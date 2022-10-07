@@ -1,0 +1,5 @@
+^qti\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^\.Rbuildignore$
+R\test.R
