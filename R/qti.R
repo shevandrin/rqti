@@ -23,7 +23,6 @@ create_assessmentItem <- function(listOfdesc, fileName = "task.xml") {
 create_responseDeclaration <- function(doc, id, cardinality="single", baseType="identifier") {
     root <- xml2::xml_add_child(doc, "responseDeclaration")
     xml2::xml_attrs(root) <- c("identifier" = id, "cardinality"=cardinality, baseType=baseType)
-    #xml2::xml_attrs(root) <- c("identifier" = id, "cardinality"=cardinality, baseType="string")
     item <- xml2::xml_add_child(root, "correctResponse")
     subitem <- xml2::xml_add_child(item, "value")
     return(doc)
