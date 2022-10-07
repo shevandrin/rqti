@@ -5,7 +5,7 @@
 
 # TODOS
 
-\[x\] 1. check if composites are possible in OPAL, NOT possible \[ \] 2.
+\[x\] 1. check if composites are possible in OPAL, NOT possible \[x\] 2.
 make github repo, push
 
 ## create rmd for
