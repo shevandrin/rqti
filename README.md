@@ -13,11 +13,19 @@ make github repo, push
 <https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html#section10006>
 this is for 2.2, we need 2.1
 
-singlechoice, multiplechoice, clozes at the end
+types of tasks (items):
 
-dropdown, associate, order, match
-
-essay (extended_text in qti)
+-   singlechoice
+-   multiplechoice
+-   text entry
+-   numbers entry
+-   clozes at the end
+-   dropdown,
+-   associate (!doesnt work in Opal),
+-   order,
+-   match (directed pair)
+-   match (matchMax\>1, table)
+-   essay (extended_text in qti)
 
 be creative: clozes in between text, dropdowns in between text -\>
 implement some yaml for input
