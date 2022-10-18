@@ -1,0 +1,19 @@
+Question
+========
+Identify the missing words in this famous quote from Shakespeare's Richard III.
+
+Now is the of our discontent <<{type: stringGap, Content: { "response": winter, "alternatives": [winter,Winter,WINTER], "score": [0.5], "expectedLength": 6, "placeholderText": "Season of the Year", "tolerance": 1}}>>.
+
+<<{type: numericGap, Content: { "response": 12, "score": [0.5], "expectedLength": 2, "placeholderText": "Number", "toleranceMode": absolute, "tolerance": "1 2", "includeLowerBound": true, "includeUpperBound": true}}>> leaves by this sun of York;
+
+And all the clouds that lour'd upon our house
+In the deep bosom of the ocean buried.  At
+<<{type: numericGap, Content: { "response": 12.5, "score": [0.5], "expectedLength": 4, "placeholderText": "Float Number", "toleranceMode": relative, "tolerance": "1 3", "includeLowerBound": true, "includeUpperBound": true}}>> 
+meters under the darkness is found.
+
+Meta-information
+================
+exname: gapProperties
+extype: string
+exsolution: nil
+extitle: An example of Gap Properties. 
