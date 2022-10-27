@@ -54,7 +54,7 @@ should be moved to rex
 
 ## create rmd for
 
-https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html#section10006 this is for 2.2, we need 2.1
+https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html
 
 types of tasks (items):
 
