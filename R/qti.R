@@ -1,7 +1,7 @@
 #' @param choices
 #'
 #'
-create_assessmen_item <- function(list_desc, file_name = "task.xml") {
+create_assessment_item <- function(list_desc, file_name = "task.xml") {
     ns <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
             "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
             "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd",
