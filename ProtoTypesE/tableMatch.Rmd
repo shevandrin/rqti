@@ -1,0 +1,17 @@
+Question
+========
+Match the following characters to the Shakespeare play they appeared in: <<{type: SimpleMatch}>>. 
+
+|       |A Midsummer Night's Dream|  Romeo and Juliet |The Tempest|
+| Capulet |  0| 1| 0|
+| Demetrius |  0.5| 0| 0|
+| Lysander |  0.5| 0| 0|
+| Prospero |  0| 0| 1|
+
+Meta-information
+================
+extitle: An example of tableMatch 
+exname: tableMatch
+extype: string
+exsolution: nil
+

@@ -1,0 +1,15 @@
+Question
+========
+Identify the missing words in this famous quote from Shakespeare's Richard III.
+
+Now is the <<{type: dropList, content: { options: [winter,summer,spring], score: [0.5,0,0], response: 1}}>> of our discontent
+Made glorious
+<<{type: dropList, content: { options: [winter,summer,spring], score: [0,0.5,0], response: 2}}>> by this sun of York;
+And all the clouds that lour'd upon our house
+In the deep bosom of the ocean buried.
+Meta-information
+================
+exname: DropList
+extype: string
+exsolution: winter
+extitle: An example of DropList 
