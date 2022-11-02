@@ -94,14 +94,26 @@ create_item_body <- function(doc, list_desc) {
     } else if (tq == "association") {
         print("this is an asssociation type of the task")
         create_associate_interaction_old(root, list_desc, doc)
-    } else if (tq %in% c("droplist", "string")) {
+    } else if (tq %in% c("droplist", "string", "num")) {
         print("this is an dropdown list type of the task")
         create_inline_choice_interation(root, list_desc, doc)
-    } else if ((tq == "matchtable")) {
+    } else if (tq == "matchtable") {
         print("this is a match table list type of the task")
         create_associate_interaction(root, list_desc, doc)
+    } else if (tq == "essay") {
+        print("this is an essay type of the task")
+        create_extended_text_interaction(root, list_desc, doc)
     }
     return(doc)
+}
+
+create_extended_text_interaction <- function(node, list_desc, doc) {
+    # to markup the lines of question
+    markup_question(node, list_desc$question)
+    # to create extendedTextInteraction element
+    root <- xml2::xml_add_child(node, "extendedTextInteraction")
+    xml2::xml_attrs(root) <- c("identifier"  =  "RESPONSE",
+                               "data-allowPaste" = "false")
 }
 
 create_choice_interaction <- function(node, list_desc, doc,
@@ -249,12 +261,18 @@ create_inline_choice_interation <- function(node, list_desc, doc) {
                 top_border <- unlist(regexpr("<<", ques_text))[1] - 1
                 item <- xml2::xml_add_child(p_item, "span")
                 xml2::xml_text(item) <- substring(ques_text, low_border, top_border)
-                # TODO base type is needed to switch to string in case of text ecntry
-                rd_node <- create_response_declaration(doc, ids_response[id_index], base_type = "identifier")
+                if (list_desc$metainfo$type == "string") {
+                    base_type <- "string"
+                } else if (list_desc$metainfo$type == "num") {
+                    base_type <- "float"
+                } else {
+                    base_type <- "indentifier"
+                }
+                rd_node <- create_response_declaration(doc, ids_response[id_index], base_type = base_type)
                 create_mapping(rd_node)
                 answer <- list_desc$metainfo$solution[index]
                 index <- index + 1L
-                if (list_desc$metainfo$type == "string") {
+                if (list_desc$metainfo$type %in% c("string", "num")) {
                     build_textentry_element(p_item, j, ids_response[id_index],
                                             answer, points, doc)
                 } else if (list_desc$metainfo$type == "droplist") {
@@ -312,8 +330,8 @@ build_textentry_element <- function(node, params, id_resp, answer, points, doc) 
     map_path <- paste(".//responseDeclaration[@identifier='", id_resp, "']/mapping", sep = "")
     mapping_node<- xml2::xml_find_first(doc, map_path)
     if (is.null(params)) {
-        create_map_entry(mapping_node, map_key = answer, mapped_value = points)
-        xml2::xml_text(v_node) <- answer
+        create_map_entry(mapping_node, map_key = as.character(answer), mapped_value = points)
+        xml2::xml_text(v_node) <- as.character(answer)
     } else {
         xml2::xml_text(v_node) <- params$content$response
         if (!is.null(params$content$score)) points <- params$content$score

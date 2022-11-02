@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="__someIdentifier__" title="An example of one gap type of question 2022-11-02-16-18-46" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="section_1" cardinality="single" baseType="string">
+    <correctResponse>
+      <value>winter</value>
+    </correctResponse>
+    <mapping>
+      <mapEntry mapKey="winter" mappedValue="1" caseSensitive="true"/>
+      <mapEntry mapKey="Winter" mappedValue="1" caseSensitive="true"/>
+      <mapEntry mapKey="WINTER" mappedValue="1" caseSensitive="true"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>
+      <span>An </span>
+      <textEntryInteraction responseIdentifier="section_1" expectedLength="6" placeholderText="Season of the Year"/>
+      <span> is a person with qualities of a personality type known as introversion, which means that they feel more comfortable focusing on their inner thoughts and ideas, rather than what's happening externally. They enjoy spending time with just one or two people, rather than large groups or crowds. Some other thoughts.</span>
+    </p>
+  </itemBody>
+</assessmentItem>
