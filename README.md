@@ -31,9 +31,9 @@ Based on qti one can also develop new interfaces for creating exercises.
 Our companion package `rex` is based on `exams` but provides new inputs
 such as:
 
-- multiple gaps and dropdowns in between text
-- order exercises
-- matching exercises
+-   multiple gaps and dropdowns in between text
+-   order exercises
+-   matching exercises
 
 Specifically, adding multiple gaps or dropdowns in between text is
 rather difficult to do within the existing exams package.
@@ -42,19 +42,31 @@ rather difficult to do within the existing exams package.
 
 should be moved to rex
 
-- rendering of qti files in in the browser (or viewer pane)
-- functions to upload files via REST API to LMS (for us OPAL, but you
-  can implement your own)
+-   rendering of qti files in in the browser (or viewer pane)
+-   functions to upload files via REST API to LMS (for us OPAL, but you
+    can implement your own)
 
 ## Installation
 
 ## Supported Exercise Types
 
+| Types                 | Notes                 |
+|-----------------------|-----------------------|
+| singlechoice          | partially implemented |
+| multiplechoice        | partially implemented |
+| text entry            | partially implemented |
+| numbers entry         | in progress           |
+| dropdown list         | partially implemented |
+| order                 | partially implemented |
+| match (directed pair) | partially implemented |
+| match (table)         | partially implemented |
+| essay                 | partially implemented |
+
 ## What is not possible
 
-- Composites are not implemented because they do not work in our LMS
-  (OPAL); several gaps do work, though
-- Associates are not implemented because they does not work in OPAL
+-   Composites are not implemented because they do not work in our LMS
+    (OPAL); several gaps do work, though
+-   Associates are not implemented because they does not work in OPAL
 
 ## create rmd for
 
@@ -62,17 +74,17 @@ should be moved to rex
 
 types of tasks (items):
 
-- singlechoice
-- multiplechoice
-- text entry
-- numbers entry
-- clozes at the end
-- dropdown,
-- associate (!doesnt work in Opal),
-- order,
-- match (directed pair)
-- match (matchMax\>1, table)
-- essay (extended_text in qti)
+-   singlechoice
+-   multiplechoice
+-   text entry
+-   numbers entry
+-   clozes at the end
+-   dropdown,
+-   associate (!doesnt work in Opal),
+-   order,
+-   match (directed pair)
+-   match (matchMax\>1, table)
+-   essay (extended_text in qti)
 
 be creative: clozes in between text, dropdowns in between text -\>
 implement some yaml for input
