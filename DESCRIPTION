@@ -11,6 +11,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Imports: 
+    htmltools,
     xml2
 Suggests: 
     testthat (>= 3.0.0)
