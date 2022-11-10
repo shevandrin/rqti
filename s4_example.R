@@ -4,9 +4,9 @@ library(qti)
 
 # create sc and mpc
 
-sc <- new("singlechoice", text = "This is the sc question", choices = c("A", "B", "C", "D"), title = "filename")
+sc <- new("singlechoice", text = "This is the sc question", choices = c("Aa", "Bb", "Cc", "Dd"), title = "filename_sc")
 
-mpc <- new("multiplechoice", text = "This is the mpc question", choices = c("A", "B", "C", "D"), points = c(1, 1, -1, 0), title = "filenamempc")
+mpc <- new("multiplechoice", text = "This is the mpc question", choices = c("A", "B", "C", "D"), points = c(1, 1, -1, 0), title = "filename_mc")
 
 # Checks for types automatically! For instance, points must be a numeric:
 

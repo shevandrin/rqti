@@ -50,17 +50,17 @@ should be moved to rex
 
 ## Supported Exercise Types
 
-| Types                 | Notes                 |
-|-----------------------|-----------------------|
-| singlechoice          | partially implemented |
-| multiplechoice        | partially implemented |
-| text entry            | partially implemented |
-| numbers entry         | in progress           |
-| dropdown list         | partially implemented |
-| order                 | partially implemented |
-| match (directed pair) | partially implemented |
-| match (table)         | partially implemented |
-| essay                 | partially implemented |
+| Types                 | Notes                 | S4 Class name  |
+|-----------------------|-----------------------|----------------|
+| singlechoice          | partially implemented | singlechoice   |
+| multiplechoice        | partially implemented | multiplechoice |
+| text entry            | partially implemented |                |
+| numbers entry         | in progress           |                |
+| dropdown list         | partially implemented |                |
+| order                 | partially implemented |                |
+| match (directed pair) | partially implemented |                |
+| match (table)         | partially implemented |                |
+| essay                 | partially implemented |                |
 
 ## What is not possible
 

@@ -1,6 +1,7 @@
 setClass("multiplechoice", contains = "choice",
          slots = list(mapping = "numeric", lower_bound = "numeric",
-                      upper_bound = "numeric", default_value = "numeric"),
+                      upper_bound = "numeric", default_value = "numeric",
+                      maxscore = "numeric"),
          prototype = list(lower_bound = 0, default_value = 0))
 
 # constructor
@@ -10,7 +11,8 @@ setMethod("initialize", "multiplechoice", function(.Object, ...) {
     .Object@upper_bound <- ifelse(length(.Object@upper_bound) == 0,
                                   sum(.Object@points[.Object@points > 0]),
                                   .Object@upper_bound)
-     validObject(.Object)
+    .Object@maxscore <- sum(.Object@points[.Object@points > 0])
+    validObject(.Object)
     .Object
 })
 
@@ -25,6 +27,10 @@ setMethod("create_response_declaration", signature(object = "multiplechoice"),
               create_response_declaration_multiple_choice(object)
           })
 
+setMethod("create_outcome_declaration", signature(object = "multiplechoice"),
+          function(object) {
+              create_outcome_declaration_multiple_choice(object)
+          })
 # helpers
 create_item_body_multiplechoice <- function(object) {
     create_item_body_choice(object, max_choices = 0)
@@ -38,4 +44,8 @@ create_response_declaration_multiple_choice <- function(object) {
                                     cardinality = "single",
                                     baseType = "identifier",
                                     correct_response, mapping))
+}
+
+create_outcome_declaration_multiple_choice <- function(object) {
+    make_outcome_declaration("MAXSCORE", value = object@maxscore)
 }

@@ -74,7 +74,7 @@ create_defaul_value <- function(node, val) {
 create_responce_processing <- function(doc, template = NULL) {
     root <- xml2::xml_add_child(doc, "responseProcessing")
     if (!is.null(template)) xml2::xml_attrs(root) <- c("template" = template)
-    return(doc)
+    return(root)
 }
 
 create_item_body <- function(doc, list_desc) {
@@ -248,6 +248,7 @@ create_inline_choice_interation <- function(node, list_desc, doc) {
     count_all_gaps <- length(unlist(stringr::str_extract_all(list_desc$question, "\\<<.*?\\>>")))
     points <- list_desc$metainfo$points / count_all_gaps
     ids_response <- make_test_ids(count_all_gaps, "section")
+    rp_node <- create_responce_processing(doc)
     id_index <- 1
     for (i in seq_len(length(question))) {
         p_item <- xml2::xml_add_child(node, "p")
@@ -270,11 +271,19 @@ create_inline_choice_interation <- function(node, list_desc, doc) {
                 }
                 rd_node <- create_response_declaration(doc, ids_response[id_index], base_type = base_type)
                 create_mapping(rd_node)
-                answer <- list_desc$metainfo$solution[index]
+
+                # TODO switch from meta block to content of brackes as a source of answer
+                answer <- unlist(stringr::str_split(stringr::str_sub(j, 3, -3), "\\+-"))
+                #answer <- list_desc$metainfo$solution[id_index]
                 index <- index + 1L
                 if (list_desc$metainfo$type %in% c("string", "num")) {
                     build_textentry_element(p_item, j, ids_response[id_index],
-                                            answer, points, doc)
+                                            answer[1], points, doc)
+
+                    if (!is.na(answer[2]) & list_desc$metainfo$type == "num") {
+                        create_responce_condition(rp_node, ids_response[id_index],
+                                                  tolerance = answer[2])
+                    }
                 } else if (list_desc$metainfo$type == "droplist") {
                     build_dropdown_element(p_item, j, ids_response[id_index], doc)
                 }
@@ -322,14 +331,15 @@ build_dropdown_element <- function(node, params, id_resp, doc) {
 build_textentry_element <- function(node, params, id_resp, answer, points, doc) {
     # to create a root element for text entry
     node <- xml2::xml_add_child(node, "textEntryInteraction")
-    xml2::xml_attrs(node) <- c("responseIdentifier" = id_resp)
+    xml2::xml_attrs(node) <- c("responseIdentifier" = id_resp,
+                               "expectedLength" = (length(answer) + 2))
     params <- try(yaml::yaml.load(stringr::str_sub(params, 3, -3)), silent = TRUE)
     cr_path <- paste(".//responseDeclaration[@identifier='", id_resp, "']/correctResponse", sep = "")
     cr_node <- xml2::xml_find_first(doc, cr_path)
     v_node <- xml2::xml_add_child(cr_node, "value")
     map_path <- paste(".//responseDeclaration[@identifier='", id_resp, "']/mapping", sep = "")
     mapping_node<- xml2::xml_find_first(doc, map_path)
-    if (is.null(params)) {
+    if (is.null(params) | is.character(params) | is.numeric(params)) {
         create_map_entry(mapping_node, map_key = as.character(answer), mapped_value = points)
         xml2::xml_text(v_node) <- as.character(answer)
     } else {
@@ -351,6 +361,24 @@ build_textentry_element <- function(node, params, id_resp, answer, points, doc) 
     }
 }
 
+create_responce_condition <- function(node, id, tolerance) {
+    rc_node <- xml2::xml_add_child(node, "responseCondition")
+    rif_node <- xml2::xml_add_child(rc_node, "responseIf")
+    re_node <- xml2::xml_add_child(rif_node, "equal")
+    xml2::xml_attrs(re_node) <- c("includeUpperBound" = "true",
+                                  "includeLowerBound" =  "true",
+                                  "tolerance" = paste(tolerance, tolerance),
+                                  "toleranceMode" = "absolute")
+    v_node <- xml2::xml_add_child(re_node, "variable")
+    xml2::xml_attrs(v_node) <-  c("identifier" =  id)
+    c_node <- xml2::xml_add_child(re_node, "correct")
+    xml2::xml_attrs(c_node) <- c("identifier" = id)
+    sov_node <- xml2::xml_add_child(rif_node, "setOutcomeValue")
+    xml2::xml_attrs(sov_node) <- c("identifier" = "SCORE")
+    v_node <- xml2::xml_add_child(sov_node, "variable")
+    xml2::xml_attrs(v_node) <- c("identifier" = "MAXSCORE")
+}
+
 create_inline_choice <- function(node, id, content) {
     root <- xml2::xml_add_child(node, "inlineChoice")
     xml2::xml_attrs(root) <- c("identifier" = id)
@@ -360,37 +388,46 @@ create_inline_choice <- function(node, id, content) {
 
 create_associate_interaction <- function(node, list_desc, doc) {
     # to parse the table in question list
-    table <- read.markdown(list_desc$questionlist)
+    table_start <- which(list_desc$question == "<<") + 1L
+    table_end <- which(list_desc$question == ">>") - 1L
+    table <- list_desc$question[table_start:table_end]
+    table <- read.markdown(table)
+    # to create response and matchInteraction
     rd_node <- create_response_declaration(doc, "RESPONSE",
                                            cardinality = "multiple",
                                            base_type = "directedPair")
     cr_node <- xml2::xml_find_first(rd_node, "//correctResponse" )
-    markup_question(node, list_desc$question)
+    markup_question(node, list_desc$question[1:(table_start - 2L)])
     root <- xml2::xml_add_child(node, "matchInteraction")
     xml2::xml_attrs(root) <- c("responseIdentifier" = "RESPONSE",
                                 "shuffle" = "true",
                                 "maxAssociations" = "0")
     mapping_node <- create_mapping(rd_node)
     ids <- make_test_ids(ncol(table) + nrow(table), type = "item")
+    # to make rows in simpleAssociableChoice
     items <- table[[1]]
-    # to make rows
-    create_simple_match(root, items, ids[1:nrow(table)])
-    # to make columns
+    match_max <- prod(rowSums(subset(table>0)[, -1]) == 1)
+    create_simple_match(root, items, ids[1:nrow(table)], match_max)
+    # to make columns in simpleAssociableChoice
     items <- names(table)[-1]
-    create_simple_match(root, items, tail(tail(ids, -nrow(table))))
+    match_max <- prod(colSums(subset(table>0)[, -1]) == 1)
+    create_simple_match(root, items, tail(tail(ids, -nrow(table))), match_max)
     # to do matching pairs
     create_matching_pairs(cr_node, mapping_node, table, ids)
+    # to assing points for the whole task according to the points from the table
+    odms_node <- xml2::xml_find_first(doc, "//outcomeDeclaration[@identifier='MAXSCORE']" )
+    xml2::xml_text(odms_node) <- as.character(sum(table[, -1]))
     url <- "http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"
     create_responce_processing(doc, template = url)
 }
 
-create_simple_match <- function(node, items, ids) {
+create_simple_match <- function(node, items, ids, match_max = 0) {
     ms_node <- xml2::xml_add_child(node, "simpleMatchSet")
     for (item in items) {
         item_choice <- xml2::xml_add_child(ms_node, "simpleAssociableChoice")
         xml2::xml_attrs(item_choice) <- c("identifier" = ids[which(items == item)],
                                           "fixed" = "false",
-                                          "matchMax" = "0")
+                                          "matchMax" = match_max)
         content_node <- xml2::xml_add_child(item_choice, "p")
         xml2::xml_text(content_node) <- item
     }

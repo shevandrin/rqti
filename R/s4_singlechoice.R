@@ -13,6 +13,10 @@ setMethod("create_response_declaration", signature(object = "singlechoice"),
               create_response_declaration_single_choice(object)
           })
 
+setMethod("create_outcome_declaration", signature(object = "singlechoice"),
+          function(object) {
+              create_outcome_declaration_single_choice(object)
+          })
 # actual functions
 create_item_body_singlechoice <- function(object) {
     create_item_body_choice(object, max_choices = 1)
@@ -25,4 +29,8 @@ create_response_declaration_single_choice <- function(object) {
                                     cardinality = "single",
                                     baseType = "identifier",
                                     child))
+}
+
+create_outcome_declaration_single_choice <- function(object) {
+    make_outcome_declaration("SCORE")
 }

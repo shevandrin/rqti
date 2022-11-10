@@ -29,3 +29,8 @@ setGeneric("create_item_body", function(object) {
 setGeneric("create_response_declaration", function(object) {
   standardGeneric("create_response_declaration")
 })
+
+#' @export
+setGeneric("create_outcome_declaration", function(object) {
+    standardGeneric("create_outcome_declaration")
+})

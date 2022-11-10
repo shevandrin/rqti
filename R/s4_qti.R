@@ -4,14 +4,15 @@
 #'
 create_assessment_item <- function(object) {
     assessment_attributes <- create_assessment_attributes(object)
-    assesment_item <- tag("assessmentItem", ns)
+    assesment_item <- tag("assessmentItem", assessment_attributes)
     assesment_item <- tagAppendChildren(
         assesment_item,
-        create_outcome_declaration("SCORE"),
         # create_outcome_declaration("MAXSCORE", children = create_default_value(object@points)),
         # create_outcome_declaration("MINSCORE"),
-        create_response_declaration(object))
-    assesment_item <- tagAppendChildren(create_item_body(object))
+        create_response_declaration(object),
+        create_outcome_declaration(object),
+        create_item_body(object))
+    #assesment_item <- tagAppendChildren(create_item_body(object))
 }
 
 create_correct_response <- function(values) {
@@ -36,20 +37,22 @@ create_score_mpc <- function(object) {
 }
 
 create_value <- function(value) {
-    tag("value", value)b
+    tag("value", value)
 }
-
 
 create_item_body_choice <- function(object, max_choices) {
-    tag("itemBody", list(shuffle = object@shuffle,
-                         maxChoices = max_choices,
-                         p(object@text),
-                         make_choice_interaction(object@choices, object@prompt)))
+    tag("itemBody", list(p(object@text),
+                         make_choice_interaction(object, max_choices)))
 }
 
-make_choice_interaction <- function(choices, prompt = "") {
-    simple_choices <- Map(make_simple_choice, LETTERS[1:length(choices)], choices)
-    tagList(tag("prompt", list(prompt)), simple_choices)
+make_choice_interaction <- function(object, max_choices) {
+    simple_choices <- Map(make_simple_choice, object@choice_identifiers, object@choices)
+    choice_interaction <- tag("choiceInteraction",
+                              list(shuffle = object@shuffle,
+                                   maxChoices = max_choices,
+                                   responseIdentifier = "RESPONSE",
+                                   simple_choices))
+    tagList(tag("prompt", list(object@prompt)), choice_interaction)
 }
 
 make_simple_choice <- function(identifier, text) {
@@ -67,16 +70,33 @@ create_map_entry <- function(value, key) {
     tag("mapEntry", list(mapKey = key, mappedValue = value))
 }
 
-create_outcome_declaration <- function(identifier,
+
+# create_outcome_declaration <- function(identifier,
+#                                        cardinality = "single",
+#                                        base_type = "float",
+#                                        children = create_default_value(0)) {
+#     tag("outcomeDeclaration", list(identifier = identifier,
+#                                    cardinality = cardinality,
+#                                    baseType=base_type, children))
+# }
+
+make_outcome_declaration <- function(identifier,
                                        cardinality = "single",
                                        base_type = "float",
-                                       children = create_default_value(0)) {
+                                       value = 0) {
     tag("outcomeDeclaration", list(identifier = identifier,
                                    cardinality = cardinality,
-                                   baseType=base_type, children))
+                                   baseType=base_type, create_default_value(value)))
 }
 
 
 create_default_value <- function(value) {
     tag("defaultValue", list(tag("value", value)))
+}
+
+create_qti_task <- function(object) {
+    content <- create_assessment_item(object)
+    doc <- xml2::read_xml(as.character(content))
+    path <- paste0("results/", object@title, ".xml")
+    xml2::write_xml(doc, path)
 }
