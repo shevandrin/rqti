@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="causeless_arieltoucan" title="filename_sc" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+    <correctResponse>
+      <value>ChoiceA</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>This is the sc question 
+ this is the second line of text</p>
+    <prompt>this is a prompt</prompt>
+    <choiceInteraction shuffle="TRUE" maxChoices="1" responseIdentifier="RESPONSE">
+      <simpleChoice identifier="ChoiceA">Aa</simpleChoice>
+      <simpleChoice identifier="ChoiceB">Bb</simpleChoice>
+      <simpleChoice identifier="ChoiceC">Cc</simpleChoice>
+      <simpleChoice identifier="ChoiceD">Dd</simpleChoice>
+    </choiceInteraction>
+  </itemBody>
+</assessmentItem>

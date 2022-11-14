@@ -1,3 +1,5 @@
+#' @import xml2
+
 get_duration <- function(file) {
     doc <- xml2::read_xml(file)
     test_duration <- xml2::xml_find_all(doc, ".//d1:testResult/d1:responseVariable")

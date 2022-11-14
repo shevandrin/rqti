@@ -1,24 +1,24 @@
 # derive sc class (contains choice), use solution slot and set it to 1
-setClass("singlechoice", contains = "choice",
+setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
 
 # set generics for sc
-setMethod("create_item_body", signature(object = "singlechoice"),
+setMethod("createItemBody", signature(object = "SingleChoice"),
           function(object) {
-              create_item_body_singlechoice(object)
+              create_item_body_single_choice(object)
           })
 
-setMethod("create_response_declaration", signature(object = "singlechoice"),
+setMethod("createResponseDeclaration", signature(object = "SingleChoice"),
           function(object) {
               create_response_declaration_single_choice(object)
           })
 
-setMethod("create_outcome_declaration", signature(object = "singlechoice"),
+setMethod("createOutcomeDeclaration", signature(object = "SingleChoice"),
           function(object) {
               create_outcome_declaration_single_choice(object)
           })
 # actual functions
-create_item_body_singlechoice <- function(object) {
+create_item_body_single_choice <- function(object) {
     create_item_body_choice(object, max_choices = 1)
 }
 
@@ -32,5 +32,5 @@ create_response_declaration_single_choice <- function(object) {
 }
 
 create_outcome_declaration_single_choice <- function(object) {
-    make_outcome_declaration("SCORE")
+    make_outcome_declaration("MAXSCORE", value = 1)
 }

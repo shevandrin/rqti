@@ -1,11 +1,11 @@
-setClass("multiplechoice", contains = "choice",
+setClass("MultipleChoice", contains = "Choice",
          slots = list(mapping = "numeric", lower_bound = "numeric",
                       upper_bound = "numeric", default_value = "numeric",
                       maxscore = "numeric"),
          prototype = list(lower_bound = 0, default_value = 0))
 
 # constructor
-setMethod("initialize", "multiplechoice", function(.Object, ...) {
+setMethod("initialize", "MultipleChoice", function(.Object, ...) {
     .Object <- callNextMethod()
     .Object@mapping <- setNames(.Object@points, .Object@choice_identifiers)
     .Object@upper_bound <- ifelse(length(.Object@upper_bound) == 0,
@@ -17,17 +17,17 @@ setMethod("initialize", "multiplechoice", function(.Object, ...) {
 })
 
 # set generics for mpc
-setMethod("create_item_body", signature(object = "multiplechoice"),
+setMethod("createItemBody", signature(object = "MultipleChoice"),
           function(object) {
               create_item_body_multiplechoice(object)
           })
 
-setMethod("create_response_declaration", signature(object = "multiplechoice"),
+setMethod("createResponseDeclaration", signature(object = "MultipleChoice"),
           function(object) {
               create_response_declaration_multiple_choice(object)
           })
 
-setMethod("create_outcome_declaration", signature(object = "multiplechoice"),
+setMethod("createOutcomeDeclaration", signature(object = "MultipleChoice"),
           function(object) {
               create_outcome_declaration_multiple_choice(object)
           })
@@ -41,7 +41,7 @@ create_response_declaration_multiple_choice <- function(object) {
     correct_response <- create_correct_response(correct_choice_identifier)
     mapping <- create_mapping(object)
     tag("responseDeclaration", list(identifier = "RESPONSE",
-                                    cardinality = "single",
+                                    cardinality = "multiple",
                                     baseType = "identifier",
                                     correct_response, mapping))
 }

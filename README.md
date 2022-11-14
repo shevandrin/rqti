@@ -52,8 +52,8 @@ should be moved to rex
 
 | Types                 | Notes                 | S4 Class name  |
 |-----------------------|-----------------------|----------------|
-| singlechoice          | partially implemented | singlechoice   |
-| multiplechoice        | partially implemented | multiplechoice |
+| singlechoice          | partially implemented | SingleChoice   |
+| multiplechoice        | partially implemented | MultipleChoice |
 | text entry            | partially implemented |                |
 | numbers entry         | in progress           |                |
 | dropdown list         | partially implemented |                |

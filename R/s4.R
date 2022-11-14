@@ -1,6 +1,6 @@
 # define general class choice (at some point should contain a more abstract class "exercise")
-
-setClass("choice", slots = c(text = "character", choices = "character",
+#' @importFrom ids adjective_animal
+setClass("Choice", slots = c(text = "character", choices = "character",
                              points = "numeric", title = "character",
                              identifier = "character", shuffle = "logical",
                              prompt = "character", qti_version = "character",
@@ -10,7 +10,7 @@ setClass("choice", slots = c(text = "character", choices = "character",
                                qti_version = "v2p1"))
 
 # constructor
-setMethod("initialize", "choice", function(.Object, ...) {
+setMethod("initialize", "Choice", function(.Object, ...) {
     .Object <- callNextMethod()
     .Object@choice_identifiers <- paste0("Choice",
                                          LETTERS[seq(.Object@choices)])
@@ -21,16 +21,16 @@ setMethod("initialize", "choice", function(.Object, ...) {
 # define generics
 
 #' @export
-setGeneric("create_item_body", function(object) {
-  standardGeneric("create_item_body")
+setGeneric("createItemBody", function(object) {
+  standardGeneric("createItemBody")
 })
 
 #' @export
-setGeneric("create_response_declaration", function(object) {
-  standardGeneric("create_response_declaration")
+setGeneric("createResponseDeclaration", function(object) {
+  standardGeneric("createResponseDeclaration")
 })
 
 #' @export
-setGeneric("create_outcome_declaration", function(object) {
-    standardGeneric("create_outcome_declaration")
+setGeneric("createOutcomeDeclaration", function(object) {
+    standardGeneric("createOutcomeDeclaration")
 })
