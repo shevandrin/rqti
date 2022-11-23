@@ -42,8 +42,12 @@ create_value <- function(value) {
     tag("value", value)
 }
 
+create_item_body_entry <- function(object) {
+    tag("itemBody", list(Map(createText, object@text@content)))
+}
+
 create_item_body_choice <- function(object, max_choices) {
-    tag("itemBody", list(p(object@text),
+    tag("itemBody", list(Map(createText, object@text@content),
                          make_choice_interaction(object, max_choices)))
 }
 
@@ -54,7 +58,7 @@ make_choice_interaction <- function(object, max_choices) {
                                    maxChoices = max_choices,
                                    responseIdentifier = "RESPONSE",
                                    simple_choices))
-    tagList(tag("prompt", list(object@prompt)), choice_interaction)
+    tagList(choice_interaction)
 }
 
 make_simple_choice <- function(identifier, text) {
@@ -68,6 +72,11 @@ create_mapping <- function(object) {
     )
 }
 
+create_mapping_gap <- function(object) {
+    map_enrties <- create_map_entry(object@score, object@response)
+    tag("mapping", list(map_enrties))
+}
+
 create_map_entry <- function(value, key) {
     tag("mapEntry", list(mapKey = key, mappedValue = value))
 }
@@ -78,7 +87,7 @@ make_outcome_declaration <- function(identifier,
                                        value = 0) {
     tag("outcomeDeclaration", list(identifier = identifier,
                                    cardinality = cardinality,
-                                   baseType=base_type, create_default_value(value)))
+                                   baseType = base_type, create_default_value(value)))
 }
 
 create_default_value <- function(value) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="moonish_sealion" title="filename_mc" adaptive="false" timeDependent="false">
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="reincarnating_squirrel" title="filename_mc" adaptive="false" timeDependent="false">
   <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
     <correctResponse>
       <value>ChoiceA</value>
@@ -18,13 +18,7 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    <p>This is the mpc question</p>
-    <prompt/>
-    <choiceInteraction shuffle="TRUE" maxChoices="0" responseIdentifier="RESPONSE">
-      <simpleChoice identifier="ChoiceA">A</simpleChoice>
-      <simpleChoice identifier="ChoiceB">B</simpleChoice>
-      <simpleChoice identifier="ChoiceC">C</simpleChoice>
-      <simpleChoice identifier="ChoiceD">D</simpleChoice>
-    </choiceInteraction>
+    This is the mpc question
+    <choiceInteraction shuffle="TRUE" maxChoices="0" responseIdentifier="RESPONSE"><simpleChoice identifier="ChoiceA">A</simpleChoice><simpleChoice identifier="ChoiceB">B</simpleChoice><simpleChoice identifier="ChoiceC">C</simpleChoice><simpleChoice identifier="ChoiceD">D</simpleChoice></choiceInteraction>
   </itemBody>
 </assessmentItem>

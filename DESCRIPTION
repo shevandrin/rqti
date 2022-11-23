@@ -9,7 +9,7 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Imports: 
     htmltools,
     xml2,
@@ -19,3 +19,18 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://github.com/shevandrin/qti
 BugReports: https://github.com/shevandrin/qti/issues
+Collate: 
+    'Text.R'
+    'AssessmentItem.R'
+    'AtomicInlines.R'
+    'Choice.R'
+    'Gap.R'
+    'NumericGap.R'
+    'SingleChoice.R'
+    'TextEntry.R'
+    'TextGap.R'
+    'exam.R'
+    'extract_results.R'
+    'multipleChoice.R'
+    'objectBuilder.R'
+    'qti.R'
