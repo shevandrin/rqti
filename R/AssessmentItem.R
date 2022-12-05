@@ -27,3 +27,22 @@ setGeneric("createResponseDeclaration", function(object) {
 setGeneric("createOutcomeDeclaration", function(object) {
     standardGeneric("createOutcomeDeclaration")
 })
+
+#' @export
+setGeneric("createResponseProcessing", function(object) {
+    standardGeneric("createResponseProcessing")
+})
+
+setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
+          function(object) {
+})
+
+setMethod("createResponseDeclaration", signature(object = "AssessmentItem"),
+          function(object) {
+})
+
+setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
+          function(object) {
+              tagList(make_outcome_declaration("SCORE", value = object@points),
+                      make_outcome_declaration("MAXSCORE", value = object@points))
+          })

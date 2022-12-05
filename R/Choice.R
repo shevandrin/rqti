@@ -15,3 +15,6 @@ setMethod("initialize", "Choice", function(.Object, ...) {
     .Object
 })
 
+setMethod("createResponseProcessing",  "Choice", function(object) {
+
+})

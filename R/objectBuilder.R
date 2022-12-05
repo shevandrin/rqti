@@ -35,7 +35,9 @@ create_text_gap_object <- function(params, id) {
     } else {
         new("TextGap", response_identifier = id, score = 1,
             response = params$content$response,
-            alternatives = params$content$alternatives)
+            alternatives = params$content$alternatives,
+            placeholder = params$content$placeholder,
+            expected_length = params$content$length)
     }
 }
 

@@ -9,12 +9,10 @@ create_assessment_item <- function(object) {
     assesment_item <- tag("assessmentItem", assessment_attributes)
     assesment_item <- tagAppendChildren(
         assesment_item,
-        # create_outcome_declaration("MAXSCORE", children = create_default_value(object@points)),
-        # create_outcome_declaration("MINSCORE"),
         createResponseDeclaration(object),
         createOutcomeDeclaration(object),
-        createItemBody(object))
-    #assesment_item <- tagAppendChildren(create_item_body(object))
+        createItemBody(object),
+        createResponseProcessing(object))
 }
 
 create_correct_response <- function(values) {
@@ -51,8 +49,33 @@ create_item_body_choice <- function(object, max_choices) {
                          make_choice_interaction(object, max_choices)))
 }
 
+create_item_body_order <- function(object) {
+    choices <- Map(make_choice, "simpleChoice", object@choices_identifiers, object@choices)
+    order_interactioin <- tag("orderInteraction", list("responseIdentifier" = "RESPONSE", "shuffle" = object@shuffle, choices))
+    tag("itemBody", list(Map(createText, object@text@content), order_interactioin))
+}
+
+create_item_body_match_table <- function(object,  row_associations, col_associations) {
+    rows <- Map(make_associable_choice, object@rows_identifiers, object@rows, row_associations)
+    rows_match <- tag("simpleMatchSet", list(rows))
+    cols <- Map(make_associable_choice, object@cols_identifiers, object@cols, col_associations)
+    cols_match <- tag("simpleMatchSet", list(cols))
+    match_interactioin <- tag("matchInteraction",
+                              list("responseIdentifier" = "RESPONSE",
+                                   "shuffle" = object@shuffle,
+                                   tagList(rows_match, cols_match)))
+    tag("itemBody", list(Map(createText, object@text@content), match_interactioin))
+}
+
+
+make_associable_choice <- function(id, text, match_max = 1) {
+    tag("simpleAssociableChoice", list(identifier =  id,
+                                       matchMax = match_max,
+                                       text))
+}
+
 make_choice_interaction <- function(object, max_choices) {
-    simple_choices <- Map(make_simple_choice, object@choice_identifiers, object@choices)
+    simple_choices <- Map(make_choice, "simpleChoice", object@choice_identifiers, object@choices)
     choice_interaction <- tag("choiceInteraction",
                               list(shuffle = object@shuffle,
                                    maxChoices = max_choices,
@@ -61,9 +84,21 @@ make_choice_interaction <- function(object, max_choices) {
     tagList(choice_interaction)
 }
 
-make_simple_choice <- function(identifier, text) {
-    tag("simpleChoice", list(identifier = identifier, text))
+make_inline_choice_interaction <- function(object) {
+    inline_choices <- Map(make_choice, "inlineChoice",
+                          object@options_identifiers,
+                          object@options)
+    inline_choice_interaction <- tag("inlineChoiceInteraction",
+                              list(shuffle = object@shuffle,
+                                   responseIdentifier = object@response_identifier,
+                                   inline_choices))
+    tagList(inline_choice_interaction)
 }
+
+make_choice <- function(type_choice, identifier, text) {
+    tag(type_choice, list(identifier = identifier, text))
+}
+
 
 create_mapping <- function(object) {
     map_entries <- purrr::imap(object@mapping, create_map_entry)
@@ -73,7 +108,8 @@ create_mapping <- function(object) {
 }
 
 create_mapping_gap <- function(object) {
-    map_enrties <- create_map_entry(object@score, object@response)
+    map_keys <- c(object@response, object@alternatives)
+    map_enrties <- Map(create_map_entry, object@score, map_keys)
     tag("mapping", list(map_enrties))
 }
 
@@ -97,7 +133,9 @@ create_default_value <- function(value) {
 #' @export
 create_qti_task <- function(object) {
     content <- create_assessment_item(object)
+    print(content)
     doc <- xml2::read_xml(as.character(content))
     path <- paste0("results/", object@title, ".xml")
     xml2::write_xml(doc, path)
+    print(paste("see:", path))
 }

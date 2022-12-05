@@ -18,3 +18,6 @@ make_question_text <- function(object) {
     content <- strsplit(object@content, "\n")
     tagList(Map(p, content[[1]]))
 }
+
+
+

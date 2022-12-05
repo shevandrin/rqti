@@ -2,13 +2,30 @@
 #' @importFrom htmltools tag p span tagList tagAppendChildren
 
 setClass("TextGap", contains = "Gap",
-         slots = c(response = "character", alternatives = "character"),
-         prototype = prototype(alternatives = NA_character_))
-
-setMethod("createText", "TextGap", function(object) {
-    tag("textEntryInteraction", list(responseIdentifier = object@response_identifier))
-})
+         slots = c(response = "character", alternatives = "character"))
 
 setMethod("getResponse", "TextGap", function(object) {
     object
 })
+
+setMethod("createResponseDeclaration", "TextGap", function(object) {
+    create_response_declaration_text_entry(object)
+})
+
+setMethod("createOutcomeDeclaration", "TextGap", function(object) {
+    create_outcome_declaration_text_entry(object)
+})
+
+create_response_declaration_text_entry <- function(object) {
+    response <- create_correct_response(object@response)
+    mapping <- create_mapping_gap(object)
+    children <- tagList(response, mapping)
+    tag("responseDeclaration", list(identifier = object@response_identifier,
+                                    cardinality = "single",
+                                    baseType = "string", children))
+}
+
+create_outcome_declaration_text_entry <- function(object) {
+
+}
+

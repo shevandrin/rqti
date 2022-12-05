@@ -50,17 +50,19 @@ should be moved to rex
 
 ## Supported Exercise Types
 
-| Types                 | Notes                 | S4 Class name  |
-|-----------------------|-----------------------|----------------|
-| singlechoice          | partially implemented | SingleChoice   |
-| multiplechoice        | partially implemented | MultipleChoice |
-| text entry            | partially implemented | TextEntry      |
-| numbers entry         | in progress           | NumEntry       |
-| dropdown list         | partially implemented |                |
-| order                 | partially implemented |                |
-| match (directed pair) | partially implemented |                |
-| match (table)         | partially implemented |                |
-| essay                 | partially implemented |                |
+| Types                                                              | Notes                 | S4 Class name       |
+|--------------------------------------------------------------------|-----------------------|---------------------|
+| singlechoice                                                       | partially implemented | SingleChoice        |
+| multiplechoice                                                     | partially implemented | MultipleChoice      |
+| text entry                                                         | partially implemented | TextEntry           |
+| numbers entry                                                      | in progress           | NumericEntry        |
+| dropdown list                                                      | partially implemented | InlineChoice        |
+| order                                                              | partially implemented | Order               |
+| match (directed pair)                                              | partially implemented | DirectedPair        |
+| match (table, one right answer in a row)                           | partially implemented | OneInRowTable       |
+| match (table, one right answer in a column)                        | partially implemented | OneInColTable       |
+| match (table, many right answers in columns and rows are possible) | partially implemented | MultipleChoiceTable |
+| essay                                                              | partially implemented |                     |
 
 ## What is not possible
 
@@ -72,46 +74,33 @@ should be moved to rex
 
 <https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html>
 
-types of tasks (items):
-
--   singlechoice
--   multiplechoice
--   text entry
--   numbers entry
--   clozes at the end
--   dropdown,
--   associate (!doesnt work in Opal),
--   order,
--   match (directed pair)
--   match (matchMax\>1, table)
--   essay (extended_text in qti)
-
 be creative:  
 clozes in between text, dropdowns in between text -\> implement some
 yaml for input
 
 ## making gaps
 
-for text:  
-- Simply use \<\<\>\> for a gap, example:  
+for gaps with text:  
+- Simply use <code>\<\<\>\></code> for a gap, example:  
 *Some text, and now the gap <code>\<\<Right answer\>\>\></code>*  
 - or use YAML description inside \<\<\>\> to add more attributes:  
-*Some Text, and now the gap: <code>\<\<{type:text, content:
+*Some Text, and then the gap: <code>\<\<{type:text, content:
 {response:Right answer, alternatives:\[Right answer, right answer,
 answer\], lenghth:10, placeholder: some text, tolerance = 1}\>\></code>
 Some more text.*
 
 #### List of attributes for gap description in YAML format
 
-| attibute     | type                    | description                                                                             |
-|--------------|-------------------------|-----------------------------------------------------------------------------------------|
-| type         | text or numeric         | text for gaps with text;<br />numeric for gaps with numbers                             |
-| response     | text or numeric         | string or numeric value that is considered as a right response for the gap              |
-| alternatives | vector of string values | provides a set of alternative values that are considered as a right answer for the gap  |
-| length       | integer                 | sets the size of the text field                                                         |
-| placeholder  | string                  | provides placeholder text in the text field, can be used to show some pattern of answer |
+| attribute    | type                    | description                                                                                                                                                      |
+|--------------|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type         | text or numeric         | text for gaps with text;<br />numeric for gaps with numbers                                                                                                      |
+| response     | text or numeric         | string or numeric value that is considered as a right response for the gap                                                                                       |
+| alternatives | vector of string values | provides a set of alternative values that are considered as a right answer for the gap; the set of alternatives must not include the value of the correct answer |
+| length       | integer                 | sets the size of the text field                                                                                                                                  |
+| placeholder  | string                  | provides placeholder text in the text field, can be used to show some pattern of answer                                                                          |
+| score        | integer                 | mark for the correct answer to the question                                                                                                                      |
 
-for numeric:
+for gaps with numbers:
 
 for combination:
 

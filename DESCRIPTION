@@ -13,7 +13,9 @@ RoxygenNote: 7.2.2
 Imports: 
     htmltools,
     xml2,
-    ids
+    ids,
+    yaml,
+    commonmark
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
@@ -24,13 +26,21 @@ Collate:
     'AssessmentItem.R'
     'AtomicInlines.R'
     'Choice.R'
+    'MatchTable.R'
+    'DirectedPair.R'
+    'Entry.R'
     'Gap.R'
+    'InlineChoice.R'
+    'MultipleChoiceTable.R'
     'NumericGap.R'
+    'OneInColTable.R'
+    'OneInRowTable.R'
+    'Order.R'
     'SingleChoice.R'
-    'TextEntry.R'
     'TextGap.R'
     'exam.R'
     'extract_results.R'
+    'knit_functions.R'
     'multipleChoice.R'
     'objectBuilder.R'
     'qti.R'
