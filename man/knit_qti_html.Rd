@@ -16,5 +16,5 @@ Choosing a specific Rmd file the function generates the qti.xml for it through t
 }
 \examples{
 # Customize knit function in the Rmd file using the following YAML setting after the word knit:
-qtiViewer::knit_qti_html
+qti::knit_qti_html
 }

@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' # Customize knit function in the Rmd file using the following YAML setting after the word knit:
-#' qtiViewer::knit_qti_html
+#' qti::knit_qti_html
 #' @export
 knit_qti_html <- function(input, ...) {
   qti_port <- Sys.getenv("QTI_PORT")
@@ -40,7 +40,7 @@ knit_qti_html <- function(input, ...) {
 start_server <- function(qti_engine_f) {
   servr::daemon_stop(which = servr::daemon_list())
   if (missing(qti_engine_f)){
-    package_d <- paste(fs::path_package("qtiViewer"),"QTI_Engine", sep = "/")
+    package_d <- paste(fs::path_package("qti"),"QTI_Engine", sep = "/")
   }
   else{
     package_d <- paste(qti_engine_f)

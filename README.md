@@ -64,6 +64,8 @@ should be moved to rex
 | match (table, many right answers in columns and rows are possible) | partially implemented | MultipleChoiceTable |
 | essay                                                              | partially implemented |                     |
 
+![Class diagramm S4.](S4_classes_diagramm.jpg)
+
 ## What is not possible
 
 -   Composites are not implemented because they do not work in our LMS
