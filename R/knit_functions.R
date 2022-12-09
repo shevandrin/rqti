@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' # Customize knit function in the Rmd file using the following YAML setting after the word knit:
-#' qtiViewer::knit_qti_html
+#' qti::knit_qti_html
 #' @export
 knit_qti_html <- function(input, ...) {
   qti_port <- Sys.getenv("QTI_PORT")
