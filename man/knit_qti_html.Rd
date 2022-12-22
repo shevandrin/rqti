@@ -16,5 +16,6 @@ Choosing a specific Rmd file the function generates the qti.xml for it through t
 }
 \examples{
 # Customize knit function in the Rmd file using the following YAML setting after the word knit:
-qti::knit_qti_html
+\dontrun{qti::knit_qti_html}
+
 }

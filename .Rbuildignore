@@ -1,4 +1,8 @@
 
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^for_code_testing\.R$
+^code_notes$
+^results$
+^LICENSE\.md$
+README.Rmd
+s4_example.R

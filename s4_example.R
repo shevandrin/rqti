@@ -8,7 +8,7 @@ library(shiny)
 sc <- new("SingleChoice",
           text = new("Text", content = list("<p>With SQL, how do you select <b>all the records</b> from a table named Persons where the value of the column FirstName is Peter?<br />SELECT * FROM", new("Br"), "this is the second line of text</p>")),
           choices = c("You must stay with your luggage at all times.", "Bb", "Cc", "Dd"),
-          title = "filename_sc",
+          title = "single_choice_task",
           prompt = "this is a prompt",
           points = 2)
 create_qti_task(sc)
@@ -17,8 +17,9 @@ create_qti_task(sc)
 mpc <- new("MultipleChoice",
            text = new("Text", content = list("This is the mpc question")),
            choices = c("A", "B", "C", "D"),
-           points = c(1, 1, -1, 0),
-           title = "filename_mc"
+           choice_identifiers = c("1", "2", "3", "4"),
+           points = c(1, 0, -1, 1),
+           title = "multiple_choice_task")
 create_qti_task(mpc)
 
 # task with TextGap
@@ -101,7 +102,8 @@ dp <- new("DirectedPair", text = new("Text",
         cols_identifiers = c("k", "l", "m"),
         answers_identifiers = c("a k", "b l", "c m"),
         points = 5,
-        title = "directed_pair"
+        title = "directed_pair",
+        prompt = "this is a prompt"
 )
 create_qti_task(dp)
 
@@ -146,3 +148,10 @@ mt <- new("MultipleChoiceTable", text = new("Text",
           title = "multiple_choice_table"
 )
 create_qti_task(mt)
+
+es <- new("Essay", text = new("Text",
+                              content = list("<h2>this is an essay type of question</h2>")),
+          title = "essay_task50x15",
+          points = 3)
+create_qti_task(es)
+

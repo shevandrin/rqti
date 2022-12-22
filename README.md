@@ -62,9 +62,9 @@ should be moved to rex
 | match (table, one right answer in a row)                           | partially implemented | OneInRowTable       |
 | match (table, one right answer in a column)                        | partially implemented | OneInColTable       |
 | match (table, many right answers in columns and rows are possible) | partially implemented | MultipleChoiceTable |
-| essay                                                              | partially implemented |                     |
+| essay                                                              | partially implemented | Essay               |
 
-![Class diagramm S4.](S4_classes_diagramm.jpg)
+![Class diagramm S4.](man/figures/README-S4_classes_diagramm.jpg)
 
 ## What is not possible
 

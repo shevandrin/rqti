@@ -1,6 +1,6 @@
 # define class MultipleChoiceTable to specify match table that supports
 # choosing many options in rows and columns
-
+#' @importFrom stats setNames
 setClass("MultipleChoiceTable", contains = "MatchTable",
          slots = list(mapping = "numeric"))
 
@@ -17,10 +17,14 @@ setMethod("initialize", "MultipleChoiceTable", function(.Object, ...) {
     .Object
 })
 
+#' @rdname createItemBody-methods
+#' @aliases createItemBody,MultipleChoiceTable
 setMethod("createItemBody",  "MultipleChoiceTable", function(object) {
     create_item_body_match_table(object, 2, 2)
 })
 
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,MultipleChoiceTable
 setMethod("createResponseDeclaration", "MultipleChoiceTable", function(object) {
     create_response_declaration_match_table2(object)
 })

@@ -6,11 +6,8 @@ test_that("Testing create_item_body_text ", {
             score = 1, response = "answer",
             alternatives = c("answer", "Answer")),
         "text after the gap",
-
         "third line"))
-
     )
-
     example <- '<itemBody>
 <gapMatchInteraction responseIdentifier="RESPONSE" shuffle="false">
 <prompt>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</prompt>

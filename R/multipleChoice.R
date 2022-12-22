@@ -1,3 +1,5 @@
+#' @import methods
+#' @importFrom stats setNames
 setClass("MultipleChoice", contains = "Choice",
          slots = list(mapping = "numeric", lower_bound = "numeric",
                       upper_bound = "numeric", default_value = "numeric",
@@ -16,17 +18,22 @@ setMethod("initialize", "MultipleChoice", function(.Object, ...) {
     .Object
 })
 
-# set generics for mpc
+#' @rdname createItemBody-methods
+#' @aliases createItemBody,MultipleChoice
 setMethod("createItemBody", signature(object = "MultipleChoice"),
           function(object) {
               create_item_body_multiplechoice(object)
           })
 
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,MultipleChoice
 setMethod("createResponseDeclaration", signature(object = "MultipleChoice"),
           function(object) {
               create_response_declaration_multiple_choice(object)
           })
 
+#' @rdname createOutcomeDeclaration-methods
+#' @aliases createOutcomeDeclaration,MultipleChoice
 setMethod("createOutcomeDeclaration", signature(object = "MultipleChoice"),
           function(object) {
               create_outcome_declaration_multiple_choice(object)

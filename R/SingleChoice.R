@@ -2,12 +2,15 @@
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
 
-# set generics for sc
+#' @rdname createItemBody-methods
+#' @aliases createItemBody,SingleChoice
 setMethod("createItemBody", signature(object = "SingleChoice"),
           function(object) {
               create_item_body_single_choice(object)
           })
 
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,SingleChoice
 setMethod("createResponseDeclaration", signature(object = "SingleChoice"),
           function(object) {
               create_response_declaration_single_choice(object)

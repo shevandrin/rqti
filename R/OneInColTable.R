@@ -3,6 +3,8 @@
 
 setClass("OneInColTable", contains = "MatchTable")
 
+#' @rdname createItemBody-methods
+#' @aliases createItemBody,OneInColTable
 setMethod("createItemBody",  "OneInColTable", function(object) {
     create_item_body_match_table(object, 2, 1)
 })

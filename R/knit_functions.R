@@ -7,7 +7,8 @@
 #'
 #' @examples
 #' # Customize knit function in the Rmd file using the following YAML setting after the word knit:
-#' qti::knit_qti_html
+#' \dontrun{qti::knit_qti_html}
+#'
 #' @export
 knit_qti_html <- function(input, ...) {
   qti_port <- Sys.getenv("QTI_PORT")
@@ -31,11 +32,12 @@ knit_qti_html <- function(input, ...) {
 #' @param qti_engine_f filepath to the js QTI Engine. Can be empty to indicate that the server can be initiated in the package folder.
 #'
 #' @examples
+#' \dontrun{
 #' # Initiated server in qtiViewer folder
 #' start_server()
 #' # Initiated server in a specific folder provided by the user. This folder contains the js QTI Engine
 #' start_server("/pathToTheQtiEngine/")
-#'
+#' }
 #' @export
 start_server <- function(qti_engine_f) {
   servr::daemon_stop(which = servr::daemon_list())

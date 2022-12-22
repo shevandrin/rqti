@@ -3,7 +3,8 @@ test_that("Testing create_item_body_single_choice", {
               text = new("Text", content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>")),
               choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
               title = "filename_sc",
-              prompt = "What does it say?")
+              prompt = "What does it say?",
+              shuffle = FALSE)
     example <- "<itemBody> <p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p><choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\"><prompt>What does it say?</prompt><simpleChoice identifier=\"ChoiceA\">You must stay with your luggage at all times.</simpleChoice><simpleChoice identifier=\"ChoiceB\">Do not let someone else look after your luggage.</simpleChoice><simpleChoice identifier=\"ChoiceC\">Remember your luggage when you leave.</simpleChoice></choiceInteraction></itemBody>"
 
     xml1 <- xml2::read_xml(toString(create_item_body_single_choice(sc)))

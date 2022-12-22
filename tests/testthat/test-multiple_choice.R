@@ -10,12 +10,12 @@ test_that("Testing create_item_body_multiplechoice", {
     example <- '<itemBody>
 <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0">
 <prompt>Which of the following elements are used to form water?</prompt>
-<simpleChoice identifier="H" fixed="false">Hydrogen</simpleChoice>
-<simpleChoice identifier="He" fixed="false">Helium</simpleChoice>
-<simpleChoice identifier="C" fixed="false">Carbon</simpleChoice>
-<simpleChoice identifier="O" fixed="false">Oxygen</simpleChoice>
-<simpleChoice identifier="N" fixed="false">Nitrogen</simpleChoice>
-<simpleChoice identifier="Cl" fixed="false">Chlorine</simpleChoice>
+<simpleChoice identifier="H">Hydrogen</simpleChoice>
+<simpleChoice identifier="He">Helium</simpleChoice>
+<simpleChoice identifier="C">Carbon</simpleChoice>
+<simpleChoice identifier="O">Oxygen</simpleChoice>
+<simpleChoice identifier="N">Nitrogen</simpleChoice>
+<simpleChoice identifier="Cl">Chlorine</simpleChoice>
 </choiceInteraction>
 </itemBody>'
 
@@ -28,6 +28,7 @@ test_that("Testing create_response_declaration_multiple_choice",{
     sc <- new("MultipleChoice",
               text = new("Text",content = list("")),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
+              choice_identifiers = c("H","He","C","O","N","Cl"),
               points = c(1,0,0,1,0,-1),
               title = "filename_sc",
               prompt = "Which of the following elements are used to form water?")

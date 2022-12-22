@@ -2,10 +2,17 @@
 % Please edit documentation in R/qti.R
 \name{create_assessment_item}
 \alias{create_assessment_item}
-\title{create assessment item}
+\title{Compose a root element AssessmentItem of xml task}
 \usage{
 create_assessment_item(object)
 }
+\arguments{
+\item{object}{an instance of the S4 object}
+}
+\value{
+A list() with a shiny.tag class
+}
 \description{
-create assessment item
+\code{create_assessment_item()} creates html structure with AssessmentItem root
+element (shiny.tag) for xml qti task description according QTI 2.1
 }

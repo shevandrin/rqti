@@ -21,6 +21,8 @@ setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object
 })
 
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,MatchTable
 setMethod("createResponseDeclaration", signature(object = "MatchTable"),
           function(object) {
               create_response_declaration_match_table(object)

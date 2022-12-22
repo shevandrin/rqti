@@ -14,17 +14,22 @@ setMethod("initialize", "Order", function(.Object, ...) {
     .Object
 })
 
-# set generics for order
+#' @rdname createItemBody-methods
+#' @aliases createItemBody,Order
 setMethod("createItemBody", signature(object = "Order"),
           function(object) {
               create_item_body_order(object)
           })
 
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,Order
 setMethod("createResponseDeclaration", signature(object = "Order"),
           function(object) {
               create_response_declaration_order(object)
           })
 
+#' @rdname createResponseProcessing-methods
+#' @aliases createResponseProcessing,Order
 setMethod("createResponseProcessing", signature(object = "Order"),
           function(object) {
               create_response_processing_order(object)

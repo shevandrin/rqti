@@ -4,18 +4,26 @@ setClass("NumericGap", contains = "Gap",
          slots = c(response = "numeric", type_precision = "character",
                    value_precision = "numeric"))
 
+#' @rdname getResponse-methods
+#' @aliases getResponse,NumericGap
 setMethod("getResponse", "NumericGap", function(object) {
     object
 })
 
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,NumericGap
 setMethod("createResponseDeclaration", "NumericGap", function(object) {
     create_response_declaration_num_entry(object)
 })
 
+#' @rdname createOutcomeDeclaration-methods
+#' @aliases createOutcomeDeclaration,NumericGap
 setMethod("createOutcomeDeclaration", "NumericGap", function(object) {
     create_outcome_declaration_num_entry(object)
 })
 
+#' @rdname createResponseProcessing-methods
+#' @aliases createResponseProcessing,NumericGap
 setMethod("createResponseProcessing", "NumericGap", function(object) {
     create_response_processing_num_entry(object)
 })

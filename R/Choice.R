@@ -3,18 +3,23 @@
 #'
 setClass("Choice", contains = "AssessmentItem",
          slots = c(choices = "character", shuffle = "logical",
-                   prompt = "character", choice_identifiers = "character"),
-         prototype = prototype(shuffle = TRUE, prompt = ""))
+                   choice_identifiers = "character"),
+         prototype = prototype(shuffle = TRUE))
 
 # constructor
 setMethod("initialize", "Choice", function(.Object, ...) {
     .Object <- callNextMethod()
-    .Object@choice_identifiers <- paste0("Choice",
-                                         LETTERS[seq(.Object@choices)])
+    ids <- .Object@choice_identifiers
+    if (identical(ids, character(0))) {
+        .Object@choice_identifiers <- paste0("Choice",
+                                             LETTERS[seq(.Object@choices)])
+    }
     validObject(.Object)
     .Object
 })
 
+#' @rdname createResponseProcessing-methods
+#' @aliases createResponseProcessing,Choice
 setMethod("createResponseProcessing",  "Choice", function(object) {
 
 })

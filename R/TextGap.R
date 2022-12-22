@@ -4,14 +4,20 @@
 setClass("TextGap", contains = "Gap",
          slots = c(response = "character", alternatives = "character"))
 
+#' @rdname getResponse-methods
+#' @aliases getResponse,TextGap
 setMethod("getResponse", "TextGap", function(object) {
     object
 })
 
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,TextGap
 setMethod("createResponseDeclaration", "TextGap", function(object) {
     create_response_declaration_text_entry(object)
 })
 
+#' @rdname createOutcomeDeclaration-methods
+#' @aliases createOutcomeDeclaration,TextGap
 setMethod("createOutcomeDeclaration", "TextGap", function(object) {
     create_outcome_declaration_text_entry(object)
 })

@@ -1,6 +1,7 @@
-# define class AtimicInline for html formatting newlines and images
+#
 #' @importFrom commonmark markdown_html
 #' @importFrom htmltools HTML
+#' @importFrom stringr str_extract_all str_sub
 #' @import yaml
 
 create_content_object <- function(file) {
@@ -8,7 +9,7 @@ create_content_object <- function(file) {
     file <- gsub("<<", "<entry>", file)
     file <- gsub(">>", "</entry>", file)
     h <- HTML(markdown_html(file, hardbreaks = TRUE, smart = TRUE))
-    count_all_gaps <- length(unlist(stringr::str_extract_all(h, "<entry>")))
+    count_all_gaps <- length(unlist(str_extract_all(h, "<entry>")))
     ids <- make_ids(count_all_gaps, "response")
     end <- unlist(gregexpr("<entry>", h)) - 1L
     begin <- unlist(gregexpr("</entry>", h)) + 8L
@@ -26,7 +27,7 @@ create_content_object <- function(file) {
 }
 
 create_text_gap_object <- function(params, id) {
-    params <- stringr::str_sub(params, 9, -9)
+    params <- str_sub(params, 9, -9)
     params <- try(yaml::yaml.load(params), silent = TRUE)
     if (is.null(params) | is.character(params) | is.numeric(params)) {
         new("TextGap", response_identifier = id,

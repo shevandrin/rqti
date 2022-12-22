@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="bookish_seaslug" title="one_in_col_table" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+    <correctResponse>
+      <value>a k</value>
+      <value>b l</value>
+      <value>b m</value>
+    </correctResponse>
+    <mapping default_value="0">
+      <mapEntry mapKey="a k" mappedValue="1.66666666666667"/>
+      <mapEntry mapKey="b l" mappedValue="1.66666666666667"/>
+      <mapEntry mapKey="b m" mappedValue="1.66666666666667"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>5</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>5</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <h3>This is match table task</h3>
+    <i>table description</i>
+    <matchInteraction responseIdentifier="RESPONSE" shuffle="TRUE">
+      <simpleMatchSet>
+        <simpleAssociableChoice identifier="a" matchMax="2">row1</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="b" matchMax="2">row2</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="c" matchMax="2">row3</simpleAssociableChoice>
+      </simpleMatchSet>
+      <simpleMatchSet>
+        <simpleAssociableChoice identifier="k" matchMax="1">alfa</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="l" matchMax="1">beta</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="m" matchMax="1">gamma</simpleAssociableChoice>
+      </simpleMatchSet>
+    </matchInteraction>
+  </itemBody>
+</assessmentItem>
