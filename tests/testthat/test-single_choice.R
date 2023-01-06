@@ -5,7 +5,14 @@ test_that("Testing create_item_body_single_choice", {
               title = "filename_sc",
               prompt = "What does it say?",
               shuffle = FALSE)
-    example <- "<itemBody> <p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p><choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\"><prompt>What does it say?</prompt><simpleChoice identifier=\"ChoiceA\">You must stay with your luggage at all times.</simpleChoice><simpleChoice identifier=\"ChoiceB\">Do not let someone else look after your luggage.</simpleChoice><simpleChoice identifier=\"ChoiceC\">Remember your luggage when you leave.</simpleChoice></choiceInteraction></itemBody>"
+    example <- "<itemBody>
+    <p>Look at the text in the picture.</p>
+    <p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>
+    <choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\">
+    <prompt>What does it say?</prompt>
+    <simpleChoice identifier=\"ChoiceA\">You must stay with your luggage at all times.</simpleChoice>
+    <simpleChoice identifier=\"ChoiceB\">Do not let someone else look after your luggage.</simpleChoice>
+    <simpleChoice identifier=\"ChoiceC\">Remember your luggage when you leave.</simpleChoice></choiceInteraction></itemBody>"
 
     xml1 <- xml2::read_xml(toString(create_item_body_single_choice(sc)))
     xml2 <- xml2::read_xml(example)
@@ -42,7 +49,6 @@ test_that("Testing outcomeDeclaration for Single Choice",{
 <value>0</value>
 </defaultValue>
 </outcomeDeclaration>'
-    print(createOutcomeDeclaration(sc))
     nodes <- createOutcomeDeclaration(sc)
     xml1 <- xml2::read_xml(toString(nodes[[1]]))
     xml2 <- xml2::read_xml(example)
