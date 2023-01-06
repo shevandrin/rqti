@@ -29,9 +29,10 @@ setMethod("getResponse", "character", function(object) {
 #' @rdname createText-methods
 #' @aliases createText,Gap
 setMethod("createText", "Gap", function(object) {
-    tag("textEntryInteraction", list(responseIdentifier = object@response_identifier,
-                                     expectedLength = object@expected_length,
-                                     placeholderText = object@placeholder))
+    tag("textEntryInteraction",
+        list(responseIdentifier = object@response_identifier,
+             expectedLength = object@expected_length,
+             placeholderText = object@placeholder))
 })
 
 #' @rdname createResponseProcessing-methods

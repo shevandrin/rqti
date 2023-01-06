@@ -13,15 +13,15 @@ create_content_object <- function(file) {
     ids <- make_ids(count_all_gaps, "response")
     end <- unlist(gregexpr("<entry>", h)) - 1L
     begin <- unlist(gregexpr("</entry>", h)) + 8L
-    all = sort(c(begin, end, 1, nchar(h)))
-    content = list()
+    all <- sort(c(begin, end, 1, nchar(h)))
+    content <- list()
     for (i in seq(length(all) - 1)) {
         text_chank <- substring(h, all[i], all[i + 1L] - 1L)
         text_chank <- gsub("\n", "", text_chank)
-        if((i %% 2) == 0) {
+        if ((i %% 2) == 0) {
             text_chank <- create_text_gap_object(text_chank, ids[i / 2])
         }
-        content = append(content, text_chank)
+        content <- append(content, text_chank)
     }
     text <- new("Text", content =  content)
 }

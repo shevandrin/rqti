@@ -7,8 +7,7 @@ setClass("Essay", contains = "AssessmentItem",
                    expectedLines = "numeric",
                    maxStrings = "numeric",
                    minStrings = "numeric",
-                   dataAllowPaste = "logical"),
-         prototype = prototype(dataAllowPaste = FALSE))
+                   dataAllowPaste = "logical"))
 
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,Essay

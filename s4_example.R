@@ -6,8 +6,9 @@ library(shiny)
 
 # create SingleChoice object
 sc <- new("SingleChoice",
-          text = new("Text", content = list("<p>With SQL, how do you select <b>all the records</b> from a table named Persons where the value of the column FirstName is Peter?<br />SELECT * FROM", new("Br"), "this is the second line of text</p>")),
+          text = new("Text", content = list("<p>With SQL, how do you select <b>all the records</b> from a table named Persons where the value of the column FirstName is Peter?<br />SELECT * FROM <br/> this is the second line of text</p>")),
           choices = c("You must stay with your luggage at all times.", "Bb", "Cc", "Dd"),
+          orientation = "horizontal",
           title = "single_choice_task",
           prompt = "this is a prompt",
           points = 2)
@@ -152,6 +153,7 @@ create_qti_task(mt)
 es <- new("Essay", text = new("Text",
                               content = list("<h2>this is an essay type of question</h2>")),
           title = "essay_task50x15",
+          maxStrings = 100,
           points = 3)
 create_qti_task(es)
 

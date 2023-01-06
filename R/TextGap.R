@@ -34,4 +34,3 @@ create_response_declaration_text_entry <- function(object) {
 create_outcome_declaration_text_entry <- function(object) {
 
 }
-

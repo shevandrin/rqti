@@ -12,10 +12,14 @@ knit_qti_html(input, ...)
 \item{...}{other arguments that are currently ignored}
 }
 \description{
-Choosing a specific Rmd file the function generates the qti.xml for it through the functions of the package exams, after the XML is copied into the QTI Engine which transforms the qti.xml into HTML format. Finally, the HTML is displayed and the user can have a preview of the exercise or exam.
+Choosing a specific Rmd file the function generates the qti.xml for it
+through the functions of the package exams, after the XML is copied into the
+QTI Engine which transforms the qti.xml into HTML format. Finally, the HTML
+is displayed and the user can have a preview of the exercise or exam.
 }
 \examples{
-# Customize knit function in the Rmd file using the following YAML setting after the word knit:
+# Customize knit function in the Rmd file using the following YAML setting
+# after the word knit:
 \dontrun{qti::knit_qti_html}
 
 }

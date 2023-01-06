@@ -7,16 +7,19 @@
 start_server(qti_engine_f)
 }
 \arguments{
-\item{qti_engine_f}{filepath to the js QTI Engine. Can be empty to indicate that the server can be initiated in the package folder.}
+\item{qti_engine_f}{filepath to the js QTI Engine. Can be empty to indicate
+that the server can be initiated in the package folder.}
 }
 \description{
-The function starts a server in the folder that contains the js QTI Engine that performs the conversion of qti.xml into HTML.
+The function starts a server in the folder that contains the js QTI Engine
+that performs the conversion of qti.xml into HTML.
 }
 \examples{
 \dontrun{
 # Initiated server in qtiViewer folder
 start_server()
-# Initiated server in a specific folder provided by the user. This folder contains the js QTI Engine
+# Initiated server in a specific folder provided by the user. This folder
+ contains the js QTI Engine
 start_server("/pathToTheQtiEngine/")
 }
 }

@@ -2,12 +2,14 @@
 
 get_duration <- function(file) {
     doc <- xml2::read_xml(file)
-    test_duration <- xml2::xml_find_all(doc, ".//d1:testResult/d1:responseVariable")
+    test_duration <- xml2::xml_find_all(doc,
+                                        ".//d1:testResult/d1:responseVariable")
     ids_test <- xml2::xml_attr(test_duration, attr = "identifier")
     val_test <- xml2::xml_text(test_duration)
     items_result <- xml_find_all(doc, ".//d1:itemResult")
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
-    val_node <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
+    val_node <- xml2::xml_find_all(doc,
+                                   ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
     val_item <- xml2::xml_text(val_node)
     data <- data.frame(identifier = c(ids_test, ids_item),
                        duration = as.numeric(c(val_test, val_item)))

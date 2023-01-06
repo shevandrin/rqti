@@ -50,5 +50,5 @@ create_response_processing_order <- function(object) {
     base_value <- tag("baseValue", list(baseType = "float", object@points))
     outcome <- tag("setOutcomeValue", list(identifier = "SCORE", base_value))
     response_if <- tag("responseIf", tagList(match, outcome))
-    response_condition <- tag("responseCondition", list(response_if))
+    tag("responseCondition", list(response_if))
 }

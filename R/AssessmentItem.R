@@ -98,5 +98,6 @@ setMethod("createResponseDeclaration", signature(object = "AssessmentItem"),
 setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
           function(object) {
               tagList(make_outcome_declaration("SCORE", value = object@points),
-                      make_outcome_declaration("MAXSCORE", value = object@points))
+                      make_outcome_declaration("MAXSCORE",
+                                               value = object@points))
           })

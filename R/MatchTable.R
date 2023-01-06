@@ -15,7 +15,8 @@ setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     if (is.na(.Object@answers_scores)) {
         score <- .Object@points / length(.Object@answers_identifiers)
-        .Object@answers_scores = rep(score, length(.Object@answers_identifiers))
+        .Object@answers_scores  <- rep(score,
+                                       length(.Object@answers_identifiers))
     }
     validObject(.Object)
     .Object
@@ -30,11 +31,12 @@ setMethod("createResponseDeclaration", signature(object = "MatchTable"),
 
 create_response_declaration_match_table <- function(object) {
     corr_response <- create_correct_response(object@answers_identifiers)
-    map_entries <- Map(create_map_entry, object@answers_scores, object@answers_identifiers)
+    map_entries <- Map(create_map_entry,
+                       object@answers_scores,
+                       object@answers_identifiers)
     mapping <- tag("mapping", list(default_value = 0, map_entries))
     tag("responseDeclaration", list(identifier = "RESPONSE",
                                     cardinality = "multiple",
                                     baseType = "directedPair",
                                     tagList(corr_response, mapping)))
 }
-

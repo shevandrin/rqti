@@ -1,9 +1,9 @@
-# define general class choice (at some point should contain a more abstract class "exercise")
-#' @include AssessmentItem.R
-#'
+#define general class choice (at some point should contain a more abstract class
+#"exercise") ' @include AssessmentItem.R '
 setClass("Choice", contains = "AssessmentItem",
          slots = c(choices = "character", shuffle = "logical",
-                   choice_identifiers = "character"),
+                   choice_identifiers = "character",
+                   orientation = "character"),
          prototype = prototype(shuffle = TRUE))
 
 # constructor

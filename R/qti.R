@@ -45,12 +45,13 @@ create_item_body_entry <- function(object) {
 
 create_item_body_essay <- function(object) {
     prompt <- create_prompt(object)
-    ext_text <- tag("extendedTextInteraction", list("responseIdentifier" = "RESPONSE",
-                                                    "expectedLength" = object@expectedLength,
-                                                    "expectedLines" = object@expectedLines,
-                                                    "maxStrings" = object@maxStrings,
-                                                    "minStrings" = object@minStrings,
-                                                    "data-allowPaste" = tolower(object@dataAllowPaste),
+    ext_text <- tag("extendedTextInteraction",
+                    list("responseIdentifier" = "RESPONSE",
+                         "expectedLength" = object@expectedLength,
+                         "expectedLines" = object@expectedLines,
+                         "maxStrings" = object@maxStrings,
+                         "minStrings" = object@minStrings,
+                         "data-allowPaste" = tolower(object@dataAllowPaste),
                                                     prompt))
     tag("itemBody", list(Map(createText, object@text@content), ext_text))
 }
@@ -62,25 +63,37 @@ create_item_body_choice <- function(object, max_choices) {
 
 create_item_body_order <- function(object) {
     prompt <- create_prompt(object)
-    choices <- Map(make_choice, "simpleChoice", object@choices_identifiers, object@choices)
+    choices <- Map(make_choice,
+                   "simpleChoice",
+                   object@choices_identifiers,
+                   object@choices)
     order_interactioin <- tag("orderInteraction",
                               list("responseIdentifier" = "RESPONSE",
                                    "shuffle" = object@shuffle,
                                    prompt, choices))
-    tag("itemBody", list(Map(createText, object@text@content), order_interactioin))
+    tag("itemBody", list(Map(createText, object@text@content),
+                         order_interactioin))
 }
 
-create_item_body_match_table <- function(object,  row_associations, col_associations) {
+create_item_body_match_table <- function(object,  row_associations,
+                                         col_associations) {
     prompt <- create_prompt(object)
-    rows <- Map(make_associable_choice, object@rows_identifiers, object@rows, row_associations)
+    rows <- Map(make_associable_choice,
+                object@rows_identifiers,
+                object@rows,
+                row_associations)
     rows_match <- tag("simpleMatchSet", list(rows))
-    cols <- Map(make_associable_choice, object@cols_identifiers, object@cols, col_associations)
+    cols <- Map(make_associable_choice,
+                object@cols_identifiers,
+                object@cols,
+                col_associations)
     cols_match <- tag("simpleMatchSet", list(cols))
     match_interactioin <- tag("matchInteraction",
                               list("responseIdentifier" = "RESPONSE",
                                    "shuffle" = object@shuffle,
                                    tagList(prompt, rows_match, cols_match)))
-    tag("itemBody", list(Map(createText, object@text@content), match_interactioin))
+    tag("itemBody", list(Map(createText, object@text@content),
+                         match_interactioin))
 }
 
 
@@ -92,11 +105,13 @@ make_associable_choice <- function(id, text, match_max = 1) {
 
 make_choice_interaction <- function(object, max_choices) {
     prompt <- create_prompt(object)
-    simple_choices <- Map(make_choice, "simpleChoice", object@choice_identifiers, object@choices)
+    simple_choices <- Map(make_choice, "simpleChoice",
+                          object@choice_identifiers, object@choices)
     choice_interaction <- tag("choiceInteraction",
                               list(responseIdentifier = "RESPONSE",
                                    shuffle = tolower(object@shuffle),
                                    maxChoices = max_choices,
+                                   orientation = object@orientation,
                                    tagList(prompt, simple_choices)))
     tagList(choice_interaction)
 }
@@ -107,7 +122,7 @@ make_inline_choice_interaction <- function(object) {
                           object@options)
     inline_choice_interaction <- tag("inlineChoiceInteraction",
                               list(shuffle = object@shuffle,
-                                   responseIdentifier = object@response_identifier,
+                                responseIdentifier = object@response_identifier,
                                    inline_choices))
     tagList(inline_choice_interaction)
 }
@@ -119,8 +134,10 @@ make_choice <- function(type_choice, identifier, text) {
 
 create_mapping <- function(object) {
     map_entries <- imap(object@mapping[object@mapping != 0], create_map_entry)
-    tag("mapping", list(lowerBound = object@lower_bound, upperBound = object@upper_bound,
-                        defaultValue = object@default_value, map_entries)
+    tag("mapping", list(lowerBound = object@lower_bound,
+                        upperBound = object@upper_bound,
+                        defaultValue = object@default_value,
+                        map_entries)
     )
 }
 
@@ -140,7 +157,8 @@ make_outcome_declaration <- function(identifier,
                                        value = 0) {
     tag("outcomeDeclaration", list(identifier = identifier,
                                    cardinality = cardinality,
-                                   baseType = base_type, create_default_value(value)))
+                                   baseType = base_type,
+                                   create_default_value(value)))
 }
 
 create_default_value <- function(value) {
