@@ -14,17 +14,17 @@ test_that("Testing CreateItemBody OneInColTable", {
     )
 
     example <- '<itemBody>
-<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="4">
+<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="3">
 <prompt>Match the following characters to the Shakespeare play they appeared in:</prompt>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="C" matchMax="1">Capulet</simpleAssociableChoice>
-<simpleAssociableChoice identifier="D" matchMax="1">Demetrius</simpleAssociableChoice>
-<simpleAssociableChoice identifier="P" matchMax="1">Prospero</simpleAssociableChoice>
+<simpleAssociableChoice identifier="C" matchMax="3">Capulet</simpleAssociableChoice>
+<simpleAssociableChoice identifier="D" matchMax="3">Demetrius</simpleAssociableChoice>
+<simpleAssociableChoice identifier="P" matchMax="3">Prospero</simpleAssociableChoice>
 </simpleMatchSet>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="M" matchMax="4">A Midsummer-Night\'s Dream</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="R" matchMax="4">Romeo and Juliet</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="T" matchMax="4">The Tempest</simpleAssociableChoice>
+<simpleAssociableChoice identifier="M" matchMax="1">A Midsummer-Night\'s Dream</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="R" matchMax="1">Romeo and Juliet</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="T" matchMax="1">The Tempest</simpleAssociableChoice>
         </simpleMatchSet>
         </matchInteraction>
         </itemBody>'
@@ -42,6 +42,7 @@ test_that("Testing create_response_declaration_OneInColTable", {
               rows = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
               rows_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "D M", "P T"),
+              answers_scores = c(1, 0.5, 1),
               points = 5,
               title = "one_in_col_table",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
@@ -88,14 +89,14 @@ test_that("Testing outcomeDeclaration OneInColTable", {
 <value>5</value>
 </defaultValue>
 </outcomeDeclaration>
-<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float" view="testConstructor">
+<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
 <defaultValue>
 <value>0</value>
 </defaultValue>
 </outcomeDeclaration>
     </additionalTag>'
 
-    responseDe <- paste('<additionalTag>', toString(createOutcomeDeclaration(sc)[[1]]),'</additionalTag>')
+    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
     xml1 <- xml2::read_xml(responseDe)
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)

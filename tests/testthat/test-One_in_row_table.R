@@ -39,6 +39,7 @@ test_that("Testing create_response_declaration_OneInRowTable",{
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
               cols_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "D M", "L M", "P T"),
+              answers_scores = c(1, 0.5, 0.5, 1),
               points = 5,
               title = "one_in_row_table",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
@@ -89,14 +90,14 @@ test_that("Testing outcomeDeclaration OneInRowTable",{
 <value>5</value>
 </defaultValue>
 </outcomeDeclaration>
-<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float" view="testConstructor">
+<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
 <defaultValue>
 <value>0</value>
 </defaultValue>
 </outcomeDeclaration>
     </additionalTag>'
 
-    responseDe <- paste('<additionalTag>', toString(createOutcomeDeclaration(sc)[[1]]),'</additionalTag>')
+    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
     xml1 <- xml2::read_xml(responseDe)
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)

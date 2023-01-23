@@ -2,7 +2,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^code_notes$
-^results$
 ^LICENSE\.md$
 README.Rmd
 s4_example.R

@@ -7,13 +7,13 @@ setClass("MatchTable", contains = "AssessmentItem",
                      answers_identifiers = "character",
                      answers_scores = "numeric",
                      shuffle = "logical"),
-         prototype = list(answers_scores = NA_integer_,
-                          shuffle = TRUE))
+         prototype = list(shuffle = TRUE))
 
 # constructor
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
-    if (is.na(.Object@answers_scores)) {
+    checker <- .Object@answers_scores
+    if (is.null(checker)) {
         score <- .Object@points / length(.Object@answers_identifiers)
         .Object@answers_scores  <- rep(score,
                                        length(.Object@answers_identifiers))
@@ -34,7 +34,7 @@ create_response_declaration_match_table <- function(object) {
     map_entries <- Map(create_map_entry,
                        object@answers_scores,
                        object@answers_identifiers)
-    mapping <- tag("mapping", list(default_value = 0, map_entries))
+    mapping <- tag("mapping", list(defaultValue = 0, map_entries))
     tag("responseDeclaration", list(identifier = "RESPONSE",
                                     cardinality = "multiple",
                                     baseType = "directedPair",

@@ -1,6 +1,6 @@
 #' Root element assessmentItem for xml task description
 #'
-#' Root element assessmentItem for xml task description accroding to QTI 2.1
+#' Root element assessmentItem for xml task description according to QTI 2.1
 #'
 #' @importFrom ids adjective_animal
 #' @slot text an object Text with
@@ -99,5 +99,6 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
           function(object) {
               tagList(make_outcome_declaration("SCORE", value = object@points),
                       make_outcome_declaration("MAXSCORE",
-                                               value = object@points))
+                                               value = object@points),
+                      make_outcome_declaration("MINSCORE", value = 0))
           })

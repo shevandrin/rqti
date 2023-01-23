@@ -5,7 +5,7 @@
 \alias{AssessmentItem-class}
 \title{Root element assessmentItem for xml task description}
 \description{
-Root element assessmentItem for xml task description accroding to QTI 2.1
+Root element assessmentItem for xml task description according to QTI 2.1
 }
 \section{Slots}{
 

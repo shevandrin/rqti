@@ -2,7 +2,9 @@
 
 setClass("Gap", slots = c(response_identifier = "character", score = "numeric",
                           placeholder = "character",
-                          expected_length = "numeric"),
+                          expected_length = "numeric",
+                          value_precision = "numeric",
+                          type_precision = "character"),
          prototype = prototype(score = NA_integer_))
 
 #' Get and process a piece of question content

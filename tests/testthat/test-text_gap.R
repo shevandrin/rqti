@@ -186,7 +186,7 @@ test_that("Testing create Outcome Declaration Gap ", {
     }
     print("No OutcomeDeclaration for DropDownList")
     xml1 <- xml2::read_xml("<additionalTag></additionalTag>")
-    xml_add_child(xml1, read_xml(toString(responseDe)))
+    xml2::xml_add_child(xml1, xml2::read_xml(toString(responseDe)))
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 

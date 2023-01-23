@@ -23,8 +23,7 @@ test_that("Testing createItemBody for the Essay object", {
                 </object>
                 </div>
                 <extendedTextInteraction responseIdentifier=\"RESPONSE\"
-                expectedLength=\"200\"
-                data-allowPaste=\"false\">
+                expectedLength=\"200\">
                 <prompt>Write Sam a postcard. Answer the questions. Write 25-35 words.</prompt>
                 </extendedTextInteraction>
                 </itemBody>
@@ -57,7 +56,7 @@ object", {
 </itemBody>
                 "
     xml1 <- xml2::read_xml(toString(createItemBody(essay)))
-    xml2 <- xml2::read_xml(example)
+    xml2 <- xml2::read_xml(toString(example))
     expect_equal(xml1, xml2)
 })
 

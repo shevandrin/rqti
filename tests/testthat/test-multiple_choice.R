@@ -25,6 +25,7 @@ test_that("Testing create_item_body_multiplechoice", {
 })
 
 test_that("Testing create_response_declaration_multiple_choice",{
+    skip_if_not_installed("XML")
     sc <- new("MultipleChoice",
               text = new("Text",content = list("")),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
@@ -62,8 +63,8 @@ test_that("Testing create_response_declaration_multiple_choice",{
         }
         else{
             #compare if the 2 XML are equal in structure. It omits attributes and other values, only validate de tag names
-            a = XML::xmlParse(xml1, asText = TRUE)
-            b = XML::xmlParse(xml2, asText = TRUE)
+            a <- XML::xmlParse(xml1, asText = TRUE)
+            b <- XML::xmlParse(xml2, asText = TRUE)
             result <- XML::compareXMLDocs(a,b)
 
             if(is.logical(result$countDiffs) && length(result$countDiffs) == 1 && !is.na(result$countDiffs) && lengths(result$countDiffs) > 0){

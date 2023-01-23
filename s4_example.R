@@ -31,7 +31,9 @@ te <- new("Entry", text = new("Text", content = list("<h2>some markdown title1</
                                                           response_identifier = "response_1",
                                                           score = 1,
                                                           placeholder = "name of table",
-                                                          expected_length = 13),
+                                                          expected_length = 13,
+                                                          value_precision = 2,
+                                                          case_sensitive = FALSE),
                                                       " <em>WHERE</em>",
                                                       new("TextGap",
                                                           response = "FirsName",
@@ -51,8 +53,10 @@ ne <- new("Entry", text = new("Text",
                                              new("NumericGap",
                                                  response_identifier = "numeric_1",
                                                  response = 7,
-                                                 value_precision = 1,
-                                                 expected_length = 1),
+                                                 value_precision = 10,
+                                                 expected_length = 1,
+                                                 include_lower_bound = FALSE,
+                                                 include_upper_bound = FALSE),
                                              " = -2")
                               ),
           title = "numeric_gaps_task")
@@ -137,7 +141,7 @@ ct <- new("OneInColTable", text = new("Text",
 create_qti_task(ct)
 
 # task with match table with many right answers in rows and columns
-mt <- new("MultipleChoiceTable", text = new("Text",
+mt <- neFw("MultipleChoiceTable", text = new("Text",
                                       content = list("<h3>This is match table task</h3>",
                                                      "<i>table description</i>")),
           rows = c("row1", "row2", "row3"),
@@ -150,6 +154,7 @@ mt <- new("MultipleChoiceTable", text = new("Text",
 )
 create_qti_task(mt)
 
+# essay type task
 es <- new("Essay", text = new("Text",
                               content = list("<h2>this is an essay type of question</h2>")),
           title = "essay_task50x15",
@@ -157,3 +162,31 @@ es <- new("Essay", text = new("Text",
           points = 3)
 create_qti_task(es)
 
+# assessment test
+test <- new("AssessmentTest", title = "Text exam", points = 5,
+            test_part_identifier = "test_part",
+            section = list(new("AssessmentSection",
+                               identifier = "s1",
+                               title = "Section 1",
+                               assessment_item = list(new("AssessmentItemRef", identifier = "single_choice_task",
+                                                      href = "single_choice_task.xml"),
+                               new("AssessmentItemRef", identifier = "multiple_choice_task",
+                                   href = "multiple_choice_task.xml"))),
+                           new("AssessmentSection",
+                               identifier = "s2",
+                               title = "Section 2",
+                               assessment_item = list(new("AssessmentItemRef", identifier = "order_task", href = "order_task.xml"),
+                                                      new("AssessmentItemRef", identifier = "directed_pair", href = "directed_pair.xml"),
+                                                      new("AssessmentSection", identifier = "s21", title = "Subsection 2-1",
+                                                          assessment_item = list(new("AssessmentItemRef", identifier = "text_gaps_task", href = "text_gaps_task.xml"))
+                                                          ),
+                                                      new("AssessmentSection", identifier = "s22", title = "Subsection 2-2",
+                                                          assessment_item = list(new("AssessmentItemRef", identifier = "one_in_row_table", href = "one_in_row_table.xml"),
+                                                                                 new("AssessmentSection", identifier = "s221", title = "Subsection 2-2-1",
+                                                                                     assessment_item = list(new("AssessmentItemRef", identifier = "essay_task50x15", href = "essay_task50x15.xml"))))
+                                                          )
+                                                      )
+                               )
+                           )
+)
+create_qti_test(test)

@@ -1,8 +1,31 @@
 # define class NumericGap to specify entries for numbers
 
 setClass("NumericGap", contains = "Gap",
-         slots = c(response = "numeric", type_precision = "character",
-                   value_precision = "numeric"))
+         slots = c(response = "numeric",
+                   include_lower_bound = "logical",
+                   include_upper_bound = "logical"),
+         prototype = prototype(type_precision = "exact",
+                               include_lower_bound = TRUE,
+                               include_upper_bound = TRUE))
+
+setValidity("NumericGap", function(object) {
+    types <- c("exact", "absolute", "relative")
+    if (!(object@type_precision %in% types)) {
+        "@value_precision can be \"exact\", \"absolute\", or \"relative\" only"
+    } else {
+        return(TRUE)
+    }
+}
+)
+
+setMethod("initialize", "NumericGap", function(.Object,...){
+    .Object <- callNextMethod()
+    if (!is.null(.Object@value_precision) & (.Object@type_precision == "exact")) {
+        .Object@type_precision = "absolute"
+    }
+    validObject(.Object)
+    .Object
+})
 
 #' @rdname getResponse-methods
 #' @aliases getResponse,NumericGap
@@ -51,10 +74,10 @@ create_response_processing_num_entry <- function(object) {
                          list(identifier = object@response_identifier)),
                      tag("correct",
                          list(identifier = object@response_identifier)))
-    equal_tag <- tag("equal", list(toleranceMode = "absolute",
+    equal_tag <- tag("equal", list(toleranceMode = object@type_precision,
                                    tolerance = tolerance_str,
-                                   includeLowerBound = "true",
-                                   includeUpperBound = "true",
+                                   includeLowerBound = tolower(object@include_lower_bound),
+                                   includeUpperBound = tolower(object@include_upper_bound),
                                    child))
     var_outcome <- tag("variable",
                        list(identifier = paste0("MAXSCORE_",

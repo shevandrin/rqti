@@ -6,5 +6,5 @@ setClass("OneInRowTable", contains = "MatchTable")
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,OneInRowTable
 setMethod("createItemBody",  "OneInRowTable", function(object) {
-    create_item_body_match_table(object, 1, 2)
+    create_item_body_match_table(object, 1, length(object@rows))
 })
