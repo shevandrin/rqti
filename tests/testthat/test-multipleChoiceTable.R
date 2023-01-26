@@ -6,7 +6,7 @@ test_that("Testing CreateItemBody MultipleChoiceTable", {
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
               cols_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "C T", "D M", "L M", "P T", "P R"),
-              points = 6,
+              answers_scores = c(1, 0.5, 0.5, 0.5, 1, 1),
               title = "MultipleChoiceTable",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
@@ -40,7 +40,7 @@ test_that("Testing create_response_declaration_MultipleChoiceTable",{
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
               cols_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "C T", "D M", "L M", "P T", "P R"),
-              points = 5,
+              answers_scores = c(1, 0.5, 0.5, 0.5, 1, 1),
               title = "MultipleChoiceTable",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
@@ -65,6 +65,7 @@ test_that("Testing create_response_declaration_MultipleChoiceTable",{
 </responseDeclaration>'
 
     qtiXML <- toString(createResponseDeclaration(sc))
+    print(qtiXML)
     xml1 <- xml2::read_xml(qtiXML)
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
@@ -78,7 +79,8 @@ test_that("Testing outcomeDeclaration MultipleChoiceTable",{
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
               cols_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "C T", "D M", "L M", "P T", "P R"),
-              points = 5,
+              answers_scores = c(1, 0.5, 0.5, 0.5, 1, 1),
+              points = 4,
               title = "MultipleChoiceTable",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )

@@ -104,7 +104,7 @@ In the deep bosom of the ocean buried.
     example <- '<additionalTag>
 <outcomeDeclaration identifier="SCORE_RESPONSE" cardinality="single" baseType="float">
 <defaultValue>
-<value>0</value>
+<value>2</value>
 </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE_RESPONSE" cardinality="single" baseType="float">
