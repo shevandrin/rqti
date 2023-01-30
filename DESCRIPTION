@@ -4,7 +4,8 @@ Version: 0.0.0.9000
 Authors@R: c(
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID")),
-           person("Ivonne", "Ojeda", role = "ctb"))
+           person("Ivonne", "Ojeda", email = "yulieth9109@gmail.com",
+  role = "ctb"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
