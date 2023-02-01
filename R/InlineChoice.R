@@ -9,8 +9,11 @@ setClass("InlineChoice", contains = "Gap",
 
 setMethod("initialize", "InlineChoice", function(.Object, ...) {
     .Object <- callNextMethod()
-    .Object@options_identifiers <- paste0("Option",
-                                         LETTERS[seq(.Object@options)])
+    if (length(.Object@options_identifiers) == 0) {
+        .Object@options_identifiers <- paste0("Option",
+                                              LETTERS[seq(.Object@options)])
+    }
+
     if (is.na(.Object@score)) {
         .Object@score <- 1
     }

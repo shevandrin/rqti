@@ -24,22 +24,6 @@ setMethod("getAssessmentItems", signature(object = "AssessmentItemRef"),
               return(href)
           })
 
-#TODO check whether it is needed for character object
-#' #' @rdname getAssessmentItems-methods
-#' #' @aliases getAssessmentItems, character
-#' setMethod("getAssessmentItems", signature(object = "character"),
-#'           function(object) {
-#'               object
-#'           })
-
-#TODO check whether it is needed for list object
-#' #' @rdname getAssessmentItems-methods
-#' #' @aliases getAssessmentItems,list
-#' setMethod("getAssessmentItems", signature(object = "list"),
-#'           function(object) {
-#'               unlist(object)
-#'           })
-
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessementSection,AssessmentItemRef
 setMethod("buildAssessmentSection", signature(object = "AssessmentItemRef"),

@@ -11,10 +11,20 @@
 #' @rdname AssessmentSection-class
 setClass("AssessmentSection", slots = c(identifier = "character",
                                      title = "character",
+                                     time_limits = "numeric",
                                      visible = "logical",
-                                     assessment_item = "list"),
+                                     assessment_item = "list",
+                                     shuffle = "logical",
+                                     selection = "numeric",
+                                     max_attempts = "numeric",
+                                     allow_comment = "logical"),
          prototype = prototype(identifier = ids::adjective_animal(),
-                               visible = TRUE
+                               visible = TRUE,
+                               time_limits = NA_integer_,
+                               shuffle = FALSE,
+                               selection = NA_integer_,
+                               max_attempts = NA_integer_,
+                               allow_comment = NA
          ))
 
 #' Get list of AssessmentItems for AssessmentSection

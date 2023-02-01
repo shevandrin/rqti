@@ -97,7 +97,7 @@ setMethod("createResponseDeclaration", signature(object = "AssessmentItem"),
 #' @aliases createOutcomeDeclaration,AssessmentItem
 setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
           function(object) {
-              tagList(make_outcome_declaration("SCORE", value = object@points),
+              tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
                                                value = object@points),
                       make_outcome_declaration("MINSCORE", value = 0))

@@ -81,7 +81,7 @@ test_that("Testing outcomeDeclaration OneInColTable", {
     # ' QTI example does not provide Outcome declaration then the following example was taken from OPAL
     example <- '<additionalTag><outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 <defaultValue>
-<value>5</value>
+<value>0</value>
 </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
@@ -100,4 +100,22 @@ test_that("Testing outcomeDeclaration OneInColTable", {
     xml1 <- xml2::read_xml(responseDe)
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
+})
+
+test_that("XML validation with schema file", {
+    sc <- new("OneInColTable",
+              cols = c("Capulet", "Demetrius", "Prospero"),
+              cols_identifiers = c("C", "D", "P"),
+              rows = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
+              rows_identifiers = c("M", "R", "T"),
+              answers_identifiers = c("C R", "D M", "P T"),
+              points = 5,
+              title = "one_in_col_table",
+              prompt = "Match the following characters to the Shakespeare play they appeared in:"
+    )
+    doc <- xml2::read_xml(toString(create_assessment_item(sc)))
+    file <- file.path(getwd(), "imsqti_v2p1.xsd")
+    schema <- xml2::read_xml(file)
+    validation <- xml2::xml_validate(doc, schema)
+    expect_equal(validation[1], TRUE)
 })

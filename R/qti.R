@@ -6,6 +6,7 @@
 #' @param object an instance of the S4 object
 #' @importFrom htmltools tag p tagList tagAppendChildren
 #' @importFrom purrr imap
+#' @importFrom utils zip
 #' @returns A list() with a shiny.tag class
 #'
 #'
@@ -69,7 +70,7 @@ create_item_body_order <- function(object) {
                    object@choices)
     order_interactioin <- tag("orderInteraction",
                               list("responseIdentifier" = "RESPONSE",
-                                   "shuffle" = object@shuffle,
+                                   "shuffle" = tolower(object@shuffle),
                                    prompt, choices))
     tag("itemBody", list(Map(createText, object@text@content),
                          order_interactioin))
@@ -123,8 +124,8 @@ make_inline_choice_interaction <- function(object) {
                           object@options_identifiers,
                           object@options)
     inline_choice_interaction <- tag("inlineChoiceInteraction",
-                              list(shuffle = object@shuffle,
-                                responseIdentifier = object@response_identifier,
+                              list(responseIdentifier = object@response_identifier,
+                                   shuffle = tolower(object@shuffle),
                                    inline_choices))
     tagList(inline_choice_interaction)
 }
@@ -188,36 +189,66 @@ create_qti_task <- function(object) {
     content <- create_assessment_item(object)
     print(content)
     doc <- xml2::read_xml(as.character(content))
-    path <- paste0("results/", object@title, ".xml")
+    path <- paste0("results/", object@identifier, ".xml")
     xml2::write_xml(doc, path)
     print(paste("see:", path))
 }
 
 
 create_assessment_test <-function(object) {
+    data_downloads <- NULL
+    if (length(object@files) > 0) {
+        files <- unlist(lapply("file://downloads/", paste0, object@files, ";"))
+        for (f in files) {
+            data_downloads <- paste0(f, data_downloads)
+        }
+    }
+    data_features <- NULL
+    if (object@show_test_time) {
+        data_features <- paste("show-test-time", data_features, sep = ";")
+    }
+    if (!is.na(object@calculator)) {
+        data_features <- paste(object@calculator, data_features, sep = ";")
+    }
+    if (object@mark_items) {
+        data_features <- paste("mark-items", data_features, sep = ";")
+    }
+    if (object@keep_responses) {
+        data_features <- paste("keep-responses", data_features, sep = ";")
+    }
+
     assessment_attributes <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
                                "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
                                "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd",
                                "identifier" = object@identifier,
-                               "title" = paste(object@title))
+                               "title" = paste(object@title),
+                               "data-downloads" = data_downloads,
+                               "data-features" = data_features)
     assesment_test <- tag("assessmentTest", assessment_attributes)
+    if (!is.na(object@time_limits)) {
+        time_limits <- tag("timeLimits", list(maxTime = object@time_limits))
+    } else {time_limits = c()}
+
+    session_control <- create_item_session_control(object@max_attempts,
+                                                   object@allow_comment,
+                                                   object@rebuild_variables)
     sections <- Map(create_section_test, object@section)
     testPart <- tag("testPart", list(identifier = object@test_part_identifier,
                                      navigationMode = object@navigation_mode,
                                      submissionMode = object@submission_mode,
-                                     sections))
+                                     tagList(session_control,
+                                             sections)))
     tagAppendChildren(assesment_test,
                       createOutcomeDeclaration(object),
+                      time_limits,
                       testPart,
                       createTestPart(object))
 }
 
 create_qti_test <- function(object) {
     content <- create_assessment_test(object)
-    # print(content)
     doc_test <- xml2::read_xml(as.character(content))
-    path_test <- paste0("results/", object@title, ".xml")
-    # items_list =
+    path_test <- paste0("results/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)
     manifest <- create_manifest(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
@@ -228,13 +259,40 @@ create_qti_test <- function(object) {
 
 create_section_test <- function(object) {
     assessment_items <- Map(buildAssessmentSection, object@assessment_item)
-    print(object@identifier)
-    print(object@title)
+    if (!is.na(object@time_limits)) {
+        time_limits <- tag("timeLimits", list(maxTime = object@time_limits))
+        } else {time_limits = c()}
+    if (object@shuffle) {
+        shuffle <- tag("ordering", list(shuffle = "true"))
+    } else {shuffle <- c()}
+    if (!is.na(object@selection)) {
+        selection <- tag("selection", list(select = object@selection))
+    } else {selection <- c()}
+
+    session_control <- create_item_session_control(object@max_attempts,
+                                                   object@allow_comment,
+                                                   NA)
+
     tag("assessmentSection", list(identifier = object@identifier,
                                   fixed = "false",
                                   title = object@title,
-                                  visible = TRUE,
-                                  assessment_items))
+                                  visible = tolower(object@visible),
+                                  tagList(time_limits,
+                                          shuffle,
+                                          selection,
+                                          session_control,
+                                          assessment_items)))
+}
+
+create_item_session_control <- function(attempts, comments, rebuild) {
+    if ((att <- !is.na(attempts)) |
+        (com <- !is.na(comments)) |
+        (reb <- !is.na(rebuild))) {
+        if (att) { att <- list(maxAttempts = attempts)} else {att <- list()}
+        if (com) { com <- list(allowComment = tolower(comments))} else {com <- list()}
+        if (reb) { reb <- list(rebuildVariables = tolower(rebuild))} else {reb <- list()}
+        session_control <- tag("itemSessionControl", c(att, com, reb))
+    } else {session_control = c()}
 }
 
 create_assessment_refs <- function(object) {
@@ -251,14 +309,13 @@ create_manifest <- function(object) {
     metadata <- tag("metadata", c())
     organisations <- tag("organisations", c())
 
-    file_name <- paste0(object@title, ".xml")
+    file_name <- paste0(object@identifier, ".xml")
     file <-  tag("file", list(href = file_name))
     items <- unlist(Map(getAssessmentItems, object@section))
-    print(names(items))
     dependencies <- Map(create_dependency, names(items))
     test_resource <- tag("resource", list(identifier = object@identifier,
                                           type = "imsqti_test_xmlv2p1",
-                                          href = paste0(object@title, ".xml"),
+                                          href = paste0(object@identifier, ".xml"),
                                           file,
                                           dependencies))
     item_resources <- Map(create_resource_item, names(items), items)
@@ -278,3 +335,35 @@ create_resource_item <- function(id, href) {
                          href = href,
                          file))
 }
+
+qti <- function(object) {
+    # create temp directory
+    tdir <- tempfile()
+    dir.create(tdir)
+    test_dir <- file.path(tools::file_path_as_absolute(tdir), "qti_test")
+    dir.create(test_dir)
+    print(test_dir)
+    if (length(object@files) > 0) {
+        download_dir <- file.path(tools::file_path_as_absolute(test_dir), "downloads")
+        dir.create(download_dir)
+        items_files <- unlist(lapply("results/downloads/", paste0, object@files))
+        file.copy(items_files, download_dir)
+    }
+
+
+
+    # copy there files from results
+    # unlist(unname(Map(paste0, "results/", files)))
+    files <- list.files("results/")
+    items_files <-unlist(lapply("results/", paste0, files))
+    file.copy(items_files, test_dir)
+    # make test xml and manifest xml
+
+    # make and copy final zip in folder exams
+    files_temp <- list.files(test_dir)
+    wd <- getwd()
+    setwd(test_dir)
+    utils::zip("mock_test.zip", list.files(test_dir))
+    setwd(wd)
+    file.copy(file.path(test_dir, "mock_test.zip"), "exams/", recursive = TRUE)
+    }

@@ -3,8 +3,8 @@ test_that("Testing createItemBody for Order questions", {
                  text = new("Text", content = list("")),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
-                 choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
-                 points = c(0.5,0.5,0.5),
+                 choices = c("Rubens Barrichello", "Jenson Button", "Michael Schumacher"),
+                 points = 0.5,
                  choices_identifiers = c("DriverA","DriverB","DriverC"),
                  shuffle = TRUE)
     example <- '<itemBody>
@@ -12,7 +12,7 @@ test_that("Testing createItemBody for Order questions", {
 <prompt>The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?</prompt>
 <simpleChoice identifier="DriverA">Rubens Barrichello</simpleChoice>
 <simpleChoice identifier="DriverB">Jenson Button</simpleChoice>
-<simpleChoice identifier="DriverC" fixed="true">Michael Schumacher</simpleChoice>
+<simpleChoice identifier="DriverC">Michael Schumacher</simpleChoice>
 </orderInteraction>
 </itemBody>'
 
@@ -33,9 +33,9 @@ test_that("Testing ResponseDeclaration for Order questions", {
                  shuffle = TRUE)
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="ordered" baseType="identifier">
 <correctResponse>
-<value>DriverC</value>
 <value>DriverA</value>
 <value>DriverB</value>
+<value>DriverC</value>
 </correctResponse>
 </responseDeclaration>'
 
@@ -50,7 +50,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
                     choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
-                    points = c(0.5,0.5,0.5),
+                    points = 0.5,
                     choices_identifiers = c("DriverA","DriverB","DriverC"),
                     shuffle = TRUE)
 
@@ -64,15 +64,34 @@ test_that("Testing OutcomeDeclaration for Order questions", {
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
 <defaultValue>
-<value>1.5</value>
+<value>0.5</value>
+</defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+<defaultValue>
+<value>0</value>
 </defaultValue>
 </outcomeDeclaration>
     </additionalTag>'
 
-    print(createOutcomeDeclaration(question))
     responseDe <- paste('<additionalTag>', toString(createOutcomeDeclaration(question)),'</additionalTag>')
     xml1 <- xml2::read_xml(responseDe)
     xml2 <- xml2::read_xml(example)
-    print("tag <MINSCORE> is not included")
     expect_equal(xml1, xml2)
+})
+
+test_that("XML validation with schema file", {
+    question <- new("Order",
+                    text = new("Text", content = list("<p>a</p>")),
+                    title = "Grand Prix of Bahrain",
+                    prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
+                    choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
+                    points = 0.5,
+                    choices_identifiers = c("DriverA","DriverB","DriverC"),
+                    shuffle = TRUE)
+    doc <- xml2::read_xml(toString(create_assessment_item(question)))
+    file <- file.path(getwd(), "imsqti_v2p1.xsd")
+    schema <- xml2::read_xml(file)
+    validation <- xml2::xml_validate(doc, schema)
+    expect_equal(validation[1], TRUE)
 })

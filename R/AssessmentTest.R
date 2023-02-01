@@ -17,12 +17,35 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      navigation_mode = "character",
                                      submission_mode = "character",
                                      section = "list",
-                                     qti_version = "character"),
+                                     qti_version = "character",
+                                     time_limits = "numeric",
+                                     show_test_time = "logical",
+                                     calculator = "character",
+                                     mark_items = "logical",
+                                     keep_responses = 'logical',
+                                     files = "character",
+                                     max_attempts = "numeric",
+                                     allow_comment = "logical",
+                                     rebuild_variables = "logical"),
          prototype = prototype(identifier = ids::adjective_animal(),
                                navigation_mode = "nonlinear",
                                submission_mode = "individual",
-                               qti_version = "v2p1"
+                               qti_version = "v2p1",
+                               time_limits = NA_integer_,
+                               show_test_time = FALSE,
+                               calculator = NA_character_,
+                               mark_items = FALSE,
+                               keep_responses = FALSE,
+                               files = NA_character_,
+                               max_attempts = NA_integer_,
+                               allow_comment = NA,
+                               rebuild_variables = NA
          ))
+# TODO verification procedure for calculator values: they must be from factor:scientific-calculator/simple-calculator
+# TODO verification of files slot
+# TODO verification procedure for navigation mode values: they must be from factor: linear/nonlinear
+# TODO verification procedure for submission mode values: they must be from factor: individual/simultaneous
+# TODO there is a conflict between keep_responses and rebuild_variables, if the second one is true - the first one will be ignored
 
 #' Create an element assessmentTest of a qti-xml document for test
 #'

@@ -8,8 +8,10 @@ setClass("Order", contains = "AssessmentItem",
 # constructor
 setMethod("initialize", "Order", function(.Object, ...) {
     .Object <- callNextMethod()
-    .Object@choices_identifiers <- paste0("Choice",
-                                         LETTERS[seq(.Object@choices)])
+    if (length(.Object@choices_identifiers)==0) {
+        .Object@choices_identifiers <- paste0("Choice",
+                                              LETTERS[seq(.Object@choices)])
+    }
     validObject(.Object)
     .Object
 })
@@ -50,5 +52,6 @@ create_response_processing_order <- function(object) {
     base_value <- tag("baseValue", list(baseType = "float", object@points))
     outcome <- tag("setOutcomeValue", list(identifier = "SCORE", base_value))
     response_if <- tag("responseIf", tagList(match, outcome))
-    tag("responseCondition", list(response_if))
+    responce_condition <- tag("responseCondition", list(response_if))
+    tag("responseProcessing", list(responce_condition))
 }

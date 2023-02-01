@@ -3,10 +3,13 @@
 setClass("NumericGap", contains = "Gap",
          slots = c(response = "numeric",
                    include_lower_bound = "logical",
-                   include_upper_bound = "logical"),
+                   include_upper_bound = "logical",
+                   value_precision = "numeric",
+                   type_precision = "character"),
          prototype = prototype(type_precision = "exact",
                                include_lower_bound = TRUE,
-                               include_upper_bound = TRUE))
+                               include_upper_bound = TRUE,
+                               score = 1))
 
 setValidity("NumericGap", function(object) {
     types <- c("exact", "absolute", "relative")
@@ -64,8 +67,11 @@ create_outcome_declaration_num_entry <- function(object) {
                                       value = 0)
     MAXSCORE <- make_outcome_declaration(paste0("MAXSCORE_",
                                                 object@response_identifier),
-                                         value = 1)
-    tagList(SCORE, MAXSCORE)
+                                         value = object@score)
+    MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
+                                                object@response_identifier),
+                                         value = 0)
+    tagList(SCORE, MAXSCORE, MINSCORE)
 }
 
 create_response_processing_num_entry <- function(object) {

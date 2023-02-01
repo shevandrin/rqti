@@ -13,7 +13,7 @@ setClass("MatchTable", contains = "AssessmentItem",
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     checker <- .Object@answers_scores
-    if (is.null(checker)) {
+    if (length(checker) == 0) {
         score <- .Object@points / length(.Object@answers_identifiers)
         .Object@answers_scores  <- rep(score,
                                        length(.Object@answers_identifiers))

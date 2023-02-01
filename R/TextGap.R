@@ -4,9 +4,9 @@
 setClass("TextGap", contains = "Gap",
          slots = c(response = "character", alternatives = "character",
                    case_sensitive = "logical"),
-         prototype = prototype(type_precision = "absolute",
-                               value_precision = 0,
-                               case_sensitive = TRUE))
+         prototype = prototype(score = 1,
+                               case_sensitive = TRUE
+                               ))
 
 #' @rdname getResponse-methods
 #' @aliases getResponse,TextGap
@@ -29,7 +29,7 @@ setMethod("createOutcomeDeclaration", "TextGap", function(object) {
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGap
 setMethod("createResponseProcessing", "TextGap", function(object) {
-    create_response_processing_text_entry(object)
+    # create_response_processing_text_entry(object)
 })
 
 create_response_declaration_text_entry <- function(object) {
@@ -42,24 +42,33 @@ create_response_declaration_text_entry <- function(object) {
 }
 
 create_outcome_declaration_text_entry <- function(object) {
-
-}
-
-create_response_processing_text_entry <- function(object) {
-    child <- tagList(tag("variable",
-                         list(identifier = object@response_identifier)),
-                     tag("correct",
-                         list(identifier = object@response_identifier)))
-    equal_tag <- tag("equal", list(toleranceMode = object@type_precision,
-                                   tolerance = object@value_precision,
-                                   child))
-    var_outcome <- tag("variable",
-                       list(identifier = paste0("MAXSCORE_",
-                                                object@response_identifier)))
-    outcome_tag <- tag("setOutcomeValue",
-                       list(identifier = paste0("SCORE_",
+    SCORE <- make_outcome_declaration(paste0("SCORE_",
+                                             object@response_identifier),
+                                      value = 0)
+    MAXSCORE <- make_outcome_declaration(paste0("MAXSCORE_",
                                                 object@response_identifier),
-                            var_outcome))
-    if_tag <- tag("responseIf", list(equal_tag, outcome_tag))
-    tag("responseCondition", list(if_tag))
+                                         value = object@score)
+    MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
+                                                object@response_identifier),
+                                         value = 0)
+    tagList(SCORE, MAXSCORE, MINSCORE)
 }
+
+# create_response_processing_text_entry <- function(object) {
+#     child <- tagList(tag("variable",
+#                          list(identifier = object@response_identifier)),
+#                      tag("correct",
+#                          list(identifier = object@response_identifier)))
+#     equal_tag <- tag("equal", list(toleranceMode = object@type_precision,
+#                                    tolerance = object@value_precision,
+#                                    child))
+#     var_outcome <- tag("variable",
+#                        list(identifier = paste0("MAXSCORE_",
+#                                                 object@response_identifier)))
+#     outcome_tag <- tag("setOutcomeValue",
+#                        list(identifier = paste0("SCORE_",
+#                                                 object@response_identifier),
+#                             var_outcome))
+#     if_tag <- tag("responseIf", list(equal_tag, outcome_tag))
+#     tag("responseCondition", list(if_tag))
+# }

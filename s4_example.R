@@ -25,7 +25,7 @@ create_qti_task(mpc)
 
 # task with TextGap
 te <- new("Entry", text = new("Text", content = list("<h2>some markdown title1</h2><h1><b>Some title</b><br />svsdvsdvsd</h1><p>With <em>SQL</em>, how do you select <b>all the records</b> from a table named <em><strong>Persons</strong></em> where the value of the column <i>FirstName</i> is Peter?<br />SELECT * FROM",
-                                                      new("TextGap",
+                                                      new("TextGapOpal",
                                                           response = "Persons",
                                                           alternatives = "persons",
                                                           response_identifier = "response_1",
@@ -33,7 +33,7 @@ te <- new("Entry", text = new("Text", content = list("<h2>some markdown title1</
                                                           placeholder = "name of table",
                                                           expected_length = 13,
                                                           value_precision = 2,
-                                                          case_sensitive = FALSE),
+                                                          case_sensitive = TRUE),
                                                       " <em>WHERE</em>",
                                                       new("TextGap",
                                                           response = "FirsName",
@@ -46,6 +46,16 @@ te <- new("Entry", text = new("Text", content = list("<h2>some markdown title1</
                                ),
            title = "text_gaps_task")
 create_qti_task(te)
+
+te_opal <- new("Entry", text = new("Text", content = list("es geht",
+                                                          new("TextGapOpal",
+                                                              response_identifier = "res1",
+                                                              response = "um",
+                                                              score = 0.5,
+                                                              value_precision = 1),
+                                                          "die neuen Produkte")),
+               title = "preposition with gehen")
+create_qti_task(te_opal)
 
 # task with NumericGap
 ne <- new("Entry", text = new("Text",
@@ -91,9 +101,11 @@ create_qti_task(dd2)
 
 # task with Order
 # TODO parse text in choices
-ord <- new("Order", text = new("Text", content = list("put in a right order")),
+ord <- new("Order", text = new("Text", content = list("<p>put in a right order</p>")),
            identifier = "order_id", title = "order_task",
-           choices = c("first", "second", "third"), points = 5)
+           choices = c("first", "second", "third"),
+           choices_identifiers = c("a","b","c"),
+           points = 5)
 create_qti_task(ord)
 
 # task with directed pairs
@@ -141,7 +153,7 @@ ct <- new("OneInColTable", text = new("Text",
 create_qti_task(ct)
 
 # task with match table with many right answers in rows and columns
-mt <- neFw("MultipleChoiceTable", text = new("Text",
+mt <- new("MultipleChoiceTable", text = new("Text",
                                       content = list("<h3>This is match table task</h3>",
                                                      "<i>table description</i>")),
           rows = c("row1", "row2", "row3"),
@@ -190,3 +202,7 @@ test <- new("AssessmentTest", title = "Text exam", points = 5,
                            )
 )
 create_qti_test(test)
+
+
+
+

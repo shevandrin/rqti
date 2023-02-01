@@ -20,7 +20,9 @@ setMethod("initialize", "MultipleChoiceTable", function(.Object, ...) {
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,MultipleChoiceTable
 setMethod("createItemBody",  "MultipleChoiceTable", function(object) {
-    create_item_body_match_table(object, 2, 2)
+    create_item_body_match_table(object,
+                                 length(object@cols),
+                                 length(object@rows))
 })
 
 #' @rdname createResponseDeclaration-methods
@@ -32,7 +34,7 @@ setMethod("createResponseDeclaration", "MultipleChoiceTable", function(object) {
 create_response_declaration_match_table2 <- function(object) {
     corr_response <- create_correct_response(object@answers_identifiers)
     map_entries <- Map(create_map_entry, object@mapping, names(object@mapping))
-    mapping <- tag("mapping", list(default_value = 0, map_entries))
+    mapping <- tag("mapping", list(defaultValue = 0, map_entries))
     tag("responseDeclaration", list(identifier = "RESPONSE",
                                     cardinality = "multiple",
                                     baseType = "directedPair",

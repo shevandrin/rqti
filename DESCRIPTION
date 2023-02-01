@@ -46,6 +46,7 @@ Collate:
     'Order.R'
     'SingleChoice.R'
     'TextGap.R'
+    'TextGapOpal.R'
     'exam.R'
     'extract_results.R'
     'knit_functions.R'
