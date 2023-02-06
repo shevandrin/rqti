@@ -27,7 +27,7 @@ test_that("Testing CreateItemBody DirectedPair", {
 </matchInteraction>
     </itemBody>'
 
-    print("I think the name of the attributes confused a little")
+    # print("I think the name of the attributes confused a little")
     xml1 <- xml2::read_xml(toString(createItemBody(sc)))
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
@@ -60,7 +60,7 @@ test_that("Testing ResponseDeclaration DirectedPair", {
 </mapping>
 </responseDeclaration>'
 
-    print("There is not option to give individual values to answer - fixed")
+    # print("There is not option to give individual values to answer - fixed")
     xml1 <- xml2::read_xml(toString(createResponseDeclaration(sc)))
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)

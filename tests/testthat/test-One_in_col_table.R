@@ -29,7 +29,6 @@ test_that("Testing CreateItemBody OneInColTable", {
         </matchInteraction>
         </itemBody>'
 
-    print('Looks that the class OneInColTable and OneInRowTable generates the same createItemBody')
     xml1 <- xml2::read_xml(toString(createItemBody(sc)))
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)

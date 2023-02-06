@@ -214,9 +214,8 @@ create_assessment_test <-function(object) {
         data_features <- paste("mark-items", data_features, sep = ";")
     }
     if (object@keep_responses) {
-        data_features <- paste("keep-responses", data_features, sep = ";")
+           data_features <- paste("keep-responses", data_features, sep = ";")
     }
-
     assessment_attributes <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
                                "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
                                "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd",
@@ -349,8 +348,6 @@ qti <- function(object) {
         items_files <- unlist(lapply("results/downloads/", paste0, object@files))
         file.copy(items_files, download_dir)
     }
-
-
 
     # copy there files from results
     # unlist(unname(Map(paste0, "results/", files)))

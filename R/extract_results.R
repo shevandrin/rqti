@@ -1,5 +1,5 @@
 #' @import xml2
-
+#' @import stringr
 get_duration <- function(file) {
     doc <- xml2::read_xml(file)
     test_duration <- xml2::xml_find_all(doc,
@@ -16,6 +16,21 @@ get_duration <- function(file) {
     return(data)
 }
 
+#' Create data frame with test rusults
+#'
+#' The function 'get_result_attributes()'creates data frames with the following
+#' data about the test results: 'identifier' - question item identifier,
+#' 'duration' - time in sec. what candidate spent on this item, 'score' - points
+#' that were given to candidate after evaluation, "max_scored' - max poissible
+#' score for this item, 'type' - the type of question, 'candidate_answer' -
+#' identifiers of choosen options or specific answer (or NA in case there was no
+#' response from candidate), 'correct_responses' - identifiers of options or
+#' specific answer that consider as a right response for this item
+#'
+#' @param file A string with a path of the xml test result file
+#' @import xml2
+#' @return data frame.
+#' @export
 get_result_attributes <- function(file) {
     doc <- xml2::read_xml(file)
     items_result <- xml_find_all(doc, ".//d1:itemResult")
@@ -27,10 +42,10 @@ get_result_attributes <- function(file) {
     maxscore_nodes <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:outcomeVariable[@identifier='MAXSCORE']")
     maxes <- xml2::xml_text(maxscore_nodes)
     types <- unlist(lapply(ids_item, identify_question_type))
-    answer_node <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[2]/d1:candidateResponse")
-    answers <- sapply(answer_node, combine_answer)
-    response_node <- answer_node <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[2]/d1:correctResponse")
-    responses <- (lapply(response_node, combine_answer))
+    answer_node <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[2]")
+    answers <- sapply(answer_node, combine_answer, "candidateResponse")
+    response_node <- answer_node <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[2]")
+    responses <- (lapply(response_node, combine_answer, "correctResponse"))
     responses[sapply(responses, is.null)] <- NA
     responses <- unlist(responses)
     data <- data.frame(identifier = ids_item,
@@ -51,10 +66,16 @@ identify_question_type <- function(q_id) {
     return(result)
 }
 
-combine_answer <- function(node) {
+combine_answer <- function(node, tag) {
     y <- c()
-    for (i in xml2::xml_children(node)) {
-        y <- stringr::str_trim(paste(xml2::xml_text(i), y))
+    response <- xml2::xml_find_first(node, paste0(".//d1:", tag))
+    if (is.na(response)) {
+        y <- NA
+    } else {
+        for (i in xml2::xml_children(response)) {
+            y <- stringr::str_trim(paste(xml2::xml_text(i), y))
+        }
     }
     return(y)
 }
+

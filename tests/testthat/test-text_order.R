@@ -16,7 +16,6 @@ test_that("Testing createItemBody for Order questions", {
 </orderInteraction>
 </itemBody>'
 
-    print("Pendent to check how define the order")
     xml1 <- xml2::read_xml(toString(createItemBody(question)))
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)

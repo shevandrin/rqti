@@ -1,5 +1,4 @@
 # define class Gap to built inline instances
-
 setClass("Gap", slots = c(response_identifier = "character", score = "numeric",
                           placeholder = "character",
                           expected_length = "numeric"),

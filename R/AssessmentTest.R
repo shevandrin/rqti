@@ -27,16 +27,17 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      max_attempts = "numeric",
                                      allow_comment = "logical",
                                      rebuild_variables = "logical"),
-         prototype = prototype(identifier = ids::adjective_animal(),
+         prototype = prototype(identifier = paste0("test_", ids::adjective_animal()),
                                navigation_mode = "nonlinear",
                                submission_mode = "individual",
+                               test_part_identifier = "test_part",
                                qti_version = "v2p1",
                                time_limits = NA_integer_,
                                show_test_time = FALSE,
                                calculator = NA_character_,
                                mark_items = FALSE,
                                keep_responses = FALSE,
-                               files = NA_character_,
+                               # files = NA_character_,
                                max_attempts = NA_integer_,
                                allow_comment = NA,
                                rebuild_variables = NA
@@ -79,7 +80,7 @@ setGeneric("createTestPart", function(object) {
 #' @aliases createOutcomeDeclaration,AssessmentTest
 setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
           function(object) {
-              tagList(make_outcome_declaration("SCORE", value = object@points),
+              tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
                                                value = object@points))
           })

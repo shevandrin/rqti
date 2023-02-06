@@ -6,12 +6,14 @@ library(shiny)
 
 # create SingleChoice object
 sc <- new("SingleChoice",
-          text = new("Text", content = list("<p>With SQL, how do you select <b>all the records</b> from a table named Persons where the value of the column FirstName is Peter?<br />SELECT * FROM <br/> this is the second line of text</p>")),
-          choices = c("You must stay with your luggage at all times.", "Bb", "Cc", "Dd"),
-          orientation = "horizontal",
+          text = new("Text", content = list("<p>Pick up the right option</p>",
+                                            new("Img", src = "1.png"))),
+          choices = c("option 1", "option 2", "option 3", "option 4"),
+          orientation = "vertical",
           title = "single_choice_task",
           prompt = "this is a prompt",
-          points = 2)
+          points = 2,
+          identifier = "convictive_agama")
 create_qti_task(sc)
 
 # create MultipleChoice object
@@ -204,5 +206,9 @@ test <- new("AssessmentTest", title = "Text exam", points = 5,
 create_qti_test(test)
 
 
-
-
+simple_test <- new("AssessmentTest", section = list(new("AssessmentSection", title = "sec1",
+                                                        assessment_item = list(new("AssessmentItemRef", identifier = "id1", href = "convictive_agama.xml")))),
+                   title = "simpliest test",
+                   points = 1)
+create_qti_test(simple_test)
+qti(simple_test)
