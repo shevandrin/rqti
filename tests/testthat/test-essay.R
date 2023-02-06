@@ -1,6 +1,6 @@
 test_that("Testing createItemBody for the Essay object", {
     essay <- new("Essay",
-              text = new("Text", content = list("<p>Read this postcard from your English pen-friend, Sam.</p>
+             content = list("<p>Read this postcard from your English pen-friend, Sam.</p>
                                                 <div>
                                                 <object type=\"image/png\" data=\"images/postcard.png\">
                                                 <blockquote class=\"postcard\">
@@ -8,7 +8,7 @@ test_that("Testing createItemBody for the Essay object", {
                                                 </blockquote>
                                                 </object>
                                                 </div>
-                                                ")),
+                                                "),
               title = "extendedText",
               expectedLength = 200,
               prompt = "Write Sam a postcard. Answer the questions. Write 25-35 words.")
@@ -37,7 +37,7 @@ test_that("Testing createItemBody for the Essay object", {
 test_that("Testing attributes values in extendedTextInteraction for Essay
 object", {
     essay <- new("Essay",
-                 text = new("Text", content = list("some question text")),
+                 content = list("some question text"),
                  title = "extendedText",
                  expectedLength = 100,
                  expectedLines = 10,
@@ -62,7 +62,7 @@ object", {
 
 test_that("XML validation with schema file", {
     essay <- new("Essay",
-                 text = new("Text", content = list("<p>some question text</p>")),
+                 content = list("<p>some question text</p>"),
                  title = "extendedText",
                  expectedLength = 100,
                  expectedLines = 10,

@@ -1,6 +1,6 @@
 test_that("Testing create_item_body_multiplechoice", {
     sc <- new("MultipleChoice",
-              text = new("Text",content = list("")),
+              content = list(""),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
               choice_identifiers = c("H","He","C","O","N","Cl"),
               points = c(1,0,0,1,0,-1),
@@ -27,7 +27,7 @@ test_that("Testing create_item_body_multiplechoice", {
 test_that("Testing create_response_declaration_multiple_choice",{
     skip_if_not_installed("XML")
     sc <- new("MultipleChoice",
-              text = new("Text",content = list("")),
+              content = list(""),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
               choice_identifiers = c("H","He","C","O","N","Cl"),
               points = c(1,0,0,1,0,-1),
@@ -84,7 +84,7 @@ test_that("Testing create_response_declaration_multiple_choice",{
 
 test_that("Testing outcomeDeclaration for Multiple Choice",{
     sc <- new("MultipleChoice",
-              text = new("Text",content = list("")),
+              content = list(""),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
               points = c(1,0,0,1,0,-1),
               title = "filename_sc",
@@ -106,7 +106,7 @@ test_that("Testing outcomeDeclaration for Multiple Choice",{
 
 test_that("XML validation with schema file", {
     sc <- new("MultipleChoice",
-              text = new("Text",content = list("")),
+              content = list(""),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
               points = c(1,0,0,1,0,-1),
               title = "filename_sc",

@@ -23,7 +23,7 @@ create_content_object <- function(file) {
         }
         content <- append(content, text_chank)
     }
-    text <- new("Text", content =  content)
+    text <- content
 }
 
 create_text_gap_object <- function(params, id) {

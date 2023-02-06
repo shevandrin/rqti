@@ -1,6 +1,6 @@
 test_that("Testing createItemBody for Order questions", {
     question <- new("Order",
-                 text = new("Text", content = list("")),
+                 content = list(""),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
                  choices = c("Rubens Barrichello", "Jenson Button", "Michael Schumacher"),
@@ -23,7 +23,7 @@ test_that("Testing createItemBody for Order questions", {
 
 test_that("Testing ResponseDeclaration for Order questions", {
     question <- new("Order",
-                 text = new("Text", content = list("")),
+                 content = list(""),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
                  choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
@@ -45,7 +45,7 @@ test_that("Testing ResponseDeclaration for Order questions", {
 
 test_that("Testing OutcomeDeclaration for Order questions", {
     question <- new("Order",
-                    text = new("Text", content = list("")),
+                    content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
                     choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
@@ -81,7 +81,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
 
 test_that("XML validation with schema file", {
     question <- new("Order",
-                    text = new("Text", content = list("<p>a</p>")),
+                    content = list("<p>a</p>"),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
                     choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),

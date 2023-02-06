@@ -1,5 +1,5 @@
 test_that("Testing CreateItemBody Inline", {
-    sc <- new("Entry", text = new("Text", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -17,7 +17,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    )))
+    ))
 
     example <- '<itemBody>
 <p>Identify the missing word in this famous quote from Shakespeare\'s Richard III.</p>
@@ -45,7 +45,7 @@ In the deep bosom of the ocean buried.
 })
 
 test_that("Testing ResponseDeclaration Inline", {
-    sc <- new("Entry", text = new("Text", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -62,7 +62,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    )))
+    ))
     # ' The original example of QTI, do not have SCORE for that reason OPAL's example was taken with out the attribute defaultValue="0"
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 <correctResponse>
@@ -79,7 +79,7 @@ In the deep bosom of the ocean buried.
 })
 
 test_that("Testing OutcomeDeclaration Inline", {
-    sc <- new("Entry", text = new("Text", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -96,7 +96,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    )))
+    ))
 
     # ' The original example of QTI, do not have SCORE for that reason OPAL's example was taken with out MINSCORE
 
@@ -120,7 +120,7 @@ In the deep bosom of the ocean buried.
 })
 
 test_that("XML validation with schema file", {
-    sc <- new("Entry", text = new("Text", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -138,7 +138,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    )), title = "inline_choice")
+    ), title = "inline_choice")
     doc <- xml2::read_xml(toString(create_assessment_item(sc)))
     file <- file.path(getwd(), "imsqti_v2p1.xsd")
     schema <- xml2::read_xml(file)

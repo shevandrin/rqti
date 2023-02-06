@@ -1,6 +1,6 @@
 test_that("Testing create_item_body_single_choice", {
     sc <- new("SingleChoice",
-              text = new("Text", content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>")),
+              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
               choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
               title = "filename_sc",
               prompt = "What does it say?",
@@ -21,7 +21,7 @@ test_that("Testing create_item_body_single_choice", {
 
 test_that("Testing create_response_declaration_single_choice",{
     sc <- new("SingleChoice",
-              text = new("Text", content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>")),
+              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
               choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
               title = "filename_sc",
               prompt = "What does it say?")
@@ -39,7 +39,7 @@ test_that("Testing create_response_declaration_single_choice",{
 
 test_that("Testing outcomeDeclaration for Single Choice",{
     sc <- new("SingleChoice",
-              text = new("Text", content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>")),
+              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
               choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
               title = "filename_sc",
               prompt = "What does it say?",points = 0)
@@ -57,7 +57,7 @@ test_that("Testing outcomeDeclaration for Single Choice",{
 
 test_that("XML validation with schema file", {
     sc <- new("SingleChoice",
-              text = new("Text", content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>")),
+              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
               choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
               title = "filename_sc",
               prompt = "What does it say?",

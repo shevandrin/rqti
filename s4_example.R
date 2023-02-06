@@ -6,8 +6,8 @@ library(shiny)
 
 # create SingleChoice object
 sc <- new("SingleChoice",
-          text = new("Text", content = list("<p>Pick up the right option</p>",
-                                            new("Img", src = "1.png"))),
+          content = list("<p>Pick up the right option</p>",
+                                            new("Img", src = "1.png")),
           choices = c("option 1", "option 2", "option 3", "option 4"),
           orientation = "vertical",
           title = "single_choice_task",
@@ -18,7 +18,7 @@ create_qti_task(sc)
 
 # create MultipleChoice object
 mpc <- new("MultipleChoice",
-           text = new("Text", content = list("This is the mpc question")),
+           content = list("This is the mpc question"),
            choices = c("A", "B", "C", "D"),
            choice_identifiers = c("1", "2", "3", "4"),
            points = c(1, 0, -1, 1),
@@ -26,7 +26,7 @@ mpc <- new("MultipleChoice",
 create_qti_task(mpc)
 
 # task with TextGap
-te <- new("Entry", text = new("Text", content = list("<h2>some markdown title1</h2><h1><b>Some title</b><br />svsdvsdvsd</h1><p>With <em>SQL</em>, how do you select <b>all the records</b> from a table named <em><strong>Persons</strong></em> where the value of the column <i>FirstName</i> is Peter?<br />SELECT * FROM",
+te <- new("Entry", content = list("<h2>some markdown title1</h2><h1><b>Some title</b><br />svsdvsdvsd</h1><p>With <em>SQL</em>, how do you select <b>all the records</b> from a table named <em><strong>Persons</strong></em> where the value of the column <i>FirstName</i> is Peter?<br />SELECT * FROM",
                                                       new("TextGapOpal",
                                                           response = "Persons",
                                                           alternatives = "persons",
@@ -44,24 +44,22 @@ te <- new("Entry", text = new("Text", content = list("<h2>some markdown title1</
                                                       "=‘Peter’</p><h3>markdown title 2</h3><p>Put the right answers in the text field above.",
                                                       "</p>"
 
-                                                      )
-                               ),
+                                                      ),
            title = "text_gaps_task")
 create_qti_task(te)
 
-te_opal <- new("Entry", text = new("Text", content = list("es geht",
+te_opal <- new("Entry", content = list("es geht",
                                                           new("TextGapOpal",
                                                               response_identifier = "res1",
                                                               response = "um",
                                                               score = 0.5,
                                                               value_precision = 1),
-                                                          "die neuen Produkte")),
+                                                          "die neuen Produkte"),
                title = "preposition with gehen")
 create_qti_task(te_opal)
 
 # task with NumericGap
-ne <- new("Entry", text = new("Text",
-                              content = list("5 - ",
+ne <- new("Entry", content = list("5 - ",
                                              new("NumericGap",
                                                  response_identifier = "numeric_1",
                                                  response = 7,
@@ -69,41 +67,40 @@ ne <- new("Entry", text = new("Text",
                                                  expected_length = 1,
                                                  include_lower_bound = FALSE,
                                                  include_upper_bound = FALSE),
-                                             " = -2")
-                              ),
+                                             " = -2"),
           title = "numeric_gaps_task")
 create_qti_task(ne)
 
 
 # task with combination of TextGap and NumericGap
-com <- new("Entry", text = new("Text", content = list("5 ",
+com <- new("Entry", content = list("5 ",
                                                             new("TextGap", response_identifier = "str_1", response = "+", score = 1, placeholder = "+ or -"),
                                                           " 2 = ",
                                                           new("NumericGap", response_identifier = "numeric_1", response = 7, value_precision = 1, expected_length = 11, placeholder = "here is number")
-                                                      )),
+                                                      ),
            title = "complex_gap_task")
 create_qti_task(com)
 
 # task with dropdown list (InlineChoice)
-dd1 <- new("Entry", text = new("Text", content = list("first line",
+dd1 <- new("Entry", content = list("first line",
                                                      new("InlineChoice", response_identifier = "list_1", options = c("a", "b", "c")
-                                                     ))),
+                                                     )),
           title = "dropdown1")
 create_qti_task(dd1)
 
-dd2 <- new("Entry", text = new("Text", content = list("first line <br/>",
+dd2 <- new("Entry", content = list("first line <br/>",
                                                       "<h2>second line</h2>",
                                                      new("InlineChoice", response_identifier = "list_1", options = c("a", "b", "c")),
                                                          "<br/>third line",
                                                          new("InlineChoice", response_identifier = "list_2", options = c("answer1", "answer2", "answer3"), score = 2),
                                                      "end text."
-                                                     )),
+                                                     ),
           title = "dropdown2")
 create_qti_task(dd2)
 
 # task with Order
 # TODO parse text in choices
-ord <- new("Order", text = new("Text", content = list("<p>put in a right order</p>")),
+ord <- new("Order", content = list("<p>put in a right order</p>"),
            identifier = "order_id", title = "order_task",
            choices = c("first", "second", "third"),
            choices_identifiers = c("a","b","c"),
@@ -112,9 +109,8 @@ create_qti_task(ord)
 
 # task with directed pairs
 # TODO validation number of cols and rows
-dp <- new("DirectedPair", text = new("Text",
-                                   content = list("<h3>This is match table task</h3>",
-                                                  "<i>table description</i>")),
+dp <- new("DirectedPair", content = list("<h3>This is match table task</h3>",
+                                                  "<i>table description</i>"),
         rows = c("row1", "row2", "row3"),
         rows_identifiers = c("a", "b", "c"),
         cols = c("alfa", "beta", "gamma"),
@@ -127,9 +123,8 @@ dp <- new("DirectedPair", text = new("Text",
 create_qti_task(dp)
 
 # task with match table with one right answer in a row
-rt <- new("OneInRowTable", text = new("Text",
-                                     content = list("<h3>This is match table task</h3>",
-                                                    "<i>table description</i>")),
+rt <- new("OneInRowTable", content = list("<h3>This is match table task</h3>",
+                                                    "<i>table description</i>"),
           rows = c("row1", "row2", "row3", "row4"),
           rows_identifiers = c("a", "b", "c", "d"),
           cols = c("alfa", "beta", "gamma"),
@@ -141,9 +136,8 @@ rt <- new("OneInRowTable", text = new("Text",
 create_qti_task(rt)
 
 # task with match table with one right answer in a column
-ct <- new("OneInColTable", text = new("Text",
-                                      content = list("<h3>This is match table task</h3>",
-                                                     "<i>table description</i>")),
+ct <- new("OneInColTable", content = list("<h3>This is match table task</h3>",
+                                                     "<i>table description</i>"),
           rows = c("row1", "row2", "row3"),
           rows_identifiers = c("a", "b", "c"),
           cols = c("alfa", "beta", "gamma"),
@@ -155,9 +149,8 @@ ct <- new("OneInColTable", text = new("Text",
 create_qti_task(ct)
 
 # task with match table with many right answers in rows and columns
-mt <- new("MultipleChoiceTable", text = new("Text",
-                                      content = list("<h3>This is match table task</h3>",
-                                                     "<i>table description</i>")),
+mt <- new("MultipleChoiceTable", content = list("<h3>This is match table task</h3>",
+                                                     "<i>table description</i>"),
           rows = c("row1", "row2", "row3"),
           rows_identifiers = c("a", "b", "c"),
           cols = c("alfa", "beta", "gamma"),
@@ -169,8 +162,7 @@ mt <- new("MultipleChoiceTable", text = new("Text",
 create_qti_task(mt)
 
 # essay type task
-es <- new("Essay", text = new("Text",
-                              content = list("<h2>this is an essay type of question</h2>")),
+es <- new("Essay", content = list("<h2>this is an essay type of question</h2>"),
           title = "essay_task50x15",
           maxStrings = 100,
           points = 3)
@@ -212,3 +204,4 @@ simple_test <- new("AssessmentTest", section = list(new("AssessmentSection", tit
                    points = 1)
 create_qti_test(simple_test)
 qti(simple_test)
+

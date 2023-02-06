@@ -41,7 +41,7 @@ create_value <- function(value) {
 }
 
 create_item_body_entry <- function(object) {
-    tag("itemBody", list(Map(createText, object@text@content)))
+    tag("itemBody", list(Map(createText, object@content)))
 }
 
 create_item_body_essay <- function(object) {
@@ -54,11 +54,11 @@ create_item_body_essay <- function(object) {
                          "minStrings" = object@minStrings,
                          "data-allowPaste" = tolower(object@dataAllowPaste),
                                                     prompt))
-    tag("itemBody", list(Map(createText, object@text@content), ext_text))
+    tag("itemBody", list(Map(createText, object@content), ext_text))
 }
 
 create_item_body_choice <- function(object, max_choices) {
-    tag("itemBody", list(Map(createText, object@text@content),
+    tag("itemBody", list(Map(createText, object@content),
                          make_choice_interaction(object, max_choices)))
 }
 
@@ -72,7 +72,7 @@ create_item_body_order <- function(object) {
                               list("responseIdentifier" = "RESPONSE",
                                    "shuffle" = tolower(object@shuffle),
                                    prompt, choices))
-    tag("itemBody", list(Map(createText, object@text@content),
+    tag("itemBody", list(Map(createText, object@content),
                          order_interactioin))
 }
 
@@ -95,7 +95,7 @@ create_item_body_match_table <- function(object,  row_associations,
                                    "maxAssociations" = max(c(row_associations,
                                                              col_associations)),
                                    tagList(prompt, rows_match, cols_match)))
-    tag("itemBody", list(Map(createText, object@text@content),
+    tag("itemBody", list(Map(createText, object@content),
                          match_interactioin))
 }
 

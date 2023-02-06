@@ -12,7 +12,7 @@
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @include Text.R
-setClass("AssessmentItem", slots = c(text = "Text", prompt = "character",
+setClass("AssessmentItem", slots = c(content = "list", prompt = "character",
                                      points = "numeric",
                                      title = "character",
                                      identifier = "character",

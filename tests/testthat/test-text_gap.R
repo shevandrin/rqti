@@ -1,5 +1,5 @@
 test_that("Testing create_item_body_text ", {
-    sc <- new("Entry", text =  new("Text",content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
                                                              response = "winter",
@@ -26,7 +26,7 @@ test_that("Testing create_item_body_text ", {
                                                              expected_length = 5,
                                                              placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>")))
+                                                         "meters under the darkness is found.</p>"))
     # ' The XML example was taked from OPAL because qti example doesn't work in OPAL
     example <- '<itemBody>
         <p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
@@ -51,7 +51,7 @@ test_that("Testing create_item_body_text ", {
 })
 
 test_that("Testing create Response Declaration Gap ", {
-    sc <- new("Entry", text =  new("Text",content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
                                                              response = "winter",
@@ -78,7 +78,7 @@ test_that("Testing create Response Declaration Gap ", {
                                                              score = 0.5,
                                                              placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>")))
+                                                         "meters under the darkness is found.</p>"))
     # ' The XML example was taken from OPAL because qti example doesn't work in OPAL
 
     # 'Response Declaration 1. In the example was not included <mapping defaultValue="0">
@@ -129,7 +129,7 @@ test_that("Testing create Response Declaration Gap ", {
 })
 
 test_that("Testing create Outcome Declaration Gap ", {
-    sc <- new("Entry", text =  new("Text",content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
                                                              response = "winter",
@@ -156,7 +156,7 @@ test_that("Testing create Outcome Declaration Gap ", {
                                                              score = 0.5,
                                                              placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>")))
+                                                         "meters under the darkness is found.</p>"))
     # ' The XML example was taken from OPAL because qti example doesn't work in OPAL
 
     # 'Outcome Declaration 1.Omitted the tag view="testConstructor" from OPAL example. There is not outcome Delete it from the example
@@ -217,7 +217,7 @@ test_that("Testing create Outcome Declaration Gap ", {
 })
 
 test_that("XML validation with schema file", {
-    sc <- new("Entry", text =  new("Text",content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
                                                              response = "winter",
@@ -244,7 +244,7 @@ test_that("XML validation with schema file", {
                                                              expected_length = 5,
                                                              placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>")),
+                                                         "meters under the darkness is found.</p>"),
               title = "fill the gaps")
     doc <- xml2::read_xml(toString(create_assessment_item(sc)))
     file <- file.path(getwd(), "imsqti_v2p1.xsd")

@@ -23,7 +23,7 @@ get_duration <- function(file) {
 #' 'duration' - time in sec. what candidate spent on this item, 'score' - points
 #' that were given to candidate after evaluation, "max_scored' - max poissible
 #' score for this item, 'type' - the type of question, 'candidate_answer' -
-#' identifiers of choosen options or specific answer (or NA in case there was no
+#' identifiers of chosen options or specific answer (or NA in case there was no
 #' response from candidate), 'correct_responses' - identifiers of options or
 #' specific answer that consider as a right response for this item
 #'
