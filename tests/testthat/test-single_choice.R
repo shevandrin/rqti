@@ -55,6 +55,34 @@ test_that("Testing outcomeDeclaration for Single Choice",{
     expect_equal(xml1, xml2)
 })
 
+test_that("Testing additional attribute for item body single choice", {
+  sc <- new("SingleChoice",
+            content = list("<p>Do you mostly use tea bags or loose tea?</p>",
+                           "<p>Choose one option</p>"),
+            points = 2,
+            identifier = "ID125",
+            title = "Question 1",
+            choices = c("Tea bags", "Loose tea"),
+            orientation = "horizontal",
+            solution = 2,
+            choice_identifiers = c("ID_1", "ID_2")
+            )
+  example <- '<itemBody>
+		<p>Do you mostly use tea bags or loose tea?</p>
+		<p>Choose one option</p>
+		<choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"true\" maxChoices=\"1\" orientation=\"horizontal\">
+			<simpleChoice identifier=\"ID_1\">Tea bags</simpleChoice>
+			<simpleChoice identifier=\"ID_2\">Loose tea</simpleChoice>
+		</choiceInteraction>
+	</itemBody>
+            '
+  xml1 <- xml2::read_xml(toString(createItemBody(sc)))
+  xml2 <- xml2::read_xml(example)
+  expect_equal(xml1, xml2)
+}
+
+)
+
 test_that("XML validation with schema file", {
     sc <- new("SingleChoice",
               content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
