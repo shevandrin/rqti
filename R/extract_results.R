@@ -9,7 +9,7 @@ get_duration <- function(file) {
     items_result <- xml_find_all(doc, ".//d1:itemResult")
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
     val_node <- xml2::xml_find_all(doc,
-                                   ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
+                ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
     val_item <- xml2::xml_text(val_node)
     data <- data.frame(identifier = c(ids_test, ids_item),
                        duration = as.numeric(c(val_test, val_item)))
@@ -35,19 +35,20 @@ get_result_attributes <- function(file) {
     doc <- xml2::read_xml(file)
     items_result <- xml_find_all(doc, ".//d1:itemResult")
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
-    dur_nodes <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
+    dur_nodes <- xml2::xml_find_all(doc,
+                ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
     durations <- xml2::xml_text(dur_nodes)
-    score_nodes <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:outcomeVariable[@identifier='SCORE']")
+    score_nodes <- xml2::xml_find_all(doc,
+                ".//d1:itemResult/d1:outcomeVariable[@identifier='SCORE']")
     scores <- xml2::xml_text(score_nodes)
-    maxscore_nodes <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:outcomeVariable[@identifier='MAXSCORE']")
+    maxscore_nodes <- xml2::xml_find_all(doc,
+                ".//d1:itemResult/d1:outcomeVariable[@identifier='MAXSCORE']")
     maxes <- xml2::xml_text(maxscore_nodes)
     types <- unlist(lapply(ids_item, identify_question_type))
-    answer_node <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[2]")
-    answers <- sapply(answer_node, combine_answer, "candidateResponse")
-    response_node <- answer_node <- xml2::xml_find_all(doc, ".//d1:itemResult/d1:responseVariable[2]")
-    responses <- (lapply(response_node, combine_answer, "correctResponse"))
-    responses[sapply(responses, is.null)] <- NA
-    responses <- unlist(responses)
+    answers <- unlist(lapply(items_result, combine_responses_notes,
+                             "candidateResponse"))
+    responses <- unlist(lapply(items_result, combine_responses_notes,
+                               "correctResponse"))
     data <- data.frame(identifier = ids_item,
                        duration = as.numeric(durations),
                        score = as.numeric(scores),
@@ -66,6 +67,12 @@ identify_question_type <- function(q_id) {
     return(result)
 }
 
+combine_responses_notes <- function(node, tag) {
+    answer_nodes <- xml2::xml_find_all(node, ".//d1:responseVariable")
+    answers <- sapply(answer_nodes[-1], combine_answer, tag)
+    paste(answers, sep = "", collapse = " ")
+}
+
 combine_answer <- function(node, tag) {
     y <- c()
     response <- xml2::xml_find_first(node, paste0(".//d1:", tag))
@@ -78,4 +85,3 @@ combine_answer <- function(node, tag) {
     }
     return(y)
 }
-
