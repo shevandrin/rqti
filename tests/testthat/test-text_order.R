@@ -27,7 +27,7 @@ test_that("Testing ResponseDeclaration for Order questions", {
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
                  choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
-                 points = c(0.5,0.5,0.5),
+                 points = 0.5,
                  choices_identifiers = c("DriverA","DriverB","DriverC"),
                  shuffle = TRUE)
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="ordered" baseType="identifier">
@@ -49,7 +49,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
                     choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
-                    points = 0.5,
+                    points = 2.5,
                     choices_identifiers = c("DriverA","DriverB","DriverC"),
                     shuffle = TRUE)
 
@@ -63,7 +63,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
 <defaultValue>
-<value>0.5</value>
+<value>2.5</value>
 </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">

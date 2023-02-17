@@ -8,6 +8,15 @@ setClass("TextGap", contains = "Gap",
                                case_sensitive = TRUE
                                ))
 
+setMethod("initialize", "TextGap", function(.Object,...){
+    .Object <- callNextMethod()
+    if (length(.Object@score) == 0) {
+        .Object@score = 1
+    }
+    validObject(.Object)
+    .Object
+})
+
 #' @rdname getResponse-methods
 #' @aliases getResponse,TextGap
 setMethod("getResponse", "TextGap", function(object) {

@@ -115,8 +115,9 @@ test_that("XML validation with schema file", {
               prompt = "Associated left elements with the right category"
     )
     doc <- xml2::read_xml(toString(create_assessment_item(sc)))
-    file <- file.path(getwd(), "tests/testthat/imsqti_v2p1.xsd")
+    file <- file.path(getwd(), "imsqti_v2p1.xsd")
     schema <- xml2::read_xml(file)
+    print(schema)
     validation <- xml2::xml_validate(doc, schema)
     expect_equal(validation[1], TRUE)
 })

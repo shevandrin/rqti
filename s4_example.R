@@ -9,10 +9,11 @@ sc <- new("SingleChoice",
           content = list("<p>Pick up the right option</p>",
                                             new("Img", src = "1.png")),
           choices = c("option 1", "option 2", "option 3", "option 4"),
-          orientation = "vertical",
+          # orientation = "vertical",
           title = "single_choice_task",
           prompt = "this is a prompt",
-          points = 2,
+          shuffle = FALSE,
+          # points = 2,
           identifier = "convictive_agama")
 create_qti_task(sc)
 
@@ -24,6 +25,14 @@ mpc <- new("MultipleChoice",
            points = c(1, 0, -1, 1),
            title = "multiple_choice_task")
 create_qti_task(mpc)
+
+# create MultipleChoice object
+mpc0 <- new("MultipleChoice",
+           prompt = "This is the mpc question",
+           choices = c("A", "B", "C"),
+           points = c(1, 0, 2),
+           title = "multiple_choice_task")
+create_qti_task(mpc0)
 
 # task with TextGap
 te <- new("Entry", content = list("<h2>some markdown title1</h2><h1><b>Some title</b><br />svsdvsdvsd</h1><p>With <em>SQL</em>, how do you select <b>all the records</b> from a table named <em><strong>Persons</strong></em> where the value of the column <i>FirstName</i> is Peter?<br />SELECT * FROM",

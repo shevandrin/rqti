@@ -1,4 +1,4 @@
-# define class InlineChoice to specify Dropdowns for numbers
+# define class InlineChoice to specify Dropdowns
 
 setClass("InlineChoice", contains = "Gap",
          slots = c(options = "character",
@@ -14,6 +14,9 @@ setMethod("initialize", "InlineChoice", function(.Object, ...) {
                                               LETTERS[seq(.Object@options)])
     }
 
+    if (length(.Object@score) == 0) {
+        .Object@score <- 1
+    }
     if (is.na(.Object@score)) {
         .Object@score <- 1
     }

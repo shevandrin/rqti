@@ -4,16 +4,21 @@ setClass("Choice", contains = "AssessmentItem",
          slots = c(choices = "character", shuffle = "logical",
                    choice_identifiers = "character",
                    orientation = "character"),
-         prototype = prototype(shuffle = TRUE))
+         prototype = prototype(shuffle = TRUE,
+                               orientation = NA_character_,
+                               choice_identifiers = NA_character_))
 
 # constructor
 setMethod("initialize", "Choice", function(.Object, ...) {
     .Object <- callNextMethod()
     ids <- .Object@choice_identifiers
-    if (identical(ids, character(0))) {
+    # if (identical(ids, character(0))) {
+    if (length(ids) < 2) {
         .Object@choice_identifiers <- paste0("Choice",
                                              LETTERS[seq(.Object@choices)])
     }
+    if (is.na(.Object@orientation)) {
+        .Object@orientation = "vertical"}
     validObject(.Object)
     .Object
 })

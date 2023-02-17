@@ -1,6 +1,14 @@
 # derive sc class (contains choice), use solution slot and set it to 1
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
+# constructor
+setMethod("initialize", "SingleChoice", function(.Object, ...) {
+    .Object <- callNextMethod()
+    if (length(.Object@solution) == 0 | is.na(.Object@solution)) {
+        .Object@solution <- 1}
+    validObject(.Object)
+    .Object
+})
 
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,SingleChoice

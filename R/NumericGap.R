@@ -23,8 +23,8 @@ setValidity("NumericGap", function(object) {
 
 setMethod("initialize", "NumericGap", function(.Object,...){
     .Object <- callNextMethod()
-    if (!is.null(.Object@value_precision) & (.Object@type_precision == "exact")) {
-        .Object@type_precision = "absolute"
+    if (length(.Object@score) == 0) {
+        .Object@score = 1
     }
     validObject(.Object)
     .Object
@@ -82,8 +82,10 @@ create_response_processing_num_entry <- function(object) {
                          list(identifier = object@response_identifier)))
     equal_tag <- tag("equal", list(toleranceMode = object@type_precision,
                                    tolerance = tolerance_str,
-                                   includeLowerBound = tolower(object@include_lower_bound),
-                                   includeUpperBound = tolower(object@include_upper_bound),
+                                   includeLowerBound =
+                                       tolower(object@include_lower_bound),
+                                   includeUpperBound =
+                                       tolower(object@include_upper_bound),
                                    child))
     var_outcome <- tag("variable",
                        list(identifier = paste0("MAXSCORE_",

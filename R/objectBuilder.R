@@ -1,7 +1,7 @@
 #
 #' @importFrom commonmark markdown_html
 #' @importFrom htmltools HTML p
-#' @importFrom stringr str_extract_all str_sub
+#' @importFrom stringr str_extract_all str_sub str_trim str_split_1
 #' @import yaml
 
 create_question_content <- function(file) {
@@ -10,45 +10,18 @@ create_question_content <- function(file) {
     attrs <- get_task_attributes(attrs_sec)
     object <- switch(tolower(attrs["type"]),
                      "entry" = create_entry_object(file, attrs),
-                     "singlechoice" =  create_sc_object(file, attrs)
+                     "singlechoice" =  create_sc_object(file, attrs),
+                     "multiplechoice" = create_mc_object(file, attrs),
+                     "essay" = create_essay_object(file, attrs)
                     )
 }
 
-create_text_gap_object <- function(params, id) {
-    params <- str_sub(params, 9, -9)
-    params <- try(yaml::yaml.load(params), silent = TRUE)
-    if (is.null(params) | is.character(params) | is.numeric(params)) {
-        new("TextGap", response_identifier = id,
-            response = params,
-            score = 1)
-    } else {
-        new("TextGap", response_identifier = id, score = 1,
-            response = params$content$response,
-            alternatives = params$content$alternatives,
-            placeholder = params$content$placeholder,
-            expected_length = params$content$length)
-    }
-}
-
-create_sc_object <- function(file, attrs) {
-    sect <- get_task_section(file, "question")
-    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
-                                                 smart = TRUE)))
-    choices <- get_task_section(file, "answers")
-    object = new("SingleChoice", content = html,
-                 identifier = unname(attrs["identifier"]),
-                 title = unname(attrs["title"]),
-                 points = as.numeric(attrs["points"]),
-                 prompt = unname(attrs["prompt"]),
-                 choices = choices
-                 )
-}
-
 create_entry_object <- function(file, attrs) {
+    file <- get_task_section(file, "question")
     file <- gsub("<<", "<entry>", file)
     file <- gsub(">>", "</entry>", file)
     html <- HTML(markdown_html(file, hardbreaks = FALSE,
-                                          smart = TRUE))
+                               smart = TRUE))
     count_all_gaps <- length(unlist(str_extract_all(html, "<entry>")))
     ids <- make_ids(count_all_gaps, "response")
     end <- unlist(gregexpr("<entry>", html)) - 1L
@@ -59,7 +32,7 @@ create_entry_object <- function(file, attrs) {
         text_chank <- substring(html, all[i], all[i + 1L] - 1L)
         # text_chank <- gsub("\n", "", text_chank)
         if ((i %% 2) == 0) {
-            text_chank <- create_text_gap_object(text_chank, ids[i / 2])
+            text_chank <- create_gap_object(text_chank, ids[i / 2])
         }
         content <- append(content, text_chank)
     }
@@ -73,6 +46,120 @@ create_entry_object <- function(file, attrs) {
 make_ids <- function(n, type) {
     paste(type, formatC(1:n, flag = "0", width = nchar(n)), sep = "_")
 }
+
+create_gap_object <- function(params, id) {
+    params <- str_sub(params, 9, -9)
+    params <- try(yaml::yaml.load(params), silent = TRUE)
+    if (is.null(params) | is.character(params) | is.numeric(params)) {
+        if (is.numeric(params)) {
+            new("NumericGap", response_identifier = id, response = params)
+        } else if (length(str_split_1(params, ",")) == 1) {
+            new("TextGap", response_identifier = id, response = params)
+        } else {
+            new("InlineChoice", response_identifier = id,
+                options = str_split_1(params, ","))
+        }
+    } else {
+        if (tolower(params$type) == "numeric") {
+            new("NumericGap", response_identifier = id,
+                response = params$response,
+                value_precision = if (!is.null(params$value_precision))
+                    params$value_precision else double(0),
+                type_precision = if (!is.null(params$type_precision))
+                    params$type_precision else "exact",
+                include_lower_bound = if(!is.null(params$lower_bound))
+                    params$lower_bound else TRUE,
+                include_upper_bound = if(!is.null(params$upper_bound))
+                    params$upper_bound else TRUE,
+                expected_length = if(!is.null(params$length))
+                    params$length else double(0),
+                placeholder = if(!is.null(params$placeholder))
+                    params$placeholder else character(0),
+                score = if(!is.null(params$score))
+                    params$score else double(0)
+                )
+        } else if (tolower(params$type) == "textgap") {
+            new("TextGap", response_identifier = id,
+                response = params$response,
+                alternatives = if(!is.null(params$alternatives))
+                    params$alternatives else character(0),
+                case_sensitive = if(!is.null(params$case_sensitive))
+                    params$case_sensitive else TRUE,
+                expected_length = if(!is.null(params$length))
+                    params$length else double(0),
+                placeholder = if(!is.null(params$placeholder))
+                    params$placeholder else character(0),
+                score = if(!is.null(params$score))
+                    params$score else double(0)
+                )
+        } else {
+            new("InlineChoice", response_identifier = id,
+                options = params$options,
+                expected_length = if(!is.null(params$length))
+                    params$length else double(0),
+                placeholder = if(!is.null(params$placeholder))
+                    params$placeholder else character(0),
+                score = if(!is.null(params$score))
+                    params$score else double(0)
+                )
+        }
+    }
+}
+
+create_sc_object <- function(file, attrs) {
+    sect <- get_task_section(file, "question")
+    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
+                                                 smart = TRUE)))
+    choices <- get_task_section(file, "answers")
+    object = new("SingleChoice", identifier = unname(attrs["identifier"]),
+                 title = unname(attrs["title"]),
+                 content = html,
+                 points = as.numeric(attrs["points"]),
+                 prompt = unname(attrs["prompt"]),
+                 choices = choices,
+                 choice_identifiers = unname(attrs["choice_identifiers"]),
+                 shuffle = if (is.null(unname(attrs["shuffle"])))
+                     unname(attrs["shuffle"]) else TRUE,
+                 orientation = unname(attrs["orientation"]),
+                 solution = as.numeric(attrs["solution"]))
+}
+
+create_mc_object <- function(file, attrs) {
+    sect <- get_task_section(file, "question")
+    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
+                                       smart = TRUE)))
+    choices <- get_task_section(file, "answers")
+    choice_ids <- str_trim(str_split_1(attrs["choice_identifiers"], ","))
+    points <- str_trim(str_split_1(attrs["points"], ","))
+    object = new("MultipleChoice", identifier = unname(attrs["identifier"]),
+                 title = unname(attrs["title"]),
+                 content = html,
+                 points = as.numeric(points),
+                 prompt = unname(attrs["prompt"]),
+                 choices = choices,
+                 choice_identifiers = choice_ids,
+                 shuffle = if (is.null(unname(attrs["shuffle"])))
+                     unname(attrs["shuffle"]) else TRUE,
+                 orientation = unname(attrs["orientation"])
+    )
+}
+
+create_essay_object <- function(file, attrs) {
+    sect <- get_task_section(file, "question")
+    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
+                                       smart = TRUE)))
+    object = new("Essay", identifier = unname(attrs["identifier"]),
+                 title = unname(attrs["title"]),
+                 content = html,
+                 points = as.numeric(attrs["points"]),
+                 expectedLength = as.numeric(attrs["length"]),
+                 expectedLines = as.numeric(attrs["lines"]),
+                 maxStrings = as.numeric(attrs["max_words"]),
+                 minStrings = as.numeric(attrs["min_words"]),
+                 dataAllowPaste = attrs["allow_paste"]
+    )
+}
+
 
 # get content of section
 # restun text chank
@@ -92,8 +179,8 @@ get_task_section <- function(file, section) {
 get_task_attributes <- function(file) {
     attrs <- c()
     for (line in file) {
-        sep_line <- gsub(" ", "", (strsplit(line, ":"))[[1]])
-        item <- sep_line[2]
+        sep_line <- str_trim(str_split_1(line, ":"))
+        item <- str_trim(sep_line[2])
         names(item) <- sep_line[1]
         attrs <- c(item, attrs)
     }
