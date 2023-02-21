@@ -12,7 +12,9 @@ create_question_content <- function(file) {
                      "entry" = create_entry_object(file, attrs),
                      "singlechoice" =  create_sc_object(file, attrs),
                      "multiplechoice" = create_mc_object(file, attrs),
-                     "essay" = create_essay_object(file, attrs)
+                     "essay" = create_essay_object(file, attrs),
+                     "order" = create_order_object(file, attrs),
+                     "directedpair" = create_dp_object(file, attrs)
                     )
 }
 
@@ -20,8 +22,7 @@ create_entry_object <- function(file, attrs) {
     file <- get_task_section(file, "question")
     file <- gsub("<<", "<entry>", file)
     file <- gsub(">>", "</entry>", file)
-    html <- HTML(markdown_html(file, hardbreaks = FALSE,
-                               smart = TRUE))
+    html <- transform_to_html(sect)
     count_all_gaps <- length(unlist(str_extract_all(html, "<entry>")))
     ids <- make_ids(count_all_gaps, "response")
     end <- unlist(gregexpr("<entry>", html)) - 1L
@@ -108,8 +109,7 @@ create_gap_object <- function(params, id) {
 
 create_sc_object <- function(file, attrs) {
     sect <- get_task_section(file, "question")
-    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
-                                                 smart = TRUE)))
+    html <- transform_to_html(sect)
     choices <- get_task_section(file, "answers")
     object = new("SingleChoice", identifier = unname(attrs["identifier"]),
                  title = unname(attrs["title"]),
@@ -126,8 +126,7 @@ create_sc_object <- function(file, attrs) {
 
 create_mc_object <- function(file, attrs) {
     sect <- get_task_section(file, "question")
-    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
-                                       smart = TRUE)))
+    html <- transform_to_html(sect)
     choices <- get_task_section(file, "answers")
     choice_ids <- str_trim(str_split_1(attrs["choice_identifiers"], ","))
     points <- str_trim(str_split_1(attrs["points"], ","))
@@ -146,20 +145,57 @@ create_mc_object <- function(file, attrs) {
 
 create_essay_object <- function(file, attrs) {
     sect <- get_task_section(file, "question")
-    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
-                                       smart = TRUE)))
+    html <- transform_to_html(sect)
     object = new("Essay", identifier = unname(attrs["identifier"]),
                  title = unname(attrs["title"]),
                  content = html,
                  points = as.numeric(attrs["points"]),
-                 expectedLength = as.numeric(attrs["length"]),
-                 expectedLines = as.numeric(attrs["lines"]),
-                 maxStrings = as.numeric(attrs["max_words"]),
-                 minStrings = as.numeric(attrs["min_words"]),
-                 dataAllowPaste = attrs["allow_paste"]
+                 expectedLength = if (!is.na(attrs["length"]))
+                     as.numeric(attrs["length"]) else double(0),
+                 expectedLines = if (!is.na(attrs["lines"]))
+                     as.numeric(attrs["lines"]) else double(0),
+                 maxStrings = if (!is.na(attrs["max_words"]))
+                     as.numeric(attrs["max_words"]) else double(0),
+                 minStrings = if (!is.na(attrs["min_words"]))
+                     as.numeric(attrs["min_words"]) else double(0),
+                 dataAllowPaste = if (!is.na(attrs["allow_paste"]))
+                     as.logical(attrs["allow_paste"]) else logical(0)
     )
 }
 
+create_order_object <- function(file, attrs) {
+    sect <- get_task_section(file, "question")
+    html <- transform_to_html(sect)
+    choices <- get_task_section(file, "answers")
+    print(attrs["choice_identifiers"])
+    object = new("Order", identifier = unname(attrs["identifier"]),
+                 title = unname(attrs["title"]),
+                 content = html,
+                 points = as.numeric(attrs["points"]),
+                 prompt = unname(attrs["prompt"]),
+                 choices = choices,
+                 choices_identifiers = if (!is.na(attrs["choice_identifiers"]))
+                     unname(attrs["choice_identifiers"]) else character(0),
+                 shuffle = if (is.null(unname(attrs["shuffle"])))
+                     unname(attrs["shuffle"]) else TRUE
+)
+}
+
+create_dp_object <- function(file, attrs) {
+    sect <- get_task_section(file, "question")
+    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
+                                       smart = TRUE)))
+    object = new("DirectedPair", identifier = unname(attrs["identifier"]),
+                 title = unname(attrs["title"]),
+                 content = html,
+                 points = as.numeric(points),
+                 prompt = unname(attrs["prompt"]),
+                 choices = choices,
+                 choice_identifiers = choice_ids,
+                 shuffle = if (is.null(unname(attrs["shuffle"])))
+                     unname(attrs["shuffle"]) else TRUE,
+                 orientation = unname(attrs["orientation"]))
+}
 
 # get content of section
 # restun text chank
@@ -185,4 +221,24 @@ get_task_attributes <- function(file) {
         attrs <- c(item, attrs)
     }
     return(attrs)
+}
+
+transform_to_html <- function(sec) {
+    # write section in temp md file
+    mdtempfile <- "_deleteme.md"
+    writeLines(sec, mdtempfile)
+    # read via pandoc
+    # it writes result of transformation to temp html file
+    htmltempfile <- "_deleteme.html"
+    options <- c("-o", htmltempfile, "-f", "markdown", "-t", "html", "--mathml")
+    # html <- as.list(HTML(rmarkdown::pandoc_convert(mdtempfile, options=options)))
+    html <- rmarkdown::pandoc_convert(mdtempfile, options=options)
+    # delete temp md file
+    unlink(mdtempfile)
+    # read html file
+    sect <- as.list(readLines("_deleteme.html"))
+    # delete temp html file
+    unlink("_deleteme.html")
+    # return lines of processed section
+    return(sect)
 }
