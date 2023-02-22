@@ -1,7 +1,6 @@
 question
 ==========
-In economics it is generallz believed that the main objective of
-a Public Sector Financial Companz like Bank is to:
+In economics it is generallz believed that the main objective of  Public Sector Financial Companz like Bank is to:
 attributes
 ==========
 identifier: eco

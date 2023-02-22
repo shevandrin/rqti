@@ -8,6 +8,7 @@ attributes
 identifier: test 2
 type: multiplechoice
 title: Economics
+points: 1,2,0,0
 answers
 ======
 scarcity vs resources

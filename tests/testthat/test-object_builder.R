@@ -49,8 +49,7 @@ test_that("Testing function of get_task_section", {
 test_that("create_question_content", {
     path = test_path("file/test_sc_example1.md")
     cqc <- create_question_content(path)
-    print(cqc)
-    example <- new("SingleChoice", content = list("<p>In economics it is generallz believed that the main objective of\na Public Sector Financial Companz like Bank is to:</p>"),
+    example <- new("SingleChoice", content = list("<p>In economics it is generallz believed that the main objective of<br>","Public Sector Financial Companz like Bank is to:</p>"),
                    points = 1,
                    identifier = "eco",
                    qti_version = "v2p1",
@@ -118,9 +117,8 @@ test_that("create_question_content", {
 test_that("create_question_content", {
     path = test_path("file/test_mc_example.md")
     cqc <- create_question_content(path)
-    print(cqc)
     example <- new("MultipleChoice", content = list("<p>In economics it is generallz believed that the main objective of\na Public Sector Financial Companz like Bank is to:</p>"),
-                   points = 1,
+                   points = c(1, 2, 0, 0),
                    identifier = "test 2",
                    qti_version = "v2p1",
                    title = "Economics",
@@ -145,13 +143,11 @@ test_that("create_question_content", {
 test_that("create_question_content", {
     path = test_path("file/test_essay_example.md")
     cqc <- create_question_content(path)
-    print (cqc)
     example <- new("Essay", content = list("<p>Defining Good Students Means More Than Just Grades.</p>"),
                    points = 10,
                    identifier = "test 2",
                    qti_version = "v2p1",
-                   title = "Definition Essay",
-                   dataAllowPaste = FALSE
+                   title = "Definition Essay"
                    )
     expect_equal(cqc, example)
 })
