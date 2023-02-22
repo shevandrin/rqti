@@ -8,7 +8,7 @@ test_that("Testing create_item_body_single_choice", {
     example <- "<itemBody>
     <p>Look at the text in the picture.</p>
     <p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>
-    <choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\">
+    <choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\" orientation=\"vertical\">
     <prompt>What does it say?</prompt>
     <simpleChoice identifier=\"ChoiceA\">You must stay with your luggage at all times.</simpleChoice>
     <simpleChoice identifier=\"ChoiceB\">Do not let someone else look after your luggage.</simpleChoice>

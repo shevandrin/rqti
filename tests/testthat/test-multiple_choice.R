@@ -8,7 +8,8 @@ test_that("Testing create_item_body_multiplechoice", {
               prompt = "Which of the following elements are used to form water?")
 
     example <- '<itemBody>
-<choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0">
+<choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0"
+orientation="vertical">
 <prompt>Which of the following elements are used to form water?</prompt>
 <simpleChoice identifier="H">Hydrogen</simpleChoice>
 <simpleChoice identifier="He">Helium</simpleChoice>

@@ -11,7 +11,7 @@ title: Economics
 points: 1,2,0,0
 answers
 ======
-scarcity vs resources
-wages vs prices
-wants vs needs
-consumers vs producers
+scarcity vs. resources
+wages vs. prices
+wants vs. needs
+consumers vs. producers

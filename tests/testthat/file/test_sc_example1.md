@@ -1,13 +1,12 @@
 question
 ==========
-In economics it is generallz believed that the main objective of  Public Sector Financial Companz like Bank is to:
+This is a mock question  
+In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:
 attributes
 ==========
 identifier: eco
 type: singlechoice
 title: Economics and Physic
-number: 145
-num: 12, 13, 1.23
 answers
 ======
 Employ more and more people
