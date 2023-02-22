@@ -4,7 +4,6 @@ In economics it is generallz believed that the main objective of
 a Public Sector Financial Companz like Bank is to:
 attributes
 ==========
-identifier: eco
 type: singlechoice
 title: Economics and Physic
 number: 145
