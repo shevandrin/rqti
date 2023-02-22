@@ -128,7 +128,8 @@ create_mc_object <- function(file, attrs) {
     sect <- get_task_section(file, "question")
     html <- transform_to_html(sect)
     choices <- get_task_section(file, "answers")
-    choice_ids <- str_trim(str_split_1(attrs["choice_identifiers"], ","))
+    choice_ids <- attrs["choice_identifiers"]
+    if (!is.na(choice_ids)) choice_ids <- str_trim(str_split_1(choice_ids, ","))
     points <- str_trim(str_split_1(attrs["points"], ","))
     object = new("MultipleChoice", identifier = unname(attrs["identifier"]),
                  title = unname(attrs["title"]),
