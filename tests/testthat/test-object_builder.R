@@ -11,34 +11,34 @@ test_that("Testing function of get-task-attribute", {
     expect_equal(gta, example)
 })
 test_that("Testing function of get-task-attribute", {
-    path = test_path("file/input_gts1.md")
+    path = test_path("file/test_fun_gts.md")
     gta <- get_task_attributes(get_task_section(readLines(path), "attributes"))
     example <- sort(setNames(c("singlechoice","Economics and Physic","145","12, 13, 1.23"),c("type","title","number", "num")))
     expect_equal(gta, example)
 })
 test_that("Testing function of get-task-attribute", {
-    path = test_path("file/input_gts1.md")
+    path = test_path("file/test_fun_gts.md")
     gta <- get_task_section(readLines(path), "attributes")
     example <- paste(c("type","title","number", "num"), c("singlechoice","Economics and Physic","145","12, 13, 1.23"), sep=": ", collapse = NULL)
     expect_equal(gta, example)
 })
 # Testing function of get_task_section -----------------------------------------
 test_that("Testing function of get_task_section", {
-    path = test_path("file/input_gts1.md")
+    path = test_path("file/test_fun_gts.md")
     gts <- get_task_section(readLines(path), "question")
     x <- "In economics it is generallz believed that the main objective of\na Public Sector Financial Companz like Bank is to:"
     example <- strsplit(x, "\n")[[1]]
     expect_equal(gts, example)
 })
 test_that("Testing function of get_task_section", {
-    path = test_path("file/input_gts1.md")
+    path = test_path("file/test_fun_gts.md")
     gts <- get_task_section(readLines(path), "attributes")
     x <- "type: singlechoice\ntitle: Economics and Physic\nnumber: 145\nnum: 12, 13, 1.23"
     example <- strsplit(x, "\n")[[1]]
     expect_equal(gts, example)
 })
 test_that("Testing function of get_task_section", {
-    path = test_path("file/input_gts1.md")
+    path = test_path("file/test_fun_gts.md")
     gts <- get_task_section(readLines(path), "answers")
     x <- "Employ more and more people\nMaximize total production\nMaximize total profits\nSell the goods at subsidized cost"
     example <- strsplit(x, "\n")[[1]]
@@ -47,9 +47,10 @@ test_that("Testing function of get_task_section", {
 # Testing function of create_question_content ----------------------------------
 # SingleChoice
 test_that("create_question_content", {
-    path = test_path("file/input_gts.md")
+    path = test_path("file/test_sc_example1.md")
     cqc <- create_question_content(path)
-    example <- new("SingleChoice", content = list("<p>In economics it is generallz believed that the main objective of\na Public Sector Financial Companz like Bank is to:</p>\n"),
+    print(cqc)
+    example <- new("SingleChoice", content = list("<p>In economics it is generallz believed that the main objective of\na Public Sector Financial Companz like Bank is to:</p>"),
                    points = 1,
                    identifier = "eco",
                    qti_version = "v2p1",
@@ -70,9 +71,9 @@ test_that("create_question_content", {
     expect_equal(cqc, example)
 })
 test_that("create_question_content", {
-    path = test_path("file/test_object1.md")
+    path = test_path("file/test_sc_example2.md")
     cqc <- create_question_content(path)
-     example <- new("SingleChoice", content = list("<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>"),
+    example <- new("SingleChoice", content = list("<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>"),
                    points = 2,
                    identifier = "sample 2",
                    qti_version = "v2p1",
@@ -93,7 +94,7 @@ test_that("create_question_content", {
     expect_equal(cqc, example)
 })
 test_that("create_question_content", {
-    path = test_path("file/test_object2.md")
+    path = test_path("file/test_sc_example3.md")
     cqc <- create_question_content(path)
     example <- new("SingleChoice", content = list("<p>Which of the following is a market economy primarily based on?</p>"),
                    points = 3,
@@ -115,7 +116,7 @@ test_that("create_question_content", {
 })
 # MultipleChoice
 test_that("create_question_content", {
-    path = test_path("file/test_object1-mc.md")
+    path = test_path("file/test_mc_example.md")
     cqc <- create_question_content(path)
     print(cqc)
     example <- new("MultipleChoice", content = list("<p>In economics it is generallz believed that the main objective of\na Public Sector Financial Companz like Bank is to:</p>"),
@@ -142,18 +143,15 @@ test_that("create_question_content", {
 })
 # Essay
 test_that("create_question_content", {
-    path = test_path("file/test_object1-essay.md")
+    path = test_path("file/test_essay_example.md")
     cqc <- create_question_content(path)
-    print(cqc)
+    print (cqc)
     example <- new("Essay", content = list("<p>Defining Good Students Means More Than Just Grades.</p>"),
                    points = 10,
                    identifier = "test 2",
                    qti_version = "v2p1",
                    title = "Definition Essay",
-                   expectedlength = 55,
-                   expectedlines = 55,
                    dataAllowPaste = FALSE
-
-    )
+                   )
     expect_equal(cqc, example)
 })
