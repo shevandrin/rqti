@@ -1,10 +1,18 @@
-#
+
+#' Create S4 object according to content of markdown file
+#'
+#' @param file a file with markdown description of question.
 #' @importFrom commonmark markdown_html
 #' @importFrom htmltools HTML p
 #' @importFrom stringr str_extract_all str_sub str_trim str_split_1
+#' @import rmarkdown
 #' @import yaml
-
-create_question_content <- function(file) {
+#' @importFrom utils read.delim
+#' @return an instance of the S4 object (SingleChoice, MultipleChoice,
+#'   Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
+#'   DirectedPair).
+#' @export
+create_question_object <- function(file) {
     file <- readLines(file)
     attrs_sec <- get_task_section(file, "attributes")
     attrs <- get_task_attributes(attrs_sec)
@@ -14,7 +22,8 @@ create_question_content <- function(file) {
                      "multiplechoice" = create_mc_object(file, attrs),
                      "essay" = create_essay_object(file, attrs),
                      "order" = create_order_object(file, attrs),
-                     "directedpair" = create_dp_object(file, attrs)
+                     "directedpair" = create_dp_object(file, attrs),
+                     "multiplechoicetable" = create_mctable_object(file, attrs)
                     )
 }
 
@@ -22,7 +31,7 @@ create_entry_object <- function(file, attrs) {
     file <- get_task_section(file, "question")
     file <- gsub("<<", "<entry>", file)
     file <- gsub(">>", "</entry>", file)
-    html <- transform_to_html(sect)
+    html <- transform_to_html(file)
     count_all_gaps <- length(unlist(str_extract_all(html, "<entry>")))
     ids <- make_ids(count_all_gaps, "response")
     end <- unlist(gregexpr("<entry>", html)) - 1L
@@ -168,7 +177,6 @@ create_order_object <- function(file, attrs) {
     sect <- get_task_section(file, "question")
     html <- transform_to_html(sect)
     choices <- get_task_section(file, "answers")
-    print(attrs["choice_identifiers"])
     object = new("Order", identifier = unname(attrs["identifier"]),
                  title = unname(attrs["title"]),
                  content = html,
@@ -179,23 +187,70 @@ create_order_object <- function(file, attrs) {
                      unname(attrs["choice_identifiers"]) else character(0),
                  shuffle = if (is.null(unname(attrs["shuffle"])))
                      unname(attrs["shuffle"]) else TRUE
-)
+    )
 }
 
 create_dp_object <- function(file, attrs) {
     sect <- get_task_section(file, "question")
-    html <- as.list(HTML(markdown_html(sect, hardbreaks = FALSE,
-                                       smart = TRUE)))
+    html <- transform_to_html(sect)
+    answers <- get_task_section(file, "answers")
+    rows_ids <- make_ids(length(answers), "row")
+    cols_ids <- make_ids(length(answers), "col")
+    answers_identifiers <- paste(rows_ids, cols_ids)
+    parsed_answers <- sub(" ", "", unlist(strsplit(answers, "\\|")))
+    rows <- parsed_answers[c(TRUE, FALSE)]
+    cols <- parsed_answers[c(FALSE, TRUE)]
     object = new("DirectedPair", identifier = unname(attrs["identifier"]),
                  title = unname(attrs["title"]),
                  content = html,
-                 points = as.numeric(points),
+                 points = as.numeric(attrs["points"]),
                  prompt = unname(attrs["prompt"]),
-                 choices = choices,
-                 choice_identifiers = choice_ids,
+                 rows = rows,
+                 rows_identifiers = rows_ids,
+                 cols = cols,
+                 cols_identifiers = cols_ids,
+                 answers_identifiers = answers_identifiers,
                  shuffle = if (is.null(unname(attrs["shuffle"])))
-                     unname(attrs["shuffle"]) else TRUE,
-                 orientation = unname(attrs["orientation"]))
+                     unname(attrs["shuffle"]) else TRUE
+    )
+
+}
+
+create_mctable_object <- function(file, attrs) {
+    sect <- get_task_section(file, "question")
+    html <- transform_to_html(sect)
+    table <- read_table(get_task_section(file, "answers"))
+    rows <- table[,1]
+    cols <- colnames(table)[-1]
+    rows_ids <- make_ids(length(rows), "row")
+    cols_ids <- make_ids(length(cols), "col")
+    answers_identifiers <- c()
+    answers_scores <- c()
+    for (i in 1:nrow(table)) {
+        for (j in 2:ncol(table)) {
+            points <- table[i, j]
+            if (points > 0) {
+                answer_pair = paste(rows_ids[i], cols_ids[j - 1L])
+                answers_identifiers = c(answers_identifiers, answer_pair)
+                answers_scores <- c(answers_scores, points)
+            }
+        }
+    }
+    object = new("MultipleChoiceTable", identifier = attrs["identifier"],
+                 title = unname(attrs["title"]),
+                 content = html,
+                 prompt = unname(attrs["prompt"]),
+                 points = sum(answers_scores),
+                 rows = rows,
+                 rows_identifiers = rows_ids,
+                 cols = cols,
+                 cols_identifiers = cols_ids,
+                 answers_identifiers = answers_identifiers,
+                 answers_scores = answers_scores,
+                 shuffle = if (!is.null(unname(attrs["shuffle"])))
+                     as.logical(unname(attrs["shuffle"])) else TRUE
+    )
+
 }
 
 # get content of section
@@ -208,7 +263,10 @@ get_task_section <- function(file, section) {
     end <- sec_bord[ind + 1L] - 2L
     if (is.na(end)) end <- length(file)
     result <- file[begin:end]
-    result <- result[sapply(result, nchar, USE.NAMES = FALSE) !=  0]
+    if (section != "question") {
+       result <- result[sapply(result, nchar, USE.NAMES = FALSE) !=  0]
+    }
+    return(result)
 }
 
 # get attributes of question
@@ -242,4 +300,21 @@ transform_to_html <- function(sec) {
     unlink("_deleteme.html")
     # return lines of processed section
     return(sect)
+}
+
+read_table <- function(file, stringsAsFactors = FALSE, strip.white = TRUE, ...){
+    if (length(file) > 1) {
+        lines <- file
+    } else if (grepl('\n', file)) {
+        con <- textConnection(file)
+        lines <- readLines(con)
+        close(con)
+    } else {
+        lines <- readLines(file)
+    }
+    lines <- lines[!grepl('^[[:blank:]+-=:_|]*$', lines)]
+    lines <- gsub('(^\\s*?\\|)|(\\|\\s*?$)', '', lines)
+    read.delim(text = paste(lines, collapse = '\n'), sep = '|',
+               stringsAsFactors = stringsAsFactors,
+               strip.white = strip.white, ...)
 }
