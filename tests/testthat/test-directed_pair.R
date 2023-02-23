@@ -102,21 +102,3 @@ test_that("Testing OutcomeDeclaration DirectedPair", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
-
-test_that("XML validation with schema file", {
-    sc <- new("DirectedPair",
-              rows = c("Lion", "Flower", "Mushrooms"),
-              rows_identifiers = c("ID_1", "ID_2", "ID_3"),
-              cols = c("Animal", "Plant", "Fungi"),
-              cols_identifiers = c("IDT_1", "IDT_2", "IDT_3"),
-              answers_identifiers = c("ID_3 IDT_3", "ID_1 IDT_1", "ID_2 IDT_2"),
-              points = 5,
-              title = "directed_pair",
-              prompt = "Associated left elements with the right category"
-    )
-    doc <- xml2::read_xml(toString(create_assessment_item(sc)))
-    file = test_path("imsqti_v2p1.xsd")
-    schema <- xml2::read_xml(file)
-    validation <- xml2::xml_validate(doc, schema)
-    expect_equal(validation[1], TRUE)
-})

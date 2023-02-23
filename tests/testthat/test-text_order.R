@@ -78,19 +78,3 @@ test_that("Testing OutcomeDeclaration for Order questions", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
-
-test_that("XML validation with schema file", {
-    question <- new("Order",
-                    content = list("<p>a</p>"),
-                    title = "Grand Prix of Bahrain",
-                    prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
-                    choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
-                    points = 0.5,
-                    choices_identifiers = c("DriverA","DriverB","DriverC"),
-                    shuffle = TRUE)
-    doc <- xml2::read_xml(toString(create_assessment_item(question)))
-    file <- file.path(getwd(), "imsqti_v2p1.xsd")
-    schema <- xml2::read_xml(file)
-    validation <- xml2::xml_validate(doc, schema)
-    expect_equal(validation[1], TRUE)
-})

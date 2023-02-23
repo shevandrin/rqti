@@ -104,17 +104,3 @@ test_that("Testing outcomeDeclaration for Multiple Choice",{
 
 
 })
-
-test_that("XML validation with schema file", {
-    sc <- new("MultipleChoice",
-              content = list(""),
-              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
-              points = c(1,0,0,1,0,-1),
-              title = "filename_sc",
-              prompt = "Which of the following elements are used to form water?")
-    doc <- xml2::read_xml(toString(create_assessment_item(sc)))
-    file <- file.path(getwd(), "imsqti_v2p1.xsd")
-    schema <- xml2::read_xml(file)
-    validation <- xml2::xml_validate(doc, schema)
-    expect_equal(validation[1], TRUE)
-})

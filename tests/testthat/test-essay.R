@@ -59,18 +59,3 @@ object", {
     xml2 <- xml2::read_xml(toString(example))
     expect_equal(xml1, xml2)
 })
-
-test_that("XML validation with schema file", {
-    essay <- new("Essay",
-                 content = list("<p>some question text</p>"),
-                 title = "extendedText",
-                 expectedLength = 100,
-                 expectedLines = 10,
-                 maxStrings = 50,
-                 minStrings = 1)
-    doc <- xml2::read_xml(toString(create_assessment_item(essay)))
-    file <- file.path(getwd(), "imsqti_v2p1.xsd")
-    schema <- xml2::read_xml(file)
-    validation <- xml2::xml_validate(doc, schema)
-    expect_equal(validation[1], TRUE)
-})

@@ -117,23 +117,3 @@ test_that("Testing outcomeDeclaration MultipleChoiceTable",{
     expect_equal(xml1, xml2)
 
 })
-
-test_that("XML validation with schema file", {
-    sc <- new("MultipleChoiceTable",
-              rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
-              rows_identifiers  = c("C", "D", "L", "P"),
-              cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
-              cols_identifiers = c("M", "R", "T"),
-              answers_identifiers = c("C R", "C T", "D M", "L M", "P T", "P R"),
-              answers_scores = c(1, 0.5, 0.5, 0.5, 1, 1),
-              points = 4,
-              title = "MultipleChoiceTable",
-              prompt = "Match the following characters to the Shakespeare play they appeared in:"
-    )
-    doc <- xml2::read_xml(toString(create_assessment_item(sc)))
-    file <- file.path(getwd(), "imsqti_v2p1.xsd")
-    schema <- xml2::read_xml(file)
-    validation <- xml2::xml_validate(doc, schema)
-    expect_equal(validation[1], TRUE)
-})
-

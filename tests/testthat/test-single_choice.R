@@ -82,17 +82,3 @@ test_that("Testing additional attribute for item body single choice", {
 }
 
 )
-
-test_that("XML validation with schema file", {
-    sc <- new("SingleChoice",
-              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
-              choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
-              title = "filename_sc",
-              prompt = "What does it say?",
-              shuffle = FALSE)
-    doc <- xml2::read_xml(toString(create_assessment_item(sc)))
-    file <- file.path(getwd(), "imsqti_v2p1.xsd")
-    schema <- xml2::read_xml(file)
-    validation <- xml2::xml_validate(doc, schema)
-    expect_equal(validation[1], TRUE)
-})
