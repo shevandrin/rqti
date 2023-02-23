@@ -32,6 +32,12 @@ create_entry_object <- function(file, attrs) {
     file <- gsub("<<", "<entry>", file)
     file <- gsub(">>", "</entry>", file)
     html <- transform_to_html(file)
+    html_ <- unlist(html)
+    text <- ""
+    for (s in html_) {
+        text <- paste(text, s)
+    }
+    html <- paste0(text, " ")
     count_all_gaps <- length(unlist(str_extract_all(html, "<entry>")))
     ids <- make_ids(count_all_gaps, "response")
     end <- unlist(gregexpr("<entry>", html)) - 1L
