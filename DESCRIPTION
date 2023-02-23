@@ -17,6 +17,7 @@ Imports:
     ids,
     yaml,
     commonmark,
+    rmarkdown,
     exams, servr, rstudioapi, RCurl, fs,
     purrr,
     stringr,
