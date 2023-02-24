@@ -94,7 +94,7 @@ create_gap_object <- function(params, id) {
                 score = if(!is.null(params$score))
                     params$score else double(0)
                 )
-        } else if (tolower(params$type) == "textgap") {
+        } else if (tolower(params$type) == "text") {
             new("TextGap", response_identifier = id,
                 response = params$response,
                 alternatives = if(!is.null(params$alternatives))
@@ -242,7 +242,7 @@ create_mctable_object <- function(file, attrs) {
             }
         }
     }
-    object = new("MultipleChoiceTable", identifier = attrs["identifier"],
+    object = new("MultipleChoiceTable", identifier = unname(attrs["identifier"]),
                  title = unname(attrs["title"]),
                  content = html,
                  prompt = unname(attrs["prompt"]),
