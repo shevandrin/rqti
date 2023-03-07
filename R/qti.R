@@ -48,11 +48,11 @@ create_item_body_essay <- function(object) {
     prompt <- create_prompt(object)
     ext_text <- tag("extendedTextInteraction",
                     list("responseIdentifier" = "RESPONSE",
-                         "expectedLength" = object@expectedLength,
-                         "expectedLines" = object@expectedLines,
-                         "maxStrings" = object@maxStrings,
-                         "minStrings" = object@minStrings,
-                         "data-allowPaste" = tolower(object@dataAllowPaste),
+                         "expectedLength" = object@expected_length,
+                         "expectedLines" = object@expected_lines,
+                         "maxStrings" = object@max_strings,
+                         "minStrings" = object@min_strings,
+                         "data-allowPaste" = tolower(object@data_allow_paste),
                                                     prompt))
     tag("itemBody", list(Map(createText, object@content), ext_text))
 }
@@ -182,14 +182,15 @@ create_prompt <- function(object) {
 #' @param object an instance of the S4 object (SingleChoice, MultipleChoice,
 #'   Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
 #'   DirectedPair).
-#'
+#' @param path a folder to store xml file
 #' @return xml document.
 #' @export
-create_qti_task <- function(object) {
+create_qti_task <- function(object, path = getwd()) {
+    if (!dir.exists(path)) dir.create(path)
     content <- create_assessment_item(object)
     print(content)
     doc <- xml2::read_xml(as.character(content))
-    path <- paste0("results/", object@identifier, ".xml")
+    path <- paste0(path, "/",object@identifier, ".xml")
     xml2::write_xml(doc, path)
     print(paste("see:", path))
 }
@@ -341,7 +342,6 @@ qti <- function(object) {
     dir.create(tdir)
     test_dir <- file.path(tools::file_path_as_absolute(tdir), "qti_test")
     dir.create(test_dir)
-    print(test_dir)
     if (length(object@files) > 0) {
         download_dir <- file.path(tools::file_path_as_absolute(test_dir), "downloads")
         dir.create(download_dir)

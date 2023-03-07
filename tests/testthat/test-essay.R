@@ -9,8 +9,8 @@ test_that("Testing createItemBody for the Essay object", {
                                                 </object>
                                                 </div>
                                                 "),
-              title = "extendedText",
-              expectedLength = 200,
+              title = "extended_text",
+              expected_length = 200,
               prompt = "Write Sam a postcard. Answer the questions. Write 25-35 words.")
     example <- "
                 <itemBody>
@@ -39,11 +39,11 @@ object", {
     essay <- new("Essay",
                  content = list("some question text"),
                  title = "extendedText",
-                 expectedLength = 100,
-                 expectedLines = 10,
-                 maxStrings = 50,
-                 minStrings = 1,
-                 dataAllowPaste = FALSE)
+                 expected_length = 100,
+                 expected_lines = 10,
+                 max_strings = 50,
+                 min_strings = 1,
+                 data_allow_paste = FALSE)
     example <- "
 <itemBody>
   some question text

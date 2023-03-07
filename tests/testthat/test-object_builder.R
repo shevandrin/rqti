@@ -61,9 +61,9 @@ test_that("Testing function of get_task_section", {
 
 # Testing function of create_question_content ----------------------------------
 # SingleChoice
-test_that("create_question_content", {
+test_that("create_question_object", {
     path <- test_path("file/test_sc_example1.md")
-    cqc <- create_question_content(path)
+    cqc <- create_question_object(path)
     expected <- new("SingleChoice",
                    content = list(
         "<p>This is a mock question<br />",
@@ -90,9 +90,9 @@ test_that("create_question_content", {
     expect_equal(cqc, expected)
 })
 
-test_that("create_question_content", {
+test_that("create_question_object", {
     path <- test_path("file/test_sc_example2.md")
-    cqc <- create_question_content(path)
+    cqc <- create_question_object(path)
     expected <- new("SingleChoice",
                    content = list(
     "<p>Which term is used to describe the study of how people make decisions",
@@ -117,9 +117,9 @@ test_that("create_question_content", {
     expect_equal(cqc, expected)
 })
 
-test_that("create_question_content", {
+test_that("create_question_object", {
     path <- test_path("file/test_sc_example3.md")
-    cqc <- create_question_content(path)
+    cqc <- create_question_object(path)
     expected <- new("SingleChoice", content = list(
     "<p>Which of the following is a market economy primarily based on?</p>"),
                    points = 3,
@@ -141,9 +141,9 @@ test_that("create_question_content", {
 })
 
 # MultipleChoice
-test_that("create_question_content", {
+test_that("create_question_object", {
     path <- test_path("file/test_mc_example.md")
-    cqc <- create_question_content(path)
+    cqc <- create_question_object(path)
     expected <- new("MultipleChoice",
                    content = list(
     "<p>When deciding between renovating a water treatment plant or building",
@@ -172,9 +172,9 @@ test_that("create_question_content", {
 })
 
 # Essay
-test_that("create_question_content", {
+test_that("create_question_object", {
     path <- test_path("file/test_essay_example.md")
-    cqc <- create_question_content(path)
+    cqc <- create_question_object(path)
     expected <- new("Essay",
                     content = list(
                 "<p>Defining Good Students Means More Than Just Grades.</p>"),

@@ -166,15 +166,15 @@ create_essay_object <- function(file, attrs) {
                  title = unname(attrs["title"]),
                  content = html,
                  points = as.numeric(attrs["points"]),
-                 expectedLength = if (!is.na(attrs["length"]))
+                 expected_length = if (!is.na(attrs["length"]))
                      as.numeric(attrs["length"]) else double(0),
-                 expectedLines = if (!is.na(attrs["lines"]))
+                 expected_lines = if (!is.na(attrs["lines"]))
                      as.numeric(attrs["lines"]) else double(0),
-                 maxStrings = if (!is.na(attrs["max_words"]))
+                 max_strings = if (!is.na(attrs["max_words"]))
                      as.numeric(attrs["max_words"]) else double(0),
-                 minStrings = if (!is.na(attrs["min_words"]))
+                 min_strings = if (!is.na(attrs["min_words"]))
                      as.numeric(attrs["min_words"]) else double(0),
-                 dataAllowPaste = if (!is.na(attrs["allow_paste"]))
+                 data_allow_paste = if (!is.na(attrs["allow_paste"]))
                      as.logical(attrs["allow_paste"]) else logical(0)
     )
 }
@@ -295,7 +295,7 @@ transform_to_html <- function(sec) {
     # read via pandoc
     # it writes result of transformation to temp html file
     htmltempfile <- "_deleteme.html"
-    options <- c("-o", htmltempfile, "-f", "markdown", "-t", "html", "--mathml")
+    options <- c("-o", htmltempfile, "-f", "markdown", "-t", "html", "--mathml", "+RTS", "-M30m")
     # html <- as.list(HTML(rmarkdown::pandoc_convert(mdtempfile, options=options)))
     html <- rmarkdown::pandoc_convert(mdtempfile, options=options)
     # delete temp md file
