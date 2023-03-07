@@ -5,3 +5,4 @@
 ^LICENSE\.md$
 README.Rmd
 s4_example.R
+^man-roxygen$

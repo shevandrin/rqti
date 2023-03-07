@@ -4,12 +4,14 @@
 \alias{create_qti_task}
 \title{Create XML file for question specification}
 \usage{
-create_qti_task(object)
+create_qti_task(object, path = getwd())
 }
 \arguments{
 \item{object}{an instance of the S4 object (SingleChoice, MultipleChoice,
 Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
 DirectedPair).}
+
+\item{path}{a folder to store xml file}
 }
 \value{
 xml document.

@@ -1,3 +1,24 @@
+#' Class "MultipleChoice"
+#'
+#' Abstract class `MuiltipleChoice` is responsible for creating multiple choice
+#' assessment task according to QTI 2.1.
+#' @template AISlotsTemplate
+#' @template ChoiceSlotsTemplate
+#' @template MCSlotsTemplate
+#' @examples
+#' mc <- new("MultipleChoice",
+#'           content = list("<p>Pick up the right options</p>"),
+#'           choices = c("option 1", "option 2", "option 3", "option 4"),
+#            orientation = "vertical",
+#'           title = "single_choice_task",
+#'           shuffle = FALSE,
+#'           points = c(0.5, 0,5, 0, 0),
+#'           identifier = "mc_example")
+#' @name MultipleChoice-class
+#' @rdname MultipleChoice-class
+#' @aliases MultipleChoice
+#' @include AssessmentItem.R Choice.R
+#' @exportClass MultipleChoice
 #' @import methods
 #' @importFrom stats setNames
 setClass("MultipleChoice", contains = "Choice",

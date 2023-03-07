@@ -3,7 +3,48 @@
 \docType{class}
 \name{Essay-class}
 \alias{Essay-class}
-\title{Title}
+\alias{Essay}
+\title{Class "Essay"}
 \description{
-Title
+Abstract class \code{Essay} is responsible for creating essay type of assessment
+task according to QTI 2.1.
+}
+\section{Slots}{
+
+\describe{
+\item{\code{content}}{list; a list of content to form text of question, includes text
+(characters) or instances of Gap-objects: \linkS4class{TextGap}, \link{NumericGap},
+InlineChoice}
+
+\item{\code{identifier}}{string; identifier of assessment task}
+
+\item{\code{title}}{string; a title of xml file}
+
+\item{\code{prompt}}{string, optional; simple question text, consisting of one
+paragraph, can supplement or replace content}
+
+\item{\code{qti_version}}{string; QTI information model version; default 'v2p1'}
+
+\item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
+input field in content delivery engine}
+
+\item{\code{expected_lines}}{numeric, optional; is responsible to set a number of
+rows of text input field in content delivery engine}
+
+\item{\code{max_strings}}{numeric, optional; is responsible to set a max number of
+words that candidate can write in the text input field}
+
+\item{\code{min_strings}}{numeric, optional; is responsible to set a min number of
+words that candidate should write in the text input field}
+
+\item{\code{data_allow_paste}}{boolean, optional; determines whether it is possible
+for candidate to copy text into text input field; default \code{FALSE}}
+}}
+
+\examples{
+es <- new("Essay", content = list("<p>Devolop some idea and write it down in
+                                  the text field</p>"),
+          title = "essay_example",
+          max_strings = 100,
+          points = 3)
 }

@@ -1,5 +1,27 @@
-# define class MultipleChoiceTable to specify match table that supports
-# choosing many options in rows and columns
+#' Class "SingleChoice"
+#'
+#' Abstract class `MultipleChoiceTable` is responsible for creating assessment
+#' task according to QTI 2.1. with table of answer options, where many right
+#' answers in each row and column are possible
+#' @template AISlotsTemplate
+#' @template MTSlotsTemplate
+#' @template MCTSlotsTemplate
+#' @examples
+#' mt <- new("MultipleChoiceTable", content = list("<p>Match table task</p>",
+#'                                                 "<i>table description</i>"),
+#'           rows = c("row1", "row2", "row3"),
+#'           rows_identifiers = c("a", "b", "c"),
+#'           cols = c("alfa", "beta", "gamma"),
+#'           cols_identifiers = c("a", "b", "c"),
+#'           answers_identifiers = c("a a", "b b", "b c"),
+#'           points = 5,
+#'           title = "multiple_choice_table",
+#'           identifier = "mc_table_example")
+#' @name MultipleChoiceTable-class
+#' @rdname MultipleChoiceTable-class
+#' @aliases MultipleChoiceTable
+#' @exportClass MultipleChoiceTable
+#' @include AssessmentItem.R MatchTable.R
 #' @importFrom stats setNames
 setClass("MultipleChoiceTable", contains = "MatchTable",
          slots = list(mapping = "numeric"))
@@ -7,11 +29,15 @@ setClass("MultipleChoiceTable", contains = "MatchTable",
 # constructor
 setMethod("initialize", "MultipleChoiceTable", function(.Object, ...) {
     .Object <- callNextMethod()
-    number_wrong_options <- length(.Object@rows) * length(.Object@cols) - length(.Object@answers_identifiers)
+    number_wrong_options <- length(.Object@rows) * length(.Object@cols) -
+        length(.Object@answers_identifiers)
     wrong_scores <- - sum(.Object@answers_scores) / number_wrong_options
-    ids <- make_ids_collacations(.Object@rows_identifiers, .Object@cols_identifiers)
-    ordered_ids <- c(.Object@answers_identifiers, setdiff(ids, .Object@answers_identifiers))
-    .Object@mapping <- c(.Object@answers_scores, rep(wrong_scores, number_wrong_options))
+    ids <- make_ids_collacations(.Object@rows_identifiers,
+                                 .Object@cols_identifiers)
+    ordered_ids <- c(.Object@answers_identifiers,
+                     setdiff(ids, .Object@answers_identifiers))
+    .Object@mapping <- c(.Object@answers_scores, rep(wrong_scores,
+                                                     number_wrong_options))
     .Object@mapping <- setNames(.Object@mapping, ordered_ids)
     validObject(.Object)
     .Object

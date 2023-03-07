@@ -1,6 +1,27 @@
-# derive sc class (contains choice), use solution slot and set it to 1
+#' Class "SingleChoice"
+#'
+#' Abstract class `SingleChoice` is responsible for creating single choice
+#' assessment task according to QTI 2.1.
+#' @template AISlotsTemplate
+#' @template ChoiceSlotsTemplate
+#' @template SCSlotsTemplate
+#' @examples
+#' sc <- new("SingleChoice",
+#'           content = list("<p>Pick up the right option</p>"),
+#'           choices = c("option 1", "option 2", "option 3", "option 4"),
+#            orientation = "vertical",
+#'           title = "single_choice_task",
+#'           shuffle = FALSE,
+#'           points = 2,
+#'           identifier = "sc_example")
+#' @name SingleChoice-class
+#' @rdname SingleChoice-class
+#' @aliases SingleChoice
+#' @exportClass SingleChoice
+#' @include AssessmentItem.R Choice.R
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
+
 # constructor
 setMethod("initialize", "SingleChoice", function(.Object, ...) {
     .Object <- callNextMethod()

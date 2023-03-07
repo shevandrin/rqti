@@ -1,4 +1,13 @@
-# define class MatchTable for building an order type question
+#' Class "MatchTable"
+#'
+#' Abstract class `MatchTable` is never to be generated, only derived classes
+#' OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are meaningful.
+#' @template MTSlotsTemplate
+#' @inheritSection AssessmentItem-class Warning
+#' @name MatchTaable-classs
+#' @rdname MatchTable-class
+#' @aliases MatchTable
+#' @include AssessmentItem.R
 setClass("MatchTable", contains = "AssessmentItem",
          slot = list(rows = "character",
                      rows_identifiers = "character",

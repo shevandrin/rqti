@@ -3,21 +3,32 @@
 \docType{class}
 \name{AssessmentItem-class}
 \alias{AssessmentItem-class}
-\title{Root element assessmentItem for xml task description}
+\alias{AssessmentItem}
+\title{Class AssessmentItem}
 \description{
-Root element assessmentItem for xml task description according to QTI 2.1
+Abstract class \code{AssessmentItem} is responsible for creating a root element
+'assessmentItem' in xml task description according to QTI 2.1. This class is
+never to be generated, only derived classes meaningful.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{text}}{an object Text with}
+\item{\code{content}}{list; a list of content to form text of question, includes text
+(characters) or instances of Gap-objects: \linkS4class{TextGap}, \link{NumericGap},
+InlineChoice}
 
-\item{\code{points}}{Number of points for the whole task}
+\item{\code{identifier}}{string; identifier of assessment task}
 
-\item{\code{title}}{Title of the file}
+\item{\code{title}}{string; a title of xml file}
 
-\item{\code{identifier}}{file id}
+\item{\code{prompt}}{string, optional; simple question text, consisting of one
+paragraph, can supplement or replace content}
 
-\item{\code{qti_version}}{qti information model version}
+\item{\code{qti_version}}{string; QTI information model version; default 'v2p1'}
 }}
+
+\section{Warning}{
+ This class is not useful in itself, but some classes derive
+from it.
+}
 

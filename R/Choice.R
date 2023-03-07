@@ -1,5 +1,13 @@
-#define general class choice (at some point should contain a more abstract class
-#"exercise") ' @include AssessmentItem.R '
+#' Class "Choice"
+#'
+#' Abstract class `Choice` is never to be generated, only derived classes [SingleChoice] and
+#' MultipleChoice are meaningful.
+#' @template ChoiceSlotsTemplate
+#' @inheritSection AssessmentItem-class Warning
+#' @name Choice-class
+#' @rdname Choice-class
+#' @aliases Choice
+#' @include AssessmentItem.R
 setClass("Choice", contains = "AssessmentItem",
          slots = c(choices = "character", shuffle = "logical",
                    choice_identifiers = "character",

@@ -2,6 +2,7 @@
 #'
 #' Abstract class `Essay` is responsible for creating essay type of assessment
 #' task according to QTI 2.1.
+#' @template AISlotsTemplate
 #' @template EssaySlotsTemplate
 #' @examples
 #' es <- new("Essay", content = list("<p>Devolop some idea and write it down in

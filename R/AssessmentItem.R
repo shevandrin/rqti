@@ -1,17 +1,15 @@
-#' Root element assessmentItem for xml task description
+#' Class AssessmentItem
 #'
-#' Root element assessmentItem for xml task description according to QTI 2.1
-#'
+#' Abstract class `AssessmentItem` is responsible for creating a root element
+#' 'assessmentItem' in xml task description according to QTI 2.1. This class is
+#' never to be generated, only derived classes meaningful.
 #' @importFrom ids adjective_animal
-#' @slot text an object Text with
-#'
-#' @slot points Number of points for the whole task
-#' @slot title Title of the file
-#' @slot identifier file id
-#' @slot qti_version qti information model version
+#' @template AISlotsTemplate
+#' @section Warning: This class is not useful in itself, but some classes derive
+#'   from it.
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
-#' @include Text.R
+#' @aliases AssessmentItem
 setClass("AssessmentItem", slots = c(content = "list", prompt = "character",
                                      points = "numeric",
                                      title = "character",
