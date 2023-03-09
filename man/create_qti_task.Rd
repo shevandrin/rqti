@@ -4,18 +4,30 @@
 \alias{create_qti_task}
 \title{Create XML file for question specification}
 \usage{
-create_qti_task(object, path = getwd())
+create_qti_task(object,
+                dir = NULL,
+                verification = FALSE)
 }
 \arguments{
-\item{object}{an instance of the S4 object (SingleChoice, MultipleChoice,
-Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
-DirectedPair).}
+\item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
+\link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable},
+\link{DirectedPair}).}
 
-\item{path}{a folder to store xml file}
+\item{dir}{string, optional; a folder to store xml file; working directory by
+default}
+
+\item{verification}{boolean, optional; to check validity of xml file, default
+\code{FALSE}}
 }
 \value{
 xml document.
 }
 \description{
 Create XML file for question specification
+}
+\examples{
+\dontrun{
+essay <- new("Essay", prompt = "Test task", title = "Essay")
+create_qti_task(essay, "result", "TRUE")
+}
 }

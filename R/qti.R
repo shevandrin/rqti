@@ -179,18 +179,38 @@ create_prompt <- function(object) {
 
 #' Create XML file for question specification
 #'
-#' @param object an instance of the S4 object (SingleChoice, MultipleChoice,
-#'   Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
-#'   DirectedPair).
-#' @param path a folder to store xml file
+#' @usage create_qti_task(object,
+#'                 dir = NULL,
+#'                 verification = FALSE)
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Entry], [Order], [OneInRowTable], [OneInColTable], [MultipleChoiceTable],
+#'   [DirectedPair]).
+#' @param dir string, optional; a folder to store xml file; working directory by
+#'   default
+#' @param verification boolean, optional; to check validity of xml file, default
+#'   `FALSE`
 #' @return xml document.
+#' @examples
+#' \dontrun{
+#' essay <- new("Essay", prompt = "Test task", title = "Essay")
+#' create_qti_task(essay, "result", "TRUE")
+#' }
 #' @export
-create_qti_task <- function(object, path = getwd()) {
-    if (!dir.exists(path)) dir.create(path)
+create_qti_task <- function(object, dir = NULL, verification = FALSE) {
+    if (is.null(dir)) dir <- getwd()
+    if (!dir.exists(dir)) dir.create(dir)
     content <- create_assessment_item(object)
     print(content)
     doc <- xml2::read_xml(as.character(content))
-    path <- paste0(path, "/",object@identifier, ".xml")
+    if (verification) {
+        ver <- verify_qti(doc)
+        if (!ver) {
+            msg <- cat("xml file is not valid. See details:\n",
+                       attributes(ver))
+            return(msg)
+        }
+    }
+    path <- paste0(dir, "/",object@identifier, ".xml")
     xml2::write_xml(doc, path)
     print(paste("see:", path))
 }
@@ -363,4 +383,14 @@ qti <- function(object) {
     utils::zip("mock_test.zip", list.files(test_dir))
     setwd(wd)
     file.copy(file.path(test_dir, "mock_test.zip"), "exams/", recursive = TRUE)
-    }
+}
+
+# function to verify xml with xsd scheme
+verify_qti <- function(doc) {
+    file <- file.path(getwd(), "tests/testthat/imsqti_v2p1.xsd")
+    print(file)
+    schema <- xml2::read_xml(file)
+    validation <- xml2::xml_validate(doc, schema)
+    ifelse ((validation[1]), return(validation[1]), return(validation))
+}
+
