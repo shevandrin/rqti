@@ -129,10 +129,10 @@ test_that("XML validation with schema file Essay", {
     essay <- new("Essay",
                  content = list("<p>some question text</p>"),
                  title = "extendedText",
-                 expectedLength = 100,
-                 expectedLines = 10,
-                 maxStrings = 50,
-                 minStrings = 1)
+                 expected_length = 100,
+                 expected_lines = 10,
+                 max_strings = 50,
+                 min_strings = 1)
     doc <- xml2::read_xml(toString(create_assessment_item(essay)))
     file <- file.path(getwd(), "imsqti_v2p1.xsd")
     schema <- xml2::read_xml(file)
