@@ -2,6 +2,7 @@
 #'
 #' Abstract class `MuiltipleChoice` is responsible for creating multiple choice
 #' assessment task according to QTI 2.1.
+#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
 #' @template MCSlotsTemplate

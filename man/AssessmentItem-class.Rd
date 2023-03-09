@@ -13,10 +13,6 @@ never to be generated, only derived classes meaningful.
 \section{Slots}{
 
 \describe{
-\item{\code{content}}{list; a list of content to form text of question, includes text
-(characters) or instances of Gap-objects: \linkS4class{TextGap}, \link{NumericGap},
-InlineChoice}
-
 \item{\code{identifier}}{string; identifier of assessment task}
 
 \item{\code{title}}{string; a title of xml file}

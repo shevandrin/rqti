@@ -1,4 +1,11 @@
-# define class Gap to built inline instances
+#' Class "Gap"
+#'
+#' Abstract class `Gap` is never to be generated, only derived classes
+#' [TextGap-class], [NumericGap] and [InlineChoice] are meaningful.
+#' @inheritSection AssessmentItem-class Warning
+#' @name Gap-class
+#' @rdname Gap-class
+#' @aliases Gap
 setClass("Gap", slots = c(response_identifier = "character", score = "numeric",
                           placeholder = "character",
                           expected_length = "numeric"),

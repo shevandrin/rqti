@@ -1,14 +1,14 @@
-#' @slot rows string vector; set answer options as row names in table or the
+#' @slot rows string vector; sets answer options as row names in table or the
 #'   firsts elements in couples in directed pairs
-#' @slot rows_identifiers string vector; set identifiers for answer options
+#' @slot rows_identifiers string vector; sets identifiers for answer options
 #'   defined in rows of table or identifiers of the firsts elements in couples
 #'   in directed pairs
-#' @slot cols string vector; set answer options as cols headers in table or the
+#' @slot cols string vector; sets answer options as cols headers in table or the
 #'   seconds elements in couples in directed pairs
-#' @slot cols_identifiers string vector; set identifiers for answer options
+#' @slot cols_identifiers string vector; sets identifiers for answer options
 #'   defined in cols of table or identifiers of the seconds elements in couples
 #'   in directed pairs
-#' @slot answers_identifiers string vector; set couples of identifiers that
+#' @slot answers_identifiers string vector; sets couples of identifiers that
 #'   combine the right answers
 #' @slot answers_scores numeric vector, optional; each number in this vector
 #'   determines the number of points that will be awarded to a candidate if he

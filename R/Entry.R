@@ -1,4 +1,39 @@
-# define class Entry for building a text gap question
+#' Class "Entry"
+#'
+#' Abstract class `Entry` is responsible for creating assessment task according
+#' to QTI 2.1., where question includes one or more instances of text input
+#' fields (with numeric or text answers) or dropdown lists.
+#' @template ContentEntrySlotTemplate
+#' @template AISlotsTemplate
+#' @template PointsSlotTemplate
+#' @examples
+#' entry_gaps <- new("Entry", content = list("<p>In mathematics, the common
+#' logarithm is the logarithm with base", new("NumericGap",
+#'                                            response_identifier = "numeric_1",
+#'                                            response = 10,
+#'                                            placeholder = "it is a number"),
+#' ". It is also known as the decimal", new("TextGap",
+#'                                          response_identifier = "text_1",
+#'                                          response = "logarithm",
+#'                                          placeholder = "it is a text"),
+#'  ".</p>"),
+#'                    title = "entry with number and text in answers",
+#'                    identifier = "entry_example")
+#' entry_dropdown <- new("Entry", content = list("<p>In mathematics, the common
+#' logarithm is the logarithm with base", new("InlineChoice",
+#'                                            response_identifier = "numeric_1",
+#'                                            options = c("10", "7", "11")),
+#' ". It is also known as the decimal", new("InlineChoice",
+#'                                          response_identifier = "text_1",
+#'                                          options = c("logarithm", "limit")),
+#'  ".</p>"),
+#'                    title = "entry with dropdown lists for answers",
+#'                    identifier = "entry_example")
+#' @name Entry-class
+#' @rdname Entry-class
+#' @aliases Entry
+#' @exportClass Entry
+#' @include AssessmentItem.R
 setClass("Entry", contains = "AssessmentItem")
 
 

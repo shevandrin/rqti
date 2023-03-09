@@ -12,9 +12,8 @@ assessment task according to QTI 2.1.
 \section{Slots}{
 
 \describe{
-\item{\code{content}}{list; a list of content to form text of question, includes text
-(characters) or instances of Gap-objects: \linkS4class{TextGap}, \link{NumericGap},
-InlineChoice}
+\item{\code{content}}{list; list of strings with formatting to form the text of the
+question}
 
 \item{\code{identifier}}{string; identifier of assessment task}
 
@@ -25,7 +24,7 @@ paragraph, can supplement or replace content}
 
 \item{\code{qti_version}}{string; QTI information model version; default 'v2p1'}
 
-\item{\code{choices}}{string vector; define a set of answer options in question}
+\item{\code{choices}}{string vector; defines a set of answers options in question}
 
 \item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
 which the choices are initially presented to the candidate; default \code{TRUE}}

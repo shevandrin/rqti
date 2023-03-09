@@ -1,6 +1,20 @@
-# define class TextGap to specify text entries
+#' Class TextGap
+#'
+#' Abstract class `TextGap` is responsible for creating instances of input
+#' fields with text type of answer in question Entry type assessment task
+#' according to QTI 2.1.
+#' @template GapSlotsTemplate
+#' @template TextGapSlotsTemplate
+#' @examples
+#' tg <- new("TextGap",
+#'           response = "answer",
+#'           alternatives = c("answerr", "aanswer"),
+#'           placeholder = "do not put special characters" )
+#' @name TextGap-class
+#' @rdname TextGap-class
+#' @aliases TextGap
+#' @include Gap.R
 #' @importFrom htmltools tag p span tagList tagAppendChildren
-
 setClass("TextGap", contains = "Gap",
          slots = c(response = "character", alternatives = "character",
                    case_sensitive = "logical"),

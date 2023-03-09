@@ -1,4 +1,4 @@
-#' @slot choices string vector; define a set of answer options in question
+#' @slot choices string vector; defines a set of answers options in question
 #' @slot shuffle boolean, optional; is responsible to randomize the order in
 #'   which the choices are initially presented to the candidate; default `TRUE`
 #' @slot choice_identifiers string vector, optional; a set of identifiers for

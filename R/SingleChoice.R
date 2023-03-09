@@ -2,9 +2,11 @@
 #'
 #' Abstract class `SingleChoice` is responsible for creating single choice
 #' assessment task according to QTI 2.1.
+#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
 #' @template SCSlotsTemplate
+#' @template PointsSlotTemplate
 #' @examples
 #' sc <- new("SingleChoice",
 #'           content = list("<p>Pick up the right option</p>"),

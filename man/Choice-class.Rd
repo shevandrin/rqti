@@ -12,7 +12,7 @@ MultipleChoice are meaningful.
 \section{Slots}{
 
 \describe{
-\item{\code{choices}}{string vector; define a set of answer options in question}
+\item{\code{choices}}{string vector; defines a set of answers options in question}
 
 \item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
 which the choices are initially presented to the candidate; default \code{TRUE}}

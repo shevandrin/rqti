@@ -1,4 +1,21 @@
-# define class Order for building an order type question
+#' Class "Order"
+#'
+#' Abstract class `Order` is responsible for creating assessment task according
+#' to QTI 2.1., where candidate has to place answers in a specific order
+#' @template ContentSlotTemplate
+#' @template AISlotsTemplate
+#' @template OrderSlotsTemplate
+#' @template PointsSlotTemplate
+#' @examples
+#' ord <- new("Order", content = list("<p>put in a right order</p>"),
+#'            choices = c("first", "second", "third"),
+#'            title = "order",
+#'            identifier = "order_example")
+#' @name Order-class
+#' @rdname Order-class
+#' @aliases Order
+#' @exportClass Order
+#' @include AssessmentItem.R
 setClass("Order", contains = "AssessmentItem",
          slot = list(choices = "character",
                      choices_identifiers = "character",

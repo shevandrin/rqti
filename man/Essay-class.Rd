@@ -12,9 +12,8 @@ task according to QTI 2.1.
 \section{Slots}{
 
 \describe{
-\item{\code{content}}{list; a list of content to form text of question, includes text
-(characters) or instances of Gap-objects: \linkS4class{TextGap}, \link{NumericGap},
-InlineChoice}
+\item{\code{content}}{list; list of strings with formatting to form the text of the
+question}
 
 \item{\code{identifier}}{string; identifier of assessment task}
 
@@ -39,6 +38,9 @@ words that candidate should write in the text input field}
 
 \item{\code{data_allow_paste}}{boolean, optional; determines whether it is possible
 for candidate to copy text into text input field; default \code{FALSE}}
+
+\item{\code{points}}{numeric, optional; the number of points for the entire task;
+default 1}
 }}
 
 \examples{

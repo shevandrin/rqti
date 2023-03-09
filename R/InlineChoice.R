@@ -1,5 +1,19 @@
-# define class InlineChoice to specify Dropdowns
-
+#' Class InlineChoice
+#'
+#' Abstract class `InlineChoice` is responsible for creating instances of
+#' dropdown lists as answer options in question Entry type assessment task
+#' according to QTI 2.1.
+#' @template GapSlotsTemplate
+#' @template InlineChoiceSlotsTemplate
+#' @include Gap.R
+#' @examples
+#' ng <- new("InlineChoice",
+#'           options =  c("answer1", "answer2", "answer3"),
+#'           response_identifier = "dropdown_gap_example")
+#' @name InlineChoice-class
+#' @rdname InlineChoice-class
+#' @aliases InlineChoice
+#' @exportClass InlineChoice
 setClass("InlineChoice", contains = "Gap",
          slots = c(options = "character",
                    solution = "numeric",

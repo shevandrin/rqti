@@ -1,5 +1,19 @@
-# define class NumericGap to specify entries for numbers
-
+#' Class NumericGap
+#'
+#' Abstract class `NumericGap` is responsible for creating instances of input
+#' fields with numeric type of answer in question Entry type assessment task
+#' according to QTI 2.1.
+#' @template GapSlotsTemplate
+#' @template NumericGapSlotsTemplate
+#' @include Gap.R
+#' @examples
+#' ng <- new("NumericGap",
+#'           response = 5,
+#'           placeholder = "use this format xx.xxx" )
+#' @name NumericGap-class
+#' @rdname NumericGap-class
+#' @aliases NumericGap
+#' @exportClass NumericGap
 setClass("NumericGap", contains = "Gap",
          slots = c(response = "numeric",
                    include_lower_bound = "logical",

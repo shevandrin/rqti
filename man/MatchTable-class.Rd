@@ -12,21 +12,21 @@ OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are meaningfu
 \section{Slots}{
 
 \describe{
-\item{\code{rows}}{string vector; set answer options as row names in table or the
+\item{\code{rows}}{string vector; sets answer options as row names in table or the
 firsts elements in couples in directed pairs}
 
-\item{\code{rows_identifiers}}{string vector; set identifiers for answer options
+\item{\code{rows_identifiers}}{string vector; sets identifiers for answer options
 defined in rows of table or identifiers of the firsts elements in couples
 in directed pairs}
 
-\item{\code{cols}}{string vector; set answer options as cols headers in table or the
+\item{\code{cols}}{string vector; sets answer options as cols headers in table or the
 seconds elements in couples in directed pairs}
 
-\item{\code{cols_identifiers}}{string vector; set identifiers for answer options
+\item{\code{cols_identifiers}}{string vector; sets identifiers for answer options
 defined in cols of table or identifiers of the seconds elements in couples
 in directed pairs}
 
-\item{\code{answers_identifiers}}{string vector; set couples of identifiers that
+\item{\code{answers_identifiers}}{string vector; sets couples of identifiers that
 combine the right answers}
 
 \item{\code{answers_scores}}{numeric vector, optional; each number in this vector

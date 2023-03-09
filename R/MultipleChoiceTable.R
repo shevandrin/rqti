@@ -1,8 +1,11 @@
-#' Class "SingleChoice"
+#' Class "MultipleChoiceTable"
 #'
 #' Abstract class `MultipleChoiceTable` is responsible for creating assessment
 #' task according to QTI 2.1. with table of answer options, where many right
 #' answers in each row and column are possible
+#' \if{html}{\out{<div style="text-align:center">}\figure{multipleTable.png}{options:
+#' style="width:250px;max-width:35\%;"}\out{</div>}}
+#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
 #' @template MCTSlotsTemplate
