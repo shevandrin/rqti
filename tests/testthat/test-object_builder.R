@@ -191,7 +191,7 @@ path <- test_path("file/test_entry_example1.md")
 cqc <- create_question_object(path)
 expected <- new("Entry", content = list("<p>Hast du",
                 new("TextGap", response_identifier = "response_1", response = "ein"),
-                "Handy?</p>"),
+                " Handy?</p>"),
                 points = 5,
                 identifier = "test 2",
                 qti_version = "v2p1",
@@ -203,8 +203,9 @@ expect_equal(cqc, expected)
 test_that("create_question_object", {
 path <- test_path("file/test_entry_example2.md")
 cqc <- create_question_object(path)
-expected <- new("Entry", content = list("<p> Hast du",
+expected <- new("Entry", content = list("<p>Hast du",
                 new("TextGap",
+                expected_length = 10,
                 response_identifier = "response_1",
                 response = "Ein"),
                 " Handy?</p>"),

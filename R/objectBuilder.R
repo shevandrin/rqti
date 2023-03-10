@@ -38,6 +38,7 @@ create_entry_object <- function(file, attrs) {
         text <- paste(text, s)
     }
     html <- paste0(text, " ")
+    html <- stringr::str_trim(html, "left")
     count_all_gaps <- length(unlist(str_extract_all(html, "<entry>")))
     ids <- make_ids(count_all_gaps, "response")
     end <- unlist(gregexpr("<entry>", html)) - 1L

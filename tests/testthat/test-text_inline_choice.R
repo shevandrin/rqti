@@ -125,7 +125,7 @@ test_that("Testing CreateItemBody Inline", {
                                           solution = 3,
                                           score = 1,
                                           shuffle = FALSE,
-                                          options = c(160,90,60),
+                                          options = c("160","90","60"),
                                           options_identifiers = c("1","2","3")),
                                           "minutes</p>"))
     example <- '<itemBody>
@@ -147,7 +147,7 @@ test_that("Testing CreateItemBody Inline", {
                                                            response_identifier = "RESPONSE",
                                                            solution = 3,
                                                            shuffle = FALSE,
-                                                           options = c(160,90,60),
+                                                           options = c("160","90","60"),
                                                            options_identifiers = c("1","2","3")),
                                       "minutes</p>"))
     example <- '<itemBody>
@@ -169,14 +169,14 @@ test_that("Testing CreateItemBody Inline", {
                                                            response_identifier = "RESPONSE",
                                                            solution = 3,
                                                            shuffle = FALSE,
-                                                           options = c(160,90,60)),
+                                                           options = c("160","90","60")),
                                                                "minutes</p>"))
     example <- '<itemBody>
 	    <p>One hour is
   <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
-				<inlineChoice identifier="1">160</inlineChoice>
-				<inlineChoice identifier="2">90</inlineChoice>
-				<inlineChoice identifier="3">60</inlineChoice>
+				<inlineChoice identifier="OptionA">160</inlineChoice>
+				<inlineChoice identifier="OptionB">90</inlineChoice>
+				<inlineChoice identifier="OptionC">60</inlineChoice>
 			</inlineChoiceInteraction>
   minutes</p>
 	</itemBody>'

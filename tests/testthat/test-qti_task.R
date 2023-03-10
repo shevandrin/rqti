@@ -4,7 +4,7 @@ test_that("create_qti_task", {
     cqt <- readLines(path)
 
     essay <- new("Essay", prompt = "Test task", title = "Essay", identifier = "new")
-    create_qti_task(essay, verification = "TRUE")
+    create_qti_task(essay)
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
