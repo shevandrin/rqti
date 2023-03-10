@@ -185,3 +185,33 @@ test_that("create_question_object", {
                    )
     expect_equal(cqc, expected)
 })
+# Entry
+test_that("create_question_object", {
+path <- test_path("file/test_entry_example1.md")
+cqc <- create_question_object(path)
+expected <- new("Entry", content = list("<p>Hast du",
+                new("TextGap", response_identifier = "response_1", response = "ein"),
+                "Handy?</p>"),
+                points = 5,
+                identifier = "test 2",
+                qti_version = "v2p1",
+                title = "Germany"
+)
+expect_equal(cqc, expected)
+})
+# Entry with YAML
+test_that("create_question_object", {
+path <- test_path("file/test_entry_example2.md")
+cqc <- create_question_object(path)
+expected <- new("Entry", content = list("<p> Hast du",
+                new("TextGap",
+                response_identifier = "response_1",
+                response = "Ein"),
+                " Handy?</p>"),
+                points = 5,
+                identifier = "test 2",
+                qti_version = "v2p1",
+                title = "Germany"
+)
+expect_equal(cqc, expected)
+})

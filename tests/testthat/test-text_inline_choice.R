@@ -118,3 +118,69 @@ In the deep bosom of the ocean buried.
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+#options as numeric
+test_that("Testing CreateItemBody Inline", {
+    sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
+                                          response_identifier = "RESPONSE",
+                                          solution = 3,
+                                          score = 1,
+                                          shuffle = FALSE,
+                                          options = c(160,90,60),
+                                          options_identifiers = c("1","2","3")),
+                                          "minutes</p>"))
+    example <- '<itemBody>
+	    <p>One hour is
+  <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
+				<inlineChoice identifier="1">160</inlineChoice>
+				<inlineChoice identifier="2">90</inlineChoice>
+				<inlineChoice identifier="3">60</inlineChoice>
+			</inlineChoiceInteraction>
+  minutes</p>
+	</itemBody>'
+    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})
+# with out score
+test_that("Testing CreateItemBody Inline", {
+    sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
+                                                           response_identifier = "RESPONSE",
+                                                           solution = 3,
+                                                           shuffle = FALSE,
+                                                           options = c(160,90,60),
+                                                           options_identifiers = c("1","2","3")),
+                                      "minutes</p>"))
+    example <- '<itemBody>
+	    <p>One hour is
+  <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
+				<inlineChoice identifier="1">160</inlineChoice>
+				<inlineChoice identifier="2">90</inlineChoice>
+				<inlineChoice identifier="3">60</inlineChoice>
+			</inlineChoiceInteraction>
+  minutes</p>
+	</itemBody>'
+    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})
+# with out options_identifier
+test_that("Testing CreateItemBody Inline", {
+    sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
+                                                           response_identifier = "RESPONSE",
+                                                           solution = 3,
+                                                           shuffle = FALSE,
+                                                           options = c(160,90,60)),
+                                                               "minutes</p>"))
+    example <- '<itemBody>
+	    <p>One hour is
+  <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
+				<inlineChoice identifier="1">160</inlineChoice>
+				<inlineChoice identifier="2">90</inlineChoice>
+				<inlineChoice identifier="3">60</inlineChoice>
+			</inlineChoiceInteraction>
+  minutes</p>
+	</itemBody>'
+    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})
