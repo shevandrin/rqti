@@ -46,9 +46,9 @@ createItemBody(object)
 \S4method{createItemBody}{SingleChoice}(object)
 }
 \arguments{
-\item{object}{an instance of the S4 object (SingleChoice, MultipleChoice,
-Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
-DirectedPair)}
+\item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
+\link{Essay}, \link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable},
+\link{MultipleChoiceTable}, \link{DirectedPair})}
 }
 \description{
 Generic function for creating itemBody element for XML document of

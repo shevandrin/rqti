@@ -1,12 +1,9 @@
-## S4 example
-
+## S4 examples
 library(qti)
-library(markdown)
-library(shiny)
 
-# create SingleChoice object
+# create SingleChoice object -------------------------------
 sc <- new("SingleChoice",
-          content = list("<p>Pick up the right option</p>",
+          content = list("<p>Pick up the right option<span class=\"math inline\">df = <em>N</em><sub>Wiwi</sub> − 1 + <em>N</em><sub>Psy</sub> − 1=</span></p>",
                                             new("Img", src = "1.png")),
           choices = c("option 1", "option 2", "option 3", "option 4"),
           # orientation = "vertical",
@@ -15,26 +12,26 @@ sc <- new("SingleChoice",
           shuffle = FALSE,
           # points = 2,
           identifier = "convictive_agama")
-create_qti_task(sc)
+create_qti_task(sc, "to_delete")
 
-# create MultipleChoice object
-mpc <- new("MultipleChoice",
+# create MultipleChoice object example 1 -------------------------------
+mc <- new("MultipleChoice",
            content = list("This is the mpc question"),
            choices = c("A", "B", "C", "D"),
            choice_identifiers = c("1", "2", "3", "4"),
            points = c(1, 0, -1, 1),
            title = "multiple_choice_task")
-create_qti_task(mpc)
+create_qti_task(mc, "to_delete")
 
-# create MultipleChoice object
+# create MultipleChoice object example 2 -------------------------------
 mpc0 <- new("MultipleChoice",
            prompt = "This is the mpc question",
            choices = c("A", "B", "C"),
            points = c(1, 0, 2),
            title = "multiple_choice_task")
-create_qti_task(mpc0)
+create_qti_task(mpc0, "to_delete")
 
-# task with TextGap
+# task with TextGap  -------------------------------
 te <- new("Entry", content = list("<h2>some markdown title1</h2><h1><b>Some title</b><br />svsdvsdvsd</h1><p>With <em>SQL</em>, how do you select <b>all the records</b> from a table named <em><strong>Persons</strong></em> where the value of the column <i>FirstName</i> is Peter?<br />SELECT * FROM",
                                                       new("TextGapOpal",
                                                           response = "Persons",
@@ -54,9 +51,10 @@ te <- new("Entry", content = list("<h2>some markdown title1</h2><h1><b>Some titl
                                                       "</p>"
 
                                                       ),
-           title = "text_gaps_task")
+           title = "text_gaps_task", "to_delete")
 create_qti_task(te)
 
+# task with TextGap for opal -------------------------------
 te_opal <- new("Entry", content = list("es geht",
                                                           new("TextGapOpal",
                                                               response_identifier = "res1",
@@ -65,9 +63,9 @@ te_opal <- new("Entry", content = list("es geht",
                                                               value_precision = 1),
                                                           "die neuen Produkte"),
                title = "preposition with gehen")
-create_qti_task(te_opal)
+create_qti_task(te_opal, "to_delete")
 
-# task with NumericGap
+# task with NumericGap  -------------------------------
 ne <- new("Entry", content = list("5 - ",
                                              new("NumericGap",
                                                  response_identifier = "numeric_1",
@@ -78,24 +76,24 @@ ne <- new("Entry", content = list("5 - ",
                                                  include_upper_bound = FALSE),
                                              " = -2"),
           title = "numeric_gaps_task")
-create_qti_task(ne)
+create_qti_task(ne, "to_delete")
 
 
-# task with combination of TextGap and NumericGap
+# task with combination of TextGap and NumericGap  -------------------------------
 com <- new("Entry", content = list("5 ",
                                                             new("TextGap", response_identifier = "str_1", response = "+", score = 1, placeholder = "+ or -"),
                                                           " 2 = ",
                                                           new("NumericGap", response_identifier = "numeric_1", response = 7, value_precision = 1, expected_length = 11, placeholder = "here is number")
                                                       ),
            title = "complex_gap_task")
-create_qti_task(com)
+create_qti_task(com, "to_delete")
 
-# task with dropdown list (InlineChoice)
+# task with dropdown list (InlineChoice)  -------------------------------
 dd1 <- new("Entry", content = list("first line",
                                                      new("InlineChoice", response_identifier = "list_1", options = c("a", "b", "c")
                                                      )),
           title = "dropdown1")
-create_qti_task(dd1)
+create_qti_task(dd1, "to_delete")
 
 dd2 <- new("Entry", content = list("first line <br/>",
                                                       "<h2>second line</h2>",
@@ -105,18 +103,18 @@ dd2 <- new("Entry", content = list("first line <br/>",
                                                      "end text."
                                                      ),
           title = "dropdown2")
-create_qti_task(dd2)
+create_qti_task(dd2, "to_delete")
 
-# task with Order
+# task with Order  -------------------------------
 # TODO parse text in choices
 ord <- new("Order", content = list("<p>put in a right order</p>"),
            identifier = "order_id", title = "order_task",
            choices = c("first", "second", "third"),
            choices_identifiers = c("a","b","c"),
            points = 5)
-create_qti_task(ord)
+create_qti_task(ord, "to_delete")
 
-# task with directed pairs
+# task with directed pairs  -------------------------------
 # TODO validation number of cols and rows
 dp <- new("DirectedPair", content = list("<h3>This is match table task</h3>",
                                                   "<i>table description</i>"),
@@ -129,9 +127,10 @@ dp <- new("DirectedPair", content = list("<h3>This is match table task</h3>",
         title = "directed_pair",
         prompt = "this is a prompt"
 )
-create_qti_task(dp)
+create_qti_task(dp, "to_delete")
 
-# task with match table with one right answer in a row
+# task with OneInRow  -------------------------------
+# match table with one right answer in a row
 rt <- new("OneInRowTable", content = list("<h3>This is match table task</h3>",
                                                     "<i>table description</i>"),
           rows = c("row1", "row2", "row3", "row4"),
@@ -142,9 +141,10 @@ rt <- new("OneInRowTable", content = list("<h3>This is match table task</h3>",
           points = 5,
           title = "one_in_row_table"
 )
-create_qti_task(rt)
+create_qti_task(rt, "to_delete")
 
-# task with match table with one right answer in a column
+# task with OneInCol  -------------------------------
+# match table with one right answer in a column
 ct <- new("OneInColTable", content = list("<h3>This is match table task</h3>",
                                                      "<i>table description</i>"),
           rows = c("row1", "row2", "row3"),
@@ -155,29 +155,31 @@ ct <- new("OneInColTable", content = list("<h3>This is match table task</h3>",
           points = 5,
           title = "one_in_col_table"
 )
-create_qti_task(ct)
+create_qti_task(ct, "to_delete")
 
-# task with match table with many right answers in rows and columns
+# task with MultipleChoiceTable  -------------------------------
+#match table with many right answers in rows and columns
 mt <- new("MultipleChoiceTable", content = list("<h3>This is match table task</h3>",
                                                      "<i>table description</i>"),
           rows = c("row1", "row2", "row3"),
           rows_identifiers = c("a", "b", "c"),
           cols = c("alfa", "beta", "gamma"),
-          cols_identifiers = c("k", "l", "m"),
-          answers_identifiers = c("a k", "b l", "b m"),
+          cols_identifiers = c("a", "b", "c"),
+          answers_identifiers = c("a a", "b b", "b c"),
           points = 5,
-          title = "multiple_choice_table"
+          title = "multiple_choice_table",
+          identifier = "mc_table"
 )
-create_qti_task(mt)
+create_qti_task(mt, "to_delete")
 
-# essay type task
+# Essay type task  -------------------------------
 es <- new("Essay", content = list("<h2>this is an essay type of question</h2>"),
           title = "essay_task50x15",
-          maxStrings = 100,
+          max_strings = 100,
           points = 3)
-create_qti_task(es)
+create_qti_task(es, "to_delete")
 
-# assessment test
+# assessment test  -------------------------------
 test <- new("AssessmentTest", title = "Text exam", points = 5,
             test_part_identifier = "test_part",
             section = list(new("AssessmentSection",
@@ -213,4 +215,3 @@ simple_test <- new("AssessmentTest", section = list(new("AssessmentSection", tit
                    points = 1)
 create_qti_test(simple_test)
 qti(simple_test)
-

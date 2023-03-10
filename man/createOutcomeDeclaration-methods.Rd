@@ -37,8 +37,10 @@ createOutcomeDeclaration(object)
 \S4method{createOutcomeDeclaration}{TextGap}(object)
 }
 \arguments{
-\item{object}{an instance of the S4 object (AssessmentItem, Entry,
-InlineChoice, MultipleChoice, NumericGap, TextGap)}
+\item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
+\link{Essay}, \link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable},
+\link{MultipleChoiceTable}, \link{DirectedPair}, \link{TextGap}, \link{NumericGap},
+\link{InlineChoice})}
 }
 \description{
 Generic function for creating outcomeDeclaration element for XML document of

@@ -44,9 +44,9 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 #' Generic function for creating itemBody element for XML document of
 #' specification the question following the QTI schema v2.1
 #'
-#' @param object an instance of the S4 object (SingleChoice, MultipleChoice,
-#'   Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
-#'   DirectedPair)
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair])
 #' @docType methods
 #' @rdname createItemBody-methods
 #'
@@ -60,9 +60,10 @@ setGeneric("createItemBody", function(object) {
 #' Generic function for creating responseDeclaration element for XML document of
 #' specification the question following the QTI schema v2.1
 #'
-#' @param object an instance of the S4 object (Entry, InlineChoice, MatchTable,
-#'   MultipleChoice, MultipleChoiceTable, NumericGap, Order, SingleChoice,
-#'   TextGap)
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseDeclaration-methods
 #'
@@ -76,8 +77,10 @@ setGeneric("createResponseDeclaration", function(object) {
 #' Generic function for creating outcomeDeclaration element for XML document of
 #' specification the question following the QTI schema v2.1
 #'
-#' @param object an instance of the S4 object (AssessmentItem, Entry,
-#'   InlineChoice, MultipleChoice, NumericGap, TextGap)
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
 #' @docType methods
 #' @rdname createOutcomeDeclaration-methods
 #'
@@ -90,8 +93,10 @@ setGeneric("createOutcomeDeclaration", function(object) {
 #' Generic function for creating responseProcessing element for XML document of
 #' specification the question following the QTI schema v2.1
 #'
-#' @param object an instance of the S4 object (Choice, Entry, Gap, InlineChoice,
-#'   NumericGap, Order)
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseProcessing-methods
 #'

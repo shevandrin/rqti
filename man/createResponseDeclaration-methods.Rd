@@ -50,9 +50,10 @@ createResponseDeclaration(object)
 \S4method{createResponseDeclaration}{TextGap}(object)
 }
 \arguments{
-\item{object}{an instance of the S4 object (Entry, InlineChoice, MatchTable,
-MultipleChoice, MultipleChoiceTable, NumericGap, Order, SingleChoice,
-TextGap)}
+\item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
+\link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable},
+\link{MultipleChoiceTable}, \link{DirectedPair}, \link{TextGap}, \link{NumericGap},
+\link{InlineChoice})}
 }
 \description{
 Generic function for creating responseDeclaration element for XML document of
