@@ -33,6 +33,7 @@ Collate:
     'AssessmentSection.R'
     'AssessmentItemRef.R'
     'AssessmentTest.R'
+    'AssessmentTestOpal.R'
     'Choice.R'
     'MatchTable.R'
     'DirectedPair.R'
@@ -54,7 +55,8 @@ Collate:
     'extract_results.R'
     'knit_functions.R'
     'objectBuilder.R'
-    'qti.R'
+    'qti_task.R'
+    'qti_test.R'
 Depends: 
     R (>= 2.10)
 LazyData: true

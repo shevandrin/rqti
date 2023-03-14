@@ -6,8 +6,8 @@
 \alias{Choice}
 \title{Class "Choice"}
 \description{
-Abstract class \code{Choice} is never to be generated, only derived classes \link{SingleChoice} and
-MultipleChoice are meaningful.
+Abstract class \code{Choice} is never to be generated, only derived classes
+\linkS4class{SingleChoice} and \linkS4class{MultipleChoice} are meaningful.
 }
 \section{Slots}{
 

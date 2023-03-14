@@ -1,7 +1,7 @@
 #' Class "Choice"
 #'
-#' Abstract class `Choice` is never to be generated, only derived classes [SingleChoice] and
-#' MultipleChoice are meaningful.
+#' Abstract class `Choice` is never to be generated, only derived classes
+#' [SingleChoice-class] and [MultipleChoice-class] are meaningful.
 #' @template ChoiceSlotsTemplate
 #' @inheritSection AssessmentItem-class Warning
 #' @name Choice-class
@@ -20,13 +20,15 @@ setClass("Choice", contains = "AssessmentItem",
 setMethod("initialize", "Choice", function(.Object, ...) {
     .Object <- callNextMethod()
     ids <- .Object@choice_identifiers
-    # if (identical(ids, character(0))) {
-    if (length(ids) < 2) {
+    if (length(ids) < 2L) {
         .Object@choice_identifiers <- paste0("Choice",
                                              LETTERS[seq(.Object@choices)])
     }
     if (is.na(.Object@orientation)) {
         .Object@orientation = "vertical"}
+    if (length(.Object@shuffle) == 0L) {
+        .Object@shuffle = TRUE
+    }
     validObject(.Object)
     .Object
 })

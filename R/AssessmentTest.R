@@ -1,12 +1,8 @@
 #' Root element assessmentTest for xml task description
 #'
 #' Root element assessmentTest for xml task description according to QTI 2.1
-#'
+#' @template ATSlotsTemplate
 #' @importFrom ids adjective_animal
-#'
-#' @slot identifier test file id
-#' @slot title Title of the file
-#' @slot qti_version qti information model version
 #' @name AssessmentTest-class
 #' @rdname AssessmentTest-class
 #' @include AssessmentSection.R
@@ -19,11 +15,6 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      section = "list",
                                      qti_version = "character",
                                      time_limits = "numeric",
-                                     show_test_time = "logical",
-                                     calculator = "character",
-                                     mark_items = "logical",
-                                     keep_responses = 'logical',
-                                     files = "character",
                                      max_attempts = "numeric",
                                      allow_comment = "logical",
                                      rebuild_variables = "logical"),
@@ -33,10 +24,6 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                test_part_identifier = "test_part",
                                qti_version = "v2p1",
                                time_limits = NA_integer_,
-                               show_test_time = FALSE,
-                               calculator = NA_character_,
-                               mark_items = FALSE,
-                               keep_responses = FALSE,
                                # files = NA_character_,
                                max_attempts = NA_integer_,
                                allow_comment = NA,
