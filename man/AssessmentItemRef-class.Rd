@@ -3,6 +3,7 @@
 \docType{class}
 \name{AssessmentItemRef-class}
 \alias{AssessmentItemRef-class}
+\alias{AssessmentItemRef}
 \title{Element asssessmentItemRef for xml testdescription}
 \description{
 Element assessmentItemRef for xml test description according to QTI 2.1

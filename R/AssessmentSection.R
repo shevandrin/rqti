@@ -9,6 +9,7 @@
 #' @slot visible show or not to show for student
 #' @name AssessmentSection-class
 #' @rdname AssessmentSection-class
+#' @aliases AssessmentSection
 setClass("AssessmentSection", slots = c(identifier = "character",
                                      title = "character",
                                      time_limits = "numeric",
@@ -44,12 +45,14 @@ setGeneric("getAssessmentItems", function(object) {
 #'
 #' Generic function for tags that contains assessementSection in assessnetTest
 #'
-#' @param object an instance of the S4 object (AssessmentSection, AssessmentItemRef)
+#' @param object an instance of the S4 object ([AssessmentSection],
+#' [AssessmentItemRef] and all types of [AssessmentItem])
+#' @param folder a character string; name of folder to store the xml files
 #' @docType methods
 #' @rdname buildAssessmentSection-methods
 #'
 #' @export
-setGeneric("buildAssessmentSection", function(object) {
+setGeneric("buildAssessmentSection", function(object, folder = NULL) {
     standardGeneric("buildAssessmentSection")
 })
 

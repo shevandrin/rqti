@@ -3,6 +3,7 @@
 \docType{class}
 \name{AssessmentSection-class}
 \alias{AssessmentSection-class}
+\alias{AssessmentSection}
 \title{Root element asssessmentSection for xml task description}
 \description{
 Root element assessmentSection for xml task description according to QTI 2.1

@@ -5,6 +5,7 @@
 #' @importFrom ids adjective_animal
 #' @name AssessmentTest-class
 #' @rdname AssessmentTest-class
+#' @aliases AssessmentTest
 #' @include AssessmentSection.R
 setClass("AssessmentTest", slots = c(identifier = "character",
                                      title = "character",

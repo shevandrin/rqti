@@ -9,7 +9,6 @@
 #' @importFrom utils zip
 #' @returns A list() with a shiny.tag class
 #'
-#'
 create_assessment_item <- function(object) {
     assessment_attributes <- create_assessment_attributes(object)
     assesment_item <- tag("assessmentItem", assessment_attributes)
@@ -200,7 +199,6 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     if (is.null(dir)) dir <- getwd()
     if (!dir.exists(dir)) dir.create(dir)
     content <- create_assessment_item(object)
-    print(content)
     doc <- xml2::read_xml(as.character(content))
     if (verification) {
         ver <- verify_qti(doc)
@@ -212,13 +210,12 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     }
     path <- paste0(dir, "/",object@identifier, ".xml")
     xml2::write_xml(doc, path)
-    print(paste("see:", path))
+    print(paste("see assessment item:", path))
 }
 
 # function to verify xml with xsd scheme
 verify_qti <- function(doc) {
     file <- file.path(getwd(), "tests/testthat/imsqti_v2p1.xsd")
-    print(file)
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(doc, schema)
     ifelse ((validation[1]), return(validation[1]), return(validation))

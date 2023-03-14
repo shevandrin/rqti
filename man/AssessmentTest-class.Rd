@@ -3,6 +3,7 @@
 \docType{class}
 \name{AssessmentTest-class}
 \alias{AssessmentTest-class}
+\alias{AssessmentTest}
 \title{Root element assessmentTest for xml task description}
 \description{
 Root element assessmentTest for xml task description according to QTI 2.1
