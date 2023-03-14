@@ -11,7 +11,7 @@
     attributeFormDefault="unqualified">
     <xs:import namespace = "http://www.w3.org/XML/1998/namespace" schemaLocation = "http://www.imsglobal.org/xsd/w3/2001/xml.xsd"/>
     <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="http://www.imsglobal.org/xsd/w3/2001/XInclude.xsd"/>
-    <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation = "file/mathml2/mathml2.xsd"/>
+    <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation = "../../inst/mathml2/mathml2.xsd"/>
     <xs:import namespace="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0" schemaLocation="http://www.imsglobal.org/profile/apip/apipv1p0/apipv1p0_qtiextv2p1_v1p0.xsd"/>
     <xs:annotation>
         <xs:documentation>
