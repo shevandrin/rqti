@@ -7,6 +7,8 @@
 \alias{getAssessmentItems,AssessmentSection}
 \alias{getAssessmentItems,AssessmentItemRef-method}
 \alias{getAssessmentItems,AssessmentItemRef}
+\alias{getAssessmentItems,AssessmentItem-method}
+\alias{getAssessmentItems,AssessmentItem}
 \title{Get list of AssessmentItems for AssessmentSection}
 \usage{
 getAssessmentItems(object)
@@ -14,6 +16,8 @@ getAssessmentItems(object)
 \S4method{getAssessmentItems}{AssessmentSection}(object)
 
 \S4method{getAssessmentItems}{AssessmentItemRef}(object)
+
+\S4method{getAssessmentItems}{AssessmentItem}(object)
 }
 \arguments{
 \item{object}{an instance of the S4 object (AssessmentSection)}

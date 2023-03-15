@@ -1,5 +1,43 @@
-# creates xml root and children of text file
-create_assessment_test <-function(object) {
+#' Create XML file for exam test specification
+#'
+#' @usage create_qti_test(object,
+#'                 dir = NULL,
+#'                 verification = FALSE)
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable], [MultipleChoiceTable],
+#'   [DirectedPair]).
+#' @param dir string, optional; a folder to store xml file; working directory by
+#'   default
+#' @param verification boolean, optional; to check validity of xml file, default
+#'   `FALSE`
+#' @return xml document.
+#' @examples
+#' \dontrun{
+#' essay <- new("Essay", prompt = "Test task", title = "Essay",
+#'              identifier = "q1")
+#' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
+#'           choices = c("A", "B", "C"), identifier = "q2")
+#' exam <- new("AssessmentTest", )
+#' create_qti_test(essay, "result", "TRUE")
+#' }
+#' @export
+create_qti_test <- function(object,dir = NULL, verification = FALSE) {
+    content <- create_assessment_test(object, dir)
+    doc_test <- xml2::read_xml(as.character(content))
+    if (!dir.exists(dir)) dir.create(dir)
+    path_test <- paste0(dir, "/", object@identifier, ".xml")
+    xml2::write_xml(doc_test, path_test)
+    print(paste("see test file:", path_test))
+    manifest <- create_manifest(object)
+    doc_manifest <- xml2::read_xml(as.character(manifest))
+    path_manifest <- paste0(dir, "/imsmanifest.xml")
+    xml2::write_xml(doc_manifest, path_manifest)
+    print(paste("see manifest file:", path_manifest))
+    zip_wrapper(object@identifier, object@files, dir)
+}
+
+# creates xml root and children of test file
+create_assessment_test <-function(object, folder) {
     data_downloads <- NULL
     if (length(object@files) > 0) {
         files <- unlist(lapply("file://downloads/", paste0, object@files, ";"))
@@ -35,7 +73,7 @@ create_assessment_test <-function(object) {
     session_control <- create_item_session_control(object@max_attempts,
                                                    object@allow_comment,
                                                    object@rebuild_variables)
-    sections <- Map(create_section_test, object@section)
+    sections <- Map(create_section_test, object@section, folder)
     testPart <- tag("testPart", list(identifier = object@test_part_identifier,
                                      navigationMode = object@navigation_mode,
                                      submissionMode = object@submission_mode,
@@ -48,43 +86,9 @@ create_assessment_test <-function(object) {
                       createTestPart(object))
 }
 
-#' Create XML file for exam test specification
-#'
-#' @usage create_qti_test(object,
-#'                 dir = NULL,
-#'                 verification = FALSE)
-#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable], [MultipleChoiceTable],
-#'   [DirectedPair]).
-#' @param dir string, optional; a folder to store xml file; working directory by
-#'   default
-#' @param verification boolean, optional; to check validity of xml file, default
-#'   `FALSE`
-#' @return xml document.
-#' @examples
-#' \dontrun{
-#' essay <- new("Essay", prompt = "Test task", title = "Essay",
-#'              identifier = "q1")
-#' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
-#'           choices = c("A", "B", "C"), identifier = "q2")
-#' exam <- new("AssessmentTest", )
-#' create_qti_test(essay, "result", "TRUE")
-#' }
-#' @export
-create_qti_test <- function(object,dir = NULL, verification = FALSE) {
-    content <- create_assessment_test(object)
-    doc_test <- xml2::read_xml(as.character(content))
-    path_test <- paste0("results/", object@identifier, ".xml")
-    xml2::write_xml(doc_test, path_test)
-    manifest <- create_manifest(object)
-    doc_manifest <- xml2::read_xml(as.character(manifest))
-    path_manifest <- paste0("results/", "imsmanifest.xml")
-    xml2::write_xml(doc_manifest, path_manifest)
-    print(manifest)
-}
-
-create_section_test <- function(object) {
-    assessment_items <- Map(buildAssessmentSection, object@assessment_item)
+# creates tag "assessmentSection" in test file
+create_section_test <- function(object, folder) {
+    assessment_items <- Map(buildAssessmentSection, object@assessment_item, folder)
     if (!is.na(object@time_limits)) {
         time_limits <- tag("timeLimits", list(maxTime = object@time_limits))
     } else {time_limits = c()}
@@ -110,6 +114,7 @@ create_section_test <- function(object) {
                                           assessment_items)))
 }
 
+# creates tag "itemSessionControl" with attrs in test file
 create_item_session_control <- function(attempts, comments, rebuild) {
     if ((att <- !is.na(attempts)) |
         (com <- !is.na(comments)) |
@@ -121,11 +126,7 @@ create_item_session_control <- function(attempts, comments, rebuild) {
     } else {session_control = c()}
 }
 
-create_assessment_refs <- function(object) {
-    tag("assessmentItemRef", list(identifier = object@identifier,
-                                  href = object@href))
-}
-
+# creates manifest file wiht root tag "manifest"
 create_manifest <- function(object) {
     manifest_attributes <- c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
                              "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
@@ -150,10 +151,12 @@ create_manifest <- function(object) {
     tagAppendChildren(manifest, metadata, organisations,resources)
 }
 
+# create tag 'dependency' for minifest file
 create_dependency <- function(id) {
     tag("dependency", list(identifierref = id))
 }
 
+# create tag 'resource' for manifest file
 create_resource_item <- function(id, href) {
     file <- tag("file", list(href = href))
     tag("resource", list(identifier = id,
@@ -162,31 +165,31 @@ create_resource_item <- function(id, href) {
                          file))
 }
 
-qti <- function(object) {
+zip_wrapper <- function(id, files, dir_xml) {
     # create temp directory
     tdir <- tempfile()
     dir.create(tdir)
     test_dir <- file.path(tools::file_path_as_absolute(tdir), "qti_test")
     dir.create(test_dir)
-    if (length(object@files) > 0) {
+    if (length(files) > 0) {
         download_dir <- file.path(tools::file_path_as_absolute(test_dir), "downloads")
         dir.create(download_dir)
-        items_files <- unlist(lapply("results/downloads/", paste0, object@files))
+        items_files <- unlist(lapply("results/downloads/", paste0, files))
         file.copy(items_files, download_dir)
     }
 
-    # copy there files from results
-    # unlist(unname(Map(paste0, "results/", files)))
-    files <- list.files("results/")
-    items_files <-unlist(lapply("results/", paste0, files))
+    #  copy files from working directory to temporary
+    files <- list.files(dir_xml)
+    dir_xml <- paste0(dir_xml, "/")
+    items_files <-unlist(lapply(dir_xml, paste0, files))
     file.copy(items_files, test_dir)
-    # make test xml and manifest xml
 
     # make and copy final zip in folder exams
     files_temp <- list.files(test_dir)
     wd <- getwd()
     setwd(test_dir)
-    utils::zip("mock_test.zip", list.files(test_dir))
+    zip_name <- paste0(id, ".zip")
+    utils::zip(zip_name, list.files(test_dir))
     setwd(wd)
-    file.copy(file.path(test_dir, "mock_test.zip"), "exams/", recursive = TRUE)
+    file.copy(file.path(test_dir, zip_name), dir_xml, recursive = TRUE)
 }

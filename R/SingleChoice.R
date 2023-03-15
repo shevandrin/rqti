@@ -90,7 +90,8 @@ create_response_declaration_single_choice <- function(object) {
 #' @name singleChoice
 #' @rdname singleChoice
 #' @export
-singleChoice <- function(identifier, title, choices,
+singleChoice <- function(identifier, choices,
+                         title = NA_character_,
                          choice_identifiers = NA_character_,
                          solution = NA_integer_,
                          content = list(),
