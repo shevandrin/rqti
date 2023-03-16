@@ -99,7 +99,7 @@ singleChoice <- function(identifier, choices,
                          shuffle = logical(0L),
                          prompt = NA_character_,
                          orientation = NA_character_){
-    sc <- new("SingleChoice",
+    new("SingleChoice",
               identifier = identifier, title = title, choices = choices,
               choice_identifiers = choice_identifiers, solution = solution,
               content = content, points = points, shuffle = shuffle, prompt = prompt,

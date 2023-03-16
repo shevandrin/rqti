@@ -23,19 +23,16 @@ setClass("AssessmentItem", slots = c(content = "list", prompt = "character",
 # constructor
 setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     .Object <- callNextMethod()
-    # if (is.na(.Object@points)) {.Object@points <- 1}
     if (length(.Object@points) == 0) {.Object@points <- 1}
-    # if (length(.Object@points) == 1 & is.na(.Object@points)) {
-    #     .Object@points <- 1}
     if (length(.Object@points) == 1) {
         if (is.na(.Object@points)) {
             .Object@points <- 1
         }
     }
+    if (length(.Object@prompt) == 0) {.Object@prompt <- ""}
     if (is.na(.Object@prompt)) {.Object@prompt <- ""}
-    if (is.na(.Object@identifier)) {
-        .Object@identifier <- ids::adjective_animal()}
-
+    if (is.na(.Object@identifier)) .Object@identifier <- ids::adjective_animal()
+    if (length(.Object@title) == 0) .Object@title <- .Object@identifier
     validObject(.Object)
     .Object
 })

@@ -6,8 +6,8 @@
 \usage{
 singleChoice(
   identifier,
-  title,
   choices,
+  title = NA_character_,
   choice_identifiers = NA_character_,
   solution = NA_integer_,
   content = list(),
@@ -20,10 +20,10 @@ singleChoice(
 \arguments{
 \item{identifier}{a character string; some identifier of question}
 
-\item{title}{a character string; some title of question}
-
 \item{choices}{a character vector; set of possible answers; by default the
 first one is considered as a right response}
+
+\item{title}{a character string; some title of question}
 
 \item{choice_identifiers}{a character vector, optional; set of identifiers of
 answer options; can be assigned automatically}
