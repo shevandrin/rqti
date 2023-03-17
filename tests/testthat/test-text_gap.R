@@ -215,3 +215,32 @@ test_that("Testing create Outcome Declaration Gap ", {
     expect_equal(xml1, xml2)
 
 })
+
+test_that("Testing create_item_body_text ", {
+    sc <- new("Entry", content = list('The speed of light is', new("TextGapOpal",
+                                                                   response_identifier = "RESPONSE_1",
+                                                                   score = 1,
+                                                                   response = "more",
+                                                                   alternatives = c("MORE", "More"),
+                                                                   value_precision = 4),
+                                      'than the speed of sound'))
+    expected <- '<additionalTag>
+    <responseProcessing>
+		<responseCondition>
+	<responseIf>
+		<equal toleranceMode="absolute" tolerance="4">
+			<variable identifier="RESPONSE_1"/>
+			<correct identifier="RESPONSE_1"/>
+			</equal>
+	<setOutcomeValue identifier="SCORE_RESPONSE_1">
+		<variable identifier="MAXSCORE_RESPONSE_1"/>
+		</setOutcomeValue>
+	</responseIf>
+        </responseCondition>
+    </responseProcessing>
+    </additionalTag>'
+    response <- as.character(htmltools::tag("additionalTag", list(createResponseProcessing(sc))))
+    xml1 <- xml2::read_xml(response)
+    xml2 <- xml2::read_xml(expected)
+    expect_equal(xml1, xml2)
+})
