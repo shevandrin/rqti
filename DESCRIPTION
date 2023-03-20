@@ -21,7 +21,8 @@ Imports:
     exams, servr, rstudioapi, RCurl, fs,
     purrr,
     stringr,
-    methods
+    methods,
+    lubridate
 Suggests: 
     testthat (>= 3.0.0),
     XML
