@@ -6,6 +6,7 @@
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
 #' @template MCSlotsTemplate
+#' @template NoteTasksTemplate
 #' @examples
 #' mc <- new("MultipleChoice",
 #'           content = list("<p>Pick up the right options</p>"),

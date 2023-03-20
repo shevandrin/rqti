@@ -1,12 +1,19 @@
-#' Root element asssessmentSection for xml task description
+#' Class AssessmentSection
 #'
-#' Root element assessmentSection for xml task description according to QTI 2.1
+#' Class `AssessmentSection` is responsible for forming a section in test xml
+#' specification according to QTI 2.1
 #'
 #' @importFrom ids adjective_animal
-#'
 #' @slot identifier section id
 #' @slot title title of the section
 #' @slot visible show or not to show for student
+#' @examples
+#' essay <- new("Essay", prompt = "Test task", title = "Essay",
+#'              identifier = "q1")
+#' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
+#'           choices = c("A", "B", "C"), identifier = "q2")
+#' exam_section <- new("AssessmentSection", identifier = "sec_id",
+#'                    title = "section", assessment_item = list(essay, sc))
 #' @name AssessmentSection-class
 #' @rdname AssessmentSection-class
 #' @aliases AssessmentSection

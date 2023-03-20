@@ -48,6 +48,9 @@ default \code{1}}
 default 1}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
 sc <- new("SingleChoice",
           content = list("<p>Pick up the right option</p>"),

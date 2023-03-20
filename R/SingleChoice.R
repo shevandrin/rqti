@@ -7,6 +7,7 @@
 #' @template ChoiceSlotsTemplate
 #' @template SCSlotsTemplate
 #' @template PointsSlotTemplate
+#' @template NoteTasksTemplate
 #' @examples
 #' sc <- new("SingleChoice",
 #'           content = list("<p>Pick up the right option</p>"),

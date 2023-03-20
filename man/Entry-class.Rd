@@ -30,6 +30,9 @@ paragraph, can supplement or replace content}
 default 1}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
 entry_gaps <- new("Entry", content = list("<p>In mathematics, the common
 logarithm is the logarithm with base", new("NumericGap",

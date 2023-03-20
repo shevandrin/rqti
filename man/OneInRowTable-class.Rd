@@ -57,6 +57,9 @@ which the choices are initially presented to the candidate; default \code{TRUE}}
 default 1}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
 mt <- new("OneInRowTable", content = list("<p>\"One in row\" table task</p>",
                                                 "<i>table description</i>"),

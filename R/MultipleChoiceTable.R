@@ -9,6 +9,7 @@
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
 #' @template MCTSlotsTemplate
+#' @template NoteTasksTemplate
 #' @examples
 #' mt <- new("MultipleChoiceTable", content = list("<p>Match table task</p>",
 #'                                                 "<i>table description</i>"),

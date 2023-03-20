@@ -10,6 +10,7 @@
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
 #' @template PointsSlotTemplate
+#' @template NoteTasksTemplate
 #' @examples
 #' dp <- new("DirectedPair", content = list("<p>\"Directed pairs\" task</p>"),
 #'           rows = c("row1", "row2", "row3"),

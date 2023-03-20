@@ -9,6 +9,8 @@
 #'  questions/tasks and/or one or more sub sections.
 #' @template ATSlotsTemplate
 #' @template ATOSlotsTemplate
+#' @seealso [AssessmentSection]
+#' @note use [create_qti_test()] to create an xml file for test specification
 #' @examples
 #' \dontrun{
 #' This example creates test 'exam' with one section 'exam_section' which

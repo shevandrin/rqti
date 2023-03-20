@@ -6,6 +6,7 @@
 #' @template AISlotsTemplate
 #' @template OrderSlotsTemplate
 #' @template PointsSlotTemplate
+#' @template NoteTasksTemplate
 #' @examples
 #' ord <- new("Order", content = list("<p>put in a right order</p>"),
 #'            choices = c("first", "second", "third"),

@@ -51,7 +51,6 @@ Collate:
     'SingleChoice.R'
     'TextGap.R'
     'TextGapOpal.R'
-    'exam.R'
     'extract_results.R'
     'knit_functions.R'
     'objectBuilder.R'

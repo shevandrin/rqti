@@ -9,9 +9,7 @@ create_qti_test(object,
                 verification = FALSE)
 }
 \arguments{
-\item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
-\link{Essay}, \link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable},
-\link{DirectedPair}).}
+\item{object}{an instance of the \link{AssessmentTest} S4 object}
 
 \item{dir}{string, optional; a folder to store xml file; working directory by
 default}
@@ -31,7 +29,10 @@ essay <- new("Essay", prompt = "Test task", title = "Essay",
              identifier = "q1")
 sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
           choices = c("A", "B", "C"), identifier = "q2")
-exam <- new("AssessmentTest", )
-create_qti_test(essay, "result", "TRUE")
+exam_section <- new("AssessmentSection", identifier = "sec_id",
+                   title = "section", assessment_item = list(essay, sc))
+exam <- new("AssessmentTestOpal", identifier = "id_test",
+           title = "some title", section = list(exam_section))
+create_qti_test(exam, "exam_folder", "TRUE")
 }
 }

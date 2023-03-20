@@ -3,9 +3,7 @@
 #' @usage create_qti_test(object,
 #'                 dir = NULL,
 #'                 verification = FALSE)
-#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable], [MultipleChoiceTable],
-#'   [DirectedPair]).
+#' @param object an instance of the [AssessmentTest] S4 object
 #' @param dir string, optional; a folder to store xml file; working directory by
 #'   default
 #' @param verification boolean, optional; to check validity of xml file, default
@@ -17,8 +15,11 @@
 #'              identifier = "q1")
 #' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
 #'           choices = c("A", "B", "C"), identifier = "q2")
-#' exam <- new("AssessmentTest", )
-#' create_qti_test(essay, "result", "TRUE")
+#' exam_section <- new("AssessmentSection", identifier = "sec_id",
+#'                    title = "section", assessment_item = list(essay, sc))
+#' exam <- new("AssessmentTestOpal", identifier = "id_test",
+#'            title = "some title", section = list(exam_section))
+#' create_qti_test(exam, "exam_folder", "TRUE")
 #' }
 #' @export
 create_qti_test <- function(object,dir = NULL, verification = FALSE) {

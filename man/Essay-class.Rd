@@ -43,8 +43,11 @@ for candidate to copy text into text input field; default \code{FALSE}}
 default 1}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
-es <- new("Essay", content = list("<p>Devolop some idea and write it down in
+es <- new("Essay", content = list("<p>Develop some idea and write it down in
                                   the text field</p>"),
           title = "essay_example",
           max_strings = 100,

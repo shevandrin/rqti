@@ -9,6 +9,7 @@
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
 #' @template PointsSlotTemplate
+#' @template NoteTasksTemplate
 #' @examples
 #' mt <- new("OneInRowTable", content = list("<p>\"One in row\" table task</p>",
 #'                                                 "<i>table description</i>"),

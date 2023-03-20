@@ -4,9 +4,10 @@
 \name{AssessmentSection-class}
 \alias{AssessmentSection-class}
 \alias{AssessmentSection}
-\title{Root element asssessmentSection for xml task description}
+\title{Class AssessmentSection}
 \description{
-Root element assessmentSection for xml task description according to QTI 2.1
+Class \code{AssessmentSection} is responsible for forming a section in test xml
+specification according to QTI 2.1
 }
 \section{Slots}{
 
@@ -18,3 +19,11 @@ Root element assessmentSection for xml task description according to QTI 2.1
 \item{\code{visible}}{show or not to show for student}
 }}
 
+\examples{
+essay <- new("Essay", prompt = "Test task", title = "Essay",
+             identifier = "q1")
+sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
+          choices = c("A", "B", "C"), identifier = "q2")
+exam_section <- new("AssessmentSection", identifier = "sec_id",
+                   title = "section", assessment_item = list(essay, sc))
+}

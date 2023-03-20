@@ -62,6 +62,9 @@ used when no explicit mapping for a source value is given; default \code{0}}
 points}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
 mc <- new("MultipleChoice",
           content = list("<p>Pick up the right options</p>"),

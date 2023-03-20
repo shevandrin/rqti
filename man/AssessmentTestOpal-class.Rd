@@ -81,6 +81,9 @@ answers of the previous attempt}
 to candidate during the test/exam}
 }}
 
+\note{
+use \code{\link[=create_qti_test]{create_qti_test()}} to create an xml file for test specification
+}
 \examples{
 \dontrun{
 This example creates test 'exam' with one section 'exam_section' which
@@ -94,4 +97,7 @@ exam_section <- new("AssessmentSection", identifier = "sec_id",
                     title = "section", assessment_item = list(task1, task2))
 exam <- new("AssessmentTestOpal", identifier = "id_test",
             title = "some title", section = list(exam_section))
+}
+\seealso{
+\link{AssessmentSection}
 }

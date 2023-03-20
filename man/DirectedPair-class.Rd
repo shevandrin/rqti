@@ -58,6 +58,9 @@ which the choices are initially presented to the candidate; default \code{TRUE}}
 default 1}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
 dp <- new("DirectedPair", content = list("<p>\"Directed pairs\" task</p>"),
           rows = c("row1", "row2", "row3"),

@@ -58,6 +58,9 @@ vector of points, where names are all possible collocations of rows and
 columns identifiers}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
 mt <- new("MultipleChoiceTable", content = list("<p>Match table task</p>",
                                                 "<i>table description</i>"),

@@ -194,6 +194,8 @@ create_prompt <- function(object) {
 #' essay <- new("Essay", prompt = "Test task", title = "Essay")
 #' create_qti_task(essay, "result", "TRUE")
 #' }
+#' @name create_qti_task
+#' @rdname create_qti_task
 #' @export
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     if (is.null(dir)) dir <- getwd()

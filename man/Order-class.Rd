@@ -37,6 +37,9 @@ which the choices are initially presented to the candidate; default \code{TRUE}}
 default 1}
 }}
 
+\note{
+use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
+}
 \examples{
 ord <- new("Order", content = list("<p>put in a right order</p>"),
            choices = c("first", "second", "third"),

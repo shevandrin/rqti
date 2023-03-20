@@ -6,6 +6,7 @@
 #' @template ContentEntrySlotTemplate
 #' @template AISlotsTemplate
 #' @template PointsSlotTemplate
+#' @template NoteTasksTemplate
 #' @examples
 #' entry_gaps <- new("Entry", content = list("<p>In mathematics, the common
 #' logarithm is the logarithm with base", new("NumericGap",
