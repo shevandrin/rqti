@@ -17,6 +17,7 @@
 #'           shuffle = FALSE,
 #'           points = 2,
 #'           identifier = "sc_example")
+#'
 #' @name SingleChoice-class
 #' @rdname SingleChoice-class
 #' @aliases SingleChoice
@@ -24,7 +25,18 @@
 #' @include AssessmentItem.R Choice.R
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
-
+#' @export
+SingleChoice <- function(content = list(), identifier = character(),
+                         title = character(), prompt = character(),
+                         choices = character(), shuffle = logical(),
+                         choice_identifiers = character(), orientation = character(),
+                         solution = numeric(), points = numeric()) {
+    new("SingleChoice", content = content, identifier = identifier,
+        title = title, prompt = prompt,
+        choices = choices, shuffle = shuffle,
+        choice_identifiers = choice_identifiers, orientation = orientation,
+        solution = solution, points = points)
+}
 # constructor
 setMethod("initialize", "SingleChoice", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -90,19 +102,3 @@ create_response_declaration_single_choice <- function(object) {
 #'
 #' @name singleChoice
 #' @rdname singleChoice
-#' @export
-singleChoice <- function(identifier, choices,
-                         title = NA_character_,
-                         choice_identifiers = NA_character_,
-                         solution = NA_integer_,
-                         content = list(),
-                         points = NA_integer_,
-                         shuffle = logical(0L),
-                         prompt = NA_character_,
-                         orientation = NA_character_){
-    new("SingleChoice",
-              identifier = identifier, title = title, choices = choices,
-              choice_identifiers = choice_identifiers, solution = solution,
-              content = content, points = points, shuffle = shuffle, prompt = prompt,
-              orientation = orientation)
-}

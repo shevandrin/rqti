@@ -22,7 +22,16 @@ setClass("Order", contains = "AssessmentItem",
                      choices_identifiers = "character",
                      shuffle = "logical"),
          prototype = list(shuffle = TRUE))
-
+#' @export
+Order <- function(content = list(), identifier = character(),
+                  title = character(), prompt = character(),
+                  choices = character(), choices_identifiers = character(),
+                  shuffle = logical(), points = numeric()) {
+    new("Order", content = content, identifier = identifier,
+        title = title, prompt = prompt, choices = choices,
+        choices_identifiers = choices_identifiers,
+        shuffle = shuffle, points = points)
+}
 # constructor
 setMethod("initialize", "Order", function(.Object, ...) {
     .Object <- callNextMethod()

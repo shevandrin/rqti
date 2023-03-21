@@ -36,8 +36,13 @@
 #' @exportClass Entry
 #' @include AssessmentItem.R
 setClass("Entry", contains = "AssessmentItem")
-
-
+#' @export
+Entry <- function(content = list(), identifier = character(),
+                  title = character(), prompt = character(),
+                  points = numeric()) {
+    new("Entry", content = content, identifier = identifier,
+        title = title, prompt = prompt, points = points)
+}
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,Entry
 setMethod("createItemBody", signature(object = "Entry"),
