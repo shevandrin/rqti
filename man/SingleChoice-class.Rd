@@ -59,4 +59,5 @@ sc <- new("SingleChoice",
           shuffle = FALSE,
           points = 2,
           identifier = "sc_example")
+
 }

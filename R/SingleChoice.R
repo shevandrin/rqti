@@ -40,8 +40,8 @@ SingleChoice <- function(content = list(), identifier = character(),
 # constructor
 setMethod("initialize", "SingleChoice", function(.Object, ...) {
     .Object <- callNextMethod()
-    if (length(.Object@solution) == 0 | is.na(.Object@solution)) {
-        .Object@solution <- 1}
+    if (length(.Object@solution) == 0) .Object@solution <- 1
+    if (is.na(.Object@solution)) .Object@solution <- 1
     validObject(.Object)
     .Object
 })

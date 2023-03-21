@@ -24,8 +24,8 @@ setMethod("initialize", "Choice", function(.Object, ...) {
         .Object@choice_identifiers <- paste0("Choice",
                                              LETTERS[seq(.Object@choices)])
     }
-    if (is.na(.Object@orientation)) {
-        .Object@orientation = "vertical"}
+    if (length(.Object@orientation) == 0) .Object@orientation = "vertical"
+    if (is.na(.Object@orientation)) .Object@orientation = "vertical"
     if (length(.Object@shuffle) == 0L) {
         .Object@shuffle = TRUE
     }
