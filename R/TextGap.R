@@ -21,7 +21,18 @@ setClass("TextGap", contains = "Gap",
          prototype = prototype(score = 1,
                                case_sensitive = TRUE
                                ))
-
+#' @export
+TextGap <- function(response_identifier = character(),
+                        score = numeric(), placeholder = character(),
+                        expected_length = numeric(),
+                        response = character(), alternatives = character(),
+                        case_sentensive = logical()
+){
+    new("TextGap", response_identifier = response_identifier,
+        score = score, placeholder = placeholder,
+        expected_length = expected_length, response = response,
+        alternatives = alternatives, case_sentensive = case_sentensive)
+}
 setMethod("initialize", "TextGap", function(.Object,...){
     .Object <- callNextMethod()
     if (length(.Object@score) == 0) {

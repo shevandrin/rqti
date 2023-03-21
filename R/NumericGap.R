@@ -24,7 +24,23 @@ setClass("NumericGap", contains = "Gap",
                                include_lower_bound = TRUE,
                                include_upper_bound = TRUE,
                                score = 1))
-
+#' @export
+NumericGap <- function(response_identifier = character(),
+                        score = numeric(), placeholder = character(),
+                        expected_length = numeric(),
+                        response = numeric(), value_precision = numeric(),
+                        type_precision = character(),
+                        include_lower_bound = logical(),
+                        include_upper_bound = logical()
+){
+    new("NumericGap", response_identifier = response_identifier,
+        score = score, placeholder = placeholder,
+        expected_length = expected_length,
+        response = response, value_precision = value_precision,
+        type_precision = type_precision,
+        include_lower_bound = include_lower_bound,
+        include_upper_bound = include_upper_bound)
+}
 setValidity("NumericGap", function(object) {
     types <- c("exact", "absolute", "relative")
     if (!(object@type_precision %in% types)) {
