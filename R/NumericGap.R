@@ -43,6 +43,7 @@ NumericGap <- function(response_identifier = character(),
 }
 setValidity("NumericGap", function(object) {
     types <- c("exact", "absolute", "relative")
+    if (length(object@type_precision) == 0L) object@type_precision = "exact"
     if (!(object@type_precision %in% types)) {
         "@value_precision can be \"exact\", \"absolute\", or \"relative\" only"
     } else {
@@ -53,9 +54,8 @@ setValidity("NumericGap", function(object) {
 
 setMethod("initialize", "NumericGap", function(.Object,...){
     .Object <- callNextMethod()
-    if (length(.Object@score) == 0) {
-        .Object@score = 1
-    }
+    if (length(.Object@score) == 0) .Object@score = 1
+    if (length(.Object@type_precision) == 0L) .Object@type_precision = "exact"
     validObject(.Object)
     .Object
 })

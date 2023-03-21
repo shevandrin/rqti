@@ -1,6 +1,22 @@
-# define class TextGapOpal to specify text entries for LML Opal
+#' Class TextGapOpal
+#'
+#' Abstract class `TextGapOpal` is responsible for creating instances of input
+#' fields with text type of answer in question Entry type assessment task
+#' according to QTI 2.1. for LMS Opal
+#' @template GapSlotsTemplate
+#' @template TextGapSlotsTemplate
+#' @template TextGapOpalSlotsTemplate
+#' @examples
+#' tgo <- new("TextGapOpal",
+#'           response = "answer",
+#'           alternatives = c("answerr", "aanswer"),
+#'           placeholder = "do not put special characters",
+#'           value_precision = 1)
+#' @name TextGapOpal-class
+#' @rdname TextGapOpal-class
+#' @aliases TextGapOpal
+#' @include Gap.R TextGap.R
 #' @importFrom htmltools tag p span tagList tagAppendChildren
-
 setClass("TextGapOpal", contains = "TextGap",
          slots = c(value_precision = "numeric"),
          prototype = prototype(value_precision = 0,
@@ -11,14 +27,14 @@ TextGapOpal <- function(response_identifier = character(),
                         score = numeric(), placeholder = character(),
                         expected_length = numeric(),
                         response = character(), alternatives = character(),
-                        case_sentensive = logical(),
+                        case_sensitive = logical(),
                         value_precision = numeric()
                         ){
     new("TextGapOpal", response_identifier = response_identifier,
         score = score, placeholder = placeholder,
         expected_length = expected_length,
         response = response, alternatives = alternatives,
-        case_sentensive = case_sentensive,
+        case_sensitive = case_sensitive,
         value_precision = value_precision
 )}
 #' @rdname createResponseProcessing-methods

@@ -1,7 +1,7 @@
 #' Class "AssessmentTestOpal"
 #'
 #' Abstract class `AssessmentTestOpal` is responsible for creating xml exam file
-#' according to QTI 2.1. for Opal
+#' according to QTI 2.1. for LMS Opal
 #' \if{html}{\out{<div style="text-align:center">}\figure{assessmentTest.png}
 #' \out{</div>}}
 #' @details
