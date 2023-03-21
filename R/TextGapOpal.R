@@ -10,13 +10,17 @@ setClass("TextGapOpal", contains = "TextGap",
 TextGapOpal <- function(response_identifier = character(),
                         score = numeric(), placeholder = character(),
                         expected_length = numeric(),
+                        response = character(), alternatives = character(),
+                        case_sentensive = logical(),
                         value_precision = numeric()
                         ){
     new("TextGapOpal", response_identifier = response_identifier,
         score = score, placeholder = placeholder,
         expected_length = expected_length,
-        value_precision = value_precision)
-}
+        response = response, alternatives = alternatives,
+        case_sentensive = case_sentensive,
+        value_precision = value_precision
+)}
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGapOpal
 setMethod("createResponseProcessing", "TextGapOpal", function(object) {
