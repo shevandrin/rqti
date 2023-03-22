@@ -2,21 +2,21 @@
 #'
 #' Class `AssessmentSection` is responsible for forming a section in test xml
 #' specification according to QTI 2.1
-#'
-#' @importFrom ids adjective_animal
-#' @slot identifier section id
-#' @slot title title of the section
-#' @slot visible show or not to show for student
+#' @template ASSlotsTemplate
 #' @examples
-#' essay <- new("Essay", prompt = "Test task", title = "Essay",
-#'              identifier = "q1")
-#' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
-#'           choices = c("A", "B", "C"), identifier = "q2")
+#' sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
+#'              identifier = "q1", choices = c("a", "b", "c"))
+#' sc2 <- new("SingleChoice", prompt = "Test task", title = "SC",
+#'              identifier = "q2", choices = c("A", "B", "C"))
+#' sc3 <- new("SingleChoice", prompt = "Test task", title = "SC",
+#'              identifier = "q3", choices = c("aa", "bb", "cc"))
 #' exam_section <- new("AssessmentSection", identifier = "sec_id",
-#'                    title = "section", assessment_item = list(essay, sc))
+#'                    title = "section", assessment_item = list(sc1, sc2, sc3),
+#'                    selection = 2)
 #' @name AssessmentSection-class
 #' @rdname AssessmentSection-class
 #' @aliases AssessmentSection
+#' @importFrom ids adjective_animal
 setClass("AssessmentSection", slots = c(identifier = "character",
                                      title = "character",
                                      time_limits = "numeric",

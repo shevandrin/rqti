@@ -12,18 +12,43 @@ specification according to QTI 2.1
 \section{Slots}{
 
 \describe{
-\item{\code{identifier}}{section id}
+\item{\code{identifier}}{string; section identifier}
 
-\item{\code{title}}{title of the section}
+\item{\code{title}}{string; title of the section}
 
-\item{\code{visible}}{show or not to show for student}
+\item{\code{time_limits}}{numeric, optional;  controls the amount of time a candidate
+is allowed for this part of the test}
+
+\item{\code{visible}}{boolean, optional; if TRUE it shows this section in hierarchy
+of test structure; default \code{TRUE}}
+
+\item{\code{assessment_item}}{list; list of \linkS4class{AssessmentSection} and/or
+Assessemt item objects: \link{SingleChoice}, \link{MultipleChoice}, \link{Essay}, \link{Entry},
+\link{Order}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable},
+\link{DirectedPair}}
+
+\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
+which the assessment items and subsections are initially presented to the
+candidate; default \code{FALSE}}
+
+\item{\code{selection}}{numeric, optional; defines how many children of the section
+are delivered in test}
+
+\item{\code{max_attempts}}{numeric. optional; enables the maximum number of attempts,
+that candidate is allowed to pass in this section}
+
+\item{\code{allow_comment}}{boolean, optional; enables to allow candidate to leave
+comments in each question of the section}
 }}
 
 \examples{
-essay <- new("Essay", prompt = "Test task", title = "Essay",
-             identifier = "q1")
-sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
-          choices = c("A", "B", "C"), identifier = "q2")
+sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
+             identifier = "q1", choices = c("a", "b", "c"))
+sc2 <- new("SingleChoice", prompt = "Test task", title = "SC",
+             identifier = "q2", choices = c("A", "B", "C"))
+sc3 <- new("SingleChoice", prompt = "Test task", title = "SC",
+             identifier = "q3", choices = c("aa", "bb", "cc"))
 exam_section <- new("AssessmentSection", identifier = "sec_id",
-                   title = "section", assessment_item = list(essay, sc))
+                   title = "section", assessment_item = list(sc1, sc2, sc3),
+                   selection = 2)
 }
