@@ -34,7 +34,20 @@ setClass("AssessmentSection", slots = c(identifier = "character",
                                max_attempts = NA_integer_,
                                allow_comment = NA
          ))
-
+#' @export
+AssessmentSection <- function(identifier = character(),
+                           title = character(), time_limits = numeric(),
+                           visible = logical(),
+                           assessment_item = list(), shuffle = logical(),
+                           selection = numeric(), max_attempts = numeric(),
+                           allow_comment = logical()
+){
+    new("AssessmentSection", identifier = identifier,
+        title = title, time_limits = time_limits,
+        visible = visible, assessment_item = assessment_item, shuffle = shuffle,
+        selection = selection, max_attempts = max_attempts,
+        allow_comment = allow_comment)
+}
 #' Get list of AssessmentItems for AssessmentSection
 #'
 #' Generic function for
