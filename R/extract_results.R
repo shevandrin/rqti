@@ -28,6 +28,8 @@ get_duration <- function(file) {
 #' * 'candidate_score' - points that were given to candidate after evaluation
 #' * 'max_scored' - max possible score for this question item
 #' * 'type' - the type of question
+#' * 'is_answer_given' - TRUE if candidate gave the answer on question,
+#' otherwise FALSE
 #'
 #' @param file A string with a path of the xml test result file
 #' @import xml2
@@ -43,6 +45,7 @@ get_result_attr_answers<- function(file) {
     test_dt <- lubridate::ymd_hms(test_dt)
 
     items_result <- xml_find_all(doc, ".//d1:itemResult")
+    given <- unlist(lapply(items_result, is_answer_given))
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
     dur_nodes <- xml2::xml_find_all(doc,
                 ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
@@ -61,7 +64,8 @@ get_result_attr_answers<- function(file) {
                        duration = as.numeric(durations),
                        candidate_score = as.numeric(scores),
                        max_scores = as.numeric(maxes),
-                       question_type = types)
+                       question_type = types,
+                       is_answser_given = given)
     return(data)
 }
 
@@ -196,6 +200,12 @@ identify_question_type <- function(q_id) {
         if (grepl(t, q_id)) result <- t
     }
     return(result)
+}
+
+is_answer_given <- function(node) {
+    resp_variable <- xml2::xml_find_all(node, ".//d1:responseVariable")[-1]
+    res <- xml2::xml_find_all(resp_variable, ".//d1:candidateResponse")
+    ifelse (length(res)>0, TRUE, FALSE)
 }
 
 combine_responses_notes <- function(node, tag) {

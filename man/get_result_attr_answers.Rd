@@ -24,5 +24,7 @@ candidate)
 \item 'candidate_score' - points that were given to candidate after evaluation
 \item 'max_scored' - max possible score for this question item
 \item 'type' - the type of question
+\item 'is_answer_given' - TRUE if candidate gave the answer on question,
+otherwise FALSE
 }
 }
