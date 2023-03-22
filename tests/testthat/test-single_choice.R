@@ -79,6 +79,29 @@ test_that("Testing additional attribute for item body single choice", {
   xml1 <- xml2::read_xml(toString(createItemBody(sc)))
   xml2 <- xml2::read_xml(example)
   expect_equal(xml1, xml2)
-}
+})
 
-)
+test_that("Testing construction functon for SingleChoice class", {
+    sut <- SingleChoice(content = list("<p>line1</p>", "<p>line2</p>"),
+                        points = 2,
+                        identifier = "ID125",
+                        choices = c("One", "Two"),
+                        orientation = "horizontal",
+                        solution = 2,
+                        shuffle = FALSE,
+                        choice_identifiers = c("ID_1", "ID_2"))
+
+    example <- new("SingleChoice",
+              content = list("<p>line1</p>", "<p>line2</p>"),
+              points = 2,
+              identifier = "ID125",
+              title = "ID125",
+              choices = c("One", "Two"),
+              orientation = "horizontal",
+              solution = 2,
+              shuffle = FALSE,
+              choice_identifiers = c("ID_1", "ID_2"))
+
+    expect_s4_class(sut, "SingleChoice")
+    expect_equal(sut, example)
+})
