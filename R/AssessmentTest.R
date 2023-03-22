@@ -51,6 +51,24 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                allow_comment = NA,
                                rebuild_variables = NA
          ))
+#' @export
+AssessmentTest <- function(identifier = character(),
+                           title = character(), points = numeric(),
+                           test_part_identifier = character(),
+                           navigation_mode = character(),
+                           submission_mode = character(),
+                           section = list(),
+                           time_limits = numeric(), max_attempts = numeric(),
+                           allow_comment = logical(),
+                           rebuild_variables = logical()
+){
+    new("AssessmentTest", identifier = identifier, title = title, points = points,
+        test_part_identifier = test_part_identifier,
+        navigation_mode = navigation_mode, submission_mode = submission_mode,
+        section = section, time_limits = time_limits,
+        max_attempts = max_attempts, allow_comment = lallow_comment,
+        rebuild_variables = rebuild_variables)
+}
 # TODO verification procedure for calculator values: they must be from factor:scientific-calculator/simple-calculator
 # TODO verification of files slot
 # TODO verification procedure for navigation mode values: they must be from factor: linear/nonlinear
