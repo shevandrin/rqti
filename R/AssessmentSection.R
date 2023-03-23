@@ -67,12 +67,11 @@ setGeneric("getAssessmentItems", function(object) {
 #'
 #' @param object an instance of the S4 object ([AssessmentSection],
 #' [AssessmentItemRef] and all types of [AssessmentItem])
-#' @param folder a character string; name of folder to store the xml files
 #' @docType methods
 #' @rdname buildAssessmentSection-methods
 #'
 #' @export
-setGeneric("buildAssessmentSection", function(object, folder = NULL) {
+setGeneric("buildAssessmentSection", function(object) {
     standardGeneric("buildAssessmentSection")
 })
 

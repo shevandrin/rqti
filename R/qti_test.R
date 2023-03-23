@@ -23,17 +23,24 @@
 #' }
 #' @export
 create_qti_test <- function(object,dir = NULL, verification = FALSE) {
+    if (!dir.exists(dir)) dir.create(dir)
+    wd <- getwd()
+    setwd(dir)
+
     content <- create_assessment_test(object, dir)
     doc_test <- xml2::read_xml(as.character(content))
-    if (!dir.exists(dir)) dir.create(dir)
+    setwd(wd)
+
     path_test <- paste0(dir, "/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)
-    print(paste("see test file:", path_test))
+    print(paste("see essessment test:", path_test))
+
     manifest <- create_manifest(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
     path_manifest <- paste0(dir, "/imsmanifest.xml")
     xml2::write_xml(doc_manifest, path_manifest)
     print(paste("see manifest file:", path_manifest))
+
     zip_wrapper(object@identifier, object@files, dir)
 }
 
@@ -74,7 +81,7 @@ create_assessment_test <-function(object, folder) {
     session_control <- create_item_session_control(object@max_attempts,
                                                    object@allow_comment,
                                                    object@rebuild_variables)
-    sections <- Map(create_section_test, object@section, folder)
+    sections <- Map(create_section_test, object@section)
     testPart <- tag("testPart", list(identifier = object@test_part_identifier,
                                      navigationMode = object@navigation_mode,
                                      submissionMode = object@submission_mode,
@@ -88,8 +95,8 @@ create_assessment_test <-function(object, folder) {
 }
 
 # creates tag "assessmentSection" in test file
-create_section_test <- function(object, folder) {
-    assessment_items <- Map(buildAssessmentSection, object@assessment_item, folder)
+create_section_test <- function(object) {
+    assessment_items <- Map(buildAssessmentSection, object@assessment_item)
     if (!is.na(object@time_limits)) {
         time_limits <- tag("timeLimits", list(maxTime = object@time_limits))
     } else {time_limits = c()}
@@ -121,8 +128,10 @@ create_item_session_control <- function(attempts, comments, rebuild) {
         (com <- !is.na(comments)) |
         (reb <- !is.na(rebuild))) {
         if (att) { att <- list(maxAttempts = attempts)} else {att <- list()}
-        if (com) { com <- list(allowComment = tolower(comments))} else {com <- list()}
-        if (reb) { reb <- list(rebuildVariables = tolower(rebuild))} else {reb <- list()}
+        if (com) { com <- list(allowComment = tolower(comments))}
+        else {com <- list()}
+        if (reb) { reb <- list(rebuildVariables = tolower(rebuild))}
+        else {reb <- list()}
         session_control <- tag("itemSessionControl", c(att, com, reb))
     } else {session_control = c()}
 }
@@ -143,7 +152,8 @@ create_manifest <- function(object) {
     dependencies <- Map(create_dependency, names(items))
     test_resource <- tag("resource", list(identifier = object@identifier,
                                           type = "imsqti_test_xmlv2p1",
-                                          href = paste0(object@identifier, ".xml"),
+                                          href = paste0(object@identifier,
+                                                        ".xml"),
                                           file,
                                           dependencies))
     item_resources <- Map(create_resource_item, names(items), items)
@@ -173,7 +183,8 @@ zip_wrapper <- function(id, files, dir_xml) {
     test_dir <- file.path(tools::file_path_as_absolute(tdir), "qti_test")
     dir.create(test_dir)
     if (length(files) > 0) {
-        download_dir <- file.path(tools::file_path_as_absolute(test_dir), "downloads")
+        download_dir <- file.path(tools::file_path_as_absolute(test_dir),
+                                  "downloads")
         dir.create(download_dir)
         items_files <- unlist(lapply("results/downloads/", paste0, files))
         file.copy(items_files, download_dir)

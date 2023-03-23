@@ -198,18 +198,19 @@ create_prompt <- function(object) {
 #' @rdname create_qti_task
 #' @export
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
-    if (is.null(dir)) dir <- getwd()
-    if (!dir.exists(dir)) dir.create(dir)
     content <- create_assessment_item(object)
     doc <- xml2::read_xml(as.character(content))
     if (verification) {
         ver <- verify_qti(doc)
         if (!ver) {
-            msg <- cat("xml file is not valid. See details:\n",
+            msg <- list("Error messsage: xml file is not valid. See details in
+                        errors",
                        attributes(ver))
             return(msg)
         }
     }
+    if (is.null(dir)) dir <- getwd()
+    if (!dir.exists(dir)) dir.create(dir)
     path <- paste0(dir, "/",object@identifier, ".xml")
     xml2::write_xml(doc, path)
     print(paste("see assessment item:", path))
@@ -217,7 +218,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
 
 # function to verify xml with xsd scheme
 verify_qti <- function(doc) {
-    file <- file.path(getwd(), "tests/testthat/imsqti_v2p1.xsd")
+    file <- file.path(getwd(), "inst/imsqti_v2p1.xsd")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(doc, schema)
     ifelse ((validation[1]), return(validation[1]), return(validation))

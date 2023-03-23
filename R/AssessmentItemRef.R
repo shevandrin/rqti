@@ -44,8 +44,8 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItemRef"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessementSection,AssessmentItem
 setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
-          function(object, folder) {
-              create_qti_task(object, folder)
+          function(object) {
+              create_qti_task(object)
               tag("assessmentItemRef", list(identifier = object@identifier,
                                             href = paste0(object@identifier,
                                                           ".xml")))
