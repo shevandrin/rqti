@@ -65,7 +65,7 @@ get_result_attr_answers<- function(file) {
                        candidate_score = as.numeric(scores),
                        max_scores = as.numeric(maxes),
                        question_type = types,
-                       is_answser_given = given)
+                       is_answer_given = given)
     return(data)
 }
 
@@ -202,6 +202,7 @@ identify_question_type <- function(q_id) {
     return(result)
 }
 
+# returns TRUE if candidate gave an answer
 is_answer_given <- function(node) {
     resp_variable <- xml2::xml_find_all(node, ".//d1:responseVariable")[-1]
     res <- xml2::xml_find_all(resp_variable, ".//d1:candidateResponse")
