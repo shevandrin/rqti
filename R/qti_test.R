@@ -48,7 +48,8 @@ create_qti_test <- function(object,dir = NULL, verification = FALSE) {
 create_assessment_test <-function(object, folder) {
     data_downloads <- NULL
     if (length(object@files) > 0) {
-        files <- unlist(lapply("file://downloads/", paste0, object@files, ";"))
+        file_names <- basename(object@files)
+        files <- unlist(lapply("file://downloads/", paste0, file_names, ";"))
         for (f in files) {
             data_downloads <- paste0(f, data_downloads)
         }
@@ -186,8 +187,7 @@ zip_wrapper <- function(id, files, dir_xml) {
         download_dir <- file.path(tools::file_path_as_absolute(test_dir),
                                   "downloads")
         dir.create(download_dir)
-        items_files <- unlist(lapply("results/downloads/", paste0, files))
-        file.copy(items_files, download_dir)
+        file.copy(files, download_dir)
     }
 
     #  copy files from working directory to temporary

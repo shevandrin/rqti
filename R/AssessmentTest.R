@@ -66,7 +66,7 @@ AssessmentTest <- function(identifier = character(),
         test_part_identifier = test_part_identifier,
         navigation_mode = navigation_mode, submission_mode = submission_mode,
         section = section, time_limits = time_limits,
-        max_attempts = max_attempts, allow_comment = lallow_comment,
+        max_attempts = max_attempts, allow_comment = allow_comment,
         rebuild_variables = rebuild_variables)
 }
 # TODO verification procedure for calculator values: they must be from factor:scientific-calculator/simple-calculator

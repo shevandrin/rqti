@@ -213,5 +213,7 @@ exam_section <- new("AssessmentSection", identifier = "sec_id",
                    assessment_item = list(sc1, sc2, sc3, exam_subsection))
 
 exam <- new("AssessmentTestOpal", identifier = "id_test",
-            title = "some title", section = list(exam_section))
+            title = "some title", section = list(exam_section),
+            files = c("man/figures/assessmentTest.png",
+                      "man/figures/README-S4_classes_diagramm.jpg"))
 create_qti_test(exam, "to_delete")
