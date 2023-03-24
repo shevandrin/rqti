@@ -14,6 +14,9 @@ setClass("AssessmentItemRef", slots = c(identifier = "character",
                                         href = "character"),
          prototype = prototype(identifier = ids::adjective_animal())
          )
+AssessmentItemRef <- function(identifier = character(0), href = character(0)) {
+    new("AssessmentItemRef", identifier = identifier, href = href)
+}
 
 #' @rdname getAssessmentItems-methods
 #' @aliases getAssessmentItems,AssessmentItemRef
@@ -49,4 +52,37 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
               tag("assessmentItemRef", list(identifier = object@identifier,
                                             href = paste0(object@identifier,
                                                           ".xml")))
+          })
+
+#' @rdname buildAssessmentSection-methods
+#' @aliases buildAssessementSection,character
+setMethod("buildAssessmentSection", signature(object = "character"),
+          function(object) {
+              if (file.exists(object)) {
+                  doc <- xml2::read_xml(object)
+                  valid <- verify_qti(doc)
+                  if (!valid) print(paste("Warning: xml file",
+                                          object, "is not valid"))
+                  id <- xml2::xml_attr(doc, "identifier")
+                  file.copy(object, getwd())
+                  tag("assessmentItemRef", list(identifier = id,
+                                            href = basename(object)))
+              }
+              else {
+                  print(paste("Warning: File or path", object,
+                        "is not correct. This file will be omitted in test"))
+                  return(NULL)
+              }
+          })
+
+#' @rdname getAssessmentItems-methods
+#' @aliases getAssessmentItems,character
+setMethod("getAssessmentItems", signature(object = "character"),
+          function(object) {
+              if (file.exists(object)) {
+                  href <- basename(object)
+                  doc <- xml2::read_xml(object)
+                  names(href) <- xml2::xml_attr(doc, "identifier")
+                  return(href)
+              }
           })

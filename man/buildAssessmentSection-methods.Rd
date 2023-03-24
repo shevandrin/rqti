@@ -9,6 +9,8 @@
 \alias{buildAssessementSection,AssessmentItemRef}
 \alias{buildAssessmentSection,AssessmentItem-method}
 \alias{buildAssessementSection,AssessmentItem}
+\alias{buildAssessmentSection,character-method}
+\alias{buildAssessementSection,character}
 \title{Build tags for AssessmentSection in assessmentTest}
 \usage{
 buildAssessmentSection(object)
@@ -18,6 +20,8 @@ buildAssessmentSection(object)
 \S4method{buildAssessmentSection}{AssessmentItemRef}(object)
 
 \S4method{buildAssessmentSection}{AssessmentItem}(object)
+
+\S4method{buildAssessmentSection}{character}(object)
 }
 \arguments{
 \item{object}{an instance of the S4 object (\link{AssessmentSection},

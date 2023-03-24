@@ -33,7 +33,7 @@ create_qti_test <- function(object,dir = NULL, verification = FALSE) {
 
     path_test <- paste0(dir, "/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)
-    print(paste("see essessment test:", path_test))
+    print(paste("see assessment test:", path_test))
 
     manifest <- create_manifest(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
@@ -201,7 +201,7 @@ zip_wrapper <- function(id, files, dir_xml) {
     wd <- getwd()
     setwd(test_dir)
     zip_name <- paste0(id, ".zip")
-    utils::zip(zip_name, list.files(test_dir))
+    utils::zip(zip_name, list.files(test_dir), extras = "-qdgds 10m")
     setwd(wd)
     file.copy(file.path(test_dir, zip_name), dir_xml, recursive = TRUE)
 }
