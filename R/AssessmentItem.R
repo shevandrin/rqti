@@ -10,10 +10,10 @@
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @aliases AssessmentItem
-setClass("AssessmentItem", slots = c(content = "list", prompt = "character",
+setClass("AssessmentItem", slots = c(identifier = "character",
+                                     content = "list", prompt = "character",
                                      points = "numeric",
                                      title = "character",
-                                     identifier = "character",
                                      qti_version = "character"),
          prototype = prototype(prompt = "",
                                points = 1,

@@ -28,12 +28,8 @@ setMethod("initialize", "InlineChoice", function(.Object, ...) {
                                               LETTERS[seq(.Object@options)])
     }
 
-    if (length(.Object@score) == 0) {
-        .Object@score <- 1
-    }
-    if (is.na(.Object@score)) {
-        .Object@score <- 1
-    }
+    if (length(.Object@score) == 0) .Object@score <- 1
+    if (is.na(.Object@score)) .Object@score <- 1
     validObject(.Object)
     .Object
 })

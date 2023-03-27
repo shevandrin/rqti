@@ -20,8 +20,7 @@
 setClass("TextGapOpal", contains = "TextGap",
          slots = c(value_precision = "numeric"),
          prototype = prototype(value_precision = 0,
-                               case_sensitive = FALSE,
-                               score = 1))
+                               case_sensitive = FALSE))
 #' @export
 TextGapOpal <- function(response_identifier = character(),
                         score = numeric(), placeholder = character(),

@@ -22,8 +22,7 @@ setClass("NumericGap", contains = "Gap",
                    type_precision = "character"),
          prototype = prototype(type_precision = "exact",
                                include_lower_bound = TRUE,
-                               include_upper_bound = TRUE,
-                               score = 1))
+                               include_upper_bound = TRUE))
 #' @export
 NumericGap <- function(response_identifier = character(),
                         score = numeric(), placeholder = character(),

@@ -91,8 +91,7 @@ create_assessment_test <-function(object, folder) {
     tagAppendChildren(assesment_test,
                       createOutcomeDeclaration(object),
                       time_limits,
-                      testPart,
-                      createTestPart(object))
+                      testPart)
 }
 
 # creates tag "assessmentSection" in test file

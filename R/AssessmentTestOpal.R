@@ -64,9 +64,3 @@ AssessmentTestOpal <- function(identifier = character(),
         calculator = calculator, mark_items = mark_items,
         keep_responses = keep_responses, files = files)
 }
-# constructor
-setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
-    .Object <- callNextMethod()
-    validObject(.Object)
-    .Object
-})

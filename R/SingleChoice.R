@@ -73,32 +73,3 @@ create_response_declaration_single_choice <- function(object) {
                                     baseType = "identifier",
                                     child))
 }
-
-#' Create object of "[SingleChoice-class]" class
-#'
-#' @param identifier a character string; some identifier of question
-#' @param title a character string; some title of question
-#' @param choices a character vector; set of possible answers; by default the
-#'   first one is considered as a right response
-#' @param choice_identifiers a character vector, optional; set of identifiers of
-#'   answer options; can be assigned automatically
-#' @param solution a number, optional; the index of the right answer in vector
-#'   of choices
-#' @param content a list of character items; this character items should be
-#'   formatted text that combines question/task description
-#' @param points a number, optional; the number of points for the right answer
-#' @param shuffle logical, optional; option to mix answer options up, default
-#'   'TRUE'
-#' @param prompt a character string, optional; text question in one paragraph,
-#'   alternative to 'text' parameter
-#' @param orientation a character string with two possible values of "vertical"
-#'   (default) or "horizontal" placement of answer options
-#' @return an object of S4 class "[SingleChoice-class]"
-#' @examples
-#' sc <- singleChoice(title = "single choice task",
-#'                    content = list("<p>Pick up the right option</p>"),
-#'                    choices= c("option 1", "option 2", "option 3"),
-#'                    identifier = "sc_example")
-#'
-#' @name singleChoice
-#' @rdname singleChoice

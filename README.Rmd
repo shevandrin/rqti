@@ -80,21 +80,36 @@ for gaps with text:
 -  Simply use <code><<>></code> for a gap, example:  
 *Some text, and now the gap <code>\<\<Right answer>\>></code>*  
 -  or use YAML description inside <<>> to add more attributes:  
-*Some Text, and then the gap: <code><<{type:text, content: {response:Right answer, alternatives:[Right answer, right answer, answer], lenghth:10, placeholder: some text, tolerance = 1}>></code> Some more text.*  
+*Some Text, and then the gap: <code><<{type: text, response: Right answer, alternatives: [Right answer, right answer, answer], case_sensitive: false, lenghth: 10, placeholder: some text>></code> Some more text.*  
 
-#### List of attributes for gap description in YAML format
+#### List of attributes for YAML description of a gap  with text content
 
 |attribute|type|description|
 |-|-|-|
-|type|text or numeric|text for gaps with text;<br />numeric for gaps with numbers|
-|response|text or numeric|string or numeric value that is considered as a right response for the gap|
+|type|text|"type" attribute should assign "text" for gap with text content|
+|response|text|string value that is a right response for the gap|
 |alternatives|vector of string values|provides a set of alternative values that are considered as a right answer for the gap; the set of alternatives must not include the value of the correct answer|
+|case_sensitive|logical|controls whether or not the candidate answer is case sensitive. In case of omission, "true" is assigned|
 |length|integer|sets the size of the text field|
 |placeholder|string|provides placeholder text in the text field, can be used to show some pattern of answer|
 |score|integer|mark for the correct answer to the question|
 
 
 for gaps with numbers:
+
+#### List of attributes for YAML description of a gap  with numeric content
+
+|attribute|type|description|
+|-|-|-|
+|type|text|"type" attribute should assign "numeric" for gap with numeric content|
+|response|numeric|numeric value that is a right response for the gap|
+|value_precision|numeric|number to indicate the upper and lower bounds within which the candidate's answer is considered correct|
+|type_precision|string|can be \"exact\", \"absolute\", or \"relative\" only|
+|lower_bound|logical|controls whether or not the lower bound is included in tolerance range. In case of omission, "true" is assigned|
+|upper_bound|logical|controls whether or not the upper bound is included in tolerance range. In case of omission, "true" is assigned|
+|length|integer|sets the size of the text field|
+|placeholder|string|provides placeholder text in the text field, can be used to show some pattern of answer|
+|score|integer|mark for the correct answer to the question|
 
 for combination:  
 

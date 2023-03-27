@@ -3,13 +3,9 @@
 \docType{methods}
 \name{createTestPart}
 \alias{createTestPart}
-\alias{createTestPart,AssessmentTest-method}
-\alias{createTestPart,AssessmentTest}
 \title{Create an element testPart of a qti-xml document for test}
 \usage{
 createTestPart(object)
-
-\S4method{createTestPart}{AssessmentTest}(object)
 }
 \arguments{
 \item{object}{an instance of the S4 object (AssessmentTest)}

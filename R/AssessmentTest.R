@@ -111,10 +111,3 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
                       make_outcome_declaration("MAXSCORE",
                                                value = object@points))
           })
-
-#' @rdname createTestPart-methods
-#' @aliases createTestPart,AssessmentTest
-setMethod("createTestPart", signature(object = "AssessmentTest"),
-          function(object) {
-
-          })
