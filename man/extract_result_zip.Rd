@@ -14,12 +14,17 @@ extract_result_zip(file, details = "answers")
 \item "answers" - default, returns data frame with answers; see data frame
 structure at \code{\link[=get_result_attr_answers]{get_result_attr_answers()}}
 \item "options" - returns data frame with options; see data frame structure at
-\code{\link[=get_result_attr_options]{get_result_attr_options()}}
+[get_result_attr_options()
 }}
 }
 \value{
 data frame.
 }
 \description{
-The function \code{extract_result_zip()} creates data frames from opal zip file
+The function \code{extract_result_zip()} creates data frames from opal zip file.
+}
+\note{
+final data frame contains additional column 'titles' with values of
+attribute 'title' of assessment item
+of the tasks
 }

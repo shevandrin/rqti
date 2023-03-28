@@ -230,27 +230,46 @@ combine_answer <- function(node, tag) {
 
 #' Create data frame with test results from Opal zip file
 #'
-#' The function `extract_result_zip()` creates data frames from opal zip file
+#' The function `extract_result_zip()` creates data frames from opal zip file.
 #'
 #' @param file A string with a path to the zip file with results
 #' @param details A string with two possible values:
 #' * "answers" - default, returns data frame with answers; see data frame
 #' structure at [get_result_attr_answers()]
 #' * "options" - returns data frame with options; see data frame structure at
-#' [get_result_attr_options()]
+#' [get_result_attr_options()
+#' @note final data frame contains additional column 'titles' with values of
+#' attribute 'title' of assessment item
+#' of the tasks
 #' @return data frame.
+#' @importFrom utils unzip
 #' @export
 extract_result_zip <- function(file, details = "answers") {
     tdir <- tempfile()
     dir.create(tdir)
     test_dir <- file.path(tools::file_path_as_absolute(tdir))
-    file.copy(file, test_dir)
-    files <- list.files(path = test_dir)
-    unzip(file, exdir = test_dir)
-    files <- list.files(path = test_dir, pattern = "result.zip")
+    files <- utils::unzip(file, exdir = test_dir)
+
+    res_files <- list.files(path = test_dir, pattern = "result.zip")
+    zip_files <- list.files(path = test_dir, pattern = ".zip$")
+    test_file <- setdiff(zip_files, res_files)
+
+    test_files <- utils::unzip(file.path(test_dir, test_file), list = TRUE)
+    if (length(test_files) > 0) {
+
+        xdir <- tempfile()
+        dir.create(xdir)
+        x_dir <- file.path(tools::file_path_as_absolute(xdir))
+        utils::unzip(file.path(test_dir, test_file), exdir = x_dir)
+        db <- get_titles(test_files, x_dir)
+    } else {
+        print("test file not found")
+        db <- NULL
+    }
+
     df <- data.frame()
-    for (f in files) {
-        unzip(file.path(test_dir, f), exdir = test_dir)
+    for (f in res_files) {
+        utils::unzip(file.path(test_dir, f), exdir = test_dir)
         xml <- list.files(path = test_dir, pattern = ".xml")
         xml_path <- file.path(test_dir, xml)
         switch(details,
@@ -258,8 +277,30 @@ extract_result_zip <- function(file, details = "answers") {
                 options = {df0 <- get_result_attr_options(xml_path)}
                 )
         file_name <- gsub("\\.zip$","", f)
+        if (!is.null(db)) {
+            titles <- c()
+            for (id in df0$question_id) {
+                titles <- c(titles, unname(db[names(db) == id]))
+            }
+            df0$titles <- titles
+        }
         df0$file_name <- file_name
         df <- rbind(df, df0)
     }
     return(df)
+}
+
+get_titles <- function(files, folder) {
+    result = c()
+    for (f in files$Name) {
+        path <- file.path(folder, f)
+        doc <- xml2::read_xml(path)
+        root <- xml2::xml_name(doc)
+        if (root == "assessmentItem") {
+            title <-  xml2::xml_attr(doc, "title")
+            names(title) <- xml2::xml_attr(doc, "identifier")
+            result <- c(result, title)
+        }
+    }
+    return(result)
 }
