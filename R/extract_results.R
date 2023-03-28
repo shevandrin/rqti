@@ -227,3 +227,35 @@ combine_answer <- function(node, tag) {
     }
     return(y)
 }
+
+#' Create data frame with test results from Opal zip file
+#'
+#' The function `extract_result_zip()` creates data frames from opal zip file
+#'
+#' @param file A string with a path to the zip file with results
+#' @param details A string with two possible values:
+#' * "answers" - default, returns data frame with answers
+#' * "options" - returns data frame with options
+#' @return data frame.
+#' @export
+extract_result_zip <- function(file, details = "answers") {
+    tdir <- tempfile()
+    dir.create(tdir)
+    test_dir <- file.path(tools::file_path_as_absolute(tdir))
+    file.copy(file, test_dir)
+    files <- list.files(path = test_dir)
+    unzip(file, exdir = test_dir)
+    files <- list.files(path = test_dir, pattern = "result.zip")
+    df <- data.frame()
+    for (f in files) {
+        unzip(file.path(test_dir, f), exdir = test_dir)
+        xml <- list.files(path = test_dir, pattern = ".xml")
+        xml_path <- file.path(test_dir, xml)
+        switch(details,
+                answers = {df0 <- get_result_attr_answers(xml_path)},
+                options = {df0 <- get_result_attr_options(xml_path)}
+                )
+        df <- rbind(df, df0)
+    }
+    return(df)
+}
