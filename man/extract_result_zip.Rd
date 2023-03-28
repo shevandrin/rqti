@@ -11,8 +11,10 @@ extract_result_zip(file, details = "answers")
 
 \item{details}{A string with two possible values:
 \itemize{
-\item "answers" - default, returns data frame with answers
-\item "options" - returns data frame with options
+\item "answers" - default, returns data frame with answers; see data frame
+structure at \code{\link[=get_result_attr_answers]{get_result_attr_answers()}}
+\item "options" - returns data frame with options; see data frame structure at
+\code{\link[=get_result_attr_options]{get_result_attr_options()}}
 }}
 }
 \value{

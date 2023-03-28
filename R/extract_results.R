@@ -234,8 +234,10 @@ combine_answer <- function(node, tag) {
 #'
 #' @param file A string with a path to the zip file with results
 #' @param details A string with two possible values:
-#' * "answers" - default, returns data frame with answers
-#' * "options" - returns data frame with options
+#' * "answers" - default, returns data frame with answers; see data frame
+#' structure at [get_result_attr_answers()]
+#' * "options" - returns data frame with options; see data frame structure at
+#' [get_result_attr_options()]
 #' @return data frame.
 #' @export
 extract_result_zip <- function(file, details = "answers") {
@@ -255,6 +257,8 @@ extract_result_zip <- function(file, details = "answers") {
                 answers = {df0 <- get_result_attr_answers(xml_path)},
                 options = {df0 <- get_result_attr_options(xml_path)}
                 )
+        file_name <- gsub("\\.zip$","", f)
+        df0$file_name <- file_name
         df <- rbind(df, df0)
     }
     return(df)
