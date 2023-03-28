@@ -1,0 +1,5 @@
+"","Nr.","Training","Response_count","Points_allocation_green","Points_allocation_yellow","Points_allocation_red","Time_taken","Difficulty","Correlation"
+"1",1,"MultipleChoice",10,40,60,0,5,70,0.3
+"2",2,"SingleChoice",10,80,0,20,2,80,0.24
+"3",3,"MultipleChoice",10,70,30,0,2,85,0.43
+"4",4,"Order",10,40,0,60,7,40,0.3
