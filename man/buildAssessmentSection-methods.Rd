@@ -13,19 +13,21 @@
 \alias{buildAssessementSection,AssessmentItemRef}
 \title{Build tags for AssessmentSection in assessmentTest}
 \usage{
-buildAssessmentSection(object)
+buildAssessmentSection(object, folder)
 
-\S4method{buildAssessmentSection}{AssessmentSection}(object)
+\S4method{buildAssessmentSection}{AssessmentSection}(object, folder)
 
-\S4method{buildAssessmentSection}{AssessmentItem}(object)
+\S4method{buildAssessmentSection}{AssessmentItem}(object, folder)
 
-\S4method{buildAssessmentSection}{character}(object)
+\S4method{buildAssessmentSection}{character}(object, folder)
 
 \S4method{buildAssessmentSection}{AssessmentItemRef}(object)
 }
 \arguments{
 \item{object}{an instance of the S4 object (\link{AssessmentSection},
 \link{AssessmentItemRef} and all types of \link{AssessmentItem})}
+
+\item{folder}{string; a folder to store xml file}
 }
 \description{
 Generic function for tags that contains assessementSection in assessnetTest
