@@ -37,7 +37,7 @@ setClass("AssessmentTestOpal", contains = "AssessmentTest",
                       files = "character"),
          prototype = prototype(show_test_time = FALSE,
                                calculator = NA_character_,
-                               mark_items = FALSE,
+                               mark_items = TRUE,
                                keep_responses = FALSE))
 #' @export
 AssessmentTestOpal <- function(identifier = character(),

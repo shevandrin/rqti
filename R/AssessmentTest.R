@@ -46,9 +46,8 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                test_part_identifier = "test_part",
                                qti_version = "v2p1",
                                time_limits = NA_integer_,
-                               # files = NA_character_,
                                max_attempts = NA_integer_,
-                               allow_comment = NA,
+                               allow_comment = TRUE,
                                rebuild_variables = NA
          ))
 #' @export

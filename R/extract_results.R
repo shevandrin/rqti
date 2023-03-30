@@ -106,6 +106,7 @@ get_result_attr_options <- function(file) {
     correct_responses <- character(0)
     cand_responses <- character(0)
     base_types <- character(0)
+    cardinalities <- character(0)
     for (ch in items_result) {
         res <- get_info(ch)
         len <- length(res$options)
@@ -115,6 +116,7 @@ get_result_attr_options <- function(file) {
         correct_responses <- append(correct_responses, res$corr)
         cand_responses <- append(cand_responses, res$cand)
         base_types <- append(base_types, res$base_types)
+        cardinalities <- append(cardinalities, res$card)
     }
 
     data <- data.frame(
@@ -122,6 +124,7 @@ get_result_attr_options <- function(file) {
         datestamp = rep(test_dt, length(identifier)),
         question_id = identifier,
         base_types =  base_types,
+        cardinalities = cardinalities,
         id_answer_options = options,
         correct_responses = correct_responses,
         cand_responses = cand_responses
@@ -134,10 +137,11 @@ get_info <- function(node){
     options_nodes <- xml2::xml_find_all(node, ".//d1:responseVariable")[-1][1]
     data_type <- xml2::xml_attr(options_nodes, "baseType")
     if (data_type == "identifier") info <- get_info_identifier(node, options_nodes)
+    if (data_type == "directedPair") info <- get_info_directedPair(node, options_nodes)
     if (data_type == "float") info <- get_info_float(node)
     if (data_type == "string") info <- get_info_float(node)
-    res <- list(info$options, info$corr, info$cand, info$base_types)
-    names(res) <- c("options", "corr", "cand", "base_types")
+    res <- list(info$options, info$corr, info$cand, info$base_types, info$card)
+    names(res) <- c("options", "corr", "cand", "base_types", "card")
     return(res)
 }
 
@@ -149,13 +153,37 @@ get_info_identifier <- function(node, options_nodes) {
     corr_values <- get_value(corr_res)
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
 
-    cand_res <- xml2::xml_find_all(node, ".//d1:candidateResponse")
+    cand_res <- xml2::xml_find_all(node, ".//d1:candidateResponse")[-1]
     cand_values <- get_value(cand_res)
+
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
     base_types <- rep(xml2::xml_attr(options_nodes, "baseType"), length(options))
-    res <- list(options, corr, cand, base_types)
+    card <- rep(xml2::xml_attr(options_nodes, "cardinality"), length(options))
+    res <- list(options, corr, cand, base_types, card)
 
-    names(res) <- c("options", "corr", "cand", "base_types")
+    names(res) <- c("options", "corr", "cand", "base_types", "card")
+    return(res)
+}
+
+# takes information from tag with directedPair as base type of response variable
+get_info_directedPair <- function(node, options_nodes) {
+    corr_res <- xml2::xml_find_all(node, ".//d1:correctResponse")
+    corr_values <- get_value(corr_res)
+
+    cand_res <- xml2::xml_find_all(node, ".//d1:candidateResponse")[-1]
+    cand_values <- get_value(cand_res)
+
+    options <- c(corr_values, cand_values)
+    options <- options[!duplicated(options)]
+
+    corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
+    cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
+
+    base_types <- rep(xml2::xml_attr(options_nodes, "baseType"), length(options))
+    card <- rep(xml2::xml_attr(options_nodes, "cardinality"), length(options))
+
+    res <- list(options, corr, cand, base_types, card)
+    names(res) <- c("options", "corr", "cand", "base_types", "card")
     return(res)
 }
 
@@ -179,9 +207,10 @@ get_info_float <- function(node) {
         cand <- append(cand, cand_values)
     }
     base_types <- xml2::xml_attr(options_nodes, "baseType")
+    card <- xml2::xml_attr(options_nodes, "cardinality")
 
-    res <- list(options, corr, cand, base_types)
-    names(res) <- c("options", "corr", "cand", "base_types")
+    res <- list(options, corr, cand, base_types, card)
+    names(res) <- c("options", "corr", "cand", "base_types", "card")
     return(res)
 }
 
@@ -226,4 +255,81 @@ combine_answer <- function(node, tag) {
         }
     }
     return(y)
+}
+
+#' Create data frame with test results from Opal zip file
+#'
+#' The function `extract_result_zip()` creates data frames from opal zip file.
+#'
+#' @param file A string with a path to the zip file with results
+#' @param details A string with two possible values:
+#' * "answers" - default, returns data frame with answers; see data frame
+#' structure at [get_result_attr_answers()]
+#' * "options" - returns data frame with options; see data frame structure at
+#' [get_result_attr_options()
+#' @note final data frame contains additional column 'titles' with values of
+#' attribute 'title' of assessment item
+#' of the tasks
+#' @return data frame.
+#' @importFrom utils unzip
+#' @export
+extract_result_zip <- function(file, details = "answers") {
+    tdir <- tempfile()
+    dir.create(tdir)
+    test_dir <- file.path(tools::file_path_as_absolute(tdir))
+    files <- utils::unzip(file, exdir = test_dir)
+
+    res_files <- list.files(path = test_dir, pattern = "result.zip")
+    zip_files <- list.files(path = test_dir, pattern = ".zip$")
+    test_file <- setdiff(zip_files, res_files)
+
+    test_files <- utils::unzip(file.path(test_dir, test_file), list = TRUE)
+    if (length(test_files) > 0) {
+
+        xdir <- tempfile()
+        dir.create(xdir)
+        x_dir <- file.path(tools::file_path_as_absolute(xdir))
+        utils::unzip(file.path(test_dir, test_file), exdir = x_dir)
+        db <- get_titles(test_files, x_dir)
+    } else {
+        print("test file not found")
+        db <- NULL
+    }
+
+    df <- data.frame()
+    for (f in res_files) {
+        utils::unzip(file.path(test_dir, f), exdir = test_dir)
+        xml <- list.files(path = test_dir, pattern = ".xml")
+        xml_path <- file.path(test_dir, xml)
+        switch(details,
+                answers = {df0 <- get_result_attr_answers(xml_path)},
+                options = {df0 <- get_result_attr_options(xml_path)}
+                )
+        file_name <- gsub("\\.zip$","", f)
+        if (!is.null(db)) {
+            titles <- c()
+            for (id in df0$question_id) {
+                titles <- c(titles, unname(db[names(db) == id]))
+            }
+            df0$titles <- titles
+        }
+        df0$file_name <- file_name
+        df <- rbind(df, df0)
+    }
+    return(df)
+}
+
+get_titles <- function(files, folder) {
+    result = c()
+    for (f in files$Name) {
+        path <- file.path(folder, f)
+        doc <- xml2::read_xml(path)
+        root <- xml2::xml_name(doc)
+        if (root == "assessmentItem") {
+            title <-  xml2::xml_attr(doc, "title")
+            names(title) <- xml2::xml_attr(doc, "identifier")
+            result <- c(result, title)
+        }
+    }
+    return(result)
 }

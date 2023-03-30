@@ -24,12 +24,9 @@
 #' @export
 create_qti_test <- function(object,dir = NULL, verification = FALSE) {
     if (!dir.exists(dir)) dir.create(dir)
-    wd <- getwd()
-    setwd(dir)
 
     content <- create_assessment_test(object, dir)
     doc_test <- xml2::read_xml(as.character(content))
-    setwd(wd)
 
     path_test <- paste0(dir, "/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)
@@ -82,7 +79,7 @@ create_assessment_test <-function(object, folder) {
     session_control <- create_item_session_control(object@max_attempts,
                                                    object@allow_comment,
                                                    object@rebuild_variables)
-    sections <- Map(create_section_test, object@section)
+    sections <- Map(create_section_test, object@section, folder)
     testPart <- tag("testPart", list(identifier = object@test_part_identifier,
                                      navigationMode = object@navigation_mode,
                                      submissionMode = object@submission_mode,
@@ -95,8 +92,9 @@ create_assessment_test <-function(object, folder) {
 }
 
 # creates tag "assessmentSection" in test file
-create_section_test <- function(object) {
-    assessment_items <- Map(buildAssessmentSection, object@assessment_item)
+create_section_test <- function(object, folder) {
+    assessment_items <- Map(buildAssessmentSection, object@assessment_item,
+                            folder)
     if (!is.na(object@time_limits)) {
         time_limits <- tag("timeLimits", list(maxTime = object@time_limits))
     } else {time_limits = c()}

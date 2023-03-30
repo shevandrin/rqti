@@ -67,11 +67,12 @@ setGeneric("getAssessmentItems", function(object) {
 #'
 #' @param object an instance of the S4 object ([AssessmentSection],
 #' [AssessmentItemRef] and all types of [AssessmentItem])
+#' @param folder string; a folder to store xml file
 #' @docType methods
 #' @rdname buildAssessmentSection-methods
 #'
 #' @export
-setGeneric("buildAssessmentSection", function(object) {
+setGeneric("buildAssessmentSection", function(object, folder) {
     standardGeneric("buildAssessmentSection")
 })
 
@@ -85,8 +86,8 @@ setMethod("getAssessmentItems", signature(object = "AssessmentSection"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessmentSection,AssessmentSection
 setMethod("buildAssessmentSection", signature(object = "AssessmentSection"),
-          function(object) {
-              create_section_test(object)
+          function(object, folder) {
+              create_section_test(object, folder)
           })
 
 #' @rdname getAssessmentItems-methods
@@ -101,8 +102,8 @@ setMethod("getAssessmentItems", signature(object = "AssessmentItem"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessementSection,AssessmentItem
 setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
-          function(object) {
-              create_qti_task(object)
+          function(object, folder) {
+              create_qti_task(object, folder)
               tag("assessmentItemRef", list(identifier = object@identifier,
                                             href = paste0(object@identifier,
                                                           ".xml")))
@@ -111,7 +112,7 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessementSection,character
 setMethod("buildAssessmentSection", signature(object = "character"),
-          function(object) {
+          function(object, folder) {
               if (file.exists(object)) {
                   doc <- xml2::read_xml(object)
                   valid <- verify_qti(doc)
