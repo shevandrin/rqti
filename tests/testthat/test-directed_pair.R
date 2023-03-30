@@ -102,3 +102,30 @@ test_that("Testing OutcomeDeclaration DirectedPair", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+test_that("Testing construction function for DirectedPair class", {
+    sut <- DirectedPair(content = list("<p>\"Directed pairs\" task</p>"),
+                    identifier = "new",
+                    title = "Directed pairs",
+                    rows = c("12*4 =", "100/50 =", "25*2 ="),
+                    rows_identifiers = c("a", "b", "c"),
+                    cols = c("48", "2", "50"),
+                    cols_identifiers = c("k", "l", "m"),
+                    answers_identifiers = c("a k", "b l", 'c m'),
+                    points = 5,
+                    shuffle = FALSE)
+
+    example <- new("DirectedPair",
+                   content = list("<p>\"Directed pairs\" task</p>"),
+                   identifier = "new",
+                   title = "Directed pairs",
+                   rows = c("12*4 =", "100/50 =", "25*2 ="),
+                   rows_identifiers = c("a", "b", "c"),
+                   cols = c("48", "2", "50"),
+                   cols_identifiers = c("k", "l", "m"),
+                   answers_identifiers = c("a k", "b l", 'c m'),
+                   points = 5,
+                   shuffle = FALSE)
+
+    expect_s4_class(sut, "DirectedPair")
+    expect_equal(sut, example)
+})

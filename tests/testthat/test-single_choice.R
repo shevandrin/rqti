@@ -81,13 +81,13 @@ test_that("Testing additional attribute for item body single choice", {
   expect_equal(xml1, xml2)
 })
 
-test_that("Testing construction functon for SingleChoice class", {
+test_that("Testing construction function for SingleChoice class", {
     sut <- SingleChoice(content = list("<p>line1</p>", "<p>line2</p>"),
                         points = 2,
                         identifier = "ID125",
                         choices = c("One", "Two"),
                         orientation = "horizontal",
-                        solution = 2,
+                        solution = 0,
                         shuffle = FALSE,
                         choice_identifiers = c("ID_1", "ID_2"))
 
@@ -98,7 +98,7 @@ test_that("Testing construction functon for SingleChoice class", {
               title = "ID125",
               choices = c("One", "Two"),
               orientation = "horizontal",
-              solution = 2,
+              solution = 0,
               shuffle = FALSE,
               choice_identifiers = c("ID_1", "ID_2"))
 

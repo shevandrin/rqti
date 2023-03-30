@@ -184,3 +184,30 @@ test_that("Testing CreateItemBody Inline", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+test_that("Testing construction function for InlineChoice class", {
+    sut <- Entry (identifier = "new",
+                  points = 4,
+                  title = "InlineChoice",
+                  content = list('The speed of light is equal',
+                                 new("InlineChoice",
+                                     options = c("400","300","500"),
+                                     response_identifier = "RESPONSE_1",
+                                     solution = 2,
+                                     score = 0),
+                                 'm/s'))
+
+    example <- new("Entry",
+                   identifier = "new",
+                   points = 4,
+                   title = "InlineChoice",
+                   content = list('The speed of light is equal',
+                                  new("InlineChoice",
+                                      options = c("400","300","500"),
+                                      response_identifier = "RESPONSE_1",
+                                      solution = 2,
+                                      score = 0),
+                                  'm/s'))
+
+    expect_s4_class(sut, "Entry")
+    expect_equal(sut, example)
+})
