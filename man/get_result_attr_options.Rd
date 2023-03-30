@@ -21,6 +21,9 @@ candidate)
 \item 'datestamp' - date and time of test
 \item 'question_id' - question item identifier
 \item 'base_types' - type of answer (identifier, string or float)
+\item 'cardinalities' - defines whether this question is single, multiple or
+ordered -value
+\item 'qti_type' - specifies the type of the task
 \item 'id_answer_options' - identifier of each response variable
 \item 'correct_responses' - values that considered as right responses for
 question
