@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="new" title="TextGapOpal" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string">
+    <correctResponse>
+      <value>more</value>
+    </correctResponse>
+    <mapping>
+      <mapEntry mapKey="more" mappedValue="1" caseSensitive="false"/>
+      <mapEntry mapKey="MORE" mappedValue="1" caseSensitive="false"/>
+      <mapEntry mapKey="More" mappedValue="1" caseSensitive="false"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE_RESPONSE_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE_RESPONSE_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE_RESPONSE_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    The speed of light is
+    <textEntryInteraction responseIdentifier="RESPONSE_1"/>
+    than the speed of sound
+  </itemBody>
+  <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <equal toleranceMode="absolute" tolerance="2">
+          <variable identifier="RESPONSE_1"/>
+          <correct identifier="RESPONSE_1"/>
+        </equal>
+        <setOutcomeValue identifier="SCORE_RESPONSE_1">
+          <variable identifier="MAXSCORE_RESPONSE_1"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+  </responseProcessing>
+</assessmentItem>
