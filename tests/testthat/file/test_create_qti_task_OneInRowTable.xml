@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="new" title="OneInRowTable" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+    <correctResponse>
+      <value>a l</value>
+      <value>b k</value>
+      <value>c m</value>
+      <value>d n</value>
+      <value>e l</value>
+    </correctResponse>
+    <mapping defaultValue="0">
+      <mapEntry mapKey="a l" mappedValue="1"/>
+      <mapEntry mapKey="b k" mappedValue="1"/>
+      <mapEntry mapKey="c m" mappedValue="1"/>
+      <mapEntry mapKey="d n" mappedValue="1"/>
+      <mapEntry mapKey="e l" mappedValue="1"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>5</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>"One in row" table task</p>
+    <i>table description</i>
+    <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="5">
+      <prompt>Choose the correct order in the multiplication table</prompt>
+      <simpleMatchSet>
+        <simpleAssociableChoice identifier="a" matchMax="1">4*9 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="b" matchMax="1">3*9 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="c" matchMax="1">5*5 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="d" matchMax="1">2*3 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="e" matchMax="1">12*3 =</simpleAssociableChoice>
+      </simpleMatchSet>
+      <simpleMatchSet>
+        <simpleAssociableChoice identifier="k" matchMax="5">27</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="l" matchMax="5">36</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="m" matchMax="5">25</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="n" matchMax="5">6</simpleAssociableChoice>
+      </simpleMatchSet>
+    </matchInteraction>
+  </itemBody>
+</assessmentItem>

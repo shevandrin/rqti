@@ -103,3 +103,34 @@ test_that("Testing outcomeDeclaration OneInRowTable",{
     expect_equal(xml1, xml2)
 
 })
+test_that("Testing construction function for OneInRowTable class", {
+    sut <- OneInRowTable(content = list("<p>\"One in row\" table task</p>",
+                                        "<i>table description</i>"),
+                 identifier = "new",
+                 title = "OneInRowTable",
+                 prompt = "Choose the correct order in the multiplication table",
+                 rows = c("4*9 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
+                 rows_identifiers = c("a", "b", "c", "d", "e"),
+                 cols = c("27", "36", "25", "6"),
+                 cols_identifiers = c("k", "l", "m", "n"),
+                 answers_identifiers = c("a l", "b k", "c m", "d n", "e l"),
+                 points = 5,
+                 shuffle = FALSE)
+
+    example <- new("OneInRowTable",
+                   content = list("<p>\"One in row\" table task</p>",
+                                                   "<i>table description</i>"),
+                 identifier = "new",
+                 title = "OneInRowTable",
+                 prompt = "Choose the correct order in the multiplication table",
+                 rows = c("4*9 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
+                 rows_identifiers = c("a", "b", "c", "d", "e"),
+                 cols = c("27", "36", "25", "6"),
+                 cols_identifiers = c("k", "l", "m", "n"),
+                 answers_identifiers = c("a l", "b k", "c m", "d n", "e l"),
+                 points = 5,
+                 shuffle = FALSE)
+
+    expect_s4_class(sut, "OneInRowTable")
+    expect_equal(sut, example)
+})
