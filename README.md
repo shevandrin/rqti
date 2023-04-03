@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/shevandrin/qti/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shevandrin/qti/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 # qti
@@ -31,9 +33,9 @@ Based on qti one can also develop new interfaces for creating exercises.
 Our companion package `rex` is based on `exams` but provides new inputs
 such as:
 
--   multiple gaps and dropdowns in between text
--   order exercises
--   matching exercises
+- multiple gaps and dropdowns in between text
+- order exercises
+- matching exercises
 
 Specifically, adding multiple gaps or dropdowns in between text is
 rather difficult to do within the existing exams package.
@@ -42,9 +44,9 @@ rather difficult to do within the existing exams package.
 
 should be moved to rex
 
--   rendering of qti files in in the browser (or viewer pane)
--   functions to upload files via REST API to LMS (for us OPAL, but you
-    can implement your own)
+- rendering of qti files in in the browser (or viewer pane)
+- functions to upload files via REST API to LMS (for us OPAL, but you
+  can implement your own)
 
 ## Installation
 
@@ -68,9 +70,9 @@ should be moved to rex
 
 ## What is not possible
 
--   Composites are not implemented because they do not work in our LMS
-    (OPAL); several gaps do work, though
--   Associates are not implemented because they does not work in OPAL
+- Composites are not implemented because they do not work in our LMS
+  (OPAL); several gaps do work, though
+- Associates are not implemented because they does not work in OPAL
 
 ## create rmd for
 
