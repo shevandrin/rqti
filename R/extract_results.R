@@ -1,3 +1,66 @@
+#' Create data frame with test results
+#'
+#' The function `extract_results()` takes Opal zip archive "Export results" or
+#' xml file and creates two kinds of data frames (according
+#'  to parameter 'level')
+#' 1. with optioin level = "excercises" data set consists of columns:
+#' * 'file_name' - name of the xml file with test results (to identify
+#' candidate)
+#' * 'datestamp' - date and time of test
+#' * 'question_id' - question item identifier
+#' * 'duration' - time in sec. what candidate spent on this item
+#' * 'candidate_score' - points that were given to candidate after evaluation
+#' * 'max_scored' - max possible score for this question item
+#' * 'question_type' - the type of question
+#' * 'is_answer_given' - TRUE if candidate gave the answer on question,
+#' otherwise FALSE
+#' * 'titles' - the values of attribute 'title' of assessment items
+#' 2. with optioin level = "items" data set consists of columns:
+#' * 'file_name' - name of the xml file with test results (to identify
+#' candidate)
+#' * 'datestamp' - date and time of test
+#' * 'question_id' - question item identifier
+#' * 'base_types' - type of answer (identifier, string or float)
+#' * 'cardinalities' - defines whether this question is single, multiple or
+#' ordered -value
+#' * 'qti_type' - specifies the type of the task
+#' * 'id_answer_options' - identifier of each response variable
+#' * 'correct_responses' - values that considered as right responses for
+#' question
+#' * 'cand_responses' - values that were given by candidate
+#' * 'titles' - the values of attribute 'title' of assessment items
+#' @param file A string with a path of the xml test result file
+#' @param level A string with two possible options: exercises and items
+#' @import xml2
+#' @import lubridate
+#' @return data frame.
+#' @export
+extract_results <- function(file, level = "exercises") {
+
+    ext <- tools::file_ext(file)
+    if (any(ext == "xml")) {
+            switch(level,
+                exercises = {df0 <- get_result_attr_answers(file)},
+                items = {df0 <- get_result_attr_options(file)})
+    } else if (any(ext == "zip")) {
+        contain <- unzip(file, list=TRUE)
+        if (length(contain) == 1) {
+            switch(level,
+                   exercises = {df0 <- get_result_attr_answers(file)},
+                   items = {df0 <- get_result_attr_options(file)})
+        } else {
+            switch(level,
+                   exercises = {df0 <- extract_result_zip(file)},
+                   items = {df0 <- extract_result_zip(file, details = "items")})
+        }
+
+    } else {
+        return("'file' must contain one name of xml or zip file")
+    }
+
+    return(df0)
+}
+
 #' @import xml2
 #' @import stringr
 get_duration <- function(file) {
@@ -293,7 +356,7 @@ combine_answer <- function(node, tag) {
 #' @return data frame.
 #' @importFrom utils unzip
 #' @export
-extract_result_zip <- function(file, details = "answers") {
+extract_result_zip <- function(file, details = "exercises") {
     tdir <- tempfile()
     dir.create(tdir)
     test_dir <- file.path(tools::file_path_as_absolute(tdir))
@@ -322,8 +385,8 @@ extract_result_zip <- function(file, details = "answers") {
         xml <- list.files(path = test_dir, pattern = ".xml")
         xml_path <- file.path(test_dir, xml)
         switch(details,
-                answers = {df0 <- get_result_attr_answers(xml_path)},
-                options = {df0 <- get_result_attr_options(xml_path)}
+                exercises = {df0 <- get_result_attr_answers(xml_path)},
+                items = {df0 <- get_result_attr_options(xml_path)}
                 )
         file_name <- gsub("\\.zip$","", f)
         if (!is.null(db)) {
