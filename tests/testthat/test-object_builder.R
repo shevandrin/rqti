@@ -67,8 +67,7 @@ test_that("create_question_object", {
     expected <- new("SingleChoice",
                    content = list(
         "<p>This is a mock question<br />",
-        "In economics it is generally believed that the main objective of a",
-        "Public Sector Financial Company like Bank is to:</p>"
+        "In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"
         ),
                    points = 1,
                    identifier = "eco",
@@ -95,8 +94,7 @@ test_that("create_question_object", {
     cqc <- create_question_object(path)
     expected <- new("SingleChoice",
                    content = list(
-    "<p>Which term is used to describe the study of how people make decisions",
-    "in a world where resources are limited?</p>"),
+    "<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>"),
                    points = 2,
                    identifier = "sample 2",
                    qti_version = "v2p1",
@@ -146,9 +144,7 @@ test_that("create_question_object", {
     cqc <- create_question_object(path)
     expected <- new("MultipleChoice",
                    content = list(
-    "<p>When deciding between renovating a water treatment plant or building",
-    "a new community pool, what is the government most likely to",
-    "consider?</p>"),
+    "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
                    points = c(1, 2, 0, 0),
                    identifier = "test 2",
                    qti_version = "v2p1",
