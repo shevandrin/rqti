@@ -1,4 +1,12 @@
-# define class Gap to built inline instances
+#' Class Img
+#'
+#' Class `Img` is responsible to keep attributes and process images as a part of
+#' excericise content
+#' @template ImgSlotsTemplate
+#' @name Img-class
+#' @rdname Img-class
+#' @aliases Img
+#' @export
 setClass("Img", slots = c(src = "character",
                           alt = "character",
                           width = "numeric",
