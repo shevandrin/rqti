@@ -13,9 +13,8 @@ test_that("Testing Img class", {
     )
     example2 <- new("Img",
                    src = "https://example.com/images/example.png"  )
-    expect_s4_class(sut1, "Img")
+
     expect_equal(sut1, example1)
-    expect_s4_class(sut2, "Img")
     expect_equal(sut2, example2)
 })
 test_that("Testing construction function for Img class", {
@@ -32,8 +31,7 @@ test_that("Testing construction function for Img class", {
                    height = 140
                 )
     example2 <- new("Img", src = "https://example.com/images/example.png")
-    expect_s4_class(sut1, "Img")
+
     expect_equal(sut1, example1)
-    expect_s4_class(sut2, "Img")
     expect_equal(sut2, example2)
 })
