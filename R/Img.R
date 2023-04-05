@@ -4,7 +4,12 @@ setClass("Img", slots = c(src = "character",
                           width = "numeric",
                           height = "numeric"),
          prototype = prototype(alt = "picture"))
-
+#' @export
+Img <- function(src = character(), alt = character(), width = numeric(),
+                height = numeric())
+                {
+    new("Img", src = src, alt = alt, width = width, height = height)
+}
 #' @rdname createText-methods
 #' @aliases createText,Img
 setMethod("createText", "Img", function(object) {
