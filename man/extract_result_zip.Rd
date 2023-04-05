@@ -4,7 +4,7 @@
 \alias{extract_result_zip}
 \title{Create data frame with test results from Opal zip file}
 \usage{
-extract_result_zip(file, details = "answers")
+extract_result_zip(file, details = "exercises")
 }
 \arguments{
 \item{file}{A string with a path to the zip file with results}

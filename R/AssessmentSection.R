@@ -103,7 +103,8 @@ setMethod("getAssessmentItems", signature(object = "AssessmentItem"),
 #' @aliases buildAssessementSection,AssessmentItem
 setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
           function(object, folder) {
-              create_qti_task(object, folder)
+              res <- create_qti_task(object, folder)
+              print(res)
               tag("assessmentItemRef", list(identifier = object@identifier,
                                             href = paste0(object@identifier,
                                                           ".xml")))

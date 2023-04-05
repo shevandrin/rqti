@@ -1,3 +1,66 @@
+#' Create data frame with test results
+#'
+#' The function `extract_results()` takes Opal zip archive "Export results" or
+#' xml file and creates two kinds of data frames (according
+#'  to parameter 'level')
+#' 1. with optioin level = "excercises" data set consists of columns:
+#' * 'file_name' - name of the xml file with test results (to identify
+#' candidate)
+#' * 'datestamp' - date and time of test
+#' * 'question_id' - question item identifier
+#' * 'duration' - time in sec. what candidate spent on this item
+#' * 'candidate_score' - points that were given to candidate after evaluation
+#' * 'max_scored' - max possible score for this question item
+#' * 'question_type' - the type of question
+#' * 'is_answer_given' - TRUE if candidate gave the answer on question,
+#' otherwise FALSE
+#' * 'titles' - the values of attribute 'title' of assessment items
+#' 2. with optioin level = "items" data set consists of columns:
+#' * 'file_name' - name of the xml file with test results (to identify
+#' candidate)
+#' * 'datestamp' - date and time of test
+#' * 'question_id' - question item identifier
+#' * 'base_types' - type of answer (identifier, string or float)
+#' * 'cardinalities' - defines whether this question is single, multiple or
+#' ordered -value
+#' * 'qti_type' - specifies the type of the task
+#' * 'id_answer_options' - identifier of each response variable
+#' * 'correct_responses' - values that considered as right responses for
+#' question
+#' * 'cand_responses' - values that were given by candidate
+#' * 'titles' - the values of attribute 'title' of assessment items
+#' @param file A string with a path of the xml test result file
+#' @param level A string with two possible options: exercises and items
+#' @import xml2
+#' @import lubridate
+#' @return data frame.
+#' @export
+extract_results <- function(file, level = "exercises") {
+
+    ext <- tools::file_ext(file)
+    if (any(ext == "xml")) {
+            switch(level,
+                exercises = {df0 <- get_result_attr_answers(file)},
+                items = {df0 <- get_result_attr_options(file)})
+    } else if (any(ext == "zip")) {
+        contain <- unzip(file, list=TRUE)
+        if (length(contain) == 1) {
+            switch(level,
+                   exercises = {df0 <- get_result_attr_answers(file)},
+                   items = {df0 <- get_result_attr_options(file)})
+        } else {
+            switch(level,
+                   exercises = {df0 <- extract_result_zip(file)},
+                   items = {df0 <- extract_result_zip(file, details = "items")})
+        }
+
+    } else {
+        return("'file' must contain one name of xml or zip file")
+    }
+
+    return(df0)
+}
+
 #' @import xml2
 #' @import stringr
 get_duration <- function(file) {
@@ -78,6 +141,9 @@ get_result_attr_answers<- function(file) {
 #' * 'datestamp' - date and time of test
 #' * 'question_id' - question item identifier
 #' * 'base_types' - type of answer (identifier, string or float)
+#' * 'cardinalities' - defines whether this question is single, multiple or
+#' ordered -value
+#' * 'qti_type' - specifies the type of the task
 #' * 'id_answer_options' - identifier of each response variable
 #' * 'correct_responses' - values that considered as right responses for
 #' question
@@ -107,6 +173,7 @@ get_result_attr_options <- function(file) {
     cand_responses <- character(0)
     base_types <- character(0)
     cardinalities <- character(0)
+    qti_type <- character(0)
     for (ch in items_result) {
         res <- get_info(ch)
         len <- length(res$options)
@@ -117,6 +184,7 @@ get_result_attr_options <- function(file) {
         cand_responses <- append(cand_responses, res$cand)
         base_types <- append(base_types, res$base_types)
         cardinalities <- append(cardinalities, res$card)
+        qti_type <- append(qti_type, res$qti_type)
     }
 
     data <- data.frame(
@@ -125,6 +193,7 @@ get_result_attr_options <- function(file) {
         question_id = identifier,
         base_types =  base_types,
         cardinalities = cardinalities,
+        qti_type = qti_type,
         id_answer_options = options,
         correct_responses = correct_responses,
         cand_responses = cand_responses
@@ -140,8 +209,9 @@ get_info <- function(node){
     if (data_type == "directedPair") info <- get_info_directedPair(node, options_nodes)
     if (data_type == "float") info <- get_info_float(node)
     if (data_type == "string") info <- get_info_float(node)
-    res <- list(info$options, info$corr, info$cand, info$base_types, info$card)
-    names(res) <- c("options", "corr", "cand", "base_types", "card")
+    res <- list(info$options, info$corr, info$cand, info$base_types, info$card,
+                info$q_type)
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "qti_type")
     return(res)
 }
 
@@ -159,9 +229,14 @@ get_info_identifier <- function(node, options_nodes) {
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
     base_types <- rep(xml2::xml_attr(options_nodes, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_nodes, "cardinality"), length(options))
-    res <- list(options, corr, cand, base_types, card)
+    if (card[1] == "single") q_type <- "SingleInlineChoice"
+    if (card[1] == "multiple") q_type <- "MultipleChoice"
+    if (card[1] == "ordered") q_type <- "Order"
+    q_type <- rep(q_type, length(options))
 
-    names(res) <- c("options", "corr", "cand", "base_types", "card")
+    res <- list(options, corr, cand, base_types, card, q_type)
+
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type")
     return(res)
 }
 
@@ -181,9 +256,10 @@ get_info_directedPair <- function(node, options_nodes) {
 
     base_types <- rep(xml2::xml_attr(options_nodes, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_nodes, "cardinality"), length(options))
+    q_type <- rep("Match", length(options))
 
-    res <- list(options, corr, cand, base_types, card)
-    names(res) <- c("options", "corr", "cand", "base_types", "card")
+    res <- list(options, corr, cand, base_types, card, q_type)
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type")
     return(res)
 }
 
@@ -194,6 +270,9 @@ get_info_float <- function(node) {
     options <- character(0)
     corr <- character(0)
     cand <- character(0)
+    base_types <- character(0)
+    card <- character(0)
+    q_type <- character(0)
     for (opt in options_nodes) {
         id <- xml2::xml_attr(opt, "identifier")
         options <- append(options, id)
@@ -205,12 +284,16 @@ get_info_float <- function(node) {
         cand_values <- get_value(cand_res)
         if (length(cand_values) == 0) cand_values = ""
         cand <- append(cand, cand_values)
+        b_type <- xml2::xml_attr(opt, "baseType")
+        base_types <- append(base_types, b_type)
+        card <- append(card, xml2::xml_attr(opt, "cardinality"))
+        if (b_type == "float") {q_type <- append(q_type, "NumericGap")}
+        else if (corr_values == "") {q_type <- append(q_type, "Essay")}
+        else {q_type <- append(q_type, "TextGap")}
     }
-    base_types <- xml2::xml_attr(options_nodes, "baseType")
-    card <- xml2::xml_attr(options_nodes, "cardinality")
 
-    res <- list(options, corr, cand, base_types, card)
-    names(res) <- c("options", "corr", "cand", "base_types", "card")
+    res <- list(options, corr, cand, base_types, card, q_type)
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type")
     return(res)
 }
 
@@ -273,7 +356,7 @@ combine_answer <- function(node, tag) {
 #' @return data frame.
 #' @importFrom utils unzip
 #' @export
-extract_result_zip <- function(file, details = "answers") {
+extract_result_zip <- function(file, details = "exercises") {
     tdir <- tempfile()
     dir.create(tdir)
     test_dir <- file.path(tools::file_path_as_absolute(tdir))
@@ -302,8 +385,8 @@ extract_result_zip <- function(file, details = "answers") {
         xml <- list.files(path = test_dir, pattern = ".xml")
         xml_path <- file.path(test_dir, xml)
         switch(details,
-                answers = {df0 <- get_result_attr_answers(xml_path)},
-                options = {df0 <- get_result_attr_options(xml_path)}
+                exercises = {df0 <- get_result_attr_answers(xml_path)},
+                items = {df0 <- get_result_attr_options(xml_path)}
                 )
         file_name <- gsub("\\.zip$","", f)
         if (!is.null(db)) {
