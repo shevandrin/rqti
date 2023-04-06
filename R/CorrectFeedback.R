@@ -18,3 +18,10 @@ CorrectFeedback <- function(outcome_identifier = character(), show = logical(),
     new("CorrectFeedback", outcome_identifier = outcome_identifier, show = show,
         identifier = identifier, title = title, content = content)
 }
+
+setMethod("initialize", "CorrectFeedback", function(.Object, ...) {
+    .Object <- callNextMethod()
+    .Object@identifier <- "correct"
+    validObject(.Object)
+    .Object
+})

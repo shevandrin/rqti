@@ -15,6 +15,12 @@ setClass("ModalFeedback", slots = list(outcome_identifier = "character",
                                        content = "list"),
                           prototype = list(show = TRUE))
 
+setMethod("initialize", "ModalFeedback", function(.Object, ...) {
+    .Object <- callNextMethod()
+    if (length(.Object@show) == 0) .Object@show <- TRUE
+    validObject(.Object)
+    .Object
+})
 
 setGeneric("createModalFeedback", function(object) {
     standardGeneric("createModalFeedback")
@@ -23,9 +29,10 @@ setGeneric("createModalFeedback", function(object) {
 setMethod("createModalFeedback", signature(object = "ModalFeedback"),
           function(object) {
             content <- list(Map(createText, object@content))
+            showHide <- ifelse(object@show, "show", "hide")
             tag("modalFeedback", list(identifier = object@identifier,
                                       outcomeIdentifier = object@outcome_identifier,
-                                      showHide = "show",
+                                      showHide = showHide,
                                       title = object@title,
                                       content))
           })
