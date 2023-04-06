@@ -18,12 +18,18 @@ Imports:
     yaml,
     commonmark,
     rmarkdown,
-    exams, servr, rstudioapi, RCurl, fs,
+    exams,
+    servr,
+    rstudioapi,
+    RCurl,
+    fs,
     purrr,
     stringr,
     methods,
-    lubridate
+    lubridate,
+    magrittr
 Suggests: 
+    dplyr,
     testthat (>= 3.0.0),
     XML
 Config/testthat/edition: 3
@@ -60,6 +66,7 @@ Collate:
     'objectBuilder.R'
     'qti_task.R'
     'qti_test.R'
+    'utils-pipe.R'
 Depends: 
     R (>= 2.10)
 LazyData: true
