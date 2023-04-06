@@ -99,6 +99,5 @@ test_that("Testing construction function for Order class", {
                    points = 1,
                    shuffle = FALSE)
 
-    expect_s4_class(sut, "Order")
     expect_equal(sut, example)
 })

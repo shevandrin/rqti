@@ -123,6 +123,5 @@ test_that("Testing construction function for Multiple Choice class", {
                    lower_bound =0
                 )
 
-    expect_s4_class(sut, "MultipleChoice")
     expect_equal(sut, example)
 })

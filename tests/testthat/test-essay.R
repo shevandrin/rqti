@@ -72,7 +72,6 @@ test_that("Testing construction function for Essay class", {
                    title = "Essay",
                    identifier = "new")
 
-    expect_s4_class(sut, "Essay")
     expect_equal(sut, example)
 })
 

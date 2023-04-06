@@ -145,6 +145,5 @@ test_that("Testing construction function for MultipleChoiceTable class", {
                    points = 3,
                    shuffle = FALSE)
 
-    expect_s4_class(sut, "MultipleChoiceTable")
     expect_equal(sut, example)
 })

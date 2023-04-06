@@ -14,7 +14,6 @@ Img <- function(src = character(), alt = character(), width = numeric(),
 setMethod("initialize", "Img", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@alt) == 0) .Object@alt <- "picture"
-    if (is.na(.Object@alt)) .Object@alt <- "picture"
     validObject(.Object)
     .Object
 })
@@ -22,7 +21,7 @@ setMethod("initialize", "Img", function(.Object, ...) {
 #' @rdname createText-methods
 #' @aliases createText,Img
 setMethod("createText", "Img", function(object) {
-    tag("div", list(tag("img",
+    tag("p", list(tag("img",
         list(src = object@src,
              alt = object@alt,
              width = object@width,

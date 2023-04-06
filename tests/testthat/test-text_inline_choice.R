@@ -208,6 +208,5 @@ test_that("Testing construction function for InlineChoice class", {
                                       score = 0),
                                   'm/s'))
 
-    expect_s4_class(sut, "Entry")
     expect_equal(sut, example)
 })

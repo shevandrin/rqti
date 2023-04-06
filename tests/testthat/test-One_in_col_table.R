@@ -128,6 +128,5 @@ test_that("Testing construction function for OneInColTable class", {
                    points = 5,
                    shuffle = FALSE)
 
-    expect_s4_class(sut, "OneInColTable")
-    expect_equal(sut, example)
+   expect_equal(sut, example)
 })

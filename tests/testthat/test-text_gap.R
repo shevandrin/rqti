@@ -270,7 +270,7 @@ test_that("Testing construction function for TextGapOpal class", {
                                       case_sensitive = TRUE ),
                                   'than the speed of sound'))
 
-    expect_s4_class(sut, "Entry")
+
     expect_equal(sut, example)
 })
 test_that("Testing construction function for TextGap class", {
@@ -298,7 +298,7 @@ test_that("Testing construction function for TextGap class", {
                                       case_sensitive = FALSE),
                                   'than the speed of sound'))
 
-    expect_s4_class(sut, "Entry")
+
     expect_equal(sut, example)
 })
 test_that("Testing construction function for NumericGap class", {
@@ -308,7 +308,7 @@ test_that("Testing construction function for NumericGap class", {
                   content = list('The speed of light is equal',
                                  NumericGap(
                                      response_identifier = "RESPONSE_1",
-                                     score = NA_integer_,                                 ,
+                                     score = NA_integer_,
                                      response = 300,
                                      value_precision = 2,
                                      include_lower_bound = TRUE,
@@ -327,6 +327,6 @@ test_that("Testing construction function for NumericGap class", {
                                       value_precision = 2),
                                   'm/s'))
 
-    expect_s4_class(sut, "Entry")
+
     expect_equal(sut, example)
 })

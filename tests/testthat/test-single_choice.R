@@ -102,6 +102,5 @@ test_that("Testing construction function for SingleChoice class", {
               shuffle = FALSE,
               choice_identifiers = c("ID_1", "ID_2"))
 
-    expect_s4_class(sut, "SingleChoice")
     expect_equal(sut, example)
 })

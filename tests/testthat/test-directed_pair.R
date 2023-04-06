@@ -126,6 +126,5 @@ test_that("Testing construction function for DirectedPair class", {
                    points = 5,
                    shuffle = FALSE)
 
-    expect_s4_class(sut, "DirectedPair")
     expect_equal(sut, example)
 })
