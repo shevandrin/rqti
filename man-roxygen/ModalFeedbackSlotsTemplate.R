@@ -1,4 +1,4 @@
-#' @slot outcomeIdentifier string; identifier if outcome declaration variable
+#' @slot outcome_identifier string; identifier if outcome declaration variable
 #'   that relates to feedback
 #' @slot show boolean, optional; is responsible to show (`TRUE` value) or hide
 #'   (`FALSE`); default `TRUE`

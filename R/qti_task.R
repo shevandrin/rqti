@@ -17,7 +17,8 @@ create_assessment_item <- function(object) {
         createResponseDeclaration(object),
         createOutcomeDeclaration(object),
         createItemBody(object),
-        createResponseProcessing(object))
+        createResponseProcessing(object),
+        Map(createModalFeedback, object@feedback))
 }
 
 create_correct_response <- function(values) {

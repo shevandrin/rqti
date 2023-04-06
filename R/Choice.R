@@ -32,9 +32,3 @@ setMethod("initialize", "Choice", function(.Object, ...) {
     validObject(.Object)
     .Object
 })
-
-#' @rdname createResponseProcessing-methods
-#' @aliases createResponseProcessing,Choice
-setMethod("createResponseProcessing",  "Choice", function(object) {
-
-})

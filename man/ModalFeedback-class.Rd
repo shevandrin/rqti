@@ -13,7 +13,7 @@ meaningful
 \section{Slots}{
 
 \describe{
-\item{\code{outcomeIdentifier}}{string; identifier if outcome declaration variable
+\item{\code{outcome_identifier}}{string; identifier if outcome declaration variable
 that relates to feedback}
 
 \item{\code{show}}{boolean, optional; is responsible to show (\code{TRUE} value) or hide

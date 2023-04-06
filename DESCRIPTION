@@ -30,13 +30,13 @@ Config/testthat/edition: 3
 URL: https://github.com/shevandrin/qti
 BugReports: https://github.com/shevandrin/qti/issues
 Collate: 
+    'ModalFeedback.R'
     'AssessmentItem.R'
     'AssessmentSection.R'
     'AssessmentItemRef.R'
     'AssessmentTest.R'
     'AssessmentTestOpal.R'
     'Choice.R'
-    'ModalFeedback.R'
     'CorrectFeedback.R'
     'MatchTable.R'
     'DirectedPair.R'

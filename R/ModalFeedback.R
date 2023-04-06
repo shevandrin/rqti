@@ -8,8 +8,24 @@
 #' @rdname ModalFeedback-class
 #' @aliases ModalFeedback
 #' @export
-setClass("ModalFeedback", slots = list(outcomeIdentifier = "character",
+setClass("ModalFeedback", slots = list(outcome_identifier = "character",
                                        show = "logical",
                                        identifier = "character",
                                        title = "character",
-                                       content = "list"))
+                                       content = "list"),
+                          prototype = list(show = TRUE))
+
+
+setGeneric("createModalFeedback", function(object) {
+    standardGeneric("createModalFeedback")
+})
+
+setMethod("createModalFeedback", signature(object = "ModalFeedback"),
+          function(object) {
+            content <- list(Map(createText, object@content))
+            tag("modalFeedback", list(identifier = object@identifier,
+                                      outcomeIdentifier = object@outcome_identifier,
+                                      showHide = "show",
+                                      title = object@title,
+                                      content))
+          })

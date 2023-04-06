@@ -10,11 +10,13 @@
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @aliases AssessmentItem
+#' @include ModalFeedback.R
 setClass("AssessmentItem", slots = c(identifier = "character",
                                      content = "list", prompt = "character",
                                      points = "numeric",
                                      title = "character",
-                                     qti_version = "character"),
+                                     qti_version = "character",
+                                     feedback = "list"),
          prototype = prototype(prompt = "",
                                points = 1,
                                identifier = ids::adjective_animal(),

@@ -20,7 +20,10 @@ never to be generated, only derived classes meaningful.
 \item{\code{prompt}}{string, optional; simple question text, consisting of one
 paragraph, can supplement or replace content}
 
-\item{\code{qti_version}}{string; QTI information model version; default 'v2p1'}
+\item{\code{qti_version}}{string; QTI information model version; default 'v2p1}
+
+\item{\code{feedback}}{vector of \linkS4class{ModalFeedback}; feedback messages for
+candidate}
 }}
 
 \section{Warning}{
