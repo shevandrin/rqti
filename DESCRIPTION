@@ -29,6 +29,7 @@ Imports:
     lubridate,
     magrittr
 Suggests: 
+    covr,
     dplyr,
     testthat (>= 3.0.0),
     XML
