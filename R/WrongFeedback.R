@@ -11,10 +11,10 @@
 setClass("WrongFeedback", contains = "ModalFeedback",
          prototype = list(identifier = "incorrect"))
 #' @export
-WrongFeedback <- function(outcomeIdentifier = character(), show = logical(),
+WrongFeedback <- function(outcome_identifier = character(), show = logical(),
                             identifier = character(), title = character(),
                             content = list()
 ) {
-    new("WrongFeedback", outcomeIdentifier = outcomeIdentifier, show = show,
+    new("WrongFeedback", outcome_identifier = outcome_identifier, show = show,
         identifier = identifier, title = title, content = content)
 }
