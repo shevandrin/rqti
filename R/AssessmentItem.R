@@ -109,6 +109,9 @@ setGeneric("createResponseProcessing", function(object) {
 
 setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
           function(object) {
+              if (length(object@feedback) >0) {
+              create_default_response_processing(object)
+              }
 })
 
 #' @rdname createResponseDeclaration-methods
@@ -121,8 +124,21 @@ setMethod("createResponseDeclaration", signature(object = "AssessmentItem"),
 #' @aliases createOutcomeDeclaration,AssessmentItem
 setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
           function(object) {
+              feedbacks <- NULL
+              if (length(object@feedback) > 0) {
+              feedbacks <- tagList(
+                  make_outcome_declaration("FEEDBACKBASIC",
+                                           value = "empty",
+                                           base_type = "identifier"),
+                  make_outcome_declaration("FEEDBACKMODAL",
+                                           cardinality = "multiple",
+                                           value = "",
+                                           base_type = "identifier"))
+              }
+
               tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
                                                value = object@points),
-                      make_outcome_declaration("MINSCORE", value = 0))
+                      make_outcome_declaration("MINSCORE", value = 0),
+                      feedbacks)
           })

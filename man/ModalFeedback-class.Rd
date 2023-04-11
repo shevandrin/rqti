@@ -7,8 +7,7 @@
 \title{Class ModalFeedback}
 \description{
 Abstract class \code{ModalFeedback} is never to be generated, only derived classes
-\linkS4class{CorrectFeedback} and \linkS4class{WrongFeedback} are
-meaningful
+\linkS4class{CorrectFeedback} and \linkS4class{WrongFeedback} are meaningful
 }
 \section{Slots}{
 

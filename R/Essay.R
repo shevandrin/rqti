@@ -17,6 +17,7 @@
 #' @rdname Essay-class
 #' @aliases Essay
 #' @include AssessmentItem.R
+#' @importFrom utils menu
 #' @export
 setClass("Essay", contains = "AssessmentItem",
          slots = c(expected_length = "numeric",
@@ -36,6 +37,19 @@ Essay <- function(content = list(), identifier = character(),
          min_strings = min_strings, data_allow_paste = data_allow_paste,
          points = points)
 }
+
+setMethod("initialize", "Essay", function(.Object, ...) {
+    .Object <- callNextMethod()
+    if (length(.Object@feedback) > 0) {
+ cat("Warning: feedback messages are not meaningful for this type of excercise")
+       user_option <- menu(c("Yes", "No"), title=" Do you want to delete them?")
+        if (user_option == 1) {
+            .Object@feedback = list()
+        }
+    }
+    validObject(.Object)
+    .Object
+})
 
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,Essay
