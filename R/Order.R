@@ -80,5 +80,9 @@ create_response_processing_order <- function(object) {
     outcome <- tag("setOutcomeValue", list(identifier = "SCORE", base_value))
     response_if <- tag("responseIf", tagList(match, outcome))
     responce_condition <- tag("responseCondition", list(response_if))
-    tag("responseProcessing", list(responce_condition))
+    conditions <- NULL
+    if (length(object@feedback) > 0) {
+        conditions <- Map(createResponseCondition, object@feedback)
+    }
+    tag("responseProcessing", list(responce_condition, conditions))
 }
