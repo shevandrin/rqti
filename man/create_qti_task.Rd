@@ -10,8 +10,8 @@ create_qti_task(object,
 }
 \arguments{
 \item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
-\link{Essay}, \link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable},
-\link{DirectedPair}).}
+\link{Essay}, \link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable},
+\link{MultipleChoiceTable}, \link{DirectedPair}).}
 
 \item{dir}{string, optional; a folder to store xml file; working directory by
 default}
