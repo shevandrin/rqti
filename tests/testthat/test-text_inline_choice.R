@@ -113,7 +113,7 @@ In the deep bosom of the ocean buried.
 </outcomeDeclaration>
 </additionalTag>'
 
-    responseDe <- paste('<additionalTag>', toString(createOutcomeDeclaration(sc)[[1]]),'</additionalTag>')
+    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
     xml1 <- xml2::read_xml(responseDe)
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)

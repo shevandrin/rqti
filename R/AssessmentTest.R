@@ -108,5 +108,6 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
           function(object) {
               tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
-                                               value = object@points))
+                                               value = object@points),
+                      make_outcome_declaration("MINSCORE", value = 0))
           })
