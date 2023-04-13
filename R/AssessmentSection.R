@@ -112,14 +112,15 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessementSection,character
 setMethod("buildAssessmentSection", signature(object = "character"),
-          function(object, folder) {
-              if (file.exists(object)) {
-                  doc <- xml2::read_xml(object)
+          function(object, folder = NULL) {
+              f_path <- ifelse(is.null(folder), file.path(object), file.path(folder, object))
+              if (file.exists(f_path)) {
+                  doc <- xml2::read_xml(f_path)
                   valid <- verify_qti(doc)
                   if (!valid) print(paste("Warning: xml file",
                                           object, "is not valid"))
                   id <- xml2::xml_attr(doc, "identifier")
-                  file.copy(object, getwd())
+                  file.copy(f_path, getwd())
                   tag("assessmentItemRef", list(identifier = id,
                                                 href = basename(object)))
               }
