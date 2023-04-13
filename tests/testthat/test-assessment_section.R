@@ -74,7 +74,7 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
                         title = "section",
                         assessment_item = list(mc1, sc2, mc3, order1)
     )
-    exam <- new("AssessmentTest",
+    exam <- AssessmentTest(
                 identifier = "id_test",
                 title = "some title",
                 section = list(exam_section))
@@ -87,6 +87,24 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
     </assessmentSection>
     </additionalTag>"
     expected <- toString(htmltools::tag("additionalTag", list(invisible(buildAssessmentSection(exam_section, folder = "todelete")))))
+
+    xml1 <- xml2::read_xml(expected)
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+    unlink("todelete", recursive = TRUE)
+})
+test_that("Test of method buildAssessmentSection() when reading a file in AssessmentSection class", {
+    sc <- new("SingleChoice",
+              prompt = "What is the percentage of 3/20?",
+              title = "SingleChoice",
+              choices = c("15%", "20%", "30%"),
+              choice_identifiers = "1",
+              identifier = "new")
+    suppressMessages(create_qti_task(sc, "todelete", "TRUE"))
+
+    expected <- toString(buildAssessmentSection(object = "new.xml", folder = "todelete"))
+
+    example <- "<assessmentItemRef identifier =\"new\" href=\"new.xml\"></assessmentItemRef>"
 
     xml1 <- xml2::read_xml(expected)
     xml2 <- xml2::read_xml(example)
