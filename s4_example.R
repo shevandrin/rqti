@@ -65,7 +65,8 @@ te <- new("Entry", content = list("<h2>some markdown title1</h2><h1><b>Some
           feedback = list(WrongFeedback(title = "Fehler",
                                         content = list("falsche Antwort")),
                           CorrectFeedback(title = "Erfolg",
-                                          content = list("richtige Antwort"))))
+                                          content = list("richtige Antwort"))),
+          identifier = "gaps_with_feedback")
 create_qti_task(te, "to_delete", TRUE)
 
 # task with TextGap for opal --------------------------------------------------
@@ -107,6 +108,10 @@ com <- new("Entry", content = list("<p>5 ",
                                         expected_length = 11,
                                         placeholder = "here is number"),
                                    "</p>"),
+           feedback = list(WrongFeedback(title = "Fehler",
+                                         content = list("falsche Antwort")),
+                           CorrectFeedback(title = "Erfolg",
+                                           content = list("richtige Antwort"))),
            title = "complex_gap_task")
 create_qti_task(com, "to_delete", TRUE)
 
@@ -130,6 +135,10 @@ dd2 <- new("Entry", content = list("<p>first line <br/>",
                                        options = c("answ1", "answ2", "answ3"),
                                        score = 2),
                                    "end text.</p>"),
+           feedback = list(WrongFeedback(title = "Fehler",
+                                         content = list("falsche Antwort")),
+                           CorrectFeedback(title = "Erfolg",
+                                           content = list("richtige Antwort"))),
           title = "dropdown2")
 create_qti_task(dd2, "to_delete", TRUE)
 
