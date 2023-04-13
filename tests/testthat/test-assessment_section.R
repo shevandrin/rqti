@@ -110,4 +110,5 @@ test_that("Test of method buildAssessmentSection() when reading a file in Assess
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
     unlink("todelete", recursive = TRUE)
+    unlink("new.xml", recursive = TRUE)
 })
