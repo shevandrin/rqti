@@ -6,7 +6,7 @@ test_that("create_qti_task", {
     essay <- new("Essay", prompt = "Test task",
                  title = "Essay",
                  identifier = "new")
-    create_qti_task(essay)
+    suppressMessages(create_qti_task(essay))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -23,7 +23,7 @@ test_that("create_qti_task", {
                choice_identifiers = c("1", "2", "3", "4"),
                points = c(1, 0, 0, 1)
     )
-    create_qti_task(mc)
+    suppressMessages(create_qti_task(mc))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -39,7 +39,7 @@ test_that("create_qti_task", {
                choices = c("15%", "20%", "30%"),
                choice_identifiers = "1",
                identifier = "new")
-    create_qti_task(sc)
+    suppressMessages(create_qti_task(sc))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -59,7 +59,7 @@ test_that("create_qti_task", {
                   choices_identifiers = c("1", "2", "3", "4"),
                   points = 1
                 )
-    create_qti_task(order)
+    suppressMessages(create_qti_task(order))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -82,7 +82,7 @@ test_that("create_qti_task", {
                          answers_identifiers =c("b k", "c m", "d n", "e l", "e p"),
                          points = 5
     )
-    create_qti_task(oneInColTable)
+    suppressMessages(create_qti_task(oneInColTable))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -103,7 +103,7 @@ test_that("create_qti_task", {
                          cols_identifiers = c("k", "l", "m", "n"),
                          answers_identifiers = c("a l", "b k", "c m", "d n", "e l"),
                          points = 5)
-    create_qti_task(OneInRowTable)
+    suppressMessages(create_qti_task(OneInRowTable))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -126,7 +126,7 @@ test_that("create_qti_task", {
                                answers_identifiers =c("b k", "c m", "d n", "e l", "e p"),
                                points = 5
     )
-    create_qti_task(MultipleChoiceTable)
+    suppressMessages(create_qti_task(MultipleChoiceTable))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -147,7 +147,7 @@ test_that("create_qti_task", {
                     answers_identifiers = c("a k", "b l", 'c m'),
                     points = 5
 )
-    create_qti_task(DirectedPair)
+    suppressMessages(create_qti_task(DirectedPair))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -170,7 +170,7 @@ TextGapOpal <- new("Entry",
                                       value_precision = 2),
                                   'than the speed of sound'))
 
-    create_qti_task(TextGapOpal)
+    suppressMessages(create_qti_task(TextGapOpal))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -192,7 +192,7 @@ NumericGap <- new("Entry",
                                      value_precision = 2),
                                  'm/s')
 )
-    create_qti_task(NumericGap)
+    suppressMessages(create_qti_task(NumericGap))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)
@@ -214,7 +214,7 @@ InlineChoice <- new("Entry",
                                        score = 1),
                                    'm/s')
 )
-    create_qti_task(InlineChoice)
+    suppressMessages(create_qti_task(InlineChoice))
     expected <- readLines("new.xml")
 
     expect_equal(cqt, expected)

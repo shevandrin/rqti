@@ -30,13 +30,13 @@ create_qti_test <- function(object,dir = NULL, verification = FALSE) {
 
     path_test <- paste0(dir, "/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)
-    print(paste("see assessment test:", path_test))
+    message(paste("see assessment test:", path_test))
 
     manifest <- create_manifest(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
     path_manifest <- paste0(dir, "/imsmanifest.xml")
     xml2::write_xml(doc_manifest, path_manifest)
-    print(paste("see manifest file:", path_manifest))
+    message(paste("see manifest file:", path_manifest))
 
     zip_wrapper(object@identifier, object@files, dir)
 }

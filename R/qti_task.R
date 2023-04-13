@@ -234,7 +234,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     if (!dir.exists(dir)) dir.create(dir)
     path <- paste0(dir, "/",object@identifier, ".xml")
     xml2::write_xml(doc, path)
-    return(paste("see assessment item:", path))
+    message(paste("see assessment item:", path))
 }
 
 # function to verify xml with xsd scheme
