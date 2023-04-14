@@ -32,17 +32,4 @@
       <simpleChoice identifier="4">Verification and visualization</simpleChoice>
     </orderInteraction>
   </itemBody>
-  <responseProcessing>
-    <responseCondition>
-      <responseIf>
-        <match>
-          <variable identifier="RESPONSE"/>
-          <correct identifier="RESPONSE"/>
-        </match>
-        <setOutcomeValue identifier="SCORE">
-          <baseValue baseType="float">1</baseValue>
-        </setOutcomeValue>
-      </responseIf>
-    </responseCondition>
-  </responseProcessing>
 </assessmentItem>

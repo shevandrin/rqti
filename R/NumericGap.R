@@ -102,27 +102,3 @@ create_outcome_declaration_num_entry <- function(object) {
                                          value = 0)
     tagList(SCORE, MAXSCORE, MINSCORE)
 }
-
-create_response_processing_num_entry <- function(object) {
-    tolerance_str <- paste(object@value_precision, object@value_precision)
-    child <- tagList(tag("variable",
-                         list(identifier = object@response_identifier)),
-                     tag("correct",
-                         list(identifier = object@response_identifier)))
-    equal_tag <- tag("equal", list(toleranceMode = object@type_precision,
-                                   tolerance = tolerance_str,
-                                   includeLowerBound =
-                                       tolower(object@include_lower_bound),
-                                   includeUpperBound =
-                                       tolower(object@include_upper_bound),
-                                   child))
-    var_outcome <- tag("variable",
-                       list(identifier = paste0("MAXSCORE_",
-                                                object@response_identifier)))
-    outcome_tag <- tag("setOutcomeValue",
-                       list(identifier = paste0("SCORE_",
-                                                object@response_identifier),
-                            var_outcome))
-    if_tag <- tag("responseIf", list(equal_tag, outcome_tag))
-    tag("responseCondition", list(if_tag))
-}

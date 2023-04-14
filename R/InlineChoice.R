@@ -79,20 +79,3 @@ create_response_declaration_inline_choice <- function(object) {
                                     baseType = "identifier",
                                     tagList(child, map_entry)))
 }
-
-create_response_processing_inline_choice <- function(object) {
-    # TODO responseProcessing doesn't need to independent task
-    # to check is there a need responseProcessing for exam
-    child <- tagList(tag("variable",
-                         list(identifier = object@response_identifier)),
-                     tag("correct",
-                         list(identifier = object@response_identifier)))
-    match <- tag("match", child)
-    base_value <- tag("baseValue", list(baseType = "float", object@score))
-    outcome <- tag("setOutcomeValue",
-                   list(identifier = paste0("SCORE_",
-                                            object@response_identifier),
-                        base_value))
-    response_if <- tag("responseIf", tagList(match, outcome))
-    tag("responseCondition", list(response_if))
-}

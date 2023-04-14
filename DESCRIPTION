@@ -67,6 +67,7 @@ Collate:
     'objectBuilder.R'
     'qti_task.R'
     'qti_test.R'
+    'response_processing.R'
     'utils-pipe.R'
 Depends: 
     R (>= 2.10)

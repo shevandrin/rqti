@@ -60,6 +60,15 @@ setMethod("createResponseDeclaration", signature(object = "SingleChoice"),
               create_response_declaration_single_choice(object)
           })
 
+#' @rdname createResponseProcessing-methods
+#' @aliases createResponseProcessing,SingleChoice
+setMethod("createResponseProcessing", signature(object = "SingleChoice"),
+          function(object) {
+              if (length(object@feedback) > 0) {
+                create_default_resp_processing_sc_order(object)
+              }
+          })
+
 # actual functions
 create_item_body_single_choice <- function(object) {
     create_item_body_choice(object, max_choices = 1)

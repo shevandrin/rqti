@@ -110,7 +110,7 @@ setGeneric("createResponseProcessing", function(object) {
 setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
           function(object) {
               if (length(object@feedback) >0) {
-              create_default_response_processing(object)
+              create_default_resp_processing(object)
               }
 })
 

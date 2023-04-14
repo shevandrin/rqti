@@ -177,26 +177,6 @@ create_prompt <- function(object) {
     }
 }
 
-create_default_response_processing <- function(object) {
-    var_resp <- tag("variable", list(identifier = "RESPONSE"))
-    tag_isnull <- tag("isNull", list(var_resp))
-    response_if <- tag("responseIf", list(tag_isnull))
-
-    var_corr <- tag("correct", list(identifier = "RESPONSE"))
-    tag_match <- tag("match", list(var_resp, var_corr))
-    var_score <- tag("variable", list(identifier = "SCORE"))
-    var_maxscore <- tag("variable", list(identifier =  "MAXSCORE"))
-    tag_sum <- tag("sum", list(var_score, var_maxscore))
-    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", tag_sum))
-    response_elseif <- tag("responseElseIf", list(tag_match, set_ov))
-    conditions <- Map(createResponseCondition, object@feedback)
-    resp_cond1 <- tag("responseCondition", list(response_if, response_elseif))
-    resp_cond2 <- tag("responseCondition", list())
-    resp_cond3 <- tag("responseCondition", list())
-    resp_proc <- tag("responseProcessing", list(resp_cond1, conditions))
-    return(resp_proc)
-}
-
 #' Create XML file for question specification
 #'
 #' @usage create_qti_task(object,

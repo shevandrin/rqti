@@ -19,7 +19,7 @@ buildAssessmentSection(object, folder)
 
 \S4method{buildAssessmentSection}{AssessmentItem}(object, folder)
 
-\S4method{buildAssessmentSection}{character}(object, folder)
+\S4method{buildAssessmentSection}{character}(object, folder = NULL)
 
 \S4method{buildAssessmentSection}{AssessmentItemRef}(object)
 }

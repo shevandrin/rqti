@@ -61,7 +61,9 @@ setMethod("createResponseDeclaration", signature(object = "Order"),
 #' @aliases createResponseProcessing,Order
 setMethod("createResponseProcessing", signature(object = "Order"),
           function(object) {
-              create_response_processing_order(object)
+              if (length(object@feedback) > 0) {
+                  create_default_resp_processing_sc_order(object)
+              }
           })
 
 create_response_declaration_order <- function(object) {
@@ -70,19 +72,4 @@ create_response_declaration_order <- function(object) {
                                         cardinality = "ordered",
                                         baseType = "identifier",
                                         child))
-}
-
-create_response_processing_order <- function(object) {
-    child <- tagList(tag("variable", list(identifier = "RESPONSE")),
-                     tag("correct", list(identifier = "RESPONSE")))
-    match <- tag("match", child)
-    base_value <- tag("baseValue", list(baseType = "float", object@points))
-    outcome <- tag("setOutcomeValue", list(identifier = "SCORE", base_value))
-    response_if <- tag("responseIf", tagList(match, outcome))
-    responce_condition <- tag("responseCondition", list(response_if))
-    conditions <- NULL
-    if (length(object@feedback) > 0) {
-        conditions <- Map(createResponseCondition, object@feedback)
-    }
-    tag("responseProcessing", list(responce_condition, conditions))
 }

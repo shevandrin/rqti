@@ -101,50 +101,6 @@ create_response_declaration_entry <- function(object) {
     Map(createResponseDeclaration, answers)
 }
 
-create_response_processing_entry <- function(object) {
-    answers <- Map(getResponse, object@content)
-    answers[sapply(answers, is.null)] <- NULL
-    processing <- Map(createResponseProcessing, answers)
-
-    conditions <- NULL
-    if (length(object@feedback) > 0) {
-        #add default condition
-        tag_isnull <- Map(make_response_condition, answers)
-        if (length(tag_isnull) > 1) {
-            tag_isnull <- tag("and", tag_isnull)
-        }
-        tag_bv <- tag("baseValue", list(baseType = "identifier", "empty"))
-        set_ov <- tag("setOutcomeValue",
-                      list(identifier = "FEEDBACKBASIC", tag_bv))
-        response_if <- tag("responseIf", list(tag_isnull, set_ov))
-        tag_lt <- tag("lt", list(tag("variable", list(identifier = "SCORE")),
-                                tag("variable", list(identifier = "MAXSCORE"))))
-        tag_bv <- tag("baseValue", list(baseType = "identifier", "incorrect"))
-        set_ov <- tag("setOutcomeValue",
-                      list(identifier = "FEEDBACKBASIC", tag_bv))
-        response_elseif <- tag("responseElseIf", list(tag_lt, set_ov))
-
-        tag_bv <- tag("baseValue", list(baseType = "identifier", "correct"))
-        set_ov <- tag("setOutcomeValue",
-                      list(identifier = "FEEDBACKBASIC", tag_bv))
-        response_else <- tag("responseElse", list(set_ov))
-
-        default_cond <- tag("responseCondition",
-                            list(response_if, response_elseif,
-                                                   response_else))
-
-        #create modal conditions
-        resp_conds <- Map(createResponseCondition, object@feedback)
-        conditions <- c(default_cond, resp_conds)
-    }
-    tag("responseProcessing", list(processing, conditions))
-}
-
-make_response_condition <- function(object) {
-    tag_var <- tag("variable", list(identifier = object@response_identifier))
-    tag("isNull", list(tag_var))
-}
-
 create_outcome_declaration_entry <- function(object) {
     feedbacks <- NULL
     if (length(object@feedback) > 0) {
