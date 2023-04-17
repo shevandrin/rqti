@@ -44,7 +44,7 @@ extract_results <- function(file, level = "exercises") {
                 items = {df0 <- get_result_attr_options(file)})
     } else if (any(ext == "zip")) {
         contain <- unzip(file, list=TRUE)
-        if (length(contain) == 1) {
+        if (nrow(contain) == 1) {
             switch(level,
                    exercises = {df0 <- get_result_attr_answers(file)},
                    items = {df0 <- get_result_attr_options(file)})
