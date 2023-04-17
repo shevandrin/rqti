@@ -1,7 +1,8 @@
 #' Class ModalFeedback
 #'
-#' Abstract class `ModalFeedback` is never to be generated, only derived classes
-#' [CorrectFeedback-class] and [WrongFeedback-class] are meaningful
+#' Abstract class `ModalFeedback` is responsible for delivering feedback
+#' messages to the candidate, regardless of whether the answer was correct or
+#' incorrect
 #' @template ModalFeedbackSlotsTemplate
 #' @name ModalFeedback-class
 #' @rdname ModalFeedback-class
