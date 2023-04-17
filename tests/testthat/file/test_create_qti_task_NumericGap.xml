@@ -5,6 +5,21 @@
       <value>300</value>
     </correctResponse>
   </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>3</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
   <outcomeDeclaration identifier="SCORE_RESPONSE_1" cardinality="single" baseType="float">
     <defaultValue>
       <value>0</value>
@@ -26,6 +41,11 @@
     m/s
   </itemBody>
   <responseProcessing>
+    <setOutcomeValue identifier="SCORE">
+      <sum>
+        <variable identifier="SCORE_RESPONSE_1"/>
+      </sum>
+    </setOutcomeValue>
     <responseCondition>
       <responseIf>
         <equal toleranceMode="exact" tolerance="2 2" includeLowerBound="true" includeUpperBound="true">

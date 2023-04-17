@@ -102,9 +102,9 @@ create_response_declaration_entry <- function(object) {
 }
 
 create_outcome_declaration_entry <- function(object) {
-    feedbacks <- NULL
+    feedbacks_declaration <- NULL
     if (length(object@feedback) > 0) {
-        feedbacks <- tagList(
+        feedbacks_declaration <- tagList(
             make_outcome_declaration("FEEDBACKBASIC",
                                      value = "empty",
                                      base_type = "identifier"),
@@ -113,7 +113,14 @@ create_outcome_declaration_entry <- function(object) {
                                      value = "",
                                      base_type = "identifier"))
     }
+
+    stand_declaration <- tagList(make_outcome_declaration("SCORE", value = 0),
+                                 make_outcome_declaration("MAXSCORE",
+                                                         value = object@points),
+                                make_outcome_declaration("MINSCORE", value = 0))
     answers <- Map(getResponse, object@content)
     answers[sapply(answers, is.null)] <- NULL
-    tagList(Map(createOutcomeDeclaration, answers), feedbacks)
+
+    gaps_declaration <- Map(createOutcomeDeclaration, answers)
+    tagList(stand_declaration, gaps_declaration, feedbacks_declaration)
 }

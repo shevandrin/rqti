@@ -13,8 +13,23 @@ sc <- new("SingleChoice",
           feedback = list(WrongFeedback(title = "Error",
                                        content = list("You made a mistake")),
                           CorrectFeedback(title = "Erfolg",
-                                          content = list("Gut gemacht")))
+                                          content = list("Gut gemacht")),
+                          new("ModalFeedback", title = "common",
+                              content = list("general feedback")))
           )
+create_qti_task(sc, "to_delete", TRUE)
+
+sc <- new("SingleChoice",
+          choices = c("option 1", "option 2", "option 3", "option 4"),
+          # orientation = "vertical",
+          title = "single_choice_task",
+          prompt = "Single choice question example",
+          shuffle = FALSE,
+          points = 2,
+          identifier = "sc_example",
+          feedback = list(new("ModalFeedback",
+                    content = list("hier it is a right solution explained")))
+)
 create_qti_task(sc, "to_delete", TRUE)
 
 # create MultipleChoice object example 1 ---------------------------------------
@@ -113,7 +128,9 @@ com <- new("Entry", content = list("<p>5 ",
            feedback = list(WrongFeedback(title = "Fehler",
                                          content = list("falsche Antwort")),
                            CorrectFeedback(title = "Erfolg",
-                                           content = list("richtige Antwort"))),
+                                           content = list("richtige Antwort")),
+                           new("ModalFeedback", title = "generelle Rückmeldung",
+                           content = list("Text der allgemeinen Rückmeldung"))),
            title = "complex_gap_task",
            identifier = "entry_complex_example")
 create_qti_task(com, "to_delete", TRUE)

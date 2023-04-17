@@ -13,7 +13,8 @@ setClass("ModalFeedback", slots = list(outcome_identifier = "character",
                                        title = "character",
                                        content = "list"),
                           prototype = list(show = TRUE,
-                                           outcome_identifier = "FEEDBACK"))
+                                           outcome_identifier = "FEEDBACK",
+                                           identifier = "modal_feedback"))
 
 setMethod("initialize", "ModalFeedback", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -46,18 +47,18 @@ setMethod("createModalFeedback", signature(object = "ModalFeedback"),
 
 setMethod("createResponseCondition", signature(object = "ModalFeedback"),
           function(object) {
-
-              variab <- tag("variable", list(identifier = "FEEDBACKMODAL"))
-              base_value <- tag("baseValue", list(baseType = "identifier",
-                                object@identifier))
-              multiple <- tag("multiple", list(variab, base_value))
-
-              tag_mt_var <- tag("variable", list(identifier = "FEEDBACKBASIC"))
-              tag_match <- tag("match", list(base_value, tag_mt_var))
-              tag_and <- tag("and", list(tag_match))
-              set_out_value <- tag("setOutcomeValue",
-                  list(identifier = object@outcome_identifier, multiple))
-              tag_resp_if <- tag("responseIf", list(tag_and, set_out_value))
-              tag_resp_cond <- tag("responseCondition", list(tag_resp_if))
-              return(tag_resp_cond)
+              tag_var <- tag("variable", list(identifier = "SCORE"))
+              tag_bv <- tag("baseValue", list(baseType = "float", 0))
+              tag_gte <- tag("gte", list(tag_var, tag_bv))
+              tag_and <- tag("and", list(tag_gte))
+              tag_var <- tag("variable", list(identifier = "FEEDBACKMODAL"))
+              tag_bv <- tag("baseValue", list(baseType = "identifier",
+                                              object@identifier))
+              tag_mult <- tag("multiple", list(tag_var, tag_bv))
+              set_ov <- tag("setOutcomeValue",
+                            list(identifier = "FEEDBACKMODAL",
+                                 tag_mult))
+              resp_if <- tag("responseIf", list(tag_and, set_ov))
+              resp_cond <- tag("responseCondition", list(resp_if))
+              return(resp_cond)
           })

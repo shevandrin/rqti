@@ -101,6 +101,21 @@ In the deep bosom of the ocean buried.
     # ' The original example of QTI, do not have SCORE for that reason OPAL's example was taken with out MINSCORE
 
     example <- '<additionalTag>
+<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+<defaultValue>
+<value>0</value>
+</defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+<defaultValue>
+<value>1</value>
+</defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+<defaultValue>
+<value>0</value>
+</defaultValue>
+</outcomeDeclaration>
 <outcomeDeclaration identifier="SCORE_RESPONSE" cardinality="single" baseType="float">
 <defaultValue>
 <value>2</value>

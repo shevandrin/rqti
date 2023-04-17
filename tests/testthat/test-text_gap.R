@@ -162,7 +162,22 @@ test_that("Testing create Outcome Declaration Gap ", {
     # 'Outcome Declaration 1.Omitted the tag view="testConstructor" from OPAL example. There is not outcome Delete it from the example
 
     example <- '<additionalTag>
-    <outcomeDeclaration identifier="SCORE_RESPONSE_1" cardinality="single" baseType="float">\n
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+<outcomeDeclaration identifier="SCORE_RESPONSE_1" cardinality="single" baseType="float">\n
 <defaultValue>
 <value>0</value>
 </defaultValue>
@@ -226,6 +241,11 @@ test_that("Testing create_item_body_text ", {
                                       'than the speed of sound'))
     expected <- '<additionalTag>
     <responseProcessing>
+        <setOutcomeValue identifier="SCORE">
+        <sum>
+            <variable identifier="SCORE_RESPONSE_1"/>
+        </sum>
+    </setOutcomeValue>
 		<responseCondition>
 	<responseIf>
 		<equal toleranceMode="absolute" tolerance="4">

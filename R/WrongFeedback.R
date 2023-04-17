@@ -25,3 +25,8 @@ setMethod("initialize", "WrongFeedback", function(.Object, ...) {
     validObject(.Object)
     .Object
 })
+
+setMethod("createResponseCondition", signature(object = "WrongFeedback"),
+          function(object) {
+              create_resp_cond_set_feedback(object)
+          })

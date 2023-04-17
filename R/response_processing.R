@@ -43,6 +43,11 @@ create_default_resp_processing_sc_order <- function(object) {
 create_response_processing_entry <- function(object) {
     answers <- Map(getResponse, object@content)
     answers[sapply(answers, is.null)] <- NULL
+
+    #set outcome value for SCORE
+    tag_sum <- tag("sum", Map(set_outcome_value_entry, answers))
+    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", tag_sum))
+
     #this form the 1th condition
     processing <- Map(createResponseProcessing, answers)
 
@@ -56,9 +61,14 @@ create_response_processing_entry <- function(object) {
         conditions <- tagList(make_default_resp_cond(answers),
                               resp_conds)
     }
-    tag("responseProcessing", list(processing, conditions))
+    tag("responseProcessing", list(set_ov, processing, conditions))
 }
 
+set_outcome_value_entry <- function(object) {
+    tag_var <- tag("variable",
+        list(identifier = paste0("SCORE_", object@response_identifier)))
+    return(tag_var)
+}
 
 make_response_condition <- function(object = NULL) {
     identifier <- ifelse(is.null(object), "RESPONSE", object@response_identifier)
@@ -169,4 +179,21 @@ create_response_processing_num_entry <- function(object) {
                             var_outcome))
     if_tag <- tag("responseIf", list(equal_tag, outcome_tag))
     tag("responseCondition", list(if_tag))
+}
+
+# this response condition makes link between Response and Feedback message
+create_resp_cond_set_feedback <- function(object) {
+    variab <- tag("variable", list(identifier = "FEEDBACKMODAL"))
+    base_value <- tag("baseValue", list(baseType = "identifier",
+                                        object@identifier))
+    multiple <- tag("multiple", list(variab, base_value))
+
+    tag_mt_var <- tag("variable", list(identifier = "FEEDBACKBASIC"))
+    tag_match <- tag("match", list(base_value, tag_mt_var))
+    tag_and <- tag("and", list(tag_match))
+    set_out_value <- tag("setOutcomeValue",
+                         list(identifier = object@outcome_identifier, multiple))
+    tag_resp_if <- tag("responseIf", list(tag_and, set_out_value))
+    tag_resp_cond <- tag("responseCondition", list(tag_resp_if))
+    return(tag_resp_cond)
 }
