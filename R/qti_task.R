@@ -204,10 +204,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     if (verification) {
         ver <- verify_qti(doc)
         if (!ver) {
-            msg <- list("Error messsage: xml file is not valid. See details in
-                        errors",
-                       attributes(ver))
-            return(msg)
+            stop("Xml file is not valid. \n", attributes(ver))
         }
     }
     if (is.null(dir)) dir <- getwd()
