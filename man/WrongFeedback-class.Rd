@@ -18,7 +18,8 @@ that relates to feedback}
 \item{\code{show}}{boolean, optional; is responsible to show (\code{TRUE} value) or hide
 (\code{FALSE}); default \code{TRUE}}
 
-\item{\code{identifier}}{string; identifier of model feedback item}
+\item{\code{identifier}}{string; identifier of model feedback item; default 'modal
+feedback'}
 
 \item{\code{title}}{string, optional; title of model feedback item}
 

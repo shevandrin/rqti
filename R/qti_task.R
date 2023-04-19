@@ -197,6 +197,7 @@ create_prompt <- function(object) {
 #' }
 #' @name create_qti_task
 #' @rdname create_qti_task
+#' @aliases create_qti_task
 #' @export
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     content <- create_assessment_item(object)

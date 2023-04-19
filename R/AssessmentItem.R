@@ -52,7 +52,6 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 #'   [MultipleChoiceTable], [DirectedPair])
 #' @docType methods
 #' @rdname createItemBody-methods
-#'
 #' @export
 setGeneric("createItemBody", function(object) {
     standardGeneric("createItemBody")
@@ -69,7 +68,6 @@ setGeneric("createItemBody", function(object) {
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseDeclaration-methods
-#'
 #' @export
 setGeneric("createResponseDeclaration", function(object) {
     standardGeneric("createResponseDeclaration")
@@ -106,6 +104,41 @@ setGeneric("createOutcomeDeclaration", function(object) {
 setGeneric("createResponseProcessing", function(object) {
     standardGeneric("createResponseProcessing")
 })
+
+#' Create XML file for question specification
+#'
+#' @usage createQtiTask(object,
+#'                 dir = NULL,
+#'                 verification = FALSE)
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair]).
+#' @param dir string, optional; a folder to store xml file; working directory by
+#'   default
+#' @param verification boolean, optional; to check validity of xml file, default
+#'   `FALSE`
+#' @return xml document.
+#' @examples
+#' \dontrun{
+#' essay <- new("Essay", prompt = "Test task", title = "Essay")
+#' createQtiTask(essay, "result", "TRUE")
+#' }
+#' @docType methods
+#' @name createQtiTask-methods
+#' @rdname createQtiTask-methods
+#' @aliases createQtiTask
+#' @docType methods
+#' @export
+setGeneric("createQtiTask", function(object, dir = NULL, verification = FALSE) {
+    standardGeneric("createQtiTask")
+})
+
+#' @rdname createQtiTask-methods
+#' @aliases createQtiTask,AssessmentItem
+setMethod("createQtiTask", signature(object = "AssessmentItem"),
+          function(object, dir = NULL, verification = FALSE) {
+              create_qti_task(object, dir, verification)
+          })
 
 setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
           function(object) {

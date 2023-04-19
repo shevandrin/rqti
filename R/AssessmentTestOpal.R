@@ -64,3 +64,45 @@ AssessmentTestOpal <- function(identifier = character(),
         calculator = calculator, mark_items = mark_items,
         keep_responses = keep_responses, files = files)
 }
+
+#' #' @rdname createQtiTest-methods
+#' #' @aliases createQtiTest,AssessmentTestOpal
+#' setMethod("createQtiTest", signature(object = "AssessmentTestOpal"),
+#'           function(object, dir = NULL, verification = FALSE) {
+#'               create_qti_test(object, dir, verification)
+#'           })
+
+#' @rdname createAssessmentTest-methods
+#' @aliases createAssessmentTest,AssessmentTestOpal
+setMethod("createAssessmentTest", signature(object = "AssessmentTestOpal"),
+          function(object, folder) {
+              data_downloads <- NULL
+              if (length(object@files) > 0) {
+                  file_names <- basename(object@files)
+                  files <- unlist(lapply("file://downloads/", paste0,
+                                         file_names, ";"))
+                  for (f in files) {
+                      data_downloads <- paste0(f, data_downloads)
+                  }
+              }
+              data_features <- NULL
+              if (object@show_test_time) {
+                  data_features <- paste("show-test-time", data_features,
+                                         sep = ";")
+              }
+              if (!is.na(object@calculator)) {
+                  data_features <- paste(object@calculator, data_features,
+                                         sep = ";")
+              }
+              if (object@mark_items) {
+                  data_features <- paste("mark-items", data_features,
+                                         sep = ";")
+              }
+              if (object@keep_responses) {
+                  data_features <- paste("keep-responses", data_features,
+                                         sep = ";")
+              }
+
+              create_assessment_test(object, folder, data_downloads,
+                                     data_features)
+          })

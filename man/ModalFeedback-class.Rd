@@ -6,8 +6,9 @@
 \alias{ModalFeedback}
 \title{Class ModalFeedback}
 \description{
-Abstract class \code{ModalFeedback} is never to be generated, only derived classes
-\linkS4class{CorrectFeedback} and \linkS4class{WrongFeedback} are meaningful
+Abstract class \code{ModalFeedback} is responsible for delivering feedback
+messages to the candidate, regardless of whether the answer was correct or
+incorrect
 }
 \section{Slots}{
 
@@ -18,7 +19,8 @@ that relates to feedback}
 \item{\code{show}}{boolean, optional; is responsible to show (\code{TRUE} value) or hide
 (\code{FALSE}); default \code{TRUE}}
 
-\item{\code{identifier}}{string; identifier of model feedback item}
+\item{\code{identifier}}{string; identifier of model feedback item; default 'modal
+feedback'}
 
 \item{\code{title}}{string, optional; title of model feedback item}
 

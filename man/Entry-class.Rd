@@ -26,8 +26,8 @@ paragraph, can supplement or replace content}
 
 \item{\code{qti_version}}{string; QTI information model version; default 'v2p1}
 
-\item{\code{feedback}}{vector of \linkS4class{ModalFeedback}; feedback messages for
-candidate}
+\item{\code{feedback}}{list of \linkS4class{ModalFeedback}, \link{CorrectFeedback}, or
+\linkS4class{WrongFeedback}; feedback messages for candidate}
 
 \item{\code{points}}{numeric, optional; the number of points for the entire task;
 default 1}

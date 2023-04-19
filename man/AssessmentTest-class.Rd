@@ -6,8 +6,8 @@
 \alias{AssessmentTest}
 \title{Class AssessmentTest}
 \description{
-Abstract class \code{AssessmentTestOpal} is responsible for creating xml exam file
-according to QTI 2.1. for Opal
+Abstract class \code{AssessmentTest} is responsible for creating xml exam file
+according to QTI 2.1.
 \if{html}{\out{<div style="text-align:center">}\figure{assessmentTest.png}
 \out{</div>}}
 }
@@ -61,9 +61,6 @@ comments in each question}
 reshuffle the order of choices for each item-attempt}
 }}
 
-\note{
-use \code{\link[=create_qti_test]{create_qti_test()}} to create an xml file for test specification
-}
 \examples{
 \dontrun{
 This example creates test 'exam' with one section 'exam_section' which
