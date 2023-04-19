@@ -45,3 +45,36 @@ test_that("Testing method createModalFeedback() for WrongFeedback class", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+test_that("Testing method createResponseCondition() for WrongFeedback class", {
+    sut <- WrongFeedback(outcome_identifier = "FEEDBACKMODAL",
+                         show = FALSE,
+                         title = "Feedback wrong name",
+                         content = list("<p>Text Feedback wrong</p>")
+    )
+
+    example <-"<additionalTag>
+<responseCondition>
+  <responseIf>
+    <and>
+      <match>
+        <baseValue baseType=\"identifier\">incorrect</baseValue>
+        <variable identifier=\"FEEDBACKBASIC\"></variable>
+      </match>
+    </and>
+    <setOutcomeValue identifier=\"FEEDBACKMODAL\">
+      <multiple>
+        <variable identifier=\"FEEDBACKMODAL\"></variable>
+        <baseValue baseType=\"identifier\">incorrect</baseValue>
+      </multiple>
+    </setOutcomeValue>
+  </responseIf>
+</responseCondition>
+    </additionalTag>"
+
+    expected <- toString(htmltools::tag("additionalTag",
+                                        list(createResponseCondition(sut))))
+
+    xml1 <- xml2::read_xml(expected)
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})

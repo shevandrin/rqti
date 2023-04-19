@@ -23,7 +23,8 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
                   identifier = "q4",
                   title = "Order",
                   prompt = "Choose the correct order",
-                  choices = c("Data collection", "Data cleansing", "Data marking", "Verification and visualization"),
+                  choices = c("Data collection", "Data cleansing",
+                              "Data marking", "Verification and visualization"),
                   choices_identifiers = c("1", "2", "3", "4"),
                   points = 1
     )
@@ -65,7 +66,8 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
                   identifier = "q4",
                   title = "Order",
                   prompt = "Choose the correct order",
-                  choices = c("Data collection", "Data cleansing", "Data marking", "Verification and visualization"),
+                  choices = c("Data collection", "Data cleansing",
+                              "Data marking", "Verification and visualization"),
                   choices_identifiers = c("1", "2", "3", "4"),
                   points = 1
     )
@@ -80,13 +82,16 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
                 section = list(exam_section))
 
     example <- "<additionalTag>
-    <assessmentSection identifier=\"sec_id\" fixed=\"false\" title=\"section\" visible=\"true\">\n <assessmentItemRef identifier=\"q1\"    href=\"q1.xml\"/>\n
+    <assessmentSection identifier=\"sec_id\" fixed=\"false\" title=\"section\" visible=\"true\">\n <assessmentItemRef identifier=\"q1\" href=\"q1.xml\"/>\n
     <assessmentItemRef identifier=\"q2\" href=\"q2.xml\"/>\n
     <assessmentItemRef identifier=\"q3\" href=\"q3.xml\"/>\n
     <assessmentItemRef identifier=\"q4\" href=\"q4.xml\"/>\n
     </assessmentSection>
     </additionalTag>"
-    expected <- toString(htmltools::tag("additionalTag", list(invisible(buildAssessmentSection(exam_section, folder = "todelete")))))
+
+     expected <- toString(htmltools::tag(
+         "additionalTag", list(suppressMessages(buildAssessmentSection(exam_section,
+                                                      folder = "todelete")))))
 
     xml1 <- xml2::read_xml(expected)
     xml2 <- xml2::read_xml(example)
@@ -102,7 +107,8 @@ test_that("Test of method buildAssessmentSection() when reading a file in Assess
               identifier = "new")
     suppressMessages(create_qti_task(sc, "todelete", "TRUE"))
 
-    expected <- toString(buildAssessmentSection(object = "new.xml", folder = "todelete"))
+    expected <- toString(buildAssessmentSection(object = "new.xml",
+                                                folder = "todelete"))
 
     example <- "<assessmentItemRef identifier =\"new\" href=\"new.xml\"></assessmentItemRef>"
 
