@@ -1,7 +1,7 @@
 #' Create XML file for exam test specification
 #'
 #' @usage create_qti_test(object,
-#'                 dir = NULL,
+#'                 dir = getwd(),
 #'                 verification = FALSE)
 #' @param object an instance of the [AssessmentTest] S4 object
 #' @param dir string, optional; a folder to store xml file; working directory by
@@ -22,7 +22,7 @@
 #' create_qti_test(exam, "exam_folder", "TRUE")
 #' }
 #' @export
-create_qti_test <- function(object, dir, verification = FALSE) {
+create_qti_test <- function(object, dir = getwd(), verification = FALSE) {
     if (!dir.exists(dir)) dir.create(dir)
 
     content <- createAssessmentTest(object, dir)

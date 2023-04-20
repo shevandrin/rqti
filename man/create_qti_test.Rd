@@ -5,7 +5,7 @@
 \title{Create XML file for exam test specification}
 \usage{
 create_qti_test(object,
-                dir = NULL,
+                dir = getwd(),
                 verification = FALSE)
 }
 \arguments{

@@ -13,11 +13,11 @@
 \alias{buildAssessementSection,AssessmentItemRef}
 \title{Build tags for AssessmentSection in assessmentTest}
 \usage{
-buildAssessmentSection(object, folder)
+buildAssessmentSection(object, folder = NULL)
 
-\S4method{buildAssessmentSection}{AssessmentSection}(object, folder)
+\S4method{buildAssessmentSection}{AssessmentSection}(object, folder = NULL)
 
-\S4method{buildAssessmentSection}{AssessmentItem}(object, folder)
+\S4method{buildAssessmentSection}{AssessmentItem}(object, folder = NULL)
 
 \S4method{buildAssessmentSection}{character}(object, folder = NULL)
 

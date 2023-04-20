@@ -10,7 +10,7 @@
 \usage{
 createQtiTest(object, dir = NULL, verification = FALSE)
 
-\S4method{createQtiTest}{AssessmentTest}(object, dir = NULL, verification = FALSE)
+\S4method{createQtiTest}{AssessmentTest}(object, dir = getwd(), verification = FALSE)
 }
 \arguments{
 \item{object}{an instance of the \link{AssessmentTest} or \link{AssessmentTestOpal} S4
