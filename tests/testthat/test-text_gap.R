@@ -350,3 +350,68 @@ test_that("Testing construction function for NumericGap class", {
 
     expect_equal(sut, example)
 })
+test_that("Testing function of create_outcome_declaration_entry for Entry class", {
+    sut <- new("Entry", identifier = "new",
+                  points = 3,
+                  title = "NumericGap",
+                  content = list('The speed of light is equal',
+                                 NumericGap(
+                                     response_identifier = "RESPONSE_1",
+                                     score = NA_integer_,
+                                     response = 300,
+                                     value_precision = 2,
+                                     include_lower_bound = TRUE,
+                                     include_upper_bound = TRUE),'m/s'),
+                feedback = list(new("ModalFeedback", title = "common",
+                                        content = list("general feedback")))                                )
+
+    example <- '<additionalTag>
+    <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+  <defaultValue>
+    <value>0</value>
+  </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+  <defaultValue>
+    <value>3</value>
+  </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+  <defaultValue>
+    <value>0</value>
+  </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="SCORE_RESPONSE_1" cardinality="single" baseType="float">
+  <defaultValue>
+    <value>0</value>
+  </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MAXSCORE_RESPONSE_1" cardinality="single" baseType="float">
+  <defaultValue>
+    <value>NA</value>
+  </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MINSCORE_RESPONSE_1" cardinality="single" baseType="float">
+  <defaultValue>
+    <value>0</value>
+  </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="FEEDBACKBASIC" cardinality="single" baseType="identifier">
+  <defaultValue>
+    <value>empty</value>
+  </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="FEEDBACKMODAL" cardinality="multiple" baseType="identifier">
+  <defaultValue>
+    <value></value>
+  </defaultValue>
+</outcomeDeclaration>
+</additionalTag>'
+
+    expected <- toString(htmltools::tag(
+        "additionalTag", list(create_outcome_declaration_entry(sut))))
+
+    xml1 <- xml2::read_xml(expected)
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})

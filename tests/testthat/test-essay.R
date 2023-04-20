@@ -74,4 +74,31 @@ test_that("Testing construction function for Essay class", {
 
     expect_equal(sut, example)
 })
+test_that("Testing attributes values in extendedTextInteraction for Essay
+object", {
+    sut <- suppressWarnings(new("Essay",
+                 content = list("some question text"),
+                 title = "extendedText",
+                 expected_length = 100,
+                 expected_lines = 10,
+                 max_strings = 50,
+                 min_strings = 1,
+                 data_allow_paste = FALSE,
+                 feedback = list(new("ModalFeedback", title = "common",
+                                   content = list("general feedback")))))
 
+    example <- "
+<itemBody>
+  some question text
+  <extendedTextInteraction responseIdentifier=\"RESPONSE\"
+  expectedLength=\"100\"
+  expectedLines=\"10\"
+  maxStrings=\"50\"
+  minStrings=\"1\"
+  data-allowPaste=\"false\"/>
+</itemBody>
+                "
+    xml1 <- xml2::read_xml(toString(suppressWarnings(createItemBody(sut))))
+    xml2 <- xml2::read_xml(toString(example))
+    expect_equal(xml1, xml2)
+})

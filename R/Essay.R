@@ -42,12 +42,7 @@ setMethod("initialize", "Essay", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@feedback) > 0) {
        warning("Feedback messages are not meaningful for this type of excercise"
-               , immediate. = TRUE, call. = FALSE)
-       user_option <- menu(c("Yes", "No"), title=" Do you want to delete them?")
-        if (user_option == 1) {
-            .Object@feedback = list()
-        }
-    }
+               , immediate. = TRUE, call. = FALSE)}
     validObject(.Object)
     .Object
 })

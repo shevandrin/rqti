@@ -212,3 +212,53 @@ expected <- new("Entry", content = list("<p>Hast du",
 )
 expect_equal(cqc, expected)
 })
+# Entry - Testing function create_outcome_declaration_entry
+test_that("Testing function create_outcome_declaration_entry", {
+    expected <- Entry(content = list("<p>Hast du",
+                                            new("TextGap", response_identifier = "response_1", response = "ein"),
+                                            " Handy?</p>"),
+                    points = 5,
+                    identifier = "test 2",
+                    title = "Germany"
+    )
+
+    example <- "<additionalTag>
+    <outcomeDeclaration identifier=\"SCORE\" cardinality=\"single\" baseType=\"float\">
+        <defaultValue>
+        <value>0</value>
+        </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier=\"MAXSCORE\" cardinality=\"single\" baseType=\"float\">
+        <defaultValue>
+        <value>5</value>
+        </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier=\"MINSCORE\" cardinality=\"single\" baseType=\"float\">
+        <defaultValue>
+        <value>0</value>
+        </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier=\"SCORE_response_1\" cardinality=\"single\" baseType=\"float\">
+        <defaultValue>
+        <value>0</value>
+        </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier=\"MAXSCORE_response_1\" cardinality=\"single\" baseType=\"float\">
+        <defaultValue>
+        <value>1</value>
+        </defaultValue>
+        </outcomeDeclaration>
+        <outcomeDeclaration identifier=\"MINSCORE_response_1\" cardinality=\"single\" baseType=\"float\">
+        <defaultValue>
+        <value>0</value>
+        </defaultValue>
+        </outcomeDeclaration>
+        </additionalTag>"
+
+    expected <- toString(htmltools::tag(
+        "additionalTag", list(create_outcome_declaration_entry(expected))))
+
+    xml1 <- xml2::read_xml(expected)
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})
