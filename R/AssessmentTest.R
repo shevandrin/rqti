@@ -146,7 +146,7 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTest"),
 #' @rdname createQtiTest-methods
 #' @aliases createQtiTest,AssessmentTest
 setMethod("createQtiTest", signature(object = "AssessmentTest"),
-          function(object, dir = NULL, verification = FALSE) {
+          function(object, dir = getwd(), verification = FALSE) {
               create_qti_test(object, dir, verification)
           })
 

@@ -22,7 +22,7 @@
 #' create_qti_test(exam, "exam_folder", "TRUE")
 #' }
 #' @export
-create_qti_test <- function(object,dir = NULL, verification = FALSE) {
+create_qti_test <- function(object, dir, verification = FALSE) {
     if (!dir.exists(dir)) dir.create(dir)
 
     content <- createAssessmentTest(object, dir)

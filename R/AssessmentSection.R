@@ -119,8 +119,7 @@ setMethod("buildAssessmentSection", signature(object = "character"),
               if (file.exists(f_path)) {
                   doc <- xml2::read_xml(f_path)
                   valid <- verify_qti(doc)
-                  if (!valid) print(paste("Warning: xml file",
-                                          object, "is not valid"))
+                  if (!valid) warning("xml file \'", object, "\' is not valid")
                   id <- xml2::xml_attr(doc, "identifier")
                   file.copy(f_path, getwd())
                   tag("assessmentItemRef", list(identifier = id,
