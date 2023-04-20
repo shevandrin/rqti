@@ -72,7 +72,7 @@ setGeneric("getAssessmentItems", function(object) {
 #' @rdname buildAssessmentSection-methods
 #'
 #' @export
-setGeneric("buildAssessmentSection", function(object, folder) {
+setGeneric("buildAssessmentSection", function(object, folder = NULL) {
     standardGeneric("buildAssessmentSection")
 })
 
@@ -86,7 +86,8 @@ setMethod("getAssessmentItems", signature(object = "AssessmentSection"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessmentSection,AssessmentSection
 setMethod("buildAssessmentSection", signature(object = "AssessmentSection"),
-          function(object, folder) {
+          function(object, folder
+                   ) {
               create_section_test(object, folder)
           })
 
@@ -112,8 +113,9 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessementSection,character
 setMethod("buildAssessmentSection", signature(object = "character"),
-          function(object, folder = NULL) {
-              f_path <- ifelse(is.null(folder), file.path(object), file.path(folder, object))
+          function(object, folder) {
+              f_path <- ifelse(is.null(folder), file.path(object),
+                               file.path(folder, object))
               if (file.exists(f_path)) {
                   doc <- xml2::read_xml(f_path)
                   valid <- verify_qti(doc)
@@ -125,8 +127,9 @@ setMethod("buildAssessmentSection", signature(object = "character"),
                                                 href = basename(object)))
               }
               else {
-                  print(paste("Warning: File or path", object,
-                              "is not correct. This file will be omitted in test"))
+                  warning("File or path \'", object, "\' is not correct. This ",
+                  "file will be omitted in test", call. = FALSE,
+                  immediate. = TRUE)
                   return(NULL)
               }
           })
