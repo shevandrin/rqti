@@ -28,12 +28,12 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
                   choices_identifiers = c("1", "2", "3", "4"),
                   points = 1
     )
-    exam_section <- AssessmentSection(
+    exam_section <- new("AssessmentSection",
         identifier = "sec_id",
         title = "section",
         assessment_item = list(mc1, sc2, mc3, order1)
     )
-    exam <- AssessmentTestOpal(
+    exam <- new("AssessmentTestOpal",
         identifier = "id_test",
         title = "some title",
         section = list(exam_section))
@@ -76,7 +76,7 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
                         title = "section",
                         assessment_item = list(mc1, sc2, mc3, order1)
     )
-    exam <- AssessmentTest(
+    exam <- new("AssessmentTest",
                 identifier = "id_test",
                 title = "some title",
                 section = list(exam_section))

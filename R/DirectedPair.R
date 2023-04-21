@@ -27,21 +27,7 @@
 #' @exportClass DirectedPair
 #' @include AssessmentItem.R MatchTable.R
 setClass("DirectedPair", contains = "MatchTable")
-#' @export
-DirectedPair <- function(content = list(), identifier = character(),
-                         title = character(), prompt = character(),
-                         rows = character(), rows_identifiers = character(),
-                         cols = character(), cols_identifiers = character(),
-                         answers_identifiers = character(),
-                         answers_scores = numeric(), shuffle = logical(),
-                         points = numeric()){
-    new("DirectedPair", content = content, identifier = identifier,
-        title = title, prompt = prompt, rows = rows,
-        rows_identifiers = rows_identifiers, cols = cols,
-        cols_identifiers = cols_identifiers,
-        answers_identifiers = answers_identifiers,
-        answers_scores = answers_scores, shuffle = shuffle, points = points)
-}
+
 # TODO provide validation that cols is equal to rows
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,DirectedPair

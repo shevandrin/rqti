@@ -200,7 +200,7 @@ test_that("Testing CreateItemBody Inline", {
     expect_equal(xml1, xml2)
 })
 test_that("Testing construction function for InlineChoice class", {
-    sut <- Entry (identifier = "new",
+    sut <- new("Entry", identifier = "new",
                   points = 4,
                   title = "InlineChoice",
                   content = list('The speed of light is equal',

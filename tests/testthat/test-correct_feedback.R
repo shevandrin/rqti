@@ -1,35 +1,3 @@
-test_that("Testing CorrectFeedback class", {
-    sut <- new("CorrectFeedback", outcome_identifier = "FEEDBACKMODAL",
-               show = logical(),
-               identifier = "Feedback1397975231",
-               title = "Feedback correctly name",
-               content = list("<p>Text Feedback correctly</p>")
-    )
-    example <- new("CorrectFeedback",
-                   outcome_identifier = "FEEDBACKMODAL",
-                   show = logical(),
-                   identifier = "Feedback1397975231",
-                   title = "Feedback correctly name",
-                   content = list("<p>Text Feedback correctly</p>")
-                   )
-
-    expect_equal(sut, example)
-})
-test_that("Testing construction function for CorrectFeedback class", {
-    sut <- CorrectFeedback(outcome_identifier = "FEEDBACKMODAL",
-                         show = FALSE,
-                         identifier = "Feedback1905544311",
-                         title = "Feedback correctly name",
-                         content = list("<p>Text Feedback correctly</p>")
-    )
-    example <- CorrectFeedback(outcome_identifier = "FEEDBACKMODAL",
-                             show = FALSE,
-                             identifier = "Feedback1905544311",
-                             title = "Feedback correctly name",
-                             content = list("<p>Text Feedback correctly</p>")
-    )
-    expect_equal(sut, example)
-})
 test_that("Testing method createModalFeedback() for WrongFeedback class", {
     sut <- new ("ModalFeedback",outcome_identifier = "FEEDBACKMODAL",
                 show = TRUE,
@@ -91,7 +59,7 @@ test_that("Testing method createModalFeedback() for WrongFeedback class", {
     expect_equal(xml1, xml2)
 })
 test_that("Testing method createResponseCondition() for CorrectFeedback class", {
-    sut <- CorrectFeedback(outcome_identifier = "FEEDBACKMODAL",
+    sut <- new("CorrectFeedback", outcome_identifier = "FEEDBACKMODAL",
                          show = FALSE,
                          title = "Feedback wrong name",
                          content = list("<p>Text Feedback wrong</p>")

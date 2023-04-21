@@ -27,21 +27,7 @@
 #' @exportClass OneInColTable
 #' @include AssessmentItem.R MatchTable.R
 setClass("OneInColTable", contains = "MatchTable")
-#' @export
-OneInColTable <- function(content = list(), identifier = character(),
-                          title = character(), prompt = character(),
-                          rows = character(), rows_identifiers = character(),
-                          cols = character(), cols_identifiers = character(),
-                          answers_identifiers = character(),
-                          answers_scores = numeric(), shuffle = logical(),
-                          points = numeric()) {
-    new("OneInColTable", content = content, identifier = identifier,
-        title = title, prompt = prompt, rows = rows,
-        rows_identifiers = rows_identifiers, cols = cols,
-        cols_identifiers = cols_identifiers,
-        answers_identifiers = answers_identifiers,
-        answers_scores = answers_scores, shuffle = shuffle, points = points)
-}
+
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,OneInColTable
 setMethod("createItemBody",  "OneInColTable", function(object) {

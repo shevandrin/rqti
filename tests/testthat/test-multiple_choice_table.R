@@ -117,33 +117,3 @@ test_that("Testing outcomeDeclaration MultipleChoiceTable",{
     expect_equal(xml1, xml2)
 
 })
-test_that("Testing construction function for MultipleChoiceTable class", {
-    sut <- MultipleChoiceTable(content = list("<p>\"One in col\" table task</p>",
-                                              "<i>table description</i>"),
-                               identifier = "new",
-                               title = "MultipleChoiceTable",
-                               prompt = "Choose the correct order in the multiplication table",
-                               rows = c("4*7 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
-                               rows_identifiers = c("a", "b", "c", "d", "e"),
-                               cols = c("27", "36", "25", "6", "72/2"),
-                               cols_identifiers = c("k", "l", "m", "n", "p"),
-                               answers_identifiers =c("b k", "c m", "d n", "e l", "e p"),
-                               points = 3,
-                               shuffle = FALSE)
-
-    example <- new("MultipleChoiceTable",
-                   content = list("<p>\"One in col\" table task</p>",
-                                  "<i>table description</i>"),
-                   identifier = "new",
-                   title = "MultipleChoiceTable",
-                   prompt = "Choose the correct order in the multiplication table",
-                   rows = c("4*7 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
-                   rows_identifiers = c("a", "b", "c", "d", "e"),
-                   cols = c("27", "36", "25", "6", "72/2"),
-                   cols_identifiers = c("k", "l", "m", "n", "p"),
-                   answers_identifiers =c("b k", "c m", "d n", "e l", "e p"),
-                   points = 3,
-                   shuffle = FALSE)
-
-    expect_equal(sut, example)
-})

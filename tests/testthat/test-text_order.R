@@ -78,26 +78,3 @@ test_that("Testing OutcomeDeclaration for Order questions", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
-test_that("Testing construction function for Order class", {
-    sut <- Order(identifier = "new", title = "Order",
-                  prompt = "Choose the correct order",
-                  choices = c("Data collection",
-                              "Data cleansing", "Data marking",
-                              "Verification and visualization"),
-                  choices_identifiers = c("1", "2", "3", "4"),
-                  points = 1,
-                  shuffle = FALSE)
-
-    example <- new("Order",
-                   identifier = "new",
-                   title = "Order",
-                   prompt = "Choose the correct order",
-                   choices = c("Data collection",
-                               "Data cleansing", "Data marking",
-                               "Verification and visualization"),
-                   choices_identifiers = c("1", "2", "3", "4"),
-                   points = 1,
-                   shuffle = FALSE)
-
-    expect_equal(sut, example)
-})

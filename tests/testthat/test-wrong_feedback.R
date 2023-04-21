@@ -1,35 +1,3 @@
-test_that("Testing WrongFeedback class", {
-    sut <- new("WrongFeedback", outcome_identifier = "FEEDBACKMODAL",
-                           show = FALSE,
-                           identifier = "Feedback1905544310",
-                           title = "Feedback wrong name",
-                           content = list("<p>Text Feedback wrong</p>")
-    )
-    example <- new("WrongFeedback",
-                   outcome_identifier = "FEEDBACKMODAL",
-                   show = FALSE,
-                   identifier = "Feedback1905544310",
-                   title = "Feedback wrong name",
-                   content = list("<p>Text Feedback wrong</p>")
-    )
-
-    expect_equal(sut, example)
-})
-test_that("Testing construction function for WrongFeedback class", {
-    sut <- WrongFeedback(outcome_identifier = "FEEDBACKMODAL",
-               show = FALSE,
-               identifier = "Feedback1905544310",
-               title = "Feedback wrong name",
-               content = list("<p>Text Feedback wrong</p>")
-    )
-    example <- WrongFeedback(outcome_identifier = "FEEDBACKMODAL",
-                   show = FALSE,
-                   identifier = "Feedback1905544310",
-                   title = "Feedback wrong name",
-                   content = list("<p>Text Feedback wrong</p>")
-    )
-    expect_equal(sut, example)
-})
 test_that("Testing method createModalFeedback() for WrongFeedback class", {
     sut <- new ("ModalFeedback",outcome_identifier = "FEEDBACKMODAL",
                 show = TRUE,
@@ -46,7 +14,7 @@ test_that("Testing method createModalFeedback() for WrongFeedback class", {
     expect_equal(xml1, xml2)
 })
 test_that("Testing method createResponseCondition() for WrongFeedback class", {
-    sut <- WrongFeedback(outcome_identifier = "FEEDBACKMODAL",
+    sut <- new("WrongFeedback", outcome_identifier = "FEEDBACKMODAL",
                          show = FALSE,
                          title = "Feedback wrong name",
                          content = list("<p>Text Feedback wrong</p>")

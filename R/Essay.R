@@ -25,18 +25,6 @@ setClass("Essay", contains = "AssessmentItem",
                    max_strings = "numeric",
                    min_strings = "numeric",
                    data_allow_paste = "logical"))
-#' @export
-Essay <- function(content = list(), identifier = character(),
-                  title = character(), prompt = character(),
-                  expected_length = numeric(), expected_lines = numeric(),
-                  max_strings = numeric(), min_strings = numeric(),
-                  data_allow_paste = logical(), points = numeric()) {
-    new("Essay", content = content, identifier = identifier,
-         title = title, prompt = prompt, expected_length = expected_length,
-         expected_lines = expected_lines, max_strings = max_strings,
-         min_strings = min_strings, data_allow_paste = data_allow_paste,
-         points = points)
-}
 
 setMethod("initialize", "Essay", function(.Object, ...) {
     .Object <- callNextMethod()

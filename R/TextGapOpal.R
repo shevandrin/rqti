@@ -21,21 +21,7 @@ setClass("TextGapOpal", contains = "TextGap",
          slots = c(value_precision = "numeric"),
          prototype = prototype(value_precision = 0,
                                case_sensitive = FALSE))
-#' @export
-TextGapOpal <- function(response_identifier = character(),
-                        score = numeric(), placeholder = character(),
-                        expected_length = numeric(),
-                        response = character(), alternatives = character(),
-                        case_sensitive = logical(),
-                        value_precision = numeric()
-                        ){
-    new("TextGapOpal", response_identifier = response_identifier,
-        score = score, placeholder = placeholder,
-        expected_length = expected_length,
-        response = response, alternatives = alternatives,
-        case_sensitive = case_sensitive,
-        value_precision = value_precision
-)}
+
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGapOpal
 setMethod("createResponseProcessing", "TextGapOpal", function(object) {

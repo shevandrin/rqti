@@ -59,21 +59,6 @@ object", {
     xml2 <- xml2::read_xml(toString(example))
     expect_equal(xml1, xml2)
 })
-test_that("Testing construction function for Essay class", {
-    sut <- Essay (content = list("<p>\"Essay\"</p>",
-                                 "<i>Essay description</i>"),
-                  prompt = "Test task",
-                  title = "Essay",
-                  identifier = "new")
-
-    example <- new("Essay", content = list("<p>\"Essay\"</p>",
-                                           "<i>Essay description</i>"),
-                   prompt = "Test task",
-                   title = "Essay",
-                   identifier = "new")
-
-    expect_equal(sut, example)
-})
 test_that("Testing attributes values in extendedTextInteraction for Essay
 object", {
     sut <- suppressWarnings(new("Essay",

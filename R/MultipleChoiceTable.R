@@ -29,21 +29,7 @@
 #' @importFrom stats setNames
 setClass("MultipleChoiceTable", contains = "MatchTable",
          slots = list(mapping = "numeric"))
-#' @export
-MultipleChoiceTable <- function(content = list(), identifier = character(),
-                                title = character(), prompt = character(),
-                                rows = character(), rows_identifiers = character(),
-                                cols = character(), cols_identifiers = character(),
-                                answers_identifiers = character(),
-                                answers_scores = numeric(), shuffle = logical(),
-                                points = numeric()) {
-    new("MultipleChoiceTable", content = content, identifier = identifier,
-        title = title, prompt = prompt, rows = rows,
-        rows_identifiers = rows_identifiers, cols = cols,
-        cols_identifiers = cols_identifiers,
-        answers_identifiers = answers_identifiers,
-        answers_scores = answers_scores, shuffle = shuffle, points = points)
-}
+
 # constructor
 setMethod("initialize", "MultipleChoiceTable", function(.Object, ...) {
     .Object <- callNextMethod()

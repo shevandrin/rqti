@@ -39,31 +39,6 @@ setClass("AssessmentTestOpal", contains = "AssessmentTest",
                                calculator = NA_character_,
                                mark_items = TRUE,
                                keep_responses = FALSE))
-#' @export
-AssessmentTestOpal <- function(identifier = character(),
-                           title = character(), points = numeric(),
-                           test_part_identifier = character(),
-                           navigation_mode = character(),
-                           submission_mode = character(),
-                           section = list(),
-                           time_limits = numeric(), max_attempts = numeric(),
-                           allow_comment = logical(),
-                           rebuild_variables = logical(),
-                           show_test_time = logical(),
-                           calculator = character(), mark_items = logical(),
-                           keep_responses = logical(),
-                           files = character()
-){
-    new("AssessmentTestOpal", identifier = identifier, title = title,
-        points = points,
-        test_part_identifier = test_part_identifier,
-        navigation_mode = navigation_mode, submission_mode = submission_mode,
-        section = section, time_limits = time_limits,
-        max_attempts = max_attempts, allow_comment = allow_comment,
-        rebuild_variables = rebuild_variables, show_test_time = show_test_time,
-        calculator = calculator, mark_items = mark_items,
-        keep_responses = keep_responses, files = files)
-}
 
 #' #' @rdname createQtiTest-methods
 #' #' @aliases createQtiTest,AssessmentTestOpal

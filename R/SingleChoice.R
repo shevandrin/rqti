@@ -25,18 +25,7 @@
 #' @include AssessmentItem.R Choice.R
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
-#' @export
-SingleChoice <- function(content = list(), identifier = character(),
-                         title = character(), prompt = character(),
-                         choices = character(), shuffle = logical(),
-                         choice_identifiers = character(), orientation = character(),
-                         solution = numeric(), points = numeric()) {
-    new("SingleChoice", content = content, identifier = identifier,
-        title = title, prompt = prompt,
-        choices = choices, shuffle = shuffle,
-        choice_identifiers = choice_identifiers, orientation = orientation,
-        solution = solution, points = points)
-}
+
 # constructor
 setMethod("initialize", "SingleChoice", function(.Object, ...) {
     .Object <- callNextMethod()
