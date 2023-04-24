@@ -264,98 +264,12 @@ test_that("Testing create_item_body_text ", {
     xml2 <- xml2::read_xml(expected)
     expect_equal(xml1, xml2)
 })
-test_that("Testing construction function for TextGapOpal class", {
-    sut <- Entry (identifier = "new",
-                  points = 3,
-                  title = "TextGapOpal",
-                  content = list('The speed of light is',
-                                 TextGapOpal(
-                                     response_identifier = "RESPONSE_1",
-                                     score = 1,
-                                     response = "more",
-                                     alternatives = c("MORE", "More"),
-                                     value_precision = 2),
-                                 'than the speed of sound'))
-    example <- new("Entry",
-                   identifier = "new",
-                   points = 3,
-                   title = "TextGapOpal",
-                   content = list('The speed of light is',
-                                  new("TextGapOpal",
-                                      response_identifier = "RESPONSE_1",
-                                      score = 1,
-                                      response = "more",
-                                      alternatives = c("MORE", "More"),
-                                      value_precision = 2,
-                                      case_sensitive = TRUE ),
-                                  'than the speed of sound'))
-
-
-    expect_equal(sut, example)
-})
-test_that("Testing construction function for TextGap class", {
-    sut <- Entry (identifier = "new",
-                  points = 3,
-                  title = "TextGap",
-                  content = list('The speed of light is',
-                                 TextGap(response_identifier = "RESPONSE_1",
-                                     score = 1,
-                                     response = "more",
-                                     alternatives = c("MORE", "More"),
-                                     case_sensitive = FALSE),
-                                 'than the speed of sound'))
-
-    example <- new("Entry",
-                   identifier = "new",
-                   points = 3,
-                   title = "TextGap",
-                   content = list('The speed of light is',
-                                  new("TextGap",
-                                      response_identifier = "RESPONSE_1",
-                                      score = 1,
-                                      response = "more",
-                                      alternatives = c("MORE", "More"),
-                                      case_sensitive = FALSE),
-                                  'than the speed of sound'))
-
-
-    expect_equal(sut, example)
-})
-test_that("Testing construction function for NumericGap class", {
-    sut <- Entry (identifier = "new",
-                  points = 3,
-                  title = "NumericGap",
-                  content = list('The speed of light is equal',
-                                 NumericGap(
-                                     response_identifier = "RESPONSE_1",
-                                     score = NA_integer_,
-                                     response = 300,
-                                     value_precision = 2,
-                                     include_lower_bound = TRUE,
-                                     include_upper_bound = TRUE),
-                                 'm/s'))
-
-    example <- new("Entry",
-                   identifier = "new",
-                   points = 3,
-                   title = "NumericGap",
-                   content = list('The speed of light is equal',
-                                  new("NumericGap",
-                                      response_identifier = "RESPONSE_1",
-                                      score = NA_integer_,
-                                      response = 300,
-                                      value_precision = 2),
-                                  'm/s'))
-
-
-    expect_equal(sut, example)
-})
 test_that("Testing function of create_outcome_declaration_entry for Entry class", {
     sut <- new("Entry", identifier = "new",
                   points = 3,
                   title = "NumericGap",
                   content = list('The speed of light is equal',
-                                 NumericGap(
+                                 new("NumericGap",
                                      response_identifier = "RESPONSE_1",
                                      score = NA_integer_,
                                      response = 300,

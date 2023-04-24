@@ -10,14 +10,6 @@
 #' @export
 setClass("CorrectFeedback", contains = "ModalFeedback",
          prototype = list(identifier = "correct"))
-#' @export
-CorrectFeedback <- function(outcome_identifier = character(), show = logical(),
-                            identifier = character(), title = character(),
-                            content = list()
-        ) {
-    new("CorrectFeedback", outcome_identifier = outcome_identifier, show = show,
-        identifier = identifier, title = title, content = content)
-}
 
 setMethod("initialize", "CorrectFeedback", function(.Object, ...) {
     .Object <- callNextMethod()

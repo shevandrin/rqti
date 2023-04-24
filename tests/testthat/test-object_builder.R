@@ -214,7 +214,7 @@ expect_equal(cqc, expected)
 })
 # Entry - Testing function create_outcome_declaration_entry
 test_that("Testing function create_outcome_declaration_entry", {
-    expected <- Entry(content = list("<p>Hast du",
+    expected <- new("Entry", content = list("<p>Hast du",
                                             new("TextGap", response_identifier = "response_1", response = "ein"),
                                             " Handy?</p>"),
                     points = 5,

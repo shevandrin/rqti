@@ -104,24 +104,3 @@ test_that("Testing outcomeDeclaration for Multiple Choice",{
 
 
 })
-test_that("Testing construction function for Multiple Choice class", {
-    sut <- MultipleChoice(identifier = "new",
-                          prompt = "What does 3/4 + 1/4 = ?",
-                          title = "MultipleChoice",
-                          choices = c("1", "4/8", "8/4", "4/4"),
-                          choice_identifiers = c("1", "2", "3", "4"),
-                          points = c(1, 0, 0, 1),
-                          lower_bound =0
-                            )
-
-    example <- new("MultipleChoice",
-                   identifier = "new", prompt = "What does 3/4 + 1/4 = ?",
-                   title = "MultipleChoice",
-                   choices = c("1", "4/8", "8/4", "4/4"),
-                   choice_identifiers = c("1", "2", "3", "4"),
-                   points = c(1, 0, 0, 1),
-                   lower_bound =0
-                )
-
-    expect_equal(sut, example)
-})

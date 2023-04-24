@@ -28,19 +28,7 @@ setClass("MultipleChoice", contains = "Choice",
                       upper_bound = "numeric", default_value = "numeric",
                       maxscore = "numeric"),
          prototype = list(lower_bound = 0, default_value = 0))
-#' @export
-MultipleChoice <- function(content = list(), identifier = character(),
-                           title = character(), prompt = character(),
-                           choices = character(), shuffle = logical(),
-                           choice_identifiers = character(),
-                           orientation = character(), points = numeric(),
-                           lower_bound = numeric()){
-    new("MultipleChoice", content = content, identifier = identifier,
-        title = title, prompt = prompt,
-        choices = choices, shuffle = shuffle,
-        choice_identifiers = choice_identifiers, orientation = orientation,
-        points = points, lower_bound = lower_bound)
-}
+
 # constructor
 setMethod("initialize", "MultipleChoice", function(.Object, ...) {
     .Object <- callNextMethod()
