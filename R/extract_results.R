@@ -355,6 +355,7 @@ combine_answer <- function(node, tag) {
 #' of the tasks
 #' @return data frame.
 #' @importFrom utils unzip
+#' @importFrom uuid UUIDgenerate
 #' @export
 extract_result_zip <- function(file, details = "exercises") {
     tdir <- tempfile()
@@ -362,28 +363,34 @@ extract_result_zip <- function(file, details = "exercises") {
     test_dir <- file.path(tools::file_path_as_absolute(tdir))
     files <- utils::unzip(file, exdir = test_dir)
 
-    res_files <- list.files(path = test_dir, pattern = "result.zip")
     zip_files <- list.files(path = test_dir, pattern = ".zip$")
-    test_file <- setdiff(zip_files, res_files)
 
-    test_files <- utils::unzip(file.path(test_dir, test_file), list = TRUE)
-    if (length(test_files) > 0) {
+    xdir <- tempfile()
+    dir.create(xdir)
+    x_dir <- file.path(tools::file_path_as_absolute(xdir))
 
-        xdir <- tempfile()
-        dir.create(xdir)
-        x_dir <- file.path(tools::file_path_as_absolute(xdir))
-        utils::unzip(file.path(test_dir, test_file), exdir = x_dir)
-        db <- get_titles(test_files, x_dir)
+    Map(get_all_xml, zip_files, test_dir, x_dir)
+    res_files <- list.files(path = x_dir, pattern = "assessmentResult")
+    test_files <- list.files(path = x_dir, pattern = "assessmentTest")
+    manifest_files <- list.files(path = x_dir, pattern = "manifest")
+    ai_files <- list.files(path = x_dir, pattern = "assessmentItem")
+    message("Current archive contains:\n",
+            length(res_files), " - files with result\n",
+            length(test_files), " - test file(s)\n",
+            length(manifest_files), " - manifest file\n",
+            length(ai_files), " - files with assessment items")
+
+    if (length(ai_files) > 0) {
+        db <- get_titles(ai_files, x_dir)
     } else {
-        print("test file not found")
+        warning("In given archive files with exercises are not found.\n",
+                "The \'title\' column will be skipped in the final dataframe",
+                immediate. = TRUE)
         db <- NULL
     }
-
     df <- data.frame()
     for (f in res_files) {
-        utils::unzip(file.path(test_dir, f), exdir = test_dir)
-        xml <- list.files(path = test_dir, pattern = ".xml")
-        xml_path <- file.path(test_dir, xml)
+        xml_path <- file.path(x_dir, f)
         switch(details,
                 exercises = {df0 <- get_result_attr_answers(xml_path)},
                 items = {df0 <- get_result_attr_options(xml_path)}
@@ -402,9 +409,25 @@ extract_result_zip <- function(file, details = "exercises") {
     return(df)
 }
 
+# extracts all xml file in temp folder
+get_all_xml <- function(file, indir, exdir) {
+    # extract in exdir
+    files <- utils::unzip(file.path(indir, file), exdir = exdir)
+    for (fl in files) {
+        content <- xml2::read_xml(fl)
+        root <- xml2::xml_name(xml2::xml_root(content))
+
+        # make a unique name
+        uuid <- UUIDgenerate(output = "string")
+        file_name <- paste0(exdir, "/", root, "_", uuid,".xml")
+        file.rename(fl, file_name)
+    }
+}
+
+# returns a named list with titles of questions and identifiers as names
 get_titles <- function(files, folder) {
     result = c()
-    for (f in files$Name) {
+    for (f in files) {
         path <- file.path(folder, f)
         doc <- xml2::read_xml(path)
         root <- xml2::xml_name(doc)
