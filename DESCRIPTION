@@ -27,7 +27,8 @@ Imports:
     stringr,
     methods,
     lubridate,
-    magrittr
+    magrittr,
+    uuid
 Suggests: 
     covr,
     dplyr,
