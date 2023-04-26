@@ -13,13 +13,6 @@ setClass("Img", slots = c(src = "character",
                           height = "numeric"),
          prototype = prototype(alt = "picture"))
 
-setMethod("initialize", "Img", function(.Object, ...) {
-    .Object <- callNextMethod()
-    if (length(.Object@alt) == 0) .Object@alt <- "picture"
-    validObject(.Object)
-    .Object
-})
-
 #' @rdname createText-methods
 #' @aliases createText,Img
 setMethod("createText", "Img", function(object) {
