@@ -42,7 +42,9 @@ test_that("Testing outcomeDeclaration for Single Choice",{
               content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
               choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
               title = "filename_sc",
-              prompt = "What does it say?",points = 0)
+              prompt = "What does it say?",points = 0,
+              feedback = list(new("ModalFeedback", title = "common",
+                                  content = list("general feedback"))))
 
     example <- '<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 <defaultValue>
