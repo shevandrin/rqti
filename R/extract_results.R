@@ -33,50 +33,104 @@
 #' @param level A string with two possible options: exercises and items
 #' @import xml2
 #' @import lubridate
+#' @importFrom uuid UUIDgenerate
+#' @importFrom utils unzip
 #' @return data frame.
 #' @export
 extract_results <- function(file, level = "exercises") {
+    if (!all(file.exists(file))) stop("One or more files in list do not exist",
+                                      call. = FALSE)
 
-    ext <- tools::file_ext(file)
-    if (any(ext == "xml")) {
-            switch(level,
-                exercises = {df0 <- get_result_attr_answers(file)},
-                items = {df0 <- get_result_attr_options(file)})
-    } else if (any(ext == "zip")) {
-        contain <- unzip(file, list=TRUE)
-        if (nrow(contain) == 1) {
-            switch(level,
-                   exercises = {df0 <- get_result_attr_answers(file)},
-                   items = {df0 <- get_result_attr_options(file)})
-        } else {
-            switch(level,
-                   exercises = {df0 <- extract_result_zip(file)},
-                   items = {df0 <- extract_result_zip(file, details = "items")})
-        }
+    exts <- tools::file_ext(file)
+    if (all(exts == "zip") & (length(exts) == 1)) {
+        list_content <- unzip(file, list=TRUE)$Name
+        exts_zip <- tools::file_ext(list_content)
+        if (any(exts_zip == "zip") | any(exts_zip == "xml")) {
+            tdir <- extract_xml(file)
+            file_names <- NULL
+        } else stop("the zip archive must contain xml and/or zip files")
+    } else if (all(exts == "xml")) {
+        tdir <- tempfile()
+        dir.create(tdir)
+        file.copy(file, tdir, overwrite = TRUE)
+        xml_list <- list.files(path = tdir,full.names = TRUE)
+        Map(make_name_unique, xml_list)
+        file_names <- basename(file)
+    } else stop("'file' must contain only one zip or set of xml files")
 
-    } else {
-        return("'file' must contain one name of xml or zip file")
-    }
-
-    return(df0)
+    ret <- build_dataset(tdir, level, file_names)
+    return(ret)
 }
 
-#' @import xml2
-#' @import stringr
-get_duration <- function(file) {
-    doc <- xml2::read_xml(file)
-    test_duration <- xml2::xml_find_all(doc,
-                                        ".//d1:testResult/d1:responseVariable")
-    ids_test <- xml2::xml_attr(test_duration, attr = "identifier")
-    val_test <- xml2::xml_text(test_duration)
-    items_result <- xml_find_all(doc, ".//d1:itemResult")
-    ids_item <- xml2::xml_attr(items_result, attr = "identifier")
-    val_node <- xml2::xml_find_all(doc,
-                ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
-    val_item <- xml2::xml_text(val_node)
-    data <- data.frame(identifier = c(ids_test, ids_item),
-                       duration = as.numeric(c(val_test, val_item)))
-    return(data)
+build_dataset <- function(tdir, level, names = NULL) {
+    xml_files <- list.files(tdir)
+
+    res_files <- list.files(path = tdir, pattern = "assessmentResult")
+    test_files <- list.files(path = tdir, pattern = "assessmentTest")
+    manifest_files <- list.files(path = tdir, pattern = "manifest")
+    ai_files <- list.files(path = tdir, pattern = "assessmentItem")
+    message("what we have:\n",
+            length(res_files), " - files with result\n",
+            length(test_files), " - test file(s)\n",
+            length(manifest_files), " - manifest file\n",
+            length(ai_files), " - files with assessment items")
+
+    if (length(ai_files) > 0) db <- get_titles(ai_files, tdir)
+    else {
+        warning("In given archive files with exercises are not found.\n",
+                "The \'title\' column will be skipped in the final dataframe",
+                immediate. = TRUE, call. = FALSE)
+        db <- NULL
+    }
+    df <- data.frame()
+    for (f in res_files) {
+        xml_path <- file.path(tdir, f)
+        switch(level,
+               exercises = {df0 <- get_result_attr_answers(xml_path)},
+               items = {df0 <- get_result_attr_options(xml_path)}
+        )
+        name <- ifelse(is.null(names), f, names[which(res_files == f)])
+        file_name <- gsub("\\.zip$","", name)
+        if (!is.null(db)) {
+            titles <- c()
+            for (id in df0$question_id) {
+                titles <- c(titles, unname(db[names(db) == id]))
+            }
+            df0$titles <- titles
+        }
+        df0$file_name <- file_name
+        df <- rbind(df, df0)
+    }
+    return(df)
+}
+
+make_name_unique <- function(file) {
+    dir_path <- dirname(file)
+    content <- xml2::read_xml(file)
+    root <- xml2::xml_name(xml2::xml_root(content))
+    # make a unique name
+    uuid <- UUIDgenerate(output = "string")
+    file_name <- paste0(dir_path, "/", root, "_", uuid,".xml")
+    file.rename(file, file_name)
+}
+
+# gather all xml files from zip archive and put them in temp dir and return it
+extract_xml <- function(file) {
+    zdir <- tempfile()
+    dir.create(zdir)
+    files <- utils::unzip(file.path(file), exdir = zdir)
+
+    tdir <- tempfile()
+    dir.create(tdir)
+
+    xml_list <- list.files(path = zdir,full.names = TRUE, pattern = ".xml")
+    file.copy(xml_list, tdir, overwrite = TRUE)
+    xml_list <- list.files(path = tdir,full.names = TRUE)
+    Map(make_name_unique, xml_list)
+
+    zip_files <- list.files(path = zdir, pattern = ".zip")
+    Map(get_all_xml, zip_files, zdir, tdir)
+    return(tdir)
 }
 
 #' Create data frame with test results by answers
@@ -107,8 +161,8 @@ get_result_attr_answers<- function(file) {
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
     test_dt <- lubridate::ymd_hms(test_dt)
 
-    items_result <- xml_find_all(doc, ".//d1:itemResult")
-    given <- unlist(lapply(items_result, is_answer_given))
+    items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
+    igiven <- unlist(lapply(items_result, is_answer_given))
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
     dur_nodes <- xml2::xml_find_all(doc,
                 ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
@@ -128,7 +182,7 @@ get_result_attr_answers<- function(file) {
                        candidate_score = as.numeric(scores),
                        max_scores = as.numeric(maxes),
                        question_type = types,
-                       is_answer_given = given)
+                       is_answer_given = igiven)
     return(data)
 }
 
@@ -340,87 +394,11 @@ combine_answer <- function(node, tag) {
     return(y)
 }
 
-#' Create data frame with test results from Opal zip file
-#'
-#' The function `extract_result_zip()` creates data frames from opal zip file.
-#'
-#' @param file A string with a path to the zip file with results
-#' @param details A string with two possible values:
-#' * "answers" - default, returns data frame with answers; see data frame
-#' structure at [get_result_attr_answers()]
-#' * "options" - returns data frame with options; see data frame structure at
-#' [get_result_attr_options()
-#' @note final data frame contains additional column 'titles' with values of
-#' attribute 'title' of assessment item
-#' of the tasks
-#' @return data frame.
-#' @importFrom utils unzip
-#' @importFrom uuid UUIDgenerate
-#' @export
-extract_result_zip <- function(file, details = "exercises") {
-    tdir <- tempfile()
-    dir.create(tdir)
-    test_dir <- file.path(tools::file_path_as_absolute(tdir))
-    files <- utils::unzip(file, exdir = test_dir)
-
-    zip_files <- list.files(path = test_dir, pattern = ".zip$")
-
-    xdir <- tempfile()
-    dir.create(xdir)
-    x_dir <- file.path(tools::file_path_as_absolute(xdir))
-
-    Map(get_all_xml, zip_files, test_dir, x_dir)
-    res_files <- list.files(path = x_dir, pattern = "assessmentResult")
-    test_files <- list.files(path = x_dir, pattern = "assessmentTest")
-    manifest_files <- list.files(path = x_dir, pattern = "manifest")
-    ai_files <- list.files(path = x_dir, pattern = "assessmentItem")
-    message("Current archive contains:\n",
-            length(res_files), " - files with result\n",
-            length(test_files), " - test file(s)\n",
-            length(manifest_files), " - manifest file\n",
-            length(ai_files), " - files with assessment items")
-
-    if (length(ai_files) > 0) {
-        db <- get_titles(ai_files, x_dir)
-    } else {
-        warning("In given archive files with exercises are not found.\n",
-                "The \'title\' column will be skipped in the final dataframe",
-                immediate. = TRUE)
-        db <- NULL
-    }
-    df <- data.frame()
-    for (f in res_files) {
-        xml_path <- file.path(x_dir, f)
-        switch(details,
-                exercises = {df0 <- get_result_attr_answers(xml_path)},
-                items = {df0 <- get_result_attr_options(xml_path)}
-                )
-        file_name <- gsub("\\.zip$","", f)
-        if (!is.null(db)) {
-            titles <- c()
-            for (id in df0$question_id) {
-                titles <- c(titles, unname(db[names(db) == id]))
-            }
-            df0$titles <- titles
-        }
-        df0$file_name <- file_name
-        df <- rbind(df, df0)
-    }
-    return(df)
-}
-
 # extracts all xml file in temp folder
 get_all_xml <- function(file, indir, exdir) {
-    # extract in exdir
-    files <- utils::unzip(file.path(indir, file), exdir = exdir)
+    files <- utils::unzip(file.path(indir, file), exdir = exdir, )
     for (fl in files) {
-        content <- xml2::read_xml(fl)
-        root <- xml2::xml_name(xml2::xml_root(content))
-
-        # make a unique name
-        uuid <- UUIDgenerate(output = "string")
-        file_name <- paste0(exdir, "/", root, "_", uuid,".xml")
-        file.rename(fl, file_name)
+        make_name_unique(fl)
     }
 }
 
