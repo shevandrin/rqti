@@ -36,3 +36,34 @@ test_that("discriminability is correct",
 # seems the time is truncated in OPAL
 test_that("time is correct",
           {expect_equal(trunc(db$m_duration), d_exp$Time_taken)})
+
+test_that("Testing function extract_results with zip archive", {
+    path1 <- test_path("file/test_result_3.zip")
+    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-1])
+    expected <- expected[order(expected$datestamp),]
+    rownames(expected) <- NULL
+
+    path2 <- test_path("file/test_result_items.csv")
+    example <- read.csv(path2)[ ,-1]
+    example$datestamp <- as.POSIXct(example$datestamp, tz = "UTC")
+    example <- example[order(example$datestamp),]
+    rownames(example) <- NULL
+
+    expect_equal(example, expected)
+})
+test_that("Testing function extract_results", {
+    path1 <- test_path("file/stab_results.xml")
+    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-1])
+    expected <- expected[order(expected$datestamp),]
+    expected <- expected[-c(95-100), ]
+    rownames(expected) <- NULL
+
+    path2 <- test_path("file/test_result_stab_items.csv")
+    example <- read.csv(path2)[ ,-1]
+    example$datestamp <- as.POSIXct(example$datestamp, tz = "UTC")
+    example <- example[order(example$datestamp),]
+    example <- example[-c(95-100), ]
+    rownames(example) <- NULL
+
+    expect_equal(example, expected)
+})

@@ -1,0 +1,1138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="test.xml"?>
+<assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 imsqti_v2p1.xsd">
+	<context/>
+	<testResult identifier="_2021_mlehreI_wiederholung_396357082" datestamp="2021-08-05T14:10:03" currentItemIndex="29">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">4362</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_03.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">159</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_25.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">178</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_02.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">121</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_24.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">120</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_05.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">225</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_27.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">101</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_04.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">321</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_26.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">593</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_07.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">48</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_29.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">437</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_06.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">110</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_28.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">559</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_09.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">71</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_08.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">48</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_10.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">81</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_12.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">225</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_11.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">49</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_14.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">85</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_13.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">170</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_16.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">397</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_15.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">63</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_18.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">273</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_17.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">190</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_19.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">332</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_21.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">279</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_20.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">506</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_01.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">146</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_23.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">113</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_22.duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">49</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="tutor">
+			<value baseType="float">32.5</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="PASS" cardinality="single" manualScored="false" baseType="boolean" view="tutor">
+			<value baseType="boolean">true</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="scorer"/>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">39</value>
+		</outcomeVariable>
+	</testResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="1">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">42</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_RESPONSE_5858188" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_5578879729 _2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_1215491710 _2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_5635904543 _2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_1280877682">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_1215491710</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_1215491710</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="2">
+		<responseVariable identifier="duration" cardinality="single" baponseType="duration">
+			<candidateResponse>
+				<value baseType="integer">21</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice_RESPONSE_5357166" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice_2130536323 _2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice_1398686872 _2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice_2326231547 _2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice_1429261996">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice_1398686872</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_02_item_3_schoice_1398686872</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="3">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">70</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice_RESPONSE_2673904" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice_1696377224 _2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice_8269560120 _2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice_1628487251 _2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice_2265367328">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice_1628487251</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_03_item_3_schoice_1628487251</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="4">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">194</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice_RESPONSE_8236447" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice_5459590298 _2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice_4427864008 _2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice_7254391543 _2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice_2833166543">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice_7254391543</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_04_item_2_schoice_5459590298</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback962057645</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="5">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">79</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice_RESPONSE_8206974" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice_1433710612 _2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice_3888679852 _2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice_3930877218 _2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice_8330476778">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice_3888679852</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_05_item_4_schoice_3888679852</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="6">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">35</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice_RESPONSE_5392302" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice_8816324796 _2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice_1086447694 _2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice_5295532493 _2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice_6145426749">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice_1086447694</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_06_item_3_schoice_1086447694</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="7">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">45</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice_RESPONSE_1410731" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice_4157716210 _2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice_8536676186 _2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice_2059508394 _2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice_8823461197">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice_2059508394</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_07_item_2_schoice_2059508394</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="8">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">47</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice_RESPONSE_7818971" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice_1781334228 _2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice_1580295023 _2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice_3926137447 _2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice_6802364711">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice_6802364711</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_08_item_4_schoice_6802364711</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="9">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">71</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice_RESPONSE_9575253" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice_9622270176 _2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice_3887154153 _2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice_1194451674 _2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice_3105866990">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice_1194451674</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_09_item_4_schoice_1194451674</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="10">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">51</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice_RESPONSE_6720126" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice_7702678749 _2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice_2303712996 _2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice_5935482467 _2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice_1882322800">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice_1882322800</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_10_item_4_schoice_1882322800</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="11">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">42</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice_RESPONSE_2312189" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice_3472061334 _2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice_4068466206 _2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice_6338943867 _2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice_1751971227">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice_4068466206</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_11_item_4_schoice_4068466206</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="12">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">211</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice_RESPONSE_2062663" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice_9840128819 _2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice_6181656072 _2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice_7236504967 _2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice_1339925585">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice_9840128819</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_12_item_4_schoice_9840128819</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="13">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">36</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice_RESPONSE_8763568" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice_5079836378 _2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice_2907194088 _2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice_7923522627 _2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice_1899100785">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice_7923522627</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_13_item_2_schoice_7923522627</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="14">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">85</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice_RESPONSE_9490485" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice_3551534443 _2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice_6190622266 _2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice_6912724385 _2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice_7608708818">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice_7608708818</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_14_item_3_schoice_7608708818</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="15">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">63</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice_RESPONSE_3325714" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice_1442957335 _2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice_7823484294 _2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice_7045753065 _2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice_8823458198">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice_7045753065</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_15_item_2_schoice_7045753065</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="16">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">199</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice_RESPONSE_5016887" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice_6062029369 _2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice_4354946000 _2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice_1990457762 _2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice_5808489410">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice_4354946000</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_16_item_2_schoice_1990457762</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback197011933</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="17">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">61</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice_RESPONSE_2429801" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice_7595890367 _2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice_3009597481 _2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice_3544199873 _2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice_3115585300">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice_3009597481</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_17_item_1_schoice_3009597481</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_18_item_1_schoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="18">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">273</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_18_item_1_schoice_RESPONSE_1530256" baseType="identifier" cardinality="single" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_18_item_1_schoice_1617151998 _2021_mlehreI_wiederholung_396357082_section_18_item_1_schoice_1087212259 _2021_mlehreI_wiederholung_396357082_section_18_item_1_schoice_4907411544">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_18_item_1_schoice_1617151998</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_18_item_1_schoice_1617151998</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="19">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">332</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_RESPONSE_1956694" baseType="identifier" cardinality="multiple" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_3169448154 _2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_2799442174 _2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_1832073174 _2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_9628924233">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_3169448154</value>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_1832073174</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_3169448154</value>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_19_item_3_mchoice_1832073174</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_20_item_3_mchoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="20">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">280</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_20_item_3_mchoice_RESPONSE_7981986" baseType="identifier" cardinality="multiple" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_20_item_3_mchoice_8696799509 _2021_mlehreI_wiederholung_396357082_section_20_item_3_mchoice_1745208460">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_20_item_3_mchoice_1745208460</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_20_item_3_mchoice_1745208460</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="21">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">156</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_RESPONSE_9148273" baseType="identifier" cardinality="multiple" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_7662238124 _2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_4949250066 _2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_8884638218 _2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_1010417705">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_8884638218</value>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_4949250066</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_4949250066</value>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_21_item_1_mchoice_1010417705</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback351411445</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_22_item_2_num" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="22">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">49</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_22_item_2_num_RESPONSE_3219555" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">55</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">55</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_23_item_1_mchoice" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="23">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">113</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_23_item_1_mchoice_RESPONSE_7655002" baseType="identifier" cardinality="multiple" choiceSequence="_2021_mlehreI_wiederholung_396357082_section_23_item_1_mchoice_2108929777 _2021_mlehreI_wiederholung_396357082_section_23_item_1_mchoice_4812655746">
+			<correctResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_23_item_1_mchoice_2108929777</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="identifier">_2021_mlehreI_wiederholung_396357082_section_23_item_1_mchoice_2108929777</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_24_item_2_cloze" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="24">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">120</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_24_item_2_cloze_RESPONSE_2780146" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">118</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">118</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_24_item_2_cloze_RESPONSE_5825605" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">1</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">1</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">1</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_25_item_2_cloze" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="25">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">178</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_25_item_2_cloze_RESPONSE_7986748" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">7</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">7</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_25_item_2_cloze_RESPONSE_7184940" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">5</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">5</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_25_item_2_cloze_RESPONSE_1011670" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">8</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">8</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_25_item_2_cloze_RESPONSE_6506311" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">7</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">7</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="26">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">593</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze_RESPONSE_5284249" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">10.5</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">10.5</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze_RESPONSE_8594099" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">31.82</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">31.82</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze_RESPONSE_5816487" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">3.5</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">3.5</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze_RESPONSE_1137182" baseType="float" cardinality="single">
+			<correctResponse>
+				<value baseType="float">54.18</value>
+			</correctResponse>
+			<candidateResponse>
+				<value baseType="float">54.18</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">correct</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor"/>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_27_item_1_essay" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="27">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">101</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_27_item_1_essay_RESPONSE_5003307" baseType="string" cardinality="single">
+			<correctResponse/>
+			<candidateResponse>
+				<value baseType="string">Eliminierung (also bspw. durch Isolierte Versuchräume Straßenlärm als Störvariable ausschließen) und Konstant-Haltung (bspw. bei allen Versuchsteilnehmenden die gleiche Beleuchtung)</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback481326136</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="28">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">559</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay_RESPONSE_8331756" baseType="string" cardinality="single">
+			<correctResponse/>
+			<candidateResponse>
+				<value baseType="string">1. Hauptfragestellung: Gibt es einen signifikanten Unterschied zwischen verschiedenen Yogastilen in Hinblick auf die stressabbauende Wirkung (messbar an der Herzfrequenz).&#xD;
+2. AV: Der praktizierte Yogastil (Ashtanga, Hatha oder Entspannungsyoga); UV: durchschnittliche Herzfrequenz pro Minute der Teilnehmenden während der Ausübung der Stile&#xD;
+3. Versuchsdesign: Within - Design&#xD;
+4. Hauptergebnisse: Es besteht ein signifikanter Unterschied zwischen den Stilen in Hinblick auf die Stressabbauende Wirkung, wobei beim Enspannungsyoga die niedrigste und beim Ashtanga Yoga die Höchste mittlere Herzfrequenz gemessen wurde.</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">5</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback265711907</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="29">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">244</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay_RESPONSE_3096849" baseType="string" cardinality="single">
+			<correctResponse/>
+			<candidateResponse>
+				<value baseType="string">Epistemologie befasst sich mit der Frage: "Wie können wir die Wirklichkeit erkennen?". Es geht also darum, Mittel zu finden, mit deren Hilfe man die Wirklichkeit ermitteln kann.&#xD;
+Ontologie befasst sich mit der Frage: "Was ist die Wirklichkeit?". Es geht also nicht darum, Wege dazu, sondern die Wirklichkeit herauszufinden.</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback531081745</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_27_item_1_essay" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="27">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">101</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_27_item_1_essay_RESPONSE_5003307" baseType="string" cardinality="single">
+			<correctResponse/>
+			<candidateResponse>
+				<value baseType="string">Eliminierung (also bspw. durch Isolierte Versuchräume Straßenlärm als Störvariable ausschließen) und Konstant-Haltung (bspw. bei allen Versuchsteilnehmenden die gleiche Beleuchtung)</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="true" scorer="Johannes Titz" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback481326136</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="28">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">559</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay_RESPONSE_8331756" baseType="string" cardinality="single">
+			<correctResponse/>
+			<candidateResponse>
+				<value baseType="string">1. Hauptfragestellung: Gibt es einen signifikanten Unterschied zwischen verschiedenen Yogastilen in Hinblick auf die stressabbauende Wirkung (messbar an der Herzfrequenz).&#xD;
+2. AV: Der praktizierte Yogastil (Ashtanga, Hatha oder Entspannungsyoga); UV: durchschnittliche Herzfrequenz pro Minute der Teilnehmenden während der Ausübung der Stile&#xD;
+3. Versuchsdesign: Within - Design&#xD;
+4. Hauptergebnisse: Es besteht ein signifikanter Unterschied zwischen den Stilen in Hinblick auf die Stressabbauende Wirkung, wobei beim Enspannungsyoga die niedrigste und beim Ashtanga Yoga die Höchste mittlere Herzfrequenz gemessen wurde.</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="true" scorer="Johannes Titz" baseType="float" view="scorer">
+			<value baseType="float">2.5</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">5</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback265711907</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+		<scorerComment scorer="Johannes Titz" creationDate="05.08.2021 15:03">Es geht mehr darum, die Auswirkung von Yoga auf Fitness zu untersuchen, nicht auf Stress (-0,5). AV und UV sind vertauscht (-2).  Der Rest passt. Insgesamt 2,5 Punkte Abzug</scorerComment>
+	</itemResult>
+	<itemResult identifier="_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay" datestamp="2021-08-05T14:10:03" sessionStatus="final" sequenceIndex="29">
+		<responseVariable identifier="duration" cardinality="single" baseType="duration">
+			<candidateResponse>
+				<value baseType="integer">244</value>
+			</candidateResponse>
+		</responseVariable>
+		<responseVariable identifier="_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay_RESPONSE_3096849" baseType="string" cardinality="single">
+			<correctResponse/>
+			<candidateResponse>
+				<value baseType="string">Epistemologie befasst sich mit der Frage: "Wie können wir die Wirklichkeit erkennen?". Es geht also darum, Mittel zu finden, mit deren Hilfe man die Wirklichkeit ermitteln kann.&#xD;
+Ontologie befasst sich mit der Frage: "Was ist die Wirklichkeit?". Es geht also nicht darum, Wege dazu, sondern die Wirklichkeit herauszufinden.</value>
+			</candidateResponse>
+		</responseVariable>
+		<outcomeVariable identifier="SCORE" cardinality="single" manualScored="true" scorer="Johannes Titz" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">2</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKBASIC" cardinality="single" manualScored="false" baseType="identifier" view="scorer">
+			<value baseType="identifier">incorrect</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="FEEDBACKMODAL" cardinality="multiple" manualScored="false" baseType="identifier" view="tutor">
+			<value baseType="identifier">Feedback531081745</value>
+		</outcomeVariable>
+		<outcomeVariable identifier="MINSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+			<value baseType="float">0</value>
+		</outcomeVariable>
+	</itemResult>
+</assessmentResult>

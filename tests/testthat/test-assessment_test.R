@@ -35,7 +35,8 @@ test_that("Testing method createOutcomeDeclaration() for AssessmentTest class", 
     exam <- new("AssessmentTest",
                 identifier = "id_test",
                 title = "some title",
-                section = list(exam_section))
+                section = list(exam_section)
+                )
 
     example <- "<additionalTag>
 <outcomeDeclaration identifier=\"SCORE\" cardinality=\"single\" baseType=\"float\">
@@ -83,7 +84,10 @@ exam <- new("AssessmentTestOpal", identifier = "id_test",
             files = c(test_path("file/test_fig1.jpg"),
                       test_path("file/test_fig2.jpg")),
             max_attempts = 5, time_limits = 100, allow_comment = TRUE,
-            rebuild_variables = TRUE)
+            rebuild_variables = TRUE,
+            show_test_time = TRUE, calculator = "simple-calculator",
+            keep_responses = TRUE
+            )
 suppressMessages(createQtiTest(exam, "todelete", "TRUE"))
 
 xml1 <- xml2::read_xml(suppressMessages(toString(createAssessmentTest(object = exam, folder = getwd()))))
