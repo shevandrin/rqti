@@ -4,20 +4,20 @@ library(qti)
 # create SingleChoice object ---------------------------------------------------
 sc <- new("SingleChoice",
           choices = c("option 1", "option 2", "option 3", "option 4"),
-          orientation = "vertical1",
+          orientation = "vertical",
           title = "single_choice_task",
           prompt = "Single choice question example",
           shuffle = FALSE,
           points = 2,
           identifier = "sc_example",
-          feedback = c(WrongFeedback(title = "Error",
+          feedback = c(new("WrongFeedback", title = "Error",
                                        content = list("You made a mistake")),
-                          CorrectFeedback(title = "Erfolg",
+                          new("CorrectFeedback", title = "Erfolg",
                                           content = list("Gut gemacht")),
                           new("ModalFeedback", title = "common",
                               content = list("general feedback")))
           )
-create_qti_task(sc, "to_delete", TRUE)
+createQtiTask(sc, "to_delete", TRUE)
 
 sc <- new("SingleChoice",
           choices = c("option 1", "option 2", "option 3", "option 4"),
@@ -286,4 +286,4 @@ exam <- new("AssessmentTestOpal", identifier = "id_test",
             title = "some title", section = list(exam_section),
             files = c("man/figures/assessmentTest.png",
                       "man/figures/README-S4_classes_diagramm.jpg"))
-create_qti_test(exam, "to_delete")
+createQtiTest(exam, "to_delete")

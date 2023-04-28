@@ -104,20 +104,6 @@ setGeneric("createAssessmentTest", function(object, folder) {
     standardGeneric("createAssessmentTest")
 })
 
-#' Create an element testPart of a qti-xml document for test
-#'
-#' Generic function for creating testPart element for XML document of
-#' specification the test following the QTI schema v2.1
-#'
-#' @param object an instance of the S4 object (AssessmentTest)
-#' @docType methods
-#' @rdname createTestPart-methods
-#'
-#' @export
-setGeneric("createTestPart", function(object) {
-    standardGeneric("createTestPart")
-})
-
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTest
 setMethod("createAssessmentTest", signature(object = "AssessmentTest"),

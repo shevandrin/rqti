@@ -53,7 +53,8 @@ test_that("Testing function extract_results with zip archive", {
 })
 test_that("Testing function extract_results", {
     path1 <- test_path("file/stab_results.xml")
-    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-1])
+    expected <- suppressWarnings(suppressMessages(
+        extract_results(path1, level = "items")[ ,-1]))
     expected <- expected[order(expected$datestamp),]
     expected <- expected[-c(95-100), ]
     rownames(expected) <- NULL
