@@ -164,15 +164,9 @@ get_result_attr_answers<- function(file) {
     items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
     igiven <- unlist(lapply(items_result, is_answer_given))
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
-    dur_nodes <- xml2::xml_find_all(doc,
-                ".//d1:itemResult/d1:responseVariable[@identifier='duration']")
-    durations <- xml2::xml_text(dur_nodes)
-    score_nodes <- xml2::xml_find_all(doc,
-                ".//d1:itemResult/d1:outcomeVariable[@identifier='SCORE']")
-    scores <- xml2::xml_text(score_nodes)
-    maxscore_nodes <- xml2::xml_find_all(doc,
-                ".//d1:itemResult/d1:outcomeVariable[@identifier='MAXSCORE']")
-    maxes <- xml2::xml_text(maxscore_nodes)
+    durations <- Map(get_duration, items_result)
+    scores <- Map(get_score, items_result, "SCORE")
+    maxes <- Map(get_score, items_result, "MAXSCORE")
     types <- unlist(lapply(ids_item, identify_question_type))
 
     data <- data.frame(file_name = rep(file_name, length(ids_item)),
@@ -184,6 +178,21 @@ get_result_attr_answers<- function(file) {
                        question_type = types,
                        is_answer_given = igiven)
     return(data)
+}
+
+# take itemResult and return duration or NA
+get_duration <- function(node) {
+    dur_node <- xml2::xml_find_all(node,
+                                    ".//d1:responseVariable[@identifier='duration']")
+    duration <- ifelse (length(dur_node) == 0, NA, xml2::xml_text(dur_node))
+    return(duration)
+}
+
+get_score <- function(node, type) {
+    pattern <- paste0(".//d1:outcomeVariable[@identifier=\'", type ,"\']")
+    score_node <- xml2::xml_find_all(node, pattern)
+    score <- ifelse (length(score_node) == 0, NA, xml2::xml_text(score_node))
+    return(score)
 }
 
 #' Create data frame with test results by options of answers
@@ -257,7 +266,7 @@ get_result_attr_options <- function(file) {
 
 # takes information from responseVariable tags
 get_info <- function(node){
-    options_nodes <- xml2::xml_find_all(node, ".//d1:responseVariable")[-1][1]
+    options_nodes <- xml2::xml_find_all(node, ".//d1:responseVariable[@identifier!='duration']")[1]
     data_type <- xml2::xml_attr(options_nodes, "baseType")
     if (data_type == "identifier") info <- get_info_identifier(node, options_nodes)
     if (data_type == "directedPair") info <- get_info_directedPair(node, options_nodes)
@@ -271,15 +280,21 @@ get_info <- function(node){
 
 # takes information from tag with identifier as base type of response variable
 get_info_identifier <- function(node, options_nodes) {
-    options <- stringr::str_split_1(xml2::xml_attr(options_nodes, "choiceSequence"), " ")
 
     corr_res <- xml2::xml_find_all(node, ".//d1:correctResponse")
     corr_values <- get_value(corr_res)
-    corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
 
     cand_res <- xml2::xml_find_all(node, ".//d1:candidateResponse")[-1]
     cand_values <- get_value(cand_res)
 
+    choice_seq <- xml2::xml_attr(options_nodes, "choiceSequence")
+
+    if (!is.na(choice_seq)) {
+        options <- stringr::str_split_1(choice_seq, " ")
+
+    } else options <- corr_values
+
+    corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
     base_types <- rep(xml2::xml_attr(options_nodes, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_nodes, "cardinality"), length(options))
@@ -320,7 +335,8 @@ get_info_directedPair <- function(node, options_nodes) {
 # takes information from tag with float or string as base type of response
 # variable
 get_info_float <- function(node) {
-    options_nodes <- xml2::xml_find_all(node, ".//d1:responseVariable")[-1]
+    options_nodes <- xml2::xml_find_all(node,
+                        ".//d1:responseVariable[@identifier!='duration']")
     options <- character(0)
     corr <- character(0)
     cand <- character(0)
@@ -396,7 +412,8 @@ combine_answer <- function(node, tag) {
 
 # extracts all xml file in temp folder
 get_all_xml <- function(file, indir, exdir) {
-    files <- utils::unzip(file.path(indir, file), exdir = exdir, )
+    files <- utils::unzip(file.path(indir, file), exdir = exdir)
+    files <- files[grep(".xml", files)]
     for (fl in files) {
         make_name_unique(fl)
     }
