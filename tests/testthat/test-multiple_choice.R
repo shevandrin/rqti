@@ -82,7 +82,6 @@ test_that("Testing create_response_declaration_multiple_choice",{
     }
 
 })
-
 test_that("Testing outcomeDeclaration for Multiple Choice",{
     sc <- new("MultipleChoice",
               content = list(""),
@@ -103,4 +102,100 @@ test_that("Testing outcomeDeclaration for Multiple Choice",{
     expect_equal(xml1, xml2)
 
 
+})
+# Testing with modal Feedback
+test_that("Testing outcomeDeclaration for Multiple Choice",{
+    mc <- new("MultipleChoice",
+              content = list(""),
+              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
+              points = c(1,0,0,1,0,-1),
+              title = "filename_sc",
+              prompt = "Which of the following elements are used to form water?",
+              feedback = list(new("ModalFeedback", title = "common",
+                                  content = list("general feedback"))))
+
+    example <- '
+    <responseProcessing>
+  <responseCondition>
+    <responseIf>
+      <not>
+        <isNull>
+          <variable identifier="RESPONSE"></variable>
+        </isNull>
+      </not>
+      <setOutcomeValue identifier="SCORE">
+        <sum>
+          <variable identifier="SCORE"></variable>
+          <mapResponse identifier="RESPONSE"></mapResponse>
+        </sum>
+      </setOutcomeValue>
+    </responseIf>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <gt>
+        <variable identifier="SCORE"></variable>
+        <variable identifier="MAXSCORE"></variable>
+      </gt>
+      <setOutcomeValue identifier="SCORE">
+        <variable identifier="MAXSCORE"></variable>
+      </setOutcomeValue>
+    </responseIf>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <lt>
+        <variable identifier="SCORE"></variable>
+        <variable identifier="MINSCORE"></variable>
+      </lt>
+      <setOutcomeValue identifier="SCORE">
+        <variable identifier="MINSCORE"></variable>
+      </setOutcomeValue>
+    </responseIf>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <isNull>
+        <variable identifier="RESPONSE"></variable>
+      </isNull>
+      <setOutcomeValue identifier="FEEDBACKBASIC">
+        <baseValue baseType="identifier">empty</baseValue>
+      </setOutcomeValue>
+    </responseIf>
+    <responseElseIf>
+      <lt>
+        <variable identifier="SCORE"></variable>
+        <variable identifier="MAXSCORE"></variable>
+      </lt>
+      <setOutcomeValue identifier="FEEDBACKBASIC">
+        <baseValue baseType="identifier">incorrect</baseValue>
+      </setOutcomeValue>
+    </responseElseIf>
+    <responseElse>
+      <setOutcomeValue identifier="FEEDBACKBASIC">
+        <baseValue baseType="identifier">correct</baseValue>
+      </setOutcomeValue>
+    </responseElse>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <and>
+        <gte>
+          <variable identifier="SCORE"></variable>
+          <baseValue baseType="float">0</baseValue>
+        </gte>
+      </and>
+      <setOutcomeValue identifier="FEEDBACKMODAL">
+        <multiple>
+          <variable identifier="FEEDBACKMODAL"></variable>
+          <baseValue baseType="identifier">modal_feedback</baseValue>
+        </multiple>
+      </setOutcomeValue>
+    </responseIf>
+  </responseCondition>
+</responseProcessing>
+    '
+    xml1 <- xml2::read_xml(toString(createResponseProcessing(mc)))
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
 })

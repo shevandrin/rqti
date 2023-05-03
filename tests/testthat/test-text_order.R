@@ -78,3 +78,127 @@ test_that("Testing OutcomeDeclaration for Order questions", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+# Testing Order class without choices_identifiers for Order class
+test_that("Testing Order class", {
+    question <- new("Order",
+                    content = list(""),
+                    title = "Grand Prix of Bahrain",
+                    prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
+                    choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
+                    points = 0.5,
+                    shuffle = TRUE)
+    example <- '<responseDeclaration identifier="RESPONSE" cardinality="ordered" baseType="identifier">
+<correctResponse>
+<value>ChoiceA</value>
+<value>ChoiceB</value>
+<value>ChoiceC</value>
+</correctResponse>
+</responseDeclaration>'
+
+    xml1 <- xml2::read_xml(toString(createResponseDeclaration(question)))
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})
+# Testing with modal Feedback
+test_that("Testing createResponseProcessing() for Order class", {
+    question <- new("Order",
+                    content = list(""),
+                    title = "Grand Prix of Bahrain",
+                    prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
+                    choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
+                    points = 2.5,
+                    choices_identifiers = c("DriverA","DriverB","DriverC"),
+                    shuffle = TRUE,
+                    feedback = list(new("ModalFeedback", title = "common",
+                                        content = list("general feedback"))))
+    example <- '<additionalTag>
+<responseProcessing>
+  <responseCondition>
+    <responseIf>
+      <isNull>
+        <variable identifier="RESPONSE"></variable>
+      </isNull>
+    </responseIf>
+    <responseElseIf>
+      <match>
+        <variable identifier="RESPONSE"></variable>
+        <correct identifier="RESPONSE"></correct>
+      </match>
+      <setOutcomeValue identifier="SCORE">
+        <sum>
+          <variable identifier="SCORE"></variable>
+          <variable identifier="MAXSCORE"></variable>
+        </sum>
+      </setOutcomeValue>
+    </responseElseIf>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <gt>
+        <variable identifier="SCORE"></variable>
+        <variable identifier="MAXSCORE"></variable>
+      </gt>
+      <setOutcomeValue identifier="SCORE">
+        <variable identifier="MAXSCORE"></variable>
+      </setOutcomeValue>
+    </responseIf>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <lt>
+        <variable identifier="SCORE"></variable>
+        <variable identifier="MINSCORE"></variable>
+      </lt>
+      <setOutcomeValue identifier="SCORE">
+        <variable identifier="MINSCORE"></variable>
+      </setOutcomeValue>
+    </responseIf>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <isNull>
+        <variable identifier="RESPONSE"></variable>
+      </isNull>
+      <setOutcomeValue identifier="FEEDBACKBASIC">
+        <baseValue baseType="identifier">empty</baseValue>
+      </setOutcomeValue>
+    </responseIf>
+    <responseElseIf>
+      <lt>
+        <variable identifier="SCORE"></variable>
+        <variable identifier="MAXSCORE"></variable>
+      </lt>
+      <setOutcomeValue identifier="FEEDBACKBASIC">
+        <baseValue baseType="identifier">incorrect</baseValue>
+      </setOutcomeValue>
+    </responseElseIf>
+    <responseElse>
+      <setOutcomeValue identifier="FEEDBACKBASIC">
+        <baseValue baseType="identifier">correct</baseValue>
+      </setOutcomeValue>
+    </responseElse>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
+      <and>
+        <gte>
+          <variable identifier="SCORE"></variable>
+          <baseValue baseType="float">0</baseValue>
+        </gte>
+      </and>
+      <setOutcomeValue identifier="FEEDBACKMODAL">
+        <multiple>
+          <variable identifier="FEEDBACKMODAL"></variable>
+          <baseValue baseType="identifier">modal_feedback</baseValue>
+        </multiple>
+      </setOutcomeValue>
+    </responseIf>
+  </responseCondition>
+</responseProcessing>
+    </additionalTag>'
+
+    responseDe <- paste('<additionalTag>', toString(createResponseProcessing(question)),'</additionalTag>')
+    xml1 <- xml2::read_xml(responseDe)
+    xml2 <- xml2::read_xml(example)
+    expect_equal(xml1, xml2)
+})
