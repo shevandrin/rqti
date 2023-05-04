@@ -27,7 +27,9 @@ Imports:
     stringr,
     methods,
     lubridate,
-    magrittr
+    magrittr,
+    httr,
+    dotenv
 Suggests: 
     covr,
     dplyr,
@@ -62,6 +64,7 @@ Collate:
     'TextGap.R'
     'TextGapOpal.R'
     'WrongFeedback.R'
+    'api_opal.R'
     'extract_results.R'
     'knit_functions.R'
     'objectBuilder.R'
