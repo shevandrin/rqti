@@ -38,8 +38,7 @@ answers; by default identifiers are generated automatically}
 \item{\code{orientation}}{string, optional; is responsible to place answers in
 vertical or horizontal mode; possible values:
 \itemize{
-\item default \code{""}
-\item "vertical"
+\item "vertical" - default
 \item "horizontal"
 }}
 

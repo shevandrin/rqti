@@ -5,7 +5,6 @@
 #'   answers; by default identifiers are generated automatically
 #' @slot orientation string, optional; is responsible to place answers in
 #' vertical or horizontal mode; possible values:
-#'   * default `""`
-#'   * "vertical"
+#'   * "vertical" - default
 #'   * "horizontal"
 #'
