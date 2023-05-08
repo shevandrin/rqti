@@ -45,9 +45,17 @@ auth_opal <- function() {
 #'@param file required; a length one character vector
 #'@param display_name optional; a length one character vector to entitle file in
 #'  OPAL; file name without extension by default
+#'@param access optional; is responsible for publication status, where 1 - only
+#'  those responsible for this learning resource; 2 - responsible and other
+#'  authors; 3 - all registered users; 4 - default value, registered users and
+#'  guests
+#'@param in_browser logical, optional; the parameter that controls whether to
+#'  open a URL in default browser; TRUE by default
 #'@return status code
+#'@importFrom utils browseURL
 #'@export
-upload_opal_test <- function(file, display_name = NULL) {
+upload_opal_test <- function(file, display_name = NULL, access = 4,
+                             in_browser = TRUE) {
     if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
 
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
@@ -55,12 +63,20 @@ upload_opal_test <- function(file, display_name = NULL) {
     url_task <- "https://bildungsportal.sachsen.de/opal/restapi/repo/entries"
     body <- list(file = upload_file(file),
                  displayname = display_name,
+                 access = access,
                  repoType = "FileResource.TEST")
-    print(body)
     response <- PUT(url_task, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                     body = body, encode = "multipart")
-    cat(content(response, as = "text", encoding = "UTF-8"))
-    return(response$status_code)
+    parse <- content(response, as = "parse", encoding = "UTF-8")
+    url_test <- NULL
+    if ((in_browser) & (!is.null(parse$key)) ){
+        url_test <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
+                           "RepositoryEntry/", parse$key)
+        browseURL(url_test)
+    }
+    res <- list(status_code = response$status_code, key = parse$key,
+                url = url_test)
+    return(res)
 }
 
 

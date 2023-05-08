@@ -4,13 +4,21 @@
 \alias{upload_opal_test}
 \title{Upload test on OPAL}
 \usage{
-upload_opal_test(file, display_name = NULL)
+upload_opal_test(file, display_name = NULL, access = 4, in_browser = TRUE)
 }
 \arguments{
 \item{file}{required; a length one character vector}
 
 \item{display_name}{optional; a length one character vector to entitle file in
 OPAL; file name without extension by default}
+
+\item{access}{optional; is responsible for publication status, where 1 - only
+those responsible for this learning resource; 2 - responsible and other
+authors; 3 - all registered users; 4 - default value, registered users and
+guests}
+
+\item{in_browser}{logical, optional; the parameter that controls whether to
+open a URL in default browser; TRUE by default}
 }
 \value{
 status code
