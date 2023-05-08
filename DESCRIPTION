@@ -1,12 +1,12 @@
 Package: qti
-Title: What the Package Does (One Line, Title Case)
+Title: Create XML Files For Tests According To QTI 2.1 Standart
 Version: 0.0.0.9000
 Authors@R: c(
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID")),
-           person("Ivonne", "Ojeda", email = "yulieth9109@gmail.com",
-  role = "ctb"))
-Description: What the package does (one paragraph).
+    person("Andrey", "Shevandrin", email = "shevanrin@gmail.com", 
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0807-2546")),
+    person("Ivonne", "Ojeda", email = "yulieth9109@gmail.com",
+    role = "ctb"))
+Description: This R package provides learning content creators with generation of XML files for Tests and Tasks according to QTI information model v. 2.1. The sources of data for Test/Task content can be Rmd/md templates or objects of S4-classes, created in R environment. This package generates all basic types of tasks and has full set of attributes for tests customisation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
