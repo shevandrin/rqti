@@ -44,27 +44,6 @@ create_qti_test <- function(object, dir = getwd(), verification = FALSE) {
 # creates xml root and children of test file
 create_assessment_test <-function(object, folder, data_downloads = NULL,
                                   data_features = NULL) {
-    # data_downloads <- NULL
-    # if (length(object@files) > 0) {
-    #     file_names <- basename(object@files)
-    #     files <- unlist(lapply("file://downloads/", paste0, file_names, ";"))
-    #     for (f in files) {
-    #         data_downloads <- paste0(f, data_downloads)
-    #     }
-    # }
-    # data_features <- NULL
-    # if (object@show_test_time) {
-    #     data_features <- paste("show-test-time", data_features, sep = ";")
-    # }
-    # if (!is.na(object@calculator)) {
-    #     data_features <- paste(object@calculator, data_features, sep = ";")
-    # }
-    # if (object@mark_items) {
-    #     data_features <- paste("mark-items", data_features, sep = ";")
-    # }
-    # if (object@keep_responses) {
-    #     data_features <- paste("keep-responses", data_features, sep = ";")
-    # }
     assessment_attributes <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
                                "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
                                "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd",

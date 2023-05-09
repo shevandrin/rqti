@@ -41,9 +41,9 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    The speed of light is
+    <p>The speed of light is
     <textEntryInteraction responseIdentifier="RESPONSE_1"/>
-    than the speed of sound
+    than the speed of sound</p>
   </itemBody>
   <responseProcessing>
     <setOutcomeValue identifier="SCORE">

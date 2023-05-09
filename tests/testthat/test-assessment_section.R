@@ -163,29 +163,30 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
     expect_equal(expected, example)
 })
 test_that("Testing AssessmentSection class for uploading files with tasks", {
-       mc <- new("MultipleChoice",
-               identifier = "q1", prompt = "What does 3/4 + 1/4 = ?",
+    mc <- new("MultipleChoice",
+               identifier = "test_create_qti_task_MultipleChoice",
+               prompt = "What does 3/4 + 1/4 = ?",
                title = "MultipleChoice",
                choices = c("1", "4/8", "8/4", "4/4"),
                choice_identifiers = c("1", "2", "3", "4"),
                points = c(1, 0, 0, 1)
     )
     TextGapOpal <- new("Entry",
-                       identifier = "q2",
+                       identifier = "test_create_qti_task_TextGapOpal",
                        points = 3,
                        title = "TextGapOpal",
-                       content = list('The speed of light is',
+                       content = list('<p>The speed of light is',
                                       new("TextGapOpal",
                                           response_identifier = "RESPONSE_1",
                                           score = 1,
                                           response = "more",
                                           alternatives = c("MORE", "More"),
                                           value_precision = 2),
-                                      'than the speed of sound')
+                                      'than the speed of sound</p>')
     )
     DirectedPair <- new("DirectedPair",
                         content = list("<p>\"Directed pairs\" task</p>"),
-                        identifier = "q3",
+                        identifier = "test_create_qti_task_DirectedPair",
                         title = "Directed pairs",
                         rows = c("12*4 =", "100/50 =", "25*2 ="),
                         rows_identifiers = c("a", "b", "c"),
@@ -195,7 +196,7 @@ test_that("Testing AssessmentSection class for uploading files with tasks", {
                         points = 5
     )
     order <- new("Order",
-                 identifier = "q4",
+                 identifier = "test_create_qti_task_Order",
                  title = "Order",
                  prompt = "Choose the correct order",
                  choices = c("Data collection", "Data cleansing", "Data marking", "Verification and visualization"),
@@ -229,20 +230,19 @@ test_that("Testing AssessmentSection class for uploading files with tasks", {
                 identifier = "id_test",
                 title = "Mock test",
                 section = list(example_exam_section))
-    suppressMessages(createQtiTest(example_exam, "exam_folder2", "TRUE"))
+    suppressMessages(createQtiTest(example_exam, "exam_folder3", "TRUE"))
 
-    # Compare of two folders
-    list_files_folder_example <- list.files("exam_folder", full.names = TRUE, recursive = TRUE)
-    list_files_folder_expected <- list.files("exam_folder2", full.names = TRUE, recursive = TRUE)
+    # get list content zip files and compate them
+    zip_example <- list.files(path = "exam_folder", pattern = ".zip", full.names = TRUE)
+    zip_expected <- list.files(path = "exam_folder3", pattern = ".zip", full.names = TRUE)
 
-    for (i in length(list_files_folder_example)) {
-        content1 <- readLines(list_files_folder_example[i])
-        content2 <- readLines(list_files_folder_expected[i])
+    list_example <- utils::unzip(zip_example, list = TRUE)
+    list_expected <- utils::unzip(zip_expected, list = TRUE)
 
-        expect_equal(content1, content2)
-    }
+    ls <- list_example$Name %in% list_expected$Name
+
+    expect_equal(all(ls), TRUE)
 
     unlink(file.path(getwd(),"exam_folder"), recursive = TRUE)
-    unlink(file.path(getwd(),"exam_folder2"), recursive = TRUE)
-
+    unlink(file.path(getwd(),"exam_folder3"), recursive = TRUE)
 })

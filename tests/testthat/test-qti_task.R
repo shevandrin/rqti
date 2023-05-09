@@ -20,7 +20,7 @@ test_that("create_qti_task", {
                identifier = "new", prompt = "What does 3/4 + 1/4 = ?",
                title = "MultipleChoice",
                choices = c("1", "4/8", "8/4", "4/4"),
-               choice_identifiers = c("1", "2", "3", "4"),
+               choice_identifiers = c("a1", "a2", "a3", "a4"),
                points = c(1, 0, 0, 1)
     )
     suppressMessages(create_qti_task(mc))
@@ -56,7 +56,7 @@ test_that("create_qti_task", {
                   choices = c("Data collection",
                               "Data cleansing", "Data marking",
                               "Verification and visualization"),
-                  choices_identifiers = c("1", "2", "3", "4"),
+                  choices_identifiers = c("a1", "a2", "a3", "a4"),
                   points = 1
                 )
     suppressMessages(create_qti_task(order))
@@ -161,14 +161,14 @@ TextGapOpal <- new("Entry",
                    identifier = "new",
                    points = 3,
                    title = "TextGapOpal",
-                   content = list('The speed of light is',
+                   content = list('<p>The speed of light is',
                                   new("TextGapOpal",
                                       response_identifier = "RESPONSE_1",
                                       score = 1,
                                       response = "more",
                                       alternatives = c("MORE", "More"),
                                       value_precision = 2),
-                                  'than the speed of sound'))
+                                  'than the speed of sound</p>'))
 
     suppressMessages(create_qti_task(TextGapOpal))
     expected <- readLines("new.xml")
