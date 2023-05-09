@@ -62,17 +62,17 @@ test_that("Testing additional attribute for item body single choice", {
             content = list("<p>Do you mostly use tea bags or loose tea?</p>",
                            "<p>Choose one option</p>"),
             points = 2,
+            shuffle = FALSE,
             identifier = "ID125",
             title = "Question 1",
             choices = c("Tea bags", "Loose tea"),
-            orientation = "horizontal",
             solution = 2,
             choice_identifiers = c("ID_1", "ID_2")
             )
   example <- '<itemBody>
 		<p>Do you mostly use tea bags or loose tea?</p>
 		<p>Choose one option</p>
-		<choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"true\" maxChoices=\"1\" orientation=\"horizontal\">
+		<choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\" orientation=\"vertical\">
 			<simpleChoice identifier=\"ID_1\">Tea bags</simpleChoice>
 			<simpleChoice identifier=\"ID_2\">Loose tea</simpleChoice>
 		</choiceInteraction>
@@ -91,7 +91,7 @@ test_that("Testing createResponseProcessing() for SingleChoice class", {
               identifier = "ID125",
               title = "Question 1",
               choices = c("Tea bags", "Loose tea"),
-              orientation = "horizontal",
+              # orientation = "horizontal",
               solution = 2,
               choice_identifiers = c("ID_1", "ID_2"),
               feedback = list(new("ModalFeedback", title = "common",

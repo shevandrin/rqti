@@ -101,3 +101,41 @@ file.remove("q2.xml")
 file.remove("q3.xml")
 unlink("todelete", recursive = TRUE)
 })
+test_that("Testing method createAssessmentTest for AssessmentTest class", {
+    sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
+               identifier = "q1", choices = c("a", "b", "c"))
+    sc2 <- new("SingleChoice", prompt = "Test task", title = "SC",
+               identifier = "q2", choices = c("A", "B", "C"))
+    sc3 <- new("SingleChoice", prompt = "Test task", title = "SC",
+               identifier = "q3", choices = c("aa", "bb", "cc"))
+    e1 <- new("Essay", prompt = "Essay task", identifier = "e1")
+    e2 <- new("Essay", prompt = "Essay task", identifier = "e2")
+    e3 <- new("Essay", prompt = "Essay task", identifier = "e3")
+    exam_subsection <- new("AssessmentSection", identifier = "subsec_id",
+                           title = "Subsection", assessment_item = list(e1, e2, e3),
+                           shuffle = TRUE, selection = 2)
+    exam_section <- new("AssessmentSection", identifier = "sec_id",
+                        title = "section",
+                        assessment_item = list(sc1, sc2, sc3, exam_subsection),
+                        max_attempts = 3, time_limits = 30, allow_comment = TRUE)
+
+    exam <- new("AssessmentTest", identifier = "id_test",
+                title = "some title", section = list(exam_section),
+                max_attempts = 5, time_limits = 100, allow_comment = TRUE,
+                rebuild_variables = TRUE
+    )
+
+    # Testing AssessmentTest
+        suppressMessages(createQtiTest(exam, "todelete", "TRUE"))
+
+    xml1 <- xml2::read_xml(suppressMessages(toString(createAssessmentTest(object = exam, folder = getwd()))))
+    xml2 <- xml2::read_xml("todelete/id_test.xml")
+    expect_equal(xml1, xml2)
+    file.remove("e1.xml")
+    file.remove("e2.xml")
+    file.remove("e3.xml")
+    file.remove("q1.xml")
+    file.remove("q2.xml")
+    file.remove("q3.xml")
+    unlink("todelete", recursive = TRUE)
+})
