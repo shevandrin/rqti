@@ -156,7 +156,8 @@ get_result_attr_answers<- function(file) {
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
     test_dt <- lubridate::ymd_hms(test_dt)
 
-    items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
+    items_result <- unique_result_set(doc)
+
     igiven <- unlist(lapply(items_result, is_answer_given))
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
     durations <- Map(get_duration, items_result)
@@ -173,6 +174,36 @@ get_result_attr_answers<- function(file) {
                        question_type = types,
                        is_answer_given = igiven)
     return(data)
+}
+
+# rebuild xml nodeset to leave only results after tutor evaluation if it
+# took place
+unique_result_set <- function(doc) {
+    items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
+    ids <- unlist(Map(xml_attr, items_result, "identifier"))
+    unique_ids <- ids[!duplicated(ids)]
+    for (id in unique_ids) {
+        expression <- paste0(".//d1:itemResult", "[@identifier=\'", id, "\']")
+        nodes <- xml2::xml_find_all(doc, expression)
+        if (length(nodes) == 2) {
+            # compare dates to take the oldest
+            # dt1 <- lubridate::ymd_hms(xml_attr(nodes[1], "datestamp"))
+            # dt2 <- lubridate::ymd_hms(xml_attr(nodes[2], "datestamp"))
+            # # remove the node with the oldest timestamp
+            # ifelse(dt2 > dt1, xml_remove(nodes[1]), xml_remove(nodes[2]))
+
+            # find 'scorer' attribute in outcomeVariables and keep the result
+            # form him
+            outcome_var <- xml_find_all(nodes[2], ".//d1:outcomeVariable")
+            is_tutor <- any(xml_has_attr(outcome_var, "scorer"))
+            ifelse(is_tutor, xml_remove(nodes[1]), xml_remove(nodes[2]))
+
+        } else if (length(nodes) > 2) {
+            stop("Identifer of an itemResult occurs more than twice.")
+        }
+    }
+    result <- xml2::xml_find_all(doc, ".//d1:itemResult")
+    return(result)
 }
 
 # take itemResult and return duration or NA
@@ -231,7 +262,8 @@ get_result_attr_options <- function(file) {
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
     test_dt <- lubridate::ymd_hms(test_dt)
 
-    items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
+    items_result <- unique_result_set(doc)
+    #items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
 
     types <- unlist(lapply(ids_item, identify_question_type))
