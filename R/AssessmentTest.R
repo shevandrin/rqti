@@ -148,5 +148,5 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
 #' @aliases createZip,AssessmentTest
 setMethod("createZip", signature(object = "AssessmentTest"),
           function(object, folder) {
-              zip_wrapper(object@identifier, NA, folder)
+              zip_wrapper(object@identifier, NULL, folder)
           })
