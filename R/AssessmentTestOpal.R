@@ -81,3 +81,10 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTestOpal"),
               create_assessment_test(object, folder, data_downloads,
                                      data_features)
           })
+
+#' @rdname createZip-methods
+#' @aliases createZip,AssessmentTestOpal
+setMethod("createZip", signature(object = "AssessmentTestOpal"),
+          function(object, folder) {
+              zip_wrapper(object@identifier, object@files, folder)
+          })

@@ -38,7 +38,7 @@ create_qti_test <- function(object, dir = getwd(), verification = FALSE) {
     xml2::write_xml(doc_manifest, path_manifest)
     message(paste("see manifest file:", path_manifest))
 
-    zip_wrapper(object@identifier, object@files, dir)
+    createZip(object, dir)
 }
 
 # creates xml root and children of test file

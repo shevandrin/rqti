@@ -104,6 +104,22 @@ setGeneric("createAssessmentTest", function(object, folder) {
     standardGeneric("createAssessmentTest")
 })
 
+#' Create an Zip archive of QTI test
+#'
+#' Generic function for creating zip archive with set of XML documents of
+#' specification the test following the QTI schema v2.1
+#'
+#' @param object an instance of the S4 object [AssessmentTest] or
+#'   [AssessmentTestOpal]
+#' @param folder string, optional; a folder to store xml file; working directory
+#'   by default
+#' @docType methods
+#' @rdname createZip-methods
+#' @aliases createZip
+setGeneric("createZip", function(object, folder) {
+    StandartGeneric("createZip")
+})
+
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTest
 setMethod("createAssessmentTest", signature(object = "AssessmentTest"),
@@ -126,4 +142,11 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
                       make_outcome_declaration("MAXSCORE",
                                                value = object@points),
                       make_outcome_declaration("MINSCORE", value = 0))
+          })
+
+#' @rdname createZip-methods
+#' @aliases createZip,AssessmentTest
+setMethod("createZip", signature(object = "AssessmentTest"),
+          function(object, folder) {
+              zip_wrapper(object@identifier, NA, folder)
           })
