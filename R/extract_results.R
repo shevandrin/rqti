@@ -268,7 +268,7 @@ get_result_attr_options <- function(file) {
     test_dt <- lubridate::ymd_hms(test_dt)
 
     items_result <- unique_result_set(doc)
-    #items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
+
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
 
     types <- unlist(lapply(ids_item, identify_question_type))
@@ -280,6 +280,8 @@ get_result_attr_options <- function(file) {
     base_types <- character(0)
     cardinalities <- character(0)
     qti_type <- character(0)
+    score_values <- character(0)
+    maxscore_values <- character(0)
     for (ch in items_result) {
         res <- get_info(ch)
         len <- length(res$options)
@@ -291,6 +293,8 @@ get_result_attr_options <- function(file) {
         base_types <- append(base_types, res$base_types)
         cardinalities <- append(cardinalities, res$card)
         qti_type <- append(qti_type, res$qti_type)
+        score_values <- append(score_values, res$score_value)
+        maxscore_values <- append(maxscore_values, res$maxscore_value)
     }
 
     data <- data.frame(
@@ -302,7 +306,9 @@ get_result_attr_options <- function(file) {
         qti_type = qti_type,
         id_answer_options = options,
         correct_responses = correct_responses,
-        cand_responses = cand_responses
+        cand_responses = cand_responses,
+        cand_score = score_values,
+        max_score = maxscore_values
     )
     return(data)
 }
@@ -317,8 +323,9 @@ get_info <- function(node){
     if (b_type == "float") info <- get_info_float(node)
     if (b_type == "string") info <- get_info_float(node)
     res <- list(info$options, info$corr, info$cand, info$base_types, info$card,
-                info$q_type)
-    names(res) <- c("options", "corr", "cand", "base_types", "card", "qti_type")
+                info$q_type, info$score_value, info$maxscore_value)
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "qti_type",
+                    "score_value", "maxscore_value")
     return(res)
 }
 
@@ -335,11 +342,21 @@ get_info_identifier <- function(node, options_node) {
 
     if (!is.na(choice_seq)) {
         options <- stringr::str_split_1(choice_seq, " ")
-
     } else options <- corr_values
 
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
+    result <- corr * cand
+
+    score <- xml2::xml_find_all(node,
+                                ".//d1:outcomeVariable[@identifier='SCORE']")
+
+    score_value <- ifelse(result, get_value(score), "0")
+
+    maxscore <- xml2::xml_find_all(node,
+                                ".//d1:outcomeVariable[@identifier='MAXSCORE']")
+    maxscore_value <- ifelse(result, get_value(maxscore), "0")
+
     base_types <- rep(xml2::xml_attr(options_node, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_node, "cardinality"), length(options))
     if (card[1] == "single") q_type <- "SingleInlineChoice"
@@ -347,9 +364,11 @@ get_info_identifier <- function(node, options_node) {
     if (card[1] == "ordered") q_type <- "Order"
     q_type <- rep(q_type, length(options))
 
-    res <- list(options, corr, cand, base_types, card, q_type)
+    res <- list(options, corr, cand, base_types, card, q_type, score_value,
+                maxscore_value)
 
-    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type")
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type",
+                    "score_value", "maxscore_value")
     return(res)
 }
 
@@ -367,12 +386,21 @@ get_info_directedPair <- function(node, options_node) {
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
 
+    score <- xml2::xml_find_all(node,
+                                ".//d1:outcomeVariable[@identifier='SCORE']")
+    score_value <- rep(get_value(score), length(options))
+
+    maxscore <- xml2::xml_find_all(node,
+                                ".//d1:outcomeVariable[@identifier='MAXSCORE']")
+    maxscore_value <- rep(get_value(maxscore), length(options))
+
     base_types <- rep(xml2::xml_attr(options_node, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_node, "cardinality"), length(options))
     q_type <- rep("Match", length(options))
 
-    res <- list(options, corr, cand, base_types, card, q_type)
-    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type")
+    res <- list(options, corr, cand, base_types, card, q_type, score_value)
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type",
+                    "score_value")
     return(res)
 }
 
@@ -387,6 +415,8 @@ get_info_float <- function(node) {
     base_types <- character(0)
     card <- character(0)
     q_type <- character(0)
+    score_values <- character(0)
+    maxscore_values <- character(0)
     for (opt in options_nodes) {
         id <- xml2::xml_attr(opt, "identifier")
         options <- append(options, id)
@@ -398,16 +428,50 @@ get_info_float <- function(node) {
         cand_values <- get_value(cand_res)
         if (length(cand_values) == 0) cand_values = ""
         cand <- append(cand, cand_values)
+
+        expression <- paste0(".//d1:outcomeVariable[",
+                             "contains(@identifier, \'SCORE\') and ",
+                             "starts-with(@identifier, \'SCORE\') and ",
+                             "contains(@identifier, \'",
+                             id,
+                             "\')]")
+        score <- xml2::xml_find_all(node, expression)
+        if (length(score) == 0) {
+            score <- xml2::xml_find_all(node,
+                                ".//d1:outcomeVariable[@identifier='SCORE']")
+        }
+        score_value <- get_value(score)
+        if (length(score) == 0) score_value <- "0"
+        score_values <- append(score_values, score_value)
+
+        expression <- paste0(".//d1:outcomeVariable[",
+                             "contains(@identifier, \'MAXSCORE\') and ",
+                             "starts-with(@identifier, \'MAXSCORE\') and ",
+                             "contains(@identifier, \'",
+                             id,
+                             "\')]")
+        maxscore <- xml2::xml_find_all(node, expression)
+        if (length(maxscore) == 0) {
+            maxscore <- xml2::xml_find_all(node,
+                                ".//d1:outcomeVariable[@identifier='MAXSCORE']")
+        }
+        maxscore_value <- get_value(maxscore)
+        if (length(maxscore) == 0) maxscore_value <- 0
+        maxscore_values <- append(maxscore_values, maxscore_value)
+
         b_type <- xml2::xml_attr(opt, "baseType")
         base_types <- append(base_types, b_type)
         card <- append(card, xml2::xml_attr(opt, "cardinality"))
         if (b_type == "float") {q_type <- append(q_type, "NumericGap")}
         else if (corr_values == "") {q_type <- append(q_type, "Essay")}
         else {q_type <- append(q_type, "TextGap")}
+
     }
 
-    res <- list(options, corr, cand, base_types, card, q_type)
-    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type")
+    res <- list(options, corr, cand, base_types, card, q_type, score_values,
+                maxscore_values)
+    names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type",
+                    "score_value", "maxscore_value")
     return(res)
 }
 
