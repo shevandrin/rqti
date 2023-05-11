@@ -186,29 +186,17 @@ unique_result_set <- function(doc) {
         expression <- paste0(".//d1:itemResult", "[@identifier=\'", id, "\']")
         nodes <- xml2::xml_find_all(doc, expression)
         if (length(nodes) > 1) {
-            # compare dates to take the oldest
-            # dt1 <- lubridate::ymd_hms(xml_attr(nodes[1], "datestamp"))
-            # dt2 <- lubridate::ymd_hms(xml_attr(nodes[2], "datestamp"))
-            # # remove the node with the oldest timestamp
-            # ifelse(dt2 > dt1, xml_remove(nodes[1]), xml_remove(nodes[2]))
-
-            # find 'scorer' attribute in outcomeVariables and keep the result
-            # form him
             is_scored <- unlist(Map(check_scored, nodes))
             manual_scored <- nodes[is_scored]
             lms_scored <- nodes[!is_scored]
 
             if (length(manual_scored) == 0) {
-                xml_remove(head(lms_scored, 1))
+                if (length(lms_scored) > 1) xml_remove(head(lms_scored, -1))
             } else {
                 xml_remove(lms_scored)
             }
+            if (length(manual_scored) > 1) xml_remove(head(manual_scored, -1))
 
-            if (length(manual_scored) > 1) xml_remove(head(manual_scored, 1))
-
-        } else if (length(nodes) > 2) {
-            print(nodes)
-            #stop("Identifer of an itemResult occurs more than twice.")
         }
     }
     result <- xml2::xml_find_all(doc, ".//d1:itemResult")
