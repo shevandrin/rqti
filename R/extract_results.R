@@ -185,7 +185,7 @@ unique_result_set <- function(doc) {
     for (id in unique_ids) {
         expression <- paste0(".//d1:itemResult", "[@identifier=\'", id, "\']")
         nodes <- xml2::xml_find_all(doc, expression)
-        if (length(nodes) == 2) {
+        if (length(nodes) > 1) {
             # compare dates to take the oldest
             # dt1 <- lubridate::ymd_hms(xml_attr(nodes[1], "datestamp"))
             # dt2 <- lubridate::ymd_hms(xml_attr(nodes[2], "datestamp"))
@@ -194,18 +194,35 @@ unique_result_set <- function(doc) {
 
             # find 'scorer' attribute in outcomeVariables and keep the result
             # form him
-            outcome_var <- xml_find_all(nodes[2], ".//d1:outcomeVariable")
-            is_tutor <- any(xml_has_attr(outcome_var, "scorer"))
-            ifelse(is_tutor, xml_remove(nodes[1]), xml_remove(nodes[2]))
+            is_scored <- unlist(Map(check_scored, nodes))
+            manual_scored <- nodes[is_scored]
+            lms_scored <- nodes[!is_scored]
+
+            if (length(manual_scored) == 0) {
+                xml_remove(head(lms_scored, 1))
+            } else {
+                xml_remove(lms_scored)
+            }
+
+            if (length(manual_scored) > 1) xml_remove(head(manual_scored, 1))
 
         } else if (length(nodes) > 2) {
-            stop("Identifer of an itemResult occurs more than twice.")
+            print(nodes)
+            #stop("Identifer of an itemResult occurs more than twice.")
         }
     }
     result <- xml2::xml_find_all(doc, ".//d1:itemResult")
     return(result)
 }
 
+# check scored attribute
+check_scored <- function(node) {
+    outcome_var <- xml_find_all(node, ".//d1:outcomeVariable")
+    # TODO use manualScored=True as a condition
+    is_tutor <- xml_has_attr(outcome_var, "scorer")
+    result <- any(is_tutor)
+    return(result)
+}
 # take itemResult and return duration or NA
 get_duration <- function(node) {
     dur_node <- xml2::xml_find_all(node,
