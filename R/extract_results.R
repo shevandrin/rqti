@@ -483,7 +483,7 @@ get_info_float <- function(node) {
         maxscore_value <- get_value(maxscore)
         if (length(maxscore) == 0) maxscore_value <- 0
         maxscore_values <- append(maxscore_values, maxscore_value)
-        result_value <- ifelse(score_value == maxscore_value, TRUE, FALSE)
+        result_value <- ifelse(score_value == maxscore_value & maxscore_value > 0, TRUE, FALSE)
         result <- append(result, result_value)
 
         b_type <- xml2::xml_attr(opt, "baseType")
