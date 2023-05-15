@@ -178,6 +178,7 @@ get_result_attr_answers<- function(file) {
 
 # rebuild xml nodeset to leave only results after tutor evaluation if it
 # took place
+#' @importFrom utils head
 unique_result_set <- function(doc) {
     items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
     ids <- unlist(Map(xml_attr, items_result, "identifier"))
@@ -282,6 +283,7 @@ get_result_attr_options <- function(file) {
     qti_type <- character(0)
     score_values <- character(0)
     maxscore_values <- character(0)
+    correctness <- character(0)
     for (ch in items_result) {
         res <- get_info(ch)
         len <- length(res$options)
@@ -295,8 +297,18 @@ get_result_attr_options <- function(file) {
         qti_type <- append(qti_type, res$qti_type)
         score_values <- append(score_values, res$score_value)
         maxscore_values <- append(maxscore_values, res$maxscore_value)
+        correctness <- append(correctness, res$correctness)
     }
-
+    # print(file_name)
+    # print(identifier)
+    # print(base_types)
+    # print(cardinalities)
+    # print(qti_type)
+    # print(options)
+    # print(correct_responses)
+    # print(cand_responses)
+    # print(score_values)
+    # print(maxscore_values)
     data <- data.frame(
         file_name = rep(file_name, length(identifier)),
         datestamp = rep(test_dt, length(identifier)),
@@ -308,7 +320,8 @@ get_result_attr_options <- function(file) {
         correct_responses = correct_responses,
         cand_responses = cand_responses,
         cand_score = score_values,
-        max_score = maxscore_values
+        max_score = maxscore_values,
+        correctness = correctness
     )
     return(data)
 }
@@ -323,9 +336,10 @@ get_info <- function(node){
     if (b_type == "float") info <- get_info_float(node)
     if (b_type == "string") info <- get_info_float(node)
     res <- list(info$options, info$corr, info$cand, info$base_types, info$card,
-                info$q_type, info$score_value, info$maxscore_value)
+                info$q_type, info$score_value, info$maxscore_value,
+                info$correctness)
     names(res) <- c("options", "corr", "cand", "base_types", "card", "qti_type",
-                    "score_value", "maxscore_value")
+                    "score_value", "maxscore_value", "correctness")
     return(res)
 }
 
@@ -346,16 +360,19 @@ get_info_identifier <- function(node, options_node) {
 
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
+    true_counts <- sum(corr)
     result <- corr * cand
+    true_cand <- sum(result)
 
     score <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='SCORE']")
 
-    score_value <- ifelse(result, get_value(score), "0")
+    score_value <- ifelse(result, as.numeric(get_value(score)) / true_cand, "0")
+
 
     maxscore <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='MAXSCORE']")
-    maxscore_value <- ifelse(result, get_value(maxscore), "0")
+    maxscore_value <- ifelse(result, as.numeric(get_value(maxscore)) / true_counts, "0")
 
     base_types <- rep(xml2::xml_attr(options_node, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_node, "cardinality"), length(options))
@@ -365,10 +382,10 @@ get_info_identifier <- function(node, options_node) {
     q_type <- rep(q_type, length(options))
 
     res <- list(options, corr, cand, base_types, card, q_type, score_value,
-                maxscore_value)
+                maxscore_value, as.logical(result))
 
     names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type",
-                    "score_value", "maxscore_value")
+                    "score_value", "maxscore_value", "correctness")
     return(res)
 }
 
@@ -385,22 +402,29 @@ get_info_directedPair <- function(node, options_node) {
 
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
+    true_counts <- sum(corr)
+
+    result <- corr * cand
+    true_cand <- sum(result)
 
     score <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='SCORE']")
-    score_value <- rep(get_value(score), length(options))
+    score_value <- ifelse(result, (as.numeric(get_value(score)) )/ true_cand, "0")
+    if (length(score) == 0) score_value <- rep("0", length(options))
 
     maxscore <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='MAXSCORE']")
-    maxscore_value <- rep(get_value(maxscore), length(options))
+    maxscore_value <- ifelse(result, as.numeric(get_value(maxscore)) / true_counts, "0")
+    if (length(maxscore) == 0) maxscore_value <- rep("0", length(options))
 
     base_types <- rep(xml2::xml_attr(options_node, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_node, "cardinality"), length(options))
     q_type <- rep("Match", length(options))
 
-    res <- list(options, corr, cand, base_types, card, q_type, score_value)
+    res <- list(options, corr, cand, base_types, card, q_type, score_value,
+                maxscore_value, as.logical(result))
     names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type",
-                    "score_value")
+                    "score_value", "maxscore_value", "correctness")
     return(res)
 }
 
@@ -417,6 +441,7 @@ get_info_float <- function(node) {
     q_type <- character(0)
     score_values <- character(0)
     maxscore_values <- character(0)
+    result <- character(0)
     for (opt in options_nodes) {
         id <- xml2::xml_attr(opt, "identifier")
         options <- append(options, id)
@@ -458,6 +483,8 @@ get_info_float <- function(node) {
         maxscore_value <- get_value(maxscore)
         if (length(maxscore) == 0) maxscore_value <- 0
         maxscore_values <- append(maxscore_values, maxscore_value)
+        result_value <- ifelse(score_value == maxscore_value, TRUE, FALSE)
+        result <- append(result, result_value)
 
         b_type <- xml2::xml_attr(opt, "baseType")
         base_types <- append(base_types, b_type)
@@ -469,9 +496,9 @@ get_info_float <- function(node) {
     }
 
     res <- list(options, corr, cand, base_types, card, q_type, score_values,
-                maxscore_values)
+                maxscore_values, result)
     names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type",
-                    "score_value", "maxscore_value")
+                    "score_value", "maxscore_value", "correctness")
     return(res)
 }
 
