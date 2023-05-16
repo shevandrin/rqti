@@ -1,17 +1,17 @@
-"file_name","datestamp","question_id","base_types","cardinalities","qti_type","id_answer_options","correct_responses","cand_responses","titles"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id1","identifier","multiple","MultipleChoice","4","TRUE","TRUE","MultipleChoice"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id1","identifier","multiple","MultipleChoice","3","FALSE","FALSE","MultipleChoice"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id1","identifier","multiple","MultipleChoice","2","FALSE","FALSE","MultipleChoice"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id1","identifier","multiple","MultipleChoice","1","TRUE","FALSE","MultipleChoice"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id3","directedPair","multiple","Match","c m","TRUE","TRUE","Directed pairs"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id3","directedPair","multiple","Match","a k","TRUE","TRUE","Directed pairs"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id3","directedPair","multiple","Match","b l","TRUE","TRUE","Directed pairs"
-"assessmentResult_7c01929c-b8b0-4fb0-be71-f7730482fdb9.xml",2023-05-02 11:56:53,"Id2","string","single","TextGap","RESPONSE_1","more","","TextGapOpal"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id1","identifier","multiple","MultipleChoice","1","TRUE","FALSE","MultipleChoice"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id1","identifier","multiple","MultipleChoice","2","FALSE","FALSE","MultipleChoice"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id1","identifier","multiple","MultipleChoice","3","FALSE","FALSE","MultipleChoice"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id1","identifier","multiple","MultipleChoice","4","TRUE","FALSE","MultipleChoice"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id3","directedPair","multiple","Match","c m","TRUE","FALSE","Directed pairs"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id3","directedPair","multiple","Match","a k","TRUE","FALSE","Directed pairs"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id3","directedPair","multiple","Match","b l","TRUE","FALSE","Directed pairs"
-"assessmentResult_b267ef5c-f761-45ba-9653-25b4158d389a.xml",2023-05-02 11:56:29,"Id2","string","single","TextGap","RESPONSE_1","more","","TextGapOpal"
+﻿file_name;datestamp;question_id;base_types;cardinalities;qti_type;id_answer_options;correct_responses;cand_responses;cand_score;max_score;correctness;titles
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;1;TRUE;FALSE;0;0;FALSE;MultipleChoice
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;2;FALSE;FALSE;0;0;FALSE;MultipleChoice
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;3;FALSE;FALSE;0;0;FALSE;MultipleChoice
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;4;TRUE;FALSE;0;0;FALSE;MultipleChoice
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id3;directedPair;multiple;Match;c m;TRUE;FALSE;0;0;FALSE;Directed pairs
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id3;directedPair;multiple;Match;a k;TRUE;FALSE;0;0;FALSE;Directed pairs
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id3;directedPair;multiple;Match;b l;TRUE;FALSE;0;0;FALSE;Directed pairs
+result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id2;string;single;TextGap;RESPONSE_1;more;;0;0;FALSE;TextGapOpal
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;4;TRUE;TRUE;1;1;TRUE;MultipleChoice
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;3;FALSE;FALSE;0;0;FALSE;MultipleChoice
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;2;FALSE;FALSE;0;0;FALSE;MultipleChoice
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;1;TRUE;FALSE;0;0;FALSE;MultipleChoice
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id3;directedPair;multiple;Match;c m;TRUE;TRUE;1.66666666666667;1.66666666666667;TRUE;Directed pairs
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id3;directedPair;multiple;Match;a k;TRUE;TRUE;1.66666666666667;1.66666666666667;TRUE;Directed pairs
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id3;directedPair;multiple;Match;b l;TRUE;TRUE;1.66666666666667;1.66666666666667;TRUE;Directed pairs
+result_2023-05-02-11-56-38_pgyEjJ73Opxg_result.zip;05.02.2023 11:56;Id2;string;single;TextGap;RESPONSE_1;more;;0;0;FALSE;TextGapOpal

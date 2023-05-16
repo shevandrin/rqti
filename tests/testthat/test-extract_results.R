@@ -39,54 +39,83 @@ test_that("time is correct",
 
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test_result_3.zip")
-    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-1])
+    expected <- suppressMessages(extract_results(path1, level = "items"))
     expected <- expected[order(expected$datestamp),]
     rownames(expected) <- NULL
 
     path2 <- test_path("file/test_result_items.csv")
-    example <- read.csv(path2)[ ,-1]
+    example <- read.csv(path2)
     example$datestamp <- as.POSIXct(example$datestamp, tz = "UTC")
     example <- example[order(example$datestamp),]
     rownames(example) <- NULL
+
+    example$cand_score <- as.character(example$cand_score)
+    example$max_score <- as.character(example$max_score)
+    example$correctness <- as.character(example$correctness)
 
     expect_equal(example, expected)
 })
 test_that("Testing function extract_results", {
     path1 <- test_path("file/stab_results.xml")
     expected <- suppressWarnings(suppressMessages(
-        extract_results(path1, level = "items")[ ,-1]))
-    expected <- expected[order(expected$datestamp),]
-    expected <- expected[-c(95-100), ]
+    extract_results(path1, level = "items")[ ,-1]))
+
+    # To delete tag \r in data frame
+    expected <- data.frame(lapply(expected, function(x) gsub("\r", "", x)))
+
     rownames(expected) <- NULL
 
     path2 <- test_path("file/test_result_stab_items.csv")
     example <- read.csv(path2)[ ,-1]
-    example$datestamp <- as.POSIXct(example$datestamp, tz = "UTC")
+    example <- read.csv(path2)
     example <- example[order(example$datestamp),]
-    example <- example[-c(95-100), ]
+
     rownames(example) <- NULL
+
+    example$cand_score <- as.character(example$cand_score)
+    example$max_score <- as.character(example$max_score)
+    example$correctness <- as.character(example$correctness)
 
     expect_equal(example, expected)
 })
-# Testing function of extract_results() on all type questions
+# Testing function of extract_results() for tasks: Essay and TextGapOpal.
+test_that("Testing function extract_results", {
+    path1 <- test_path("file/test-extract_result_essay_gap.zip")
+    expected <- suppressWarnings(suppressMessages(
+                                    extract_results(path1, level = "items")))
+    expected <- data.frame(lapply(expected, function(x) gsub("\r", "", x)))
+
+    expected <- expected[order(expected$datestamp),]
+    rownames(expected) <- NULL
+
+    path2 <- test_path("file/test-extract_result_essay_gap.csv")
+    example <- read.csv(path2)
+    example <- example[order(example$datestamp),]
+
+    rownames(example) <- NULL
+
+    example$cand_score <- as.character(example$cand_score)
+    example$max_score <- as.character(example$max_score)
+    example$correctness <- as.character(example$correctness)
+
+    expect_equal(example, expected)
+})
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test_result.zip")
-
-    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-1])
+    expected <- suppressMessages(extract_results(path1, level = "items"))
     expected <- expected[order(expected$datestamp),]
     rownames(expected) <- NULL
 
     path2 <- test_path("file/test_result_items_all_type_q.csv")
-    example <- read.csv(path2)[ ,-1]
+    example <- read.csv(path2)
     example$datestamp <- as.POSIXct(example$datestamp, tz = "UTC")
     example <- example[order(example$datestamp),]
 
-    # Why is a different type of data between
-    # actual$cand_responses and correct_responses  is a logical vector and
-    # expected$cand_responses` and correct_responses is a character vector?
-
     example$cand_responses <- as.character(example$cand_responses)
     example$correct_responses <- as.character(example$correct_responses)
+    example$correctness <- as.character(example$correctness)
+    example$cand_score <- as.character(example$cand_score)
+    example$max_score <- as.character(example$max_score)
 
     rownames(example) <- NULL
     expect_equal(example, expected)
@@ -94,15 +123,19 @@ test_that("Testing function extract_results with zip archive", {
 # The testing function of extract_results() with gaps in the answers
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test-extract_result_with_gap_answer.zip")
-
-    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-1])
+    expected <- suppressMessages(extract_results(path1, level = "items"))
     expected <- expected[order(expected$datestamp),]
     rownames(expected) <- NULL
 
     path2 <- test_path("file/test-extract_result_with_gap_answer.csv")
-    example <- read.csv(path2)[ ,-1]
+    example <- read.csv(path2)
     example$datestamp <- as.POSIXct(example$datestamp, tz = "UTC")
     example <- example[order(example$datestamp),]
+
+    expected$cand_responses <- as.character(expected$cand_responses)
+    expected$correctness <- as.logical(expected$correctness)
+    expected$cand_score <- as.numeric(expected$cand_score)
+    expected$max_score <- as.numeric(expected$max_score)
 
     rownames(example) <- NULL
     expect_equal(example, expected)
@@ -111,17 +144,17 @@ test_that("Testing function extract_results with zip archive", {
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test-extract_result_only_gap.zip")
 
-    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-1])
-    expected <- expected[order(expected$datestamp),]
-    rownames(expected) <- NULL
-
+    # exclude column of the date stamp
+    expected <- suppressMessages(extract_results(path1, level = "items")[ ,-2])
     path2 <- test_path("file/test-extract_result_only_gap.csv")
-    example <- read.csv(path2, na.string = NA)[ ,-1]
-    example$datestamp <- as.POSIXct(example$datestamp, tz = "UTC")
-    example <- example[order(example$datestamp),]
+
+    # exclude column of the date stamp
+    example <- read.csv(path2, sep = ";", na.string = NA)[ ,-2]
 
     expected$cand_responses <- as.logical(expected$cand_responses)
+    expected$correctness <- as.logical(expected$correctness)
+    expected$cand_score <- as.numeric(expected$cand_score)
+    expected$max_score <- as.numeric(expected$max_score)
 
-    rownames(example) <- NULL
     expect_equal(example, expected)
 })
