@@ -372,7 +372,8 @@ get_info_identifier <- function(node, options_node) {
 
     maxscore <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='MAXSCORE']")
-    maxscore_value <- ifelse(result, as.numeric(get_value(maxscore)) / true_counts, "0")
+    maxscore_value <- ifelse(result,
+                             as.numeric(get_value(maxscore)) / true_counts, "0")
 
     base_types <- rep(xml2::xml_attr(options_node, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_node, "cardinality"), length(options))
@@ -409,12 +410,14 @@ get_info_directedPair <- function(node, options_node) {
 
     score <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='SCORE']")
-    score_value <- ifelse(result, (as.numeric(get_value(score)) )/ true_cand, "0")
+    score_value <- ifelse(result,
+                          (as.numeric(get_value(score)) )/ true_cand, "0")
     if (length(score) == 0) score_value <- rep("0", length(options))
 
     maxscore <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='MAXSCORE']")
-    maxscore_value <- ifelse(result, as.numeric(get_value(maxscore)) / true_counts, "0")
+    maxscore_value <- ifelse(result,
+                             as.numeric(get_value(maxscore)) / true_counts, "0")
     if (length(maxscore) == 0) maxscore_value <- rep("0", length(options))
 
     base_types <- rep(xml2::xml_attr(options_node, "baseType"), length(options))
@@ -483,7 +486,8 @@ get_info_float <- function(node) {
         maxscore_value <- get_value(maxscore)
         if (length(maxscore) == 0) maxscore_value <- 0
         maxscore_values <- append(maxscore_values, maxscore_value)
-        result_value <- ifelse(score_value == maxscore_value & maxscore_value > 0, TRUE, FALSE)
+        result_value <- ifelse(score_value == maxscore_value & score_value != 0,
+                               TRUE, FALSE)
         result <- append(result, result_value)
 
         b_type <- xml2::xml_attr(opt, "baseType")
