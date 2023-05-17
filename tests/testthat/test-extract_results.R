@@ -61,14 +61,14 @@ test_that("Testing function extract_results", {
         extract_results(path1, level = "items")[ ,-1]))
 
     # To delete tag \r in data frame
-    sut <- data.frame(lapply(sut, function(x) gsub("\r", "", x)))
-    sut$cand_responses <- sut$cand_responses[nzchar(sut$cand_responses)]
-
+    sut$cand_responses <- gsub("\r", "", sut$cand_responses)
+    sut <- sut[!is.na(sut$cand_responses) & sut$cand_responses != "", , drop = FALSE]
     rownames(sut) <- NULL
 
     path2 <- test_path("file/test_result_stab_items.csv")
     expected <- read.csv(path2)[ ,-1]
     expected <- read.csv(path2)
+    expected$datestamp <- as.POSIXct(expected$datestamp, tz = "UTC")
     expected <- expected[order(expected$datestamp),]
 
     rownames(expected) <- NULL
@@ -83,20 +83,22 @@ test_that("Testing function extract_results", {
 test_that("Testing function extract_results", {
     path1 <- test_path("file/test-extract_result_essay_gap.zip")
     sut <- suppressWarnings(suppressMessages(
-        extract_results(path1, level = "items")))
+                                    extract_results(path1, level = "items")))
 
     # To delete tag \r in data frame
-    sut <- data.frame(lapply(sut, function(x) gsub("\r", "", x)))
-    sut$cand_responses <- sut$cand_responses[nzchar(sut$cand_responses)]
+    sut$cand_responses <- gsub("\r", "", sut$cand_responses)
+    sut <- sut[!is.na(sut$cand_responses) & sut$cand_responses != "", , drop = FALSE]
 
     sut <- sut[order(sut$datestamp),]
     rownames(sut) <- NULL
 
     path2 <- test_path("file/test-extract_result_essay_gap.csv")
     expected <- read.csv(path2)
+    expected$datestamp <- as.POSIXct(expected$datestamp, tz = "UTC")
     expected <- expected[order(expected$datestamp),]
 
     rownames(expected) <- NULL
+
 
     expected$cand_score <- as.character(expected$cand_score)
     expected$max_score <- as.character(expected$max_score)
