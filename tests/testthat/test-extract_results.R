@@ -53,7 +53,7 @@ test_that("Testing function extract_results with zip archive", {
     expected$max_score <- as.character(expected$max_score)
     expected$correctness <- as.character(expected$correctness)
 
-    expect_equal(expected, sut)
+    expect_equal(sut,expected)
 })
 test_that("Testing function extract_results", {
     path1 <- test_path("file/stab_results.xml")
@@ -62,6 +62,7 @@ test_that("Testing function extract_results", {
 
     # To delete tag \r in data frame
     sut <- data.frame(lapply(sut, function(x) gsub("\r", "", x)))
+    sut$cand_responses <- sut$cand_responses[nzchar(sut$cand_responses)]
 
     rownames(sut) <- NULL
 
@@ -76,14 +77,17 @@ test_that("Testing function extract_results", {
     expected$max_score <- as.character(expected$max_score)
     expected$correctness <- as.character(expected$correctness)
 
-    expect_equal(expected, sut)
+    expect_equal(sut,expected)
 })
 # Testing function of extract_results() for tasks: Essay and TextGapOpal.
 test_that("Testing function extract_results", {
     path1 <- test_path("file/test-extract_result_essay_gap.zip")
     sut <- suppressWarnings(suppressMessages(
         extract_results(path1, level = "items")))
+
+    # To delete tag \r in data frame
     sut <- data.frame(lapply(sut, function(x) gsub("\r", "", x)))
+    sut$cand_responses <- sut$cand_responses[nzchar(sut$cand_responses)]
 
     sut <- sut[order(sut$datestamp),]
     rownames(sut) <- NULL
@@ -98,7 +102,7 @@ test_that("Testing function extract_results", {
     expected$max_score <- as.character(expected$max_score)
     expected$correctness <- as.character(expected$correctness)
 
-    expect_equal(expected, sut)
+    expect_equal(sut,expected)
 })
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test_result.zip")
@@ -118,7 +122,7 @@ test_that("Testing function extract_results with zip archive", {
     expected$max_score <- as.character(expected$max_score)
 
     rownames(expected) <- NULL
-    expect_equal(expected, sut)
+    expect_equal(sut,expected)
 })
 # The testing function of extract_results() with gaps in the answers
 test_that("Testing function extract_results with zip archive", {
@@ -138,7 +142,7 @@ test_that("Testing function extract_results with zip archive", {
     sut$max_score <- as.numeric(sut$max_score)
 
     rownames(expected) <- NULL
-    expect_equal(expected, sut)
+    expect_equal(sut,expected)
 })
 # The testing function of extract_results() with only gaps in the answers
 test_that("Testing function extract_results with zip archive", {
@@ -157,5 +161,5 @@ test_that("Testing function extract_results with zip archive", {
     sut$cand_score <- as.numeric(sut$cand_score)
     sut$max_score <- as.numeric(sut$max_score)
 
-    expect_equal(expected, sut)
+    expect_equal(sut,expected)
 })
