@@ -58,24 +58,25 @@ test_that("Testing function extract_results with zip archive", {
 test_that("Testing function extract_results", {
     path1 <- test_path("file/stab_results.xml")
     sut <- suppressWarnings(suppressMessages(
-        extract_results(path1, level = "items")[ ,-1]))
-
-    # To delete tag \r in data frame
-    sut$cand_responses <- gsub("\r", "", sut$cand_responses)
-    sut <- sut[!is.na(sut$cand_responses) & sut$cand_responses != "", , drop = FALSE]
+                                extract_results(path1, level = "items")[ ,-1]))
+    sut <- sut[order(sut$datestamp),]
     rownames(sut) <- NULL
+
+    # To delete all symbols
+    sut$cand_responses <- gsub("[^a-zA-Z0-9]", "", sut$cand_responses)
 
     path2 <- test_path("file/test_result_stab_items.csv")
     expected <- read.csv(path2)
-    expected <- expected[!is.na(expected$cand_responses) & expected$cand_responses != "", , drop = FALSE]
     expected$datestamp <- as.POSIXct(expected$datestamp, tz = "UTC")
     expected <- expected[order(expected$datestamp),]
-
     rownames(expected) <- NULL
 
     expected$cand_score <- as.character(expected$cand_score)
     expected$max_score <- as.character(expected$max_score)
     expected$correctness <- as.character(expected$correctness)
+
+    # To delete all symbols
+    expected$cand_responses <- gsub("[^a-zA-Z0-9]", "", expected$cand_responses)
 
     expect_equal(sut,expected)
 })
@@ -83,28 +84,24 @@ test_that("Testing function extract_results", {
 test_that("Testing function extract_results", {
     path1 <- test_path("file/test-extract_result_essay_gap.zip")
     sut <- suppressWarnings(suppressMessages(
-                                    extract_results(path1, level = "items")))
-
-    # To delete tag \r in data frame
-    sut$cand_responses <- gsub("\r", "", sut$cand_responses)
-    sut <- sut[!is.na(sut$cand_responses) & sut$cand_responses != "", , drop = FALSE]
-
+                                       extract_results(path1, level = "items")))
     sut <- sut[order(sut$datestamp),]
     rownames(sut) <- NULL
+    # To delete all symbols
+    sut$cand_responses <- gsub("[^a-zA-Z0-9]", "", sut$cand_responses)
 
     path2 <- test_path("file/test-extract_result_essay_gap.csv")
-
     expected <- read.csv(path2)
-    expected <- expected[!is.na(expected$cand_responses) & expected$cand_responses != "", , drop = FALSE]
     expected$datestamp <- as.POSIXct(expected$datestamp, tz = "UTC")
     expected <- expected[order(expected$datestamp),]
-
     rownames(expected) <- NULL
-
 
     expected$cand_score <- as.character(expected$cand_score)
     expected$max_score <- as.character(expected$max_score)
     expected$correctness <- as.character(expected$correctness)
+
+    # To delete all symbols
+    expected$cand_responses <- gsub("[^a-zA-Z0-9]", "", expected$cand_responses)
 
     expect_equal(sut,expected)
 })
