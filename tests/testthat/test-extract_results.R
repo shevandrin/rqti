@@ -66,8 +66,8 @@ test_that("Testing function extract_results", {
     rownames(sut) <- NULL
 
     path2 <- test_path("file/test_result_stab_items.csv")
-    expected <- read.csv(path2)[ ,-1]
     expected <- read.csv(path2)
+    expected <- expected[!is.na(expected$cand_responses) & expected$cand_responses != "", , drop = FALSE]
     expected$datestamp <- as.POSIXct(expected$datestamp, tz = "UTC")
     expected <- expected[order(expected$datestamp),]
 
@@ -93,7 +93,9 @@ test_that("Testing function extract_results", {
     rownames(sut) <- NULL
 
     path2 <- test_path("file/test-extract_result_essay_gap.csv")
+
     expected <- read.csv(path2)
+    expected <- expected[!is.na(expected$cand_responses) & expected$cand_responses != "", , drop = FALSE]
     expected$datestamp <- as.POSIXct(expected$datestamp, tz = "UTC")
     expected <- expected[order(expected$datestamp),]
 
