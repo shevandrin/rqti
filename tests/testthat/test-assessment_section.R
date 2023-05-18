@@ -162,7 +162,7 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
     example <- "q1.xml, q2.xml, q3.xml, q4.xml"
     expect_equal(expected, example)
 })
-test_that("Testing AssessmentSection class for uploading files with tasks", {
+test_that("Testing AssessmentTestOpal class: create tasks with upload files xml", {
     mc <- new("MultipleChoice",
                identifier = "test_create_qti_task_MultipleChoice",
                prompt = "What does 3/4 + 1/4 = ?",
@@ -245,4 +245,20 @@ test_that("Testing AssessmentSection class for uploading files with tasks", {
 
     unlink(file.path(getwd(),"exam_folder"), recursive = TRUE)
     unlink(file.path(getwd(),"exam_folder3"), recursive = TRUE)
+})
+test_that("buildAssessmentSection returns warning for invalid XML file", {
+    temp_folder <- tempdir()
+
+    invalid_xml <- tempfile(tmpdir = temp_folder, fileext = ".xml")
+    cat("<invalid></invalid>", file = invalid_xml)
+
+    expect_warning(buildAssessmentSection(invalid_xml, temp_folder),"is not valid")
+})
+
+test_that("buildAssessmentSection returns warning for incorrect file or path", {
+
+    expect_warning(
+        buildAssessmentSection("nonexistent.xml", "nonexistent_folder"),
+        "is not correct. This file will be omitted in test"
+    )
 })
