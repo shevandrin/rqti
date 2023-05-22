@@ -26,15 +26,6 @@
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
 
-# constructor
-setMethod("initialize", "SingleChoice", function(.Object, ...) {
-    .Object <- callNextMethod()
-    if (length(.Object@solution) == 0) .Object@solution <- 1
-    if (is.na(.Object@solution)) .Object@solution <- 1
-    validObject(.Object)
-    .Object
-})
-
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,SingleChoice
 setMethod("createItemBody", signature(object = "SingleChoice"),

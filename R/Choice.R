@@ -13,7 +13,7 @@ setClass("Choice", contains = "AssessmentItem",
                    choice_identifiers = "character",
                    orientation = "character"),
          prototype = prototype(shuffle = TRUE,
-                               orientation = NA_character_,
+                               orientation = "vertical",
                                choice_identifiers = NA_character_))
 
 # constructor
@@ -23,11 +23,6 @@ setMethod("initialize", "Choice", function(.Object, ...) {
     if (length(ids) < 2L) {
         .Object@choice_identifiers <- paste0("Choice",
                                              LETTERS[seq(.Object@choices)])
-    }
-    if (length(.Object@orientation) == 0) .Object@orientation = "vertical"
-    if (is.na(.Object@orientation)) .Object@orientation = "vertical"
-    if (length(.Object@shuffle) == 0L) {
-        .Object@shuffle = TRUE
     }
     validObject(.Object)
     .Object

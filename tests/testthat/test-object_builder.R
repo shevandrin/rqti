@@ -1,75 +1,11 @@
-
-# Testing function of get-task-attribute ---------------------------------------
-test_that("Testing function of get-task-attribute", {
-    gta <- get_task_attributes("title: Konjunktiv two")
-    expected <- setNames("Konjunktiv two","title")
-    expect_equal(gta, expected)
-})
-
-test_that("Testing function of get-task-attribute", {
-    gta <- get_task_attributes("identifier: 090909")
-    expected <- setNames("090909","identifier")
-    expect_equal(gta, expected)
-})
-
-test_that("Testing function of get-task-attribute", {
-    path <- test_path("file/test_fun_gts.md")
-    gta <- get_task_attributes(get_task_section(readLines(path), "attributes"))
-    expected <- sort(setNames(c("singlechoice",
-                               "Economics and Physic",
-                               "145","12, 13, 1.23"),
-                             c("type","title","number", "num")))
-    expect_equal(gta, expected)
-})
-
-test_that("Testing function of get-task-attribute", {
-    path <- test_path("file/test_fun_gts.md")
-    gta <- get_task_section(readLines(path), "attributes")
-    expected <- paste(c("type","title","number", "num"),
-                     c("singlechoice","Economics and Physic",
-                       "145","12, 13, 1.23"), sep=": ", collapse = NULL)
-    expect_equal(gta, expected)
-})
-
-# Testing function of get_task_section -----------------------------------------
-test_that("Testing function of get_task_section", {
-    path <- test_path("file/test_fun_gts.md")
-    gts <- get_task_section(readLines(path), "question")
-    expected <- c(
-        "In economics it is generallz believed that the main objective of",
-        "a Public Sector Financial Companz like Bank is to:")
-    expect_equal(gts, expected)
-})
-
-test_that("Testing function of get_task_section", {
-    path <- test_path("file/test_fun_gts.md")
-    gts <- get_task_section(readLines(path), "attributes")
-    expected <- c("type: singlechoice",
-    "title: Economics and Physic",
-    "number: 145", "num: 12, 13, 1.23")
-    expect_equal(gts, expected)
-})
-
-test_that("Testing function of get_task_section", {
-    path <- test_path("file/test_fun_gts.md")
-    gts <- get_task_section(readLines(path), "answers")
-    expected <- c("Employ more and more people",
-    "Maximize total production", "Maximize total profits",
-    "Sell the goods at subsidized cost")
-    expect_equal(gts, expected)
-})
-
-# Testing function of create_question_content ----------------------------------
 # SingleChoice
 test_that("create_question_object", {
     path <- test_path("file/test_sc_example1.md")
-    cqc <- create_question_object(path)
+    sut <- create_question_object(path)
+
+    content <- "<p>This is a mock question<br>\r\nIn economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>\r"
     expected <- new("SingleChoice",
-                   content = list(
-        "<p>This is a mock question<br />",
-        "In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"
-        ),
-                   points = 1,
+                   content = list(content),
                    identifier = "eco",
                    qti_version = "v2p1",
                    title = "Economics and Physic",
@@ -86,7 +22,7 @@ test_that("create_question_object", {
                    orientation = "vertical",
                    solution = 1
     )
-    expect_equal(cqc, expected)
+    expect_equal(sut, expected)
 })
 
 test_that("create_question_object", {
@@ -94,7 +30,7 @@ test_that("create_question_object", {
     cqc <- create_question_object(path)
     expected <- new("SingleChoice",
                    content = list(
-    "<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>"),
+    "<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>\r"),
                    points = 2,
                    identifier = "sample 2",
                    qti_version = "v2p1",
@@ -119,7 +55,7 @@ test_that("create_question_object", {
     path <- test_path("file/test_sc_example3.md")
     cqc <- create_question_object(path)
     expected <- new("SingleChoice", content = list(
-    "<p>Which of the following is a market economy primarily based on?</p>"),
+    "<p>Which of the following is a market economy primarily based on?</p>\r"),
                    points = 3,
                    identifier = "sample 2",
                    qti_version = "v2p1",

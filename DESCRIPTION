@@ -31,7 +31,8 @@ Imports:
     lubridate,
     magrittr,
     httr,
-    dotenv
+    dotenv,
+    parsermd
 Suggests: 
     covr,
     dplyr,
