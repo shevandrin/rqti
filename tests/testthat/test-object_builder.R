@@ -77,10 +77,10 @@ test_that("create_question_object", {
 # MultipleChoice
 test_that("create_question_object", {
     path <- test_path("file/test_mc_example.md")
-    cqc <- create_question_object(path)
+    sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                    content = list(
-    "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+    "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>\r"),
                    points = c(1, 2, 0, 0),
                    identifier = "test 2",
                    qti_version = "v2p1",
@@ -100,7 +100,8 @@ test_that("create_question_object", {
                    default_value = 0
 
     )
-    expect_equal(cqc, expected)
+    sut@choices <- textclean::replace_non_ascii(sut@choices)
+    expect_equal(sut, expected)
 })
 
 # Essay

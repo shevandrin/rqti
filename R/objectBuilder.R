@@ -22,7 +22,7 @@ create_question_object <- function(file) {
     object <- switch(tolower(attrs$type),
                      "entry" = create_entry_object(doc_tree, attrs),
                      "sc" =  create_sc_object(doc_tree, attrs, file_name),
-                     "multiplechoice" = create_mc_object(doc_tree, attrs),
+                     "mc" = create_mc_object(doc_tree, attrs),
                      "essay" = create_essay_object(doc_tree, attrs),
                      "order" = create_order_object(doc_tree, attrs),
                      "directedpair" = create_dp_object(doc_tree, attrs),
@@ -70,7 +70,36 @@ create_entry_object <- function(rmd, attrs, file_name) {
 }
 
 create_mc_object <- function(rmd, attrs, file_name) {
+    # transform questoin section into html
+    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
+    html <- transform_to_html(parsermd::as_document(question))
 
+    # get answers - choices
+    question_list <- xml2::xml_find_all(html, "//ul")
+    choices <- xml2::xml_text(xml2::xml_find_all(
+        question_list[length(question_list)], ".//li"))
+
+    # look for <em> to find position of the correct answer
+    em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
+    if (length(em) > 0) attrs$solution = which(choices == em)
+
+    # rid of list from question-html
+    xml_remove(question_list[length(question_list)])
+    # get clean html of question-html
+    content <- clean_question(html)
+
+    feedback <- parse_feedback(rmd)
+
+    # align attrs with slots of MultipleChoice class
+    if (is.null(attrs$identifier)) attrs$identifier <- file_name
+    attrs$points <- as.numeric(strsplit(as.character(attrs$points), ",")[[1]])
+    attrs <- c(Class = "MultipleChoice", choices = list(choices),
+               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
+    attrs[["type"]] <- NULL # rid of type attribute from attrs
+
+    #create new S4 object
+    object <- do.call(new, attrs)
+    return(object)
 }
 
 create_essay_object <- function(rmd, attrs, file_name) {
