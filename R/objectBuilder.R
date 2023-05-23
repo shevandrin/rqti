@@ -103,7 +103,23 @@ create_mc_object <- function(rmd, attrs, file_name) {
 }
 
 create_essay_object <- function(rmd, attrs, file_name) {
+    # transform questoin section into html
+    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
+    html <- transform_to_html(parsermd::as_document(question))
 
+    # get clean html of question-html
+    content <- clean_question(html)
+
+    feedback <- parse_feedback(rmd)
+
+    # align attrs with slots of Essay class
+    if (is.null(attrs$identifier)) attrs$identifier <- file_name
+    attrs <- c(Class = "Essay", content = as.list(list(content)), attrs,
+               feedback = as.list(list(feedback)))
+    attrs[["type"]] <- NULL # rid of type attribute from attrs
+
+    #create new S4 object
+    object <- do.call(new, attrs)
 }
 
 create_order_object <- function(rmd, attrs, file_name) {

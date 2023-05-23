@@ -107,7 +107,7 @@ test_that("create_question_object", {
 # Essay
 test_that("create_question_object", {
     path <- test_path("file/test_essay_example.md")
-    cqc <- create_question_object(path)
+    sut <- create_question_object(path)
     expected <- new("Essay",
                     content = list(
                 "<p>Defining Good Students Means More Than Just Grades.</p>"),
@@ -116,7 +116,7 @@ test_that("create_question_object", {
                    qti_version = "v2p1",
                    title = "Definition Essay"
                    )
-    expect_equal(cqc, expected)
+    expect_equal(sut, expected)
 })
 # Entry
 test_that("create_question_object", {
