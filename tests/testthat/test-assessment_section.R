@@ -232,7 +232,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                 section = list(example_exam_section))
     suppressMessages(createQtiTest(example_exam, "exam_folder3", "TRUE"))
 
-    # get list content zip files and compate them
+    # get list content zip files and compare them
     zip_example <- list.files(path = "exam_folder", pattern = ".zip", full.names = TRUE)
     zip_expected <- list.files(path = "exam_folder3", pattern = ".zip", full.names = TRUE)
 
@@ -246,7 +246,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
     unlink(file.path(getwd(),"exam_folder"), recursive = TRUE)
     unlink(file.path(getwd(),"exam_folder3"), recursive = TRUE)
 })
-test_that("buildAssessmentSection returns warning for invalid XML file", {
+test_that("Testing buildAssessmentSection() that returns a warning for an invalid XML file", {
     temp_folder <- tempdir()
 
     invalid_xml <- tempfile(tmpdir = temp_folder, fileext = ".xml")
@@ -254,9 +254,7 @@ test_that("buildAssessmentSection returns warning for invalid XML file", {
 
     expect_warning(buildAssessmentSection(invalid_xml, temp_folder),"is not valid")
 })
-
-test_that("buildAssessmentSection returns warning for incorrect file or path", {
-
+test_that("Testing buildAssessmentSection() that returns a warning for incorrect file or path", {
     expect_warning(
         buildAssessmentSection("nonexistent.xml", "nonexistent_folder"),
         "is not correct. This file will be omitted in test"
