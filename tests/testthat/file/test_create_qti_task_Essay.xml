@@ -16,7 +16,7 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    <extendedTextInteraction responseIdentifier="RESPONSE">
+    <extendedTextInteraction responseIdentifier="RESPONSE" data-allowPaste="false">
       <prompt>Test task</prompt>
     </extendedTextInteraction>
   </itemBody>
