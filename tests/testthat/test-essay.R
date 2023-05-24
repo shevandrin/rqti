@@ -23,7 +23,7 @@ test_that("Testing createItemBody for the Essay object", {
                 </object>
                 </div>
                 <extendedTextInteraction responseIdentifier=\"RESPONSE\"
-                expectedLength=\"200\">
+                expectedLength=\"200\" data-allowPaste=\"false\">
                 <prompt>Write Sam a postcard. Answer the questions. Write 25-35 words.</prompt>
                 </extendedTextInteraction>
                 </itemBody>

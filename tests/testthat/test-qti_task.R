@@ -1,7 +1,7 @@
 # Essay
 test_that("create_qti_task", {
     path <- test_path("file/test_create_qti_task_Essay.xml")
-    cqt <- readLines(path)
+    sut <- readLines(path)
 
     essay <- new("Essay", prompt = "Test task",
                  title = "Essay",
@@ -9,7 +9,7 @@ test_that("create_qti_task", {
     suppressMessages(create_qti_task(essay))
     expected <- readLines("new.xml")
 
-    expect_equal(cqt, expected)
+    expect_equal(sut, expected)
     file.remove("new.xml")
 })
 # MultipleChoice
