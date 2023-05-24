@@ -20,13 +20,13 @@ create_question_object <- function(file) {
     file_name <- tools::file_path_sans_ext(basename(file))
 
     object <- switch(tolower(attrs$type),
-                     "entry" = create_entry_object(doc_tree, attrs),
+                     "entry" = create_entry_object(doc_tree, attrs, file_name),
                      "sc" =  create_sc_object(doc_tree, attrs, file_name),
-                     "mc" = create_mc_object(doc_tree, attrs),
-                     "essay" = create_essay_object(doc_tree, attrs),
-                     "order" = create_order_object(doc_tree, attrs),
-                     "directedpair" = create_dp_object(doc_tree, attrs),
-                     "multiplechoicetable" = create_mctable_object(doc_tree, attrs)
+                     "mc" = create_mc_object(doc_tree, attrs, file_name),
+                     "essay" = create_essay_object(doc_tree, attrs, file_name),
+                     "order" = create_order_object(doc_tree, attrs, file_name),
+                     "directedpair" = create_dp_object(doc_tree, attrs, file_name),
+                     "multiplechoicetable" = create_mctable_object(doc_tree, attrs, file_name)
     )
     return(object)
 }
@@ -65,10 +65,6 @@ create_sc_object <- function(rmd, attrs, file_name) {
     return(object)
 }
 
-create_entry_object <- function(rmd, attrs, file_name) {
-
-}
-
 create_mc_object <- function(rmd, attrs, file_name) {
     # transform questoin section into html
     question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
@@ -92,7 +88,10 @@ create_mc_object <- function(rmd, attrs, file_name) {
 
     # align attrs with slots of MultipleChoice class
     if (is.null(attrs$identifier)) attrs$identifier <- file_name
+
+    # !!! this is the only difference with sc
     attrs$points <- as.numeric(strsplit(as.character(attrs$points), ",")[[1]])
+
     attrs <- c(Class = "MultipleChoice", choices = list(choices),
                content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
     attrs[["type"]] <- NULL # rid of type attribute from attrs
@@ -100,6 +99,74 @@ create_mc_object <- function(rmd, attrs, file_name) {
     #create new S4 object
     object <- do.call(new, attrs)
     return(object)
+}
+
+create_entry_object <- function(rmd, attrs, file_name) {
+    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
+    question <- parsermd::as_document(question)
+    question <- gsub("<<", "<entry>", question)
+    question <- gsub(">>", "</entry>", question)
+    html <- transform_to_html(question)
+
+    entry_gaps <- xml2::xml_find_all(html, "//entry")
+    gaps_content <- xml2::xml_text(entry_gaps)
+    ids <- make_ids(length(entry_gaps), "response")
+    # new_gaps <- Map(create_gap_object, ids, gaps_content)
+
+    html_ <- clean_question(html)
+    end <- unlist(gregexpr("<entry>", html_)) - 1L
+    begin <- unlist(gregexpr("</entry>", html_)) + 8L
+    all <- sort(c(begin, end, 1, nchar(html_)))
+
+    content <- list()
+    for (i in seq(length(all) - 1)) {
+        text_chank <- substring(html_, all[i], all[i + 1L])
+        if ((i %% 2) == 0) {
+            text_chank <- create_gap_object(ids[i/2], gaps_content[i/2])
+        }
+        content <- append(content, text_chank)
+    }
+
+    # create list where put string chank than Gap object, then string chank
+
+    feedback <- parse_feedback(rmd)
+    # align attrs with slots of Entry class
+    if (is.null(attrs$identifier)) attrs$identifier <- file_name
+    attrs <- c(Class = "Entry", content = as.list(list(content)), attrs,
+               feedback = as.list(list(feedback)))
+    attrs[["type"]] <- NULL # rid of type attribute from attrs
+
+    object <- do.call(new, attrs)
+    return(object)
+}
+
+create_gap_object <- function(id, value) {
+    attrs <- yaml::yaml.load(value)
+    if (!is.list(attrs)) {
+        if (!is.na(suppressWarnings(as.numeric(value)))) {
+            object <- new("NumericGap", response_identifier = id, response = as.numeric(value))
+        } else if (length(str_split_1(value, "\\|")) == 1) {
+            object <- new("TextGap", response_identifier = id, response = value)
+        } else {
+            object <- new("InlineChoice", response_identifier = id,
+                options = str_split_1(value, "\\|"))
+            print(value)
+        }
+    } else {
+        object_class <- switch(attrs$type,
+            "text" = "TextGap",
+            "numeric" = "NumericGap",
+            "text_opal" = "TextGapOpal",
+            "InlineChoice")
+        attrs[["type"]] <- NULL
+        attrs <- c(Class = object_class, attrs, response_identifier = id)
+        object <- do.call(new, attrs)
+    }
+    return(object)
+}
+
+make_ids <- function(n, type) {
+    paste(type, formatC(1:n, flag = "0", width = nchar(n)), sep = "_")
 }
 
 create_essay_object <- function(rmd, attrs, file_name) {
@@ -181,6 +248,7 @@ clean_question <- function(html) {
     content <- as.character(xml2::xml_find_all(html, ".//body"))
     content <- gsub("<\\/?(body)>", "", content)
     content <- gsub("^\\n|\\n$", "", content)
+    content <- gsub("<br>", "<br/>", content)
     content <- as.list(content)
     return(content)
 }

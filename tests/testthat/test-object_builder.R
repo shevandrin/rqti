@@ -3,7 +3,7 @@ test_that("create_question_object", {
     path <- test_path("file/test_sc_example1.md")
     sut <- create_question_object(path)
 
-    content <- "<p>This is a mock question<br>\r\nIn economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>\r"
+    content <- "<p>This is a mock question<br/>\r\nIn economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>\r"
     expected <- new("SingleChoice",
                    content = list(content),
                    identifier = "eco",
@@ -121,8 +121,8 @@ test_that("create_question_object", {
 # Entry
 test_that("create_question_object", {
 path <- test_path("file/test_entry_example1.md")
-cqc <- create_question_object(path)
-expected <- new("Entry", content = list("<p>Hast du",
+sut <- create_question_object(path)
+expected <- new("Entry", content = list("<p>Hast du ",
                 new("TextGap", response_identifier = "response_1", response = "ein"),
                 " Handy?</p>"),
                 points = 5,
@@ -130,26 +130,29 @@ expected <- new("Entry", content = list("<p>Hast du",
                 qti_version = "v2p1",
                 title = "Germany"
 )
-expect_equal(cqc, expected)
+expect_equal(sut, expected)
 })
 # Entry with YAML
 test_that("create_question_object", {
 path <- test_path("file/test_entry_example2.md")
-cqc <- create_question_object(path)
-expected <- new("Entry", content = list("<p>Hast du",
+sut <- create_question_object(path)
+expected <- new("Entry", content = list("<p>Hast du ",
                 new("TextGap",
                 expected_length = 10,
                 response_identifier = "response_1",
                 response = "Ein"),
-                " Handy?</p>"),
+                " Handy?<br/>\r\nWie viele Äpfel liegen auf dem Tisch? ",
+                new("NumericGap", response = 2,
+                    response_identifier = "response_2"),
+                "</p>"),
                 points = 5,
                 identifier = "test 2",
                 qti_version = "v2p1",
                 title = "Germany"
 )
-expect_equal(cqc, expected)
+expect_equal(sut, expected)
 })
-# Entry - Testing function create_outcome_declaration_entry
+ # Entry - Testing function create_outcome_declaration_entry
 test_that("Testing function create_outcome_declaration_entry", {
     expected <- new("Entry", content = list("<p>Hast du",
                                             new("TextGap", response_identifier = "response_1", response = "ein"),
