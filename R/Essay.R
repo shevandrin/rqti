@@ -24,8 +24,7 @@ setClass("Essay", contains = "AssessmentItem",
                    expected_lines = "numeric",
                    max_strings = "numeric",
                    min_strings = "numeric",
-                   data_allow_paste = "logical"),
-        prototype = prototype(data_allow_paste = FALSE))
+                   data_allow_paste = "logical"))
 
 setMethod("initialize", "Essay", function(.Object, ...) {
     .Object <- callNextMethod()

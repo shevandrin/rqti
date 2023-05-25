@@ -249,6 +249,7 @@ clean_question <- function(html) {
     content <- gsub("<\\/?(body)>", "", content)
     content <- gsub("^\\n|\\n$", "", content)
     content <- gsub("<br>", "<br/>", content)
+    content <- gsub("\r", "", content)
     content <- as.list(content)
     return(content)
 }

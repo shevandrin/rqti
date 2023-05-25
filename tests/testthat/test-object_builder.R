@@ -3,7 +3,7 @@ test_that("create_question_object", {
     path <- test_path("file/test_sc_example1.md")
     sut <- create_question_object(path)
 
-    content <- "<p>This is a mock question<br/>\r\nIn economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>\r"
+    content <- "<p>This is a mock question<br/>\nIn economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"
     expected <- new("SingleChoice",
                    content = list(content),
                    identifier = "eco",
@@ -30,7 +30,7 @@ test_that("create_question_object", {
     cqc <- create_question_object(path)
     expected <- new("SingleChoice",
                    content = list(
-    "<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>\r"),
+    "<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>"),
                    points = 2,
                    identifier = "sample 2",
                    qti_version = "v2p1",
@@ -55,7 +55,7 @@ test_that("create_question_object", {
     path <- test_path("file/test_sc_example3.md")
     cqc <- create_question_object(path)
     expected <- new("SingleChoice", content = list(
-    "<p>Which of the following is a market economy primarily based on?</p>\r"),
+    "<p>Which of the following is a market economy primarily based on?</p>"),
                    points = 3,
                    identifier = "sample 2",
                    qti_version = "v2p1",
@@ -80,7 +80,7 @@ test_that("create_question_object", {
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                    content = list(
-    "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>\r"),
+    "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
                    points = c(1, 2, 0, 0),
                    identifier = "test 2",
                    qti_version = "v2p1",
@@ -114,7 +114,8 @@ test_that("create_question_object", {
                    points = 10,
                    identifier = "test 2",
                    qti_version = "v2p1",
-                   title = "Definition Essay"
+                   title = "Definition Essay",
+                   data_allow_paste = FALSE
                    )
     expect_equal(sut, expected)
 })
@@ -141,7 +142,7 @@ expected <- new("Entry", content = list("<p>Hast du ",
                 expected_length = 10,
                 response_identifier = "response_1",
                 response = "Ein"),
-                " Handy?<br/>\r\nWie viele Äpfel liegen auf dem Tisch? ",
+                " Handy?<br/>\nWie viele Äpfel liegen auf dem Tisch? ",
                 new("NumericGap", response = 2,
                     response_identifier = "response_2"),
                 "</p>"),
@@ -201,4 +202,14 @@ test_that("Testing function create_outcome_declaration_entry", {
     xml1 <- xml2::read_xml(expected)
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
+})
+
+test_that("Test parsing md for Order task", {
+    path <- test_path("file/test_order_example.md")
+    sut <- create_question_object(path)
+    expected <- new("Order", content = list("<p>Arrange German cities in ascending order of population</p>"),
+                    identifier = "test_order_example",
+                    choices = c("Berlin", "Hamburg", "Munich", "Cologne", "Düsseldorf",  "Leipzig")
+    )
+    expect_equal(sut, expected)
 })
