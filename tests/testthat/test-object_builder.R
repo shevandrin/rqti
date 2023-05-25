@@ -213,3 +213,17 @@ test_that("Test parsing md for Order task", {
     )
     expect_equal(sut, expected)
 })
+test_that("Test parsing md for Direct Pair task", {
+    path <- test_path("file/test_directedPair_example.md")
+    sut <- create_question_object(path)
+    expected <- new("DirectedPair", content = list("<p>Associate the cities with lands.</p>"),
+                    identifier = "test_direct_pair_example",
+                    rows = c("Munchen", "Chemnitz", "Dusseldorf", "Karlsruhe", "Erfurt"),
+                    rows_identifiers = c("ID_1", "ID_2", "ID_3","ID_4","ID_5"),
+                    cols = c("Bayern", "Sachsen", "NRW", "Baden-Württemberg", "Thüringen"),
+                    cols_identifiers = c("IDT_1", "IDT_2", "IDT_3","IDT_4","IDT_5"),
+                    answers_identifiers = c("ID_1 IDT_1", "ID_2 IDT_2", "ID_3 IDT_3", "ID_4 IDT_4", "ID_5 IDT_5"),
+                    answers_scores = c(1, 1, 1, 1, 0.5)
+    )
+    expect_equal(sut, expected)
+})
