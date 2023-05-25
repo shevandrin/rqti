@@ -238,9 +238,23 @@ test_that("Test parsing md for OnInColTable task", {
                          rows = c("4*7 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
                          rows_identifiers = c("row_1", "row_2", "row_3", "row_4", "row_5"),
                          cols = c("27", "36", "25", "6", "72/2"),
-                         cols_identifiers = c("k", "l", "m", "n", "p"),
+                         cols_identifiers = c("col_1", "col_2", "col_3", "col_4", "col_5"),
                          answers_identifiers =c("row_2 col_1", "row_3 col_3", "row_4 col_4", "row_5 col_2", "row_5 col_5"),
                          answers_scores = c(0.5, 1, 1, 1, 1)
     )
+    expect_equal(sut, expected)
+})
+test_that("Test parsing md for OneInRowTable task", {
+    path <- test_path("file/test_OneInRowTable_example.md")
+    sut <- create_question_object(path)
+    OneInRowTable <- new("OneInRowTable", content = list("<p>Choose the correct order in the multiplication table</p>"),
+                         identifier = "test_OneInRowTable_example",
+                         title = "OneInRowTable",
+                         rows = c("4*9 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
+                         rows_identifiers = c("row_1", "row_2", "row_3", "row_4", "row_5"),
+                         cols = c("27", "36", "25", "6"),
+                         cols_identifiers = c("col_1", "col_2", "col_3", "col_4"),
+                         answers_identifiers = c("row_1 col_2", "row_2 col_1", "row_3 col_3", "row_4 col_4", "row_5 col_2"),
+                         answers_scores = c(0.5, 1, 1, 1, 1))
     expect_equal(sut, expected)
 })
