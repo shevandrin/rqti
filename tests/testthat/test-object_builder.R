@@ -231,7 +231,7 @@ test_that("Test parsing md for Direct Pair task", {
 test_that("Test parsing md for OnInColTable task", {
     path <- test_path("file/test_OnInColTable_example.md")
     sut <- create_question_object(path)
-    oneInColTable <- new("OneInColTable",
+    expected <- new("OneInColTable",
                          content = list("<p>Choose the correct order in the multiplication table</p>"),
                          identifier = "test_OnInColTable_example",
                          title = "OneInColTable",
@@ -247,7 +247,8 @@ test_that("Test parsing md for OnInColTable task", {
 test_that("Test parsing md for OneInRowTable task", {
     path <- test_path("file/test_OneInRowTable_example.md")
     sut <- create_question_object(path)
-    OneInRowTable <- new("OneInRowTable", content = list("<p>Choose the correct order in the multiplication table</p>"),
+    expected <- new("OneInRowTable",
+                         content = list("<p>Choose the correct order in the multiplication table</p>"),
                          identifier = "test_OneInRowTable_example",
                          title = "OneInRowTable",
                          rows = c("4*9 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
