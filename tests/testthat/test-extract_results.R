@@ -164,3 +164,12 @@ test_that("Testing function extract_results with zip archive", {
 
     expect_equal(sut,expected)
 })
+test_that("Testing extract_results() throws an error for non-existing file", {
+    expect_error(extract_results("nonexistent.xml", "nonexistent_folder"),
+                 "One or more files in list do not exist")
+})
+test_that("Testing extract_results() throws an error for invalid 'file' argument", {
+        invalid_file <- test_path("file/test_fig2.jpg")
+        expect_error(extract_results(invalid_file), "'file' must contain only one zip or set of xml files")
+})
+
