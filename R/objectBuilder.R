@@ -190,7 +190,32 @@ create_essay_object <- function(rmd, attrs, file_name) {
 }
 
 create_order_object <- function(rmd, attrs, file_name) {
+    # transform question section into html
+    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
+    html <- transform_to_html(parsermd::as_document(question))
 
+    # get answers - choices
+    question_list <- xml2::xml_find_all(html, "//ul")
+    choices <- xml2::xml_text(xml2::xml_find_all(
+        question_list[length(question_list)], ".//li"))
+
+    # rid of list from question-html
+    xml_remove(question_list[length(question_list)])
+    # get clean html of question-html
+    content <- clean_question(html)
+
+    feedback <- parse_feedback(rmd)
+
+    # align attrs with slots of Order class
+    if (is.null(attrs$identifier)) attrs$identifier <- file_name
+
+    attrs <- c(Class = "Order", choices = list(choices),
+               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
+    attrs[["type"]] <- NULL # rid of type attribute from attrs
+
+    #create new S4 object
+    object <- do.call(new, attrs)
+    return(object)
 }
 
 create_dp_object <- function(rmd, attrs, file_name) {
