@@ -203,3 +203,13 @@ test_that("Testing function create_outcome_declaration_entry", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+
+test_that("Test parsing md for Order task", {
+    path <- test_path("file/test_order_example.md")
+    sut <- create_question_object(path)
+    expected <- new("Order", content = list("<p>Arrange German cities in ascending order of population</p>"),
+                    identifier = "test_order_example",
+                    choices = c("Berlin", "Hamburg", "Munich", "Cologne", "Düsseldorf",  "Leipzig")
+    )
+    expect_equal(sut, expected)
+})
