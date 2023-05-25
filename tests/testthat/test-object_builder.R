@@ -219,10 +219,11 @@ test_that("Test parsing md for Direct Pair task", {
     expected <- new("DirectedPair", content = list("<p>Associate the cities with lands.</p>"),
                     identifier = "test_direct_pair_example",
                     rows = c("Munchen", "Chemnitz", "Dusseldorf", "Karlsruhe", "Erfurt"),
-                    rows_identifiers = c("ID_1", "ID_2", "ID_3","ID_4","ID_5"),
+                    rows_identifiers = c("row_1", "row_2", "row_3","row_4","row_5"),
                     cols = c("Bayern", "Sachsen", "NRW", "Baden-Württemberg", "Thüringen"),
-                    cols_identifiers = c("IDT_1", "IDT_2", "IDT_3","IDT_4","IDT_5"),
-                    answers_identifiers = c("ID_1 IDT_1", "ID_2 IDT_2", "ID_3 IDT_3", "ID_4 IDT_4", "ID_5 IDT_5"),
+                    cols_identifiers = c("col_1", "col_2", "col_3","col_4","col_5"),
+                    answers_identifiers = c("row_1 col_1", "row_2 col_2",
+                                    "row_3 col_3", "row_4 col_4", "row_5 col_5"),
                     answers_scores = c(1, 1, 1, 1, 0.5)
     )
     expect_equal(sut, expected)
