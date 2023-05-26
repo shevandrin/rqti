@@ -26,7 +26,7 @@ create_question_object <- function(file) {
                      "essay" = create_essay_object(doc_tree, attrs, file_name),
                      "order" = create_order_object(doc_tree, attrs, file_name),
                      "directedpair" = create_dp_object(doc_tree, attrs, file_name),
-                     "multiplechoicetable" = create_mctable_object(doc_tree, attrs, file_name)
+                     "matchtable" = create_matchtable_object(doc_tree, attrs, file_name)
     )
     return(object)
 }
@@ -150,7 +150,6 @@ create_gap_object <- function(id, value) {
         } else {
             object <- new("InlineChoice", response_identifier = id,
                 options = str_split_1(value, "\\|"))
-            print(value)
         }
     } else {
         object_class <- switch(attrs$type,
@@ -219,10 +218,100 @@ create_order_object <- function(rmd, attrs, file_name) {
 }
 
 create_dp_object <- function(rmd, attrs, file_name) {
+    # transform question section into html
+    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
+    html <- transform_to_html(parsermd::as_document(question))
 
+    # get answers - pairs
+    question_list <- xml2::xml_find_all(html, "//ul")
+    choices <- xml2::xml_text(xml2::xml_find_all(
+        question_list[length(question_list)], ".//li"))
+    answer_pairs <- sub(" ", "", unlist(strsplit(choices, "\\|")))
+    rows <- answer_pairs[c(TRUE, FALSE)]
+    cols <- answer_pairs[c(FALSE, TRUE)]
+
+    rows_ids <- make_ids(length(choices), "row")
+    cols_ids <- make_ids(length(choices), "col")
+    pairs_ids <- paste(rows_ids, cols_ids)
+
+    # rid of list from question-html
+    xml_remove(question_list[length(question_list)])
+    # get clean html of question-html
+    content <- clean_question(html)
+
+    feedback <- parse_feedback(rmd)
+
+    # align attrs with slots of MultipleChoice class
+    if (is.null(attrs$identifier)) attrs$identifier <- file_name
+
+    # !!! this is the only difference with sc
+    attrs$answers_scores <- as.numeric(strsplit(as.character(attrs$answers_scores), ",")[[1]])
+
+    attrs <- c(Class = "DirectedPair", rows = list(rows), cols = list(cols),
+               answers_identifiers = list(pairs_ids),
+               rows_identifiers = list(rows_ids),
+               cols_identifiers = list(cols_ids),
+               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
+    attrs[["type"]] <- NULL # rid of type attribute from attrs
+
+    #create new S4 object
+    object <- do.call(new, attrs)
+    return(object)
 }
 
-create_mctable_object <- function(rmd, attrs, file_name) {
+create_matchtable_object <- function(rmd, attrs, file_name) {
+    # transform question section into html
+    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
+    html <- transform_to_html(parsermd::as_document(question))
+
+    # get answers - choices
+    table <- parsermd::rmd_select(rmd, parsermd::by_section("table"))[-1]
+    table <- read_table(as_document(table))
+    rows <- as.character(table[,1])
+    cols <- as.character(colnames(table)[-1])
+    rows_ids <- make_ids(length(rows), "row")
+    cols_ids <- make_ids(length(cols), "col")
+    answers_ids <- c()
+    answers_scores <- c()
+    for (i in 1:nrow(table)) {
+        for (j in 2:ncol(table)) {
+            points <- table[i, j]
+            if (points > 0) {
+                answer_pair = paste(rows_ids[i], cols_ids[j - 1L])
+                answers_ids = c(answers_ids, answer_pair)
+                answers_scores <- c(answers_scores, points)
+            }
+        }
+    }
+
+
+    print(rows)
+    print(cols)
+    print(rows_ids)
+    print(cols_ids)
+    print(answers_ids)
+    print(answers_scores)
+    cls <- define_match_class(answers_ids, rows_ids, cols_ids)
+    print(cls)
+
+    content <- clean_question(html)
+
+    feedback <- parse_feedback(rmd)
+
+    # align attrs with slots of MultipleChoice class
+    if (is.null(attrs$identifier)) attrs$identifier <- file_name
+
+    attrs <- c(Class = cls, rows = list(rows), cols = list(cols),
+               answers_identifiers = list(answers_ids),
+               rows_identifiers = list(rows_ids),
+               cols_identifiers = list(cols_ids),
+               answers_scores = list(answers_scores),
+               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
+    attrs[["type"]] <- NULL # rid of type attribute from attrs
+    print(attrs)
+
+    #create new S4 object
+    object <- do.call(new, attrs)
 
 }
 
@@ -301,17 +390,35 @@ transform_to_html <- function(sec) {
     return(sect)
 }
 
-read_table <- function(file, stringsAsFactors = FALSE, strip.white = TRUE, ...){
-    if (length(file) > 1) {
-        lines <- file
-    } else if (grepl('\n', file)) {
-        con <- textConnection(file)
-        lines <- readLines(con)
-        close(con)
+define_match_class <- function(ids, rows, cols) {
+    occurrences <- table(unlist(strsplit(ids, " ")))
+    unique_rows <- !any(occurrences[rows] > 1)
+    unique_cols <- !any(occurrences[cols] > 1)
+
+    if (unique_rows & !unique_cols) {
+        cls <- "OneInRowTable"
+    } else if (!unique_rows & unique_cols) {
+        cls <- "OneInColTable"
+    } else if (unique_rows & unique_cols) {
+        cls <- "MultipleChoiceTable"
     } else {
-        lines <- readLines(file)
+        cls <- "DirectedPair"
     }
-    lines <- lines[!grepl('^[[:blank:]+-=:_|]*$', lines)]
+    return(cls)
+}
+
+read_table <- function(lines, stringsAsFactors = FALSE, strip.white = TRUE, ...){
+    # if (length(file) > 1) {
+    #     lines <- file
+    # } else if (grepl('\n', file)) {
+    #     con <- textConnection(file)
+    #     lines <- readLines(con)
+    #     close(con)
+    # } else {
+    #     lines <- readLines(file)
+    # }
+    # lines <- lines[!grepl('^(?!\\d)[[:blank:]+-=:_|]*$', lines, perl = TRUE)
+    lines <- lines[!grepl('^\\|[-=:_|]+\\|*$', lines)]
     lines <- gsub('(^\\s*?\\|)|(\\|\\s*?$)', '', lines)
     read.delim(text = paste(lines, collapse = '\n'), sep = '|',
                stringsAsFactors = stringsAsFactors,

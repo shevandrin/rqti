@@ -234,12 +234,12 @@ test_that("Test parsing md for OnInColTable task", {
     expected <- new("OneInColTable",
                          content = list("<p>Choose the correct order in the multiplication table</p>"),
                          identifier = "test_OnInColTable_example",
-                         title = "OneInColTable",
-                         rows = c("4*7 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
+                         title = "test_OnInColTable_example",
+                         rows = c("2*3 =", "4*7 =", "12*3 =", "3*9 =", "5*5 ="),
                          rows_identifiers = c("row_1", "row_2", "row_3", "row_4", "row_5"),
-                         cols = c("27", "36", "25", "6", "72/2"),
+                         cols = c("X6", "X36", "X27", "X722", "X25"),
                          cols_identifiers = c("col_1", "col_2", "col_3", "col_4", "col_5"),
-                         answers_identifiers =c("row_2 col_1", "row_3 col_3", "row_4 col_4", "row_5 col_2", "row_5 col_5"),
+                         answers_identifiers =c("row_1 col_1", "row_3 col_2", "row_3 col_4", "row_4 col_3", "row_5 col_5"),
                          answers_scores = c(0.5, 1, 1, 1, 1)
     )
     expect_equal(sut, expected)
