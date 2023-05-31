@@ -32,7 +32,8 @@ Imports:
     magrittr,
     httr,
     dotenv,
-    parsermd
+    parsermd,
+    rvest
 Suggests: 
     covr,
     dplyr,

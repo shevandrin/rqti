@@ -265,9 +265,8 @@ create_matchtable_object <- function(rmd, attrs, file_name) {
     html <- transform_to_html(parsermd::as_document(question))
 
     # get answers - choices
-    table <- parsermd::rmd_select(rmd, parsermd::by_section("table"))[-1]
-    table <- read_table(as_document(table))
-    rows <- as.character(table[,1])
+    table <- read_table(html)
+    rows <- as.character(unlist(table[,1]))
     cols <- as.character(colnames(table)[-1])
     rows_ids <- make_ids(length(rows), "row")
     cols_ids <- make_ids(length(cols), "col")
@@ -284,15 +283,9 @@ create_matchtable_object <- function(rmd, attrs, file_name) {
         }
     }
 
-
-    print(rows)
-    print(cols)
-    print(rows_ids)
-    print(cols_ids)
-    print(answers_ids)
-    print(answers_scores)
+    answers_scores <- unlist(answers_scores)
+    names(answers_scores) <- NULL
     cls <- define_match_class(answers_ids, rows_ids, cols_ids)
-    print(cls)
 
     content <- clean_question(html)
 
@@ -308,7 +301,6 @@ create_matchtable_object <- function(rmd, attrs, file_name) {
                answers_scores = list(answers_scores),
                content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
     attrs[["type"]] <- NULL # rid of type attribute from attrs
-    print(attrs)
 
     #create new S4 object
     object <- do.call(new, attrs)
@@ -399,28 +391,17 @@ define_match_class <- function(ids, rows, cols) {
         cls <- "OneInRowTable"
     } else if (!unique_rows & unique_cols) {
         cls <- "OneInColTable"
-    } else if (unique_rows & unique_cols) {
-        cls <- "MultipleChoiceTable"
     } else {
-        cls <- "DirectedPair"
+        cls <- "MultipleChoiceTable"
     }
     return(cls)
 }
 
-read_table <- function(lines, stringsAsFactors = FALSE, strip.white = TRUE, ...){
-    # if (length(file) > 1) {
-    #     lines <- file
-    # } else if (grepl('\n', file)) {
-    #     con <- textConnection(file)
-    #     lines <- readLines(con)
-    #     close(con)
-    # } else {
-    #     lines <- readLines(file)
-    # }
-    # lines <- lines[!grepl('^(?!\\d)[[:blank:]+-=:_|]*$', lines, perl = TRUE)
-    lines <- lines[!grepl('^\\|[-=:_|]+\\|*$', lines)]
-    lines <- gsub('(^\\s*?\\|)|(\\|\\s*?$)', '', lines)
-    read.delim(text = paste(lines, collapse = '\n'), sep = '|',
-               stringsAsFactors = stringsAsFactors,
-               strip.white = strip.white, ...)
+#' @importFrom rvest html_table
+read_table <- function(html) {
+    tbl <- xml2::xml_find_all(html, "//table")
+    tbl <- tbl[length(tbl)]
+    df <- rvest::html_table(tbl, fill = TRUE)[[1]]
+    xml_remove(tbl)
+    return(df)
 }

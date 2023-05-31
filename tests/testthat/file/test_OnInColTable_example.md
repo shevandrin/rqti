@@ -5,8 +5,7 @@ identifier: test_OnInColTable_example
 # question
 Choose the correct order in the multiplication table
 
-# table
-|      | 6 |36|27|722|25|
+|      | 6 |36|27|72/2|25|
 |------|---|--|--|----|--|
 |2*3 = |0.5|0 |0 | 0  |0 |
 |4*7 = | 0 |0 |0 | 0  |0 |
