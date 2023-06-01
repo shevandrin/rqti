@@ -17,58 +17,46 @@ create_question_object <- function(file) {
     doc_tree <- parsermd::parse_rmd(file)
     attrs_sec <- parsermd::rmd_select(doc_tree, parsermd::has_type("rmd_yaml_list"))
     attrs <- yaml.load(parsermd::as_document(attrs_sec))
-    file_name <- tools::file_path_sans_ext(basename(file))
+    question <- parsermd::rmd_select(doc_tree, parsermd::by_section("question"))[-1]
+    html <- transform_to_html(parsermd::as_document(question))
 
-    object <- switch(tolower(attrs$type),
-                     "entry" = create_entry_object(doc_tree, attrs, file_name),
-                     "sc" =  create_sc_object(doc_tree, attrs, file_name),
-                     "mc" = create_mc_object(doc_tree, attrs, file_name),
-                     "essay" = create_essay_object(doc_tree, attrs, file_name),
-                     "order" = create_order_object(doc_tree, attrs, file_name),
-                     "directedpair" = create_dp_object(doc_tree, attrs, file_name),
-                     "matchtable" = create_matchtable_object(doc_tree, attrs, file_name)
+    slots <- switch(tolower(attrs$type),
+                     "entry" = create_entry_object(question, attrs),
+                     "sc" =  create_sc_object(html, attrs),
+                     "mc" = create_mc_object(html, attrs),
+                     "essay" = create_essay_object(attrs),
+                     "order" = create_order_object(question, html, attrs),
+                     "directedpair" = create_dp_object(question, html, attrs),
+                     "matchtable" = create_matchtable_object(question, html, attrs)
     )
+    file_name <- tools::file_path_sans_ext(basename(file))
+    if (is.null(slots$identifier)) slots$identifier <- file_name
+    feedback <- list(parse_feedback(file))
+    if (is.null(slots$content)) slots$content <- as.list((clean_question(html)))
+    slots <- c(slots, feedback = feedback)
+    slots[["type"]] <- NULL # rid of type attribute from slots
+    object <- do.call(new, slots)
     return(object)
 }
 
 # creates SingleChoice type of qti-object
-create_sc_object <- function(rmd, attrs, file_name) {
-    # transform questoin section into html
-    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question))
-
+create_sc_object <- function(html, attrs) {
     # get answers - choices
     question_list <- xml2::xml_find_all(html, "//ul")
     choices <- xml2::xml_text(xml2::xml_find_all(
         question_list[length(question_list)], ".//li"))
-
     # look for <em> to find position of the correct answer
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
     if (length(em) > 1) stop("More than 1 option marked as the correct answer")
     if (length(em) > 0) attrs$solution = which(choices == em)
-
     # rid of list from question-html
     xml_remove(question_list[length(question_list)])
-    # get clean html of question-html
-    content <- clean_question(html)
 
-    feedback <- parse_feedback(rmd)
-
-    # align attrs with slots of SingleChoice class
-    if (is.null(attrs$identifier)) attrs$identifier <- file_name
-    attrs <- c(Class = "SingleChoice", choices = list(choices),
-               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
-    attrs[["type"]] <- NULL # rid of type attribute from attrs
-
-    #create new S4 object
-    object <- do.call(new, attrs)
-    return(object)
+    attrs <- c(Class = "SingleChoice", choices = list(choices), attrs)
+    return(attrs)
 }
 
-create_mc_object <- function(rmd, attrs, file_name) {
-    # transform questoin section into html
-    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question))
+create_mc_object <- function(html, attrs) {
 
     # get answers - choices
     question_list <- xml2::xml_find_all(html, "//ul")
@@ -81,28 +69,15 @@ create_mc_object <- function(rmd, attrs, file_name) {
 
     # rid of list from question-html
     xml_remove(question_list[length(question_list)])
-    # get clean html of question-html
-    content <- clean_question(html)
-
-    feedback <- parse_feedback(rmd)
-
-    # align attrs with slots of MultipleChoice class
-    if (is.null(attrs$identifier)) attrs$identifier <- file_name
 
     # !!! this is the only difference with sc
     attrs$points <- as.numeric(strsplit(as.character(attrs$points), ",")[[1]])
 
-    attrs <- c(Class = "MultipleChoice", choices = list(choices),
-               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
-    attrs[["type"]] <- NULL # rid of type attribute from attrs
-
-    #create new S4 object
-    object <- do.call(new, attrs)
-    return(object)
+    attrs <- c(Class = "MultipleChoice", choices = list(choices), attrs)
+    return(attrs)
 }
 
-create_entry_object <- function(rmd, attrs, file_name) {
-    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
+create_entry_object <- function(question, attrs) {
     question <- parsermd::as_document(question)
     question <- gsub("<<", "<entry>", question)
     question <- gsub(">>", "</entry>", question)
@@ -127,17 +102,8 @@ create_entry_object <- function(rmd, attrs, file_name) {
         content <- append(content, text_chank)
     }
 
-    # create list where put string chank than Gap object, then string chank
-
-    feedback <- parse_feedback(rmd)
-    # align attrs with slots of Entry class
-    if (is.null(attrs$identifier)) attrs$identifier <- file_name
-    attrs <- c(Class = "Entry", content = as.list(list(content)), attrs,
-               feedback = as.list(list(feedback)))
-    attrs[["type"]] <- NULL # rid of type attribute from attrs
-
-    object <- do.call(new, attrs)
-    return(object)
+    attrs <- c(Class = "Entry", content = as.list(list(content)), attrs)
+    return(attrs)
 }
 
 create_gap_object <- function(id, value) {
@@ -168,30 +134,12 @@ make_ids <- function(n, type) {
     paste(type, formatC(1:n, flag = "0", width = nchar(n)), sep = "_")
 }
 
-create_essay_object <- function(rmd, attrs, file_name) {
-    # transform questoin section into html
-    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question))
-
-    # get clean html of question-html
-    content <- clean_question(html)
-
-    feedback <- parse_feedback(rmd)
-
-    # align attrs with slots of Essay class
-    if (is.null(attrs$identifier)) attrs$identifier <- file_name
-    attrs <- c(Class = "Essay", content = as.list(list(content)), attrs,
-               feedback = as.list(list(feedback)))
-    attrs[["type"]] <- NULL # rid of type attribute from attrs
-
-    #create new S4 object
-    object <- do.call(new, attrs)
+create_essay_object <- function(attrs) {
+    attrs <- c(Class = "Essay", attrs)
+    return(attrs)
 }
 
-create_order_object <- function(rmd, attrs, file_name) {
-    # transform question section into html
-    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question))
+create_order_object <- function(question, html, attrs) {
 
     # get answers - choices
     question_list <- xml2::xml_find_all(html, "//ul")
@@ -200,27 +148,12 @@ create_order_object <- function(rmd, attrs, file_name) {
 
     # rid of list from question-html
     xml_remove(question_list[length(question_list)])
-    # get clean html of question-html
-    content <- clean_question(html)
 
-    feedback <- parse_feedback(rmd)
-
-    # align attrs with slots of Order class
-    if (is.null(attrs$identifier)) attrs$identifier <- file_name
-
-    attrs <- c(Class = "Order", choices = list(choices),
-               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
-    attrs[["type"]] <- NULL # rid of type attribute from attrs
-
-    #create new S4 object
-    object <- do.call(new, attrs)
-    return(object)
+    attrs <- c(Class = "Order", choices = list(choices), attrs)
+    return(attrs)
 }
 
-create_dp_object <- function(rmd, attrs, file_name) {
-    # transform question section into html
-    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question))
+create_dp_object <- function(question, html, attrs) {
 
     # get answers - pairs
     question_list <- xml2::xml_find_all(html, "//ul")
@@ -236,33 +169,18 @@ create_dp_object <- function(rmd, attrs, file_name) {
 
     # rid of list from question-html
     xml_remove(question_list[length(question_list)])
-    # get clean html of question-html
-    content <- clean_question(html)
 
-    feedback <- parse_feedback(rmd)
-
-    # align attrs with slots of MultipleChoice class
-    if (is.null(attrs$identifier)) attrs$identifier <- file_name
-
-    # !!! this is the only difference with sc
     attrs$answers_scores <- as.numeric(strsplit(as.character(attrs$answers_scores), ",")[[1]])
 
     attrs <- c(Class = "DirectedPair", rows = list(rows), cols = list(cols),
                answers_identifiers = list(pairs_ids),
                rows_identifiers = list(rows_ids),
                cols_identifiers = list(cols_ids),
-               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
-    attrs[["type"]] <- NULL # rid of type attribute from attrs
-
-    #create new S4 object
-    object <- do.call(new, attrs)
-    return(object)
+               attrs)
+    return(attrs)
 }
 
-create_matchtable_object <- function(rmd, attrs, file_name) {
-    # transform question section into html
-    question <- parsermd::rmd_select(rmd, parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question))
+create_matchtable_object <- function(question, html, attrs) {
 
     # get answers - choices
     table <- read_table(html)
@@ -287,48 +205,28 @@ create_matchtable_object <- function(rmd, attrs, file_name) {
     names(answers_scores) <- NULL
     cls <- define_match_class(answers_ids, rows_ids, cols_ids)
 
-    content <- clean_question(html)
-
-    feedback <- parse_feedback(rmd)
-
-    # align attrs with slots of MultipleChoice class
-    if (is.null(attrs$identifier)) attrs$identifier <- file_name
-
     attrs <- c(Class = cls, rows = list(rows), cols = list(cols),
                answers_identifiers = list(answers_ids),
                rows_identifiers = list(rows_ids),
                cols_identifiers = list(cols_ids),
                answers_scores = list(answers_scores),
-               content = as.list(list(content)), attrs, feedback = as.list(list(feedback)))
-    attrs[["type"]] <- NULL # rid of type attribute from attrs
-
-    #create new S4 object
-    object <- do.call(new, attrs)
-
+               attrs)
+    return(attrs)
 }
 
-parse_feedback <- function(rmd) {
-    result <- list()
-    feedback <- rmd_select(rmd, by_section("feedback"))[-1]
-    if (length(feedback) == 1) {
-        html <- clean_question(transform_to_html(as_document(feedback)))
-        f_object <- new("ModalFeedback", content = as.list(html))
-        result <- append(result, f_object)
+parse_feedback <- function(file) {
+    sections <- c("feedback", "wrong feedback", "correct feedback")
+    classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
+    create_fb_object <- function(sec, cls, file) {
+        rmd <- parsermd::parse_rmd(file)
+        feedback <- rmd_select(rmd, parsermd::by_section(sec))[-1]
+        if (length(feedback) == 1) {
+            html <- clean_question(transform_to_html(as_document(feedback)))
+            f_object <- new(cls, content = as.list(html))
+        }
     }
-
-    w_feedback <- rmd_select(rmd, by_section("wrong feedback"))[-1]
-    if (length(w_feedback) == 1) {
-        html <- clean_question(transform_to_html(as_document(w_feedback)))
-        w_object <- new("WrongFeedback", content = as.list(html))
-        result <- append(result, w_object)
-    }
-
-    c_feedback <- rmd_select(rmd, by_section("correct feedback"))[-1]
-    if (length(c_feedback) == 1) {
-        html <- clean_question(transform_to_html(as_document(c_feedback)))
-        c_object <- new("CorrectFeedback", content = as.list(html))
-        result <- append(result, c_object)
-    }
+    result <- Map(create_fb_object, sections, classes, file)
+    result <- unname(Filter(Negate(is.null), result))
     return(result)
 }
 
