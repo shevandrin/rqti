@@ -16,13 +16,13 @@ data frame.
 The function \code{get_result_attr_answers()} creates data frames with the
 following data about the test results:
 \itemize{
-\item 'file_name' - name of the xml file with test results (to identify
+\item 'file' - name of the xml file with test results (to identify
 candidate)
-\item 'datestamp' - date and time of test
-\item 'question_id' - question item identifier
+\item 'date' - date and time of test
+\item 'id_question' - question item identifier
 \item 'duration' - time in sec. what candidate spent on this item
-\item 'candidate_score' - points that were given to candidate after evaluation
-\item 'max_scored' - max possible score for this question item
+\item 'score_candidate' - points that were given to candidate after evaluation
+\item 'score_max' - max possible score for this question item
 \item 'type' - the type of question
 \item 'is_answer_given' - TRUE if candidate gave the answer on question,
 otherwise FALSE

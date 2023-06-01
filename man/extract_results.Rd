@@ -22,34 +22,34 @@ to parameter 'level')
 \item with optioin level = "excercises" data set consists of columns:
 }
 \itemize{
-\item 'file_name' - name of the xml file with test results (to identify
+\item 'file' - name of the xml file with test results (to identify
 candidate)
-\item 'datestamp' - date and time of test
-\item 'question_id' - question item identifier
+\item 'date' - date and time of test
+\item 'id_question' - question item identifier
 \item 'duration' - time in sec. what candidate spent on this item
-\item 'candidate_score' - points that were given to candidate after evaluation
-\item 'max_scored' - max possible score for this question item
+\item 'score_candidate' - points that were given to candidate after evaluation
+\item 'score_max' - max possible score for this question item
 \item 'question_type' - the type of question
 \item 'is_answer_given' - TRUE if candidate gave the answer on question,
 otherwise FALSE
-\item 'titles' - the values of attribute 'title' of assessment items
+\item 'title' - the values of attribute 'title' of assessment items
 }
 \enumerate{
-\item with optioin level = "items" data set consists of columns:
+\item with option level = "items" data set consists of columns:
 }
 \itemize{
-\item 'file_name' - name of the xml file with test results (to identify
+\item 'file' - name of the xml file with test results (to identify
 candidate)
-\item 'datestamp' - date and time of test
-\item 'question_id' - question item identifier
-\item 'base_types' - type of answer (identifier, string or float)
+\item 'date' - date and time of test
+\item 'id_question' - question item identifier
+\item 'base_type' - type of answer (identifier, string or float)
 \item 'cardinalities' - defines whether this question is single, multiple or
 ordered -value
 \item 'qti_type' - specifies the type of the task
-\item 'id_answer_options' - identifier of each response variable
-\item 'correct_responses' - values that considered as right responses for
+\item 'id_answer' - identifier of each response variable
+\item 'response_correct' - values that considered as right responses for
 question
-\item 'cand_responses' - values that were given by candidate
-\item 'titles' - the values of attribute 'title' of assessment items
+\item 'response_candidate' - values that were given by candidate
+\item 'title' - the values of attribute 'title' of assessment items
 }
 }

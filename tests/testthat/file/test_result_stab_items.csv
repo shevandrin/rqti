@@ -1,4 +1,4 @@
-"datestamp","question_id","base_types","cardinalities","qti_type","id_answer_options","correct_responses","cand_responses","cand_score","max_score","correctness"
+"date","id_question","base_type","cardinalities","qti_type","id_answer","response_correct","response_candidate","cand_score","max_score","correctness"
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice","identifier","single","SingleInlineChoice","_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_5578879729","FALSE","FALSE","0","0","FALSE"
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice","identifier","single","SingleInlineChoice","_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_1215491710","TRUE","TRUE","1","1","TRUE"
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice","identifier","single","SingleInlineChoice","_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_5635904543","FALSE","FALSE","0","0","FALSE"
@@ -94,9 +94,13 @@
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze","float","single","NumericGap","_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze_RESPONSE_5816487","3.5","3.5","2","2","TRUE"
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze","float","single","NumericGap","_2021_mlehreI_wiederholung_396357082_section_26_item_4_cloze_RESPONSE_1137182","54.18","54.18","2","2","TRUE"
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_27_item_1_essay","string","single","Essay","_2021_mlehreI_wiederholung_396357082_section_27_item_1_essay_RESPONSE_5003307","","Eliminierung (also bspw. durch Isolierte Versuchräume Straßenlärm als Störvariable ausschließen) und Konstant-Haltung (bspw. bei allen Versuchsteilnehmenden die gleiche Beleuchtung)","2","2","TRUE"
-2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay","string","single","Essay","_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay_RESPONSE_8331756","","1. Hauptfragestellung: Gibt es einen signifikanten Unterschied zwischen verschiedenen Yogastilen in Hinblick auf die stressabbauende Wirkung (messbar an der Herzfrequenz).
-2. AV: Der praktizierte Yogastil (Ashtanga, Hatha oder Entspannungsyoga); UV: durchschnittliche Herzfrequenz pro Minute der Teilnehmenden während der Ausübung der Stile
-3. Versuchsdesign: Within - Design
+2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay","string","single","Essay","_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay_RESPONSE_8331756","","1. Hauptfragestellung: Gibt es einen signifikanten Unterschied zwischen verschiedenen Yogastilen in Hinblick auf die stressabbauende Wirkung (messbar an der Herzfrequenz).
+
+2. AV: Der praktizierte Yogastil (Ashtanga, Hatha oder Entspannungsyoga); UV: durchschnittliche Herzfrequenz pro Minute der Teilnehmenden während der Ausübung der Stile
+
+3. Versuchsdesign: Within - Design
+
 4. Hauptergebnisse: Es besteht ein signifikanter Unterschied zwischen den Stilen in Hinblick auf die Stressabbauende Wirkung, wobei beim Enspannungsyoga die niedrigste und beim Ashtanga Yoga die Höchste mittlere Herzfrequenz gemessen wurde.","2.5","5","FALSE"
-2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay","string","single","Essay","_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay_RESPONSE_3096849","","Epistemologie befasst sich mit der Frage: ""Wie können wir die Wirklichkeit erkennen?"". Es geht also darum, Mittel zu finden, mit deren Hilfe man die Wirklichkeit ermitteln kann.
+2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay","string","single","Essay","_2021_mlehreI_wiederholung_396357082_section_29_item_1_essay_RESPONSE_3096849","","Epistemologie befasst sich mit der Frage: ""Wie können wir die Wirklichkeit erkennen?"". Es geht also darum, Mittel zu finden, mit deren Hilfe man die Wirklichkeit ermitteln kann.
+
 Ontologie befasst sich mit der Frage: ""Was ist die Wirklichkeit?"". Es geht also nicht darum, Wege dazu, sondern die Wirklichkeit herauszufinden.","2","2","TRUE"

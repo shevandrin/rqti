@@ -1,4 +1,4 @@
-﻿file_name;datestamp;question_id;base_types;cardinalities;qti_type;id_answer_options;correct_responses;cand_responses;cand_score;max_score;correctness;titles
+file;date;id_question;base_type;cardinalities;qti_type;id_answer;response_correct;response_candidate;cand_score;max_score;correctness;title
 result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;1;TRUE;FALSE;0;0;FALSE;MultipleChoice
 result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;2;FALSE;FALSE;0;0;FALSE;MultipleChoice
 result_2023-05-02-11-56-22_wzWWG3L4mk1z_result.zip;05.02.2023 11:56;Id1;identifier;multiple;MultipleChoice;3;FALSE;FALSE;0;0;FALSE;MultipleChoice

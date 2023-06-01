@@ -4,31 +4,31 @@
 #' xml file and creates two kinds of data frames (according
 #'  to parameter 'level')
 #' 1. with optioin level = "excercises" data set consists of columns:
-#' * 'file_name' - name of the xml file with test results (to identify
+#' * 'file' - name of the xml file with test results (to identify
 #' candidate)
-#' * 'datestamp' - date and time of test
-#' * 'question_id' - question item identifier
+#' * 'date' - date and time of test
+#' * 'id_question' - question item identifier
 #' * 'duration' - time in sec. what candidate spent on this item
-#' * 'candidate_score' - points that were given to candidate after evaluation
-#' * 'max_scored' - max possible score for this question item
+#' * 'score_candidate' - points that were given to candidate after evaluation
+#' * 'score_max' - max possible score for this question item
 #' * 'question_type' - the type of question
 #' * 'is_answer_given' - TRUE if candidate gave the answer on question,
 #' otherwise FALSE
-#' * 'titles' - the values of attribute 'title' of assessment items
-#' 2. with optioin level = "items" data set consists of columns:
-#' * 'file_name' - name of the xml file with test results (to identify
+#' * 'title' - the values of attribute 'title' of assessment items
+#' 2. with option level = "items" data set consists of columns:
+#' * 'file' - name of the xml file with test results (to identify
 #' candidate)
-#' * 'datestamp' - date and time of test
-#' * 'question_id' - question item identifier
-#' * 'base_types' - type of answer (identifier, string or float)
+#' * 'date' - date and time of test
+#' * 'id_question' - question item identifier
+#' * 'base_type' - type of answer (identifier, string or float)
 #' * 'cardinalities' - defines whether this question is single, multiple or
 #' ordered -value
 #' * 'qti_type' - specifies the type of the task
-#' * 'id_answer_options' - identifier of each response variable
-#' * 'correct_responses' - values that considered as right responses for
+#' * 'id_answer' - identifier of each response variable
+#' * 'response_correct' - values that considered as right responses for
 #' question
-#' * 'cand_responses' - values that were given by candidate
-#' * 'titles' - the values of attribute 'title' of assessment items
+#' * 'response_candidate' - values that were given by candidate
+#' * 'title' - the values of attribute 'title' of assessment items
 #' @param file A string with a path of the xml test result file
 #' @param level A string with two possible options: exercises and items
 #' @import xml2
@@ -91,10 +91,10 @@ build_dataset <- function(tdir, level, names = NULL) {
         name <- ifelse(is.null(names), f, names[which(res_files == f)])
         if (!is.null(db)) {
             titles <- c()
-            for (id in df0$question_id) {
+            for (id in df0$id_question) {
                 titles <- c(titles, unname(db[names(db) == id]))
             }
-            df0$titles <- titles
+            df0$title <- titles
         }
         df <- rbind(df, df0)
     }
@@ -132,13 +132,13 @@ extract_xml <- function(file) {
 #'
 #' The function `get_result_attr_answers()` creates data frames with the
 #' following data about the test results:
-#' * 'file_name' - name of the xml file with test results (to identify
+#' * 'file' - name of the xml file with test results (to identify
 #' candidate)
-#' * 'datestamp' - date and time of test
-#' * 'question_id' - question item identifier
+#' * 'date' - date and time of test
+#' * 'id_question' - question item identifier
 #' * 'duration' - time in sec. what candidate spent on this item
-#' * 'candidate_score' - points that were given to candidate after evaluation
-#' * 'max_scored' - max possible score for this question item
+#' * 'score_candidate' - points that were given to candidate after evaluation
+#' * 'score_max' - max possible score for this question item
 #' * 'type' - the type of question
 #' * 'is_answer_given' - TRUE if candidate gave the answer on question,
 #' otherwise FALSE
@@ -165,9 +165,9 @@ get_result_attr_answers<- function(file) {
     maxes <- Map(get_score, items_result, "MAXSCORE")
     types <- unlist(lapply(ids_item, identify_question_type))
 
-    data <- data.frame(file_name = rep(file_name, length(ids_item)),
-                       datestamp = rep(test_dt, length(ids_item)),
-                       question_id = ids_item,
+    data <- data.frame(file = rep(file_name, length(ids_item)),
+                       date = rep(test_dt, length(ids_item)),
+                       id_question = ids_item,
                        duration = as.numeric(durations),
                        candidate_score = as.numeric(scores),
                        max_scores = as.numeric(maxes),
@@ -241,18 +241,18 @@ clean_name <- function(file) {
 #'
 #' The function `get_result_attr_options()` creates data frames with the
 #' following data about the individual answers:
-#' * 'file_name' - name of the xml file with test results (to identify
+#' * 'file' - name of the xml file with test results (to identify
 #' candidate)
-#' * 'datestamp' - date and time of test
-#' * 'question_id' - question item identifier
-#' * 'base_types' - type of answer (identifier, string or float)
+#' * 'date' - date and time of test
+#' * 'id_question' - question item identifier
+#' * 'base_type' - type of answer (identifier, string or float)
 #' * 'cardinalities' - defines whether this question is single, multiple or
 #' ordered -value
 #' * 'qti_type' - specifies the type of the task
-#' * 'id_answer_options' - identifier of each response variable
-#' * 'correct_responses' - values that considered as right responses for
+#' * 'id_answer' - identifier of each response variable
+#' * 'response_correct' - values that considered as right responses for
 #' question
-#' * 'cand_responses' - values that were given by candidate
+#' * 'response_candidate' - values that were given by candidate
 #'
 #' @param file A string with a path of the xml test result file
 #' @import xml2
@@ -310,15 +310,15 @@ get_result_attr_options <- function(file) {
     # print(score_values)
     # print(maxscore_values)
     data <- data.frame(
-        file_name = rep(file_name, length(identifier)),
-        datestamp = rep(test_dt, length(identifier)),
-        question_id = identifier,
-        base_types =  base_types,
+        file = rep(file_name, length(identifier)),
+        date = rep(test_dt, length(identifier)),
+        id_question = identifier,
+        base_type =  base_types,
         cardinalities = cardinalities,
         qti_type = qti_type,
-        id_answer_options = options,
-        correct_responses = correct_responses,
-        cand_responses = cand_responses,
+        id_answer = options,
+        response_correct = correct_responses,
+        response_candidate = cand_responses,
         cand_score = score_values,
         max_score = maxscore_values,
         correctness = correctness
