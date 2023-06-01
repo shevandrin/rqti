@@ -273,3 +273,55 @@ test_that("Test parsing md for MultipleChoiceTable task", {
                     answers_scores = c(1, 1, 1, 1, 1, 1))
     expect_equal(sut, expected)
 })
+test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
+    path <- test_path("file/test_entry_Gap_primitive.md")
+    sut <- create_question_object(path)
+    expected <- new("Entry",
+           identifier = "test_entry_example",
+           title = "test_entry_example",
+           content = list('<p>Hast du ',
+                     new("TextGap",
+                          response_identifier = "response_1",
+                          response = "ein",
+                          alternatives = c("EIN", "Ein"),
+                          case_sensitive = TRUE),
+                     ' Handy? Dieses Telefonmodell ist Nokia ',
+                     new("NumericGap",
+                          response_identifier = "response_2",
+                          response = 3310),
+                     '. Hast du ',
+                     new("TextGap",
+                          response_identifier = "response_3",
+                          response = "ein"),
+                     ' Computer? Der beliebteste Prozessor im ersten Quartal 2023 ist der Core i',
+                     new("NumericGap",
+                          response_identifier = "response_4",
+                          response = 5),
+                     '.</p>'),
+                    feedback = list(new("ModalFeedback",
+                                        content = list("<p>general feedback</p>"))))
+    expect_equal(sut, expected)
+})
+test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
+    path <- test_path("file/test_entry_Gap_InlineChoice.md")
+    sut <- create_question_object(path)
+    expected <- new("Entry",
+                    identifier = "test_entry_example",
+                    title = "test_entry_example",
+                    content = list('<p>Das beliebteste Telefon der Welt ist ',
+                                   new("InlineChoice",
+                                       options = c("Realme 9 Pro","Realme GT Master Edition","Samsung Galaxy A52"),
+                                       response_identifier = "response_1"),
+                                   '. Das meistverkaufte Telefonmodell in Deutschland ist ',
+                                   new("InlineChoice",
+                                       options = c("Apple iPhone 13 Pro","Apple iPhone 13 Pro Max","Apple iPhone 13"),
+                                       response_identifier = "response_2",
+                                       solution = 3),
+                                   '.</p>'),
+                    feedback = list(new("CorrectFeedback",
+                                        content = list("<p>correct feedback</p>")),
+                                        new("WrongFeedback",
+                                        content = list("<p>wrong feedback</p>")))
+                    )
+    expect_equal(sut, expected)
+})
