@@ -15,9 +15,11 @@
 create_question_object <- function(file) {
 
     doc_tree <- parsermd::parse_rmd(file)
-    attrs_sec <- parsermd::rmd_select(doc_tree, parsermd::has_type("rmd_yaml_list"))
+    attrs_sec <- parsermd::rmd_select(doc_tree,
+                                      parsermd::has_type("rmd_yaml_list"))
     attrs <- yaml.load(parsermd::as_document(attrs_sec))
-    question <- parsermd::rmd_select(doc_tree, parsermd::by_section("question"))[-1]
+    question <- parsermd::rmd_select(doc_tree,
+                                     parsermd::by_section("question"))[-1]
     html <- transform_to_html(parsermd::as_document(question))
 
     slots <- switch(tolower(attrs$type),
@@ -25,9 +27,9 @@ create_question_object <- function(file) {
                      "sc" =  create_sc_object(html, attrs),
                      "mc" = create_mc_object(html, attrs),
                      "essay" = create_essay_object(attrs),
-                     "order" = create_order_object(question, html, attrs),
-                     "directedpair" = create_dp_object(question, html, attrs),
-                     "matchtable" = create_matchtable_object(question, html, attrs)
+                     "order" = create_order_object(html, attrs),
+                     "directedpair" = create_dp_object(html, attrs),
+                     "matchtable" = create_matchtable_object(html, attrs)
     )
     file_name <- tools::file_path_sans_ext(basename(file))
     if (is.null(slots$identifier)) slots$identifier <- file_name
@@ -41,36 +43,20 @@ create_question_object <- function(file) {
 
 # creates SingleChoice type of qti-object
 create_sc_object <- function(html, attrs) {
-    # get answers - choices
-    question_list <- xml2::xml_find_all(html, "//ul")
-    choices <- xml2::xml_text(xml2::xml_find_all(
-        question_list[length(question_list)], ".//li"))
-    # look for <em> to find position of the correct answer
-    em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
+    choices_options <- parse_list(html)
+    em <- choices_options$solution
+    choices <- choices_options$choices
     if (length(em) > 1) stop("More than 1 option marked as the correct answer")
-    if (length(em) > 0) attrs$solution = which(choices == em)
-    # rid of list from question-html
-    xml_remove(question_list[length(question_list)])
+    if (length(em) > 0) attrs$solution = em
 
     attrs <- c(Class = "SingleChoice", choices = list(choices), attrs)
     return(attrs)
 }
 
 create_mc_object <- function(html, attrs) {
-
-    # get answers - choices
-    question_list <- xml2::xml_find_all(html, "//ul")
-    choices <- xml2::xml_text(xml2::xml_find_all(
-        question_list[length(question_list)], ".//li"))
-
-    # look for <em> to find position of the correct answer
-    em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
-    if (length(em) > 0) attrs$solution = which(choices == em)
-
-    # rid of list from question-html
-    xml_remove(question_list[length(question_list)])
-
-    # !!! this is the only difference with sc
+    choices_options <- parse_list(html)
+    em <- choices_options$solution
+    choices <- choices_options$choices
     attrs$points <- as.numeric(strsplit(as.character(attrs$points), ",")[[1]])
 
     attrs <- c(Class = "MultipleChoice", choices = list(choices), attrs)
@@ -110,7 +96,8 @@ create_gap_object <- function(id, value) {
     attrs <- yaml::yaml.load(value)
     if (!is.list(attrs)) {
         if (!is.na(suppressWarnings(as.numeric(value)))) {
-            object <- new("NumericGap", response_identifier = id, response = as.numeric(value))
+            object <- new("NumericGap", response_identifier = id,
+                          response = as.numeric(value))
         } else if (length(str_split_1(value, "\\|")) == 1) {
             object <- new("TextGap", response_identifier = id, response = value)
         } else {
@@ -139,26 +126,17 @@ create_essay_object <- function(attrs) {
     return(attrs)
 }
 
-create_order_object <- function(question, html, attrs) {
-
-    # get answers - choices
-    question_list <- xml2::xml_find_all(html, "//ul")
-    choices <- xml2::xml_text(xml2::xml_find_all(
-        question_list[length(question_list)], ".//li"))
-
-    # rid of list from question-html
-    xml_remove(question_list[length(question_list)])
+create_order_object <- function(html, attrs) {
+    choices_options <- parse_list(html)
+    choices <- choices_options$choices
 
     attrs <- c(Class = "Order", choices = list(choices), attrs)
     return(attrs)
 }
 
-create_dp_object <- function(question, html, attrs) {
-
-    # get answers - pairs
-    question_list <- xml2::xml_find_all(html, "//ul")
-    choices <- xml2::xml_text(xml2::xml_find_all(
-        question_list[length(question_list)], ".//li"))
+create_dp_object <- function(html, attrs) {
+    choices_options <- parse_list(html)
+    choices <- choices_options$choices
     answer_pairs <- sub(" ", "", unlist(strsplit(choices, "\\|")))
     rows <- answer_pairs[c(TRUE, FALSE)]
     cols <- answer_pairs[c(FALSE, TRUE)]
@@ -167,10 +145,8 @@ create_dp_object <- function(question, html, attrs) {
     cols_ids <- make_ids(length(choices), "col")
     pairs_ids <- paste(rows_ids, cols_ids)
 
-    # rid of list from question-html
-    xml_remove(question_list[length(question_list)])
-
-    attrs$answers_scores <- as.numeric(strsplit(as.character(attrs$answers_scores), ",")[[1]])
+    attrs$answers_scores <- as.numeric(strsplit(as.character(
+        attrs$answers_scores), ",")[[1]])
 
     attrs <- c(Class = "DirectedPair", rows = list(rows), cols = list(cols),
                answers_identifiers = list(pairs_ids),
@@ -180,7 +156,7 @@ create_dp_object <- function(question, html, attrs) {
     return(attrs)
 }
 
-create_matchtable_object <- function(question, html, attrs) {
+create_matchtable_object <- function(html, attrs) {
 
     # get answers - choices
     table <- read_table(html)
@@ -212,6 +188,16 @@ create_matchtable_object <- function(question, html, attrs) {
                answers_scores = list(answers_scores),
                attrs)
     return(attrs)
+}
+
+parse_list <- function(html) {
+    question_list <- xml2::xml_find_all(html, "//ul")
+    choices <- xml2::xml_text(xml2::xml_find_all(
+        question_list[length(question_list)], ".//li"))
+    em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
+    solution <- which(choices == em)
+    xml_remove(question_list[length(question_list)])
+    return(list(choices = choices, solution = solution))
 }
 
 parse_feedback <- function(file) {
@@ -267,12 +253,11 @@ transform_to_html <- function(sec) {
     htmltempfile <- "_deleteme.html"
     options <- c("-o", htmltempfile, "-f", "markdown", "-t", "html",
                  "--mathml", "--wrap=none", "+RTS", "-M30m")
-    # html <- as.list(HTML(rmarkdown::pandoc_convert(mdtempfile, options=options)))
+
     rmarkdown::pandoc_convert(mdtempfile, options=options)
     # delete temp md file
     unlink(mdtempfile)
     # read html file
-    # sect <- as.list(readLines("_deleteme.html"))
     sect <- xml2::read_html("_deleteme.html", encoding = "UTF-8")
     # delete temp html file
     unlink("_deleteme.html")
