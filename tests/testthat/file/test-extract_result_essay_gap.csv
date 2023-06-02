@@ -1,19 +1,19 @@
 "file","date","id_question","base_type","cardinalities","qti_type","id_answer","response_correct","response_candidate","cand_score","max_score","correctness","title"
-"result_2023-05-16-11-52-57_RrBQYdD0dYMA_result.zip",2023-05-16 11:53:38,"Id1","string","single","TextGap","RESPONSE_1","more","less","0","1","FALSE","TextGapOpal"
-"result_2023-05-16-11-52-57_RrBQYdD0dYMA_result.zip",2023-05-16 11:53:38,"Id2","string","single","Essay","RESPONSE","","Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.","0","30","FALSE","essay_example"
-"result_2023-05-16-12-00-57_nz7W70aK07nz_result.zip",2023-05-16 12:02:09,"Id1","string","single","TextGap","RESPONSE_1","more","more","1","1","TRUE","TextGapOpal"
+"result_2023-05-16-11-52-57_RrBQYdD0dYMA_result.zip",2023-05-16 11:53:38,"Id1","string","single","TextGap","RESPONSE_1","more","less",0,1,0,"TextGapOpal"
+"result_2023-05-16-11-52-57_RrBQYdD0dYMA_result.zip",2023-05-16 11:53:38,"Id2","string","single","Essay","RESPONSE","","Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.",0,30,0,"essay_example"
+"result_2023-05-16-12-00-57_nz7W70aK07nz_result.zip",2023-05-16 12:02:09,"Id1","string","single","TextGap","RESPONSE_1","more","more",1,1,1,"TextGapOpal"
 "result_2023-05-16-12-00-57_nz7W70aK07nz_result.zip",2023-05-16 12:02:09,"Id2","string","single","Essay","RESPONSE","","1. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
 2. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem
 
  3.Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
 
-4 ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.","0","30","FALSE","essay_example"
-"result_2023-05-16-12-04-25_WgEwYXjnXYmA_result.zip",2023-05-16 12:06:50,"Id1","string","single","TextGap","RESPONSE_1","more","more","1","1","TRUE","TextGapOpal"
+4 ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.",0,30,0,"essay_example"
+"result_2023-05-16-12-04-25_WgEwYXjnXYmA_result.zip",2023-05-16 12:06:50,"Id1","string","single","TextGap","RESPONSE_1","more","more",1,1,1,"TextGapOpal"
 "result_2023-05-16-12-04-25_WgEwYXjnXYmA_result.zip",2023-05-16 12:06:50,"Id2","string","single","Essay","RESPONSE","","Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
 
  BEFORE THIS PLACE I PUT THE SPACES Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
 
 10. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
 
-11.Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. AFTER THIS PLACE I PUT THE SPACES","0","30","FALSE","essay_example"
+11.Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. AFTER THIS PLACE I PUT THE SPACES",0,30,0,"essay_example"

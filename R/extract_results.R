@@ -68,8 +68,7 @@ build_dataset <- function(tdir, level, names = NULL) {
     test_files <- list.files(path = tdir, pattern = "assessmentTest")
     manifest_files <- list.files(path = tdir, pattern = "manifest")
     ai_files <- list.files(path = tdir, pattern = "assessmentItem")
-    message("what we have:\n",
-            length(res_files), " - files with result\n",
+    message(length(res_files), " - files with result\n",
             length(test_files), " - test file(s)\n",
             length(manifest_files), " - manifest file\n",
             length(ai_files), " - files with assessment items")
@@ -283,7 +282,7 @@ get_result_attr_options <- function(file) {
     qti_type <- character(0)
     score_values <- character(0)
     maxscore_values <- character(0)
-    correctness <- character(0)
+    correctness <- logical(0)
     for (ch in items_result) {
         res <- get_info(ch)
         len <- length(res$options)
@@ -321,7 +320,7 @@ get_result_attr_options <- function(file) {
         response_candidate = cand_responses,
         cand_score = score_values,
         max_score = maxscore_values,
-        correctness = correctness
+        correctness = as.integer(as.logical(correctness))
     )
     return(data)
 }

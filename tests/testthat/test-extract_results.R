@@ -51,7 +51,7 @@ test_that("Testing function extract_results with zip archive", {
 
     expected$cand_score <- as.character(expected$cand_score)
     expected$max_score <- as.character(expected$max_score)
-    expected$correctness <- as.character(expected$correctness)
+    expected$correctness <- expected$correctness
 
     expect_equal(sut,expected)
 })
@@ -73,7 +73,7 @@ test_that("Testing function extract_results", {
 
     expected$cand_score <- as.character(expected$cand_score)
     expected$max_score <- as.character(expected$max_score)
-    expected$correctness <- as.character(expected$correctness)
+    expected$correctness <- expected$correctness
 
     # To delete all symbols
     expected$response_candidate <- gsub("[^a-zA-Z0-9]", "", expected$response_candidate)
@@ -98,7 +98,7 @@ test_that("Testing function extract_results", {
 
     expected$cand_score <- as.character(expected$cand_score)
     expected$max_score <- as.character(expected$max_score)
-    expected$correctness <- as.character(expected$correctness)
+    expected$correctness <- expected$correctness
 
     # To delete all symbols
     expected$response_candidate <- gsub("[^a-zA-Z0-9]", "", expected$response_candidate)
@@ -118,7 +118,7 @@ test_that("Testing function extract_results with zip archive", {
 
     expected$response_candidate <- as.character(expected$response_candidate)
     expected$response_correct <- as.character(expected$response_correct)
-    expected$correctness <- as.character(expected$correctness)
+    expected$correctness <- expected$correctness
     expected$cand_score <- as.character(expected$cand_score)
     expected$max_score <- as.character(expected$max_score)
 
