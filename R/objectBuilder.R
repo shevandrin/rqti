@@ -201,8 +201,9 @@ parse_list <- function(html) {
 }
 
 parse_feedback <- function(file) {
-    sections <- c("feedback", "wrong feedback", "correct feedback")
+    sections <- c("feedback", "feedback\\-", "feedback\\+")
     classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
+
     create_fb_object <- function(sec, cls, file) {
         rmd <- parsermd::parse_rmd(file)
         feedback <- rmd_select(rmd, parsermd::by_section(sec))[-1]
@@ -211,6 +212,7 @@ parse_feedback <- function(file) {
             f_object <- new(cls, content = as.list(html))
         }
     }
+
     result <- Map(create_fb_object, sections, classes, file)
     result <- unname(Filter(Negate(is.null), result))
     return(result)
