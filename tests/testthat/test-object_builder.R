@@ -318,10 +318,11 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
                                        response_identifier = "response_2",
                                        solution = 3),
                                    '.</p>'),
-                    feedback = list(new("CorrectFeedback",
-                                        content = list("<p>correct feedback</p>")),
-                                        new("WrongFeedback",
-                                        content = list("<p>wrong feedback</p>")))
+                    feedback = list(new("WrongFeedback",
+                                        content = list("<p>wrong feedback</p>")),
+                                     new("CorrectFeedback",
+                                        content = list("<p>correct feedback</p>"))
+                                       )
                     )
     expect_equal(sut, expected)
 })
