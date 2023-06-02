@@ -1,4 +1,4 @@
-"file","date","id_question","base_type","cardinalities","qti_type","id_answer","response_correct","response_candidate","cand_score","max_score","correctness","title"
+"file","date","id_question","base_type","cardinalities","qti_type","id_answer","expected_response","candidate_response","score_candidate","score_max","is_response_correct","title"
 "result_2023-04-27-14-01-43_EAYa1vkQ3VLA_result.zip",2023-04-27 14:02:08,"Id1","identifier","multiple","MultipleChoice","1","TRUE","FALSE",0,0,0,"MultipleChoice"
 "result_2023-04-27-14-01-43_EAYa1vkQ3VLA_result.zip",2023-04-27 14:02:08,"Id1","identifier","multiple","MultipleChoice","3","FALSE","TRUE",0,0,0,"MultipleChoice"
 "result_2023-04-27-14-01-43_EAYa1vkQ3VLA_result.zip",2023-04-27 14:02:08,"Id1","identifier","multiple","MultipleChoice","4","TRUE","FALSE",0,0,0,"MultipleChoice"

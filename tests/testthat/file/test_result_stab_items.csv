@@ -1,4 +1,4 @@
-"date","id_question","base_type","cardinalities","qti_type","id_answer","response_correct","response_candidate","cand_score","max_score","correctness"
+"date","id_question","base_type","cardinalities","qti_type","id_answer","expected_response","candidate_response","score_candidate","score_max","is_response_correct"
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice","identifier","single","SingleInlineChoice","_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_5578879729","FALSE","FALSE",0,0,0
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice","identifier","single","SingleInlineChoice","_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_1215491710","TRUE","TRUE",1,1,1
 2021-08-05 14:10:03,"_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice","identifier","single","SingleInlineChoice","_2021_mlehreI_wiederholung_396357082_section_01_item_1_schoice_5635904543","FALSE","FALSE",0,0,0

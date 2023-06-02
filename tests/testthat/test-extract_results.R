@@ -13,14 +13,14 @@ mycor <- function(x, y) {
 
 db <- d %>%
   dplyr::group_by(file) %>%
-  dplyr::mutate(sum_score = sum(candidate_score)) %>%
+  dplyr::mutate(sum_score = sum(score_candidate)) %>%
   dplyr::group_by(id_question) %>%
   # correct for part-whole
   # todo: remove sd = 0 first
 dplyr::summarize(n = dplyr::n(),
             m_duration = mean(duration),
-            difficulty = mean(candidate_score / max_scores) * 100,
-            r_it = round(mycor(candidate_score, sum_score - candidate_score),
+            difficulty = mean(score_candidate / score_max) * 100,
+            r_it = round(mycor(score_candidate, sum_score - score_candidate),
                          2))
 
 d_exp <- read.csv(test_path("file", "statistics.csv"))
@@ -49,9 +49,9 @@ test_that("Testing function extract_results with zip archive", {
     expected <- expected[order(expected$date),]
     rownames(expected) <- NULL
 
-    expected$cand_score <- as.character(expected$cand_score)
-    expected$max_score <- as.character(expected$max_score)
-    expected$correctness <- expected$correctness
+    expected$score_candidate <- as.character(expected$score_candidate)
+    expected$score_max <- as.character(expected$score_max)
+    expected$is_response_correct <- expected$is_response_correct
 
     expect_equal(sut,expected)
 })
@@ -62,22 +62,18 @@ test_that("Testing function extract_results", {
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
 
-    # To delete all symbols
-    sut$response_candidate <- gsub("[^a-zA-Z0-9]", "", sut$response_candidate)
-
     path2 <- test_path("file/test_result_stab_items.csv")
     expected <- read.csv(path2)
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
     rownames(expected) <- NULL
 
-    expected$cand_score <- as.character(expected$cand_score)
-    expected$max_score <- as.character(expected$max_score)
-    expected$correctness <- expected$correctness
+    expected$score_candidate <- as.character(expected$score_candidate)
+    expected$score_max <- as.character(expected$score_max)
 
     # To delete all symbols
-    expected$response_candidate <- gsub("[^a-zA-Z0-9]", "", expected$response_candidate)
-
+    expected$candidate_response <- gsub("[^a-zA-Z0-9]", "", expected$candidate_response)
+    sut$candidate_response <- gsub("[^a-zA-Z0-9]", "", sut$candidate_response)
     expect_equal(sut,expected)
 })
 # Testing function of extract_results() for tasks: Essay and TextGapOpal.
@@ -88,7 +84,7 @@ test_that("Testing function extract_results", {
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
     # To delete all symbols
-    sut$response_candidate <- gsub("[^a-zA-Z0-9]", "", sut$response_candidate)
+    sut$candidate_response <- gsub("[^a-zA-Z0-9]", "", sut$candidate_response)
 
     path2 <- test_path("file/test-extract_result_essay_gap.csv")
     expected <- read.csv(path2)
@@ -96,12 +92,12 @@ test_that("Testing function extract_results", {
     expected <- expected[order(expected$date),]
     rownames(expected) <- NULL
 
-    expected$cand_score <- as.character(expected$cand_score)
-    expected$max_score <- as.character(expected$max_score)
-    expected$correctness <- expected$correctness
+    expected$score_candidate <- as.character(expected$score_candidate)
+    expected$score_max <- as.character(expected$score_max)
+    expected$is_response_correct <- expected$is_response_correct
 
     # To delete all symbols
-    expected$response_candidate <- gsub("[^a-zA-Z0-9]", "", expected$response_candidate)
+    expected$candidate_response <- gsub("[^a-zA-Z0-9]", "", expected$candidate_response)
 
     expect_equal(sut,expected)
 })
@@ -116,11 +112,11 @@ test_that("Testing function extract_results with zip archive", {
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
 
-    expected$response_candidate <- as.character(expected$response_candidate)
-    expected$response_correct <- as.character(expected$response_correct)
-    expected$correctness <- expected$correctness
-    expected$cand_score <- as.character(expected$cand_score)
-    expected$max_score <- as.character(expected$max_score)
+    expected$candidate_response <- as.character(expected$candidate_response)
+    expected$expected_response <- as.character(expected$expected_response)
+    expected$is_response_correct <- expected$is_response_correct
+    expected$score_candidate <- as.character(expected$score_candidate)
+    expected$score_max <- as.character(expected$score_max)
 
     rownames(expected) <- NULL
     expect_equal(sut,expected)
@@ -137,10 +133,10 @@ test_that("Testing function extract_results with zip archive", {
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
 
-    sut$response_candidate <- as.character(sut$response_candidate)
-    sut$correctness <- as.logical(sut$correctness)
-    sut$cand_score <- as.numeric(sut$cand_score)
-    sut$max_score <- as.numeric(sut$max_score)
+    sut$candidate_response <- as.character(sut$candidate_response)
+    sut$is_response_correct <- as.logical(sut$is_response_correct)
+    sut$score_candidate <- as.numeric(sut$score_candidate)
+    sut$score_max <- as.numeric(sut$score_max)
 
     rownames(expected) <- NULL
     expect_equal(sut,expected)
@@ -157,10 +153,10 @@ test_that("Testing function extract_results with zip archive", {
     # exclude column of the date stamp
     expected <- read.csv(path2, sep = ";", na.string = NA)[ ,-2]
 
-    sut$response_candidate <- as.logical(sut$response_candidate)
-    sut$correctness <- as.logical(sut$correctness)
-    sut$cand_score <- as.numeric(sut$cand_score)
-    sut$max_score <- as.numeric(sut$max_score)
+    sut$candidate_response <- as.logical(sut$candidate_response)
+    sut$is_response_correct <- as.logical(sut$is_response_correct)
+    sut$score_candidate <- as.numeric(sut$score_candidate)
+    sut$score_max <- as.numeric(sut$score_max)
 
     expect_equal(sut,expected)
 })

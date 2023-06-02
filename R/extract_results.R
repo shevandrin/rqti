@@ -168,8 +168,8 @@ get_result_attr_answers<- function(file) {
                        date = rep(test_dt, length(ids_item)),
                        id_question = ids_item,
                        duration = as.numeric(durations),
-                       candidate_score = as.numeric(scores),
-                       max_scores = as.numeric(maxes),
+                       score_candidate = as.numeric(scores),
+                       score_max = as.numeric(maxes),
                        question_type = types,
                        is_answer_given = igiven)
     return(data)
@@ -316,11 +316,11 @@ get_result_attr_options <- function(file) {
         cardinalities = cardinalities,
         qti_type = qti_type,
         id_answer = options,
-        response_correct = correct_responses,
-        response_candidate = cand_responses,
-        cand_score = score_values,
-        max_score = maxscore_values,
-        correctness = as.integer(as.logical(correctness))
+        expected_response = correct_responses,
+        candidate_response = cand_responses,
+        score_candidate = score_values,
+        score_max = maxscore_values,
+        is_response_correct = as.integer(as.logical(correctness))
     )
     return(data)
 }
