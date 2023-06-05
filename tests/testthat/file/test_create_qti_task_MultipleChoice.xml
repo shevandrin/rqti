@@ -7,6 +7,8 @@
     </correctResponse>
     <mapping lowerBound="0" upperBound="2" defaultValue="0">
       <mapEntry mapKey="a1" mappedValue="1"/>
+      <mapEntry mapKey="a2" mappedValue="-1"/>
+      <mapEntry mapKey="a3" mappedValue="-1"/>
       <mapEntry mapKey="a4" mappedValue="1"/>
     </mapping>
   </responseDeclaration>

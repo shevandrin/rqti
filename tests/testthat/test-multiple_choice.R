@@ -36,14 +36,17 @@ test_that("Testing create_response_declaration_multiple_choice",{
               prompt = "Which of the following elements are used to form water?")
 # 'The default value was changed from -2 to 0 because the package not allow negative points for Total score
 
-    example <- '<responseDeclaration cardinality="multiple" baseType="identifier">
+    example <- '<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
     <correctResponse>
-        <value identifier="RESPONSE">H</value>
+        <value>H</value>
         <value>O</value>
     </correctResponse>
     <mapping lowerBound="0" upperBound="2" defaultValue="0">
         <mapEntry mapKey="H" mappedValue="1"/>
+        <mapEntry mapKey="He" mappedValue="-0.666666666666667"/>
+        <mapEntry mapKey="C" mappedValue="-0.666666666666667"/>
         <mapEntry mapKey="O" mappedValue="1"/>
+        <mapEntry mapKey="N" mappedValue="-0.666666666666667"/>
         <mapEntry mapKey="Cl" mappedValue="-1"/>
     </mapping>
     </responseDeclaration>'

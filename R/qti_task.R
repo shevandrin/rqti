@@ -136,11 +136,14 @@ make_choice <- function(type_choice, identifier, text) {
 
 
 create_mapping <- function(object) {
+    sum <- sum(object@points[object@points > 0])
+    zero <- which(object@points == 0)
+    object@points[zero] <- - sum / length(zero)
     val <- object@points[object@points != 0]
     key <- object@choice_identifiers[object@points != 0]
     map_entries <- Map(create_map_entry, val, key)
     tag("mapping", list(lowerBound = 0,
-                        upperBound = sum(object@points[object@points > 0]),
+                        upperBound = sum,
                         defaultValue = 0,
                         map_entries)
     )
