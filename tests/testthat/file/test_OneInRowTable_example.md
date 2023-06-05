@@ -1,5 +1,5 @@
 ---
-type: matchtable
+type: match
 identifier: test_OneInRowTable_example
 title: OneInRowTable
 ---

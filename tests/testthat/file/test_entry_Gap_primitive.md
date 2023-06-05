@@ -1,5 +1,5 @@
 ---
-type: entry
+type: gap
 identifier: test_entry_example
 ---
 # question

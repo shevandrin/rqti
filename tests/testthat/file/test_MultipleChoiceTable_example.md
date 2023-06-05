@@ -1,5 +1,5 @@
 ---
-type: matchtable
+type: match
 identifier: test_MultipleChoiceTable_example
 ---
 # question

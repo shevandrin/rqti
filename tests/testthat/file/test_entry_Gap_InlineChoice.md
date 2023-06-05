@@ -1,5 +1,5 @@
 ---
-type: entry
+type: dropdown
 identifier: test_entry_example
 ---
 # question

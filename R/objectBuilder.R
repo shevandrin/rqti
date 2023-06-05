@@ -22,15 +22,24 @@ create_question_object <- function(file) {
                                      parsermd::by_section("question"))[-1]
     html <- transform_to_html(parsermd::as_document(question))
 
-    slots <- switch(tolower(attrs$type),
-                     "entry" = create_entry_object(question, attrs),
-                     "sc" =  create_sc_object(html, attrs),
-                     "mc" = create_mc_object(html, attrs),
-                     "essay" = create_essay_object(attrs),
-                     "order" = create_order_object(html, attrs),
-                     "directedpair" = create_dp_object(html, attrs),
-                     "matchtable" = create_matchtable_object(html, attrs)
-    )
+    slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice")) {
+        create_sc_object(html, attrs)
+    } else if (tolower(attrs$type) %in% c("mc", "multiplechoice")) {
+        create_mc_object(html, attrs)
+    } else if (tolower(attrs$type) %in% c("gap", "dropdown")) {
+        create_entry_object(question, attrs)
+    } else if (tolower(attrs$type) == "order") {
+        create_order_object(html, attrs)
+    } else if (tolower(attrs$type) == "essay") {
+        create_essay_object(attrs)
+    } else if (tolower(attrs$type) %in% c("dp", "directedpair")) {
+        create_dp_object(html, attrs)
+    } else if (tolower(attrs$type) %in% c("match")) {
+        create_matchtable_object(html, attrs)
+    } else {
+        stop("The type of task is not specified properly")
+    }
+
     file_name <- tools::file_path_sans_ext(basename(file))
     if (is.null(slots$identifier)) slots$identifier <- file_name
     feedback <- list(parse_feedback(file))
