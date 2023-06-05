@@ -95,10 +95,7 @@ test_that("create_question_object", {
                                           "ChoiceB",
                                           "ChoiceC",
                                           "ChoiceD"),
-                   orientation = "vertical",
-                   lower_bound = 0,
-                   default_value = 0
-
+                   orientation = "vertical"
     )
     sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
