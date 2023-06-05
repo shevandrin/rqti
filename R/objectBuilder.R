@@ -64,9 +64,13 @@ create_sc_object <- function(html, attrs) {
 
 create_mc_object <- function(html, attrs) {
     choices_options <- parse_list(html)
-    em <- choices_options$solution
     choices <- choices_options$choices
     attrs$points <- as.numeric(strsplit(as.character(attrs$points), ",")[[1]])
+    if (length(attrs$points) == 1) {
+        ind_point <- as.numeric(attrs$points) / length(choices_options$solution)
+        attrs$points <- rep(0, length(choices))
+        attrs$points[choices_options$solution] <- ind_point
+    }
 
     attrs <- c(Class = "MultipleChoice", choices = list(choices), attrs)
     return(attrs)
@@ -204,7 +208,7 @@ parse_list <- function(html) {
     choices <- xml2::xml_text(xml2::xml_find_all(
         question_list[length(question_list)], ".//li"))
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
-    solution <- which(choices == em)
+    solution <- which(choices %in% em)
     xml_remove(question_list[length(question_list)])
     return(list(choices = choices, solution = solution))
 }
