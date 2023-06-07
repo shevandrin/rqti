@@ -72,7 +72,6 @@ Collate:
     'WrongFeedback.R'
     'api_opal.R'
     'extract_results.R'
-    'helpers.R'
     'knit_functions.R'
     'objectBuilder.R'
     'qti_task.R'
