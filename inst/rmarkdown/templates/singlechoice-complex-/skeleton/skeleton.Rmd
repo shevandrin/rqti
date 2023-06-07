@@ -1,0 +1,32 @@
+---
+type: sc # equivalent to singlechoice and schoice
+identifier: TOPIC1_Q001 # think twice for later data analysis
+title: A meaningful title that can be displayed in the LMS
+shuffle: true
+orientation: vertical # OR horizontal
+points: 1
+---
+
+# question
+
+Which version of the QTI standard is used by the R package qti?
+
+- 1.2
+- **2.1** <!--Mark correct solution with asterisks-->
+- 2.2
+- 3.0
+
+# feedback
+
+General feedback will be displayed everytime.
+
+<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment the following:
+
+# feedback+
+
+Nice.
+
+# feedback-
+
+Try again.
+-->

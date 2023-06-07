@@ -37,6 +37,7 @@ Imports:
 Suggests: 
     covr,
     dplyr,
+    knitr,
     testthat (>= 3.0.0),
     textclean,
     XML
@@ -80,3 +81,4 @@ Collate:
 Depends: 
     R (>= 2.10)
 LazyData: true
+VignetteBuilder: knitr

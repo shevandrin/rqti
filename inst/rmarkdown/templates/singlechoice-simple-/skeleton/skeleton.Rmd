@@ -1,0 +1,18 @@
+---
+type: sc
+---
+
+# question
+
+Which version of the QTI standard is used by the R package qti?
+
+- 2.1 <!-- First option is always the correct one-->
+- 1.2
+- 3.0
+- 2.2
+
+# feedback
+
+The used qti version is 2.1. 
+
+<!-- The whole feedback section is optional. For non-trivial examples you might still want to provide an explanation. -->

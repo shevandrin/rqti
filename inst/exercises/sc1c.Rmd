@@ -1,0 +1,26 @@
+---
+type: sc
+identifier: TOPIC1_Q001
+title: A meaningful title that can be displayed in the LMS
+shuffle: false
+orientation: horizontal
+solution: 2
+points: 0.5
+---
+
+# question
+
+Which version of the QTI standard is used by the R package qti?
+
+- 1.2
+- 2.1
+- 2.2
+- 3.0
+
+# feedback+
+
+Nice.
+
+# feedback-
+
+Try again.
