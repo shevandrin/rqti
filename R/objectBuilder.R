@@ -1,3 +1,18 @@
+#' Create qti-XML task file from Rmd (md) description
+#'
+#' Create XML file for question specification from Rmd (md) description
+#' according to qti 2.1 infromation model
+#' @param file a file with markdown description of question.
+#' @param dir string, optional; a folder to store xml file; working directory by
+#'   default
+#' @param verification boolean, optional; to check validity of xml file, default
+#'   `FALSE`
+#' @return xml document
+rmd2qti <- function(file, dir = NULL, verification = FALSE) {
+    obj <- create_question_object(file)
+    createQtiTask(object = obj, dir = dir, verification = verification)
+}
+
 #' Create S4 object according to content of markdown file
 #'
 #' @param file a file with markdown description of question.
@@ -8,11 +23,21 @@
 #' @import yaml
 #' @import parsermd
 #' @importFrom utils read.delim
+#' @importFrom knitr knit
 #' @return an instance of the S4 object (SingleChoice, MultipleChoice,
 #'   Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
 #'   DirectedPair).
 #' @export
 create_question_object <- function(file) {
+
+    file_name <- tools::file_path_sans_ext(basename(file))
+    exts <- tools::file_ext(file)
+    if (exts == "Rmd") {
+        tdir <- tempdir()
+        file <- knitr::knit(file,
+                            output = file.path(tdir, paste0(file_name, ".md")),
+                            quiet = TRUE)
+    }
 
     doc_tree <- parsermd::parse_rmd(file)
     attrs_sec <- parsermd::rmd_select(doc_tree,
@@ -40,7 +65,6 @@ create_question_object <- function(file) {
         stop("The type of task is not specified properly")
     }
 
-    file_name <- tools::file_path_sans_ext(basename(file))
     if (is.null(slots$identifier)) slots$identifier <- file_name
     feedback <- list(parse_feedback(file))
     if (is.null(slots$content)) slots$content <- as.list((clean_question(html)))

@@ -33,7 +33,8 @@ Imports:
     httr,
     dotenv,
     parsermd,
-    rvest
+    rvest,
+    knitr
 Suggests: 
     covr,
     dplyr,
