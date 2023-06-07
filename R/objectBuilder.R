@@ -7,7 +7,6 @@
 #'   default
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
-#' @return xml document
 rmd2qti <- function(file, dir = NULL, verification = FALSE) {
     obj <- create_question_object(file)
     createQtiTask(object = obj, dir = dir, verification = verification)
@@ -305,7 +304,9 @@ transform_to_html <- function(sec) {
 }
 
 define_match_class <- function(ids, rows, cols) {
-    occurrences <- table(unlist(strsplit(ids, " ")))
+
+    ids <- unlist(strsplit(ids, " "))
+    occurrences <- table(c(ids, setdiff(rows, ids), setdiff(cols, ids)))
     unique_rows <- !any(occurrences[rows] > 1)
     unique_cols <- !any(occurrences[cols] > 1)
 

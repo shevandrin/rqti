@@ -15,9 +15,6 @@ default}
 \item{verification}{boolean, optional; to check validity of xml file, default
 \code{FALSE}}
 }
-\value{
-xml document
-}
 \description{
 Create XML file for question specification from Rmd (md) description
 according to qti 2.1 infromation model
