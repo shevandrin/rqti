@@ -269,8 +269,10 @@ test_that("Test parsing md for OnInColTable task", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for OneInRowTable task", {
-    path <- test_path("file/test_OneInRowTable_example.md")
-    sut <- create_question_object(path)
+    path1 <- test_path("file/test_OneInRowTable_example.md")
+    sut1 <- create_question_object(path1)
+    path2 <- test_path("file/test_OneInRowTable_example.Rmd")
+    sut2 <- create_question_object(path2)
     expected <- new("OneInRowTable",
                          content = list("<p>Choose the correct order in the multiplication table</p>"),
                          identifier = "test_OneInRowTable_example",
@@ -281,7 +283,8 @@ test_that("Test parsing md for OneInRowTable task", {
                          cols_identifiers = c("col_1", "col_2", "col_3", "col_4"),
                          answers_identifiers = c("row_1 col_2", "row_2 col_1", "row_3 col_3", "row_4 col_4", "row_5 col_2"),
                          answers_scores = c(0.5, 1, 1, 1, 1))
-    expect_equal(sut, expected)
+    expect_equal(sut1, expected)
+    expect_equal(sut2, expected)
 })
 test_that("Test parsing md for MultipleChoiceTable task", {
     path <- test_path("file/test_MultipleChoiceTable_example.md")
