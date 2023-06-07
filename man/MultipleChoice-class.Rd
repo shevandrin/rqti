@@ -47,21 +47,6 @@ the number of points that will be awarded to a candidate if he selects the
 corresponding answer; the order of the scores must follow the order of the
 \code{choices}; it is possible to assign negative values to incorrect answers;
 all answers with a positive score are considered correct}
-
-\item{\code{mapping}}{do not use; value initialize automatically; named numeric
-vector of points, where names are choice identifiers}
-
-\item{\code{lower_bound}}{numeric, optional; min number of options, that candidate
-has to choose; default \code{0}}
-
-\item{\code{upper_bound}}{do not use;value initialize automatically; define max
-number of right options in the answer set}
-
-\item{\code{default_value}}{do not use; the default value from the target set to be
-used when no explicit mapping for a source value is given; default \code{0}}
-
-\item{\code{maxscore}}{do not use; value initialize automatically as sum of positive
-points}
 }}
 
 \note{

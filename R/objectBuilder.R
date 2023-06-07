@@ -1,3 +1,18 @@
+#' Create qti-XML task file from Rmd (md) description
+#'
+#' Create XML file for question specification from Rmd (md) description
+#' according to qti 2.1 infromation model
+#' @param file a file with markdown description of question.
+#' @param dir string, optional; a folder to store xml file; working directory by
+#'   default
+#' @param verification boolean, optional; to check validity of xml file, default
+#'   `FALSE`
+#' @return xml document
+rmd2qti <- function(file, dir = NULL, verification = FALSE) {
+    obj <- create_question_object(file)
+    createQtiTask(object = obj, dir = dir, verification = verification)
+}
+
 #' Create S4 object according to content of markdown file
 #'
 #' @param file a file with markdown description of question.
@@ -8,11 +23,21 @@
 #' @import yaml
 #' @import parsermd
 #' @importFrom utils read.delim
+#' @importFrom knitr knit
 #' @return an instance of the S4 object (SingleChoice, MultipleChoice,
 #'   Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
 #'   DirectedPair).
 #' @export
 create_question_object <- function(file) {
+
+    file_name <- tools::file_path_sans_ext(basename(file))
+    exts <- tools::file_ext(file)
+    if (exts == "Rmd") {
+        tdir <- tempdir()
+        file <- knitr::knit(file,
+                            output = file.path(tdir, paste0(file_name, ".md")),
+                            quiet = TRUE)
+    }
 
     doc_tree <- parsermd::parse_rmd(file)
     attrs_sec <- parsermd::rmd_select(doc_tree,
@@ -40,7 +65,6 @@ create_question_object <- function(file) {
         stop("The type of task is not specified properly")
     }
 
-    file_name <- tools::file_path_sans_ext(basename(file))
     if (is.null(slots$identifier)) slots$identifier <- file_name
     feedback <- list(parse_feedback(file))
     if (is.null(slots$content)) slots$content <- as.list((clean_question(html)))
@@ -64,9 +88,13 @@ create_sc_object <- function(html, attrs) {
 
 create_mc_object <- function(html, attrs) {
     choices_options <- parse_list(html)
-    em <- choices_options$solution
     choices <- choices_options$choices
     attrs$points <- as.numeric(strsplit(as.character(attrs$points), ",")[[1]])
+    if (length(attrs$points) == 1) {
+        ind_point <- as.numeric(attrs$points) / length(choices_options$solution)
+        attrs$points <- rep(0, length(choices))
+        attrs$points[choices_options$solution] <- ind_point
+    }
 
     attrs <- c(Class = "MultipleChoice", choices = list(choices), attrs)
     return(attrs)
@@ -204,7 +232,7 @@ parse_list <- function(html) {
     choices <- xml2::xml_text(xml2::xml_find_all(
         question_list[length(question_list)], ".//li"))
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
-    solution <- which(choices == em)
+    solution <- which(choices %in% em)
     xml_remove(question_list[length(question_list)])
     return(list(choices = choices, solution = solution))
 }

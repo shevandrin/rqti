@@ -74,7 +74,7 @@ test_that("create_question_object", {
     expect_equal(cqc, expected)
 })
 
-# MultipleChoice
+# MultipleChoice - 1
 test_that("create_question_object", {
     path <- test_path("file/test_mc_example.md")
     sut <- create_question_object(path)
@@ -95,10 +95,34 @@ test_that("create_question_object", {
                                           "ChoiceB",
                                           "ChoiceC",
                                           "ChoiceD"),
-                   orientation = "vertical",
-                   lower_bound = 0,
-                   default_value = 0
+                   orientation = "vertical"
+    )
+    sut@choices <- textclean::replace_non_ascii(sut@choices)
+    expect_equal(sut, expected)
+})
 
+# MultipleChoice - 2
+test_that("create_question_object", {
+    path <- test_path("file/test_mc_example2.md")
+    sut <- create_question_object(path)
+    expected <- new("MultipleChoice",
+                    content = list(
+                        "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+                    points = c(2.5, 0, 2.5, 0),
+                    identifier = "test 2",
+                    qti_version = "v2p1",
+                    title = "Economics",
+                    choices = c("scarcity vs. resources",
+                                "wants vs. needs",
+                                "wages vs. prices",
+                                "consumers vs. producers"),
+                    shuffle = TRUE,
+                    prompt = "",
+                    choice_identifiers = c("ChoiceA",
+                                           "ChoiceB",
+                                           "ChoiceC",
+                                           "ChoiceD"),
+                    orientation = "vertical"
     )
     sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
