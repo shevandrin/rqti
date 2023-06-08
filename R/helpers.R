@@ -1,3 +1,18 @@
+#' Create YAML string for TextGap object
+#'
+#' @param response string; contains right answer for this text gap entry
+#' @param alternatives string vector, optional; contains a vector of values that
+#'   are also considered correct answers
+#' @param score numeric, optional; the number of points for this gap; default 1
+#' @param expected_length numeric, optional; is responsible to set a size of
+#'   text input field in content delivery engine
+#' @param placeholder string, optional; is responsible to place some helpful
+#'   text in text input field in content delivery engine
+#' @param case_sensitive logical, optional; determines whether the evaluation of
+#'   the correct answer is case sensitive
+#' @param response_identifier string; an identifier for thy answer; by default
+#'   it is generated automatically
+#' @return string; map yaml
 #' @export
 textgap <- function(response, alternatives = NULL, score = NULL,
                     expected_length = NULL, placeholder = NULL,
@@ -9,6 +24,24 @@ textgap <- function(response, alternatives = NULL, score = NULL,
     return(result)
 }
 
+#' Create YAML string for TextGapOpal object
+#'
+#' @param response string; contains right answer for this text gap entry
+#' @param alternatives string vector, optional; contains a vector of values that
+#'   are also considered correct answers
+#' @param score numeric, optional; the number of points for this gap; default 1
+#' @param expected_length numeric, optional; is responsible to set a size of
+#'   text input field in content delivery engine
+#' @param placeholder string, optional; is responsible to place some helpful
+#'   text in text input field in content delivery engine
+#' @param case_sensitive logical, optional; determines whether the evaluation of
+#'   the correct answer is case sensitive
+#' @param response_identifier string; an identifier for thy answer; by default
+#'   it is generated automatically
+#' @param value_precision numeric, optional; defines how many characters will be
+#'   taken into account to tolerate spelling mistake in evaluation of candidate
+#'   answer
+#' @return string; map yaml
 #' @export
 textgapopal <- function(response, alternatives = NULL, score = NULL,
                         expected_length = NULL, placeholder = NULL,
@@ -21,11 +54,32 @@ textgapopal <- function(response, alternatives = NULL, score = NULL,
     return(result)
 }
 
+#' Create YAML string for NumericGap object
+#'
+#' @param response numeric; contains right answer for this numeric entry
+#' @param score numeric, optional; the number of points for this gap; default 1
+#' @param expected_length numeric, optional; is responsible to set a size of
+#'   text input field in content delivery engine
+#' @param placeholder string, optional; is responsible to place some helpful
+#'   text in text input field in content delivery engine
+#' @param value_precision numeric, optional; specifies the value for up and low
+#'   boundaries of tolerance rate for candidate answer
+#' @param response_identifier string; an identifier for thy answer; by default
+#'   it is generated automatically
+#' @param type_precision string, optional; specifies tolerance mode; possible
+#'   values:"exact", "absolute", "relative"
+#' @param include_lower_bound boolean, optional; specifies whether or not the
+#'   lower bound is included in tolerance rate
+#' @param include_upper_bound boolean, optional; specifies whether or not the
+#'   upper bound is included in tolerance rate
+#' @param response_identifier string; an identifier for thy answer; by default
+#'   it is generated automatically
+#' @return string; map yaml
 #' @export
 numgap <- function(response, score = NULL, expected_length = NULL,
                    placeholder = NULL, value_precision = NULL,
                    type_precision = NULL, include_lower_bound = NULL,
-                   include_upper_bound = NULL) {
+                   include_upper_bound = NULL, response_identifier = NULL) {
 
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
@@ -47,7 +101,12 @@ clean_yaml_str <- function(params, type){
     result <- paste0("<<{", result, "}>>")
     return(result)
 }
-
+#' Create markdown list for answer options
+#'
+#' @param vect string or numeric vector of answer options for single/multiple
+#'   choice task
+#' @param solutions numeric, optional; indexes of right answer options in `vect`
+#' @return markdown list
 #' @export
 answerlist <- function(vect, solutions = NULL) {
     if (!is.null(solutions)) {
