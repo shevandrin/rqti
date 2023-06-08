@@ -1,26 +1,32 @@
+#' @export
 textgap <- function(response, alternatives = NULL, score = NULL,
                     expected_length = NULL, placeholder = NULL,
                     case_sensitive = NULL, response_identifier = NULL) {
+
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
     result <- clean_yaml_str(params, "text")
     return(result)
 }
 
+#' @export
 textgapopal <- function(response, alternatives = NULL, score = NULL,
                         expected_length = NULL, placeholder = NULL,
                         case_sensitive = NULL, response_identifier = NULL,
                         value_precision = NULL) {
+
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
     result <- clean_yaml_str(params, "text_opal")
     return(result)
 }
 
+#' @export
 numgap <- function(response, score = NULL, expected_length = NULL,
                    placeholder = NULL, value_precision = NULL,
                    type_precision = NULL, include_lower_bound = NULL,
                    include_upper_bound = NULL) {
+
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
     result <- clean_yaml_str(params, "numeric")
@@ -28,6 +34,7 @@ numgap <- function(response, score = NULL, expected_length = NULL,
 }
 
 clean_yaml_str <- function(params, type){
+
     if (!is.null(params$alternatives)) {
         params$alternatives <- paste(params$alternatives, collapse = ",")
         params$alternatives <- paste0("[", params$alternatives, "]")
@@ -39,4 +46,13 @@ clean_yaml_str <- function(params, type){
     result <- gsub("'", "", result)
     result <- paste0("<<{", result, "}>>")
     return(result)
+}
+
+#' @export
+answerlist <- function(vect, solutions = NULL) {
+    if (!is.null(solutions)) {
+        for (s in solutions) vect[s] <- paste0("*", vect[s], "*")
+    }
+    md_list <- paste0("- ", vect)
+    return(cat(md_list, sep = "\n"))
 }
