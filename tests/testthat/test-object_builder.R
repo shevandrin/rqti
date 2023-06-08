@@ -301,7 +301,7 @@ test_that("Test parsing md for MultipleChoiceTable task", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
-    path <- test_path("file/test_entry_Gap_primitive.md")
+    path <- test_path("file/test_entry_Gap_primitive.Rmd")
     sut <- create_question_object(path)
     expected <- new("Entry",
            identifier = "test_entry_example",
