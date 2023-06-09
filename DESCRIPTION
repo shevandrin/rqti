@@ -20,10 +20,8 @@ Imports:
     yaml,
     commonmark,
     rmarkdown,
-    exams,
     servr,
     rstudioapi,
-    RCurl,
     fs,
     purrr,
     stringr,
@@ -38,7 +36,6 @@ Imports:
 Suggests: 
     covr,
     dplyr,
-    knitr,
     testthat (>= 3.0.0),
     textclean,
     XML
