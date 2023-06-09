@@ -6,6 +6,9 @@
 [![test-coverage](https://github.com/shevandrin/qti/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/shevandrin/qti/actions/workflows/test-coverage.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shevandrin/qti/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shevandrin/qti?branch=main)
+[![Project Status: WIP - Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
 # qti
@@ -69,7 +72,11 @@ should be moved to rex
 | match (table, many right answers in columns and rows are possible) | partially implemented | MultipleChoiceTable |
 | essay                                                              | partially implemented | Essay               |
 
-![Class diagramm S4.](man/figures/README-S4_classes_diagramm.jpg)
+<figure>
+<img src="man/figures/README-S4_classes_diagramm.jpg"
+alt="Class diagramm S4." />
+<figcaption aria-hidden="true">Class diagramm S4.</figcaption>
+</figure>
 
 ## What is not possible
 
