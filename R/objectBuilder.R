@@ -50,7 +50,7 @@ create_question_object <- function(file) {
         create_sc_object(html, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "multiplechoice")) {
         create_mc_object(html, attrs)
-    } else if (tolower(attrs$type) %in% c("gap", "dropdown")) {
+    } else if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown")) {
         create_entry_object(question, attrs)
     } else if (tolower(attrs$type) == "order") {
         create_order_object(html, attrs)
