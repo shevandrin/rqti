@@ -43,10 +43,7 @@ test_that("Testing create_response_declaration_multiple_choice",{
     </correctResponse>
     <mapping lowerBound="0" upperBound="2" defaultValue="0">
         <mapEntry mapKey="H" mappedValue="1"/>
-        <mapEntry mapKey="He" mappedValue="-0.666666666666667"/>
-        <mapEntry mapKey="C" mappedValue="-0.666666666666667"/>
         <mapEntry mapKey="O" mappedValue="1"/>
-        <mapEntry mapKey="N" mappedValue="-0.666666666666667"/>
         <mapEntry mapKey="Cl" mappedValue="-1"/>
     </mapping>
     </responseDeclaration>'
