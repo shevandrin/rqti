@@ -1,5 +1,5 @@
 ---
-type: gap
+type: cloze
 identifier: test_entry_example
 ---
 
