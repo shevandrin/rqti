@@ -4,13 +4,16 @@
 \alias{answerlist}
 \title{Create markdown list for answer options}
 \usage{
-answerlist(vect, solutions = NULL)
+answerlist(vect, solutions = NULL, gaps = NULL)
 }
 \arguments{
 \item{vect}{string or numeric vector of answer options for single/multiple
 choice task}
 
 \item{solutions}{numeric, optional; indexes of right answer options in \code{vect}}
+
+\item{gaps}{numeric or string vector, optional; provides primitive
+description to build gaps in content of Entry task}
 }
 \value{
 markdown list

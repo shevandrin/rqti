@@ -106,12 +106,24 @@ clean_yaml_str <- function(params, type){
 #' @param vect string or numeric vector of answer options for single/multiple
 #'   choice task
 #' @param solutions numeric, optional; indexes of right answer options in `vect`
+#' @param gaps numeric or string vector, optional; provides primitive
+#'   description to build gaps in content of Entry task
 #' @return markdown list
 #' @export
-answerlist <- function(vect, solutions = NULL) {
+answerlist <- function(vect, solutions = NULL, gaps = NULL) {
+
     if (!is.null(solutions)) {
         for (s in solutions) vect[s] <- paste0("*", vect[s], "*")
     }
-    md_list <- paste0("- ", vect)
+
+    if (!is.null(gaps)) {
+        if (length(vect) != length(gaps)) {
+            print("*Error*: Number of Gaps must be equal to number of list
+                  items")
+        }
+        gaps <- paste0(" <<", gaps, ">>")
+    }
+
+    md_list <- paste0("- ", vect, gaps)
     return(cat(md_list, sep = "\n"))
 }
