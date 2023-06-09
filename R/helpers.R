@@ -12,45 +12,19 @@
 #'   the correct answer is case sensitive
 #' @param response_identifier string; an identifier for thy answer; by default
 #'   it is generated automatically
-#' @return string; map yaml
-#' @export
-textgap <- function(response, alternatives = NULL, score = NULL,
-                    expected_length = NULL, placeholder = NULL,
-                    case_sensitive = NULL, response_identifier = NULL) {
-
-    params <- as.list(match.call())[-1]
-    params <- lapply(params, eval)
-    result <- clean_yaml_str(params, "text")
-    return(result)
-}
-
-#' Create YAML string for TextGapOpal object
-#'
-#' @param response string; contains right answer for this text gap entry
-#' @param alternatives string vector, optional; contains a vector of values that
-#'   are also considered correct answers
-#' @param score numeric, optional; the number of points for this gap; default 1
-#' @param expected_length numeric, optional; is responsible to set a size of
-#'   text input field in content delivery engine
-#' @param placeholder string, optional; is responsible to place some helpful
-#'   text in text input field in content delivery engine
-#' @param case_sensitive logical, optional; determines whether the evaluation of
-#'   the correct answer is case sensitive
-#' @param response_identifier string; an identifier for thy answer; by default
-#'   it is generated automatically
 #' @param value_precision numeric, optional; defines how many characters will be
 #'   taken into account to tolerate spelling mistake in evaluation of candidate
 #'   answer
 #' @return string; map yaml
 #' @export
-textgapopal <- function(response, alternatives = NULL, score = NULL,
-                        expected_length = NULL, placeholder = NULL,
-                        case_sensitive = NULL, response_identifier = NULL,
-                        value_precision = NULL) {
-
+gap_text <- function(response, alternatives = NULL, score = NULL,
+                    expected_length = NULL, placeholder = NULL,
+                    case_sensitive = NULL, response_identifier = NULL,
+                    value_precision = NULL) {
+    type <- ifelse(is.null(value_precision), "text", "text_opal")
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
-    result <- clean_yaml_str(params, "text_opal")
+    result <- clean_yaml_str(params, type)
     return(result)
 }
 
@@ -76,7 +50,7 @@ textgapopal <- function(response, alternatives = NULL, score = NULL,
 #'   it is generated automatically
 #' @return string; map yaml
 #' @export
-numgap <- function(response, score = NULL, expected_length = NULL,
+gap_numeric <- function(response, score = NULL, expected_length = NULL,
                    placeholder = NULL, value_precision = NULL,
                    type_precision = NULL, include_lower_bound = NULL,
                    include_upper_bound = NULL, response_identifier = NULL) {
