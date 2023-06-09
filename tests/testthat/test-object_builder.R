@@ -301,12 +301,12 @@ test_that("Test parsing md for MultipleChoiceTable task", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
-    path <- test_path("file/test_entry_Gap_primitive.md")
+    path <- test_path("file/test_entry_Gap_primitive.Rmd")
     sut <- create_question_object(path)
     expected <- new("Entry",
            identifier = "test_entry_example",
            title = "test_entry_example",
-           content = list('<p>Hast du ',
+           content = list('<p><strong>Diese Aufgabe dient zum Testen verschiedener Möglichkeiten zum Erstellen von Lücken</strong></p>\n<p>Hast du ',
                      new("TextGap",
                           response_identifier = "response_1",
                           response = "ein",
@@ -324,7 +324,32 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
                      new("NumericGap",
                           response_identifier = "response_4",
                           response = 5),
-                     '.</p>'),
+                     '.</p>\n<p>neue numerische Lücke, die mit der Funktion gebaut würde ',
+                     new("NumericGap",
+                         response_identifier = "response_5",
+                         response = 8,
+                         placeholder = "die richtige Antwort ist 8",
+                         expected_length = 50,
+                         type_precision = "relative",
+                         value_precision = 10,
+                         include_lower_bound = FALSE),
+                     '</p>\n<p>eine texte Lücke, die mit der Funktion gebaut würde ',
+                     new("TextGap",
+                         response_identifier = "response_6",
+                         response = "answer0",
+                         alternatives = c("answer1", "answer2"), score = 3,
+                         placeholder = "put answer here",
+                         expected_length = 70, case_sensitive = FALSE),
+                     '</p>\n<p>eine texte Lücke <strong>für opal</strong>, die mit der Funktion gebaut würde ',
+                     new("TextGapOpal",
+                         response_identifier = "response_7",
+                         response = "answer0",
+                         alternatives = c("answer1", "answer2"),
+                         score = 3,
+                         placeholder = "opal allows some tolerance rate",
+                         expected_length = 50,
+                         case_sensitive = FALSE,
+                         value_precision = 2),'</p>'),
                     feedback = list(new("ModalFeedback",
                                         content = list("<p>general feedback</p>"))))
     expect_equal(sut, expected)

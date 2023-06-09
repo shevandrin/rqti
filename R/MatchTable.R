@@ -16,16 +16,20 @@ setClass("MatchTable", contains = "AssessmentItem",
                      answers_identifiers = "character",
                      answers_scores = "numeric",
                      shuffle = "logical"),
-         prototype = list(shuffle = TRUE))
+         prototype = list(shuffle = TRUE, points = NA_real_))
 
 # constructor
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
-    checker <- .Object@answers_scores
-    if (length(checker) == 0) {
-        score <- .Object@points / length(.Object@answers_identifiers)
-        .Object@answers_scores  <- rep(score,
-                                       length(.Object@answers_identifiers))
+    answ_count <- length(.Object@answers_identifiers)
+
+    if (is.na(.Object@points)) {
+        .Object@points <- answ_count
+    }
+
+    if (length(.Object@answers_scores) == 0) {
+        score <- .Object@points / answ_count
+        .Object@answers_scores  <- rep(score, answ_count)
     }
     validObject(.Object)
     .Object
