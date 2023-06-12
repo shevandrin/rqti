@@ -1,10 +1,11 @@
 ---
 type: sc # equivalent to singlechoice and schoice
-identifier: TOPIC1_Q001 # think twice for later data analysis
+identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
-shuffle: true
+shuffle: true # random order of choices
 orientation: vertical # OR horizontal
 points: 1
+#knit: qti::knit_qti_html # uncomment for QTI format preview via knit button
 ---
 
 # question
@@ -18,15 +19,15 @@ Which version of the QTI standard is used by the R package qti?
 
 # feedback
 
-General feedback will be displayed everytime.
+General feedback will be displayed every time (without conditions).
 
 <!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment the following:
 
 # feedback+
 
-Nice.
+Nice. (Only displayed when the solution is correct.)
 
 # feedback-
 
-Try again.
+Try again. (Only displayed if the solution is not correct.)
 -->
