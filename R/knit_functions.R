@@ -25,7 +25,7 @@ knit_qti_html <- function(input, ...) {
     if (url == "") {
       stop("Server for QTIJS not running. You can start it manually with start_server()")
     }
-    rmd2qti(input, dir = qtijs_path())
+    rmd2zip(input, path = qtijs_path())
     rstudioapi::viewer(url)
 }
 

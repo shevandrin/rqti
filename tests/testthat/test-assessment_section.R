@@ -168,7 +168,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                prompt = "What does 3/4 + 1/4 = ?",
                title = "MultipleChoice",
                choices = c("1", "4/8", "8/4", "4/4"),
-               choice_identifiers = c("1", "2", "3", "4"),
+               choice_identifiers = c("a1", "a2", "a3", "a4"),
                points = c(1, 0, 0, 1)
     )
     TextGapOpal <- new("Entry",

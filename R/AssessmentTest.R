@@ -113,10 +113,11 @@ setGeneric("createAssessmentTest", function(object, folder) {
 #'   [AssessmentTestOpal]
 #' @param folder string, optional; a folder to store xml file; working directory
 #'   by default
+#' @param file_name string, optional; file name of zip archive
 #' @docType methods
 #' @rdname createZip-methods
 #' @aliases createZip
-setGeneric("createZip", function(object, folder) {
+setGeneric("createZip", function(object, folder, file_name) {
     StandartGeneric("createZip")
 })
 
@@ -147,6 +148,7 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
 #' @rdname createZip-methods
 #' @aliases createZip,AssessmentTest
 setMethod("createZip", signature(object = "AssessmentTest"),
-          function(object, folder) {
-              zip_wrapper(object@identifier, NULL, folder)
+          function(object, folder, file_name) {
+              if (is.null(file_name)) file_name <- object@identifier
+              zip_wrapper(file_name, NULL, folder)
           })

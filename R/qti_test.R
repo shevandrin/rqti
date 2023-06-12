@@ -1,11 +1,9 @@
 #' Create XML file for exam test specification
 #'
-#' @usage create_qti_test(object,
-#'                 dir = getwd(),
-#'                 verification = FALSE)
+#' @usage create_qti_test(object, path = getwd(), verification = FALSE)
 #' @param object an instance of the [AssessmentTest] S4 object
-#' @param dir string, optional; a folder to store xml file; working directory by
-#'   default
+#' @param path string, optional; a path to folder to store zip file with possible
+#'   file name; working directory by default
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
 #' @return xml document.
@@ -19,11 +17,23 @@
 #'                    title = "section", assessment_item = list(essay, sc))
 #' exam <- new("AssessmentTestOpal", identifier = "id_test",
 #'            title = "some title", section = list(exam_section))
-#' create_qti_test(exam, "exam_folder", "TRUE")
+#' create_qti_test(exam, "exam_folder/exam.zip", "TRUE")
 #' }
 #' @export
-create_qti_test <- function(object, dir = getwd(), verification = FALSE) {
-    if (!dir.exists(dir)) dir.create(dir)
+create_qti_test <- function(object, path = getwd(), verification = FALSE) {
+    ext <- tools::file_ext(path)
+    if (ext == "") {
+        dir <- path
+        file_name <- NULL
+    } else {
+        dir <- dirname(path)
+        file_name <- tools::file_path_sans_ext(basename(path))
+    }
+
+    if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+    # to remove content of dir
+    file_list <- list.files(dir, full.names = TRUE)
+    file.remove(file_list)
 
     content <- createAssessmentTest(object, dir)
     doc_test <- xml2::read_xml(as.character(content))
@@ -38,7 +48,7 @@ create_qti_test <- function(object, dir = getwd(), verification = FALSE) {
     xml2::write_xml(doc_manifest, path_manifest)
     message(paste("see manifest file:", path_manifest))
 
-    createZip(object, dir)
+    createZip(object, dir, file_name)
 }
 
 # creates xml root and children of test file
