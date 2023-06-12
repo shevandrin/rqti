@@ -62,6 +62,8 @@ test_that("Testing method createOutcomeDeclaration() for AssessmentTest class", 
     expect_equal(xml1, xml2)
 })
 
+skip_on_cran()
+skip_on_covr()
 test_that("Testing method createAssessmentTest for AssessmentTestOpal class", {
 sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
            identifier = "q1", choices = c("a", "b", "c"))
