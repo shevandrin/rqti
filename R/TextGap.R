@@ -18,12 +18,13 @@
 setClass("TextGap", contains = "Gap",
          slots = c(response = "character", alternatives = "character",
                    case_sensitive = "logical"),
-         prototype = prototype(case_sensitive = TRUE
-                               ))
+         prototype = prototype(case_sensitive = TRUE))
+
 setMethod("initialize", "TextGap", function(.Object,...){
     .Object <- callNextMethod()
-    if (length(.Object@score) == 0) .Object@score = 1
-    if (length(.Object@case_sensitive) == 0L) .Object@case_sensitive = TRUE
+    if (length(.Object@expected_length) == 0) {
+        .Object@expected_length <- nchar(.Object@response) + 3
+    }
     validObject(.Object)
     .Object
 })
