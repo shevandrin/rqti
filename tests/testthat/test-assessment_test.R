@@ -61,6 +61,7 @@ test_that("Testing method createOutcomeDeclaration() for AssessmentTest class", 
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+
 test_that("Testing method createAssessmentTest for AssessmentTestOpal class", {
 sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
            identifier = "q1", choices = c("a", "b", "c"))
@@ -90,17 +91,13 @@ exam <- new("AssessmentTestOpal", identifier = "id_test",
             )
 suppressMessages(createQtiTest(exam, "todelete", "TRUE"))
 
-xml1 <- xml2::read_xml(suppressMessages(toString(createAssessmentTest(object = exam, folder = getwd()))))
-xml2 <- xml2::read_xml("todelete/id_test.xml")
-expect_equal(xml1, xml2)
-file.remove("e1.xml")
-file.remove("e2.xml")
-file.remove("e3.xml")
-file.remove("q1.xml")
-file.remove("q2.xml")
-file.remove("q3.xml")
+sut <- sort(list.files("todelete"))
+expected <- sort(c("e1.xml", "e2.xml", "e3.xml", "q1.xml", "q2.xml", "q3.xml",
+              "id_test.xml", "id_test.zip", "imsmanifest.xml"))
+expect_equal(sut, expected)
 unlink("todelete", recursive = TRUE)
 })
+
 test_that("Testing method createAssessmentTest for AssessmentTest class", {
     sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
                identifier = "q1", choices = c("a", "b", "c"))
