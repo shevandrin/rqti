@@ -8,8 +8,11 @@
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
 rmd2qti <- function(file, dir = NULL, verification = FALSE) {
-    obj <- create_question_object(file)
-    createQtiTask(object = obj, dir = dir, verification = verification)
+    task <- create_question_object(file)
+    section <- new("AssessmentSection", assessment_item = list(task))
+    test <- new("AssessmentTestOpal", identifier = "id_test",
+                title = "QTIJS Preview", section = list(section))
+    createQtiTest(test, dir = dir, verification = verification)
 }
 
 #' Create S4 object according to content of markdown file
@@ -42,6 +45,8 @@ create_question_object <- function(file) {
     attrs_sec <- parsermd::rmd_select(doc_tree,
                                       parsermd::has_type("rmd_yaml_list"))
     attrs <- yaml.load(parsermd::as_document(attrs_sec))
+    # ignore parameters that are not related to object creation
+    attrs <- attrs[! names(attrs) %in% c("knit")]
     question <- parsermd::rmd_select(doc_tree,
                                      parsermd::by_section("question"))[-1]
     html <- transform_to_html(parsermd::as_document(question))

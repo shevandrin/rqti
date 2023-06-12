@@ -2,24 +2,27 @@
 % Please edit documentation in R/knit_functions.R
 \name{knit_qti_html}
 \alias{knit_qti_html}
-\title{Generate a HTML representation of a RMD file}
+\title{Render an RMD file as qti xml with QTIJS}
 \usage{
 knit_qti_html(input, ...)
 }
 \arguments{
 \item{input}{(the path to the input Rmd document)}
 
-\item{...}{other arguments that are currently ignored}
+\item{...}{required for passing arguments when knitting}
 }
 \description{
-Choosing a specific Rmd file the function generates the qti.xml for it
-through the functions of the package exams, after the XML is copied into the
-QTI Engine which transforms the qti.xml into HTML format. Finally, the HTML
-is displayed and the user can have a preview of the exercise or exam.
+Generates the qti xml file through the functions of the package exams. The
+xml is copied into the QTIJS folder which transforms the xml into HTML.
+Finally, the HTML is displayed and the user can have a preview of the
+exercise or exam.
+}
+\details{
+Requires a running QTIJS server, which can be started with start_server().
 }
 \examples{
 # Customize knit function in the Rmd file using the following YAML setting
 # after the word knit:
-\dontrun{qti::knit_qti_html}
+\dontrun{qti::knit}
 
 }

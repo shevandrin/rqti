@@ -2,24 +2,22 @@
 % Please edit documentation in R/knit_functions.R
 \name{start_server}
 \alias{start_server}
-\title{Start QTI Engine in a server}
+\title{Start QTIJS on a local server}
 \usage{
-start_server(qti_engine_f)
-}
-\arguments{
-\item{qti_engine_f}{filepath to the js QTI Engine. Can be empty to indicate
-that the server can be initiated in the package folder.}
+start_server()
 }
 \description{
-The function starts a server in the folder that contains the js QTI Engine
-that performs the conversion of qti.xml into HTML.
+This function starts an http server with the QTIJS renderer. The renderer performs the conversion of qti.xml into HTML.
+}
+\details{
+The server has to be started manually by the user, otherwise the Knit Button will not work. The Button starts a new session and invoking a server there does not make much sense.
 }
 \examples{
 \dontrun{
 # Initiated server in qtiViewer folder
 start_server()
 # Initiated server in a specific folder provided by the user. This folder
- contains the js QTI Engine
-start_server("/pathToTheQtiEngine/")
+ contains the QTI renderer
+start_server("/pathToTheQtiRenderer/")
 }
 }
