@@ -62,7 +62,7 @@ test_that("Testing create Response Declaration Gap ", {
                                                          "</p>","<p>",
                                                          new("NumericGap",
                                                              response_identifier = "RESPONSE_2",
-                                                             response = 12,
+                                                             response = 1234567890,
                                                              value_precision = 1,
                                                              expected_length = 4),
                                                          "leaves by this sun of York;
@@ -74,7 +74,6 @@ test_that("Testing create Response Declaration Gap ", {
                                                              response_identifier = "RESPONSE_4",
                                                              response = 12.5,
                                                              value_precision = 1,
-                                                             expected_length = 5,
                                                              score = 0.5,
                                                              placeholder = "Floating point"),
 
@@ -104,7 +103,7 @@ test_that("Testing create Response Declaration Gap ", {
 
     example <- '<responseDeclaration identifier="RESPONSE_2" cardinality="single" baseType="float">
 <correctResponse>
-<value>12</value>
+<value>1234567890</value>
 </correctResponse>
 </responseDeclaration>'
 
@@ -225,9 +224,9 @@ test_that("Testing create Outcome Declaration Gap ", {
     </additionalTag>'
 
     responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
-    xml1 <- xml2::read_xml(responseDe)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(responseDe)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 
 })
 

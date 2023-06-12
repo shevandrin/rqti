@@ -156,7 +156,7 @@ test_that("create_qti_task", {
 # TextGapOpal
 test_that("create_qti_task", {
     path <- test_path("file/test_create_qti_task_TextGapOpal.xml")
-    cqt <- readLines(path)
+    expected <- readLines(path)
 TextGapOpal <- new("Entry",
                    identifier = "new",
                    points = 3,
@@ -171,15 +171,15 @@ TextGapOpal <- new("Entry",
                                   'than the speed of sound</p>'))
 
     suppressMessages(create_qti_task(TextGapOpal))
-    expected <- readLines("new.xml")
+    sut <- readLines("new.xml")
 
-    expect_equal(cqt, expected)
+    expect_equal(sut, expected)
     file.remove("new.xml")
 })
 # NumericGap
 test_that("create_qti_task", {
     path <- test_path("file/test_create_qti_task_NumericGap.xml")
-    cqt <- readLines(path)
+    expected <- readLines(path)
 NumericGap <- new("Entry",
                   identifier = "new",
                   points = 3,
@@ -193,9 +193,9 @@ NumericGap <- new("Entry",
                                  'm/s')
 )
     suppressMessages(create_qti_task(NumericGap))
-    expected <- readLines("new.xml")
+    sut <- readLines("new.xml")
 
-    expect_equal(cqt, expected)
+    expect_equal(sut, expected)
     file.remove("new.xml")
 })
 # InlineChoice

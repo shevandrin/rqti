@@ -22,6 +22,7 @@ setClass("NumericGap", contains = "Gap",
                    type_precision = "character"),
          prototype = prototype(type_precision = "exact",
                                score = 1,
+                               expected_length = 1,
                                type_precision = "exact",
                                include_lower_bound = TRUE,
                                include_upper_bound = TRUE))
@@ -34,8 +35,16 @@ setValidity("NumericGap", function(object) {
     } else {
         return(TRUE)
     }
-}
-)
+})
+
+setMethod("initialize", "NumericGap", function(.Object, ...) {
+    .Object <- callNextMethod()
+    if (nchar(.Object@response) > 4 & (length(.Object@expected_length) == 0)) {
+        .Object@expected_length <- nchar(.Object@response) - 3
+    }
+    validObject(.Object)
+    .Object
+})
 
 #' @rdname getResponse-methods
 #' @aliases getResponse,NumericGap
