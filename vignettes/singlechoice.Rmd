@@ -7,6 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<!-- todo: wait until BPS replies, then we can take screenshots with the approach below -->
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -26,13 +27,32 @@ The simplest exercise type in the qti package is single choice. The minimum you 
 cat(readLines(fs::path_package("exercises", "sc1.Rmd", package = "qti")), sep = '\n')
 ```
 
+<!-- Iframe does not seem to work out of the box -->
+<!-- <iframe src="http://127.0.0.1:4321" sandbox="allow-scripts"></iframe> -->
+
 Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to provide some explanation for students (here not really, since it is trivial).
 
 Calling `rmd2qti` on the file produces the xml-file in the current folder. In the QTI player ONYX this file renders as:
 
+ADD: function rmd2opal
+
 ```{r eval=FALSE}
 rmd2qti(fs::path_package("exercises", "sc1.Rmd", package = "qti"))
-upload2opal("sc1.xml") # hide
+url <- upload2opal("sc1.xml") # you need an OPAL account for that!
+```
+
+```{r eval=FALSE}
+system(paste0("wkhtmltoimage ", url, "sc1.png"))
+```
+
+You can also just click the knit Button in RStudio, which will produce an html file. But this file is not the final product as it just translates the md to html. To see what the qti-file will look like, you can uncomment the line `#knit: qti::knit_qti_html` in the yaml section and click the knit Button again. This will start a local server and show you a preview via QTIJS. The same is achieved when you run `render_xml("sc1.xml")`.
+
+## Syntax explained
+
+Let us have a closer look at the input file.
+
+```{r comment='', echo = F}
+cat(readLines(fs::path_package("exercises", "sc1.Rmd", package = "qti")), sep = '\n')
 ```
 
 Note that you do not necessarily need to specify which list element is correct. The first one is treated as the correct one, which is a nice shortcut. If you communicate this to your collaborators, it is also much easier to read. They do not need to look anywhere else in the file for checking the correct answer. 
@@ -47,7 +67,11 @@ Which renders as:
 
 ```{r eval=FALSE}
 rmd2qti(fs::path_package("exercises", "sc1b.Rmd", package = "qti"))
-upload2opal("sc1.xml") # hide
+upload2opal("sc1b.xml") # hide
+```
+
+```{r eval=FALSE}
+system(paste0("wkhtmltoimage ", url, "sc1b.png"))
 ```
 
 Once again, this is much easier to read than providing the solution somewhere else (in the yaml section). Furthermore, producing a preview as html directly shows you which element is correct.
@@ -83,6 +107,10 @@ Which renders as:
 ```{r eval=FALSE}
 rmd2qti(fs::path_package("exercises", "sc1c.Rmd", package = "qti"))
 upload2opal("sc1c.xml") #hide?
+```
+
+```{r eval=FALSE}
+system(paste0("wkhtmltoimage ", url, "sc1c.png"))
 ```
 
 ## yaml attributes
@@ -125,27 +153,28 @@ Feedback can be provided with the section
 
 ## List of answers as a variable
 
-For more complex exercises the list of answers is often just available as a variable. In this case you can use the helper function `...` to convert the vector into a markdown list:
+For more complex exercises the list of answers is often just available as a variable. In this case you can use the helper function `answerlist` to convert the vector into a markdown list:
 
 ```{r}
 
 ```
 
-## A programatic low level approach
+<!-- make a separate vignette for this -->
+<!-- ## A programatic low level approach -->
 
-The `qti` package is very flexible in that you can also use low level functions to create qti content. Let us say you have a csv table with many single choice exercises. It is quite easy to transform this to a qti section:
+<!-- The `qti` package is very flexible in that you can also use low level functions to create qti content. Let us say you have a csv table with many single choice exercises. It is quite easy to transform this to a qti section: -->
 
-```{r}
+<!-- ```{r} -->
 
-```
+<!-- ``` -->
 
 
 ## Some advice on single choice exercises
 
-From a psychometric perspective single choice exercises are the worst option for ability assessment. This is mainly because guessing can never be ruled out. Psychometric properties will usually be much worse than for gap exercises that are similar in content.
+From a psychometric perspective single choice exercises are the worst option for ability assessment. This is mainly because guessing can never be ruled out. Psychometric properties will usually be worse than for gap exercises that are similar in content.
 
-In the `exams` package you will see many examples where numeric gaps are transformed into single choice exercises. In our opinion this only makes sense if the LMS does not support gap exercises, the support is poor or a print exam with automatic grading is a strict requirement. Otherwise, most exercises will be much better with numeric (or string) gaps.
+In the `exams` package you will see many examples where numeric gaps are transformed into single choice exercises. In our opinion this only makes sense if the learning management system does not support gap exercises, the support is poor or a print exam with automatic grading is a strict requirement. Otherwise, most exercises will be better with numeric (or string) gaps.
 
-There are situations where single choice exercises cannot be avoided. For instance, exercises regarding the level of measurement only have five choices (nominal, ordinal, interval, ratio, absolute). Guessing cannot be avoided so single choice is the only option. In this case we recommend to ask several questions, not just one. Also you might want to give less points to single choice exercises in general.
+There are situations where single choice exercises cannot be avoided. For instance, exercises regarding the level of measurement only have five choices (nominal, ordinal, interval, ratio, absolute). In this case we recommend to ask several questions, not just one. Also you might want to give less points to single choice exercises in general to reduce the variance caused by guessing.
 
-In summary, try to avoid single choice exercises. Specifically, do not transform numeric gap exercises to single choice exercises, unless you have a good reason. If you cannot avoid single choice exercises, ask several related questions, not just one. Consider giving less weight to single choice exercises in grading.
+In summary, try to avoid single choice exercises. Specifically, do not transform numeric gap exercises to single choice exercises, unless you have a good reason. If you cannot avoid single choice exercises, ask several questions, not just one. Consider giving less weight to single choice exercises in grading.
