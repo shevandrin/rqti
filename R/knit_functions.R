@@ -18,8 +18,7 @@
 #' @export
 knit_qti_html <- function(input, ...) {
     # naming this function just knit, does not work
-    # clean up
-    unlink(paste(qtijs_path(), "*.xml", sep = "/"))
+    clean_qtijs()
     url <- Sys.getenv("QTI_URL")
     print(url)
     if (url == "") {
@@ -38,10 +37,23 @@ knit_qti_html <- function(input, ...) {
 #' @return nothing, has side effects
 #' @export
 render_xml <- function(input) {
-  renderer <- prepare_renderer()
+  url <- prepare_renderer()
   # use index.xml for a single file
-  file.copy(input, paste0(renderer$path, "/index.xml"))
-  rstudioapi::viewer(renderer$url)
+  file.copy(input, paste0(qtijs_path(), "/index.xml"))
+  rstudioapi::viewer(url)
+}
+
+#' Render a zipped qti archive
+#'
+#' Uses QTIJS to render a zipped qti archive in the RStudio viewer pane with a local server.
+#'
+#' @param input input file
+#' @return nothing, has side effects
+#' @export
+render_zip <- function(input) {
+    url <- prepare_renderer()
+    unzip(input, exdir = qtijs_path())
+    rstudioapi::viewer(url)
 }
 
 #' Start QTIJS on a local server
@@ -70,11 +82,11 @@ start_server <- function() {
     return(server_info$url)
 }
 
-
 #' shortcut for the correct QTIJS path
 qtijs_path <- function() {
     fs::path_package("qti", "QTIJS")
 }
+
 #' Prepare QTIJS renderer
 #'
 #' Starts server for QTIJS, returns path of QTIJS and the url of the server.
@@ -85,7 +97,10 @@ prepare_renderer <- function() {
       start_server()
   }
   # clean up
-  files_d <- paste(path, "*.xml", sep = "/")
-  unlink(files_d)
-  return(list(path = path, url = Sys.getenv("QTI_URL")))
+  clean_qtijs()
+  Sys.getenv("QTI_URL")
+}
+
+clean_qtijs <- function() {
+  unlink(paste(qtijs_path(), "*.xml", sep = "/"))
 }

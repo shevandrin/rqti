@@ -173,7 +173,7 @@ const BUILTIN_DECLARATIONS = {
   },
 }
 
-const DEFAULT_THEME = "theme";
+const DEFAULT_THEME = "themecc";
 const MAX_TABLE_COLS = 4;
 const RPTEMPLATES = "http://www.imsglobal.org/question/qti_v2p2/rptemplates";
 const SVG_NS = "http://www.w3.org/2000/svg";
