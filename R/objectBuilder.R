@@ -1,10 +1,10 @@
-#' Create qti-XML task file from Rmd (md) description
+#' Create test zip file with one task xml file from Rmd (md) description
 #'
-#' Create XML file for question specification from Rmd (md) description
-#' according to qti 2.1 infromation model
+#' Create zip file with test, that contains one xml question specification
+#' generated from Rmd (md) description according to qti 2.1 information model
 #' @param file a file with markdown description of question.
-#' @param path string, optional; a folder to store xml file; working directory by
-#'   default
+#' @param path string, optional; a folder to store xml file; working directory
+#'   by default
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
 #' @export
@@ -14,6 +14,21 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
     test <- new("AssessmentTestOpal", identifier = "id_test",
                 title = "QTIJS Preview", section = list(section))
     createQtiTest(test, dir = path, verification = verification)
+}
+
+#' Create qti-XML task file from Rmd (md) description
+#'
+#' Create XML file for question specification from Rmd (md) description
+#' according to qti 2.1 infromation model
+#' @param file a file with markdown description of question.
+#' @param path string, optional; a folder to store xml file, can contain file
+#'   name; working directory by default
+#' @param verification boolean, optional; to check validity of xml file, default
+#'   `FALSE`
+#' @export
+rmd2xml <- function(file, path = getwd(), verification = FALSE) {
+    task <- create_question_object(file)
+    createQtiTask(task, dir = path, verification = verification)
 }
 
 #' Create S4 object according to content of markdown file

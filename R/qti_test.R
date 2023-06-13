@@ -34,7 +34,7 @@ create_qti_test <- function(object, path = getwd(), verification = FALSE) {
     # to remove content of dir
     if (path != getwd()) {
     file_list <- list.files(dir, full.names = TRUE)
-    file.remove(file_list)
+        file.remove(file_list)
     }
 
     content <- createAssessmentTest(object, dir)

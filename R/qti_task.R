@@ -214,8 +214,16 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
         }
     }
     if (is.null(dir)) dir <- getwd()
-    if (!dir.exists(dir)) dir.create(dir)
-    path <- paste0(dir, "/",object@identifier, ".xml")
+    ext <- tools::file_ext(dir)
+    if (ext == "") {
+        file_name <- object@identifier
+    } else {
+        file_name <- tools::file_path_sans_ext(basename(dir))
+        dir <- dirname(dir)
+    }
+    if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+
+    path <- paste0(dir, "/", file_name, ".xml")
     xml2::write_xml(doc, path)
     message(paste("see assessment item:", path))
 }

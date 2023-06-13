@@ -2,20 +2,20 @@
 % Please edit documentation in R/objectBuilder.R
 \name{rmd2zip}
 \alias{rmd2zip}
-\title{Create qti-XML task file from Rmd (md) description}
+\title{Create test zip file with one task xml file from Rmd (md) description}
 \usage{
 rmd2zip(file, path = getwd(), verification = FALSE)
 }
 \arguments{
 \item{file}{a file with markdown description of question.}
 
-\item{path}{string, optional; a folder to store xml file; working directory by
-default}
+\item{path}{string, optional; a folder to store xml file; working directory
+by default}
 
 \item{verification}{boolean, optional; to check validity of xml file, default
 \code{FALSE}}
 }
 \description{
-Create XML file for question specification from Rmd (md) description
-according to qti 2.1 infromation model
+Create zip file with test, that contains one xml question specification
+generated from Rmd (md) description according to qti 2.1 information model
 }
