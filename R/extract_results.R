@@ -1,42 +1,50 @@
 #' Create data frame with test results
 #'
 #' The function `extract_results()` takes Opal zip archive "Export results" or
-#' xml file and creates two kinds of data frames (according
-#'  to parameter 'level')
-#' 1. with optioin level = "excercises" data set consists of columns:
-#' * 'file' - name of the xml file with test results (to identify
-#' candidate)
-#' * 'date' - date and time of test
-#' * 'id_question' - question item identifier
-#' * 'duration' - time in sec. what candidate spent on this item
-#' * 'score_candidate' - points that were given to candidate after evaluation
-#' * 'score_max' - max possible score for this question item
-#' * 'question_type' - the type of question
-#' * 'is_answer_given' - TRUE if candidate gave the answer on question,
-#' otherwise FALSE
-#' * 'title' - the values of attribute 'title' of assessment items
-#' 2. with option level = "items" data set consists of columns:
-#' * 'file' - name of the xml file with test results (to identify
-#' candidate)
-#' * 'date' - date and time of test
-#' * 'id_question' - question item identifier
-#' * 'base_type' - type of answer (identifier, string or float)
-#' * 'cardinalities' - defines whether this question is single, multiple or
-#' ordered -value
-#' * 'qti_type' - specifies the type of the task
-#' * 'id_answer' - identifier of each response variable
-#' * 'response_correct' - values that considered as right responses for
-#' question
-#' * 'response_candidate' - values that were given by candidate
-#' * 'title' - the values of attribute 'title' of assessment items
-#' @param file A string with a path of the xml test result file
-#' @param level A string with two possible options: exercises and items
+#' xml file and creates two kinds of data frames (according to parameter
+#' 'level'), see the 'Details' section.
+#' @param file a string with a path of the xml test result file
+#' @param level a string with two possible options: exercises and items
+#' @param hide_filename a boolean value, TRUE to hide original file names by
+#'   default
 #' @import xml2
 #' @import lubridate
 #' @importFrom utils unzip
 #' @return data frame.
+#' @note 1.With optioin level = "excercises" data frame consists of columns:
+#'  * 'file' - name of the xml file with test results (to identify
+#'   candidate)
+#'  * 'date' - date and time of test
+#'  * 'id_question' - question item identifier
+#'  * 'duration' - time in sec. what candidate spent on this item
+#'  * 'score_candidate' - points that were given to candidate after evaluation
+#'  * 'score_max' - max possible score for this question
+#'  * 'question_type' - the type of question
+#'  * 'is_answer_given' - TRUE if candidate gave the answer on question,
+#'   otherwise FALSE
+#'  * 'title' - the values of attribute 'title' of assessment items
+#'
+#'   2.With option level = "items" data frame consists of columns:
+#' * 'file' - name of the xml file with test results (to identify
+#'   candidate)
+#' * 'date' - date and time of test
+#' * 'id_question' - question item identifier
+#' * 'base_type' - type of answer (identifier, string or float)
+#' * 'cardinalities' - defines whether this question is single, multiple or
+#'   ordered -value
+#' * 'qti_type' - specifies the type of the task
+#' * 'id_answer' - identifier of each response variable
+#' * 'expected_response' - values that considered as right responses for
+#'   question
+#' * 'candidate_response' - values that were given by candidate
+#' * 'score_candidate' - - points that were given to candidate after evaluation
+#' * 'score_max' - max possible score for this question item
+#' * 'is_response_correct' - TRUE if candidate gave the right response,
+#'   otherwise FALSE
+#' * 'title' - the values of attribute 'title' of assessment items
+#' @import digest
 #' @export
-extract_results <- function(file, level = "exercises") {
+extract_results <- function(file, level = "exercises", hide_filename = TRUE) {
     if (!all(file.exists(file))) stop("One or more files in list do not exist",
                                       call. = FALSE)
 
@@ -57,11 +65,11 @@ extract_results <- function(file, level = "exercises") {
         file_names <- basename(file)
     } else stop("'file' must contain only one zip or set of xml files")
 
-    ret <- build_dataset(tdir, level, file_names)
+    ret <- build_dataset(tdir, level, file_names, hide_filename)
     return(ret)
 }
 
-build_dataset <- function(tdir, level, names = NULL) {
+build_dataset <- function(tdir, level, names = NULL, hide_filename) {
     xml_files <- list.files(tdir)
 
     res_files <- list.files(path = tdir, pattern = "assessmentResult")
@@ -84,8 +92,9 @@ build_dataset <- function(tdir, level, names = NULL) {
     for (f in res_files) {
         xml_path <- file.path(tdir, f)
         switch(level,
-               exercises = {df0 <- get_result_attr_answers(xml_path)},
-               items = {df0 <- get_result_attr_options(xml_path)}
+               exercises = {df0 <- get_result_attr_answers(xml_path,
+                                                           hide_filename)},
+               items = {df0 <- get_result_attr_options(xml_path, hide_filename)}
         )
         name <- ifelse(is.null(names), f, names[which(res_files == f)])
         if (!is.null(db)) {
@@ -127,28 +136,12 @@ extract_xml <- function(file) {
     return(tdir)
 }
 
-#' Create data frame with test results by answers
-#'
-#' The function `get_result_attr_answers()` creates data frames with the
-#' following data about the test results:
-#' * 'file' - name of the xml file with test results (to identify
-#' candidate)
-#' * 'date' - date and time of test
-#' * 'id_question' - question item identifier
-#' * 'duration' - time in sec. what candidate spent on this item
-#' * 'score_candidate' - points that were given to candidate after evaluation
-#' * 'score_max' - max possible score for this question item
-#' * 'type' - the type of question
-#' * 'is_answer_given' - TRUE if candidate gave the answer on question,
-#' otherwise FALSE
-#'
-#' @param file A string with a path of the xml test result file
-#' @import xml2
-#' @import lubridate
-#' @return data frame.
-#' @export
-get_result_attr_answers<- function(file) {
+# Create data frame with test results by answers
+get_result_attr_answers<- function(file, hide_filename) {
     file_name <- clean_name(file)
+    if (hide_filename) {
+        file_name <- digest(file_name, algo = "sha1", serialize = FALSE)
+    }
 
     doc <- xml2::read_xml(file)
     node_dt <- xml2::xml_find_first(doc, ".//d1:testResult")
@@ -236,31 +229,13 @@ clean_name <- function(file) {
 
 
 
-#' Create data frame with test results by options of answers
-#'
-#' The function `get_result_attr_options()` creates data frames with the
-#' following data about the individual answers:
-#' * 'file' - name of the xml file with test results (to identify
-#' candidate)
-#' * 'date' - date and time of test
-#' * 'id_question' - question item identifier
-#' * 'base_type' - type of answer (identifier, string or float)
-#' * 'cardinalities' - defines whether this question is single, multiple or
-#' ordered -value
-#' * 'qti_type' - specifies the type of the task
-#' * 'id_answer' - identifier of each response variable
-#' * 'response_correct' - values that considered as right responses for
-#' question
-#' * 'response_candidate' - values that were given by candidate
-#'
-#' @param file A string with a path of the xml test result file
-#' @import xml2
-#' @import lubridate
-#' @return data frame.
-#' @export
-get_result_attr_options <- function(file) {
+# Create data frame with test results by options of answers
+get_result_attr_options <- function(file, hide_filename) {
     file_name <- clean_name(file)
     file_name <- sub("assessmentResult_", "", file_name)
+    if (hide_filename) {
+        file_name <- digest(file_name, algo = "sha1", serialize = FALSE)
+    }
 
     doc <- xml2::read_xml(file)
     node_dt <- xml2::xml_find_first(doc, ".//d1:testResult")

@@ -4,23 +4,26 @@
 \alias{extract_results}
 \title{Create data frame with test results}
 \usage{
-extract_results(file, level = "exercises")
+extract_results(file, level = "exercises", hide_filename = TRUE)
 }
 \arguments{
-\item{file}{A string with a path of the xml test result file}
+\item{file}{a string with a path of the xml test result file}
 
-\item{level}{A string with two possible options: exercises and items}
+\item{level}{a string with two possible options: exercises and items}
+
+\item{hide_filename}{a boolean value, TRUE to hide original file names by
+default}
 }
 \value{
 data frame.
 }
 \description{
 The function \code{extract_results()} takes Opal zip archive "Export results" or
-xml file and creates two kinds of data frames (according
-to parameter 'level')
-\enumerate{
-\item with optioin level = "excercises" data set consists of columns:
+xml file and creates two kinds of data frames (according to parameter
+'level'), see the 'Details' section.
 }
+\note{
+1.With optioin level = "excercises" data frame consists of columns:
 \itemize{
 \item 'file' - name of the xml file with test results (to identify
 candidate)
@@ -28,15 +31,14 @@ candidate)
 \item 'id_question' - question item identifier
 \item 'duration' - time in sec. what candidate spent on this item
 \item 'score_candidate' - points that were given to candidate after evaluation
-\item 'score_max' - max possible score for this question item
+\item 'score_max' - max possible score for this question
 \item 'question_type' - the type of question
 \item 'is_answer_given' - TRUE if candidate gave the answer on question,
 otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
 }
-\enumerate{
-\item with option level = "items" data set consists of columns:
-}
+
+2.With option level = "items" data frame consists of columns:
 \itemize{
 \item 'file' - name of the xml file with test results (to identify
 candidate)
@@ -47,9 +49,13 @@ candidate)
 ordered -value
 \item 'qti_type' - specifies the type of the task
 \item 'id_answer' - identifier of each response variable
-\item 'response_correct' - values that considered as right responses for
+\item 'expected_response' - values that considered as right responses for
 question
-\item 'response_candidate' - values that were given by candidate
+\item 'candidate_response' - values that were given by candidate
+\item 'score_candidate' - - points that were given to candidate after evaluation
+\item 'score_max' - max possible score for this question item
+\item 'is_response_correct' - TRUE if candidate gave the right response,
+otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
 }
 }
