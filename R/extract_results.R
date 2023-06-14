@@ -332,8 +332,17 @@ get_info_identifier <- function(node, options_node) {
         options <- stringr::str_split_1(choice_seq, " ")
     } else options <- corr_values
 
+    card_node <- xml2::xml_find_first(node, ".//d1:responseVariable[@identifier='RESPONSE']")
+    card <- xml2::xml_attr(card_node, "cardinality")
+    if (is.na(card)) card <- "single"
+
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
-    cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
+    if (card != "ordered") {
+        cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
+    } else {
+        cand <- (cand_values == corr_values)
+    }
+
     true_counts <- sum(corr)
     result <- corr * cand
     true_cand <- sum(result)
@@ -377,8 +386,8 @@ get_info_directedPair <- function(node, options_node) {
 
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
     cand <- sapply(options, function(x) x %in% cand_values, USE.NAMES = FALSE)
-    true_counts <- sum(corr)
 
+    true_counts <- sum(corr)
     result <- corr * cand
     true_cand <- sum(result)
 
@@ -390,7 +399,7 @@ get_info_directedPair <- function(node, options_node) {
 
     maxscore <- xml2::xml_find_all(node,
                                 ".//d1:outcomeVariable[@identifier='MAXSCORE']")
-    maxscore_value <- ifelse(result,
+    maxscore_value <- ifelse(corr,
                              as.numeric(get_value(maxscore)) / true_counts, "0")
     if (length(maxscore) == 0) maxscore_value <- rep("0", length(options))
 
