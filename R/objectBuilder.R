@@ -159,7 +159,7 @@ create_gap_object <- function(id, value) {
             object <- new("TextGap", response_identifier = id, response = value)
         } else {
             object <- new("InlineChoice", response_identifier = id,
-                options = str_split_1(value, "\\|"))
+                choices = str_split_1(value, "\\|"))
         }
     } else {
         object_class <- switch(attrs$type,

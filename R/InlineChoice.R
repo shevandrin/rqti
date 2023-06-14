@@ -8,24 +8,24 @@
 #' @include Gap.R
 #' @examples
 #' ng <- new("InlineChoice",
-#'           options =  c("answer1", "answer2", "answer3"),
+#'           choices =  c("answer1", "answer2", "answer3"),
 #'           response_identifier = "dropdown_gap_example")
 #' @name InlineChoice-class
 #' @rdname InlineChoice-class
 #' @aliases InlineChoice
 #' @exportClass InlineChoice
 setClass("InlineChoice", contains = "Gap",
-         slots = c(options = "character",
+         slots = c(choices = "character",
                    solution = "numeric",
-                   options_identifiers = "character",
+                   choices_identifiers = "character",
                    shuffle = "logical"),
          prototype = list(shuffle = TRUE, solution = 1))
 
 setMethod("initialize", "InlineChoice", function(.Object, ...) {
     .Object <- callNextMethod()
-    if (length(.Object@options_identifiers) == 0) {
-        .Object@options_identifiers <- paste0("Option",
-                                              LETTERS[seq(.Object@options)])
+    if (length(.Object@choices_identifiers) == 0) {
+        .Object@choices_identifiers <- paste0("Option",
+                                              LETTERS[seq(.Object@choices)])
     }
 
     if (length(.Object@score) == 0) .Object@score <- 1
@@ -69,7 +69,7 @@ setMethod("createResponseProcessing", "InlineChoice", function(object) {
 })
 
 create_response_declaration_inline_choice <- function(object) {
-    correct_choice_identifier <- object@options_identifiers[object@solution]
+    correct_choice_identifier <- object@choices_identifiers[object@solution]
     child <- create_correct_response(correct_choice_identifier)
     map_entry <- tag("mapping",
                      list(create_map_entry(object@score,

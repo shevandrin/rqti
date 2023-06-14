@@ -25,8 +25,8 @@ Made glorious summer by this sun of",
                                           solution = 3,
                                           score = 2,
                                           shuffle = FALSE,
-                                          options = c("Gloucester", "Lancaster", "York"),
-                                          options_identifiers = c("G","L","Y")),";<br/>
+                                          choices = c("Gloucester", "Lancaster", "York"),
+                                          choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>
 In the deep bosom of the ocean buried.
