@@ -6,7 +6,8 @@ test_that("XML validation with schema file for Order", {
                     choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
                     points = 0.5,
                     choices_identifiers = c("DriverA","DriverB","DriverC"),
-                    shuffle = TRUE)
+                    shuffle = TRUE,
+                    points_per_answer = FALSE)
     doc <- xml2::read_xml(toString(create_assessment_item(question)))
     file <- system.file("imsqti_v2p1.xsd", package = "qti")
     schema <- xml2::read_xml(file)

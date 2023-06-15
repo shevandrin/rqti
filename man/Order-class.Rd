@@ -36,6 +36,10 @@ answers; by default identifiers are generated automatically}
 \item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
 which the choices are initially presented to the candidate; default \code{TRUE}}
 
+\item{\code{points_per_answer}}{boolean, optional; in case of \code{TRUE} each selected
+answer will be scored individually, in case of \code{FALSE} only answer wich is
+fully correct will be scored with maximum score; \code{TRUE} by default}
+
 \item{\code{points}}{numeric, optional; the number of points for the entire task;
 default 1}
 }}

@@ -57,8 +57,8 @@ test_that("create_qti_task", {
                               "Data cleansing", "Data marking",
                               "Verification and visualization"),
                   choices_identifiers = c("a1", "a2", "a3", "a4"),
-                  points = 1
-                )
+                  points = 1,
+                 points_per_answer = FALSE)
     suppressMessages(create_qti_task(order))
     expected <- readLines("new.xml")
 

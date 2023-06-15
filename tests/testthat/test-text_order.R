@@ -110,7 +110,8 @@ test_that("Testing createResponseProcessing() for Order class", {
                     choices_identifiers = c("DriverA","DriverB","DriverC"),
                     shuffle = TRUE,
                     feedback = list(new("ModalFeedback", title = "common",
-                                        content = list("general feedback"))))
+                                        content = list("general feedback"))),
+                    points_per_answer = FALSE)
     example <- '<additionalTag>
 <responseProcessing>
   <responseCondition>
