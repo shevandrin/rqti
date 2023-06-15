@@ -40,9 +40,9 @@ mc <- new("MultipleChoice",
            points = c(1, 0, -1, 1),
            title = "multiple_choice_task",
            identifier = "mc_example",
-           feedback = list(WrongFeedback(title = "bad decision",
+           feedback = list(new("WrongFeedback", title = "bad decision",
                                         content = list("<i>this is false</i>")),
-                           CorrectFeedback(title = "gut gemacht",
+                           new("CorrectFeedback", title = "gut gemacht",
                                 content = list("diese Antwort ist richtig")))
           )
 create_qti_task(mc, "to_delete", TRUE)
@@ -79,9 +79,9 @@ te <- new("Entry", content = list("<h2>some markdown title1</h2><h1><b>Some
                                 "=‘Peter’</p><h3>markdown title 2</h3><p>Put the
                                 right answers in the text field above.</p>"),
            title = "text_gaps_task",
-          feedback = list(WrongFeedback(title = "Fehler",
+          feedback = list(new("WrongFeedback", title = "Fehler",
                                         content = list("falsche Antwort")),
-                          CorrectFeedback(title = "Erfolg",
+                          new("CorrectFeedback", title = "Erfolg",
                                           content = list("richtige Antwort"))),
           identifier = "gaps_with_feedback")
 create_qti_task(te, "to_delete", TRUE)
@@ -125,9 +125,9 @@ com <- new("Entry", content = list("<p>5 ",
                                         expected_length = 11,
                                         placeholder = "here is number"),
                                    "</p>"),
-           feedback = list(WrongFeedback(title = "Fehler",
+           feedback = list(new("WrongFeedback", title = "Fehler",
                                          content = list("falsche Antwort")),
-                           CorrectFeedback(title = "Erfolg",
+                           new("CorrectFeedback", title = "Erfolg",
                                            content = list("richtige Antwort")),
                            new("ModalFeedback", title = "generelle Rückmeldung",
                            content = list("Text der allgemeinen Rückmeldung"))),
@@ -139,7 +139,7 @@ create_qti_task(com, "to_delete", TRUE)
 dd1 <- new("Entry", content = list("<p>first line",
                                     new("InlineChoice",
                                         response_identifier = "list_1",
-                                        options = c("a", "b", "c")),
+                                        choices = c("a", "b", "c")),
                                    "</p>"),
           title = "dropdown1")
 create_qti_task(dd1, "to_delete", TRUE)
@@ -148,16 +148,16 @@ dd2 <- new("Entry", content = list("<p>first line <br/>",
                                    "<big>second line</big>",
                                     new("InlineChoice",
                                         response_identifier = "list_1",
-                                        options = c("a", "b", "c")),
+                                        choices = c("a", "b", "c")),
                                    "<br/>third line",
                                    new("InlineChoice",
                                        response_identifier = "list_2",
-                                       options = c("answ1", "answ2", "answ3"),
+                                       choices = c("answ1", "answ2", "answ3"),
                                        score = 2),
                                    "end text.</p>"),
-           feedback = list(WrongFeedback(title = "Fehler",
+           feedback = list(new("WrongFeedback", title = "Fehler",
                                          content = list("falsche Antwort")),
-                           CorrectFeedback(title = "Erfolg",
+                           new("CorrectFeedback", title = "Erfolg",
                                            content = list("richtige Antwort"))),
           title = "dropdown2",
           identifier = "dd_example")
@@ -169,10 +169,8 @@ ord <- new("Order", content = list("<p>put in a right order</p>"),
            choices = c("first", "second", "third"),
            choices_identifiers = c("a","b","c"),
            points = 5,
-           feedback = list(WrongFeedback(title = "Fehler",
-                                         content = list("falsche Antwort")),
-                           CorrectFeedback(title = "Erfolg",
-                                           content = list("richtige Antwort"))))
+           points_per_answer = FALSE,
+           feedback = list(new("ModalFeedback", content = list("some text"))))
 create_qti_task(ord, "to_delete", TRUE)
 
 # task with directed pairs  ----------------------------------------------------
@@ -187,9 +185,9 @@ dp <- new("DirectedPair", content = list("<h3>This is match table task</h3>",
         points = 5,
         title = "directed_pair",
         prompt = "this is a prompt",
-        feedback = list(WrongFeedback(title = "Fehler",
+        feedback = list(new("WrongFeedback", title = "Fehler",
                                       content = list("falsche Antwort")),
-                        CorrectFeedback(title = "Erfolg",
+                        new("CorrectFeedback", title = "Erfolg",
                                         content = list("richtige Antwort"))),
         identifier = "dp_example"
 )
@@ -206,9 +204,9 @@ rt <- new("OneInRowTable", content = list("<h3>This is match table task</h3>",
           answers_identifiers = c("a k", "b l", "c l", "d m"),
           points = 5,
           title = "one_in_row_table",
-          feedback = list(WrongFeedback(title = "Fehler",
+          feedback = list(new("WrongFeedback", title = "Fehler",
                                         content = list("falsche Antwort")),
-                          CorrectFeedback(title = "Erfolg",
+                          new("CorrectFeedback", title = "Erfolg",
                                           content = list("richtige Antwort"))),
           identifier = "oneInRow_example"
 )
@@ -225,9 +223,9 @@ ct <- new("OneInColTable", content = list("<h3>This is match table task</h3>",
           answers_identifiers = c("a k", "b l", "b m"),
           points = 5,
           title = "one_in_col_table",
-          feedback = list(WrongFeedback(title = "Fehler",
+          feedback = list(new("WrongFeedback", title = "Fehler",
                                         content = list("falsche Antwort")),
-                          CorrectFeedback(title = "Erfolg",
+                          new("CorrectFeedback", title = "Erfolg",
                                           content = list("richtige Antwort"))),
           identifier = "oneInCol_example"
 )
@@ -246,9 +244,9 @@ mt <- new("MultipleChoiceTable",
           points = 5,
           title = "multiple_choice_table",
           identifier = "mcTable_example",
-          feedback = list(WrongFeedback(title = "Fehler",
+          feedback = list(new("WrongFeedback", title = "Fehler",
                                         content = list("falsche Antwort")),
-                          CorrectFeedback(title = "Erfolg",
+                          new("CorrectFeedback", title = "Erfolg",
                                           content = list("richtige Antwort")))
 )
 create_qti_task(mt, "to_delete", TRUE)
@@ -259,9 +257,9 @@ es <- new("Essay", content = list("<h2>this is an essay type of question</h2>"),
           max_strings = 100,
           points = 3,
           identifier = "essay_example",
-          feedback = list(WrongFeedback(title = "Fehler",
+          feedback = list(new("WrongFeedback", title = "Fehler",
                                         content = list("falsche Antwort")),
-                          CorrectFeedback(title = "Erfolg",
+                          new("CorrectFeedback", title = "Erfolg",
                                           content = list("richtige Antwort"))))
 create_qti_task(es, "to_delete", TRUE)
 
