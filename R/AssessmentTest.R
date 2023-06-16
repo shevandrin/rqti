@@ -55,6 +55,13 @@ setClass("AssessmentTest", slots = c(identifier = "character",
 # TODO verification procedure for submission mode values: they must be from factor: individual/simultaneous
 # TODO there is a conflict between keep_responses and rebuild_variables, if the second one is true - the first one will be ignored
 
+setMethod("initialize", "AssessmentTest", function(.Object, ...) {
+    .Object <- callNextMethod()
+    if (length(.Object@title) == 0) .Object@title <- .Object@identifier
+    validObject(.Object)
+    .Object
+})
+
 #' Create XML file for exam test specification
 #'
 #' @usage createQtiTest(object, dir = NULL, verification = FALSE)
