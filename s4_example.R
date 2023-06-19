@@ -17,6 +17,9 @@ sc <- new("SingleChoice",
                           new("ModalFeedback", title = "common",
                               content = list("general feedback")))
           )
+
+sc <- SingleChoice(choices = c("a", "b", "c"))
+
 createQtiTask(sc, "to_delete", TRUE)
 
 sc <- new("SingleChoice",
@@ -30,13 +33,14 @@ sc <- new("SingleChoice",
           feedback = list(new("ModalFeedback",
                     content = list("hier it is a right solution explained")))
 )
+
 create_qti_task(sc, "to_delete", TRUE)
 
 # create MultipleChoice object example 1 ---------------------------------------
 mc <- new("MultipleChoice",
            content = list("<p>This is the mpc question</p>"),
            choices = c("A", "B", "C", "D"),
-           choice_identifiers = c("a1", "a2", "a3", "a4"),
+           choice_identifiers = c("a1", "b2", "c3", "d4"),
            points = c(1, 0, -1, 1),
            title = "multiple_choice_task",
            identifier = "mc_example",
@@ -91,8 +95,9 @@ te_opal <- new("Entry", content = list("<p>es geht",
                                         new("TextGapOpal",
                                             response_identifier = "res1",
                                             response = "um",
-                                            score = 0.5,
-                                            value_precision = 1),
+                                            value_precision = 1,
+                                            # expected_length = 1,
+                                            score = 0.5),
                                         "die neuen Produkte</p>"),
                title = "preposition with gehen")
 create_qti_task(te_opal, "to_delete", TRUE)
@@ -101,7 +106,7 @@ create_qti_task(te_opal, "to_delete", TRUE)
 ne <- new("Entry", content = list("<p>5 - ",
                                     new("NumericGap",
                                         response_identifier = "numeric_1",
-                                        response = 7,
+                                        response = 7.232,
                                         value_precision = 10,
                                         expected_length = 1,
                                         include_lower_bound = FALSE,
@@ -281,7 +286,7 @@ exam_section <- new("AssessmentSection", identifier = "sec_id",
                    assessment_item = list(sc1, sc2, sc3, exam_subsection))
 
 exam <- new("AssessmentTestOpal", identifier = "id_test",
-            title = "some title", section = list(exam_section),
+            section = list(exam_section),
             files = c("man/figures/assessmentTest.png",
                       "man/figures/README-S4_classes_diagramm.jpg"))
 createQtiTest(exam, "to_delete")
