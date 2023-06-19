@@ -1,5 +1,6 @@
 ---
 type: sc
+knit: qti::render_rmd
 ---
 
 # question

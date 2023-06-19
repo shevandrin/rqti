@@ -1,4 +1,4 @@
-name: singlechoice (complex)
+name: "QTI: singlechoice (complex)"
 description: >
    A more complex example for single choice exercises.
 create_dir: FALSE

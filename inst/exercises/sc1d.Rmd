@@ -1,6 +1,7 @@
 ---
 type: sc
 knit: qti::render_rmd
+shuffle: false
 ---
 
 # question

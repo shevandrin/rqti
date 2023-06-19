@@ -7,7 +7,12 @@ Authors@R: c(
     person("Petr", "Bondarenko", email = "bondarenko.volsu@gmail.com", 
     role = c("ctb"), comment = c(ORCID = "0000-0002-5154-9664")),
     person("Ivonne", "Ojeda", email = "yulieth9109@gmail.com",
-    role = "ctb"))
+    role = "ctb"),
+    person("Johannes", "Titz", email = "johannes@titz.science",
+    comment = c(ORCID = "0000-0002-1102-5719"), role = "aut"),
+    person("Brian", "Mottershead", role = "cph", comment = "Author of QTIJS library"),
+    person("Stiftung für Innovation in der Hochschullehre", role = "fnd")
+    )
 Description: This R package provides learning content creators with generation of XML files for Tests and Tasks according to QTI information model v. 2.1. The sources of data for Test/Task content can be Rmd/md templates or objects of S4-classes, created in R environment. This package generates all basic types of tasks and has full set of attributes for tests customisation.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -41,7 +46,7 @@ Suggests:
     textclean,
     XML
 Config/testthat/edition: 3
-Config/testthat/parallel: true
+Config/testthat/parallel: false
 URL: https://github.com/shevandrin/qti
 BugReports: https://github.com/shevandrin/qti/issues
 Collate: 
@@ -79,6 +84,7 @@ Collate:
     'qti_test.R'
     'response_processing.R'
     'utils-pipe.R'
+    'zzz.R'
 Depends: 
     R (>= 2.10)
 LazyData: true

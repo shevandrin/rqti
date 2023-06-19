@@ -8,6 +8,7 @@ vignette: >
 ---
 
 <!-- todo: wait until BPS replies, then we can take screenshots with the approach below -->
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -21,31 +22,65 @@ library(qti)
 
 ## Minimum version
 
-The simplest exercise type in the qti package is single choice. The minimum you need to provide is the `type: sc` (or the equivalent `type: singlechoice`) in the yaml-section and a list with at least two elements in the section **# question**:
+The simplest exercise type in the qti package is single choice. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: singlechoice (simple)` and `QTI: singlechoice (complex)`.
+
+The minimum you need to provide is the `type: sc` (or the equivalent `type: singlechoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("exercises", "sc1.Rmd", package = "qti")), sep = '\n')
 ```
 
 <!-- Iframe does not seem to work out of the box -->
+
 <!-- <iframe src="http://127.0.0.1:4321" sandbox="allow-scripts"></iframe> -->
 
-Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to provide some explanation for students (here not really, since it is trivial).
+Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students (here not really since it is trivial).
 
-Calling `rmd2qti` on the file produces the xml-file in the current folder. In the QTI player ONYX this file renders as:
+Further note that the `knit` parameter is set to a custom qti function, which will handle the preview. This is not necessarily required, but simplifies the workflow substantially. If you leave it out, the default preview is just an html file. If you add our knit function, you will get a more realistic preview.
 
-ADD: function rmd2opal
+<!-- Calling `rmd2qti` on the file produces the xml-file in the current folder. In the QTI player ONYX this file renders as: -->
+
+<!-- ADD: function rmd2opal...but leaves out important step for non-opal users -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- rmd2qti(fs::path_package("exercises", "sc1.Rmd", package = "qti")) -->
+<!-- url <- upload2opal("sc1.xml") # you need an OPAL account for that! -->
+<!-- ``` -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- system(paste0("wkhtmltoimage ", url, " sc1.png")) -->
+<!-- ``` -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- # does not work, produces something strange -->
+<!-- # try out pageres instead? -->
+<!-- system(paste0("wkhtmltoimage ", "http://127.0.0.1:6052 ", "sc1.png")) -->
+<!-- ``` -->
+
+To see what the final result might look like in a learning management system you can just click the `Knit` button in RStudio. This will produce a qti xml file and render it in the viewer pane via QTIJS (you can also just fire up the displayed server url in the browser). The same is achieved when you run `render_qti` on the Rmd-file or first `rmd2qti` (producing the qti xml) and then `render_xml` to render the file. In every case the output looks like this:
+
+![Preview of single choice exercise rendered by QTIJS](screenshot_sc1.png){width="400"}
+
+The corresponding xml file is created in the same folder as the Rmd file if you click the Knit-Button or in the current directory if you execute the functions from the console. Usually, the Knit button will be sufficient for most use cases, but if you need more control the functions `rmd2qti, render_xml, render_zip` are handy. The functions give a message about the path of the created file.
+
+Most learning management systems can directly import an xml-file, so all you need to do is upload the generated file. Compositions of exercises are covered in the article: ....TODO
+
+If you happen to use OPAL/ONYX, you can also upload your exercises via:
 
 ```{r eval=FALSE}
-rmd2qti(fs::path_package("exercises", "sc1.Rmd", package = "qti"))
-url <- upload2opal("sc1.xml") # you need an OPAL account for that!
+rmd2qti("sc1.Rmd") # generates xml
+url <- upload2opal("sc1.xml")
 ```
+
+The last function will return a url, which you can fire up in a browser:
 
 ```{r eval=FALSE}
-system(paste0("wkhtmltoimage ", url, "sc1.png"))
+browseURL(url)
 ```
 
-You can also just click the knit Button in RStudio, which will produce an html file. But this file is not the final product as it just translates the md to html. To see what the qti-file will look like, you can uncomment the line `#knit: qti::knit_qti_html` in the yaml section and click the knit Button again. This will start a local server and show you a preview via QTIJS. The same is achieved when you run `render_xml("sc1.xml")`.
+We set the rights to public, so we do not need to login in the browser again (you can only be logged in once).
+
+The function `upload2opal` will aks you for credentials first. Depending on the OPAL setup you might need to use a VPN. Furthermore only password-based authentication accounts work (Shibboleth does not work). You probably need to consult your IT before using `upload2opal`. More information on this can be found in the article: OPAL API. Specifically, we describe how to setup the API at TU Chemnitz.
 
 ## Syntax explained
 
@@ -55,7 +90,7 @@ Let us have a closer look at the input file.
 cat(readLines(fs::path_package("exercises", "sc1.Rmd", package = "qti")), sep = '\n')
 ```
 
-Note that you do not necessarily need to specify which list element is correct. The first one is treated as the correct one, which is a nice shortcut. If you communicate this to your collaborators, it is also much easier to read. They do not need to look anywhere else in the file for checking the correct answer. 
+Note that you do not necessarily need to specify which list element is correct. The first one is treated as the correct one, which is a nice shortcut. If you communicate this to your collaborators, it is also much easier to read. They do not need to look anywhere else in the file for checking the correct answer.
 
 Of course you can specify the correct choice if need be. Our preferred way of doing this is by putting asterisks around this option:
 
@@ -88,11 +123,7 @@ A question text that is not separated by a blank line
 
 Renders as:
 
-> My question text, not separated by a blank line
-> - 1.2
-> - 2.1
-> - 3.0
-> - 2.2
+> My question text, not separated by a blank line - 1.2 - 2.1 - 3.0 - 2.2
 
 ## More control
 
@@ -145,21 +176,22 @@ How many points are given for the correct solution. Default is 1. You cannot do 
 
 ## Feedback
 
-Feedback can be provided with the section 
+Feedback can be provided with the section
 
-- **# feedback** (general feedback, displayed every time, without conditions)
-- **# feedback+** (only provided if student reaches all points)
-- **# feedback-** (only provided if student does not reach all points)
+-   **\# feedback** (general feedback, displayed every time, without conditions)
+-   **\# feedback+** (only provided if student reaches all points)
+-   **\# feedback-** (only provided if student does not reach all points)
 
 ## List of answers as a variable
 
 For more complex exercises the list of answers is often just available as a variable. In this case you can use the helper function `answerlist` to convert the vector into a markdown list:
 
-```{r}
-
+```{r results="plaintext", comment=""}
+answerlist(c(1.2, 2.1, 2.2, 3.0), solutions = c(2))
 ```
 
 <!-- make a separate vignette for this -->
+
 <!-- ## A programatic low level approach -->
 
 <!-- The `qti` package is very flexible in that you can also use low level functions to create qti content. Let us say you have a csv table with many single choice exercises. It is quite easy to transform this to a qti section: -->
@@ -167,7 +199,6 @@ For more complex exercises the list of answers is often just available as a vari
 <!-- ```{r} -->
 
 <!-- ``` -->
-
 
 ## Some advice on single choice exercises
 
