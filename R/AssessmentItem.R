@@ -22,6 +22,7 @@ setClass("AssessmentItem", slots = c(identifier = "character",
                                identifier = ids::adjective_animal(),
                                qti_version = "v2p1"
                                ))
+
 # constructor
 setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -38,6 +39,7 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     validObject(.Object)
     .Object
 })
+
 #' Create an element itemBody of a qti-xml document
 #'
 #' Generic function for creating itemBody element for XML document of
