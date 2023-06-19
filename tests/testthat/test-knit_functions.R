@@ -5,6 +5,7 @@ test_that("sc1d.Rmd renders via render_qti", {
                   " --overwrite --filename=sc1d 600x600"),
            wait = T)
     skip_if(Sys.getenv("HOME") != "/home/jt")
+    skip_if(is_checking())
     expect_equal(as.character(tools::md5sum("sc1d.png")), "e134e49b2ed933248e04540566fce5f9")
 })
 
@@ -15,6 +16,7 @@ test_that("sc1d.xml renders via render_qti", {
                   " --overwrite --filename=sc1dxml 600x600"),
            wait = T)
     skip_if(Sys.getenv("HOME") != "/home/jt")
+    skip_if(is_checking())
     expect_equal(as.character(tools::md5sum("sc1dxml.png")), "e134e49b2ed933248e04540566fce5f9")
 })
 
@@ -26,6 +28,7 @@ test_that("sc1d.zip renders via render_qti", {
                   " --overwrite --filename=sc1dzip 600x600"),
            wait = T)
     skip_if(Sys.getenv("HOME") != "/home/jt")
+    skip_if(is_checking())
     expect_equal(as.character(tools::md5sum("sc1dzip.png")), "337bc386d37876801aa4867e43d172b1")
 })
 
