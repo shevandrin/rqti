@@ -22,7 +22,6 @@ setClass("NumericGap", contains = "Gap",
                    type_precision = "character"),
          prototype = prototype(type_precision = "exact",
                                score = 1,
-                               expected_length = 1,
                                type_precision = "exact",
                                include_lower_bound = TRUE,
                                include_upper_bound = TRUE))
