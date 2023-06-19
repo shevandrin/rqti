@@ -1,6 +1,6 @@
 ---
 type: sc
-#knit: qti::knit_qti_html
+knit: qti::render_rmd
 ---
 
 # question
