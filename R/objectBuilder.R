@@ -47,6 +47,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #'   DirectedPair).
 #' @export
 create_question_object <- function(file) {
+    print(file)
 
     file_name <- tools::file_path_sans_ext(basename(file))
     exts <- tools::file_ext(file)
@@ -69,7 +70,7 @@ create_question_object <- function(file) {
 
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice")) {
         create_sc_object(html, attrs)
-    } else if (tolower(attrs$type) %in% c("mc", "multiplechoice")) {
+    } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {
         create_mc_object(html, attrs)
     } else if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown")) {
         create_entry_object(question, attrs)
@@ -90,6 +91,13 @@ create_question_object <- function(file) {
     if (is.null(slots$content)) slots$content <- as.list((clean_question(html)))
     slots <- c(slots, feedback = feedback)
     slots[["type"]] <- NULL # rid of type attribute from slots
+
+    if (!is.null(slots[["seed"]])) {
+        id <- paste0(slots[["identifier"]], "_S", slots[["seed"]])
+        slots[["identifier"]] <- id
+        slots[["seed"]] <- NULL
+    }
+
     object <- do.call(new, slots)
     return(object)
 }
@@ -109,6 +117,10 @@ create_sc_object <- function(html, attrs) {
 create_mc_object <- function(html, attrs) {
     choices_options <- parse_list(html)
     choices <- choices_options$choices
+    # define default points as number of right answers * 0.5
+    if (length(attrs$points) == 0) {
+        attrs$points <- length(choices_options$solution) * 0.5
+    }
     attrs$points <- as.numeric(strsplit(as.character(attrs$points), ",")[[1]])
     if (length(attrs$points) == 1) {
         ind_point <- as.numeric(attrs$points) / length(choices_options$solution)
