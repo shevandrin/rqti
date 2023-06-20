@@ -1,5 +1,6 @@
 ---
 type: sc
+knit: qti::render_rmd
 identifier: TOPIC1_Q001
 title: A meaningful title that can be displayed in the LMS
 shuffle: false
