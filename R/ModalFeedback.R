@@ -21,7 +21,7 @@ setMethod("initialize", "ModalFeedback", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@show) == 0) .Object@show <- TRUE
     if (length(.Object@outcome_identifier) == 0)
-        .Object@outcome_identifier = "FEEDBACK"
+        .Object@outcome_identifier = "FEEDBACKMODAL"
     validObject(.Object)
     .Object
 })
