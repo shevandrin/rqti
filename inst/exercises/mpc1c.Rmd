@@ -1,0 +1,22 @@
+---
+type: multiplechoice
+knit: qti::render_rmd
+identifier: TOPIC2_Q001
+title: A meaningful title that can be displayed in the LMS
+shuffle: false
+orientation: horizontal
+points: 1, 1, -1, -1
+---
+
+# question
+
+Which exercise types are supported by the R package qti?
+
+- match pair (pair several elements)
+- match tables (single choice or multiple choice tables)
+- drawing
+- graphical match (drag selection to specific position)
+
+# feedback
+
+All basic types of QTI are supported. More advanced exercises (as available in OPAL/ONYX) are not yet supported because they are LMS specific.
