@@ -80,12 +80,12 @@ Collate:
     'helpers.R'
     'knit_functions.R'
     'objectBuilder.R'
+    'pageres.R'
     'qti_task.R'
     'qti_test.R'
     'response_processing.R'
     'utils-pipe.R'
     'zzz.R'
-    'pageres.R'
 Depends: 
     R (>= 2.10)
 LazyData: true
