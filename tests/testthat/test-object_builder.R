@@ -378,3 +378,27 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
                     )
     expect_equal(sut, expected)
 })
+test_that("Testing of creating mc object from Rmd without points", {
+    path <- "file/test_mc_no_point.Rmd"
+    sut <- create_question_object(path)
+    expected <- new("MultipleChoice",
+                    content = list(
+                        "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+                    identifier = "test 2",
+                    qti_version = "v2p1",
+                    title = "Economics",
+                    choices = c("scarcity vs. resources",
+                                "wages vs. prices",
+                                "wants vs. needs",
+                                "consumers vs. producers"),
+                    shuffle = TRUE,
+                    prompt = "",
+                    choice_identifiers = c("ChoiceA",
+                                           "ChoiceB",
+                                           "ChoiceC",
+                                           "ChoiceD"),
+                    orientation = "vertical"
+    )
+
+    expect_equal(sut, expected)
+})
