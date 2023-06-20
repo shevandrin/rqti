@@ -11,3 +11,4 @@ s4_example.R
 ^PUTrequest\.txt$
 ^TODO\.Rmd$
 ^curl\.sh$
+^gitstats\.txt$
