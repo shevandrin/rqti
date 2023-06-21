@@ -107,8 +107,8 @@ test_that("Test of method buildAssessmentSection() when reading a file in Assess
               identifier = "new")
     suppressMessages(createQtiTask(sc, "todelete", "TRUE"))
 
-    expected <- toString(buildAssessmentSection(object = "new.xml",
-                                                folder = "todelete"))
+    expected <- suppressMessages(toString(buildAssessmentSection(
+        object = "todelete/new.xml", folder = "todelete")))
 
     example <- "<assessmentItemRef identifier =\"new\" href=\"new.xml\"></assessmentItemRef>"
 
@@ -252,7 +252,7 @@ test_that("Testing buildAssessmentSection() that returns a warning for an invali
     invalid_xml <- tempfile(tmpdir = temp_folder, fileext = ".xml")
     cat("<invalid></invalid>", file = invalid_xml)
 
-    expect_warning(buildAssessmentSection(invalid_xml, temp_folder),"is not valid")
+    expect_warning(suppressMessages(buildAssessmentSection(invalid_xml, temp_folder)),"is not valid")
 })
 test_that("Testing buildAssessmentSection() that returns a warning for incorrect file or path", {
     expect_warning(

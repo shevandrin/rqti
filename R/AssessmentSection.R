@@ -34,6 +34,16 @@ setClass("AssessmentSection", slots = c(identifier = "character",
                                max_attempts = NA_integer_,
                                allow_comment = NA
          ))
+
+setMethod("initialize", "AssessmentSection", function(.Object, ...) {
+    .Object <- callNextMethod()
+
+    if (length(.Object@title) == 0) .Object@title <- .Object@identifier
+
+    validObject(.Object)
+    .Object
+})
+
 #' Get list of AssessmentItems for AssessmentSection
 #'
 #' Generic function for
@@ -101,20 +111,22 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
 setMethod("buildAssessmentSection", signature(object = "character"),
           function(object, folder) {
 
-              if (is.null(folder) | (dirname(object) != ".")) {
-                  f_path <- file.path(object)
-              } else {
-                  f_path <- file.path(folder, object)
-              }
+              # if (is.null(folder) | (dirname(object) != ".")) {
+              #     f_path <- file.path(object)
+              # } else {
+              #     f_path <- file.path(folder, object)
+              # }
+
+              f_path <- file.path(object)
 
               if (file.exists(f_path)) {
                   doc <- xml2::read_xml(f_path)
                   valid <- verify_qti(doc)
                   if (!valid) warning("xml file \'", object, "\' is not valid")
                   id <- xml2::xml_attr(doc, "identifier")
-                  wd <- folder
-                  #wd <- getwd()
-                  file.copy(f_path, wd)
+
+                  file.copy(f_path, folder)
+                  message(paste("see assessment item:", file.path(folder, basename(f_path))))
                   tag("assessmentItemRef", list(identifier = id,
                                                 href = basename(object)))
               }
