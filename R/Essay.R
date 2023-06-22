@@ -40,3 +40,12 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 setMethod("createItemBody",  "Essay", function(object) {
     create_item_body_essay(object)
 })
+
+#' @rdname createResponseDeclaration-methods
+#' @aliases createResponseDeclaration,Essay
+setMethod("createResponseDeclaration", signature(object = "Essay"),
+          function(object) {
+              tag("responseDeclaration", list(identifier = "RESPONSE",
+                                              cardinality = "single",
+                                              baseType = "string"))
+          })
