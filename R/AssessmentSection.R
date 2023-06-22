@@ -32,7 +32,7 @@ setClass("AssessmentSection", slots = c(identifier = "character",
                                shuffle = FALSE,
                                selection = NA_integer_,
                                max_attempts = NA_integer_,
-                               allow_comment = NA
+                               allow_comment = TRUE
          ))
 
 setMethod("initialize", "AssessmentSection", function(.Object, ...) {

@@ -82,7 +82,9 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
                 section = list(exam_section))
 
     example <- "<additionalTag>
-    <assessmentSection identifier=\"sec_id\" fixed=\"false\" title=\"section\" visible=\"true\">\n <assessmentItemRef identifier=\"q1\" href=\"q1.xml\"/>\n
+    <assessmentSection identifier=\"sec_id\" fixed=\"false\" title=\"section\" visible=\"true\">\n
+    <itemSessionControl allowComment=\"true\"/>\n
+    <assessmentItemRef identifier=\"q1\" href=\"q1.xml\"/>\n
     <assessmentItemRef identifier=\"q2\" href=\"q2.xml\"/>\n
     <assessmentItemRef identifier=\"q3\" href=\"q3.xml\"/>\n
     <assessmentItemRef identifier=\"q4\" href=\"q4.xml\"/>\n
