@@ -4,16 +4,48 @@
 \alias{section}
 \title{Create a section as a part of test content}
 \usage{
-section(file, num_variants = 1, id = NULL, nested = TRUE)
+section(
+  file,
+  num_variants = 1,
+  id = NULL,
+  nested = TRUE,
+  title = character(0),
+  time_limits = NA_integer_,
+  visible = TRUE,
+  shuffle = FALSE,
+  max_attempts = NA_integer_,
+  allow_comment = TRUE
+)
 }
 \arguments{
-\item{file}{vector of Rmd, md, or xml files}
+\item{file}{string; vector of Rmd, md, or xml files}
 
-\item{num_variants}{number of variants from Rmd files}
+\item{num_variants}{integer; number of variants to create from Rmd files}
 
-\item{id}{identifier of section}
+\item{id}{string, optional; identifier of the assessment section}
 
-\item{nested}{the type of the test structure}
+\item{nested}{boolean; the type of the test structure; \code{TRUE} by default}
+
+\item{title}{string, optional; title of the section}
+
+\item{time_limits}{integer, optional; controls the amount of time a candidate
+is allowed for this part of the test}
+
+\item{visible}{boolean, optional; if TRUE it shows this section in hierarchy
+of test structure; default \code{TRUE}}
+
+\item{shuffle}{boolean, optional; is responsible to randomize the order in
+which the assessment items and subsections are initially presented to the
+candidate; default \code{FALSE}}
+
+\item{max_attempts}{numeric, optional; enables the maximum number of
+attempts, that candidate is allowed to pass in this section}
+
+\item{allow_comment}{boolean, optional; enables to allow candidate to leave
+comments in each question of the section; \code{TRUE} by default}
+}
+\value{
+object of \link{AssessmentSection}-class
 }
 \description{
 Create a section as a part of test content

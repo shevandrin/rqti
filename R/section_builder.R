@@ -1,11 +1,27 @@
 #' Create a section as a part of test content
 #'
-#' @param file vector of Rmd, md, or xml files
-#' @param num_variants number of variants from Rmd files
-#' @param id identifier of section
-#' @param nested the type of the test structure
+#' @param file string; vector of Rmd, md, or xml files
+#' @param num_variants integer; number of variants to create from Rmd files
+#' @param id string, optional; identifier of the assessment section
+#' @param nested boolean; the type of the test structure; `TRUE` by default
+#' @param title string, optional; title of the section
+#' @param time_limits integer, optional; controls the amount of time a candidate
+#'   is allowed for this part of the test
+#' @param visible boolean, optional; if TRUE it shows this section in hierarchy
+#'   of test structure; default `TRUE`
+#' @param shuffle boolean, optional; is responsible to randomize the order in
+#'   which the assessment items and subsections are initially presented to the
+#'   candidate; default `FALSE`
+#' @param max_attempts numeric, optional; enables the maximum number of
+#'   attempts, that candidate is allowed to pass in this section
+#' @param allow_comment boolean, optional; enables to allow candidate to leave
+#'   comments in each question of the section; `TRUE` by default
+#' @return object of [AssessmentSection]-class
 #' @export
-section <- function(file, num_variants = 1, id = NULL, nested = TRUE) {
+section <- function(file, num_variants = 1, id = NULL, nested = TRUE,
+                    title = character(0), time_limits = NA_integer_,
+                    visible = TRUE, shuffle = FALSE, max_attempts = NA_integer_,
+                    allow_comment = TRUE) {
     if (num_variants <= 1) {
         rmd_files <- file[grep("\\.Rmd$|\\.md$", file)]
         xml_files <- file[grep("\\.xml$", file)]
@@ -21,10 +37,8 @@ section <- function(file, num_variants = 1, id = NULL, nested = TRUE) {
         if (nested) {
             selection <- 1
             for (n  in seq(num_variants)) {
-                print(n)
                 sec <- make_seed_subsection(file)
                 names(sec) <- NULL
-                print(sec@identifier)
                 sub_items <- c(sub_items, sec)
                 if (is.null(id)) id <- paste0("variable_section_",
                                               sample.int(100, 1))
@@ -41,17 +55,16 @@ section <- function(file, num_variants = 1, id = NULL, nested = TRUE) {
         }
     }
 
-
-
-
     section <- new("AssessmentSection", identifier = id, selection = selection,
-                               assessment_item = sub_items)
+                   assessment_item = sub_items, title = title,
+                   time_limits = time_limits, visible = visible,
+                   shuffle = shuffle, max_attempts = max_attempts,
+                   allow_comment = allow_comment)
     return(section)
 }
 
 make_variant <- function(file, seed_number) {
     set.seed(seed_number)
-    print(file)
     object <- create_question_object(file)
     id <- paste0(object@identifier, "_S", seed_number)
     object@identifier <- id
