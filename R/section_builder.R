@@ -22,7 +22,7 @@ section <- function(file, num_variants = 1, id = NULL, nested = TRUE) {
             selection <- 1
             for (n  in seq(num_variants)) {
                 print(n)
-                sec <- make_subsection(file)
+                sec <- make_seed_subsection(file)
                 names(sec) <- NULL
                 print(sec@identifier)
                 sub_items <- c(sub_items, sec)
@@ -31,8 +31,12 @@ section <- function(file, num_variants = 1, id = NULL, nested = TRUE) {
             }
         } else {
             selection <- 0
-            for (f in seq(length(file))) {
-                sec <- make_subsection(f)
+            for (f in file) {
+                sec <- make_variant_subsection(f, num_variants)
+                names(sec) <- NULL
+                sub_items <- c(sub_items, sec)
+                if (is.null(id)) id <- paste0("variable_section_",
+                                              sample.int(100, 1))
             }
         }
     }
@@ -47,18 +51,33 @@ section <- function(file, num_variants = 1, id = NULL, nested = TRUE) {
 
 make_variant <- function(file, seed_number) {
     set.seed(seed_number)
+    print(file)
     object <- create_question_object(file)
-    object@identifier <- paste0(object@identifier, "_S", seed_number)
+    id <- paste0(object@identifier, "_S", seed_number)
+    object@identifier <- id
+    object@title <- paste0(object@title, "_S", seed_number)
     return(object)
 }
 
-make_subsection <- function(file) {
+make_seed_subsection <- function(file) {
     seed_number <- sample.int(100, 1)
     id <- paste0("seed_section_S", seed_number)
     asmt_items <- Map(make_variant, file, rep(seed_number, length(file)))
     names(asmt_items) <- NULL
     exam_subsection <- new("AssessmentSection", identifier = id,
                            assessment_item = asmt_items)
+    return(exam_subsection)
+}
+
+make_variant_subsection <- function(file, num_variants) {
+    seed_number <- sample.int(100, num_variants)
+    id <- paste0("variant_section_S", sample.int(1000, 1))
+
+    asmt_items <- Map(make_variant, file, seed_number)
+    names(asmt_items) <- NULL
+
+    exam_subsection <- new("AssessmentSection", identifier = id,
+                           assessment_item = asmt_items, selection = 1)
     return(exam_subsection)
 }
 
