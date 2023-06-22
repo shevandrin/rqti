@@ -47,7 +47,6 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #'   DirectedPair).
 #' @export
 create_question_object <- function(file) {
-    print(file)
 
     file_name <- tools::file_path_sans_ext(basename(file))
     exts <- tools::file_ext(file)
