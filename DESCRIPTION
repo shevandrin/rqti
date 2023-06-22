@@ -84,6 +84,7 @@ Collate:
     'qti_task.R'
     'qti_test.R'
     'response_processing.R'
+    'section_builder.R'
     'utils-pipe.R'
     'zzz.R'
 Depends: 
