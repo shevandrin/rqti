@@ -35,8 +35,8 @@ render_rmd <- function(input, ...) {
       }
     }
     message("Open browser at: ", url, " for preview")
-    rmd2xml(input, path = paste0(qtijs_path(), "/index.xml"))
-    rmd2xml(input)
+    rmd2zip(input, path = qtijs_path())
+    rmd2zip(input)
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
