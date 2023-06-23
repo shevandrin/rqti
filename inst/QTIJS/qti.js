@@ -188,7 +188,7 @@ const SCROLL_ADJUST = -170;
 const EN = {
   UPLOAD: "Upload file",
   COMMENT: "Comment on this question if you wish.",
-  EXPECTED_CHARS: (len)=>`expected: ${len} chars`,
+  EXPECTED_CHARS: (len)=>``,//expected: ${len} chars`,
   EXPECTED_LINES: (lines)=>`expected: $(lines) lines`,
   END_TEST: "<p>You have reached the end of the test</p>",  
 }
@@ -1187,7 +1187,7 @@ function transform(elem) {
     let expectedLines = elem.getAttribute("expectedLines");
     let expected = "";
     if (expectedLength) 
-      return`${placeholder} ${QTI.LANG.EXPECTED_CHARS(expectedLength)})`;
+      return`${placeholder} ${QTI.LANG.EXPECTED_CHARS(expectedLength)}`;
     else if (expectedLines)
       return `${placeholder} ${QTI.LANG.EXPECTED_LINES(expectedLines)})`;
     else

@@ -33,6 +33,7 @@
   border: none;
   border-bottom: solid 1px;
   padding-left: .5em;
+  width: 4em;
 }
 [data-qtijs-tag=assessmentTest] details {
   color: inherit;
