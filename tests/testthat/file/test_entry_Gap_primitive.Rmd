@@ -9,15 +9,15 @@ library(qti)
 # question
 **Diese Aufgabe dient zum Testen verschiedener Möglichkeiten zum Erstellen von Lücken**
 
-Hast du <<{type: text, solution: ein, alternatives: [EIN, Ein]}>> Handy? Dieses Telefonmodell ist Nokia <<{type: numeric, solution: 3310}>>. Hast du <<ein>> Computer? Der beliebteste Prozessor im ersten Quartal 2023 ist der Core i<<5>>.
+Hast du <<{type: text, solution: [ein, EIN, Ein]}>> Handy? Dieses Telefonmodell ist Nokia <<{type: numeric, solution: 3310}>>. Hast du <<ein>> Computer? Der beliebteste Prozessor im ersten Quartal 2023 ist der Core i<<5>>.
 
 neue numerische Lücke, die mit der Funktion gebaut würde `r gap_numeric(solution = 8, placeholder = "die richtige Antwort ist 8", expected_length = 50, tolerance_type = "relative", tolerance = 10, include_lower_bound = FALSE)`
 
 
-eine texte Lücke, die mit der Funktion gebaut würde `r gap_text(solution = "answer0", alternatives = c("answer1", "answer2"), score = 3, placeholder = "put answer here", expected_length = 70, case_sensitive = FALSE)`
+eine texte Lücke, die mit der Funktion gebaut würde `r gap_text(solution = c("answer0", "answer1", "answer2"), score = 3, placeholder = "put answer here", expected_length = 70, case_sensitive = FALSE)`
 
 
-eine texte Lücke **für opal**, die mit der Funktion gebaut würde `r gap_text(solution = "answer0", alternatives = c("answer1", "answer2"), score = 3, placeholder = "opal allows some tolerance rate", expected_length = 50, case_sensitive = FALSE, tolerance = 2)`
+eine texte Lücke **für opal**, die mit der Funktion gebaut würde `r gap_text(solution = c("answer0", "answer1", "answer2"), score = 3, placeholder = "opal allows some tolerance rate", expected_length = 50, case_sensitive = FALSE, tolerance = 2)`
 
 # feedback
 general feedback

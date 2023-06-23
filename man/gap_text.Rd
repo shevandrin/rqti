@@ -6,7 +6,6 @@
 \usage{
 gap_text(
   solution,
-  alternatives = NULL,
   score = NULL,
   expected_length = NULL,
   placeholder = NULL,
@@ -16,10 +15,8 @@ gap_text(
 )
 }
 \arguments{
-\item{solution}{string; contains right answer for this text gap entry}
-
-\item{alternatives}{string vector, optional; contains a vector of values that
-are also considered correct answers}
+\item{solution}{string vector; contains a vector of values that
+are considered as correct answers}
 
 \item{score}{numeric, optional; the number of points for this gap; default 1}
 

@@ -45,8 +45,7 @@ test_that("XML validation with schema file for Entry", {
     sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                       new("TextGap",
-                                          solution = "winter",
-                                          alternatives = c("WINTER", "Winter"),
+                                          solution = c("winter", "WINTER", "Winter"),
                                           response_identifier = "RESPONSE_1",
                                           score = 0.5,
                                           expected_length = 10),

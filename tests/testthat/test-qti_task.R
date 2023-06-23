@@ -165,8 +165,7 @@ TextGapOpal <- new("Entry",
                                   new("TextGapOpal",
                                       response_identifier = "RESPONSE_1",
                                       score = 1,
-                                      solution = "more",
-                                      alternatives = c("MORE", "More"),
+                                      solution = c("more", "MORE", "More"),
                                       tolerance = 2),
                                   'than the speed of sound</p>'))
 

@@ -8,8 +8,7 @@
 #' @template TextGapOpalSlotsTemplate
 #' @examples
 #' tgo <- new("TextGapOpal",
-#'           solution = "answer",
-#'           alternatives = c("answerr", "aanswer"),
+#'           solution = c("answer","answerr", "aanswer"),
 #'           placeholder = "do not put special characters",
 #'           tolerance = 1)
 #' @name TextGapOpal-class

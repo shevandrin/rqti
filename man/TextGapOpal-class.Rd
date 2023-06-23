@@ -25,10 +25,8 @@ in text input field in content delivery engine}
 \item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
 input field in content delivery engine}
 
-\item{\code{solution}}{string; contains right answer for this text gap entry}
-
-\item{\code{alternatives}}{string vector, optional; contains a vector of values that are
-also considered correct answers}
+\item{\code{solution}}{string; contains a vector of values that are
+considered as correct answers}
 
 \item{\code{case_sensitive}}{logical; determines whether the evaluation of the
 correct answer is case sensitive; default \code{TRUE}}
@@ -39,8 +37,7 @@ account to tolerate spelling mistake in evaluation of candidate answer}
 
 \examples{
 tgo <- new("TextGapOpal",
-          solution = "answer",
-          alternatives = c("answerr", "aanswer"),
+          solution = c("answer","answerr", "aanswer"),
           placeholder = "do not put special characters",
           tolerance = 1)
 }

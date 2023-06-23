@@ -1,8 +1,7 @@
 #' Create YAML string for TextGap object
 #'
-#' @param solution string; contains right answer for this text gap entry
-#' @param alternatives string vector, optional; contains a vector of values that
-#'   are also considered correct answers
+#' @param solution string vector; contains a vector of values that
+#'   are considered as correct answers
 #' @param score numeric, optional; the number of points for this gap; default 1
 #' @param expected_length numeric, optional; is responsible to set a size of
 #'   text input field in content delivery engine
@@ -17,7 +16,7 @@
 #'   answer
 #' @return string; map yaml
 #' @export
-gap_text <- function(solution, alternatives = NULL, score = NULL,
+gap_text <- function(solution, score = NULL,
                     expected_length = NULL, placeholder = NULL,
                     case_sensitive = NULL, response_identifier = NULL,
                     tolerance = NULL) {
@@ -63,10 +62,8 @@ gap_numeric <- function(solution, score = NULL, expected_length = NULL,
 
 clean_yaml_str <- function(params, type){
 
-    if (!is.null(params$alternatives)) {
-        params$alternatives <- paste(params$alternatives, collapse = ",")
-        params$alternatives <- paste0("[", params$alternatives, "]")
-    }
+    solution <- paste(params$solution, collapse = ",")
+    params$solution <- paste0("[", solution, "]")
 
     result <- as.yaml(c(params, type = type), line.sep = "\r")
     result <- gsub("\r", ", ", result)
