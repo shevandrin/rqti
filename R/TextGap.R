@@ -7,7 +7,7 @@
 #' @template TextGapSlotsTemplate
 #' @examples
 #' tg <- new("TextGap",
-#'           response = "answer",
+#'           solution = "answer",
 #'           alternatives = c("answerr", "aanswer"),
 #'           placeholder = "do not put special characters" )
 #' @name TextGap-class
@@ -16,14 +16,14 @@
 #' @include Gap.R
 #' @importFrom htmltools tag p span tagList tagAppendChildren
 setClass("TextGap", contains = "Gap",
-         slots = c(response = "character", alternatives = "character",
+         slots = c(solution = "character", alternatives = "character",
                    case_sensitive = "logical"),
          prototype = prototype(case_sensitive = TRUE))
 
 setMethod("initialize", "TextGap", function(.Object,...){
     .Object <- callNextMethod()
     if (length(.Object@expected_length) == 0) {
-        .Object@expected_length <- nchar(.Object@response) + 3
+        .Object@expected_length <- nchar(.Object@solution) + 3
     }
     validObject(.Object)
     .Object
@@ -54,7 +54,7 @@ setMethod("createResponseProcessing", "TextGap", function(object) {
 })
 
 create_response_declaration_text_entry <- function(object) {
-    response <- create_correct_response(object@response)
+    response <- create_correct_response(object@solution)
     mapping <- create_mapping_gap(object)
     children <- tagList(response, mapping)
     tag("responseDeclaration", list(identifier = object@response_identifier,

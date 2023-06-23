@@ -5,18 +5,18 @@
 \title{Create YAML string for TextGap object}
 \usage{
 gap_text(
-  response,
+  solution,
   alternatives = NULL,
   score = NULL,
   expected_length = NULL,
   placeholder = NULL,
   case_sensitive = NULL,
   response_identifier = NULL,
-  value_precision = NULL
+  tolerance = NULL
 )
 }
 \arguments{
-\item{response}{string; contains right answer for this text gap entry}
+\item{solution}{string; contains right answer for this text gap entry}
 
 \item{alternatives}{string vector, optional; contains a vector of values that
 are also considered correct answers}
@@ -32,10 +32,10 @@ text in text input field in content delivery engine}
 \item{case_sensitive}{logical, optional; determines whether the evaluation of
 the correct answer is case sensitive}
 
-\item{response_identifier}{string; an identifier for thy answer; by default
+\item{response_identifier}{string; an identifier for the answer; by default
 it is generated automatically}
 
-\item{value_precision}{numeric, optional; defines how many characters will be
+\item{tolerance}{numeric, optional; defines how many characters will be
 taken into account to tolerate spelling mistake in evaluation of candidate
 answer}
 }

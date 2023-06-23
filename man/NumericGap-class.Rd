@@ -25,12 +25,12 @@ in text input field in content delivery engine}
 \item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
 input field in content delivery engine}
 
-\item{\code{response}}{numeric; contains right answer for this numeric entry}
+\item{\code{solution}}{numeric; contains right answer for this numeric entry}
 
-\item{\code{value_precision}}{numeric, optional; specifies the value for up and low
+\item{\code{tolerance}}{numeric, optional; specifies the value for up and low
 boundaries of tolerance rate for candidate answer}
 
-\item{\code{type_precision}}{string, optional; specifies tolerance mode; possible
+\item{\code{tolerance_type}}{string, optional; specifies tolerance mode; possible
 values:
 \itemize{
 \item "exact" by default
@@ -47,6 +47,6 @@ upper bound is included in tolerance rate}
 
 \examples{
 ng <- new("NumericGap",
-          response = 5,
+          solution = 5,
           placeholder = "use this format xx.xxx" )
 }

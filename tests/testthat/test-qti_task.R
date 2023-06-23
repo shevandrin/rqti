@@ -165,9 +165,9 @@ TextGapOpal <- new("Entry",
                                   new("TextGapOpal",
                                       response_identifier = "RESPONSE_1",
                                       score = 1,
-                                      response = "more",
+                                      solution = "more",
                                       alternatives = c("MORE", "More"),
-                                      value_precision = 2),
+                                      tolerance = 2),
                                   'than the speed of sound</p>'))
 
     suppressMessages(create_qti_task(TextGapOpal))
@@ -188,8 +188,8 @@ NumericGap <- new("Entry",
                                  new("NumericGap",
                                      response_identifier = "RESPONSE_1",
                                      score = 1,
-                                     response = 300,
-                                     value_precision = 2),
+                                     solution = 300,
+                                     tolerance = 2),
                                  'm/s')
 )
     suppressMessages(create_qti_task(NumericGap))

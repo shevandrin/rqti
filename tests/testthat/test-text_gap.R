@@ -2,7 +2,7 @@ test_that("Testing create_item_body_text ", {
     sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
-                                                             response = "winter",
+                                                             solution = "winter",
                                                              alternatives = c("WINTER", "Winter"),
                                                              response_identifier = "RESPONSE_1",
                                                              score = 0.5,
@@ -10,9 +10,9 @@ test_that("Testing create_item_body_text ", {
                                                          "</p>","<p>",
                                                          new("NumericGap",
                                                              response_identifier = "RESPONSE_2",
-                                                             response = 12,
+                                                             solution = 12,
                                                              score = 0.5,
-                                                             value_precision = 1,
+                                                             tolerance = 1,
                                                              expected_length = 4),
                                                          "leaves by this sun of York;
   </p>
@@ -21,8 +21,8 @@ test_that("Testing create_item_body_text ", {
   In the deep bosom of the ocean buried.  At",
                                                          new("NumericGap",
                                                              response_identifier = "RESPONSE_4",
-                                                             response = 12.5,
-                                                             value_precision = 1,
+                                                             solution = 12.5,
+                                                             tolerance = 1,
                                                              expected_length = 5,
                                                              placeholder = "Floating point"),
 
@@ -54,7 +54,7 @@ test_that("Testing create Response Declaration Gap ", {
     sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
-                                                             response = "winter",
+                                                             solution = "winter",
                                                              alternatives = c("WINTER", "Winter"),
                                                              response_identifier = "RESPONSE_1",
                                                              score = 0.5,
@@ -62,8 +62,8 @@ test_that("Testing create Response Declaration Gap ", {
                                                          "</p>","<p>",
                                                          new("NumericGap",
                                                              response_identifier = "RESPONSE_2",
-                                                             response = 1234567890,
-                                                             value_precision = 1,
+                                                             solution = 1234567890,
+                                                             tolerance = 1,
                                                              expected_length = 4),
                                                          "leaves by this sun of York;
   </p>
@@ -72,8 +72,8 @@ test_that("Testing create Response Declaration Gap ", {
   In the deep bosom of the ocean buried.  At",
                                                          new("NumericGap",
                                                              response_identifier = "RESPONSE_4",
-                                                             response = 12.5,
-                                                             value_precision = 1,
+                                                             solution = 12.5,
+                                                             tolerance = 1,
                                                              score = 0.5,
                                                              placeholder = "Floating point"),
 
@@ -131,7 +131,7 @@ test_that("Testing create Outcome Declaration Gap ", {
     sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
-                                                             response = "winter",
+                                                             solution = "winter",
                                                              alternatives = c("WINTER", "Winter"),
                                                              response_identifier = "RESPONSE_1",
                                                              score = 0.5,
@@ -139,8 +139,8 @@ test_that("Testing create Outcome Declaration Gap ", {
                                                          "</p>","<p>",
                                                          new("NumericGap",
                                                              response_identifier = "RESPONSE_2",
-                                                             response = 12,
-                                                             value_precision = 1,
+                                                             solution = 12,
+                                                             tolerance = 1,
                                                              expected_length = 4),
                                                          "leaves by this sun of York;
   </p>
@@ -149,8 +149,8 @@ test_that("Testing create Outcome Declaration Gap ", {
   In the deep bosom of the ocean buried.  At",
                                                          new("NumericGap",
                                                              response_identifier = "RESPONSE_4",
-                                                             response = 12.5,
-                                                             value_precision = 1,
+                                                             solution = 12.5,
+                                                             tolerance = 1,
                                                              expected_length = 5,
                                                              score = 0.5,
                                                              placeholder = "Floating point"),
@@ -234,9 +234,9 @@ test_that("Testing create_item_body_text ", {
     sc <- new("Entry", content = list('The speed of light is', new("TextGapOpal",
                                                                    response_identifier = "RESPONSE_1",
                                                                    score = 1,
-                                                                   response = "more",
+                                                                   solution = "more",
                                                                    alternatives = c("MORE", "More"),
-                                                                   value_precision = 4),
+                                                                   tolerance = 4),
                                       'than the speed of sound'))
     expected <- '<additionalTag>
     <responseProcessing>
@@ -271,8 +271,8 @@ test_that("Testing function of create_outcome_declaration_entry for Entry class"
                                  new("NumericGap",
                                      response_identifier = "RESPONSE_1",
                                      score = NA_integer_,
-                                     response = 300,
-                                     value_precision = 2,
+                                     solution = 300,
+                                     tolerance = 2,
                                      include_lower_bound = TRUE,
                                      include_upper_bound = TRUE),'m/s'),
                 feedback = list(new("ModalFeedback", title = "common",

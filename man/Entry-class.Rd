@@ -40,11 +40,11 @@ use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a
 entry_gaps <- new("Entry", content = list("<p>In mathematics, the common
 logarithm is the logarithm with base", new("NumericGap",
                                            response_identifier = "numeric_1",
-                                           response = 10,
+                                           solution = 10,
                                            placeholder = "it is a number"),
 ". It is also known as the decimal", new("TextGap",
                                          response_identifier = "text_1",
-                                         response = "logarithm",
+                                         solution = "logarithm",
                                          placeholder = "it is a text"),
  ".</p>"),
                    title = "entry with number and text in answers",

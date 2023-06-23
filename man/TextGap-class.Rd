@@ -25,7 +25,7 @@ in text input field in content delivery engine}
 \item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
 input field in content delivery engine}
 
-\item{\code{response}}{string; contains right answer for this text gap entry}
+\item{\code{solution}}{string; contains right answer for this text gap entry}
 
 \item{\code{alternatives}}{string vector, optional; contains a vector of values that are
 also considered correct answers}
@@ -36,7 +36,7 @@ correct answer is case sensitive; default \code{TRUE}}
 
 \examples{
 tg <- new("TextGap",
-          response = "answer",
+          solution = "answer",
           alternatives = c("answerr", "aanswer"),
           placeholder = "do not put special characters" )
 }

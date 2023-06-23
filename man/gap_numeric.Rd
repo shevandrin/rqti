@@ -5,19 +5,19 @@
 \title{Create YAML string for NumericGap object}
 \usage{
 gap_numeric(
-  response,
+  solution,
   score = NULL,
   expected_length = NULL,
   placeholder = NULL,
-  value_precision = NULL,
-  type_precision = NULL,
+  tolerance = NULL,
+  tolerance_type = NULL,
   include_lower_bound = NULL,
   include_upper_bound = NULL,
   response_identifier = NULL
 )
 }
 \arguments{
-\item{response}{numeric; contains right answer for this numeric entry}
+\item{solution}{numeric; contains right answer for this numeric entry}
 
 \item{score}{numeric, optional; the number of points for this gap; default 1}
 
@@ -27,10 +27,10 @@ text input field in content delivery engine}
 \item{placeholder}{string, optional; is responsible to place some helpful
 text in text input field in content delivery engine}
 
-\item{value_precision}{numeric, optional; specifies the value for up and low
+\item{tolerance}{numeric, optional; specifies the value for up and low
 boundaries of tolerance rate for candidate answer}
 
-\item{type_precision}{string, optional; specifies tolerance mode; possible
+\item{tolerance_type}{string, optional; specifies tolerance mode; possible
 values:"exact", "absolute", "relative"}
 
 \item{include_lower_bound}{boolean, optional; specifies whether or not the

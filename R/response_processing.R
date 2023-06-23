@@ -144,7 +144,7 @@ create_response_processing_text_entry_opal <- function(object) {
                      tag("correct",
                          list(identifier = object@response_identifier)))
     equal_tag <- tag("equal", list(toleranceMode = "absolute",
-                                   tolerance = object@value_precision,
+                                   tolerance = object@tolerance,
                                    child))
     var_outcome <- tag("variable",
                        list(identifier = paste0("MAXSCORE_",
@@ -158,12 +158,12 @@ create_response_processing_text_entry_opal <- function(object) {
 }
 
 create_response_processing_num_entry <- function(object) {
-    tolerance_str <- paste(object@value_precision, object@value_precision)
+    tolerance_str <- paste(object@tolerance, object@tolerance)
     child <- tagList(tag("variable",
                          list(identifier = object@response_identifier)),
                      tag("correct",
                          list(identifier = object@response_identifier)))
-    equal_tag <- tag("equal", list(toleranceMode = object@type_precision,
+    equal_tag <- tag("equal", list(toleranceMode = object@tolerance_type,
                                    tolerance = tolerance_str,
                                    includeLowerBound =
                                        tolower(object@include_lower_bound),
