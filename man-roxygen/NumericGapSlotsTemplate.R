@@ -1,7 +1,7 @@
-#' @slot response numeric; contains right answer for this numeric entry
-#' @slot value_precision numeric, optional; specifies the value for up and low
+#' @slot solution numeric; contains right answer for this numeric entry
+#' @slot tolerance numeric, optional; specifies the value for up and low
 #'   boundaries of tolerance rate for candidate answer
-#' @slot type_precision string, optional; specifies tolerance mode; possible
+#' @slot tolerance_type string, optional; specifies tolerance mode; possible
 #'   values:
 #'   * "exact" by default
 #'   * "absolute"

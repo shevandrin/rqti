@@ -8,18 +8,17 @@
 #' @template TextGapOpalSlotsTemplate
 #' @examples
 #' tgo <- new("TextGapOpal",
-#'           response = "answer",
-#'           alternatives = c("answerr", "aanswer"),
+#'           solution = c("answer","answerr", "aanswer"),
 #'           placeholder = "do not put special characters",
-#'           value_precision = 1)
+#'           tolerance = 1)
 #' @name TextGapOpal-class
 #' @rdname TextGapOpal-class
 #' @aliases TextGapOpal
 #' @include Gap.R TextGap.R
 #' @importFrom htmltools tag p span tagList tagAppendChildren
 setClass("TextGapOpal", contains = "TextGap",
-         slots = c(value_precision = "numeric"),
-         prototype = prototype(value_precision = 0,
+         slots = c(tolerance = "numeric"),
+         prototype = prototype(tolerance = 0,
                                case_sensitive = FALSE))
 
 #' @rdname createResponseProcessing-methods

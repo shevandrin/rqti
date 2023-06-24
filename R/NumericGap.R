@@ -8,28 +8,27 @@
 #' @include Gap.R
 #' @examples
 #' ng <- new("NumericGap",
-#'           response = 5,
+#'           solution = 5,
 #'           placeholder = "use this format xx.xxx" )
 #' @name NumericGap-class
 #' @rdname NumericGap-class
 #' @aliases NumericGap
 #' @exportClass NumericGap
 setClass("NumericGap", contains = "Gap",
-         slots = c(response = "numeric",
+         slots = c(solution = "numeric",
                    include_lower_bound = "logical",
                    include_upper_bound = "logical",
-                   value_precision = "numeric",
-                   type_precision = "character"),
-         prototype = prototype(type_precision = "exact",
-                               score = 1,
-                               type_precision = "exact",
+                   tolerance = "numeric",
+                   tolerance_type = "character"),
+         prototype = prototype(score = 1,
+                               tolerance_type = "exact",
                                include_lower_bound = TRUE,
                                include_upper_bound = TRUE))
 
 setValidity("NumericGap", function(object) {
     types <- c("exact", "absolute", "relative")
-    if (length(object@type_precision) == 0L) object@type_precision = "exact"
-    if (!(object@type_precision %in% types)) {
+    if (length(object@tolerance_type) == 0L) object@tolerance_type = "exact"
+    if (!(object@tolerance_type %in% types)) {
         "@value_precision can be \"exact\", \"absolute\", or \"relative\" only"
     } else {
         return(TRUE)
@@ -38,8 +37,8 @@ setValidity("NumericGap", function(object) {
 
 setMethod("initialize", "NumericGap", function(.Object, ...) {
     .Object <- callNextMethod()
-    if (nchar(.Object@response) > 4 & (length(.Object@expected_length) == 0)) {
-        .Object@expected_length <- nchar(.Object@response) - 3
+    if (nchar(.Object@solution) > 4 & (length(.Object@expected_length) == 0)) {
+        .Object@expected_length <- nchar(.Object@solution) - 3
     }
     validObject(.Object)
     .Object
@@ -70,7 +69,7 @@ setMethod("createResponseProcessing", "NumericGap", function(object) {
 })
 
 create_response_declaration_num_entry <- function(object) {
-    response <- create_correct_response(object@response)
+    response <- create_correct_response(object@solution)
     tag("responseDeclaration", list(identifier = object@response_identifier,
                                     cardinality = "single",
                                     baseType = "float", response))

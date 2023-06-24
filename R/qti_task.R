@@ -150,8 +150,7 @@ create_mapping <- function(object) {
 }
 
 create_mapping_gap <- function(object) {
-    map_keys <- c(object@response, object@alternatives)
-    map_enrties <- Map(create_map_entry, object@score, map_keys,
+    map_enrties <- Map(create_map_entry, object@score, object@solution,
                        object@case_sensitive)
     tag("mapping", list(map_enrties))
 }

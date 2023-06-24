@@ -45,17 +45,16 @@ test_that("XML validation with schema file for Entry", {
     sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                       new("TextGap",
-                                          response = "winter",
-                                          alternatives = c("WINTER", "Winter"),
+                                          solution = c("winter", "WINTER", "Winter"),
                                           response_identifier = "RESPONSE_1",
                                           score = 0.5,
                                           expected_length = 10),
                                       "</p>","<p>",
                                       new("NumericGap",
                                           response_identifier = "RESPONSE_2",
-                                          response = 12,
+                                          solution = 12,
                                           score = 0.5,
-                                          value_precision = 1,
+                                          tolerance = 1,
                                           expected_length = 4),
                                       "leaves by this sun of York;
   </p>
@@ -64,8 +63,8 @@ test_that("XML validation with schema file for Entry", {
   In the deep bosom of the ocean buried.  At",
                                       new("NumericGap",
                                           response_identifier = "RESPONSE_4",
-                                          response = 12.5,
-                                          value_precision = 1,
+                                          solution = 12.5,
+                                          tolerance = 1,
                                           expected_length = 5,
                                           placeholder = "Floating point"),
 

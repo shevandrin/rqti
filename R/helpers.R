@@ -1,8 +1,7 @@
 #' Create YAML string for TextGap object
 #'
-#' @param response string; contains right answer for this text gap entry
-#' @param alternatives string vector, optional; contains a vector of values that
-#'   are also considered correct answers
+#' @param solution string vector; contains a vector of values that
+#'   are considered as correct answers
 #' @param score numeric, optional; the number of points for this gap; default 1
 #' @param expected_length numeric, optional; is responsible to set a size of
 #'   text input field in content delivery engine
@@ -10,18 +9,18 @@
 #'   text in text input field in content delivery engine
 #' @param case_sensitive logical, optional; determines whether the evaluation of
 #'   the correct answer is case sensitive
-#' @param response_identifier string; an identifier for thy answer; by default
+#' @param response_identifier string; an identifier for the answer; by default
 #'   it is generated automatically
-#' @param value_precision numeric, optional; defines how many characters will be
+#' @param tolerance numeric, optional; defines how many characters will be
 #'   taken into account to tolerate spelling mistake in evaluation of candidate
 #'   answer
 #' @return string; map yaml
 #' @export
-gap_text <- function(response, alternatives = NULL, score = NULL,
+gap_text <- function(solution, score = NULL,
                     expected_length = NULL, placeholder = NULL,
                     case_sensitive = NULL, response_identifier = NULL,
-                    value_precision = NULL) {
-    type <- ifelse(is.null(value_precision), "text", "text_opal")
+                    tolerance = NULL) {
+    type <- ifelse(is.null(tolerance), "text", "text_opal")
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
     result <- clean_yaml_str(params, type)
@@ -30,17 +29,17 @@ gap_text <- function(response, alternatives = NULL, score = NULL,
 
 #' Create YAML string for NumericGap object
 #'
-#' @param response numeric; contains right answer for this numeric entry
+#' @param solution numeric; contains right answer for this numeric entry
 #' @param score numeric, optional; the number of points for this gap; default 1
 #' @param expected_length numeric, optional; is responsible to set a size of
 #'   text input field in content delivery engine
 #' @param placeholder string, optional; is responsible to place some helpful
 #'   text in text input field in content delivery engine
-#' @param value_precision numeric, optional; specifies the value for up and low
+#' @param tolerance numeric, optional; specifies the value for up and low
 #'   boundaries of tolerance rate for candidate answer
 #' @param response_identifier string; an identifier for thy answer; by default
 #'   it is generated automatically
-#' @param type_precision string, optional; specifies tolerance mode; possible
+#' @param tolerance_type string, optional; specifies tolerance mode; possible
 #'   values:"exact", "absolute", "relative"
 #' @param include_lower_bound boolean, optional; specifies whether or not the
 #'   lower bound is included in tolerance rate
@@ -50,9 +49,9 @@ gap_text <- function(response, alternatives = NULL, score = NULL,
 #'   it is generated automatically
 #' @return string; map yaml
 #' @export
-gap_numeric <- function(response, score = NULL, expected_length = NULL,
-                   placeholder = NULL, value_precision = NULL,
-                   type_precision = NULL, include_lower_bound = NULL,
+gap_numeric <- function(solution, score = NULL, expected_length = NULL,
+                   placeholder = NULL, tolerance = NULL,
+                   tolerance_type = NULL, include_lower_bound = NULL,
                    include_upper_bound = NULL, response_identifier = NULL) {
 
     params <- as.list(match.call())[-1]
@@ -63,10 +62,8 @@ gap_numeric <- function(response, score = NULL, expected_length = NULL,
 
 clean_yaml_str <- function(params, type){
 
-    if (!is.null(params$alternatives)) {
-        params$alternatives <- paste(params$alternatives, collapse = ",")
-        params$alternatives <- paste0("[", params$alternatives, "]")
-    }
+    solution <- paste(params$solution, collapse = ",")
+    params$solution <- paste0("[", solution, "]")
 
     result <- as.yaml(c(params, type = type), line.sep = "\r")
     result <- gsub("\r", ", ", result)

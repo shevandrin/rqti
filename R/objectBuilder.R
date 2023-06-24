@@ -48,6 +48,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' @export
 create_question_object <- function(file) {
 
+    file_dir <- dirname(file)
     file_name <- tools::file_path_sans_ext(basename(file))
     exts <- tools::file_ext(file)
     if (exts == "Rmd") {
@@ -65,7 +66,7 @@ create_question_object <- function(file) {
     attrs <- attrs[! names(attrs) %in% c("knit")]
     question <- parsermd::rmd_select(doc_tree,
                                      parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question))
+    html <- transform_to_html(parsermd::as_document(question), file_dir)
 
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
         create_sc_object(html, attrs)
@@ -165,9 +166,9 @@ create_gap_object <- function(id, value) {
     if (!is.list(attrs)) {
         if (!is.na(suppressWarnings(as.numeric(value)))) {
             object <- new("NumericGap", response_identifier = id,
-                          response = as.numeric(value))
+                          solution = as.numeric(value))
         } else if (length(str_split_1(value, "\\|")) == 1) {
-            object <- new("TextGap", response_identifier = id, response = value)
+            object <- new("TextGap", response_identifier = id, solution = value)
         } else {
             object <- new("InlineChoice", response_identifier = id,
                 choices = str_split_1(value, "\\|"))
@@ -314,7 +315,7 @@ clean_question <- function(html) {
     return(content)
 }
 
-transform_to_html <- function(sec) {
+transform_to_html <- function(sec, image_dir = ".") {
     # write section in temp md file
     mdtempfile <- "_deleteme.md"
     writeLines(sec, mdtempfile)
@@ -329,6 +330,21 @@ transform_to_html <- function(sec) {
     unlink(mdtempfile)
     # read html file
     sect <- xml2::read_html("_deleteme.html", encoding = "UTF-8")
+    #find img tags
+    # imgs <- xml2::xml_find_all(sect, "//img")
+    # print(imgs)
+    # #find image path
+    # path_image <- file.path(image_dir, xml2::xml_attr(imgs, "src"))
+    # print(path_image)
+    # print(file.exists(path_image))
+    # path_image <- "code_notes/Rmd_examples/pic.png"
+    #
+    # image_binary <- readBin(path_image, "raw", file.info(path_image)$size)
+    # # Encode the image binary to Base64
+    # image_base64 <- base64enc::base64encode(image_binary)
+    # xml2::xml_set_attr(imgs, "src", image_base64)
+
+
     # delete temp html file
     unlink("_deleteme.html")
     # return lines of processed section

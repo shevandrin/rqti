@@ -181,9 +181,8 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                                       new("TextGapOpal",
                                           response_identifier = "RESPONSE_1",
                                           score = 1,
-                                          response = "more",
-                                          alternatives = c("MORE", "More"),
-                                          value_precision = 2),
+                                          solution = c("more", "MORE", "More"),
+                                          tolerance = 2),
                                       'than the speed of sound</p>')
     )
     DirectedPair <- new("DirectedPair",
