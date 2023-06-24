@@ -67,19 +67,19 @@ create_question_object <- function(file) {
                                      parsermd::by_section("question"))[-1]
     html <- transform_to_html(parsermd::as_document(question))
 
-    slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice")) {
+    slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
         create_sc_object(html, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {
         create_mc_object(html, attrs)
-    } else if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown")) {
+    } else if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
         create_entry_object(question, attrs)
     } else if (tolower(attrs$type) == "order") {
         create_order_object(html, attrs)
     } else if (tolower(attrs$type) == "essay") {
         create_essay_object(attrs)
-    } else if (tolower(attrs$type) %in% c("dp", "directedpair")) {
+    } else if (tolower(attrs$type) %in% c("dp", "directedpair", "pair")) {
         create_dp_object(html, attrs)
-    } else if (tolower(attrs$type) %in% c("match")) {
+    } else if (tolower(attrs$type) %in% c("match", "table", "matchtable")) {
         create_matchtable_object(html, attrs)
     } else {
         stop("The type of task is not specified properly")
