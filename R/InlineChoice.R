@@ -15,7 +15,7 @@
 #' @aliases InlineChoice
 #' @exportClass InlineChoice
 setClass("InlineChoice", contains = "Gap",
-         slots = c(solution = "character",
+         slots = c(solution = "ANY",
                    answer_index = "numeric",
                    choices_identifiers = "character",
                    shuffle = "logical"),

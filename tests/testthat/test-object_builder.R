@@ -353,7 +353,7 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
-    path <- test_path("file/test_entry_Gap_InlineChoice.md")
+    path <- test_path("file/test_entry_Gap_InlineChoice.Rmd")
     sut <- create_question_object(path)
     expected <- new("Entry",
                     identifier = "test_entry_example",
@@ -367,7 +367,9 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
                                        solution = c("Apple iPhone 13 Pro","Apple iPhone 13 Pro Max","Apple iPhone 13"),
                                        response_identifier = "response_2",
                                        answer_index = 3),
-                                   '.</p>'),
+                                   '.</p>\n<p>In welchem Jahr begann das iPhone auf dem europäischen Markt zu verkaufen?',
+                                   new("InlineChoice", response_identifier = "response_3", solution = c(2007, 2008)),
+                                   '</p>'),
                     feedback = list(new("WrongFeedback",
                                         content = list("<p>wrong feedback</p>")),
                                      new("CorrectFeedback",

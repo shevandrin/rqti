@@ -72,6 +72,21 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
     return(result)
 }
 
+dropdown <- function(solution, answer_index = 1, score = 1, shuffle = TRUE,
+                     response_identifier = NULL, choices_identifiers = NULL) {
+
+    # get users values
+    params <- as.list(match.call())[-1]
+    params <- lapply(params, eval)
+    # get default values
+    defaults <- formals(dropdown)
+    # combine users and default values
+    params <- combine_params(params, defaults)
+    # build map yaml string
+    result <- clean_yaml_str(params, "InlineChoice")
+    return(result)
+}
+
 clean_yaml_str <- function(params, type){
 
     solution <- paste(params$solution, collapse = ",")

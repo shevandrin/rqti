@@ -23,10 +23,10 @@
 #' entry_dropdown <- new("Entry", content = list("<p>In mathematics, the common
 #' logarithm is the logarithm with base", new("InlineChoice",
 #'                                            response_identifier = "numeric_1",
-#'                                            choices = c("10", "7", "11")),
+#'                                            solution = c("10", "7", "11")),
 #' ". It is also known as the decimal", new("InlineChoice",
 #'                                          response_identifier = "text_1",
-#'                                          choices = c("logarithm", "limit")),
+#'                                          solution = c("logarithm", "limit")),
 #'  ".</p>"),
 #'                    title = "entry with dropdown lists for answers",
 #'                    identifier = "entry_example")
