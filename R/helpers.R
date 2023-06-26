@@ -2,27 +2,33 @@
 #'
 #' @param solution string vector; contains a vector of values that
 #'   are considered as correct answers
+#' @param tolerance numeric, optional; defines how many characters will be
+#'   taken into account to tolerate spelling mistake in evaluation of candidate
+#'   answer
+#' @param case_sensitive logical, optional; determines whether the evaluation of
+#'   the correct answer is case sensitive; default `TRUE`
 #' @param score numeric, optional; the number of points for this gap; default 1
+#' @param response_identifier string; an identifier for the answer; by default
+#'   it is generated automatically
 #' @param expected_length numeric, optional; is responsible to set a size of
 #'   text input field in content delivery engine
 #' @param placeholder string, optional; is responsible to place some helpful
 #'   text in text input field in content delivery engine
-#' @param case_sensitive logical, optional; determines whether the evaluation of
-#'   the correct answer is case sensitive
-#' @param response_identifier string; an identifier for the answer; by default
-#'   it is generated automatically
-#' @param tolerance numeric, optional; defines how many characters will be
-#'   taken into account to tolerate spelling mistake in evaluation of candidate
-#'   answer
 #' @return string; map yaml
 #' @export
-gap_text <- function(solution, score = NULL,
-                    expected_length = NULL, placeholder = NULL,
-                    case_sensitive = NULL, response_identifier = NULL,
-                    tolerance = NULL) {
+gap_text <- function(solution, tolerance = NULL, case_sensitive = TRUE,
+                     score = 1, response_identifier = NULL,
+                     expected_length = NULL, placeholder = NULL) {
+    # define gap-type
     type <- ifelse(is.null(tolerance), "text", "text_opal")
+    # get users values
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
+    # get default values
+    defaults <- formals(gap_text)
+    # combine users and default values
+    params <- combine_params(params, defaults)
+    # build map yaml string
     result <- clean_yaml_str(params, type)
     return(result)
 }
@@ -30,32 +36,38 @@ gap_text <- function(solution, score = NULL,
 #' Create YAML string for NumericGap object
 #'
 #' @param solution numeric; contains right answer for this numeric entry
-#' @param score numeric, optional; the number of points for this gap; default 1
-#' @param expected_length numeric, optional; is responsible to set a size of
-#'   text input field in content delivery engine
-#' @param placeholder string, optional; is responsible to place some helpful
-#'   text in text input field in content delivery engine
 #' @param tolerance numeric, optional; specifies the value for up and low
 #'   boundaries of tolerance rate for candidate answer
-#' @param response_identifier string; an identifier for thy answer; by default
-#'   it is generated automatically
 #' @param tolerance_type string, optional; specifies tolerance mode; possible
 #'   values:"exact", "absolute", "relative"
+#' @param score numeric, optional; the number of points for this gap; default 1
+#' @param response_identifier string; an identifier for thy answer; by default
+#'   it is generated automatically
 #' @param include_lower_bound boolean, optional; specifies whether or not the
 #'   lower bound is included in tolerance rate
 #' @param include_upper_bound boolean, optional; specifies whether or not the
 #'   upper bound is included in tolerance rate
-#' @param response_identifier string; an identifier for thy answer; by default
-#'   it is generated automatically
+#' @param expected_length numeric, optional; is responsible to set a size of
+#'   text input field in content delivery engine
+#' @param placeholder string, optional; is responsible to place some helpful
+#'   text in text input field in content delivery engine
 #' @return string; map yaml
 #' @export
-gap_numeric <- function(solution, score = NULL, expected_length = NULL,
-                   placeholder = NULL, tolerance = NULL,
-                   tolerance_type = NULL, include_lower_bound = NULL,
-                   include_upper_bound = NULL, response_identifier = NULL) {
+gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
+                        score = 1, response_identifier = NULL,
+                        include_lower_bound = TRUE, include_upper_bound = TRUE,
+                        expected_length = NULL, placeholder = NULL) {
 
+    # get users values
     params <- as.list(match.call())[-1]
     params <- lapply(params, eval)
+    if (!is.null(params$tolerance) & (is.null(params$tolerance_type))) {
+        params$tolerance_type <- "absolute" }
+    # get default values
+    defaults <- formals(gap_numeric)
+    # combine users and default values
+    params <- combine_params(params, defaults)
+    # build map yaml string
     result <- clean_yaml_str(params, "numeric")
     return(result)
 }
@@ -72,6 +84,18 @@ clean_yaml_str <- function(params, type){
     result <- paste0("<<{", result, "}>>")
     return(result)
 }
+
+combine_params <- function(params, defaults) {
+    params_keys <- names(params)
+    defaults <- Filter(function(x) length(x) != 0, defaults)
+    defaults_keys <- names(defaults)
+    diff_keys <- setdiff(defaults_keys, params_keys)
+    defaults <- defaults[diff_keys]
+    # combine users and default values
+    params <- c(params, defaults)
+    return(params)
+}
+
 #' Create markdown list for answer options
 #'
 #' @param vect string or numeric vector of answer options for single/multiple

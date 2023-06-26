@@ -6,35 +6,35 @@
 \usage{
 gap_text(
   solution,
-  score = NULL,
-  expected_length = NULL,
-  placeholder = NULL,
-  case_sensitive = NULL,
+  tolerance = NULL,
+  case_sensitive = TRUE,
+  score = 1,
   response_identifier = NULL,
-  tolerance = NULL
+  expected_length = NULL,
+  placeholder = NULL
 )
 }
 \arguments{
 \item{solution}{string vector; contains a vector of values that
 are considered as correct answers}
 
+\item{tolerance}{numeric, optional; defines how many characters will be
+taken into account to tolerate spelling mistake in evaluation of candidate
+answer}
+
+\item{case_sensitive}{logical, optional; determines whether the evaluation of
+the correct answer is case sensitive; default \code{TRUE}}
+
 \item{score}{numeric, optional; the number of points for this gap; default 1}
+
+\item{response_identifier}{string; an identifier for the answer; by default
+it is generated automatically}
 
 \item{expected_length}{numeric, optional; is responsible to set a size of
 text input field in content delivery engine}
 
 \item{placeholder}{string, optional; is responsible to place some helpful
 text in text input field in content delivery engine}
-
-\item{case_sensitive}{logical, optional; determines whether the evaluation of
-the correct answer is case sensitive}
-
-\item{response_identifier}{string; an identifier for the answer; by default
-it is generated automatically}
-
-\item{tolerance}{numeric, optional; defines how many characters will be
-taken into account to tolerate spelling mistake in evaluation of candidate
-answer}
 }
 \value{
 string; map yaml
