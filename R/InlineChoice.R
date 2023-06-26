@@ -19,7 +19,12 @@ setClass("InlineChoice", contains = "Gap",
                    answer_index = "numeric",
                    choices_identifiers = "character",
                    shuffle = "logical"),
-         prototype = list(shuffle = TRUE, answer_index = 1))
+         prototype = list(shuffle = TRUE, answer_index = 1),
+         validity = function(object) {
+          if (!any(is.character(object@solution), is.numeric(object@solution))){
+                stop("slot \'solution\' must be of type \'character'\ or \'numeric\'")
+           }
+         })
 
 setMethod("initialize", "InlineChoice", function(.Object, ...) {
     .Object <- callNextMethod()
