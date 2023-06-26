@@ -23,10 +23,10 @@ Now is the winter of our discontent
 Made glorious summer by this sun of",
                                       new("InlineChoice",
                                           response_identifier = "RESPONSE",
-                                          solution = 3,
+                                          answer_index = 3,
                                           score = 2,
                                           shuffle = FALSE,
-                                          choices = c("Gloucester", "Lancaster", "York"),
+                                          solution = c("Gloucester", "Lancaster", "York"),
                                           choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>

@@ -25,10 +25,10 @@ in text input field in content delivery engine}
 \item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
 input field in content delivery engine}
 
-\item{\code{choices}}{string vector; contains the answers which are shown in the drop
+\item{\code{solution}}{string vector; contains the answers which are shown in the drop
 down list}
 
-\item{\code{solution}}{numeric, optional; the index of the right answer in options
+\item{\code{answer_index}}{numeric, optional; the index of the right answer in options
 vector; default \code{1}}
 
 \item{\code{choices_identifiers}}{string vector, optional; a set of identifiers for
@@ -40,6 +40,6 @@ which the choices are initially presented to the candidate; default \code{TRUE}}
 
 \examples{
 ng <- new("InlineChoice",
-          choices =  c("answer1", "answer2", "answer3"),
+          solution=  c("answer1", "answer2", "answer3"),
           response_identifier = "dropdown_gap_example")
 }

@@ -207,9 +207,9 @@ InlineChoice <- new("Entry",
                     title = "InlineChoice",
                     content = list('The speed of light is equal',
                                    new("InlineChoice",
-                                       choices = c("400","300","500"),
+                                       solution = c("400","300","500"),
                                        response_identifier = "RESPONSE_1",
-                                       solution = 2,
+                                       answer_index = 2,
                                        score = 1),
                                    'm/s')
 )

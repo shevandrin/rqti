@@ -7,10 +7,10 @@ Now is the winter of our discontent
 Made glorious summer by this sun of",
         new("InlineChoice",
             response_identifier = "RESPONSE",
-            solution = 3,
+            answer_index = 3,
             score = 2,
             shuffle = FALSE,
-            choices = c("Gloucester", "Lancaster", "York"),
+            solution = c("Gloucester", "Lancaster", "York"),
             choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>
@@ -53,9 +53,9 @@ Now is the winter of our discontent
 Made glorious summer by this sun of",
        new("InlineChoice",
        response_identifier = "RESPONSE",
-       solution = 3,
+       answer_index = 3,
        score = 2,
-       choices = c("Gloucester", "Lancaster", "York"),
+       solution = c("Gloucester", "Lancaster", "York"),
        choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>
@@ -87,9 +87,9 @@ Now is the winter of our discontent
 Made glorious summer by this sun of",
         new("InlineChoice",
         response_identifier = "RESPONSE",
-        solution = 3,
+        answer_index = 3,
         score = 2,
-        choices = c("Gloucester", "Lancaster", "York"),
+        solution = c("Gloucester", "Lancaster", "York"),
         choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>
@@ -137,10 +137,10 @@ In the deep bosom of the ocean buried.
 test_that("Testing CreateItemBody Inline", {
     sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
                                           response_identifier = "RESPONSE",
-                                          solution = 3,
+                                          answer_index = 3,
                                           score = 1,
                                           shuffle = FALSE,
-                                          choices = c("160","90","60"),
+                                          solution = c("160","90","60"),
                                           choices_identifiers = c("1","2","3")),
                                           "minutes</p>"))
     example <- '<itemBody>
@@ -160,9 +160,9 @@ test_that("Testing CreateItemBody Inline", {
 test_that("Testing CreateItemBody Inline", {
     sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
                                                            response_identifier = "RESPONSE",
-                                                           solution = 3,
+                                                           answer_index = 3,
                                                            shuffle = FALSE,
-                                                           choices = c("160","90","60"),
+                                                           solution = c("160","90","60"),
                                                            choices_identifiers = c("1","2","3")),
                                       "minutes</p>"))
     example <- '<itemBody>
@@ -182,9 +182,9 @@ test_that("Testing CreateItemBody Inline", {
 test_that("Testing CreateItemBody Inline", {
     sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
                                                            response_identifier = "RESPONSE",
-                                                           solution = 3,
+                                                           answer_index = 3,
                                                            shuffle = FALSE,
-                                                           choices = c("160","90","60")),
+                                                           solution = c("160","90","60")),
                                                                "minutes</p>"))
     example <- '<itemBody>
 	    <p>One hour is
@@ -205,9 +205,9 @@ test_that("Testing construction function for InlineChoice class", {
                   title = "InlineChoice",
                   content = list('The speed of light is equal',
                                  new("InlineChoice",
-                                     choices = c("400","300","500"),
+                                     solution = c("400","300","500"),
                                      response_identifier = "RESPONSE_1",
-                                     solution = 2,
+                                     answer_index = 2,
                                      score = 0),
                                  'm/s'))
 
@@ -217,9 +217,9 @@ test_that("Testing construction function for InlineChoice class", {
                    title = "InlineChoice",
                    content = list('The speed of light is equal',
                                   new("InlineChoice",
-                                      choices = c("400","300","500"),
+                                      solution = c("400","300","500"),
                                       response_identifier = "RESPONSE_1",
-                                      solution = 2,
+                                      answer_index = 2,
                                       score = 0),
                                   'm/s'))
 
