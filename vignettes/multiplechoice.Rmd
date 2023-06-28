@@ -90,10 +90,10 @@ Feedback can be provided with the section
 
 ## List of answers as a variable
 
-For more complex exercises the list of answers is often just available as a variable. In this case you can use the helper function `answerlist` to convert the vector into a markdown list:
+For more complex exercises the list of answers is often just available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
 
 ```{r results="plaintext", comment=""}
-answerlist(c("dropdown list", "programming language evaluation", "numeric gap"), solutions = c(1, 3))
+mdlist(c("dropdown list", "programming language evaluation", "numeric gap"), solutions = c(1, 3))
 ```
 
 ## Some advice on multiple choice exercises
