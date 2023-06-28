@@ -136,7 +136,7 @@ combine_params <- function(params, defaults) {
 #'   description to build gaps in content of Entry task
 #' @return markdown list
 #' @export
-answerlist <- function(vect, solutions = NULL, gaps = NULL) {
+mdlist <- function(vect, solutions = NULL, gaps = NULL) {
 
     if (!is.null(solutions)) {
         for (s in solutions) vect[s] <- paste0("*", vect[s], "*")
