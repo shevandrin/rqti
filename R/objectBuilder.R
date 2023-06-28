@@ -87,7 +87,7 @@ create_question_object <- function(file) {
     }
 
     if (is.null(slots$identifier)) slots$identifier <- file_name
-    feedback <- list(parse_feedback(file))
+    feedback <- list(parse_feedback(file, file_dir))
     if (is.null(slots$content)) slots$content <- as.list((clean_question(html)))
     slots <- c(slots, feedback = feedback)
     slots[["type"]] <- NULL # rid of type attribute from slots
@@ -269,20 +269,21 @@ parse_list <- function(html) {
     return(list(choices = choices, solution = solution))
 }
 
-parse_feedback <- function(file) {
+parse_feedback <- function(file, image_dir = NULL) {
     sections <- c("feedback", "feedback\\-", "feedback\\+")
     classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
 
-    create_fb_object <- function(sec, cls, file) {
+    create_fb_object <- function(sec, cls, file, image_dir) {
         rmd <- parsermd::parse_rmd(file)
         feedback <- rmd_select(rmd, parsermd::by_section(sec))[-1]
         if (length(feedback) == 1) {
-            html <- clean_question(transform_to_html(as_document(feedback)))
+            html <- clean_question(transform_to_html(as_document(feedback),
+                                   image_dir))
             f_object <- new(cls, content = as.list(html))
         }
     }
 
-    result <- Map(create_fb_object, sections, classes, file)
+    result <- Map(create_fb_object, sections, classes, file, rep(image_dir, 3))
     result <- unname(Filter(Negate(is.null), result))
     return(result)
 }
@@ -315,6 +316,7 @@ clean_question <- function(html) {
     return(content)
 }
 
+#' @importFrom base64enc base64encode
 transform_to_html <- function(sec, image_dir = ".") {
     # write section in temp md file
     mdtempfile <- "_deleteme.md"
@@ -331,20 +333,23 @@ transform_to_html <- function(sec, image_dir = ".") {
     # read html file
     sect <- xml2::read_html("_deleteme.html", encoding = "UTF-8")
     #find img tags
-    # imgs <- xml2::xml_find_all(sect, "//img")
-    # print(imgs)
-    # #find image path
-    # path_image <- file.path(image_dir, xml2::xml_attr(imgs, "src"))
-    # print(path_image)
-    # print(file.exists(path_image))
-    # path_image <- "code_notes/Rmd_examples/pic.png"
-    #
-    # image_binary <- readBin(path_image, "raw", file.info(path_image)$size)
-    # # Encode the image binary to Base64
-    # image_base64 <- base64enc::base64encode(image_binary)
-    # xml2::xml_set_attr(imgs, "src", image_base64)
-
-
+    imgs <- xml2::xml_find_all(sect, "//img")
+    # process each image
+    for (img in imgs) {
+        xml2::xml_set_attr(img, "special", "special")
+        # make path to image in the directory of the document
+        path_image <- file.path(image_dir, xml2::xml_attr(img, "src"))
+        if (!file.exists(path_image)) {
+            # remake path to image in with working directory
+            path_image <- file.path(".", xml2::xml_attr(img, "src"))
+        }
+        if (file.exists(path_image)) {
+            image_binary <- readBin(path_image, "raw", file.info(path_image)$size)
+            image_base64 <- base64enc::base64encode(image_binary)
+            image_source <- paste0("data:image/png;base64,", image_base64)
+            xml2::xml_set_attr(img, "src", image_source)
+        }
+    }
     # delete temp html file
     unlink("_deleteme.html")
     # return lines of processed section
