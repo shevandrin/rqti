@@ -1,0 +1,14 @@
+---
+type: dropdown
+knit: qti::render_rmd
+---
+
+# question
+
+The philosophy of the qti package is <<do one thing and do it well|one for all>>.
+
+Under the hood, the qti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no OOP", "R6 OOP"))`.
+
+# feedback
+
+The package `qti` is specialized for producing xml qti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.

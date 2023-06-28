@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="skeleton" title="skeleton" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
+    <correctResponse>
+      <value>ChoiceA</value>
+      <value>ChoiceB</value>
+    </correctResponse>
+    <mapping lowerBound="0" upperBound="1" defaultValue="0">
+      <mapEntry mapKey="ChoiceA" mappedValue="0.5"/>
+      <mapEntry mapKey="ChoiceB" mappedValue="0.5"/>
+      <mapEntry mapKey="ChoiceC" mappedValue="-0.5"/>
+      <mapEntry mapKey="ChoiceD" mappedValue="-0.5"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>Which exercise types are supported by the R package qti?</p>
+    <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0" orientation="vertical">
+      <simpleChoice identifier="ChoiceA">dropdown list</simpleChoice>
+      <simpleChoice identifier="ChoiceB">gaps</simpleChoice>
+      <simpleChoice identifier="ChoiceC">programming language evaluation</simpleChoice>
+      <simpleChoice identifier="ChoiceD">drawing</simpleChoice>
+    </choiceInteraction>
+  </itemBody>
+  <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <not>
+          <isNull>
+            <variable identifier="RESPONSE"/>
+          </isNull>
+        </not>
+        <setOutcomeValue identifier="SCORE">
+          <sum>
+            <variable identifier="SCORE"/>
+            <mapResponse identifier="RESPONSE"/>
+          </sum>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <gt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MAXSCORE"/>
+        </gt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MAXSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <lt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MINSCORE"/>
+        </lt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MINSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <isNull>
+          <variable identifier="RESPONSE"/>
+        </isNull>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">empty</baseValue>
+        </setOutcomeValue>
+      </responseIf>
+      <responseElseIf>
+        <lt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MAXSCORE"/>
+        </lt>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">incorrect</baseValue>
+        </setOutcomeValue>
+      </responseElseIf>
+      <responseElse>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">correct</baseValue>
+        </setOutcomeValue>
+      </responseElse>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <and>
+          <gte>
+            <variable identifier="SCORE"/>
+            <baseValue baseType="float">0</baseValue>
+          </gte>
+        </and>
+        <setOutcomeValue identifier="FEEDBACKMODAL">
+          <multiple>
+            <variable identifier="FEEDBACKMODAL"/>
+            <baseValue baseType="identifier">modal_feedback</baseValue>
+          </multiple>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+  </responseProcessing>
+  <modalFeedback identifier="modal_feedback" outcomeIdentifier="FEEDBACK" showHide="show">
+    <p>All basic types of QTI are supported, including dropdown list. More advanced exercises (as available in OPAL/ONYX) are not yet supported because they are LMS specific.</p>
+  </modalFeedback>
+</assessmentItem>

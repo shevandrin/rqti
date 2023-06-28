@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="skeleton" title="skeleton" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="response_1" cardinality="single" baseType="float">
+    <correctResponse>
+      <value>114</value>
+    </correctResponse>
+  </responseDeclaration>
+  <responseDeclaration identifier="response_2" cardinality="single" baseType="float">
+    <correctResponse>
+      <value>90</value>
+    </correctResponse>
+  </responseDeclaration>
+  <responseDeclaration identifier="response_3" cardinality="single" baseType="string">
+    <correctResponse>
+      <value>OPAL</value>
+    </correctResponse>
+    <mapping>
+      <mapEntry mapKey="OPAL" mappedValue="1" caseSensitive="true"/>
+    </mapping>
+  </responseDeclaration>
+  <responseDeclaration identifier="response_4" cardinality="single" baseType="string">
+    <correctResponse>
+      <value>Bildungsportal Sachsen</value>
+    </correctResponse>
+    <mapping>
+      <mapEntry mapKey="Bildungsportal Sachsen" mappedValue="1" caseSensitive="false"/>
+      <mapEntry mapKey="Bildungs Portal Sachsen" mappedValue="1" caseSensitive="false"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="SCORE_response_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE_response_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE_response_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="SCORE_response_2" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE_response_2" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE_response_2" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="SCORE_response_3" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE_response_3" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE_response_3" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="SCORE_response_4" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE_response_4" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE_response_4" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="FEEDBACKBASIC" cardinality="single" baseType="identifier">
+    <defaultValue>
+      <value>empty</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="FEEDBACKMODAL" cardinality="multiple" baseType="identifier">
+    <defaultValue>
+      <value/>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <h2 id="numeric-gaps">numeric gaps</h2>
+    <p>The qti package has 
+    <textEntryInteraction responseIdentifier="response_1"/>
+     tests. The test coverage of the package is 
+    <textEntryInteraction responseIdentifier="response_2"/>
+    %.</p>
+    <p>In the last gap, the tolerance was set to 5 and the correct solution to 90. This means that the interval from 85 to 95 is a correct response (90+-5). The parameter <code>tolerance_type</code> determines how the tolerance is calculated. Setting it to <code>relative</code>, would make the interval go from 0.855 to 0.945 (90+-5%).</p>
+    <p>The qti package can access the API of the learning management system 
+    <textEntryInteraction responseIdentifier="response_3" expectedLength="7"/>
+     (by BPS). BPS stands for 
+    <textEntryInteraction responseIdentifier="response_4" expectedLength="25"/>
+    . OPAL allows a new attribute for text gaps (<code>tolerance</code>), which takes into account spelling mistakes. Only use it with the OPAL LMS as it is probably not supported on other LMS. Further note that using this attribute will make the xml files invalid regarding the QTI standard.</p>
+  </itemBody>
+  <responseProcessing>
+    <setOutcomeValue identifier="SCORE">
+      <sum>
+        <variable identifier="SCORE_response_1"/>
+        <variable identifier="SCORE_response_2"/>
+        <variable identifier="SCORE_response_3"/>
+        <variable identifier="SCORE_response_4"/>
+      </sum>
+    </setOutcomeValue>
+    <responseCondition>
+      <responseIf>
+        <equal toleranceMode="exact" includeLowerBound="true" includeUpperBound="true">
+          <variable identifier="response_1"/>
+          <correct identifier="response_1"/>
+        </equal>
+        <setOutcomeValue identifier="SCORE_response_1">
+          <variable identifier="MAXSCORE_response_1"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <equal toleranceMode="absolute" tolerance="5 5" includeLowerBound="true" includeUpperBound="true">
+          <variable identifier="response_2"/>
+          <correct identifier="response_2"/>
+        </equal>
+        <setOutcomeValue identifier="SCORE_response_2">
+          <variable identifier="MAXSCORE_response_2"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <equal toleranceMode="absolute" tolerance="4">
+          <variable identifier="response_4"/>
+          <correct identifier="response_4"/>
+        </equal>
+        <setOutcomeValue identifier="SCORE_response_4">
+          <variable identifier="MAXSCORE_response_4"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <gt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MAXSCORE"/>
+        </gt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MAXSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <lt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MINSCORE"/>
+        </lt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MINSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <and>
+          <isNull>
+            <variable identifier="response_1"/>
+          </isNull>
+          <isNull>
+            <variable identifier="response_2"/>
+          </isNull>
+          <isNull>
+            <variable identifier="response_3"/>
+          </isNull>
+          <isNull>
+            <variable identifier="response_4"/>
+          </isNull>
+        </and>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">empty</baseValue>
+        </setOutcomeValue>
+      </responseIf>
+      <responseElseIf>
+        <lt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MAXSCORE"/>
+        </lt>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">incorrect</baseValue>
+        </setOutcomeValue>
+      </responseElseIf>
+      <responseElse>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">correct</baseValue>
+        </setOutcomeValue>
+      </responseElse>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <and>
+          <gte>
+            <variable identifier="SCORE"/>
+            <baseValue baseType="float">0</baseValue>
+          </gte>
+        </and>
+        <setOutcomeValue identifier="FEEDBACKMODAL">
+          <multiple>
+            <variable identifier="FEEDBACKMODAL"/>
+            <baseValue baseType="identifier">modal_feedback</baseValue>
+          </multiple>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+  </responseProcessing>
+  <modalFeedback identifier="modal_feedback" outcomeIdentifier="FEEDBACK" showHide="show">
+    <p>For numeric gaps, the LMS will usually display the correct value inline, but you might still want to provide some detailed explanations here.</p>
+  </modalFeedback>
+</assessmentItem>

@@ -1,0 +1,18 @@
+---
+type: gap
+knit: qti::render_rmd
+---
+
+# question
+
+## numeric gaps
+
+The qti package has <<114>> tests. The test coverage of the package is `r gap_numeric(90, tolerance = 5)`%.
+
+In the last gap, the tolerance was set to 5 and the correct solution to 90. This means that the interval from 85 to 95 is a correct response (90+-5). The parameter `tolerance_type` determines how the tolerance is calculated. Setting it to `relative`, would make the interval go from 0.855 to 0.945 (90+-5%).
+
+The qti package can access the API of the learning management system <<OPAL>> (by BPS). BPS stands for `r gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"), tolerance = 4, case_sensitive = FALSE)`. OPAL allows a new attribute for text gaps (`tolerance`), which takes into account spelling mistakes. Only use it with the OPAL LMS as it is probably not supported on other LMS. Further note that using this attribute will make the xml files invalid regarding the QTI standard.
+
+# feedback
+
+For numeric gaps, the LMS will usually display the correct value inline, but you might still want to provide some detailed explanations here.

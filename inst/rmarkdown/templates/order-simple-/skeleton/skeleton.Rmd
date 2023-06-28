@@ -1,0 +1,17 @@
+---
+type: order
+knit: qti::render_rmd
+---
+
+# question
+
+What is the structure of an exam in QTI terms, starting from the top (the exam) to the bottom (individual questions).
+
+- test
+- section
+- item
+- interaction
+
+# feedback
+
+For oder exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.

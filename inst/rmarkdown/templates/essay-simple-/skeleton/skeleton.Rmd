@@ -1,0 +1,12 @@
+---
+type: essay
+knit: qti::render_rmd
+---
+
+# question
+
+What are the advantages and disadvantages of the `qti` package as compared to the `exams` package?
+
+# feedback
+
+The qti package can only export to the QTI format, which makes it less general than the `exams` package. But the qti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.
