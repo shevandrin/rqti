@@ -41,7 +41,7 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = TRUE,
 #' @param tolerance_type string, optional; specifies tolerance mode; possible
 #'   values:"exact", "absolute", "relative"
 #' @param score numeric, optional; the number of points for this gap; default 1
-#' @param response_identifier string; an identifier for thy answer; by default
+#' @param response_identifier string; an identifier for the answer; by default
 #'   it is generated automatically
 #' @param include_lower_bound boolean, optional; specifies whether or not the
 #'   lower bound is included in tolerance rate
@@ -72,6 +72,22 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
     return(result)
 }
 
+#' Create YAML string for InlineChoice object (dropdown list)
+#'
+#' @param solution numeric or character vector; contains values of possible
+#'   answers
+#' @param answer_index integer, optional; the number of right answer in the
+#'   `solution` vector, default `1`
+#' @param score numeric, optional; the number of points for this gap; default
+#'   `1`
+#' @param shuffle boolean, optional; is responsible to randomize the order in
+#'   which the choices are initially presented to the candidate; default `TRUE`
+#' @param response_identifier string; an identifier for the answer; by default
+#'   it is generated automatically
+#' @param choices_identifiers character vector, optional; a set of identifiers
+#'   for answers; by default identifiers are generated automatically
+#' @return string; map yaml
+#' @export
 dropdown <- function(solution, answer_index = 1, score = 1, shuffle = TRUE,
                      response_identifier = NULL, choices_identifiers = NULL) {
 

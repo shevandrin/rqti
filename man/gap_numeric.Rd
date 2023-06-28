@@ -27,7 +27,7 @@ values:"exact", "absolute", "relative"}
 
 \item{score}{numeric, optional; the number of points for this gap; default 1}
 
-\item{response_identifier}{string; an identifier for thy answer; by default
+\item{response_identifier}{string; an identifier for the answer; by default
 it is generated automatically}
 
 \item{include_lower_bound}{boolean, optional; specifies whether or not the
