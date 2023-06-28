@@ -38,7 +38,8 @@ Imports:
     parsermd,
     rvest,
     knitr,
-    digest
+    digest,
+    base64enc
 Suggests: 
     covr,
     dplyr,

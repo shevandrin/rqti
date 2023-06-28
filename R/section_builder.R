@@ -2,6 +2,8 @@
 #'
 #' @param file string; vector of Rmd, md, or xml files
 #' @param num_variants integer; number of variants to create from Rmd files
+#' @param seed_number integer vector, optional; seed numbers to reproduce the
+#'   result of calculations
 #' @param id string, optional; identifier of the assessment section
 #' @param nested boolean; the type of the test structure; `TRUE` by default
 #' @param title string, optional; title of the section
@@ -18,7 +20,7 @@
 #'   comments in each question of the section; `TRUE` by default
 #' @return object of [AssessmentSection]-class
 #' @export
-section <- function(file, num_variants = 1, id = NULL, nested = TRUE,
+section <- function(file, num_variants = 1, seed_number = NULL, id = NULL, nested = TRUE,
                     title = character(0), time_limits = NA_integer_,
                     visible = TRUE, shuffle = FALSE, max_attempts = NA_integer_,
                     allow_comment = TRUE) {
@@ -37,7 +39,7 @@ section <- function(file, num_variants = 1, id = NULL, nested = TRUE,
         if (nested) {
             selection <- 1
             for (n  in seq(num_variants)) {
-                sec <- make_seed_subsection(file)
+                sec <- make_seed_subsection(file, seed_number)
                 names(sec) <- NULL
                 sub_items <- c(sub_items, sec)
                 if (is.null(id)) id <- paste0("variable_section_",
@@ -46,7 +48,7 @@ section <- function(file, num_variants = 1, id = NULL, nested = TRUE,
         } else {
             selection <- 0
             for (f in file) {
-                sec <- make_variant_subsection(f, num_variants)
+                sec <- make_variant_subsection(f, num_variants, seed_number)
                 names(sec) <- NULL
                 sub_items <- c(sub_items, sec)
                 if (is.null(id)) id <- paste0("variable_section_",
@@ -72,8 +74,8 @@ make_variant <- function(file, seed_number) {
     return(object)
 }
 
-make_seed_subsection <- function(file) {
-    seed_number <- sample.int(100, 1)
+make_seed_subsection <- function(file, seed_number = NULL) {
+    if (is.null(seed_number)) seed_number <- sample.int(100, 1)
     id <- paste0("seed_section_S", seed_number)
     asmt_items <- Map(make_variant, file, rep(seed_number, length(file)))
     names(asmt_items) <- NULL
@@ -82,8 +84,8 @@ make_seed_subsection <- function(file) {
     return(exam_subsection)
 }
 
-make_variant_subsection <- function(file, num_variants) {
-    seed_number <- sample.int(100, num_variants)
+make_variant_subsection <- function(file, num_variants, seed_number = NULL) {
+    if (is.null(seed_number)) seed_number <- sample.int(100, num_variants)
     id <- paste0("variant_section_S", sample.int(1000, 1))
 
     asmt_items <- Map(make_variant, file, seed_number)

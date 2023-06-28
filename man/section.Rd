@@ -7,6 +7,7 @@
 section(
   file,
   num_variants = 1,
+  seed_number = NULL,
   id = NULL,
   nested = TRUE,
   title = character(0),
@@ -21,6 +22,9 @@ section(
 \item{file}{string; vector of Rmd, md, or xml files}
 
 \item{num_variants}{integer; number of variants to create from Rmd files}
+
+\item{seed_number}{integer vector, optional; seed numbers to reproduce the
+result of calculations}
 
 \item{id}{string, optional; identifier of the assessment section}
 
