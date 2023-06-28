@@ -45,17 +45,17 @@
 }
 [data-qtijs-tag=assessmentTest] details[open] {
   border: solid 1px var(--qtijs-bluegreen-details-color);
-  font-style: italic;  
+  font-style: italic;
 }
 [data-qtijs-tag=assessmentTest] form {
   margin: 0;
   padding: 0;
-}  
+}
 [data-qtijs-tag=assessmentTest] p {
   margin: .5em 0em .5em 0em;
 }
 [data-qtijs-tag=assessmentTest] summary {
-  font-variant: small-caps;  
+  font-variant: small-caps;
   font-size: .85rem;
   color: var(--qtijs-bluegreen-summary-color);
   padding: 0;
@@ -63,7 +63,7 @@
 }
 [data-qtijs-tag=assessmentTest] summary:focus {
   border: none;
-  outline: none;    
+  outline: none;
 }
 [data-qtijs-tag=assessmentTest] textarea {
   border: solid 1px;
@@ -75,7 +75,7 @@
 }
 [data-qtijs-tag=assessmentTest]::before {
   display: block;
-  content: attr(title);  
+  content: attr(title);
   font-size: 1.4rem;
   font-weight: bold;
   text-align: left;
@@ -102,7 +102,7 @@
 [data-qtijs-tag=assessmentItem]::before {
   display: block;
   counter-increment: question;
-  content: counter(question);  
+  content: counter(question);
   font-size: 1rem;
   font-weight: bold;
   font-variant: small-caps;
@@ -151,7 +151,7 @@ div.qtijs-input-wrap {
   padding: 1px;
   background: var(--qtijs-bluegreen-input-bg);
   width: 85%;
-}  
+}
 div[data-qtijs-tag=prompt] + div.qtijs-input-wrap {
   margin-top: 1em;
 }
@@ -171,7 +171,7 @@ div[data-qtijs-tag=prompt] + div.qtijs-input-wrap {
 }
 [data-qtijs-tag=testFeedback] {
   margin: 1em .5em;
-}  
+}
 [data-qtijs-tag=rubricBlock] {
   font-weight: bold;
 }
@@ -219,7 +219,7 @@ div[data-qtijs-tag=prompt] + div.qtijs-input-wrap {
   background-color: #fff8f8;
 }
 .qtijs-overtime [data-qtijs-tag=assessmentItem],
-[data-qtijs-tag=assessmentItem].qtijs-overtime {  
+[data-qtijs-tag=assessmentItem].qtijs-overtime {
   pointer-events: none;
   opacity: .8;
 }
@@ -249,4 +249,22 @@ div[data-qtijs-tag=prompt] + div.qtijs-input-wrap {
 }
 [data-qtijs-tag=feedbackInline] span.incorrect {
   background-image: url("images/incorrect.png");
+}
+
+[data-qtijs-tag=extendedTextInteraction] textarea {
+  margin-top: 1em;
+  width: 97%;
+  height: 10em;
+  background: var(--qtijs-bluegreen-input-bg);
+  border: solid 1px;
+}
+
+[data-qtijs-tag=textEntryInteraction] input[type=text] {
+  background: var(--qtijs-bluegreen-input-bg);
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-bottom: solid 1px;
+  padding-left: .5em;
+  width: 4em;
 }
