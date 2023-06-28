@@ -35,11 +35,12 @@ render_rmd <- function(input, ...) {
       }
     }
     message("Open browser at: ", url, " for preview")
-    rmd2zip(input, qtijs_path())
-    rmd2zip(input)
+    suppressMessages(rmd2xml(input, paste0(qtijs_path(), "/index.xml")))
+    rmd2xml(input)
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
+    message("finished rendering")
 }
 
 #' Render a single xml file
