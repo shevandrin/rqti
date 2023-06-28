@@ -45,7 +45,8 @@ create_qti_test <- function(object, path = getwd(), verification = FALSE) {
     xml2::write_xml(doc_manifest, path_manifest)
     message(paste("see manifest file:", path_manifest))
 
-    createZip(object, dir, file_name)
+    path <- createZip(object, dir, file_name)
+    return(path)
 }
 
 # creates xml root and children of test file
@@ -188,4 +189,5 @@ zip_wrapper <- function(id, files, dir_xml) {
     utils::zip(zip_name, list.files(test_dir), extras = "-qdgds 10m")
     setwd(wd)
     file.copy(file.path(test_dir, zip_name), dir_xml, recursive = TRUE)
+    return(paste0(dir_xml, zip_name))
 }
