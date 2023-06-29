@@ -262,8 +262,8 @@ create_matchtable_object <- function(html, attrs) {
 parse_list <- function(html) {
     # find solution indexed in list with possible answers
     question_list <- xml2::xml_find_all(html, "//ul")
-    questoion_list <- question_list[length(question_list)]
-    choices  <- xml2::xml_find_all(question_list, "//li")
+    question_list <- question_list[length(question_list)]
+    choices  <- xml2::xml_find_all(question_list, ".//li")
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
     solution <- which(xml2::xml_text(choices) %in% em)
     # remove em tag from possible answers
@@ -273,8 +273,9 @@ parse_list <- function(html) {
     xml_replace(nodes, em_content, copy = FALSE)
     # redefine new vector with possible answers
     question_list <- xml2::xml_find_all(html, "//ul")
-    questoion_list <- question_list[length(question_list)]
-    choices <- xml2::xml_contents(xml2::xml_find_all(question_list, "//li"))
+    print(length(question_list))
+    question_list <- question_list[length(question_list)]
+    choices <- xml2::xml_contents(xml2::xml_find_all(question_list, ".//li"))
     xml_remove(question_list[length(question_list)])
     return(list(choices = as.character(choices), solution = solution))
 }
