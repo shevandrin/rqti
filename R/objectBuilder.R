@@ -273,11 +273,16 @@ parse_list <- function(html) {
     xml_replace(nodes, em_content, copy = FALSE)
     # redefine new vector with possible answers
     question_list <- xml2::xml_find_all(html, "//ul")
-    print(length(question_list))
     question_list <- question_list[length(question_list)]
-    choices <- xml2::xml_contents(xml2::xml_find_all(question_list, ".//li"))
+    choices <- xml2::xml_find_all(question_list, ".//li")
+    choices_str <- c()
+    for (choice in choices) {
+        content <- xml2::xml_contents(choice)
+        content <- paste0(as.character(content), collapse = "")
+        choices_str <- c(choices_str, content)
+    }
     xml_remove(question_list[length(question_list)])
-    return(list(choices = as.character(choices), solution = solution))
+    return(list(choices = as.character(choices_str), solution = solution))
 }
 
 parse_feedback <- function(file, image_dir = NULL) {
