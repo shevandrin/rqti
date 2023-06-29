@@ -1,4 +1,29 @@
 # SingleChoice
+test_that("Testing SingleChoice where answer is $nummer", {
+    path <- test_path("file/test_sc_example3.md")
+    sut <- create_question_object(path)
+
+    content <- "<p>This is a mock question<br/>\nThe speed of the light in kilometers per second is:</p>"
+    expected <- new("SingleChoice",
+                    content = list(content),
+                    identifier = "eco",
+                    qti_version = "v2p1",
+                    title = "Physic",
+                    choices = c("<math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mn>299</mn><annotation encoding=\"application/x-tex\">299</annotation></semantics></math>",
+                                "<math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mn>300</mn><annotation encoding=\"application/x-tex\">300</annotation></semantics></math>",
+                                "<math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mn>199</mn><annotation encoding=\"application/x-tex\">199</annotation></semantics></math>",
+                                "<math display=\"inline\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mn>99</mn><annotation encoding=\"application/x-tex\">99</annotation></semantics></math>"),
+                    shuffle = TRUE,
+                    prompt = "",
+                    choice_identifiers = c("ChoiceA",
+                                           "ChoiceB",
+                                           "ChoiceC",
+                                           "ChoiceD"),
+                    orientation = "vertical",
+                    solution = 2
+    )
+    expect_equal(sut, expected)
+})
 test_that("create_question_object", {
     path <- test_path("file/test_sc_example1.md")
     sut <- create_question_object(path)
@@ -51,29 +76,6 @@ test_that("create_question_object", {
     expect_equal(cqc, expected)
 })
 
-test_that("create_question_object", {
-    path <- test_path("file/test_sc_example3.md")
-    cqc <- create_question_object(path)
-    expected <- new("SingleChoice", content = list(
-    "<p>Which of the following is a market economy primarily based on?</p>"),
-                   points = 3,
-                   identifier = "sample 2",
-                   qti_version = "v2p1",
-                   title = "Economics",
-                   choices = c("capitalism and free enterprise",
-                               "traditionalism and command",
-                               "incentives and traditionalism"),
-                   shuffle = TRUE,
-                   prompt = "",
-                   choice_identifiers = c("ChoiceA",
-                                          "ChoiceB",
-                                          "ChoiceC"),
-                   orientation = "vertical",
-                   solution = 1
-    )
-    expect_equal(cqc, expected)
-})
-
 # MultipleChoice - 1
 test_that("create_question_object", {
     path <- test_path("file/test_mc_example.md")
@@ -106,8 +108,7 @@ test_that("create_question_object", {
     path <- test_path("file/test_mc_example2.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
-                    content = list(
-                        "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+                    content = list("<p>Economic systems are ways that countries answer the 5 fundamental questions:</p>\n<ul>\n<li>What will be produced?</li>\n<li>How will goods and services be produced?</li>\n<li>Who will get the output?</li>\n<li>How will the system accommodate change?</li>\n<li>How will the system promote progress?</li>\n</ul>\n<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
                     points = c(2.5, 0, 2.5, 0),
                     identifier = "test 2",
                     qti_version = "v2p1",
@@ -127,7 +128,6 @@ test_that("create_question_object", {
     sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
 })
-
 # Essay
 test_that("create_question_object", {
     path <- test_path("file/test_essay_example.md")

@@ -260,15 +260,25 @@ create_matchtable_object <- function(html, attrs) {
 }
 
 parse_list <- function(html) {
-
+    # find solution indexed in list with possible answers
     question_list <- xml2::xml_find_all(html, "//ul")
-    choices  <- xml2::xml_find_all(question_list, "//li")
+    question_list <- question_list[length(question_list)]
+    choices  <- xml2::xml_find_all(question_list, ".//li")
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
     solution <- which(xml2::xml_text(choices) %in% em)
-    choices <- gsub("<li>|</li>", "", as.character(choices))
-    choices <- choices[nzchar(choices)]
+
+    # build a list with possible answers, that keeps formatting of the content
+    # (mathml)
+    choices_str <- c()
+    for (choice in choices) {
+        content <- xml2::xml_contents(choice)
+        em_node <- xml_find_all(choice, ".//em")
+        if (length(em_node) > 0) content <- xml2::xml_contents(em_node)
+        content <- paste0(as.character(content), collapse = "")
+        choices_str <- c(choices_str, content)
+    }
     xml_remove(question_list[length(question_list)])
-    return(list(choices = choices, solution = solution))
+    return(list(choices = as.character(choices_str), solution = solution))
 }
 
 parse_feedback <- function(file, image_dir = NULL) {

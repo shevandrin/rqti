@@ -1,14 +1,14 @@
 ---
-identifier: sample 2
+identifier: eco
 type: sc
-title: Economics
-points: 3
-solution: 1
+title: Physic
 ---
+
 # question
-Which of the following is a market economy primarily based on?
+This is a mock question  
+The speed of the light in kilometers per second is:
 
-* capitalism and free enterprise
-* traditionalism and command
-* incentives and traditionalism
-
+* $299$
+* *$300$*
+* $199$
+* $99$
