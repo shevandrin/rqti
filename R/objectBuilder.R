@@ -265,8 +265,7 @@ parse_list <- function(html) {
     choices  <- xml2::xml_find_all(question_list, "//li")
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
     solution <- which(xml2::xml_text(choices) %in% em)
-    choices <- gsub("<li>|</li>", "", as.character(choices))
-    choices <- choices[nzchar(choices)]
+    choices <- gsub("<li>(.*?)</li>", "\\1", as.character(choices))
     xml_remove(question_list[length(question_list)])
     return(list(choices = choices, solution = solution))
 }
