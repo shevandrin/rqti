@@ -106,8 +106,7 @@ test_that("create_question_object", {
     path <- test_path("file/test_mc_example2.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
-                    content = list(
-                        "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+                    content = list("<p>Economic systems are ways that countries answer the 5 fundamental questions:</p>\n<ul>\n<li>What will be produced?</li>\n<li>How will goods and services be produced?</li>\n<li>Who will get the output?</li>\n<li>How will the system accommodate change?</li>\n<li>How will the system promote progress?</li>\n</ul>\n<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
                     points = c(2.5, 0, 2.5, 0),
                     identifier = "test 2",
                     qti_version = "v2p1",
@@ -127,7 +126,6 @@ test_that("create_question_object", {
     sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
 })
-
 # Essay
 test_that("create_question_object", {
     path <- test_path("file/test_essay_example.md")
