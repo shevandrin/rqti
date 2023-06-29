@@ -266,18 +266,14 @@ parse_list <- function(html) {
     choices  <- xml2::xml_find_all(question_list, ".//li")
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
     solution <- which(xml2::xml_text(choices) %in% em)
-    # remove em tag from possible answers
-    choices <- xml2::xml_contents(choices)
-    nodes <- xml_find_all(choices, "//em")
-    em_content <- xml_contents(nodes)
-    xml_replace(nodes, em_content, copy = FALSE)
-    # redefine new vector with possible answers
-    question_list <- xml2::xml_find_all(html, "//ul")
-    question_list <- question_list[length(question_list)]
-    choices <- xml2::xml_find_all(question_list, ".//li")
+
+    # build a list with possible answers, that keeps formatting of the content
+    # (mathml)
     choices_str <- c()
     for (choice in choices) {
         content <- xml2::xml_contents(choice)
+        em_node <- xml_find_all(choice, ".//em")
+        if (length(em_node) > 0) content <- xml2::xml_contents(em_node)
         content <- paste0(as.character(content), collapse = "")
         choices_str <- c(choices_str, content)
     }
