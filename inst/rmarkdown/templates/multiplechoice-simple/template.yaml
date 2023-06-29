@@ -1,4 +1,4 @@
-name: QTI: multiplechoice (simple)
+name: "QTI: multiplechoice (simple)"
 description: >
-   A description of the template
+   A simple example of a multiple choice exercise
 create_dir: FALSE
