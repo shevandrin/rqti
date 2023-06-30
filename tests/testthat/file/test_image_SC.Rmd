@@ -1,0 +1,39 @@
+---
+identifier: test 2
+type: sc
+title: statistical
+points: 3
+---
+```{r data_generation, echo = FALSE, results = "hide"}
+# Generate normal distribution values
+set.seed(123)
+n <- 100  # Number of values
+mu <- 0   # Mean of the distribution
+sigma <- 1  # Standard deviation of the distribution
+values <- rnorm(n, mean = mu, sd = sigma)
+
+# Present the values
+# summary(values)
+
+# Generate and display the histogram plot
+library(ggplot2)
+histogram <- ggplot(data.frame(values), aes(x = values)) +
+    geom_histogram(fill = "steelblue", color = "white") +
+    labs(title = "Histogram of Normal Distribution Values", x = "Values", y = "Frequency")
+ggsave("ND.png", plot = histogram, width = 3, height = 3, dpi = 300)
+
+```
+# question
+Which type of histogram is shown on the picture?
+
+![](ND.png){width=300px height=300px}
+
+* *Histogram of Normal Distribution Values*
+* Bernoulli Distribution
+* Binomial Distribution
+* Poisson Distribution
+
+# feedback
+The correct answer is Histogram of Normal Distribution Values. According to the definition, this distribution has the follow view:
+
+![](ND.png){width=300px height=300px}
