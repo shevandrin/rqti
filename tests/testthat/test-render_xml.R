@@ -1,9 +1,8 @@
 test_that("Testing Rmd file for SingleChoice that contains image in ItemBody", {
     path <- test_path("file/test_image_SC.Rmd")
-    rmd2xml(path)
+    suppressMessages(rmd2xml(path, path = test_path()))
 
-    xml_file_sut <- xml2::read_xml("test 2.xml")
-    render_xml("test 2.xml")
+    xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
     xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_SC.xml"))
@@ -21,15 +20,14 @@ test_that("Testing Rmd file for SingleChoice that contains image in ItemBody", {
     expected <- as.character(item_body_expected)
 
     expect_equal(sut, expected)
-    unlink("test 2.xml")
+    unlink(test_path("test 2.xml"))
     unlink(test_path("file/ND.png"))
 })
 test_that("Testing Rmd file for SingleChoice that contain image in Feedback", {
     path <- test_path("file/test_image_SC.Rmd")
-    rmd2xml(path)
+    suppressMessages(rmd2xml(path, path = test_path()))
 
-    xml_file_sut <- xml2::read_xml("test 2.xml")
-    render_xml("test 2.xml")
+    xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
     xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_SC.xml"))
@@ -47,16 +45,15 @@ test_that("Testing Rmd file for SingleChoice that contain image in Feedback", {
     expected <- as.character(modalFeedback_expected)
 
     expect_equal(sut, expected)
-    unlink("test 2.xml")
+    unlink(test_path("test 2.xml"))
     unlink(test_path("file/ND.png"))
 })
 test_that("Testing Rmd file for MultipleChoice that contains two images", {
 
     path <- test_path("file/test_image_MC.Rmd")
-    rmd2xml(path)
+    suppressMessages(rmd2xml(path, path = test_path()))
 
-    xml_file_sut <- xml2::read_xml("test 2.xml")
-    render_xml("test 2.xml")
+    xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
     xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_MC.xml"))
@@ -74,19 +71,18 @@ test_that("Testing Rmd file for MultipleChoice that contains two images", {
     expected <- as.character(item_body_expected)
 
     expect_equal(sut, expected)
-    unlink("test 2.xml")
-    unlink("scatterplot2-1.png")
-    unlink("scatterplot1-1.png")
+    unlink(test_path("test 2.xml"))
+    unlink(test_path("scatterplot2-1.png"))
+    unlink(test_path("scatterplot1-1.png"))
     unlink(test_path("file/pic_1.png"))
     unlink(test_path("file/pic_2.png"))
     unlink(test_path("file/ND.png"))
 })
 test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", {
     path <- test_path("file/test_image_MC.Rmd")
-    rmd2xml(path)
+    suppressMessages(rmd2xml(path, path = test_path()))
 
-    xml_file_sut <- xml2::read_xml("test 2.xml")
-    render_xml("test 2.xml")
+    xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
     xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_MC.xml"))
@@ -104,8 +100,8 @@ test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", 
     expected <- as.character(modalFeedback_expected)
 
     expect_equal(sut, expected)
-    unlink("test 2.xml")
-    unlink("scatterplot2-1.png")
-    unlink("scatterplot1-1.png")
+    unlink(test_path("test 2.xml"))
+    unlink(test_path("scatterplot2-1.png"))
+    unlink(test_path("scatterplot1-1.png"))
     unlink(test_path("file/pic_1.png"))
 })
