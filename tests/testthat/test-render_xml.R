@@ -1,4 +1,7 @@
+    skip_on_cran()
+    skip_on_covr()
 test_that("Testing Rmd file for SingleChoice that contains image in ItemBody", {
+
     path <- test_path("file/test_image_SC.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
 
@@ -23,6 +26,8 @@ test_that("Testing Rmd file for SingleChoice that contains image in ItemBody", {
     unlink(test_path("test 2.xml"))
     unlink(test_path("file/ND.png"))
 })
+skip_on_cran()
+skip_on_covr()
 test_that("Testing Rmd file for SingleChoice that contain image in Feedback", {
     path <- test_path("file/test_image_SC.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
@@ -48,6 +53,8 @@ test_that("Testing Rmd file for SingleChoice that contain image in Feedback", {
     unlink(test_path("test 2.xml"))
     unlink(test_path("file/ND.png"))
 })
+skip_on_cran()
+skip_on_covr()
 test_that("Testing Rmd file for MultipleChoice that contains two images", {
 
     path <- test_path("file/test_image_MC.Rmd")
@@ -72,12 +79,14 @@ test_that("Testing Rmd file for MultipleChoice that contains two images", {
 
     expect_equal(sut, expected)
     unlink(test_path("test 2.xml"))
-    unlink(test_path("scatterplot2-1.png"))
-    unlink(test_path("scatterplot1-1.png"))
+    unlink("scatterplot2-1.png")
+    unlink("scatterplot1-1.png")
     unlink(test_path("file/pic_1.png"))
     unlink(test_path("file/pic_2.png"))
     unlink(test_path("file/ND.png"))
 })
+skip_on_cran()
+skip_on_covr()
 test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", {
     path <- test_path("file/test_image_MC.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
@@ -101,7 +110,7 @@ test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", 
 
     expect_equal(sut, expected)
     unlink(test_path("test 2.xml"))
-    unlink(test_path("scatterplot2-1.png"))
-    unlink(test_path("scatterplot1-1.png"))
+    unlink("scatterplot2-1.png")
+    unlink("scatterplot1-1.png")
     unlink(test_path("file/pic_1.png"))
 })
