@@ -1,5 +1,5 @@
 test_that("Testing CreateItemBody Inline", {
-    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -17,7 +17,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    ))
+    )))
 
     example <- '<itemBody>
 <p>Identify the missing word in this famous quote from Shakespeare\'s Richard III.</p>
@@ -45,7 +45,7 @@ In the deep bosom of the ocean buried.
 })
 
 test_that("Testing ResponseDeclaration Inline", {
-    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -62,7 +62,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    ))
+    )))
     # ' The original example of QTI, do not have SCORE for that reason OPAL's example was taken with out the attribute defaultValue="0"
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 <correctResponse>
@@ -79,7 +79,7 @@ In the deep bosom of the ocean buried.
 })
 
 test_that("Testing OutcomeDeclaration Inline", {
-    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -96,7 +96,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    ))
+    )))
 
     # ' The original example of QTI, do not have SCORE for that reason OPAL's example was taken with out MINSCORE
 
@@ -108,7 +108,7 @@ In the deep bosom of the ocean buried.
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
 <defaultValue>
-<value>1</value>
+<value>2</value>
 </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
@@ -135,14 +135,14 @@ In the deep bosom of the ocean buried.
 })
 #options as numeric
 test_that("Testing CreateItemBody Inline", {
-    sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
+    sc <- suppressMessages(new("Entry", content = list("<p>One hour is",new("InlineChoice",
                                           response_identifier = "RESPONSE",
                                           answer_index = 3,
                                           score = 1,
                                           shuffle = FALSE,
                                           solution = c("160","90","60"),
                                           choices_identifiers = c("1","2","3")),
-                                          "minutes</p>"))
+                                          "minutes</p>")))
     example <- '<itemBody>
 	    <p>One hour is
   <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
@@ -158,13 +158,13 @@ test_that("Testing CreateItemBody Inline", {
 })
 # with out score
 test_that("Testing CreateItemBody Inline", {
-    sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
+    sc <- suppressMessages(new("Entry", content = list("<p>One hour is",new("InlineChoice",
                                                            response_identifier = "RESPONSE",
                                                            answer_index = 3,
                                                            shuffle = FALSE,
                                                            solution = c("160","90","60"),
                                                            choices_identifiers = c("1","2","3")),
-                                      "minutes</p>"))
+                                      "minutes</p>")))
     example <- '<itemBody>
 	    <p>One hour is
   <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
@@ -180,12 +180,12 @@ test_that("Testing CreateItemBody Inline", {
 })
 # with out options_identifier
 test_that("Testing CreateItemBody Inline", {
-    sc <- new("Entry", content = list("<p>One hour is",new("InlineChoice",
+    sc <- suppressMessages(new("Entry", content = list("<p>One hour is",new("InlineChoice",
                                                            response_identifier = "RESPONSE",
                                                            answer_index = 3,
                                                            shuffle = FALSE,
                                                            solution = c("160","90","60")),
-                                                               "minutes</p>"))
+                                                               "minutes</p>")))
     example <- '<itemBody>
 	    <p>One hour is
   <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
@@ -200,7 +200,7 @@ test_that("Testing CreateItemBody Inline", {
     expect_equal(xml1, xml2)
 })
 test_that("Testing construction function for InlineChoice class", {
-    sut <- new("Entry", identifier = "new",
+    sut <- suppressMessages(new("Entry", identifier = "new",
                   points = 4,
                   title = "InlineChoice",
                   content = list('The speed of light is equal',
@@ -209,9 +209,9 @@ test_that("Testing construction function for InlineChoice class", {
                                      response_identifier = "RESPONSE_1",
                                      answer_index = 2,
                                      score = 0),
-                                 'm/s'))
+                                 'm/s')))
 
-    example <- new("Entry",
+    example <- suppressMessages(new("Entry",
                    identifier = "new",
                    points = 4,
                    title = "InlineChoice",
@@ -221,7 +221,7 @@ test_that("Testing construction function for InlineChoice class", {
                                       response_identifier = "RESPONSE_1",
                                       answer_index = 2,
                                       score = 0),
-                                  'm/s'))
+                                  'm/s')))
 
     expect_equal(sut, example)
 })

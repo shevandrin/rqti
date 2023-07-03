@@ -5,9 +5,9 @@
       <value>more</value>
     </correctResponse>
     <mapping>
-      <mapEntry mapKey="more" mappedValue="1" caseSensitive="false"/>
-      <mapEntry mapKey="MORE" mappedValue="1" caseSensitive="false"/>
-      <mapEntry mapKey="More" mappedValue="1" caseSensitive="false"/>
+      <mapEntry mapKey="more" mappedValue="3" caseSensitive="false"/>
+      <mapEntry mapKey="MORE" mappedValue="3" caseSensitive="false"/>
+      <mapEntry mapKey="More" mappedValue="3" caseSensitive="false"/>
     </mapping>
   </responseDeclaration>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -32,7 +32,7 @@
   </outcomeDeclaration>
   <outcomeDeclaration identifier="MAXSCORE_RESPONSE_1" cardinality="single" baseType="float">
     <defaultValue>
-      <value>1</value>
+      <value>3</value>
     </defaultValue>
   </outcomeDeclaration>
   <outcomeDeclaration identifier="MINSCORE_RESPONSE_1" cardinality="single" baseType="float">

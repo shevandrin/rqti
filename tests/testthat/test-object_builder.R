@@ -146,22 +146,22 @@ test_that("create_question_object", {
 # Entry
 test_that("create_question_object", {
 path <- test_path("file/test_entry_example1.md")
-sut <- create_question_object(path)
-expected <- new("Entry", content = list("<p>Hast du ",
+sut <- suppressMessages(create_question_object(path))
+expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 new("TextGap", response_identifier = "response_1", solution = "ein"),
                 " Handy?</p>"),
                 points = 5,
                 identifier = "test 2",
                 qti_version = "v2p1",
                 title = "Germany"
-)
+))
 expect_equal(sut, expected)
 })
 # Entry with YAML
 test_that("create_question_object", {
 path <- test_path("file/test_entry_example2.md")
-sut <- create_question_object(path)
-expected <- new("Entry", content = list("<p>Hast du ",
+sut <- suppressMessages(create_question_object(path))
+expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 new("TextGap",
                 expected_length = 10,
                 response_identifier = "response_1",
@@ -174,18 +174,18 @@ expected <- new("Entry", content = list("<p>Hast du ",
                 identifier = "test 2",
                 qti_version = "v2p1",
                 title = "Germany"
-)
+))
 expect_equal(sut, expected)
 })
  # Entry - Testing function create_outcome_declaration_entry
 test_that("Testing function create_outcome_declaration_entry", {
-    expected <- new("Entry", content = list("<p>Hast du",
+    expected <- suppressMessages(new("Entry", content = list("<p>Hast du",
                                             new("TextGap", response_identifier = "response_1", solution = "ein"),
                                             " Handy?</p>"),
-                    points = 5,
+                    points = 1,
                     identifier = "test 2",
                     title = "Germany"
-    )
+    ))
 
     example <- "<additionalTag>
     <outcomeDeclaration identifier=\"SCORE\" cardinality=\"single\" baseType=\"float\">
@@ -195,7 +195,7 @@ test_that("Testing function create_outcome_declaration_entry", {
         </outcomeDeclaration>
         <outcomeDeclaration identifier=\"MAXSCORE\" cardinality=\"single\" baseType=\"float\">
         <defaultValue>
-        <value>5</value>
+        <value>1</value>
         </defaultValue>
         </outcomeDeclaration>
         <outcomeDeclaration identifier=\"MINSCORE\" cardinality=\"single\" baseType=\"float\">
@@ -302,8 +302,8 @@ test_that("Test parsing md for MultipleChoiceTable task", {
 })
 test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
     path <- test_path("file/test_entry_Gap_primitive.Rmd")
-    sut <- create_question_object(path)
-    expected <- new("Entry",
+    sut <- suppressMessages(create_question_object(path))
+    expected <- suppressMessages(new("Entry",
            identifier = "test_entry_example",
            title = "test_entry_example",
            content = list('<p><strong>Diese Aufgabe dient zum Testen verschiedener Möglichkeiten zum Erstellen von Lücken</strong></p>\n<p>Hast du ',
@@ -349,13 +349,13 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
                          case_sensitive = FALSE,
                          tolerance = 2),'</p>'),
                     feedback = list(new("ModalFeedback",
-                                        content = list("<p>general feedback</p>"))))
+                                        content = list("<p>general feedback</p>")))))
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
     path <- test_path("file/test_entry_Gap_InlineChoice.Rmd")
-    sut <- create_question_object(path)
-    expected <- new("Entry",
+    sut <- suppressMessages(create_question_object(path))
+    expected <- suppressMessages(new("Entry",
                     identifier = "test_entry_example",
                     title = "test_entry_example",
                     content = list('<p>Das beliebteste Telefon der Welt ist ',
@@ -375,7 +375,7 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
                                      new("CorrectFeedback",
                                         content = list("<p>correct feedback</p>"))
                                        )
-                    )
+                    ))
     expect_equal(sut, expected)
 })
 test_that("Testing of creating mc object from Rmd without points", {

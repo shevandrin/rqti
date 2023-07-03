@@ -1,5 +1,5 @@
 test_that("Testing create_item_body_text ", {
-    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
                                                              solution = c("winter", "WINTER", "Winter"),
@@ -25,7 +25,7 @@ test_that("Testing create_item_body_text ", {
                                                              expected_length = 5,
                                                              placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>"))
+                                                         "meters under the darkness is found.</p>")))
     # ' The XML example was taked from OPAL because qti example doesn't work in OPAL
     example <- '<itemBody>
         <p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
@@ -50,7 +50,7 @@ test_that("Testing create_item_body_text ", {
 })
 
 test_that("Testing create Response Declaration Gap ", {
-    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
                                                              solution = c("winter","WINTER", "Winter"),
@@ -75,7 +75,7 @@ test_that("Testing create Response Declaration Gap ", {
                                                              score = 0.5,
                                                              placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>"))
+                                                         "meters under the darkness is found.</p>")))
     # ' The XML example was taken from OPAL because qti example doesn't work in OPAL
 
     # 'Response Declaration 1. In the example was not included <mapping defaultValue="0">
@@ -126,7 +126,7 @@ test_that("Testing create Response Declaration Gap ", {
 })
 
 test_that("Testing create Outcome Declaration Gap ", {
-    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                                          new("TextGap",
                                                              solution = c("winter", "WINTER", "Winter"),
@@ -152,7 +152,7 @@ test_that("Testing create Outcome Declaration Gap ", {
                                                              score = 0.5,
                                                              placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>"))
+                                                         "meters under the darkness is found.</p>")))
     # ' The XML example was taken from OPAL because qti example doesn't work in OPAL
 
     # 'Outcome Declaration 1.Omitted the tag view="testConstructor" from OPAL example. There is not outcome Delete it from the example
@@ -165,7 +165,7 @@ test_that("Testing create Outcome Declaration Gap ", {
   </outcomeDeclaration>
   <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
     <defaultValue>
-      <value>1</value>
+      <value>2</value>
     </defaultValue>
   </outcomeDeclaration>
   <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
@@ -228,12 +228,12 @@ test_that("Testing create Outcome Declaration Gap ", {
 })
 
 test_that("Testing create_item_body_text ", {
-    sc <- new("Entry", content = list('The speed of light is', new("TextGapOpal",
+    sc <- suppressMessages(new("Entry", content = list('The speed of light is', new("TextGapOpal",
                                                                    response_identifier = "RESPONSE_1",
                                                                    score = 1,
                                                                    solution = c("more", "MORE", "More"),
                                                                    tolerance = 4),
-                                      'than the speed of sound'))
+                                      'than the speed of sound')))
     expected <- '<additionalTag>
     <responseProcessing>
         <setOutcomeValue identifier="SCORE">
@@ -260,19 +260,19 @@ test_that("Testing create_item_body_text ", {
     expect_equal(xml1, xml2)
 })
 test_that("Testing function of create_outcome_declaration_entry for Entry class", {
-    sut <- new("Entry", identifier = "new",
+    sut <- suppressMessages(new("Entry", identifier = "new",
                   points = 3,
                   title = "NumericGap",
                   content = list('The speed of light is equal',
                                  new("NumericGap",
                                      response_identifier = "RESPONSE_1",
-                                     score = NA_integer_,
+                                     score = 3,
                                      solution = 300,
                                      tolerance = 2,
                                      include_lower_bound = TRUE,
                                      include_upper_bound = TRUE),'m/s'),
                 feedback = list(new("ModalFeedback", title = "common",
-                                        content = list("general feedback")))                                )
+                                        content = list("general feedback"))))                                )
 
     example <- '<additionalTag>
     <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -297,7 +297,7 @@ test_that("Testing function of create_outcome_declaration_entry for Entry class"
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE_RESPONSE_1" cardinality="single" baseType="float">
   <defaultValue>
-    <value>NA</value>
+    <value>3</value>
   </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MINSCORE_RESPONSE_1" cardinality="single" baseType="float">

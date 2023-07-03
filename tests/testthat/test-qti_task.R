@@ -164,7 +164,7 @@ TextGapOpal <- new("Entry",
                    content = list('<p>The speed of light is',
                                   new("TextGapOpal",
                                       response_identifier = "RESPONSE_1",
-                                      score = 1,
+                                      score = 3,
                                       solution = c("more", "MORE", "More"),
                                       tolerance = 2),
                                   'than the speed of sound</p>'))
@@ -181,7 +181,7 @@ test_that("create_qti_task", {
     expected <- readLines(path)
 NumericGap <- new("Entry",
                   identifier = "new",
-                  points = 3,
+                  points = 1,
                   title = "NumericGap",
                   content = list('The speed of light is equal',
                                  new("NumericGap",
@@ -203,7 +203,7 @@ test_that("create_qti_task", {
     cqt <- readLines(path)
 InlineChoice <- new("Entry",
                     identifier = "new",
-                    points = 4,
+                    points = 1,
                     title = "InlineChoice",
                     content = list('The speed of light is equal',
                                    new("InlineChoice",

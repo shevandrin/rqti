@@ -173,7 +173,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                choice_identifiers = c("a1", "a2", "a3", "a4"),
                points = c(1, 0, 0, 1)
     )
-    TextGapOpal <- new("Entry",
+    TextGapOpal <- suppressMessages(new("Entry",
                        identifier = "test_create_qti_task_TextGapOpal",
                        points = 3,
                        title = "TextGapOpal",
@@ -183,7 +183,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                                           score = 1,
                                           solution = c("more", "MORE", "More"),
                                           tolerance = 2),
-                                      'than the speed of sound</p>')
+                                      'than the speed of sound</p>'))
     )
     DirectedPair <- new("DirectedPair",
                         content = list("<p>\"Directed pairs\" task</p>"),

@@ -15,7 +15,7 @@ test_that("XML validation with schema file for Order", {
     expect_equal(validation[1], TRUE)
 })
 test_that("XML validation with schema file for Entry", {
-    sc <- new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -33,7 +33,7 @@ And all the clouds that lour'd upon our house
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>"
-    ), title = "inline_choice")
+    ), title = "inline_choice"))
     doc <- xml2::read_xml(toString(create_assessment_item(sc)))
     file <- system.file("imsqti_v2p1.xsd", package = "qti")
     schema <- xml2::read_xml(file)
@@ -42,7 +42,7 @@ In the deep bosom of the ocean buried.
 })
 
 test_that("XML validation with schema file for Entry", {
-    sc <- new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- suppressMessages(new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                                       new("TextGap",
                                           solution = c("winter", "WINTER", "Winter"),
@@ -69,7 +69,7 @@ test_that("XML validation with schema file for Entry", {
                                           placeholder = "Floating point"),
 
                                       "meters under the darkness is found.</p>"),
-              title = "fill the gaps")
+              title = "fill the gaps"))
     doc <- xml2::read_xml(toString(create_assessment_item(sc)))
     file <- system.file("imsqti_v2p1.xsd", package = "qti")
     schema <- xml2::read_xml(file)

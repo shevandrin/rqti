@@ -37,6 +37,19 @@
 #' @include AssessmentItem.R
 setClass("Entry", contains = "AssessmentItem")
 
+setMethod("initialize", "Entry", function(.Object, ...) {
+    .Object <- callNextMethod()
+    content_obj <- Map(getResponse, .Object@content)
+    content_obj <- Filter(Negate(is.null), content_obj)
+    points <- sum(sapply(content_obj, function(x) x@score))
+    if (.Object@points != points) {
+        message("Overal points is recalculated as a sum of score of gaps")
+    }
+    .Object@points <- points
+    validObject(.Object)
+    .Object
+})
+
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,Entry
 setMethod("createItemBody", signature(object = "Entry"),
