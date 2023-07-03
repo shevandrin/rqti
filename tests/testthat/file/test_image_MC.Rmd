@@ -14,28 +14,23 @@ values <- rnorm(n, mean = mu, sd = sigma)
 
 # Generate and display the histogram plot
 library(ggplot2)
-histogram <- ggplot(data.frame(values), aes(x = values)) +
+histogram_1 <- ggplot(data.frame(values), aes(x = values)) +
     geom_histogram(fill = "steelblue", color = "white") +
     labs(title = "Histogram of Normal Distribution Values", x = "Values", y = "Frequency")
-ggsave("pic_1.png", plot = histogram, width = 5, height = 3, dpi = 300)
+ggsave("pic_1.png", plot = histogram_1, width = 5, height = 3, dpi = 300)
 
 v <- c(5, 9, 13, 2, 50, 20, 59, 36, 23, 2, 8, 27, 72, 14)
 
-histogram <- ggplot(data = NULL, aes(x = v)) +
+histogram_2 <- ggplot(data = NULL, aes(x = v)) +
   geom_histogram(binwidth = 5, fill = "red", color = "black") +
   xlab("Weight")
-
-# ggsave("pic_2.png", plot = histogram, width = 5, height = 3, dpi = 300)
+ggsave("pic_2.png", plot = histogram_2, width = 5, height = 3, dpi = 300)
 ```
 # question
 Which types of histogram is shown on the picture?
 
 ![](pic_1.png){width=300px height=200px} 
-<!-- ![](pic_2.png){width=300px height=200px} -->
-```{r scatterplot1, echo = FALSE, results = "hide", fig.height = 3, fig.width = 4, fig.path = "", fig.cap = ""}
-plot(histogram)
-```
-
+![](pic_2.png){width=300px height=200px}
 
 * *Histogram of Normal Distribution Values*
 * Bernoulli Distribution
@@ -45,8 +40,6 @@ plot(histogram)
 # feedback
 The correct answer is Histogram of Normal Distribution Values and Histogram of Distribution of a numeric variable’s values.
 
-![](pic_1.png){width=300px height=300px}
-<!-- ![](pic_2.png){width=300px height=300px} -->
-```{r scatterplot2, echo = FALSE, results = "hide", fig.height = 3, fig.width = 4, fig.path = "", fig.cap = ""}
-plot(histogram)
-```
+![](pic_1.png){width=300px height=200px}
+![](pic_2.png){width=300px height=200px}
+

@@ -1,4 +1,3 @@
-
 skip_on_cran()
 skip_on_covr()
 skip_on_ci()
@@ -83,11 +82,8 @@ test_that("Testing Rmd file for MultipleChoice that contains two images", {
 
     expect_equal(sut, expected)
     unlink(test_path("test 2.xml"))
-    unlink("scatterplot2-1.png")
-    unlink("scatterplot1-1.png")
     unlink(test_path("file/pic_1.png"))
     unlink(test_path("file/pic_2.png"))
-    unlink(test_path("file/ND.png"))
 })
 skip_on_cran()
 skip_on_covr()
@@ -115,7 +111,6 @@ test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", 
 
     expect_equal(sut, expected)
     unlink(test_path("test 2.xml"))
-    unlink("scatterplot2-1.png")
-    unlink("scatterplot1-1.png")
     unlink(test_path("file/pic_1.png"))
+    unlink(test_path("file/pic_2.png"))
 })
