@@ -1,4 +1,4 @@
-#' @slot identifier string; identifier if xml test file
+#' @slot identifier string; identifier of the xml test file
 #' @slot title string; file title
 #' @slot points numeric; maximum number of points for the exam/test
 #' @slot test_part_identifier string; identifier of the test part
@@ -10,7 +10,7 @@
 #'   responses are submitted for response processing; two mode options are
 #'   possible:
 #'   * "individual" - submit candidates' responses on an item-by-idem
-#'   basisused by **default**
+#'   basis, used by **default**
 #'   * "simultaneous - candidates' responses are submitted all together by the
 #'   end of the test
 #' @slot section list; list of [AssessmentSection-class] objects

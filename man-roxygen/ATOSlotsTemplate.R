@@ -6,7 +6,7 @@
 #'   * "scientific-calculator"
 #'   * "" - by default
 #' @slot mark_items boolean, optional; determines to allow candidate marking of
-#'   questions, default 'FALSE'
+#'   questions, default 'TRUE'
 #' @slot keep_responses boolean, optional; determines to save candidate's
 #'   answers of the previous attempt
 #' @slot files string vector, optional; paths to files, which will be accessible

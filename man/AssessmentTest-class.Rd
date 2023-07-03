@@ -18,7 +18,7 @@ questions/tasks and/or one or more sub sections.
 \section{Slots}{
 
 \describe{
-\item{\code{identifier}}{string; identifier if xml test file}
+\item{\code{identifier}}{string; identifier of the xml test file}
 
 \item{\code{title}}{string; file title}
 
@@ -38,7 +38,7 @@ responses are submitted for response processing; two mode options are
 possible:
 \itemize{
 \item "individual" - submit candidates' responses on an item-by-idem
-basisused by \strong{default}
+basis, used by \strong{default}
 \item "simultaneous - candidates' responses are submitted all together by the
 end of the test
 }}

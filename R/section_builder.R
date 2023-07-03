@@ -95,8 +95,103 @@ make_variant_subsection <- function(file, num_variants, seed_number = NULL) {
                            assessment_item = asmt_items, selection = 1)
     return(exam_subsection)
 }
+#' Create test
+#'
+#' @param content list contains [AssessmentSection] objects
+#' @param identifier string; identifier if the test file
+#' @param title string, optional; file title
+#' @param navigation_mode string, optional; determines the general paths that the
+#'   candidate may have during exam; two mode options are possible: `linear`
+#'   "linear" - candidate is not allowed to return to the previous questions;
+#'   `nonlinear`- candidate if free to navigate, used by default
+#' @param submission_mode string, optional; determines when the candidate's responses
+#'   are submitted for response processing; two mode options are possible:
+#'   `individual` - submit candidates' responses on an item-by-idem basis, used
+#'   by default; `simultaneous - candidates` - responses are submitted all
+#'   together by the end of the test
+#' @param time_limits numeric, optional; controls the amount of time a candidate
+#'   is given for the test
+#' @param max_attempts numeric, optional; enables the maximum number of
+#'   attempts, that candidate is allowed to pass
+#' @param allow_comment boolean, optional; enables to allow candidate to leave
+#'   comments in each question, `TRUE` by default
+#' @param rebuild_variables boolean, optional; enables to recalculate variables and
+#'   reshuffle the order of choices for each item-attempt
+test <- function(content, identifier = NULL, title = NULL,
+                 navigation_mode = "nonlinear", submission_mode = "individual",
+                 time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
+                 rebuild_variables = TRUE) {
 
-test <- function(content) {
-    resutl <- new("AssessmentTest", section = content)
-    return(resutl)
+    # get users values
+    args <- as.list(match.call())[-1]
+    args <- lapply(args, eval)
+     args["section"] <- ifelse (length(unlist(args["content"])) == 1,
+                                list(args["content"]), as.list(args["content"]))
+    args["content"] = NULL
+    # define test class
+    args["Class"] <- "AssessmentTest"
+    # get default values
+    defaults <- formals(test)
+    defaults["content"] <- NULL
+    # combine users and default values
+    params <- combine_params(args, defaults)
+
+    object <- do.call(new, params)
+    return(object)
+}
+
+#' Create test for LMS Opal
+#'
+#' @param content list contains [AssessmentSection] objects
+#' @param identifier string; identifier if the test file
+#' @param title string, optional; file title
+#' @param navigation_mode string, optional; determines the general paths that
+#'   the candidate may have during exam; two mode options are possible: `linear`
+#'   "linear" - candidate is not allowed to return to the previous questions;
+#'   `nonlinear`- candidate if free to navigate, used by default
+#' @param submission_mode string, optional; determines when the candidate's
+#'   responses are submitted for response processing; two mode options are
+#'   possible: `individual` - submit candidates' responses on an item-by-idem
+#'   basis, used by default; `simultaneous - candidates` - responses are
+#'   submitted all together by the end of the test
+#' @param time_limits numeric, optional; controls the amount of time a candidate
+#'   is given for the test
+#' @param max_attempts numeric, optional; enables the maximum number of
+#'   attempts, that candidate is allowed to pass
+#' @param allow_comment boolean, optional; enables to allow candidate to leave
+#'   comments in each question, `TRUE` by default
+#' @param rebuild_variables boolean, optional; enables to recalculate variables
+#'   and reshuffle the order of choices for each item-attempt
+#' @param files string vector, optional; paths to files, which will be
+#'   accessible to candidate during the test/exam
+#' @param show_test_time boolean, optional; determines to show candidate elapsed
+#'   processing time without time limit; default `FALSE`
+#' @param calculator string, optional; determines to show to candidate
+#'   calculator; possible values: `simple-calculator` or
+#'   `scientific-calculator`, the lase one is assigned by default
+#' @param mark_items boolean, optional; determines to allow candidate marking of
+#'   questions, default `TRUE`
+#' @param keep_responses boolean, optional; determines to save candidate's
+#'   answers of the previous attempt, default `FALSE`
+test4opal <- function(content, identifier = NULL, title = NULL,
+                      navigation_mode = "nonlinear", submission_mode = "individual",
+                      time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
+                      rebuild_variables = TRUE, files = NULL, show_test_time = FALSE,
+                      calculator = "scientific-calculator", mark_items  = FALSE,
+                      keep_responses = FALSE) {
+    # get users values
+    args <- as.list(match.call())[-1]
+    args <- lapply(args, eval)
+     args["section"] <- ifelse (length(unlist(args["content"])) == 1,
+                                list(args["content"]), as.list(args["content"]))
+    args["content"] = NULL
+    # define test class
+    args["Class"] <- "AssessmentTestOpal"
+    # get default values
+    defaults <- formals(test)
+    defaults["content"] = NULL
+    # combine users and default values
+    params <- combine_params(args, defaults)
+
+    object <- do.call(new, params)
 }
