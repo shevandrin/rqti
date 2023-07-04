@@ -14,7 +14,7 @@ setClass("ModalFeedback", slots = list(outcome_identifier = "character",
                                        title = "character",
                                        content = "list"),
                           prototype = list(show = TRUE,
-                                           outcome_identifier = "FEEDBACK",
+                                           outcome_identifier = "FEEDBACKMODAL",
                                            identifier = "modal_feedback"))
 
 setMethod("initialize", "ModalFeedback", function(.Object, ...) {
