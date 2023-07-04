@@ -185,3 +185,34 @@ test_that("Testing createResponseProcessing() for SingleChoice class", {
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
 })
+test_that("SingleChoice creates a valid SingleChoice object", {
+    # Create a SingleChoice object using the function
+    sc <- SingleChoice(
+              content = list("<p>Do you mostly use tea bags or loose tea?</p>",
+                             "<p>Choose one option</p>"),
+              points = 2,
+              identifier = "ID125",
+              title = "Question 1",
+              choices = c("Tea bags", "Loose tea"),
+              # orientation = "horizontal",
+              solution = 2,
+              choice_identifiers = c("ID_1", "ID_2"),
+              feedback = list(new("ModalFeedback", title = "common",
+                                  content = list("general feedback"))))
+
+    # Check that the object is of class "SingleChoice"
+    expect_true(inherits(sc, "SingleChoice"))
+})
+# Define a test for the error case when the points slot has an invalid value
+test_that("SingleChoice throws an error for invalid points value", {
+    # Call SingleChoice with invalid points value
+    expect_error(SingleChoice(
+        content = list("<p>Pick up the right option</p>"),
+        choices = c("option 1", "option 2", "option 3", "option 4"),
+        orientation = "vertical",
+        title = "single_choice_task",
+        shuffle = FALSE,
+        points = "f",  # Invalid points value (character instead of numeric)
+        identifier = "sc_example"
+    ), "invalid object for slot \"points\"")
+})
