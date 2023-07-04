@@ -39,12 +39,6 @@ setMethod("createResponseDeclaration", "TextGap", function(object) {
     create_response_declaration_text_entry(object)
 })
 
-#' @rdname createOutcomeDeclaration-methods
-#' @aliases createOutcomeDeclaration,TextGap
-setMethod("createOutcomeDeclaration", "TextGap", function(object) {
-    create_outcome_declaration_text_entry(object)
-})
-
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGap
 setMethod("createResponseProcessing", "TextGap", function(object) {
@@ -60,15 +54,3 @@ create_response_declaration_text_entry <- function(object) {
                                     baseType = "string", children))
 }
 
-create_outcome_declaration_text_entry <- function(object) {
-    SCORE <- make_outcome_declaration(paste0("SCORE_",
-                                             object@response_identifier),
-                                      value = 0)
-    MAXSCORE <- make_outcome_declaration(paste0("MAXSCORE_",
-                                                object@response_identifier),
-                                         value = object@score)
-    MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
-                                                object@response_identifier),
-                                         value = 0)
-    tagList(SCORE, MAXSCORE, MINSCORE)
-}

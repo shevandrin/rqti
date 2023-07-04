@@ -118,12 +118,17 @@ In the deep bosom of the ocean buried.
 </outcomeDeclaration>
 <outcomeDeclaration identifier="SCORE_RESPONSE" cardinality="single" baseType="float">
 <defaultValue>
-<value>2</value>
+<value>0</value>
 </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE_RESPONSE" cardinality="single" baseType="float">
 <defaultValue>
 <value>2</value>
+</defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MINSCORE_RESPONSE" cardinality="single" baseType="float">
+<defaultValue>
+<value>0</value>
 </defaultValue>
 </outcomeDeclaration>
 </additionalTag>'

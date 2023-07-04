@@ -57,16 +57,6 @@ setMethod("createResponseDeclaration", "InlineChoice", function(object)  {
     create_response_declaration_inline_choice(object)
 })
 
-#' @rdname createOutcomeDeclaration-methods
-#' @aliases createOutcomeDeclaration,InlineChoice
-setMethod("createOutcomeDeclaration", "InlineChoice", function(object)  {
-    tagList(make_outcome_declaration(paste0("SCORE_",
-                                            object@response_identifier),
-                                     value = object@score),
-    make_outcome_declaration(paste0("MAXSCORE_", object@response_identifier),
-                             value = object@score))
-})
-
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,InlineChoice
 setMethod("createResponseProcessing", "InlineChoice", function(object) {

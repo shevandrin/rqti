@@ -41,7 +41,26 @@ setMethod("createText", "Gap", function(object) {
              placeholderText = object@placeholder))
 })
 
+#' @rdname createOutcomeDeclaration-methods
+#' @aliases createOutcomeDeclaration,TextGap
+setMethod("createOutcomeDeclaration", "Gap", function(object) {
+    create_outcome_declaration_gap(object)
+})
+
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,Gap
 setMethod("createResponseProcessing", "Gap", function(object) {
 })
+
+create_outcome_declaration_gap <- function(object) {
+    SCORE <- make_outcome_declaration(paste0("SCORE_",
+                                             object@response_identifier),
+                                      value = 0)
+    MAXSCORE <- make_outcome_declaration(paste0("MAXSCORE_",
+                                                object@response_identifier),
+                                         value = object@score)
+    MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
+                                                object@response_identifier),
+                                         value = 0)
+    tagList(SCORE, MAXSCORE, MINSCORE)
+}

@@ -56,12 +56,6 @@ setMethod("createResponseDeclaration", "NumericGap", function(object) {
     create_response_declaration_num_entry(object)
 })
 
-#' @rdname createOutcomeDeclaration-methods
-#' @aliases createOutcomeDeclaration,NumericGap
-setMethod("createOutcomeDeclaration", "NumericGap", function(object) {
-    create_outcome_declaration_num_entry(object)
-})
-
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,NumericGap
 setMethod("createResponseProcessing", "NumericGap", function(object) {
@@ -73,17 +67,4 @@ create_response_declaration_num_entry <- function(object) {
     tag("responseDeclaration", list(identifier = object@response_identifier,
                                     cardinality = "single",
                                     baseType = "float", response))
-}
-
-create_outcome_declaration_num_entry <- function(object) {
-    SCORE <- make_outcome_declaration(paste0("SCORE_",
-                                             object@response_identifier),
-                                      value = 0)
-    MAXSCORE <- make_outcome_declaration(paste0("MAXSCORE_",
-                                                object@response_identifier),
-                                         value = object@score)
-    MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
-                                                object@response_identifier),
-                                         value = 0)
-    tagList(SCORE, MAXSCORE, MINSCORE)
 }
