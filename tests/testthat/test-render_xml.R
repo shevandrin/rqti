@@ -114,3 +114,27 @@ test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", 
     unlink(test_path("file/pic_1.png"))
     unlink(test_path("file/pic_2.png"))
 })
+test_that("Testing Rmd file for MultipleChoice that contain formula by Latex", {
+    path <- test_path("file/test_mc_no_point.Rmd")
+    suppressMessages(rmd2xml(path, path = test_path()))
+
+    xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
+
+    # Read example xml file
+    xml_file_expected <- xml2::read_xml(test_path("file/test_example_MS_contain_Latex.xml"))
+
+    # Strip namespaces from the XML files
+    xml_file_sut <- xml_ns_strip(xml_file_sut)
+    xml_file_expected <- xml_ns_strip(xml_file_expected)
+
+    # Find the 'itemBody' tags
+    itemBody_sut <- xml_find_first(xml_file_sut, ".//itemBody ")
+    itemBody_expected <- xml_find_first(xml_file_expected, ".//itemBody")
+
+    # Copy the contents to the 'sut' and 'expected' variables
+    sut <- as.character(itemBody_sut)
+    expected <- as.character(itemBody_expected)
+
+    expect_equal(sut, expected)
+    unlink(test_path("test 2.xml"))
+})

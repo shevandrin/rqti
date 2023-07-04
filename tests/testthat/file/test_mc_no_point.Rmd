@@ -7,6 +7,8 @@ title: Economics
 When deciding between renovating a water treatment plant or
 building a new community pool, what is the government
 most likely to consider?
+This is a multiline formula:
+$$x-1=y$$
 
 * *scarcity vs. resources*
 * *wages vs. prices*

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="test 2" title="Economics" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
+    <correctResponse>
+      <value>ChoiceA</value>
+      <value>ChoiceB</value>
+    </correctResponse>
+    <mapping lowerBound="0" upperBound="1" defaultValue="0">
+      <mapEntry mapKey="ChoiceA" mappedValue="0.5"/>
+      <mapEntry mapKey="ChoiceB" mappedValue="0.5"/>
+      <mapEntry mapKey="ChoiceC" mappedValue="-0.5"/>
+      <mapEntry mapKey="ChoiceD" mappedValue="-0.5"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>x</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x-1=y</annotation></semantics></math></p>
+    <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0" orientation="vertical">
+      <simpleChoice identifier="ChoiceA">scarcity vs. resources</simpleChoice>
+      <simpleChoice identifier="ChoiceB">wages vs. prices</simpleChoice>
+      <simpleChoice identifier="ChoiceC">wants vs. needs</simpleChoice>
+      <simpleChoice identifier="ChoiceD">consumers vs. producers</simpleChoice>
+    </choiceInteraction>
+  </itemBody>
+</assessmentItem>
