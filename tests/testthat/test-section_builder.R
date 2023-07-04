@@ -1,5 +1,5 @@
 mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
-          content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+          content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>x</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi></mrow><annotation encoding=\"application/x-tex\">x-1=y</annotation></semantics></math></p>"),
           choices = c("scarcity vs. resources",
                       "wages vs. prices",
                       "wants vs. needs",
@@ -74,7 +74,8 @@ test_that("Testing function section() to build variable nested AssessmentSection
 })
 
 test_that("Testing function section() to build variable AssessmentSection for nested = False ", {
-
+    path1 <- test_path("file/test_mc_no_point.Rmd")
+    path3 <- test_path("file/test_sc_example1.md")
     num_variants = 3
     file <- c(path1, path3)
     sut <- section(file, num_variants, id = "variable_section", nested = FALSE)
