@@ -5,7 +5,6 @@ mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
                       "wants vs. needs",
                       "consumers vs. producers"),
           points = c(0.5, 0.5, 0, 0))
-
 sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
           content = list("<p>This is a mock question<br/>
 In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"),
@@ -24,7 +23,13 @@ test_that("Testing function section() to build permanent AssessmentSection", {
     sut@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@choices)
     # rid of the name from @assessment_item
     names(sut@assessment_item) <- NULL
-
+    mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
+              content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>x</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi></mrow><annotation encoding=\"application/x-tex\">x-1=y</annotation></semantics></math></p>"),
+              choices = c("scarcity vs. resources",
+                          "wages vs. prices",
+                          "wants vs. needs",
+                          "consumers vs. producers"),
+              points = c(0.5, 0.5, 0, 0))
     expected <- new("AssessmentSection", identifier = "permanent_section",
                     assessment_item = list(mc, "test_create_qti_task_Essay.xml"),
                     selection = 0)
