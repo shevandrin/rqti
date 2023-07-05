@@ -46,11 +46,6 @@
     than the speed of sound</p>
   </itemBody>
   <responseProcessing>
-    <setOutcomeValue identifier="SCORE">
-      <sum>
-        <variable identifier="SCORE_RESPONSE_1"/>
-      </sum>
-    </setOutcomeValue>
     <responseCondition>
       <responseIf>
         <equal toleranceMode="absolute" tolerance="2">
@@ -62,5 +57,10 @@
         </setOutcomeValue>
       </responseIf>
     </responseCondition>
+    <setOutcomeValue identifier="SCORE">
+      <sum>
+        <variable identifier="SCORE_RESPONSE_1"/>
+      </sum>
+    </setOutcomeValue>
   </responseProcessing>
 </assessmentItem>

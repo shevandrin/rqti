@@ -41,11 +41,6 @@
     m/s
   </itemBody>
   <responseProcessing>
-    <setOutcomeValue identifier="SCORE">
-      <sum>
-        <variable identifier="SCORE_RESPONSE_1"/>
-      </sum>
-    </setOutcomeValue>
     <responseCondition>
       <responseIf>
         <equal toleranceMode="exact" tolerance="2 2" includeLowerBound="true" includeUpperBound="true">
@@ -57,5 +52,10 @@
         </setOutcomeValue>
       </responseIf>
     </responseCondition>
+    <setOutcomeValue identifier="SCORE">
+      <sum>
+        <variable identifier="SCORE_RESPONSE_1"/>
+      </sum>
+    </setOutcomeValue>
   </responseProcessing>
 </assessmentItem>

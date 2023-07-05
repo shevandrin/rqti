@@ -44,21 +44,22 @@
     m/s
   </itemBody>
   <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <not>
+          <isNull>
+            <variable identifier="RESPONSE_1"/>
+          </isNull>
+        </not>
+        <setOutcomeValue identifier="SCORE_RESPONSE_1">
+          <mapResponse identifier="RESPONSE_1"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
     <setOutcomeValue identifier="SCORE">
       <sum>
         <variable identifier="SCORE_RESPONSE_1"/>
       </sum>
     </setOutcomeValue>
-    <responseCondition>
-      <responseIf>
-        <match>
-          <variable identifier="RESPONSE_1"/>
-          <correct identifier="RESPONSE_1"/>
-        </match>
-        <setOutcomeValue identifier="SCORE_RESPONSE_1">
-          <baseValue baseType="float">1</baseValue>
-        </setOutcomeValue>
-      </responseIf>
-    </responseCondition>
   </responseProcessing>
 </assessmentItem>

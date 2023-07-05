@@ -236,11 +236,6 @@ test_that("Testing create_item_body_text ", {
                                       'than the speed of sound')))
     expected <- '<additionalTag>
     <responseProcessing>
-        <setOutcomeValue identifier="SCORE">
-        <sum>
-            <variable identifier="SCORE_RESPONSE_1"/>
-        </sum>
-    </setOutcomeValue>
 		<responseCondition>
 	<responseIf>
 		<equal toleranceMode="absolute" tolerance="4">
@@ -252,6 +247,11 @@ test_that("Testing create_item_body_text ", {
 		</setOutcomeValue>
 	</responseIf>
         </responseCondition>
+            <setOutcomeValue identifier="SCORE">
+        <sum>
+            <variable identifier="SCORE_RESPONSE_1"/>
+        </sum>
+    </setOutcomeValue>
     </responseProcessing>
     </additionalTag>'
     response <- as.character(htmltools::tag("additionalTag", list(createResponseProcessing(sc))))
