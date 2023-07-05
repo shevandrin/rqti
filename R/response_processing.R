@@ -61,7 +61,7 @@ create_response_processing_entry <- function(object) {
         conditions <- tagList(make_default_resp_cond(answers),
                               resp_conds)
     }
-    tag("responseProcessing", list(set_ov, processing, conditions))
+    tag("responseProcessing", list(processing, set_ov, conditions))
 }
 
 set_outcome_value_entry <- function(object) {
@@ -124,17 +124,13 @@ make_default_resp_cond <- function(answers = list(NULL)) {
 
 
 create_response_processing_inline_choice <- function(object) {
-    child <- tagList(tag("variable",
-                         list(identifier = object@response_identifier)),
-                     tag("correct",
-                         list(identifier = object@response_identifier)))
-    match <- tag("match", child)
-    base_value <- tag("baseValue", list(baseType = "float", object@score))
-    outcome <- tag("setOutcomeValue",
-                   list(identifier = paste0("SCORE_",
-                                            object@response_identifier),
-                        base_value))
-    response_if <- tag("responseIf", tagList(match, outcome))
+    var_tag <- tag("variable", list(identifier = object@response_identifier))
+    not_tag <- tag("not", list(tag("isNull", list(var_tag))))
+    map_tag <- tag("mapResponse", list(identifier = object@response_identifier))
+    outcome_tag <- tag("setOutcomeValue",
+                list(identifier = paste0("SCORE_", object@response_identifier),
+                     map_tag))
+    response_if <- tag("responseIf", tagList(not_tag, outcome_tag))
     tag("responseCondition", list(response_if))
 }
 
