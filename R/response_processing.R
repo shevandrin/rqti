@@ -123,7 +123,7 @@ make_default_resp_cond <- function(answers = list(NULL)) {
 }
 
 
-create_response_processing_inline_choice <- function(object) {
+create_response_processing_gap_basic <- function(object) {
     var_tag <- tag("variable", list(identifier = object@response_identifier))
     not_tag <- tag("not", list(tag("isNull", list(var_tag))))
     map_tag <- tag("mapResponse", list(identifier = object@response_identifier))

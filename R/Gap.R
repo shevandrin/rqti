@@ -50,6 +50,7 @@ setMethod("createOutcomeDeclaration", "Gap", function(object) {
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,Gap
 setMethod("createResponseProcessing", "Gap", function(object) {
+    create_response_processing_gap_basic(object)
 })
 
 create_outcome_declaration_gap <- function(object) {

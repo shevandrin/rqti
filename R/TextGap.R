@@ -39,12 +39,6 @@ setMethod("createResponseDeclaration", "TextGap", function(object) {
     create_response_declaration_text_entry(object)
 })
 
-#' @rdname createResponseProcessing-methods
-#' @aliases createResponseProcessing,TextGap
-setMethod("createResponseProcessing", "TextGap", function(object) {
-    # create_response_processing_text_entry(object)
-})
-
 create_response_declaration_text_entry <- function(object) {
     response <- create_correct_response(object@solution[1])
     mapping <- create_mapping_gap(object)

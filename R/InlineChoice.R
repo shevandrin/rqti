@@ -57,12 +57,6 @@ setMethod("createResponseDeclaration", "InlineChoice", function(object)  {
     create_response_declaration_inline_choice(object)
 })
 
-#' @rdname createResponseProcessing-methods
-#' @aliases createResponseProcessing,InlineChoice
-setMethod("createResponseProcessing", "InlineChoice", function(object) {
-    create_response_processing_inline_choice(object)
-})
-
 create_response_declaration_inline_choice <- function(object) {
     correct_choice_identifier <- object@choices_identifiers[object@answer_index]
     child <- create_correct_response(correct_choice_identifier)
