@@ -12,7 +12,7 @@ test_that("Testing CreateItemBody DirectedPair", {
 
     # The example was based on OPAL question type "Match Interaction" because qti does not provide it
     example <- '<itemBody>
-<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="1">
+<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
 <prompt>Associated left elements with the right category</prompt>
 <simpleMatchSet>
 <simpleAssociableChoice identifier="ID_1" matchMax="1">Lion</simpleAssociableChoice>

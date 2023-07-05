@@ -32,5 +32,5 @@ setClass("DirectedPair", contains = "MatchTable")
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,DirectedPair
 setMethod("createItemBody",  "DirectedPair", function(object) {
-    create_item_body_match_table(object, 1, 1)
+    create_item_body_match_table(object, 1, 1, 0)
 })

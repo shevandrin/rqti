@@ -77,7 +77,10 @@ create_item_body_order <- function(object) {
 }
 
 create_item_body_match_table <- function(object,  row_associations,
-                                         col_associations) {
+                                         col_associations,
+                                         max_associations = NULL) {
+    if (is.null(max_associations)) max_associations <- max(c(row_associations,
+                                               col_associations))
     prompt <- create_prompt(object)
     rows <- Map(make_associable_choice,
                 object@rows_identifiers,
@@ -92,8 +95,7 @@ create_item_body_match_table <- function(object,  row_associations,
     match_interactioin <- tag("matchInteraction",
                               list("responseIdentifier" = "RESPONSE",
                                    "shuffle" = tolower(object@shuffle),
-                                   "maxAssociations" = max(c(row_associations,
-                                                             col_associations)),
+                                   "maxAssociations" = max_associations,
                                    tagList(prompt, rows_match, cols_match)))
     tag("itemBody", list(Map(createText, object@content),
                          match_interactioin))

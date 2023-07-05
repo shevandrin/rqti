@@ -29,7 +29,7 @@
   </outcomeDeclaration>
   <itemBody>
     <p>"Directed pairs" task</p>
-    <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="1">
+    <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
       <simpleMatchSet>
         <simpleAssociableChoice identifier="a" matchMax="1">12*4 =</simpleAssociableChoice>
         <simpleAssociableChoice identifier="b" matchMax="1">100/50 =</simpleAssociableChoice>
