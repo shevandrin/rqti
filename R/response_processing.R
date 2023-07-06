@@ -135,21 +135,20 @@ create_response_processing_gap_basic <- function(object) {
 }
 
 create_response_processing_text_entry_opal <- function(object) {
-    child <- tagList(tag("variable",
-                         list(identifier = object@response_identifier)),
-                     tag("correct",
-                         list(identifier = object@response_identifier)))
-    equal_tag <- tag("equal", list(toleranceMode = "absolute",
-                                   tolerance = object@tolerance,
-                                   child))
-    var_outcome <- tag("variable",
-                       list(identifier = paste0("MAXSCORE_",
-                                                object@response_identifier)))
+    # url to scheme that process the answer with tolerance
+    url_scheme <- "http://bps-system.de/xsd/imsqti_ext_maptolresponse"
+    var_tag <- tag("variable", list(identifier = object@response_identifier))
+    not_tag <- tag("not", list(tag("isNull", list(var_tag))))
+    map_tag <- tag("mapTolResponse",
+                       list(xmlns = url_scheme,
+                            identifier = object@response_identifier,
+                            tolerance = object@tolerance,
+                            toleranceMode = "absolute"))
     outcome_tag <- tag("setOutcomeValue",
                        list(identifier = paste0("SCORE_",
                                                 object@response_identifier),
-                            var_outcome))
-    if_tag <- tag("responseIf", list(equal_tag, outcome_tag))
+                            map_tag))
+    if_tag <- tag("responseIf", list(not_tag, outcome_tag))
     tag("responseCondition", list(if_tag))
 }
 

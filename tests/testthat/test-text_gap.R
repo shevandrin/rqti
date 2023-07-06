@@ -236,17 +236,18 @@ test_that("Testing create_item_body_text ", {
                                       'than the speed of sound')))
     expected <- '<additionalTag>
     <responseProcessing>
-		<responseCondition>
-	<responseIf>
-		<equal toleranceMode="absolute" tolerance="4">
-			<variable identifier="RESPONSE_1"/>
-			<correct identifier="RESPONSE_1"/>
-			</equal>
-	<setOutcomeValue identifier="SCORE_RESPONSE_1">
-		<variable identifier="MAXSCORE_RESPONSE_1"/>
-		</setOutcomeValue>
-	</responseIf>
-        </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <not>
+          <isNull>
+            <variable identifier="RESPONSE_1"/>
+          </isNull>
+        </not>
+        <setOutcomeValue identifier="SCORE_RESPONSE_1">
+          <mapTolResponse xmlns="http://bps-system.de/xsd/imsqti_ext_maptolresponse" identifier="RESPONSE_1" tolerance="4" toleranceMode="absolute"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
             <setOutcomeValue identifier="SCORE">
         <sum>
             <variable identifier="SCORE_RESPONSE_1"/>

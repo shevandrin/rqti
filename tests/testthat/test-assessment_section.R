@@ -214,7 +214,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                 identifier = "id_test",
                 title = "Mock test",
                 section = list(exam_section))
-    suppressMessages(createQtiTest(exam, "exam_folder", "TRUE"))
+    suppressWarnings(suppressMessages(createQtiTest(exam, "exam_folder", "TRUE")))
 
     # Reading of tasks from xml files
     path1 <- test_path("file/test_create_qti_task_MultipleChoice.xml")
@@ -231,7 +231,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                 identifier = "id_test",
                 title = "Mock test",
                 section = list(example_exam_section))
-    suppressMessages(createQtiTest(example_exam, "exam_folder3", "TRUE"))
+    suppressWarnings(suppressMessages(createQtiTest(example_exam, "exam_folder3", FALSE)))
 
     # get list content zip files and compare them
     zip_example <- list.files(path = "exam_folder", pattern = ".zip", full.names = TRUE)
