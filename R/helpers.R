@@ -59,15 +59,10 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
                         expected_length = NULL, placeholder = NULL) {
 
     # get users values
-    params <- as.list(match.call())[-1]
-    params <- lapply(params, eval)
+    params <- c(as.list(environment()))
+    params <- Filter(Negate(is.null), params)
     if (!is.null(params$tolerance) & (is.null(params$tolerance_type))) {
         params$tolerance_type <- "absolute" }
-    # get default values
-    defaults <- formals(gap_numeric)
-    # combine users and default values
-    params <- combine_params(params, defaults)
-    # build map yaml string
     result <- clean_yaml_str(params, "numeric")
     return(result)
 }
