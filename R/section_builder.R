@@ -122,7 +122,7 @@ test <- function(content, identifier = NULL, title = NULL,
                  time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
                  rebuild_variables = TRUE) {
 
-    params <- c(as.list(environment()))
+    params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     params["section"] <- ifelse (length(unlist(params["content"])) == 1,
                             list(params["content"]), as.list(params["content"]))
@@ -173,7 +173,7 @@ test4opal <- function(content, identifier = NULL, title = NULL,
                       calculator = "scientific-calculator", mark_items  = FALSE,
                       keep_responses = FALSE) {
 
-    params <- c(as.list(environment()))
+    params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     params["section"] <- ifelse (length(unlist(params["content"])) == 1,
                                 list(params["content"]), as.list(params["content"]))

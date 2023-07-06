@@ -20,7 +20,7 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = TRUE,
                      score = 1, response_identifier = NULL,
                      expected_length = NULL, placeholder = NULL) {
 
-    params <- c(as.list(environment()))
+    params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     # define gap-type
     type <- ifelse(is.null(tolerance), "text", "text_opal")
@@ -53,7 +53,7 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
                         include_lower_bound = TRUE, include_upper_bound = TRUE,
                         expected_length = NULL, placeholder = NULL) {
 
-    params <- c(as.list(environment()))
+    params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     if (!is.null(params$tolerance) & (is.null(params$tolerance_type))) {
         params$tolerance_type <- "absolute" }
@@ -80,7 +80,7 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
 dropdown <- function(solution, answer_index = 1, score = 1, shuffle = TRUE,
                      response_identifier = NULL, choices_identifiers = NULL) {
 
-    params <- c(as.list(environment()))
+    params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     result <- clean_yaml_str(params, "InlineChoice")
     return(result)
