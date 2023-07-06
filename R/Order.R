@@ -85,7 +85,7 @@ setMethod("createResponseCondition", signature(object = "Order"),
 create_condition_points <- function(answ_points, index) {
     var_tag <- tag("variable", list(identifier = "RESPONSE"))
     index1 <- tag("index", list(n = index, var_tag))
-    corr_tag <- tag("correct", list(indentifier = "RESPONSE"))
+    corr_tag <- tag("correct", list(identifier = "RESPONSE"))
     index2 <- tag("index", list(n = index, corr_tag))
     match_tag <- tag("match", list(index1, index2))
     var_tag <- tag("variable", list(identifier = "SCORE"))
