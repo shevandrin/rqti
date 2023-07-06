@@ -403,3 +403,25 @@ test_that("Testing of creating mc object from Rmd without points", {
 
     expect_equal(sut@points, expected@points)
 })
+test_that("Testing of xml file for Order Task", {
+    path <- test_path("file/test_order.Rmd")
+    suppressMessages(rmd2xml(path, path = test_path()))
+    xml_file_sut <- xml2::read_xml(test_path("test_order.xml"))
+
+    xml_file_expected <- xml2::read_xml(test_path("file/test_order_opal.xml"))
+
+# Strip namespaces from the XML files
+    xml_file_sut <- xml_ns_strip(xml_file_sut)
+    xml_file_expected <- xml_ns_strip(xml_file_expected)
+
+# Find the 'match' tags
+    match_sut <- xml_find_all(xml_file_sut, ".//match")
+    match_expected <- xml_find_all(xml_file_expected, ".//match")
+
+# Copy the contents to the 'sut' and 'expected' variables
+    sut <- as.character(match_sut)
+    expected <- as.character(match_expected)
+
+    expect_equal(sut, expected)
+    unlink(test_path("test_order.xml"))
+})
