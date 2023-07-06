@@ -416,18 +416,18 @@ test_that("Testing the order task, points are awarded for each correct answer.",
 
 # Find the 'match' and 'baseValue' tags
     match_sut <- xml_find_all(xml_file_sut, ".//match")
-    basevalue_sut <- xml_find_all(xml_file_sut, ".//baseValue")
-    list_basevalue_sut <- sum(as.numeric(xml2::xml_text(basevalue)))
+    bv_sut <- xml_find_all(xml_file_sut, ".//baseValue")
+    list_bv_sut <- sum(as.numeric(xml2::xml_text(bv_sut)))
 
     match_expected <- xml_find_all(xml_file_expected, ".//match")
-    basevalue_expected <- xml_find_all(xml_file_sut, ".//baseValue")
-    list_basevalue_expected <- sum(as.numeric(xml2::xml_text(basevalue)))
+    bv_expected <- xml_find_all(xml_file_sut, ".//baseValue")
+    list_bv_expected <- sum(as.numeric(xml2::xml_text(bv_expected)))
 
 # Copy the contents to the 'sut' and 'expected' variables
     sut <- as.character(match_sut)
     expected <- as.character(match_expected)
 
     expect_equal(sut, expected)
-    expect_equal(list_basevalue_sut, list_basevalue_expected )
+    expect_equal(list_bv_sut, list_bv_expected )
     unlink(test_path("test_order.xml"))
 })
