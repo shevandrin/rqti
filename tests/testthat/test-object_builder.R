@@ -403,7 +403,7 @@ test_that("Testing of creating mc object from Rmd without points", {
 
     expect_equal(sut@points, expected@points)
 })
-test_that("Testing of xml file for Order Task", {
+test_that("Testing the order task, points are awarded for each correct answer.", {
     path <- test_path("file/test_order.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
     xml_file_sut <- xml2::read_xml(test_path("test_order.xml"))
@@ -414,14 +414,20 @@ test_that("Testing of xml file for Order Task", {
     xml_file_sut <- xml_ns_strip(xml_file_sut)
     xml_file_expected <- xml_ns_strip(xml_file_expected)
 
-# Find the 'match' tags
+# Find the 'match' and 'baseValue' tags
     match_sut <- xml_find_all(xml_file_sut, ".//match")
+    basevalue_sut <- xml_find_all(xml_file_sut, ".//baseValue")
+    list_basevalue_sut <- sum(as.numeric(xml2::xml_text(basevalue)))
+
     match_expected <- xml_find_all(xml_file_expected, ".//match")
+    basevalue_expected <- xml_find_all(xml_file_sut, ".//baseValue")
+    list_basevalue_expected <- sum(as.numeric(xml2::xml_text(basevalue)))
 
 # Copy the contents to the 'sut' and 'expected' variables
     sut <- as.character(match_sut)
     expected <- as.character(match_expected)
 
     expect_equal(sut, expected)
+    expect_equal(list_basevalue_sut, list_basevalue_expected )
     unlink(test_path("test_order.xml"))
 })
