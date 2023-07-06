@@ -99,17 +99,6 @@ clean_yaml_str <- function(params, type){
     return(result)
 }
 
-combine_params <- function(params, defaults) {
-    params_keys <- names(params)
-    defaults <- Filter(function(x) length(x) != 0, defaults)
-    defaults_keys <- names(defaults)
-    diff_keys <- setdiff(defaults_keys, params_keys)
-    defaults <- defaults[diff_keys]
-    # combine users and default values
-    params <- c(params, defaults)
-    return(params)
-}
-
 #' Create markdown list for answer options
 #'
 #' @param vect string or numeric vector of answer options for single/multiple

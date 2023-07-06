@@ -122,20 +122,13 @@ test <- function(content, identifier = NULL, title = NULL,
                  time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
                  rebuild_variables = TRUE) {
 
-    # get users values
-    args <- as.list(match.call())[-1]
-    args <- lapply(args, eval)
-     args["section"] <- ifelse (length(unlist(args["content"])) == 1,
-                                list(args["content"]), as.list(args["content"]))
-    args["content"] = NULL
+    params <- c(as.list(environment()))
+    params <- Filter(Negate(is.null), params)
+    params["section"] <- ifelse (length(unlist(params["content"])) == 1,
+                            list(params["content"]), as.list(params["content"]))
+    params["content"] = NULL
     # define test class
-    args["Class"] <- "AssessmentTest"
-    # get default values
-    defaults <- formals(test)
-    defaults["content"] <- NULL
-    # combine users and default values
-    params <- combine_params(args, defaults)
-
+    params["Class"] <- "AssessmentTest"
     object <- do.call(new, params)
     return(object)
 }
@@ -179,19 +172,13 @@ test4opal <- function(content, identifier = NULL, title = NULL,
                       rebuild_variables = TRUE, files = NULL, show_test_time = FALSE,
                       calculator = "scientific-calculator", mark_items  = FALSE,
                       keep_responses = FALSE) {
-    # get users values
-    args <- as.list(match.call())[-1]
-    args <- lapply(args, eval)
-     args["section"] <- ifelse (length(unlist(args["content"])) == 1,
-                                list(args["content"]), as.list(args["content"]))
-    args["content"] = NULL
-    # define test class
-    args["Class"] <- "AssessmentTestOpal"
-    # get default values
-    defaults <- formals(test)
-    defaults["content"] = NULL
-    # combine users and default values
-    params <- combine_params(args, defaults)
 
+    params <- c(as.list(environment()))
+    params <- Filter(Negate(is.null), params)
+    params["section"] <- ifelse (length(unlist(params["content"])) == 1,
+                                list(params["content"]), as.list(params["content"]))
+    params["content"] = NULL
+    # define test class
+    params["Class"] <- "AssessmentTestOpal"
     object <- do.call(new, params)
 }
