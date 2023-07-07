@@ -131,3 +131,9 @@ stop_server <- function() {
     Sys.setenv(QTI_URL = "")
     servr::daemon_stop()
 }
+
+render_opal <- function(input, ...) {
+    rmd2zip(input)
+    auth_opal()
+    upload_opal_test("test.zip")
+}
