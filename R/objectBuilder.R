@@ -348,7 +348,6 @@ transform_to_html <- function(sec, image_dir = ".") {
     imgs <- xml2::xml_find_all(sect, "//img")
     # process each image
     for (img in imgs) {
-        xml2::xml_set_attr(img, "special", "special")
         # make path to image in the directory of the document
         path_image <- file.path(image_dir, xml2::xml_attr(img, "src"))
         if (!file.exists(path_image)) {

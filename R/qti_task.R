@@ -207,7 +207,7 @@ create_prompt <- function(object) {
 #' @export
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     content <- as.character(create_assessment_item(object))
-    content <- gsub("special=\"special\">", "/>", content)
+    content <- gsub('(<img[^>]*[^/])>', "\\1/>", content)
     doc <- xml2::read_xml(as.character(content))
     if (verification) {
         ver <- verify_qti(doc)

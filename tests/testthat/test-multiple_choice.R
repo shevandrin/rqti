@@ -1,6 +1,6 @@
 test_that("Testing create_item_body_multiplechoice", {
     sc <- new("MultipleChoice",
-              content = list(""),
+              content = list(),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
               choice_identifiers = c("H","He","C","O","N","Cl"),
               points = c(1,0,0,1,0,-1),
