@@ -59,6 +59,13 @@ which the choices are initially presented to the candidate; default \code{TRUE}}
 
 \item{\code{points}}{numeric, optional; the number of points for the entire task;
 default 1}
+
+\item{\code{orientation}}{string, optional; is responsible to place answers in
+vertical or horizontal mode; possible values:
+\itemize{
+\item "vertical" - default
+\item "horizontal"
+}}
 }}
 
 \note{

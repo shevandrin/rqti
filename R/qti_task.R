@@ -78,7 +78,8 @@ create_item_body_order <- function(object) {
 
 create_item_body_match_table <- function(object,  row_associations,
                                          col_associations,
-                                         max_associations = NULL) {
+                                         max_associations = NULL,
+                                         orientation = NULL) {
     if (is.null(max_associations)) max_associations <- max(c(row_associations,
                                                col_associations))
     prompt <- create_prompt(object)
@@ -92,10 +93,12 @@ create_item_body_match_table <- function(object,  row_associations,
                 object@cols,
                 col_associations)
     cols_match <- tag("simpleMatchSet", list(cols))
+
     match_interactioin <- tag("matchInteraction",
                               list("responseIdentifier" = "RESPONSE",
                                    "shuffle" = tolower(object@shuffle),
                                    "maxAssociations" = max_associations,
+                                   "orientation" = orientation,
                                    tagList(prompt, rows_match, cols_match)))
     tag("itemBody", list(Map(createText, object@content),
                          match_interactioin))
