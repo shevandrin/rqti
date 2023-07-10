@@ -37,18 +37,18 @@
     <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="5">
       <prompt>Choose the correct order in the multiplication table</prompt>
       <simpleMatchSet>
-        <simpleAssociableChoice identifier="a" matchMax="5">4*7 =</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="b" matchMax="5">3*9 =</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="c" matchMax="5">5*5 =</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="d" matchMax="5">2*3 =</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="e" matchMax="5">12*3 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="a" fixed="false" matchMax="5">4*7 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="b" fixed="false" matchMax="5">3*9 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="c" fixed="false" matchMax="5">5*5 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="d" fixed="false" matchMax="5">2*3 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="e" fixed="false" matchMax="5">12*3 =</simpleAssociableChoice>
       </simpleMatchSet>
       <simpleMatchSet>
-        <simpleAssociableChoice identifier="k" matchMax="1">27</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="l" matchMax="1">36</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="m" matchMax="1">25</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="n" matchMax="1">6</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="p" matchMax="1">72/2</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="k" fixed="false" matchMax="1">27</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="l" fixed="false" matchMax="1">36</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="m" fixed="false" matchMax="1">25</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="n" fixed="false" matchMax="1">6</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="p" fixed="false" matchMax="1">72/2</simpleAssociableChoice>
       </simpleMatchSet>
     </matchInteraction>
   </itemBody>

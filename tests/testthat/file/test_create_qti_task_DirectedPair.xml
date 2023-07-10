@@ -31,14 +31,14 @@
     <p>"Directed pairs" task</p>
     <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
       <simpleMatchSet>
-        <simpleAssociableChoice identifier="a" matchMax="1">12*4 =</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="b" matchMax="1">100/50 =</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="c" matchMax="1">25*2 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="a" fixed="false" matchMax="1">12*4 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="b" fixed="false" matchMax="1">100/50 =</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="c" fixed="false" matchMax="1">25*2 =</simpleAssociableChoice>
       </simpleMatchSet>
       <simpleMatchSet>
-        <simpleAssociableChoice identifier="k" matchMax="1">48</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="l" matchMax="1">2</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="m" matchMax="1">50</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="k" fixed="false" matchMax="1">48</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="l" fixed="false" matchMax="1">2</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="m" fixed="false" matchMax="1">50</simpleAssociableChoice>
       </simpleMatchSet>
     </matchInteraction>
   </itemBody>

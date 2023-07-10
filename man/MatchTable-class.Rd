@@ -7,7 +7,8 @@
 \title{Class "MatchTable"}
 \description{
 Abstract class \code{MatchTable} is never to be generated, only derived classes
-OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are meaningful.
+OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are
+meaningful.
 }
 \section{Slots}{
 
@@ -37,6 +38,12 @@ of right options}
 
 \item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
 which the choices are initially presented to the candidate; default \code{TRUE}}
+
+\item{\code{rows_shuffle}}{boolean, optional; shuffle possible answers in rows,
+default \code{TRUE}}
+
+\item{\code{cols_shuffle}}{boolean, optional; shuffle possible answers in columns;
+defalut \code{TRUE}}
 }}
 
 \section{Warning}{
