@@ -1,8 +1,13 @@
 #' Class "MatchTable"
 #'
 #' Abstract class `MatchTable` is never to be generated, only derived classes
-#' OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are meaningful.
+#' OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are
+#' meaningful.
 #' @template MTSlotsTemplate
+#' @slot rows_shuffle boolean, optional; shuffle possible answers in rows,
+#'   default `TRUE`
+#' @slot cols_shuffle boolean, optional; shuffle possible answers in columns;
+#'   defalut `TRUE`
 #' @inheritSection AssessmentItem-class Warning
 #' @name MatchTaable-classs
 #' @rdname MatchTable-class
@@ -15,8 +20,11 @@ setClass("MatchTable", contains = "AssessmentItem",
                      cols_identifiers = "character",
                      answers_identifiers = "character",
                      answers_scores = "numeric",
-                     shuffle = "logical"),
-         prototype = list(shuffle = TRUE, points = NA_real_))
+                     shuffle = "logical",
+                     rows_shuffle = "logical",
+                     cols_shuffle = "logical"),
+         prototype = list(shuffle = TRUE, points = NA_real_,
+         rows_shuffle = TRUE, cols_shuffle = TRUE))
 
 # constructor
 setMethod("initialize", "MatchTable", function(.Object, ...) {

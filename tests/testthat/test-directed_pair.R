@@ -15,14 +15,14 @@ test_that("Testing CreateItemBody DirectedPair", {
 <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
 <prompt>Associated left elements with the right category</prompt>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="ID_1" matchMax="1">Lion</simpleAssociableChoice>
-<simpleAssociableChoice identifier="ID_2" matchMax="1">Flower</simpleAssociableChoice>
-<simpleAssociableChoice identifier="ID_3" matchMax="1">Mushrooms</simpleAssociableChoice>
+<simpleAssociableChoice identifier="ID_1" fixed="false" matchMax="1">Lion</simpleAssociableChoice>
+<simpleAssociableChoice identifier="ID_2" fixed="false" matchMax="1">Flower</simpleAssociableChoice>
+<simpleAssociableChoice identifier="ID_3" fixed="false"  matchMax="1">Mushrooms</simpleAssociableChoice>
 </simpleMatchSet>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="IDT_1" matchMax="1">Animal</simpleAssociableChoice>
-<simpleAssociableChoice identifier="IDT_2" matchMax="1">Plant</simpleAssociableChoice>
-<simpleAssociableChoice identifier="IDT_3" matchMax="1">Fungi</simpleAssociableChoice>
+<simpleAssociableChoice identifier="IDT_1" fixed="false" matchMax="1">Animal</simpleAssociableChoice>
+<simpleAssociableChoice identifier="IDT_2" fixed="false" matchMax="1">Plant</simpleAssociableChoice>
+<simpleAssociableChoice identifier="IDT_3" fixed="false" matchMax="1">Fungi</simpleAssociableChoice>
 </simpleMatchSet>
 </matchInteraction>
     </itemBody>'

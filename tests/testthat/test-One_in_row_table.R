@@ -14,15 +14,15 @@ test_that("Testing CreateItemBody OneInRowTable", {
 <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="4">
 <prompt>Match the following characters to the Shakespeare play they appeared in:</prompt>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="C" matchMax="1">Capulet</simpleAssociableChoice>
-<simpleAssociableChoice identifier="D" matchMax="1">Demetrius</simpleAssociableChoice>
-<simpleAssociableChoice identifier="L" matchMax="1">Lysander</simpleAssociableChoice>
-<simpleAssociableChoice identifier="P" matchMax="1">Prospero</simpleAssociableChoice>
+<simpleAssociableChoice identifier="C" fixed="false" matchMax="1">Capulet</simpleAssociableChoice>
+<simpleAssociableChoice identifier="D" fixed="false" matchMax="1">Demetrius</simpleAssociableChoice>
+<simpleAssociableChoice identifier="L" fixed="false" matchMax="1">Lysander</simpleAssociableChoice>
+<simpleAssociableChoice identifier="P" fixed="false" matchMax="1">Prospero</simpleAssociableChoice>
 </simpleMatchSet>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="M" matchMax="4">A Midsummer-Night\'s Dream</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="R" matchMax="4">Romeo and Juliet</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="T" matchMax="4">The Tempest</simpleAssociableChoice>
+<simpleAssociableChoice identifier="M" fixed="false" matchMax="4">A Midsummer-Night\'s Dream</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="R" fixed="false" matchMax="4">Romeo and Juliet</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="T" fixed="false" matchMax="4">The Tempest</simpleAssociableChoice>
         </simpleMatchSet>
         </matchInteraction>
         </itemBody>'

@@ -59,6 +59,7 @@ create_question_object <- function(file) {
     }
 
     doc_tree <- parsermd::parse_rmd(file)
+
     attrs_sec <- parsermd::rmd_select(doc_tree,
                                       parsermd::has_type("rmd_yaml_list"))
     attrs <- yaml.load(parsermd::as_document(attrs_sec))
@@ -180,7 +181,8 @@ create_gap_object <- function(id, value) {
             "text_opal" = "TextGapOpal",
             "InlineChoice")
         attrs[["type"]] <- NULL
-        attrs <- c(Class = object_class, attrs, response_identifier = id)
+        if (!("response_identifier" %in% names(attrs)))  attrs["response_identifier"] <- id
+        attrs <- c(Class = object_class, attrs)
         object <- do.call(new, attrs)
     }
     return(object)
@@ -348,7 +350,6 @@ transform_to_html <- function(sec, image_dir = ".") {
     imgs <- xml2::xml_find_all(sect, "//img")
     # process each image
     for (img in imgs) {
-        xml2::xml_set_attr(img, "special", "special")
         # make path to image in the directory of the document
         path_image <- file.path(image_dir, xml2::xml_attr(img, "src"))
         if (!file.exists(path_image)) {

@@ -78,32 +78,40 @@ create_item_body_order <- function(object) {
 
 create_item_body_match_table <- function(object,  row_associations,
                                          col_associations,
-                                         max_associations = NULL) {
+                                         max_associations = NULL,
+                                         orientation = NULL) {
     if (is.null(max_associations)) max_associations <- max(c(row_associations,
                                                col_associations))
     prompt <- create_prompt(object)
+    fixed <- ifelse(object@rows_shuffle, "false", "true")
     rows <- Map(make_associable_choice,
                 object@rows_identifiers,
                 object@rows,
-                row_associations)
+                row_associations,
+                fixed)
     rows_match <- tag("simpleMatchSet", list(rows))
+    fixed <- ifelse(object@cols_shuffle, "false", "true")
     cols <- Map(make_associable_choice,
                 object@cols_identifiers,
                 object@cols,
-                col_associations)
+                col_associations,
+                fixed)
     cols_match <- tag("simpleMatchSet", list(cols))
+
     match_interactioin <- tag("matchInteraction",
                               list("responseIdentifier" = "RESPONSE",
                                    "shuffle" = tolower(object@shuffle),
                                    "maxAssociations" = max_associations,
+                                   "orientation" = orientation,
                                    tagList(prompt, rows_match, cols_match)))
     tag("itemBody", list(Map(createText, object@content),
                          match_interactioin))
 }
 
 
-make_associable_choice <- function(id, text, match_max = 1) {
+make_associable_choice <- function(id, text, match_max = 1, fixed) {
     tag("simpleAssociableChoice", list(identifier =  id,
+                                       "fixed" = fixed,
                                        matchMax = match_max,
                                        text))
 }
@@ -207,7 +215,7 @@ create_prompt <- function(object) {
 #' @export
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     content <- as.character(create_assessment_item(object))
-    content <- gsub("special=\"special\">", "/>", content)
+    content <- gsub('(<img[^>]*[^/])>', "\\1/>", content)
     doc <- xml2::read_xml(as.character(content))
     if (verification) {
         ver <- verify_qti(doc)

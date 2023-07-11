@@ -10,6 +10,10 @@
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
 #' @template PointsSlotTemplate
+#' @slot orientation string, optional; is responsible to place answers in
+#' vertical or horizontal mode; possible values:
+#'   * "vertical" - default
+#'   * "horizontal"
 #' @template NoteTasksTemplate
 #' @examples
 #' dp <- new("DirectedPair", content = list("<p>\"Directed pairs\" task</p>"),
@@ -26,11 +30,14 @@
 #' @aliases DirectedPair
 #' @exportClass DirectedPair
 #' @include AssessmentItem.R MatchTable.R
-setClass("DirectedPair", contains = "MatchTable")
+setClass("DirectedPair", contains = "MatchTable",
+         slots = c(orientation = "character"),
+         prototype = prototype(orientation = "vertical"))
 
 # TODO provide validation that cols is equal to rows
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,DirectedPair
 setMethod("createItemBody",  "DirectedPair", function(object) {
-    create_item_body_match_table(object, 1, 1, 0)
+    if (object@orientation == "horizontal") ort <- "horizontal" else ort <- NULL
+    create_item_body_match_table(object, 1, 1, 0, ort)
 })

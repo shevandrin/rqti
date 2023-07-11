@@ -17,14 +17,14 @@ test_that("Testing CreateItemBody OneInColTable", {
 <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="3">
 <prompt>Match the following characters to the Shakespeare play they appeared in:</prompt>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="C" matchMax="3">Capulet</simpleAssociableChoice>
-<simpleAssociableChoice identifier="D" matchMax="3">Demetrius</simpleAssociableChoice>
-<simpleAssociableChoice identifier="P" matchMax="3">Prospero</simpleAssociableChoice>
+<simpleAssociableChoice identifier="C" fixed="false" matchMax="3">Capulet</simpleAssociableChoice>
+<simpleAssociableChoice identifier="D" fixed="false" matchMax="3">Demetrius</simpleAssociableChoice>
+<simpleAssociableChoice identifier="P" fixed="false" matchMax="3">Prospero</simpleAssociableChoice>
 </simpleMatchSet>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="M" matchMax="1">A Midsummer-Night\'s Dream</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="R" matchMax="1">Romeo and Juliet</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="T" matchMax="1">The Tempest</simpleAssociableChoice>
+<simpleAssociableChoice identifier="M" fixed="false" matchMax="1">A Midsummer-Night\'s Dream</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="R" fixed="false" matchMax="1">Romeo and Juliet</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="T" fixed="false" matchMax="1">The Tempest</simpleAssociableChoice>
         </simpleMatchSet>
         </matchInteraction>
         </itemBody>'
