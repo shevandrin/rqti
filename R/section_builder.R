@@ -20,10 +20,21 @@
 #'   comments in each question of the section; `TRUE` by default
 #' @return object of [AssessmentSection]-class
 #' @export
-section <- function(file, num_variants = 1, seed_number = NULL, id = NULL, nested = TRUE,
-                    title = character(0), time_limits = NA_integer_,
-                    visible = TRUE, shuffle = FALSE, max_attempts = NA_integer_,
+section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
+                    nested = TRUE, title = character(0),
+                    time_limits = NA_integer_, visible = TRUE,
+                    shuffle = FALSE, max_attempts = NA_integer_,
                     allow_comment = TRUE) {
+
+    if (num_variants > length(seed_number) & !is.null(seed_number)) {
+        stop("The items in seed_number must be equal to number of files",
+             call. = FALSE)
+    } else if (num_variants < length(seed_number)) {
+        warning(paste("From seed_number only first", length(file),
+                      "items are taken"), call. = FALSE)
+        seed_number <- seed_number[1:num_variants]
+    }
+
     if (num_variants <= 1) {
         rmd_files <- file[grep("\\.Rmd$|\\.md$", file)]
         xml_files <- file[grep("\\.xml$", file)]
@@ -39,7 +50,7 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL, neste
         if (nested) {
             selection <- 1
             for (n  in seq(num_variants)) {
-                sec <- make_seed_subsection(file, seed_number)
+                sec <- make_seed_subsection(file, seed_number[n])
                 names(sec) <- NULL
                 sub_items <- c(sub_items, sec)
                 if (is.null(id)) id <- paste0("variable_section_",
@@ -48,6 +59,7 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL, neste
         } else {
             selection <- 0
             for (f in file) {
+
                 sec <- make_variant_subsection(f, num_variants, seed_number)
                 names(sec) <- NULL
                 sub_items <- c(sub_items, sec)
