@@ -181,7 +181,7 @@ create_gap_object <- function(id, value) {
             "text_opal" = "TextGapOpal",
             "InlineChoice")
         attrs[["type"]] <- NULL
-        if (is.null(attrs["response_identifier"]))  attrs["response_identifier"] <- id
+        if (!("response_identifier" %in% names(attrs)))  attrs["response_identifier"] <- id
         attrs <- c(Class = object_class, attrs)
         object <- do.call(new, attrs)
     }
