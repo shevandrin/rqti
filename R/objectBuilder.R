@@ -59,6 +59,7 @@ create_question_object <- function(file) {
     }
 
     doc_tree <- parsermd::parse_rmd(file)
+
     attrs_sec <- parsermd::rmd_select(doc_tree,
                                       parsermd::has_type("rmd_yaml_list"))
     attrs <- yaml.load(parsermd::as_document(attrs_sec))
@@ -180,7 +181,8 @@ create_gap_object <- function(id, value) {
             "text_opal" = "TextGapOpal",
             "InlineChoice")
         attrs[["type"]] <- NULL
-        attrs <- c(Class = object_class, attrs, response_identifier = id)
+        if (is.null(attrs["response_identifier"]))  attrs["response_identifier"] <- id
+        attrs <- c(Class = object_class, attrs)
         object <- do.call(new, attrs)
     }
     return(object)
