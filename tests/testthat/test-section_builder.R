@@ -120,7 +120,6 @@ test_that("Testing function section() to build variable AssessmentSection for ne
                     assessment_item = (item[4:6]), selection = 1)
     # create expected
     expected <- new("AssessmentSection", identifier = "variable_section",
-                    selection = 0,
                     assessment_item = list(variant1, variant2))
 
     expect_equal(sut, expected)

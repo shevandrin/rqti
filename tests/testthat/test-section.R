@@ -39,5 +39,5 @@ test_that("Testing of function section() creates assessment section correctly wh
 
     expect_true(inherits(sut, "AssessmentSection"))
     expect_equal(length(sut@assessment_item), length(file))
-    expect_equal(sut@selection, 0)
+    expect_equal(sut@selection, NA_integer_)
 })

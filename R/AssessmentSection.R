@@ -39,6 +39,8 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     .Object <- callNextMethod()
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
+    select  <- .Object@selection
+    if (!is.na(select)) if (select == 0) .Object@selection <- NA_integer_
 
     validObject(.Object)
     .Object
