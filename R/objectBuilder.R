@@ -355,8 +355,10 @@ transform_to_html <- function(sec, image_dir = ".") {
     # read via pandoc
     # it writes result of transformation to temp html file
     htmltempfile <- "_deleteme.html"
+    # options <- c("-o", htmltempfile, "-f", "markdown", "-t", "html",
+    #              "--mathml", "--wrap=none", "+RTS", "-M30m")
     options <- c("-o", htmltempfile, "-f", "markdown", "-t", "html",
-                 "--mathml", "--wrap=none", "+RTS", "-M30m")
+                 "--wrap=none", "+RTS", "-M30m")
 
     rmarkdown::pandoc_convert(mdtempfile, options=options)
     # delete temp md file
