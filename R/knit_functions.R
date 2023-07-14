@@ -132,6 +132,7 @@ stop_server <- function() {
     servr::daemon_stop()
 }
 
+#' @export
 render_opal <- function(input, ...) {
     rmd2zip(input)
     auth_opal()
