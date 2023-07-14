@@ -132,6 +132,10 @@ stop_server <- function() {
     servr::daemon_stop()
 }
 
+#' Render Rmd directly in Opal via API
+#'
+#' @param input (the path to the input Rmd document)
+#' @param ... required for passing arguments when knitting
 #' @export
 render_opal <- function(input, ...) {
     rmd2zip(input)
