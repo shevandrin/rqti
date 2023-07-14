@@ -6,6 +6,8 @@
 #'   result of calculations
 #' @param id string, optional; identifier of the assessment section
 #' @param nested boolean; the type of the test structure; `TRUE` by default
+#' @param selection numeric, optional; defines how many children of the section are
+#'   delivered in test
 #' @param title string, optional; title of the section
 #' @param time_limits integer, optional; controls the amount of time a candidate
 #'   is allowed for this part of the test
@@ -21,7 +23,7 @@
 #' @return object of [AssessmentSection]-class
 #' @export
 section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
-                    nested = TRUE, title = character(0),
+                    nested = TRUE, selection = 0, title = character(0),
                     time_limits = NA_integer_, visible = TRUE,
                     shuffle = FALSE, max_attempts = NA_integer_,
                     allow_comment = TRUE) {
@@ -57,7 +59,7 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
                                               sample.int(100, 1))
             }
         } else {
-            selection <- 0
+            selection <- NA_integer_
             for (f in file) {
 
                 sec <- make_variant_subsection(f, num_variants, seed_number)

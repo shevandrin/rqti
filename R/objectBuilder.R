@@ -82,6 +82,7 @@ create_question_object <- function(file) {
     } else if (tolower(attrs$type) %in% c("dp", "directedpair", "pair")) {
         create_dp_object(html, attrs)
     } else if (tolower(attrs$type) %in% c("match", "table", "matchtable")) {
+        if (!any(names(attrs) == "abbr_id")) attrs$abbr_id <- FALSE
         create_matchtable_object(html, attrs)
     } else {
         stop("The type of task is not specified properly")
@@ -192,6 +193,16 @@ make_ids <- function(n, type) {
     paste(type, formatC(1:n, flag = "0", width = nchar(n)), sep = "_")
 }
 
+make_abbr_ids <- function(items) {
+    ids <- abbreviate(items, minlength = 6)
+    counts <- table(ids)
+    dupl <- which(counts > 1)
+    for (i in dupl) {
+        ids[ids == names(counts)[i]] <- paste0(names(counts)[i], seq_len(counts[i]))
+    }
+    return(unname(ids))
+}
+
 create_essay_object <- function(attrs) {
     attrs <- c(Class = "Essay", attrs)
     return(attrs)
@@ -233,8 +244,14 @@ create_matchtable_object <- function(html, attrs) {
     table <- read_table(html)
     rows <- as.character(unlist(table[,1]))
     cols <- as.character(colnames(table)[-1])
-    rows_ids <- make_ids(length(rows), "row")
-    cols_ids <- make_ids(length(cols), "col")
+    if (attrs$abbr_id) {
+        rows_ids <- make_abbr_ids(rows)
+        cols_ids <- make_abbr_ids(cols)
+    } else {
+        rows_ids <- make_ids(length(rows), "row")
+        cols_ids <- make_ids(length(cols), "col")
+    }
+
     answers_ids <- c()
     answers_scores <- c()
     for (i in 1:nrow(table)) {
@@ -251,7 +268,7 @@ create_matchtable_object <- function(html, attrs) {
     answers_scores <- unlist(answers_scores)
     names(answers_scores) <- NULL
     cls <- define_match_class(answers_ids, rows_ids, cols_ids)
-
+    attrs$abbr_id <- NULL
     attrs <- c(Class = cls, rows = list(rows), cols = list(cols),
                answers_identifiers = list(answers_ids),
                rows_identifiers = list(rows_ids),

@@ -10,6 +10,7 @@ section(
   seed_number = NULL,
   id = NULL,
   nested = TRUE,
+  selection = 0,
   title = character(0),
   time_limits = NA_integer_,
   visible = TRUE,
@@ -29,6 +30,9 @@ result of calculations}
 \item{id}{string, optional; identifier of the assessment section}
 
 \item{nested}{boolean; the type of the test structure; \code{TRUE} by default}
+
+\item{selection}{numeric, optional; defines how many children of the section are
+delivered in test}
 
 \item{title}{string, optional; title of the section}
 
