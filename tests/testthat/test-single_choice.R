@@ -14,9 +14,9 @@ test_that("Testing create_item_body_single_choice", {
     <simpleChoice identifier=\"ChoiceB\">Do not let someone else look after your luggage.</simpleChoice>
     <simpleChoice identifier=\"ChoiceC\">Remember your luggage when you leave.</simpleChoice></choiceInteraction></itemBody>"
 
-    xml1 <- xml2::read_xml(toString(create_item_body_single_choice(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(create_item_body_single_choice(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing create_response_declaration_single_choice",{
@@ -32,9 +32,9 @@ test_that("Testing create_response_declaration_single_choice",{
 </correctResponse>
 </responseDeclaration>'
 
-    xml1 <- xml2::read_xml(toString(create_response_declaration_single_choice(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(create_response_declaration_single_choice(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing outcomeDeclaration for Single Choice",{
@@ -52,9 +52,10 @@ test_that("Testing outcomeDeclaration for Single Choice",{
 </defaultValue>
 </outcomeDeclaration>'
     nodes <- createOutcomeDeclaration(sc)
-    xml1 <- xml2::read_xml(toString(nodes[[1]]))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+
+    sut <- xml2::read_xml(toString(nodes[[1]]))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing additional attribute for item body single choice", {
@@ -78,10 +79,11 @@ test_that("Testing additional attribute for item body single choice", {
 		</choiceInteraction>
 	</itemBody>
             '
-  xml1 <- xml2::read_xml(toString(createItemBody(sc)))
-  xml2 <- xml2::read_xml(example)
-  expect_equal(xml1, xml2)
+  sut <- xml2::read_xml(toString(createItemBody(sc)))
+  expected <- xml2::read_xml(example)
+  expect_equal(sut, expected)
 })
+
 # Testing createResponseProcessing() with modal Feedback
 test_that("Testing createResponseProcessing() for SingleChoice class", {
     sc <- new("SingleChoice",
@@ -181,10 +183,11 @@ test_that("Testing createResponseProcessing() for SingleChoice class", {
   </responseCondition>
 </responseProcessing>
             '
-    xml1 <- xml2::read_xml(toString(createResponseProcessing(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createResponseProcessing(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 test_that("SingleChoice creates a valid SingleChoice object", {
     # Create a SingleChoice object using the function
     sc <- SingleChoice(
@@ -203,6 +206,7 @@ test_that("SingleChoice creates a valid SingleChoice object", {
     # Check that the object is of class "SingleChoice"
     expect_true(inherits(sc, "SingleChoice"))
 })
+
 # Define a test for the error case when the points slot has an invalid value
 test_that("SingleChoice throws an error for invalid points value", {
     # Call SingleChoice with invalid points value
