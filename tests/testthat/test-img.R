@@ -9,10 +9,11 @@ test_that("Testing method createText for Img class", {
     <img src=\"https://example.com/images/example.png\" alt=\"image_1\"
     width=\"320\" height=\"200\" />
 </p>"
-    xml1 <- xml2::read_xml(toString(createText(sut)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createText(sut)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 test_that("Testing of method createText() (with out slot alt) for Img class", {
     sut <- new("Img", src = "https://example.com/images/example.png",
                width = 320,
@@ -23,12 +24,12 @@ test_that("Testing of method createText() (with out slot alt) for Img class", {
     <img src=\"https://example.com/images/example.png\" alt=\"picture\"
     width=\"320\" height=\"200\" />
 </p>"
-    xml1 <- xml2::read_xml(toString(createText(sut)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createText(sut)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
-skip()
+skip("This test is skipped")
 skip_on_cran()
 skip_on_covr()
 skip_on_ci()
@@ -40,7 +41,8 @@ test_that("Testing Rmd file for SingleChoice that contains image in ItemBody", {
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
-    xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_SC.xml"))
+    xml_file_expected <- xml2::read_xml(
+        test_path("file/test_example_contain_bin_image_SC.xml"))
 
     # Strip namespaces from the XML files
     xml_file_sut <- xml_ns_strip(xml_file_sut)
@@ -59,7 +61,7 @@ test_that("Testing Rmd file for SingleChoice that contains image in ItemBody", {
     unlink(test_path("file/ND.png"))
 })
 
-skip()
+skip("This test is skipped")
 skip_on_cran()
 skip_on_covr()
 skip_on_ci()
@@ -70,7 +72,8 @@ test_that("Testing Rmd file for SingleChoice that contain image in Feedback", {
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
-    xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_SC.xml"))
+    xml_file_expected <- xml2::read_xml(
+        test_path("file/test_example_contain_bin_image_SC.xml"))
 
     # Strip namespaces from the XML files
     xml_file_sut <- xml_ns_strip(xml_file_sut)
@@ -78,7 +81,8 @@ test_that("Testing Rmd file for SingleChoice that contain image in Feedback", {
 
     # Find the 'modalFeedback' tags
     modalFeedback_sut <- xml_find_first(xml_file_sut, ".//modalFeedback ")
-    modalFeedback_expected <- xml_find_first(xml_file_expected, ".//modalFeedback")
+    modalFeedback_expected <- xml_find_first(xml_file_expected,
+                                             ".//modalFeedback")
 
     # Copy the contents to the 'sut' and 'expected' variables
     sut <- as.character(modalFeedback_sut)
@@ -89,7 +93,7 @@ test_that("Testing Rmd file for SingleChoice that contain image in Feedback", {
     unlink(test_path("file/ND.png"))
 })
 
-skip()
+skip("This test is skipped")
 skip_on_cran()
 skip_on_covr()
 skip_on_ci()
@@ -101,7 +105,8 @@ test_that("Testing Rmd file for MultipleChoice that contains two images", {
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
-    xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_MC.xml"))
+    xml_file_expected <- xml2::read_xml(
+        test_path("file/test_example_contain_bin_image_MC.xml"))
 
     # Strip namespaces from the XML files
     xml_file_sut <- xml_ns_strip(xml_file_sut)
@@ -121,18 +126,20 @@ test_that("Testing Rmd file for MultipleChoice that contains two images", {
     unlink(test_path("file/pic_2.png"))
 })
 
-skip()
+skip("This test is skipped")
 skip_on_cran()
 skip_on_covr()
 skip_on_ci()
-test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", {
+test_that("Testing Rmd file for MultipleChoice that contain image in Feedback",
+          {
     path <- test_path("file/test_image_MC.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
 
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
-    xml_file_expected <- xml2::read_xml(test_path("file/test_example_contain_bin_image_MC.xml"))
+    xml_file_expected <- xml2::read_xml(
+        test_path("file/test_example_contain_bin_image_MC.xml"))
 
     # Strip namespaces from the XML files
     xml_file_sut <- xml_ns_strip(xml_file_sut)
@@ -140,7 +147,8 @@ test_that("Testing Rmd file for MultipleChoice that contain image in Feedback", 
 
     # Find the 'modalFeedback' tags
     modalFeedback_sut <- xml_find_first(xml_file_sut, ".//modalFeedback ")
-    modalFeedback_expected <- xml_find_first(xml_file_expected, ".//modalFeedback")
+    modalFeedback_expected <- xml_find_first(xml_file_expected,
+                                             ".//modalFeedback")
 
     # Copy the contents to the 'sut' and 'expected' variables
     sut <- as.character(modalFeedback_sut)
@@ -159,7 +167,8 @@ test_that("Testing Rmd file for MultipleChoice that contain formula by Latex", {
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
 
     # Read example xml file
-    xml_file_expected <- xml2::read_xml(test_path("file/test_example_MS_contain_Latex.xml"))
+    xml_file_expected <- xml2::read_xml(
+        test_path("file/test_example_MS_contain_Latex.xml"))
 
     # Strip namespaces from the XML files
     xml_file_sut <- xml_ns_strip(xml_file_sut)
