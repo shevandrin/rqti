@@ -136,6 +136,17 @@ setGeneric("createQtiTask", function(object, dir = NULL, verification = FALSE) {
     standardGeneric("createQtiTask")
 })
 
+#' Get points from AssessmentItem object
+#'
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
+#' @docType methods
+setGeneric("getPoints", function(object) {
+    standardGeneric("getPoints")
+})
+
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
 setMethod("createQtiTask", signature(object = "AssessmentItem"),
@@ -177,4 +188,13 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
                                                value = object@points),
                       make_outcome_declaration("MINSCORE", value = 0),
                       feedbacks)
+          })
+
+#' @rdname getPoints-methods
+#' @aliases getPoints,AssessmentItem
+setMethod("getPoints", signature(object = "AssessmentItem"),
+          function(object) {
+              points <- object@points
+              names(points) <- object@identifier
+              return(points)
           })
