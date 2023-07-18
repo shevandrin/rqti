@@ -48,7 +48,7 @@ test_that("Testing method createOutcomeDeclaration()
 </outcomeDeclaration>
 <outcomeDeclaration identifier=\"MAXSCORE\" cardinality=\"single\" baseType=\"float\">
   <defaultValue>
-    <value></value>
+    <value>6</value>
   </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier=\"MINSCORE\" cardinality=\"single\" baseType=\"float\">

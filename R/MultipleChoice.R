@@ -45,6 +45,14 @@ setMethod("createOutcomeDeclaration", signature(object = "MultipleChoice"),
           function(object) {
               create_outcome_declaration_multiple_choice(object)
           })
+
+#' @rdname getPoints-methods
+#' @aliases getPoints,MultipleChoice
+setMethod("getPoints", signature(object = "MultipleChoice"),
+          function(object) {
+              return(sum(object@points))
+          })
+
 # helpers
 create_item_body_multiplechoice <- function(object) {
     create_item_body_choice(object, max_choices = 0)

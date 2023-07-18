@@ -142,6 +142,9 @@ setGeneric("createQtiTask", function(object, dir = NULL, verification = FALSE) {
 #'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
+#' @name getPoints-methods
+#' @rdname getPoints-methods
+#' @aliases getPoints
 #' @docType methods
 setGeneric("getPoints", function(object) {
     standardGeneric("getPoints")

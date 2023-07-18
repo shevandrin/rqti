@@ -58,6 +58,10 @@ setClass("AssessmentTest", slots = c(identifier = "character",
 setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
+
+    points <- sum(sapply(.Object@section, getPoints))
+    .Object@points <- points
+
     validObject(.Object)
     .Object
 })
@@ -158,4 +162,21 @@ setMethod("createZip", signature(object = "AssessmentTest"),
           function(object, folder, file_name) {
               if (is.null(file_name)) file_name <- object@identifier
               zip_wrapper(file_name, NULL, folder)
+          })
+
+#' @rdname getPoints-methods
+#' @aliases getPoints,character
+setMethod("getPoints", signature(object = "character"),
+          function(object) {
+              if (!file.exists(object)) {
+                  warning(paste("file", object, "does not exist"),
+                          call. = FALSE)
+                  return(1)
+              }
+              doc <- xml2::read_xml(object)
+              od_tag  <- xml2::xml_find_all(doc, ".//d1:outcomeDeclaration
+                                            [@identifier='MAXSCORE']")
+              points <- as.numeric(xml2::xml_text(od_tag))
+              if (is.na(points)) points <- 1
+              return(points)
           })
