@@ -1,7 +1,8 @@
 test_that("Testing create_item_body_multiplechoice", {
     sc <- new("MultipleChoice",
               content = list(),
-              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
+              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
+                          "Chlorine"),
               choice_identifiers = c("H","He","C","O","N","Cl"),
               points = c(1,0,0,1,0,-1),
               title = "filename_sc",
@@ -20,16 +21,17 @@ orientation="vertical">
 </choiceInteraction>
 </itemBody>'
 
-    xml1 <- xml2::read_xml(toString(create_item_body_multiplechoice(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(create_item_body_multiplechoice(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing create_response_declaration_multiple_choice",{
     skip_if_not_installed("XML")
     sc <- new("MultipleChoice",
               content = list(""),
-              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
+              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
+                          "Chlorine"),
               choice_identifiers = c("H","He","C","O","N","Cl"),
               points = c(1,0,0,1,0,-1),
               title = "filename_sc",
@@ -49,28 +51,28 @@ test_that("Testing create_response_declaration_multiple_choice",{
     </responseDeclaration>'
 
     qtiXML <- toString(create_response_declaration_multiple_choice(sc))
-    xml1 <- xml2::read_xml(qtiXML)
-    xml2 <- xml2::read_xml(example)
+    sut <- xml2::read_xml(qtiXML)
+    expected <- xml2::read_xml(example)
 
-    if(isTRUE(identical(xml1,xml2)) == FALSE){
+    if(isTRUE(identical(sut,expected)) == FALSE){
 
         # 'Convert the String in atomic vector to compare the 2 XML are equal in content
-        vxml1 <- unlist(strsplit(as.character(xml1),split = ""))
-        vxml2 <- unlist(strsplit(as.character(xml2),split = ""))
+        vxml1 <- unlist(strsplit(as.character(sut),split = ""))
+        vxml2 <- unlist(strsplit(as.character(expected),split = ""))
 
         if (identical(stringr::str_sort(vxml2), stringr::str_sort(vxml1)) == FALSE){
             print("XML content differs")
-            expect_equal(xml1, xml2)
+            expect_equal(sut, expected)
         }
         else{
             #compare if the 2 XML are equal in structure. It omits attributes and other values, only validate de tag names
-            a <- XML::xmlParse(xml1, asText = TRUE)
-            b <- XML::xmlParse(xml2, asText = TRUE)
+            a <- XML::xmlParse(sut, asText = TRUE)
+            b <- XML::xmlParse(expected, asText = TRUE)
             result <- XML::compareXMLDocs(a,b)
 
             if(is.logical(result$countDiffs) && length(result$countDiffs) == 1 && !is.na(result$countDiffs) && lengths(result$countDiffs) > 0){
                 print("XML structure differs")
-                expect_equal(xml1, xml2)
+                expect_equal(sut, expected)
             }
             else{
                 expect_equal(0, 0)
@@ -78,14 +80,16 @@ test_that("Testing create_response_declaration_multiple_choice",{
         }
     }else{
         print("Direct test passed")
-        expect_equal(xml1, xml2)
+        expect_equal(sut, expected)
     }
 
 })
+
 test_that("Testing outcomeDeclaration for Multiple Choice",{
     sc <- new("MultipleChoice",
               content = list(""),
-              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
+              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
+                          "Chlorine"),
               points = c(1,0,0,1,0,-1),
               title = "filename_sc",
               prompt = "Which of the following elements are used to form water?")
@@ -97,17 +101,18 @@ test_that("Testing outcomeDeclaration for Multiple Choice",{
 </defaultValue>
 </outcomeDeclaration>'
 
-    xml1 <- xml2::read_xml(toString(create_outcome_declaration_multiple_choice(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
-
-
+    sut <- xml2::read_xml(
+        toString(create_outcome_declaration_multiple_choice(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 # Testing with modal Feedback
 test_that("Testing outcomeDeclaration for Multiple Choice",{
     mc <- new("MultipleChoice",
               content = list(""),
-              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen","Chlorine"),
+              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
+                          "Chlorine"),
               points = c(1,0,0,1,0,-1),
               title = "filename_sc",
               prompt = "Which of the following elements are used to form water?",
@@ -195,7 +200,7 @@ test_that("Testing outcomeDeclaration for Multiple Choice",{
   </responseCondition>
 </responseProcessing>
     '
-    xml1 <- xml2::read_xml(toString(createResponseProcessing(mc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createResponseProcessing(mc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
