@@ -74,10 +74,12 @@ test_that("Testing function extract_results", {
     expected$score_max <- as.character(expected$score_max)
 
     # To delete all symbols
-    expected$candidate_response <- gsub("[^a-zA-Z0-9]", "", expected$candidate_response)
+    expected$candidate_response <- gsub("[^a-zA-Z0-9]", "",
+                                        expected$candidate_response)
     sut$candidate_response <- gsub("[^a-zA-Z0-9]", "", sut$candidate_response)
     expect_equal(sut,expected)
 })
+
 # Testing function of extract_results() for tasks: Essay and TextGapOpal.
 test_that("Testing function extract_results", {
     path1 <- test_path("file/test-extract_result_essay_gap.zip")
@@ -100,7 +102,8 @@ test_that("Testing function extract_results", {
     expected$is_response_correct <- expected$is_response_correct
 
     # To delete all symbols
-    expected$candidate_response <- gsub("[^a-zA-Z0-9]", "", expected$candidate_response)
+    expected$candidate_response <- gsub("[^a-zA-Z0-9]", "",
+                                        expected$candidate_response)
 
     expect_equal(sut,expected)
 })
@@ -170,8 +173,9 @@ test_that("Testing extract_results() throws an error for non-existing file", {
     expect_error(extract_results("nonexistent.xml", "nonexistent_folder"),
                  "One or more files in list do not exist")
 })
-test_that("Testing extract_results() throws an error for invalid 'file' argument", {
+test_that("Testing extract_results() throws an error for invalid
+          'file' argument", {
         invalid_file <- test_path("file/test_fig2.jpg")
-        expect_error(extract_results(invalid_file), "'file' must contain only one zip or set of xml files")
+        expect_error(extract_results(invalid_file),
+                     "'file' must contain only one zip or set of xml files")
 })
-

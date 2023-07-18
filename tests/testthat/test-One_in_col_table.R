@@ -2,7 +2,7 @@
 # the original provided by QTI to validated
 
 test_that("Testing CreateItemBody OneInColTable", {
-    sc <- new("OneInColTable",
+    sut <- new("OneInColTable",
               rows = c("Capulet", "Demetrius", "Prospero"),
               rows_identifiers = c("C", "D", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -31,13 +31,13 @@ test_that("Testing CreateItemBody OneInColTable", {
         </matchInteraction>
         </itemBody>'
 
-    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(sut)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing create_response_declaration_OneInColTable", {
-    sc <- new("OneInColTable",
+    sut <- new("OneInColTable",
               cols = c("Capulet", "Demetrius", "Prospero"),
               cols_identifiers = c("C", "D", "P"),
               rows = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -63,13 +63,13 @@ test_that("Testing create_response_declaration_OneInColTable", {
 </mapping>
 </responseDeclaration>'
 
-    sut <- xml2::read_xml(toString(createResponseDeclaration(sc)))
+    sut <- xml2::read_xml(toString(createResponseDeclaration(sut)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing outcomeDeclaration OneInColTable", {
-    sc <- new("OneInColTable",
+    sut <- new("OneInColTable",
               cols = c("Capulet", "Demetrius", "Prospero"),
               cols_identifiers = c("C", "D", "P"),
               rows = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -100,7 +100,8 @@ test_that("Testing outcomeDeclaration OneInColTable", {
 </outcomeDeclaration>
     </additionalTag>'
 
-    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
+    responseDe <- as.character(htmltools::tag(
+        "additionalTag", list(createOutcomeDeclaration(sut))))
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)

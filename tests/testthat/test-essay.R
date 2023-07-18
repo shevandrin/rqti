@@ -29,9 +29,9 @@ test_that("Testing createItemBody for the Essay object", {
                 </itemBody>
                 "
 
-    xml1 <- xml2::read_xml(toString(createItemBody(essay)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(essay)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing attributes values in extendedTextInteraction for Essay
@@ -55,10 +55,11 @@ object", {
   data-allowPaste=\"false\"/>
 </itemBody>
                 "
-    xml1 <- xml2::read_xml(toString(createItemBody(essay)))
-    xml2 <- xml2::read_xml(toString(example))
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(essay)))
+    expected <- xml2::read_xml(toString(example))
+    expect_equal(sut, expected)
 })
+
 test_that("Testing attributes values in extendedTextInteraction for Essay
 object", {
     sut <- suppressWarnings(new("Essay",
@@ -83,7 +84,7 @@ object", {
   data-allowPaste=\"false\"/>
 </itemBody>
                 "
-    xml1 <- xml2::read_xml(toString(suppressWarnings(createItemBody(sut))))
-    xml2 <- xml2::read_xml(toString(example))
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(suppressWarnings(createItemBody(sut))))
+    expected <- xml2::read_xml(toString(example))
+    expect_equal(sut, expected)
 })
