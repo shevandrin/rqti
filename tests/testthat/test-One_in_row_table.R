@@ -1,5 +1,5 @@
 test_that("Testing CreateItemBody OneInRowTable", {
-    sc <- new("OneInRowTable",
+    sut <- new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -28,13 +28,13 @@ test_that("Testing CreateItemBody OneInRowTable", {
         </matchInteraction>
         </itemBody>'
 
-    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(sut)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing create_response_declaration_OneInRowTable",{
-    sc <- new("OneInRowTable",
+    sut <- new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -62,15 +62,14 @@ test_that("Testing create_response_declaration_OneInRowTable",{
 </mapping>
 </responseDeclaration>'
 
-    qtiXML <- toString(createResponseDeclaration(sc))
+    qtiXML <- toString(createResponseDeclaration(sut))
     sut <- xml2::read_xml(qtiXML)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
-
 })
 
 test_that("Testing outcomeDeclaration OneInRowTable",{
-    sc <- new("OneInRowTable",
+    sut <- new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -100,9 +99,9 @@ test_that("Testing outcomeDeclaration OneInRowTable",{
 </outcomeDeclaration>
     </additionalTag>'
 
-    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
+    responseDe <- as.character(htmltools::tag(
+        "additionalTag", list(createOutcomeDeclaration(sut))))
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
-
 })
