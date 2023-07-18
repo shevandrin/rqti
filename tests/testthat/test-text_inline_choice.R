@@ -1,5 +1,6 @@
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- suppressMessages(new("Entry",
+    content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -39,13 +40,15 @@ In the deep bosom of the ocean buried.
 </blockquote>
 </itemBody>'
 
-    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing ResponseDeclaration Inline", {
-    sc <- suppressMessages(new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- suppressMessages(new("Entry",
+    content = list(
+    "<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -64,6 +67,7 @@ In the deep bosom of the ocean buried.
 </blockquote>"
     )))
     # ' The original example of QTI, do not have SCORE for that reason OPAL's example was taken with out the attribute defaultValue="0"
+
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 <correctResponse>
 <value>Y</value>
@@ -73,13 +77,15 @@ In the deep bosom of the ocean buried.
 </mapping>
 </responseDeclaration>'
 
-    xml1 <- xml2::read_xml(toString(createResponseDeclaration(sc)[[1]]))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createResponseDeclaration(sc)[[1]]))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing OutcomeDeclaration Inline", {
-    sc <- suppressMessages(new("Entry", content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
+    sc <- suppressMessages(
+    new("Entry",
+    content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
@@ -98,7 +104,8 @@ In the deep bosom of the ocean buried.
 </blockquote>"
     )))
 
-    # ' The original example of QTI, do not have SCORE for that reason OPAL's example was taken with out MINSCORE
+    # The original example of QTI, do not have SCORE for that
+    # reason OPAL's example was taken with out MINSCORE
 
     example <- '<additionalTag>
 <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -133,21 +140,24 @@ In the deep bosom of the ocean buried.
 </outcomeDeclaration>
 </additionalTag>'
 
-    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
-    xml1 <- xml2::read_xml(responseDe)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    responseDe <- as.character(htmltools::tag(
+        "additionalTag", list(createOutcomeDeclaration(sc))))
+    sut <- xml2::read_xml(responseDe)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 #options as numeric
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry", content = list("<p>One hour is",new("InlineChoice",
-                                          response_identifier = "RESPONSE",
-                                          answer_index = 3,
-                                          score = 1,
-                                          shuffle = FALSE,
-                                          solution = c("160","90","60"),
-                                          choices_identifiers = c("1","2","3")),
-                                          "minutes</p>")))
+    sc <- suppressMessages(new("Entry",
+                    content = list("<p>One hour is",new("InlineChoice",
+                              response_identifier = "RESPONSE",
+                              answer_index = 3,
+                              score = 1,
+                              shuffle = FALSE,
+                              solution = c("160","90","60"),
+                              choices_identifiers = c("1","2","3")),
+                              "minutes</p>")))
     example <- '<itemBody>
 	    <p>One hour is
   <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
@@ -157,18 +167,21 @@ test_that("Testing CreateItemBody Inline", {
 			</inlineChoiceInteraction>
   minutes</p>
 	</itemBody>'
-    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 # with out score
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry", content = list("<p>One hour is",new("InlineChoice",
-                                                           response_identifier = "RESPONSE",
-                                                           answer_index = 3,
-                                                           shuffle = FALSE,
-                                                           solution = c("160","90","60"),
-                                                           choices_identifiers = c("1","2","3")),
+    sc <- suppressMessages(new("Entry",
+                               content = list(
+                                   "<p>One hour is",new("InlineChoice",
+                                          response_identifier = "RESPONSE",
+                                          answer_index = 3,
+                                          shuffle = FALSE,
+                                          solution = c("160","90","60"),
+                                          choices_identifiers = c("1","2","3")),
                                       "minutes</p>")))
     example <- '<itemBody>
 	    <p>One hour is
@@ -179,18 +192,20 @@ test_that("Testing CreateItemBody Inline", {
 			</inlineChoiceInteraction>
   minutes</p>
 	</itemBody>'
-    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 # with out options_identifier
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry", content = list("<p>One hour is",new("InlineChoice",
-                                                           response_identifier = "RESPONSE",
-                                                           answer_index = 3,
-                                                           shuffle = FALSE,
-                                                           solution = c("160","90","60")),
-                                                               "minutes</p>")))
+    sc <- suppressMessages(new("Entry",
+                        content = list("<p>One hour is",new("InlineChoice",
+                                           response_identifier = "RESPONSE",
+                                           answer_index = 3,
+                                           shuffle = FALSE,
+                                           solution = c("160","90","60")),
+                                           "minutes</p>")))
     example <- '<itemBody>
 	    <p>One hour is
   <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
@@ -200,10 +215,11 @@ test_that("Testing CreateItemBody Inline", {
 			</inlineChoiceInteraction>
   minutes</p>
 	</itemBody>'
-    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 test_that("Testing construction function for InlineChoice class", {
     sut <- suppressMessages(new("Entry", identifier = "new",
                   points = 4,
