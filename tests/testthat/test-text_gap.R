@@ -1,32 +1,37 @@
 test_that("Testing create_item_body_text ", {
-    sc <- suppressMessages(new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- suppressMessages(new("Entry",
+    content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
-                                                         new("TextGap",
-                                                             solution = c("winter", "WINTER", "Winter"),
-                                                             response_identifier = "RESPONSE_1",
-                                                             score = 0.5,
-                                                             expected_length = 10),
-                                                         "</p>","<p>",
-                                                         new("NumericGap",
-                                                             response_identifier = "RESPONSE_2",
-                                                             solution = 12,
-                                                             score = 0.5,
-                                                             tolerance = 1,
-                                                             expected_length = 4),
-                                                         "leaves by this sun of York;
+                   new("TextGap",
+                       solution = c("winter", "WINTER", "Winter"),
+                       response_identifier = "RESPONSE_1",
+                       score = 0.5,
+                       expected_length = 10),
+                   "</p>","<p>",
+                   new("NumericGap",
+                       response_identifier = "RESPONSE_2",
+                       solution = 12,
+                       score = 0.5,
+                       tolerance = 1,
+                       expected_length = 4),
+                   "leaves by this sun of York;
   </p>
         <p>And all the clouds that lour'd upon our house</p>
         <p>
   In the deep bosom of the ocean buried.  At",
-                                                         new("NumericGap",
-                                                             response_identifier = "RESPONSE_4",
-                                                             solution = 12.5,
-                                                             tolerance = 1,
-                                                             expected_length = 5,
-                                                             placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>")))
-    # ' The XML example was taked from OPAL because qti example doesn't work in OPAL
+                   new("NumericGap",
+                       response_identifier = "RESPONSE_4",
+                       solution = 12.5,
+                       tolerance = 1,
+                       expected_length = 5,
+                       placeholder = "Floating point"),
+
+                   "meters under the darkness is found.</p>")))
+
+    # The XML example was taked from OPAL because qti
+    # example doesn't work in OPAL
+
     example <- '<itemBody>
         <p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>
@@ -44,42 +49,45 @@ test_that("Testing create_item_body_text ", {
   meters under the darkness is found.</p>
 </itemBody>'
 
-    xml1 <- xml2::read_xml(as.character(createItemBody(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(as.character(createItemBody(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing create Response Declaration Gap ", {
-    sc <- suppressMessages(new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- suppressMessages(new("Entry",
+    content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
-                                                         new("TextGap",
-                                                             solution = c("winter","WINTER", "Winter"),
-                                                             response_identifier = "RESPONSE_1",
-                                                             score = 0.5,
-                                                             expected_length = 10),
-                                                         "</p>","<p>",
-                                                         new("NumericGap",
-                                                             response_identifier = "RESPONSE_2",
-                                                             solution = 1234567890,
-                                                             tolerance = 1,
-                                                             expected_length = 4),
-                                                         "leaves by this sun of York;
+                   new("TextGap",
+                       solution = c("winter","WINTER", "Winter"),
+                       response_identifier = "RESPONSE_1",
+                       score = 0.5,
+                       expected_length = 10),
+                   "</p>","<p>",
+                   new("NumericGap",
+                       response_identifier = "RESPONSE_2",
+                       solution = 1234567890,
+                       tolerance = 1,
+                       expected_length = 4),
+                   "leaves by this sun of York;
   </p>
         <p>And all the clouds that lour'd upon our house</p>
         <p>
   In the deep bosom of the ocean buried.  At",
-                                                         new("NumericGap",
-                                                             response_identifier = "RESPONSE_4",
-                                                             solution = 12.5,
-                                                             tolerance = 1,
-                                                             score = 0.5,
-                                                             placeholder = "Floating point"),
+                   new("NumericGap",
+                       response_identifier = "RESPONSE_4",
+                       solution = 12.5,
+                       tolerance = 1,
+                       score = 0.5,
+                       placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>")))
-    # ' The XML example was taken from OPAL because qti example doesn't work in OPAL
+                   "meters under the darkness is found.</p>")))
 
-    # 'Response Declaration 1. In the example was not included <mapping defaultValue="0">
-    # in mapEntry is included caseSensitive="true" according to qti inf model: caseSensitive [1]: boolean
+# The XML example was taken from OPAL because qti example doesn't work in OPAL
+# Response Declaration 1. In the example was not included
+# <mapping defaultValue="0">
+# in mapEntry is included caseSensitive="true" according to
+# qti inf model: caseSensitive [1]: boolean
 
     example <- '<responseDeclaration identifier="RESPONSE_1" cardinality="single" baseType="string">
 <correctResponse>
@@ -93,9 +101,9 @@ test_that("Testing create Response Declaration Gap ", {
 </responseDeclaration>'
 
     responseDe <- createResponseDeclaration(sc)[[1]]
-    xml1 <- xml2::read_xml(as.character(responseDe))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(as.character(responseDe))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 
     # 'Response Declaration 2
 
@@ -106,9 +114,9 @@ test_that("Testing create Response Declaration Gap ", {
 </responseDeclaration>'
 
     responseDe <- createResponseDeclaration(sc)[[2]]
-    xml1 <- xml2::read_xml(as.character(responseDe))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(as.character(responseDe))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 
     # 'Response Declaration 3
 
@@ -120,42 +128,44 @@ test_that("Testing create Response Declaration Gap ", {
 </responseDeclaration>'
 
     responseDe <- createResponseDeclaration(sc)[[3]]
-    xml1 <- xml2::read_xml(as.character(responseDe))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(as.character(responseDe))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing create Outcome Declaration Gap ", {
-    sc <- suppressMessages(new("Entry", content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
+    sc <- suppressMessages(new("Entry",
+    content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
-                                                         new("TextGap",
-                                                             solution = c("winter", "WINTER", "Winter"),
-                                                             response_identifier = "RESPONSE_1",
-                                                             score = 0.5,
-                                                             expected_length = 10),
-                                                         "</p>","<p>",
-                                                         new("NumericGap",
-                                                             response_identifier = "RESPONSE_2",
-                                                             solution = 12,
-                                                             tolerance = 1,
-                                                             expected_length = 4),
-                                                         "leaves by this sun of York;
+                   new("TextGap",
+                       solution = c("winter", "WINTER", "Winter"),
+                       response_identifier = "RESPONSE_1",
+                       score = 0.5,
+                       expected_length = 10),
+                   "</p>","<p>",
+                   new("NumericGap",
+                       response_identifier = "RESPONSE_2",
+                       solution = 12,
+                       tolerance = 1,
+                       expected_length = 4),
+                   "leaves by this sun of York;
   </p>
         <p>And all the clouds that lour'd upon our house</p>
         <p>
   In the deep bosom of the ocean buried.  At",
-                                                         new("NumericGap",
-                                                             response_identifier = "RESPONSE_4",
-                                                             solution = 12.5,
-                                                             tolerance = 1,
-                                                             expected_length = 5,
-                                                             score = 0.5,
-                                                             placeholder = "Floating point"),
+                   new("NumericGap",
+                       response_identifier = "RESPONSE_4",
+                       solution = 12.5,
+                       tolerance = 1,
+                       expected_length = 5,
+                       score = 0.5,
+                       placeholder = "Floating point"),
 
-                                                         "meters under the darkness is found.</p>")))
-    # ' The XML example was taken from OPAL because qti example doesn't work in OPAL
+                   "meters under the darkness is found.</p>")))
+# The XML example was taken from OPAL because qti example doesn't work in OPAL
 
-    # 'Outcome Declaration 1.Omitted the tag view="testConstructor" from OPAL example. There is not outcome Delete it from the example
+# Outcome Declaration 1.Omitted the tag view="testConstructor" from OPAL
+# example. There is not outcome Delete it from the example
 
     example <- '<additionalTag>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -220,7 +230,8 @@ test_that("Testing create Outcome Declaration Gap ", {
 </outcomeDeclaration>
     </additionalTag>'
 
-    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
+    responseDe <- as.character(htmltools::tag(
+        "additionalTag", list(createOutcomeDeclaration(sc))))
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
@@ -228,12 +239,13 @@ test_that("Testing create Outcome Declaration Gap ", {
 })
 
 test_that("Testing create_item_body_text ", {
-    sc <- suppressMessages(new("Entry", content = list('The speed of light is', new("TextGapOpal",
-                                                                   response_identifier = "RESPONSE_1",
-                                                                   score = 1,
-                                                                   solution = c("more", "MORE", "More"),
-                                                                   tolerance = 4),
-                                      'than the speed of sound')))
+    sc <- suppressMessages(new("Entry",
+            content = list('The speed of light is', new("TextGapOpal",
+                                    response_identifier = "RESPONSE_1",
+                                    score = 1,
+                                    solution = c("more", "MORE", "More"),
+                                    tolerance = 4),
+                                   'than the speed of sound')))
     expected <- '<additionalTag>
     <responseProcessing>
     <responseCondition>
@@ -255,12 +267,15 @@ test_that("Testing create_item_body_text ", {
     </setOutcomeValue>
     </responseProcessing>
     </additionalTag>'
-    response <- as.character(htmltools::tag("additionalTag", list(createResponseProcessing(sc))))
-    xml1 <- xml2::read_xml(response)
-    xml2 <- xml2::read_xml(expected)
-    expect_equal(xml1, xml2)
+    response <- as.character(htmltools::tag(
+        "additionalTag", list(createResponseProcessing(sc))))
+    sut <- xml2::read_xml(response)
+    expected <- xml2::read_xml(expected)
+    expect_equal(sut, expected)
 })
-test_that("Testing function of create_outcome_declaration_entry for Entry class", {
+
+test_that("Testing function of create_outcome_declaration_entry
+          for Entry class", {
     sut <- suppressMessages(new("Entry", identifier = "new",
                   points = 3,
                   title = "NumericGap",
@@ -318,10 +333,10 @@ test_that("Testing function of create_outcome_declaration_entry for Entry class"
 </outcomeDeclaration>
 </additionalTag>'
 
-    expected <- toString(htmltools::tag(
+    sut1 <- toString(htmltools::tag(
         "additionalTag", list(create_outcome_declaration_entry(sut))))
 
-    xml1 <- xml2::read_xml(expected)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(sut1)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
