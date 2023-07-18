@@ -2,7 +2,8 @@ test_that("Testing CreateItemBody OneInRowTable", {
     sc <- new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
-              cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
+              cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
+                       "The Tempest"),
               cols_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "D M", "L M", "P T"),
               points = 5,
@@ -27,16 +28,17 @@ test_that("Testing CreateItemBody OneInRowTable", {
         </matchInteraction>
         </itemBody>'
 
-    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing create_response_declaration_OneInRowTable",{
     sc <- new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
-              cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
+              cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
+                       "The Tempest"),
               cols_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "D M", "L M", "P T"),
               answers_scores = c(1, 0.5, 0.5, 1),
@@ -61,9 +63,9 @@ test_that("Testing create_response_declaration_OneInRowTable",{
 </responseDeclaration>'
 
     qtiXML <- toString(createResponseDeclaration(sc))
-    xml1 <- xml2::read_xml(qtiXML)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(qtiXML)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 
 })
 
@@ -71,7 +73,8 @@ test_that("Testing outcomeDeclaration OneInRowTable",{
     sc <- new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
-              cols = c("A Midsummer-Night's Dream", "Romeo and Juliet", "The Tempest"),
+              cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
+                       "The Tempest"),
               cols_identifiers = c("M", "R", "T"),
               answers_identifiers = c("C R", "D M", "L M", "P T"),
               points = 5,
@@ -98,8 +101,8 @@ test_that("Testing outcomeDeclaration OneInRowTable",{
     </additionalTag>'
 
     responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
-    xml1 <- xml2::read_xml(responseDe)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(responseDe)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 
 })
