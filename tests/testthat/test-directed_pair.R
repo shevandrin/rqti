@@ -10,7 +10,9 @@ test_that("Testing CreateItemBody DirectedPair", {
               prompt = "Associated left elements with the right category"
     )
 
-    # The example was based on OPAL question type "Match Interaction" because qti does not provide it
+    # The example was based on OPAL question type "Match Interaction" because
+    # qti does not provide it
+
     example <- '<itemBody>
 <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
 <prompt>Associated left elements with the right category</prompt>
@@ -28,9 +30,9 @@ test_that("Testing CreateItemBody DirectedPair", {
     </itemBody>'
 
     # print("I think the name of the attributes confused a little")
-    xml1 <- xml2::read_xml(toString(createItemBody(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing ResponseDeclaration DirectedPair", {
@@ -46,7 +48,8 @@ test_that("Testing ResponseDeclaration DirectedPair", {
               prompt = "Associated left elements with the right category"
     )
 
-    # The example was based on OPAL question type "Match Interaction" because qti does not provide it
+    # The example was based on OPAL question type "Match Interaction" because
+    # qti does not provide it
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
 <correctResponse>
 <value>ID_3 IDT_3</value>
@@ -61,9 +64,9 @@ test_that("Testing ResponseDeclaration DirectedPair", {
 </responseDeclaration>'
 
     # print("There is not option to give individual values to answer - fixed")
-    xml1 <- xml2::read_xml(toString(createResponseDeclaration(sc)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createResponseDeclaration(sc)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing OutcomeDeclaration DirectedPair", {
@@ -78,7 +81,8 @@ test_that("Testing OutcomeDeclaration DirectedPair", {
               prompt = "Associated left elements with the right category"
     )
 
-    # The example was based on OPAL question type "Match Interaction" because qti does not provide it
+    # The example was based on OPAL question type "Match Interaction" because
+    # qti does not provide it
     example <- '<additionalTag>
 <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 <defaultValue>
@@ -97,8 +101,9 @@ test_that("Testing OutcomeDeclaration DirectedPair", {
 </outcomeDeclaration>
     </additionalTag>'
 
-    responseDe <- as.character(htmltools::tag("additionalTag", list(createOutcomeDeclaration(sc))))
-    xml1 <- xml2::read_xml(responseDe)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    responseDe <- as.character(htmltools::tag("additionalTag",
+                                            list(createOutcomeDeclaration(sc))))
+    sut <- xml2::read_xml(responseDe)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })

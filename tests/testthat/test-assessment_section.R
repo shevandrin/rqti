@@ -37,11 +37,14 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
         identifier = "id_test",
         title = "some title",
         section = list(exam_section))
-    expected<-toString(getAssessmentItems(exam_section))
-    example <- "q1.xml, q2.xml, q3.xml, q4.xml"
-    expect_equal(expected, example)
+
+    sut<-toString(getAssessmentItems(exam_section))
+    expected <- "q1.xml, q2.xml, q3.xml, q4.xml"
+    expect_equal(sut, expected)
 })
-test_that("Testing method buildAssessmentSection() for AssessmentSection class", {
+
+test_that("Testing method buildAssessmentSection() for AssessmentSection class",
+          {
     mc1 <- new("MultipleChoice",
                identifier = "q1", prompt = "What does 3/4 + 1/4 = ?",
                title = "MultipleChoice",
@@ -91,15 +94,17 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
     </assessmentSection>
     </additionalTag>"
 
-     expected <- toString(htmltools::tag(
-         "additionalTag", list(suppressMessages(buildAssessmentSection(exam_section,
+     sut1 <- toString(htmltools::tag(
+         "additionalTag",
+         list(suppressMessages(buildAssessmentSection(exam_section,
                                                       folder = "todelete")))))
 
-    xml1 <- xml2::read_xml(expected)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(sut1)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
     unlink("todelete", recursive = TRUE)
 })
+
 test_that("Test of method buildAssessmentSection() when reading a file in AssessmentSection class", {
     sc <- new("SingleChoice",
               prompt = "What is the percentage of 3/20?",
@@ -109,17 +114,18 @@ test_that("Test of method buildAssessmentSection() when reading a file in Assess
               identifier = "new")
     suppressMessages(createQtiTask(sc, "todelete", "TRUE"))
 
-    expected <- suppressMessages(toString(buildAssessmentSection(
+    sut1 <- suppressMessages(toString(buildAssessmentSection(
         object = "todelete/new.xml", folder = "todelete")))
 
     example <- "<assessmentItemRef identifier =\"new\" href=\"new.xml\"></assessmentItemRef>"
 
-    xml1 <- xml2::read_xml(expected)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(sut1)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
     unlink("todelete", recursive = TRUE)
     unlink("new.xml", recursive = TRUE)
 })
+
 test_that("Testing method getAssessmentItems() for AssessmentSection class", {
     mc1 <- new("MultipleChoice",
                identifier = "q1", prompt = "What does 3/4 + 1/4 = ?",
@@ -160,11 +166,13 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
                 title = "some title",
                 section = list(exam_section))
 
-    expected<-toString(getAssessmentItems(exam_section))
-    example <- "q1.xml, q2.xml, q3.xml, q4.xml"
-    expect_equal(expected, example)
+    sut<-toString(getAssessmentItems(exam_section))
+    expected <- "q1.xml, q2.xml, q3.xml, q4.xml"
+    expect_equal(sut, expected)
 })
-test_that("Testing AssessmentTestOpal class: create tasks with upload files xml", {
+
+test_that("Testing AssessmentTestOpal class: create tasks with upload
+          files xml", {
     mc <- new("MultipleChoice",
                identifier = "test_create_qti_task_MultipleChoice",
                prompt = "What does 3/4 + 1/4 = ?",
@@ -200,7 +208,8 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
                  identifier = "test_create_qti_task_Order",
                  title = "Order",
                  prompt = "Choose the correct order",
-                 choices = c("Data collection", "Data cleansing", "Data marking", "Verification and visualization"),
+                 choices = c("Data collection", "Data cleansing",
+                             "Data marking", "Verification and visualization"),
                  choices_identifiers = c("1", "2", "3", "4"),
                  points = 1
     )
@@ -208,13 +217,15 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
     exam_section <- new("AssessmentSection",
                         identifier = "sec_id",
                         title = "section",
-                        assessment_item = list(mc, order, DirectedPair, TextGapOpal)
+                        assessment_item = list(mc, order, DirectedPair,
+                                               TextGapOpal)
     )
     exam <- new("AssessmentTestOpal",
                 identifier = "id_test",
                 title = "Mock test",
                 section = list(exam_section))
-    suppressWarnings(suppressMessages(createQtiTest(exam, "exam_folder", "TRUE")))
+    suppressWarnings(suppressMessages(createQtiTest(exam, "exam_folder",
+                                                    "TRUE")))
 
     # Reading of tasks from xml files
     path1 <- test_path("file/test_create_qti_task_MultipleChoice.xml")
@@ -225,37 +236,45 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload files xml"
     example_exam_section <- new("AssessmentSection",
                                identifier = "sec_id",
                                title = "section",
-                               assessment_item = list(path1, path2, path3, path4))
+                               assessment_item = list(path1, path2,
+                                                      path3, path4))
 
     example_exam <- new("AssessmentTestOpal",
                 identifier = "id_test",
                 title = "Mock test",
                 section = list(example_exam_section))
-    suppressWarnings(suppressMessages(createQtiTest(example_exam, "exam_folder3", FALSE)))
+    suppressWarnings(suppressMessages(createQtiTest(example_exam,
+                                                    "exam_folder3", FALSE)))
 
     # get list content zip files and compare them
-    zip_example <- list.files(path = "exam_folder", pattern = ".zip", full.names = TRUE)
-    zip_expected <- list.files(path = "exam_folder3", pattern = ".zip", full.names = TRUE)
+    zip_expected <- list.files(path = "exam_folder", pattern = ".zip",
+                              full.names = TRUE)
+    zip_sut <- list.files(path = "exam_folder3", pattern = ".zip",
+                              full.names = TRUE)
 
-    list_example <- utils::unzip(zip_example, list = TRUE)
     list_expected <- utils::unzip(zip_expected, list = TRUE)
+    list_sut <- utils::unzip(zip_sut, list = TRUE)
 
-    ls <- list_example$Name %in% list_expected$Name
+    ls <- list_expected$Name %in% list_sut$Name
 
     expect_equal(all(ls), TRUE)
 
     unlink(file.path(getwd(),"exam_folder"), recursive = TRUE)
     unlink(file.path(getwd(),"exam_folder3"), recursive = TRUE)
 })
-test_that("Testing buildAssessmentSection() that returns a warning for an invalid XML file", {
+
+test_that("Testing buildAssessmentSection() that returns a warning
+          for an invalid XML file", {
     temp_folder <- tempdir()
 
     invalid_xml <- tempfile(tmpdir = temp_folder, fileext = ".xml")
     cat("<invalid></invalid>", file = invalid_xml)
 
-    expect_warning(suppressMessages(buildAssessmentSection(invalid_xml, temp_folder)),"is not valid")
+    expect_warning(suppressMessages(buildAssessmentSection(
+                                    invalid_xml, temp_folder)),"is not valid")
 })
-test_that("Testing buildAssessmentSection() that returns a warning for incorrect file or path", {
+test_that("Testing buildAssessmentSection() that returns a warning
+          for incorrect file or path", {
     expect_warning(
         buildAssessmentSection("nonexistent.xml", "nonexistent_folder"),
         "is not correct. This file will be omitted in test"
