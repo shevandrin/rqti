@@ -50,7 +50,7 @@ setMethod("createOutcomeDeclaration", signature(object = "MultipleChoice"),
 #' @aliases getPoints,MultipleChoice
 setMethod("getPoints", signature(object = "MultipleChoice"),
           function(object) {
-              return(sum(object@points))
+              return(sum(object@points[object@points > 0]))
           })
 
 # helpers
