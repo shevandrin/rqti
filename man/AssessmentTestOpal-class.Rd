@@ -48,17 +48,17 @@ end of the test
 \item{\code{qti_version}}{string, optional; qti information model version, default
 'v2p1'}
 
-\item{\code{time_limits}}{numeric, optional;  controls the amount of time a candidate
-is allowed for this part of the test}
+\item{\code{time_limits}}{numeric, optional;  controls the amount of time \emph{in
+minutes} a candidate is allowed for this part of the test}
 
-\item{\code{max_attempts}}{numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass}
+\item{\code{max_attempts}}{numeric, optional; enables the maximum number of attempts,
+that candidate is allowed to pass}
 
 \item{\code{allow_comment}}{boolean, optional; enables to allow candidate to leave
 comments in each question}
 
-\item{\code{rebuild_variables}}{boolean, optional; enables to recalculate variables and
-reshuffle the order of choices for each item-attempt}
+\item{\code{rebuild_variables}}{boolean, optional; enables to recalculate variables
+and reshuffle the order of choices for each item-attempt}
 
 \item{\code{show_test_time}}{boolean, optional; determines to show candidate elapsed
 processing time without time limit; default 'FALSE'}

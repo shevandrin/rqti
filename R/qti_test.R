@@ -61,7 +61,7 @@ create_assessment_test <-function(object, folder, data_downloads = NULL,
                                "data-features" = data_features)
     assesment_test <- tag("assessmentTest", assessment_attributes)
     if (!is.na(object@time_limits)) {
-        time_limits <- tag("timeLimits", list(maxTime = object@time_limits))
+       time_limits <- tag("timeLimits", list(maxTime = object@time_limits * 60))
     } else {time_limits = c()}
 
     session_control <- create_item_session_control(object@max_attempts,
@@ -84,7 +84,7 @@ create_section_test <- function(object, folder) {
     assessment_items <- Map(buildAssessmentSection, object@assessment_item,
                             folder)
     if (!is.na(object@time_limits)) {
-        time_limits <- tag("timeLimits", list(maxTime = object@time_limits))
+       time_limits <- tag("timeLimits", list(maxTime = object@time_limits * 60))
     } else {time_limits = c()}
     if (object@shuffle) {
         shuffle <- tag("ordering", list(shuffle = "true"))
