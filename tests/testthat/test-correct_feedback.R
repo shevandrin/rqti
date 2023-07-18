@@ -9,9 +9,9 @@ test_that("Testing method createModalFeedback() for WrongFeedback class", {
 <modalFeedback identifier=\"correct\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" title=\"Feedback wrong name\">
 		<p>Text Feedback wrong</p>
 </modalFeedback>"
-    xml1 <- xml2::read_xml(toString(createModalFeedback(sut)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createModalFeedback(sut)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 test_that("Testing method createResponseCondition", {
     sut <- new ("ModalFeedback",outcome_identifier = "FEEDBACKMODAL",
@@ -39,10 +39,11 @@ test_that("Testing method createResponseCondition", {
   </responseIf>
 </responseCondition>"
 
-    xml1 <- xml2::read_xml(toString(createResponseCondition(sut)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createResponseCondition(sut)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 test_that("Testing method createModalFeedback() for WrongFeedback class", {
     sut <- new ("ModalFeedback",outcome_identifier = "FEEDBACKMODAL",
                 show = TRUE,
@@ -54,11 +55,13 @@ test_that("Testing method createModalFeedback() for WrongFeedback class", {
 <modalFeedback identifier=\"correct\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" title=\"Feedback wrong name\">
 		<p>Text Feedback wrong</p>
 </modalFeedback>"
-    xml1 <- xml2::read_xml(toString(createModalFeedback(sut)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createModalFeedback(sut)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
-test_that("Testing method createResponseCondition() for CorrectFeedback class", {
+
+test_that("Testing method createResponseCondition() for CorrectFeedback class",
+          {
     sut <- new("CorrectFeedback", outcome_identifier = "FEEDBACKMODAL",
                          show = FALSE,
                          title = "Feedback wrong name",
@@ -84,11 +87,10 @@ test_that("Testing method createResponseCondition() for CorrectFeedback class", 
 </responseCondition>
     </additionalTag>"
 
-    expected <- toString(htmltools::tag("additionalTag",
+    sut <- toString(htmltools::tag("additionalTag",
                                         list(createResponseCondition(sut))))
 
-    xml1 <- xml2::read_xml(expected)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(sut)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
-
