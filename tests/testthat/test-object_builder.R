@@ -148,7 +148,8 @@ test_that("create_question_object", {
 path <- test_path("file/test_entry_example1.md")
 sut <- suppressMessages(create_question_object(path))
 expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
-                new("TextGap", response_identifier = "response_1", solution = "ein"),
+                new("TextGap", response_identifier = "response_1",
+                    solution = "ein"),
                 " Handy?</p>"),
                 points = 5,
                 identifier = "test 2",
@@ -179,9 +180,12 @@ expect_equal(sut, expected)
 })
  # Entry - Testing function create_outcome_declaration_entry
 test_that("Testing function create_outcome_declaration_entry", {
-    expected <- suppressMessages(new("Entry", content = list("<p>Hast du",
-                                            new("TextGap", response_identifier = "response_1", solution = "ein"),
-                                            " Handy?</p>"),
+    expected <- suppressMessages(new("Entry",
+                                     content = list("<p>Hast du",
+                                     new("TextGap",
+                                     response_identifier = "response_1",
+                                     solution = "ein"),
+                                     " Handy?</p>"),
                     points = 1,
                     identifier = "test 2",
                     title = "Germany"
@@ -233,7 +237,8 @@ test_that("Test parsing md for Order task", {
     sut <- create_question_object(path)
     expected <- new("Order", content = list("<p>Arrange German cities in ascending order of population</p>"),
                     identifier = "test_order_example",
-                    choices = c("Berlin", "Hamburg", "Munich", "Cologne", "Düsseldorf",  "Leipzig")
+                    choices = c("Berlin", "Hamburg", "Munich",
+                                "Cologne", "Düsseldorf",  "Leipzig")
     )
     expect_equal(sut, expected)
 })
@@ -242,10 +247,14 @@ test_that("Test parsing md for Direct Pair task", {
     sut <- create_question_object(path)
     expected <- new("DirectedPair", content = list("<p>Associate the cities with lands.</p>"),
                     identifier = "test_direct_pair_example",
-                    rows = c("Munchen", "Chemnitz", "Dusseldorf", "Karlsruhe", "Erfurt"),
-                    rows_identifiers = c("row_1", "row_2", "row_3","row_4","row_5"),
-                    cols = c("Bayern", "Sachsen", "NRW", "Baden-Württemberg", "Thüringen"),
-                    cols_identifiers = c("col_1", "col_2", "col_3","col_4","col_5"),
+                    rows = c("Munchen", "Chemnitz", "Dusseldorf",
+                                        "Karlsruhe", "Erfurt"),
+                    rows_identifiers = c("row_1", "row_2", "row_3",
+                                         "row_4","row_5"),
+                    cols = c("Bayern", "Sachsen", "NRW",
+                                         "Baden-Württemberg", "Thüringen"),
+                    cols_identifiers = c("col_1", "col_2", "col_3",
+                                         "col_4","col_5"),
                     answers_identifiers = c("row_1 col_1", "row_2 col_2",
                                     "row_3 col_3", "row_4 col_4", "row_5 col_5"),
                     answers_scores = c(1, 1, 1, 1, 0.5)
@@ -259,11 +268,15 @@ test_that("Test parsing md for OnInColTable task", {
                          content = list("<p>Choose the correct order in the multiplication table</p>"),
                          identifier = "test_OnInColTable_example",
                          title = "test_OnInColTable_example",
-                         rows = c("2*3 =", "4*7 =", "12*3 =", "3*9 =", "5*5 ="),
-                         rows_identifiers = c("row_1", "row_2", "row_3", "row_4", "row_5"),
+                         rows = c("2*3 =", "4*7 =", "12*3 =",
+                                              "3*9 =", "5*5 ="),
+                         rows_identifiers = c("row_1", "row_2", "row_3",
+                                              "row_4", "row_5"),
                          cols = c("6", "36", "27", "72/2", "25"),
-                         cols_identifiers = c("col_1", "col_2", "col_3", "col_4", "col_5"),
-                         answers_identifiers =c("row_1 col_1", "row_3 col_2", "row_3 col_4", "row_4 col_3", "row_5 col_5"),
+                         cols_identifiers = c("col_1", "col_2", "col_3",
+                                              "col_4", "col_5"),
+                         answers_identifiers =c("row_1 col_1", "row_3 col_2",
+                                "row_3 col_4", "row_4 col_3", "row_5 col_5"),
                          answers_scores = c(0.5, 1, 1, 1, 1)
     )
     expect_equal(sut, expected)
@@ -278,10 +291,13 @@ test_that("Test parsing md for OneInRowTable task", {
                          identifier = "test_OneInRowTable_example",
                          title = "OneInRowTable",
                          rows = c("4*9 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
-                         rows_identifiers = c("row_1", "row_2", "row_3", "row_4", "row_5"),
+                         rows_identifiers = c("row_1", "row_2", "row_3",
+                                              "row_4", "row_5"),
                          cols = c("27", "36", "25", "6"),
-                         cols_identifiers = c("col_1", "col_2", "col_3", "col_4"),
-                         answers_identifiers = c("row_1 col_2", "row_2 col_1", "row_3 col_3", "row_4 col_4", "row_5 col_2"),
+                         cols_identifiers = c("col_1", "col_2",
+                                              "col_3", "col_4"),
+                         answers_identifiers = c("row_1 col_2", "row_2 col_1",
+                                "row_3 col_3", "row_4 col_4", "row_5 col_2"),
                          answers_scores = c(0.5, 1, 1, 1, 1))
     expect_equal(sut1, expected)
     expect_equal(sut2, expected)
@@ -293,10 +309,13 @@ test_that("Test parsing md for MultipleChoiceTable task", {
                     content = list("<p>Choose the correct order in the multiplication table</p>"),
                     identifier = "test_MultipleChoiceTable_example",
                     rows = c("4*7-1 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
-                    rows_identifiers = c("row_1", "row_2", "row_3", "row_4", "row_5"),
+                    rows_identifiers = c("row_1", "row_2", "row_3",
+                                         "row_4", "row_5"),
                     cols = c("27", "36", "25", "6", "72/2"),
-                    cols_identifiers = c("col_1", "col_2", "col_3", "col_4", "col_5"),
-                    answers_identifiers =c("row_1 col_1", "row_2 col_1", "row_3 col_3", "row_4 col_4", "row_5 col_2", "row_5 col_5"),
+                    cols_identifiers = c("col_1", "col_2", "col_3",
+                                         "col_4", "col_5"),
+                    answers_identifiers =c("row_1 col_1", "row_2 col_1",
+                    "row_3 col_3", "row_4 col_4", "row_5 col_2", "row_5 col_5"),
                     answers_scores = c(1, 1, 1, 1, 1, 1))
     expect_equal(sut, expected)
 })
@@ -349,7 +368,7 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
                          case_sensitive = FALSE,
                          tolerance = 2),'</p>'),
                     feedback = list(new("ModalFeedback",
-                                        content = list("<p>general feedback</p>")))))
+                                content = list("<p>general feedback</p>")))))
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
@@ -360,20 +379,26 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
                     title = "test_entry_example",
                     content = list('<p>Das beliebteste Telefon der Welt ist ',
                                    new("InlineChoice",
-                                       solution = c("Realme 9 Pro","Realme GT Master Edition","Samsung Galaxy A52"),
+                                       solution = c("Realme 9 Pro",
+                                                    "Realme GT Master Edition",
+                                                    "Samsung Galaxy A52"),
                                        response_identifier = "response_1"),
-                                   '. Das meistverkaufte Telefonmodell in Deutschland ist ',
+                    '. Das meistverkaufte Telefonmodell in Deutschland ist ',
                                    new("InlineChoice",
-                                       solution = c("Apple iPhone 13 Pro","Apple iPhone 13 Pro Max","Apple iPhone 13"),
+                                       solution = c("Apple iPhone 13 Pro",
+                                                    "Apple iPhone 13 Pro Max",
+                                                    "Apple iPhone 13"),
                                        response_identifier = "response_2",
                                        answer_index = 3),
                                    '.</p>\n<p>In welchem Jahr begann das iPhone auf dem europäischen Markt zu verkaufen?',
-                                   new("InlineChoice", response_identifier = "response_3", solution = c(2007, 2008)),
+                                   new("InlineChoice",
+                                       response_identifier = "response_3",
+                                       solution = c(2007, 2008)),
                                    '</p>'),
                     feedback = list(new("WrongFeedback",
-                                        content = list("<p>wrong feedback</p>")),
+                                    content = list("<p>wrong feedback</p>")),
                                      new("CorrectFeedback",
-                                        content = list("<p>correct feedback</p>"))
+                                      content = list("<p>correct feedback</p>"))
                                        )
                     ))
     expect_equal(sut, expected)
@@ -403,7 +428,8 @@ test_that("Testing of creating mc object from Rmd without points", {
 
     expect_equal(sut@points, expected@points)
 })
-test_that("Testing the order task, points are awarded for each correct answer.", {
+test_that("Testing the order task, points are awarded for each correct answer.",
+          {
     path <- test_path("file/test_order.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
     xml_file_sut <- xml2::read_xml(test_path("test_order.xml"))
