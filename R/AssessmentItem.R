@@ -59,7 +59,6 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 #'   [MultipleChoiceTable], [DirectedPair])
 #' @docType methods
 #' @rdname createItemBody-methods
-#' @export
 setGeneric("createItemBody", function(object) {
     standardGeneric("createItemBody")
 })
@@ -75,7 +74,6 @@ setGeneric("createItemBody", function(object) {
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseDeclaration-methods
-#' @export
 setGeneric("createResponseDeclaration", function(object) {
     standardGeneric("createResponseDeclaration")
 })
@@ -91,7 +89,6 @@ setGeneric("createResponseDeclaration", function(object) {
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createOutcomeDeclaration-methods
-#'
 setGeneric("createOutcomeDeclaration", function(object) {
     standardGeneric("createOutcomeDeclaration")
 })
@@ -107,7 +104,6 @@ setGeneric("createOutcomeDeclaration", function(object) {
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseProcessing-methods
-#'
 setGeneric("createResponseProcessing", function(object) {
     standardGeneric("createResponseProcessing")
 })
