@@ -151,3 +151,26 @@ setMethod("getAssessmentItems", signature(object = "character"),
                   return(href)
               }
           })
+
+#' @rdname getPoints-methods
+#' @aliases getPoints,AssessmentSection
+setMethod("getPoints", signature(object = "AssessmentSection"),
+          function(object) {
+              points <- sapply(object@assessment_item, getPoints)
+              if (!is.na(object@selection)) {
+                  is_same <- all(points == points[1])
+                  if (!is_same) {
+                      ids <- paste(names(points), "=", points, collapse = ", ")
+                      msg <- paste0("In section id:", object@identifier,
+                                    " there are items with different points. ",
+                                    "In selection mode, this leads to ",
+                                    "inconsistent overall score in different ",
+                                    "test variants: ", ids)
+                      warning(msg, call. = FALSE)
+                  }
+                  points <- points[seq(object@selection)]
+              }
+              points <- sum(points)
+              names(points) <- object@identifier
+              return(points)
+          })
