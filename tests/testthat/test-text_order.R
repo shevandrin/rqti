@@ -3,7 +3,8 @@ test_that("Testing createItemBody for Order questions", {
                  content = list(""),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
-                 choices = c("Rubens Barrichello", "Jenson Button", "Michael Schumacher"),
+                 choices = c("Rubens Barrichello", "Jenson Button",
+                             "Michael Schumacher"),
                  points = 0.5,
                  choices_identifiers = c("DriverA","DriverB","DriverC"),
                  shuffle = TRUE)
@@ -16,9 +17,9 @@ test_that("Testing createItemBody for Order questions", {
 </orderInteraction>
 </itemBody>'
 
-    xml1 <- xml2::read_xml(toString(createItemBody(question)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createItemBody(question)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing ResponseDeclaration for Order questions", {
@@ -38,9 +39,9 @@ test_that("Testing ResponseDeclaration for Order questions", {
 </correctResponse>
 </responseDeclaration>'
 
-    xml1 <- xml2::read_xml(toString(createResponseDeclaration(question)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createResponseDeclaration(question)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
 
 test_that("Testing OutcomeDeclaration for Order questions", {
@@ -53,7 +54,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
                     choices_identifiers = c("DriverA","DriverB","DriverC"),
                     shuffle = TRUE)
 
-    #' The example was taken from OPAL, the original qti example does not have score.
+# The example was taken from OPAL, the original qti example does not have score.
 
     example <- '<additionalTag>
 <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -73,11 +74,14 @@ test_that("Testing OutcomeDeclaration for Order questions", {
 </outcomeDeclaration>
     </additionalTag>'
 
-    responseDe <- paste('<additionalTag>', toString(createOutcomeDeclaration(question)),'</additionalTag>')
-    xml1 <- xml2::read_xml(responseDe)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    responseDe <- paste('<additionalTag>',
+                        toString(createOutcomeDeclaration(question)),
+                        '</additionalTag>')
+    sut <- xml2::read_xml(responseDe)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 # Testing Order class without choices_identifiers for Order class
 test_that("Testing Order class", {
     question <- new("Order",
@@ -95,17 +99,19 @@ test_that("Testing Order class", {
 </correctResponse>
 </responseDeclaration>'
 
-    xml1 <- xml2::read_xml(toString(createResponseDeclaration(question)))
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    sut <- xml2::read_xml(toString(createResponseDeclaration(question)))
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
+
 # Testing with modal Feedback
 test_that("Testing createResponseProcessing() for Order class", {
     question <- new("Order",
                     content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
-                    choices = c("Michael Schumacher","Jenson Button","Rubens Barrichello"),
+                    choices = c("Michael Schumacher","Jenson Button",
+                                "Rubens Barrichello"),
                     points = 2.5,
                     choices_identifiers = c("DriverA","DriverB","DriverC"),
                     shuffle = TRUE,
@@ -198,8 +204,10 @@ test_that("Testing createResponseProcessing() for Order class", {
 </responseProcessing>
     </additionalTag>'
 
-    responseDe <- paste('<additionalTag>', toString(createResponseProcessing(question)),'</additionalTag>')
-    xml1 <- xml2::read_xml(responseDe)
-    xml2 <- xml2::read_xml(example)
-    expect_equal(xml1, xml2)
+    responseDe <- paste(
+        '<additionalTag>',
+        toString(createResponseProcessing(question)),'</additionalTag>')
+    sut <- xml2::read_xml(responseDe)
+    expected <- xml2::read_xml(example)
+    expect_equal(sut, expected)
 })
