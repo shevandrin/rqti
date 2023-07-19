@@ -39,8 +39,6 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     .Object <- callNextMethod()
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
-    select  <- .Object@selection
-    if (!is.na(select)) if (select == 0) .Object@selection <- NA_integer_
 
     # check identifiers
     ids <- sapply(.Object@assessment_item, getIdentifier)
@@ -49,6 +47,20 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
         warning("Items of section id:", .Object@identifier,
                 " contain non-unique values: ", ids, call. = FALSE)
     }
+
+    # check selection value
+    if (!is.na(.Object@selection)) {
+        if (.Object@selection > length(.Object@assessment_item)) {
+            warning(paste0("value of selection (", .Object@selection,
+            ") must be less than number of items in assessment_item slot (",
+            length(.Object@assessment_item), "). Selection is assigned to ",
+            length(.Object@assessment_item) - 1))
+            .Object@selection <- length(.Object@assessment_item) - 1
+        }
+    }
+
+    select  <- .Object@selection
+    if (!is.na(select)) if (select == 0) .Object@selection <- NA_integer_
 
     validObject(.Object)
     .Object
