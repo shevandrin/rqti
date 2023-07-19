@@ -42,6 +42,14 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     select  <- .Object@selection
     if (!is.na(select)) if (select == 0) .Object@selection <- NA_integer_
 
+    # check identifiers
+    ids <- sapply(.Object@assessment_item, getIdentifier)
+    if (length(ids) != length(unique(ids))) {
+        ids <- paste(ids, collapse = ", ")
+        warning("Items of section id:", .Object@identifier,
+                " contain non-unique values: ", ids, call. = FALSE)
+    }
+
     validObject(.Object)
     .Object
 })

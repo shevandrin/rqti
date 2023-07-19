@@ -17,7 +17,7 @@ path3 <- test_path("file/test_sc_example1.md")
 
 test_that("Testing function section() to build permanent AssessmentSection", {
     path1 <- test_path("file/test_mc_no_point.Rmd")
-    path2 <- "test_create_qti_task_Essay.xml"
+    path2 <- test_path("file/test_create_qti_task_Essay.xml")
     sut <- section(c(path1, path2), id = "permanent_section")
     # to clean invisible symbols
     sut@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@choices)
@@ -31,7 +31,7 @@ test_that("Testing function section() to build permanent AssessmentSection", {
                           "consumers vs. producers"),
               points = c(0.5, 0.5, 0, 0))
     expected <- new("AssessmentSection", identifier = "permanent_section",
-                    assessment_item = list(mc, "test_create_qti_task_Essay.xml"),
+                    assessment_item = list(mc, "file/test_create_qti_task_Essay.xml"),
                     selection = 0)
 
     expect_equal(sut, expected)

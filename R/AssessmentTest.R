@@ -57,10 +57,20 @@ setClass("AssessmentTest", slots = c(identifier = "character",
 
 setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object <- callNextMethod()
+    # us identifier as a title
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
 
+    # assign points
     points <- sum(sapply(.Object@section, getPoints))
     .Object@points <- points
+
+    # check identifiers
+    ids <- sapply(.Object@section, getIdentifier)
+    if (length(ids) != length(unique(ids))) {
+        ids <- paste(ids, collapse = ", ")
+        warning("Identifiers of test sections contain non-unique values: ", ids,
+                call. = FALSE)
+    }
 
     validObject(.Object)
     .Object
@@ -179,4 +189,19 @@ setMethod("getPoints", signature(object = "character"),
               points <- as.numeric(xml2::xml_text(od_tag))
               if (is.na(points)) points <- 1
               return(points)
+          })
+
+#' @rdname getIdentifier-methods
+#' @aliases getIdentifier,character
+setMethod("getIdentifier", signature(object = "character"),
+          function(object) {
+              if (!file.exists(object)) {
+                  warning(paste("file", object, "does not exist"),
+                          call. = FALSE)
+                  return(1)
+              }
+              doc <- xml2::read_xml(object)
+              ai_tag  <- xml2::xml_find_all(doc, "//d1:assessmentItem")
+              id <- xml2::xml_attr(ai_tag, "identifier")
+              return(id)
           })

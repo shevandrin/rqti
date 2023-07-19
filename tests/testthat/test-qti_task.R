@@ -18,17 +18,17 @@ test_that("create_qti_task", {
     path <- test_path("file/test_create_qti_task_MultipleChoice.xml")
     expected <- readLines(path)
     mc <- new("MultipleChoice",
-               identifier = "new", prompt = "What does 3/4 + 1/4 = ?",
+               identifier = "mpc", prompt = "What does 3/4 + 1/4 = ?",
                title = "MultipleChoice",
                choices = c("1", "4/8", "8/4", "4/4"),
                choice_identifiers = c("a1", "a2", "a3", "a4"),
                points = c(1, 0, 0, 1)
     )
     suppressMessages(create_qti_task(mc))
-    sut <- readLines("new.xml")
+    sut <- readLines("mpc.xml")
 
     expect_equal(sut, expected)
-    file.remove("new.xml")
+    file.remove("mpc.xml")
 })
 
 # SingleChoice
@@ -53,7 +53,7 @@ test_that("create_qti_task", {
     path <- test_path("file/test_create_qti_task_Order.xml")
     expected <- readLines(path)
     order <- new("Order",
-                  identifier = "new",
+                  identifier = "ord",
                   title = "Order",
                   prompt = "Choose the correct order",
                   choices = c("Data collection",
@@ -63,10 +63,10 @@ test_that("create_qti_task", {
                   points = 1,
                  points_per_answer = FALSE)
     suppressMessages(create_qti_task(order))
-    sut <- readLines("new.xml")
+    sut <- readLines("ord.xml")
 
     expect_equal(sut, expected)
-    file.remove("new.xml")
+    file.remove("ord.xml")
 })
 
 # OneInColTable
@@ -147,7 +147,7 @@ test_that("create_qti_task", {
     expected <- readLines(path)
     DirectedPair <- new("DirectedPair",
                     content = list("<p>\"Directed pairs\" task</p>"),
-                    identifier = "new",
+                    identifier = "dpr",
                     title = "Directed pairs",
                     rows = c("12*4 =", "100/50 =", "25*2 ="),
                     rows_identifiers = c("a", "b", "c"),
@@ -157,10 +157,10 @@ test_that("create_qti_task", {
                     points = 5
 )
     suppressMessages(create_qti_task(DirectedPair))
-    sut <- readLines("new.xml")
+    sut <- readLines("dpr.xml")
 
     expect_equal(sut, expected)
-    file.remove("new.xml")
+    file.remove("dpr.xml")
 })
 
 # TextGapOpal
@@ -168,7 +168,7 @@ test_that("create_qti_task", {
     path <- test_path("file/test_create_qti_task_TextGapOpal.xml")
     expected <- readLines(path)
 TextGapOpal <- new("Entry",
-                   identifier = "new",
+                   identifier = "tgo",
                    points = 3,
                    title = "TextGapOpal",
                    content = list('<p>The speed of light is',
@@ -180,10 +180,10 @@ TextGapOpal <- new("Entry",
                                   'than the speed of sound</p>'))
 
     suppressMessages(create_qti_task(TextGapOpal))
-    sut <- readLines("new.xml")
+    sut <- readLines("tgo.xml")
 
     expect_equal(sut, expected)
-    file.remove("new.xml")
+    file.remove("tgo.xml")
 })
 
 # NumericGap
