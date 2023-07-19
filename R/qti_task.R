@@ -41,7 +41,9 @@ create_value <- function(value) {
 }
 
 create_item_body_entry <- function(object) {
-    tag("itemBody", list(Map(createText, object@content)))
+    prompt <- NULL
+    if (object@prompt != "") prompt <- tag("p", list(object@prompt))
+    tag("itemBody", list(prompt, Map(createText, object@content)))
 }
 
 create_item_body_essay <- function(object) {
@@ -220,7 +222,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     if (verification) {
         ver <- verify_qti(doc)
         if (!ver) {
-            stop("Xml file is not valid. \n", attributes(ver))
+            stop("Xml file is not valid. \n", attributes(ver), call. = FALSE)
         }
     }
     if (is.null(dir)) dir <- getwd()
