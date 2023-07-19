@@ -174,3 +174,10 @@ setMethod("getPoints", signature(object = "AssessmentSection"),
               names(points) <- object@identifier
               return(points)
           })
+
+#' @rdname getIdentifier-methods
+#' @aliases getIdentifier,AssessmentSection
+setMethod("getIdentifier", signature(object = "AssessmentSection"),
+          function(object) {
+              return(object@identifier)
+          })
