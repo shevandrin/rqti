@@ -1,7 +1,7 @@
 test_that("Testing of function section() creates assessment
           section correctly", {
-    file1 <- test_path("file/test_order.Rmd")
-    file2 <- test_path("file/test_mc_no_point.Rmd")
+    file1 <- test_path("file/rmd/test_order.Rmd")
+    file2 <- test_path("file/rmd/test_mc_no_point.Rmd")
     file <- c(file1,file2)
     num_variants <- 3
     seed_number <- c(1,2,3)
@@ -16,7 +16,7 @@ test_that("Testing of function section() creates assessment
 
 test_that("Testing of function section where handles mismatched num_variants
           and seed_number correctly", {
-    file <- test_path("file/test_order.Rmd")
+    file <- test_path("file/rmd/test_order.Rmd")
     num_variants <- 3
     seed_number <- c(1, 2)
 
@@ -29,8 +29,8 @@ test_that("Testing of function section where handles mismatched num_variants
 
 test_that("Testing of function section() creates assessment section correctly
           when nested is FALSE", {
-    file1 <- test_path("file/test_order.Rmd")
-    file2 <- test_path("file/test_mc_no_point.Rmd")
+    file1 <- test_path("file/rmd/test_order.Rmd")
+    file2 <- test_path("file/rmd/test_mc_no_point.Rmd")
     file <- c(file1,file2)
     num_variants <- 4
     seed_number <- c(1,2,3,4)
