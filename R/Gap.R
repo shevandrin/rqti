@@ -10,6 +10,19 @@ setClass("Gap", slots = c(response_identifier = "character", score = "numeric",
                           placeholder = "character",
                           expected_length = "numeric"),
          prototype = prototype(score = 1))
+#' @importFrom uuid UUIDgenerate
+setMethod("initialize", "Gap", function(.Object, ...) {
+    .Object <- callNextMethod()
+
+    if (length(.Object@response_identifier) == 0) {
+        id <- paste0("gap_", UUIDgenerate())
+        warning("There is no response_identifier in Gap-object. A random value",
+                " is assigned: ", id, call. = FALSE)
+    }
+
+    validObject(.Object)
+    .Object
+})
 
 #' Get and process a piece of question content
 #'
