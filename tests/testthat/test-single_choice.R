@@ -1,10 +1,13 @@
-test_that("Testing create_item_body_single_choice", {
-    sc <- new("SingleChoice",
-              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
-              choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
-              title = "filename_sc",
-              prompt = "What does it say?",
-              shuffle = FALSE)
+sc <- new("SingleChoice",
+          content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
+          choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
+          title = "filename_sc",
+          prompt = "What does it say?",
+          shuffle = FALSE,
+          feedback = list(new("ModalFeedback", title = "common",
+                              content = list("general feedback"))))
+
+test_that("Test createItemBody() for SingleChoice-object with valid options", {
     example <- "<itemBody>
     <p>Look at the text in the picture.</p>
     <p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>
@@ -20,12 +23,6 @@ test_that("Testing create_item_body_single_choice", {
 })
 
 test_that("Testing create_response_declaration_single_choice",{
-    sc <- new("SingleChoice",
-              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
-              choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
-              title = "filename_sc",
-              prompt = "What does it say?")
-
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 <correctResponse>
 <value>ChoiceA</value>
@@ -38,14 +35,6 @@ test_that("Testing create_response_declaration_single_choice",{
 })
 
 test_that("Testing outcomeDeclaration for Single Choice",{
-    sc <- new("SingleChoice",
-              content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
-              choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
-              title = "filename_sc",
-              prompt = "What does it say?",points = 0,
-              feedback = list(new("ModalFeedback", title = "common",
-                                  content = list("general feedback"))))
-
     example <- '<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 <defaultValue>
 <value>0</value>
@@ -59,17 +48,13 @@ test_that("Testing outcomeDeclaration for Single Choice",{
 })
 
 test_that("Testing additional attribute for item body single choice", {
-  sc <- new("SingleChoice",
-            content = list("<p>Do you mostly use tea bags or loose tea?</p>",
-                           "<p>Choose one option</p>"),
-            points = 2,
-            shuffle = FALSE,
-            identifier = "ID125",
-            title = "Question 1",
-            choices = c("Tea bags", "Loose tea"),
-            solution = 2,
-            choice_identifiers = c("ID_1", "ID_2")
-            )
+  sc@choices <- c("Tea bags", "Loose tea")
+  sc@solution <- 2
+  sc@choice_identifiers <-  c("ID_1", "ID_2")
+  sc@content <- list("<p>Do you mostly use tea bags or loose tea?</p>",
+                                             "<p>Choose one option</p>")
+  sc@prompt <- ""
+
   example <- '<itemBody>
 		<p>Do you mostly use tea bags or loose tea?</p>
 		<p>Choose one option</p>
@@ -86,18 +71,13 @@ test_that("Testing additional attribute for item body single choice", {
 
 # Testing createResponseProcessing() with modal Feedback
 test_that("Testing createResponseProcessing() for SingleChoice class", {
-    sc <- new("SingleChoice",
-              content = list("<p>Do you mostly use tea bags or loose tea?</p>",
-                             "<p>Choose one option</p>"),
-              points = 2,
-              identifier = "ID125",
-              title = "Question 1",
-              choices = c("Tea bags", "Loose tea"),
-              # orientation = "horizontal",
-              solution = 2,
-              choice_identifiers = c("ID_1", "ID_2"),
-              feedback = list(new("ModalFeedback", title = "common",
-                                  content = list("general feedback"))))
+    sc@choices <- c("Tea bags", "Loose tea")
+    sc@solution <- 2
+    sc@choice_identifiers <-  c("ID_1", "ID_2")
+    sc@content <- list("<p>Do you mostly use tea bags or loose tea?</p>",
+                       "<p>Choose one option</p>")
+    sc@prompt <- ""
+
     example <- '
     <responseProcessing>
   <responseCondition>
@@ -190,18 +170,12 @@ test_that("Testing createResponseProcessing() for SingleChoice class", {
 
 test_that("SingleChoice creates a valid SingleChoice object", {
     # Create a SingleChoice object using the function
-    sc <- SingleChoice(
-              content = list("<p>Do you mostly use tea bags or loose tea?</p>",
-                             "<p>Choose one option</p>"),
-              points = 2,
-              identifier = "ID125",
-              title = "Question 1",
-              choices = c("Tea bags", "Loose tea"),
-              # orientation = "horizontal",
-              solution = 2,
-              choice_identifiers = c("ID_1", "ID_2"),
-              feedback = list(new("ModalFeedback", title = "common",
-                                  content = list("general feedback"))))
+    sc@choices <- c("Tea bags", "Loose tea")
+    sc@solution <- 2
+    sc@choice_identifiers <-  c("ID_1", "ID_2")
+    sc@content <- list("<p>Do you mostly use tea bags or loose tea?</p>",
+                       "<p>Choose one option</p>")
+    sc@prompt <- ""
 
     # Check that the object is of class "SingleChoice"
     expect_true(inherits(sc, "SingleChoice"))
@@ -209,9 +183,7 @@ test_that("SingleChoice creates a valid SingleChoice object", {
 
 # Define a test for the error case when the points slot has an invalid value
 test_that("SingleChoice throws an error for invalid points value", {
-    # Call SingleChoice with invalid points value
-    expect_error(SingleChoice(
-        content = list("<p>Pick up the right option</p>"),
+    expect_error(SingleChoice(content = list("<p>Pick up the right option</p>"),
         choices = c("option 1", "option 2", "option 3", "option 4"),
         orientation = "vertical",
         title = "single_choice_task",
