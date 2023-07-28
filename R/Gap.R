@@ -15,8 +15,7 @@ setMethod("initialize", "Gap", function(.Object, ...) {
     .Object <- callNextMethod()
 
     if (length(.Object@response_identifier) == 0) {
-        ending <- paste(sample(c(letters, LETTERS, 0:9), 20), collapse = "")
-        id <- paste0("gap_", ending)
+        id <- paste0("gap_", ids::adjective_animal())
         warning("There is no response_identifier in Gap-ohnnbject. A random ",
                 " value is assigned: ", id, call. = FALSE)
         .Object@response_identifier <- id
