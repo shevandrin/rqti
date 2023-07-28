@@ -72,6 +72,14 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
                 call. = FALSE)
     }
 
+    # check time limits
+    if (!is.na(.Object@time_limits)) {
+        if (.Object@time_limits > 180 | .Object@time_limits < 0.01) {
+            warning("Value of time_limits does not seem plausible.",
+                    call. = FALSE)
+            }
+    }
+
     validObject(.Object)
     .Object
 })
