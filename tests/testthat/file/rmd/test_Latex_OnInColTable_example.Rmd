@@ -1,0 +1,13 @@
+---
+type: Match
+identifier: test_OnInColTable_example
+---
+# question
+Choose the correct order in the multiplication table
+
+|Formulas|Mean|Standard Deviation|Normal Distribution|Hypothesis Testing (t-test)|
+|------|-----|------------------|-------------------|---------------------------|
+|$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$]|1|0|0|0|
+|$$s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2}$$|0|1|0|0|
+|$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$|0|0|1|0|
+|$$t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$|0|0|0|1|

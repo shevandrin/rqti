@@ -11,12 +11,12 @@ In economics it is generally believed that the main objective of a Public Sector
           choices = c("Employ more and more people", "Maximize total production",
                       "Maximize total profits", "Sell the goods at subsidized cost"))
 
-path1 <- test_path("file/test_mc_no_point.Rmd")
-path2 <- "test_create_qti_task_Essay.xml"
-path3 <- test_path("file/test_sc_example1.md")
+path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
+path2 <-  test_path("file/test_create_qti_task_Essay.xml")
+path3 <- test_path("file/md/test_sc_example1.md")
 
 test_that("Testing function section() to build permanent AssessmentSection", {
-    path1 <- test_path("file/test_mc_no_point.Rmd")
+    path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
     path2 <- test_path("file/test_create_qti_task_Essay.xml")
     sut <- section(c(path1, path2), id = "permanent_section")
     # to clean invisible symbols
@@ -31,7 +31,7 @@ test_that("Testing function section() to build permanent AssessmentSection", {
                           "consumers vs. producers"),
               points = c(0.5, 0.5, 0, 0))
     expected <- new("AssessmentSection", identifier = "permanent_section",
-                    assessment_item = list(mc, "file/test_create_qti_task_Essay.xml"),
+                    assessment_item = list(mc, path2),
                     selection = 0)
 
     expect_equal(sut, expected)
@@ -79,8 +79,8 @@ test_that("Testing function section() to build variable nested AssessmentSection
 })
 
 test_that("Testing function section() to build variable AssessmentSection for nested = False ", {
-    path1 <- test_path("file/test_mc_no_point.Rmd")
-    path3 <- test_path("file/test_sc_example1.md")
+    path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
+    path3 <- test_path("file/md/test_sc_example1.md")
     num_variants = 3
     file <- c(path1, path3)
     sut <- section(file, num_variants, id = "variable_section", nested = FALSE)

@@ -1,0 +1,21 @@
+---
+identifier: test 2
+type: sc
+title: statistical
+points: 3
+---
+# question
+Which type of histogram is shown on the picture?
+
+![Example Image](pic_2.png){width=500px}
+```{r example-image, echo=FALSE, out.width="50%", fig.cap="Example Image", fig.width=4, fig.height=2}
+knitr::include_graphics("pic_2.png")
+```
+
+* *Histogram of Normal Distribution Values*
+* Bernoulli Distribution
+* Binomial Distribution
+* Poisson Distribution
+
+# feedback
+The correct answer is Histogram of Normal Distribution Values. According to the definition, this distribution has the follow view:

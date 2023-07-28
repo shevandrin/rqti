@@ -1,0 +1,13 @@
+---
+type: match
+identifier: test_OneInRowTable_example
+title: OneInRowTable
+---
+
+```{r setup, echo=FALSE, warning=FALSE}
+df <- readr::read_csv("table.csv", col_types = "c")
+```
+# question
+Choose the correct order in the multiplication table
+`r knitr::kable(df)`
+
