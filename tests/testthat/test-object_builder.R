@@ -1,6 +1,6 @@
 # SingleChoice
 test_that("Testing SingleChoice where answer is $nummer", {
-    path <- test_path("file/test_sc_example3.md")
+    path <- test_path("file/md/test_sc_example3.md")
     sut <- create_question_object(path)
 
     content <- "<p>This is a mock question<br/>\nThe speed of the light in kilometers per second is:</p>"
@@ -25,7 +25,7 @@ test_that("Testing SingleChoice where answer is $nummer", {
     expect_equal(sut, expected)
 })
 test_that("create_question_object", {
-    path <- test_path("file/test_sc_example1.md")
+    path <- test_path("file/md/test_sc_example1.md")
     sut <- create_question_object(path)
 
     content <- "<p>This is a mock question<br/>\nIn economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"
@@ -51,7 +51,7 @@ test_that("create_question_object", {
 })
 
 test_that("create_question_object", {
-    path <- test_path("file/test_sc_example2.md")
+    path <- test_path("file/md/test_sc_example2.md")
     cqc <- create_question_object(path)
     expected <- new("SingleChoice",
                    content = list(
@@ -78,7 +78,7 @@ test_that("create_question_object", {
 
 # MultipleChoice - 1
 test_that("create_question_object", {
-    path <- test_path("file/test_mc_example.md")
+    path <- test_path("file/md/test_mc_example.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                    content = list(
@@ -105,7 +105,7 @@ test_that("create_question_object", {
 
 # MultipleChoice - 2
 test_that("create_question_object", {
-    path <- test_path("file/test_mc_example2.md")
+    path <- test_path("file/md/test_mc_example2.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                     content = list("<p>Economic systems are ways that countries answer the 5 fundamental questions:</p>\n<ul>\n<li>What will be produced?</li>\n<li>How will goods and services be produced?</li>\n<li>Who will get the output?</li>\n<li>How will the system accommodate change?</li>\n<li>How will the system promote progress?</li>\n</ul>\n<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
@@ -130,7 +130,7 @@ test_that("create_question_object", {
 })
 # Essay
 test_that("create_question_object", {
-    path <- test_path("file/test_essay_example.md")
+    path <- test_path("file/md/test_essay_example.md")
     sut <- create_question_object(path)
     expected <- new("Essay",
                     content = list(
@@ -145,7 +145,7 @@ test_that("create_question_object", {
 })
 # Entry
 test_that("create_question_object", {
-path <- test_path("file/test_entry_example1.md")
+path <- test_path("file/md/test_entry_example1.md")
 sut <- suppressMessages(create_question_object(path))
 expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 new("TextGap", response_identifier = "response_1",
@@ -160,7 +160,7 @@ expect_equal(sut, expected)
 })
 # Entry with YAML
 test_that("create_question_object", {
-path <- test_path("file/test_entry_example2.md")
+path <- test_path("file/md/test_entry_example2.md")
 sut <- suppressMessages(create_question_object(path))
 expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 new("TextGap",
@@ -233,7 +233,7 @@ test_that("Testing function create_outcome_declaration_entry", {
 })
 
 test_that("Test parsing md for Order task", {
-    path <- test_path("file/test_order_example.md")
+    path <- test_path("file/md/test_order_example.md")
     sut <- create_question_object(path)
     expected <- new("Order", content = list("<p>Arrange German cities in ascending order of population</p>"),
                     identifier = "test_order_example",
@@ -243,7 +243,7 @@ test_that("Test parsing md for Order task", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for Direct Pair task", {
-    path <- test_path("file/test_directedPair_example.md")
+    path <- test_path("file/md/test_directedPair_example.md")
     sut <- create_question_object(path)
     expected <- new("DirectedPair", content = list("<p>Associate the cities with lands.</p>"),
                     identifier = "test_direct_pair_example",
@@ -262,7 +262,7 @@ test_that("Test parsing md for Direct Pair task", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for OnInColTable task", {
-    path <- test_path("file/test_OnInColTable_example.md")
+    path <- test_path("file/md/test_OnInColTable_example.md")
     sut <- create_question_object(path)
     expected <- new("OneInColTable",
                          content = list("<p>Choose the correct order in the multiplication table</p>"),
@@ -282,9 +282,9 @@ test_that("Test parsing md for OnInColTable task", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for OneInRowTable task", {
-    path1 <- test_path("file/test_OneInRowTable_example.md")
+    path1 <- test_path("file/md/test_OneInRowTable_example.md")
     sut1 <- create_question_object(path1)
-    path2 <- test_path("file/test_OneInRowTable_example.Rmd")
+    path2 <- test_path("file/rmd/test_OneInRowTable_example.Rmd")
     sut2 <- create_question_object(path2)
     expected <- new("OneInRowTable",
                          content = list("<p>Choose the correct order in the multiplication table</p>"),
@@ -303,7 +303,7 @@ test_that("Test parsing md for OneInRowTable task", {
     expect_equal(sut2, expected)
 })
 test_that("Test parsing md for MultipleChoiceTable task", {
-    path <- test_path("file/test_MultipleChoiceTable_example.md")
+    path <- test_path("file/md/test_MultipleChoiceTable_example.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoiceTable",
                     content = list("<p>Choose the correct order in the multiplication table</p>"),
@@ -320,7 +320,7 @@ test_that("Test parsing md for MultipleChoiceTable task", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
-    path <- test_path("file/test_entry_Gap_primitive.Rmd")
+    path <- test_path("file/rmd/test_entry_Gap_primitive.Rmd")
     sut <- suppressMessages(create_question_object(path))
     expected <- suppressMessages(new("Entry",
            identifier = "test_entry_example",
@@ -372,7 +372,7 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
     expect_equal(sut, expected)
 })
 test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
-    path <- test_path("file/test_entry_Gap_InlineChoice.Rmd")
+    path <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
     sut <- suppressMessages(create_question_object(path))
     expected <- suppressMessages(new("Entry",
                     identifier = "test_entry_example",
@@ -404,7 +404,7 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
     expect_equal(sut, expected)
 })
 test_that("Testing of creating mc object from Rmd without points", {
-    path <- test_path("file/test_mc_no_point.Rmd")
+    path <- test_path("file/rmd/test_mc_no_point.Rmd")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                     content = list(
@@ -430,7 +430,7 @@ test_that("Testing of creating mc object from Rmd without points", {
 })
 test_that("Testing the order task, points are awarded for each correct answer.",
           {
-    path <- test_path("file/test_order.Rmd")
+    path <- test_path("file/rmd/test_order.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
     xml_file_sut <- xml2::read_xml(test_path("test_order.xml"))
 
