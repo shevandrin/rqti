@@ -15,10 +15,10 @@ setMethod("initialize", "Gap", function(.Object, ...) {
     .Object <- callNextMethod()
 
     if (length(.Object@response_identifier) == 0) {
-        ending <- paste(sample(c(letters, LETTERS, 0:9), 20), collapse = "")
-        id <- paste0("gap_", ending)
-        warning("There is no response_identifier in Gap-object. A random value",
-                " is assigned: ", id, call. = FALSE)
+        id <- paste0("gap_", ids::adjective_animal())
+        warning("There is no response_identifier in Gap-object. A random ",
+                " value is assigned: ", id, call. = FALSE)
+        .Object@response_identifier <- id
     }
 
     validObject(.Object)
@@ -66,6 +66,13 @@ setMethod("createOutcomeDeclaration", "Gap", function(object) {
 setMethod("createResponseProcessing", "Gap", function(object) {
     create_response_processing_gap_basic(object)
 })
+
+#' @rdname getIdentifier-methods
+#' @aliases getIdentifier,Gap
+setMethod("getIdentifier", signature(object = "Gap"),
+          function(object) {
+              return(object@response_identifier)
+          })
 
 create_outcome_declaration_gap <- function(object) {
     SCORE <- make_outcome_declaration(paste0("SCORE_",

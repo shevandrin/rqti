@@ -46,6 +46,16 @@ setMethod("initialize", "Entry", function(.Object, ...) {
         message("Overal points is recalculated as a sum of score of gaps")
     }
     .Object@points <- points
+
+    # check identifiers
+    objs <- .Object@content[sapply(.Object@content, function(x) is(x, "Gap"))]
+    ids <- sapply(objs, getIdentifier)
+    if (length(ids) != length(unique(ids))) {
+        ids <- paste(ids, collapse = ", ")
+        warning("Identifiers of objects in content-slot are non-unique : ",
+                ids, call. = FALSE)
+    }
+
     validObject(.Object)
     .Object
 })
