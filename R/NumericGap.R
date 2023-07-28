@@ -8,6 +8,7 @@
 #' @include Gap.R
 #' @examples
 #' ng <- new("NumericGap",
+#'           response_identifier = "gap_1",
 #'           solution = 5,
 #'           placeholder = "use this format xx.xxx" )
 #' @name NumericGap-class
