@@ -61,7 +61,7 @@ setMethod("createResponseDeclaration", signature(object = "SingleChoice"),
 setMethod("createResponseProcessing", signature(object = "SingleChoice"),
           function(object) {
               if (length(object@feedback) > 0) {
-                create_default_resp_processing_sc_order(object)
+                create_default_resp_processing_sc(object)
               }
           })
 

@@ -17,17 +17,15 @@ create_default_resp_processing <- function(object) {
     return(resp_proc)
 }
 
-#process modalfeedback for sc and order
-create_default_resp_processing_sc_order <- function(object) {
+#process modalfeedback for sc
+create_default_resp_processing_sc <- function(object) {
     var_resp <- tag("variable", list(identifier = "RESPONSE"))
     tag_isnull <- tag("isNull", list(var_resp))
     response_if <- tag("responseIf", list(tag_isnull))
     var_corr <- tag("correct", list(identifier = "RESPONSE"))
     tag_match <- tag("match", list(var_resp, var_corr))
-    var_score <- tag("variable", list(identifier = "SCORE"))
     var_maxscore <- tag("variable", list(identifier =  "MAXSCORE"))
-    tag_sum <- tag("sum", list(var_score, var_maxscore))
-    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", tag_sum))
+    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", var_maxscore))
     response_elseif <- tag("responseElseIf", list(tag_match, set_ov))
     resp_cond1 <- tag("responseCondition", list(response_if, response_elseif))
 
@@ -36,6 +34,14 @@ create_default_resp_processing_sc_order <- function(object) {
     conditions <- Map(createResponseCondition, object@feedback)
     resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond234,
                                                 conditions))
+    return(resp_proc)
+}
+
+#process modalfeedback for order
+create_default_resp_processing_order <- function(object) {
+    resp_cond234 <- make_default_resp_cond()
+    conditions <- Map(createResponseCondition, object@feedback)
+    resp_proc <- tag("responseProcessing", list(resp_cond234, conditions))
     return(resp_proc)
 }
 
