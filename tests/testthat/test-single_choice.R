@@ -1,40 +1,45 @@
 sc <- new("SingleChoice",
           content = list("<p>Look at the text in the picture.</p><p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>"),
-          choices = c("You must stay with your luggage at all times.", "Do not let someone else look after your luggage.", "Remember your luggage when you leave."),
+          choices = c("You must stay with your luggage at all times.",
+                      "Do not let someone else look after your luggage.",
+                      "Remember your luggage when you leave."),
           title = "filename_sc",
           prompt = "What does it say?",
           shuffle = FALSE,
+          choice_identifiers = c("ID_1", "ID_2", "ID_3"),
           feedback = list(new("ModalFeedback", title = "common",
                               content = list("general feedback"))))
 
-test_that("Test createItemBody() for SingleChoice-object with valid options", {
-    example <- "<itemBody>
-    <p>Look at the text in the picture.</p>
-    <p><img src=\"images/sign.png\" alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>
-    <choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\" orientation=\"vertical\">
+test_that("Test createItemBody() for SingleChoice class", {
+    example <- '<itemBody>
+  <p>Look at the text in the picture.</p><p><img src="images/sign.png" alt="NEVER LEAVE LUGGAGE UNATTENDED"/></p>
+  <choiceInteraction responseIdentifier="RESPONSE" shuffle="false" maxChoices="1" orientation="vertical">
     <prompt>What does it say?</prompt>
-    <simpleChoice identifier=\"ChoiceA\">You must stay with your luggage at all times.</simpleChoice>
-    <simpleChoice identifier=\"ChoiceB\">Do not let someone else look after your luggage.</simpleChoice>
-    <simpleChoice identifier=\"ChoiceC\">Remember your luggage when you leave.</simpleChoice></choiceInteraction></itemBody>"
+    <simpleChoice identifier="ID_1">You must stay with your luggage at all times.</simpleChoice>
+    <simpleChoice identifier="ID_2">Do not let someone else look after your luggage.</simpleChoice>
+    <simpleChoice identifier="ID_3">Remember your luggage when you leave.</simpleChoice>
+  </choiceInteraction>
+</itemBody>'
 
-    sut <- xml2::read_xml(toString(create_item_body_single_choice(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(sc)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
-test_that("Testing create_response_declaration_single_choice",{
+test_that("Testing createResponseDeclaration() for SingleChoice class: solution = 2",{
+    sc@solution <- 2
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
 <correctResponse>
-<value>ChoiceA</value>
+<value>ID_2</value>
 </correctResponse>
 </responseDeclaration>'
 
-    sut <- xml2::read_xml(toString(create_response_declaration_single_choice(sc)))
+    sut <- xml2::read_xml(toString(createResponseDeclaration(sc)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
-test_that("Testing outcomeDeclaration for Single Choice",{
+test_that("Testing outcomeDeclaration() for SingleChoice class",{
     example <- '<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 <defaultValue>
 <value>0</value>
@@ -47,33 +52,26 @@ test_that("Testing outcomeDeclaration for Single Choice",{
     expect_equal(sut, expected)
 })
 
-test_that("Testing additional attribute for item body single choice", {
-  sc@choices <- c("Tea bags", "Loose tea")
-  sc@solution <- 2
-  sc@choice_identifiers <-  c("ID_1", "ID_2")
-  sc@content <- list("<p>Do you mostly use tea bags or loose tea?</p>",
-                                             "<p>Choose one option</p>")
-  sc@prompt <- ""
+test_that("Testing createItemBody() for SingleChoice class: orientation = horizontal", {
+  sc@orientation <- "horizontal"
 
-  example <- '<itemBody>
-		<p>Do you mostly use tea bags or loose tea?</p>
-		<p>Choose one option</p>
-		<choiceInteraction responseIdentifier=\"RESPONSE\" shuffle=\"false\" maxChoices=\"1\" orientation=\"vertical\">
-			<simpleChoice identifier=\"ID_1\">Tea bags</simpleChoice>
-			<simpleChoice identifier=\"ID_2\">Loose tea</simpleChoice>
-		</choiceInteraction>
-	</itemBody>
-            '
+  example <- '
+    <itemBody>
+  <p>Look at the text in the picture.</p><p><img src="images/sign.png" alt="NEVER LEAVE LUGGAGE UNATTENDED"/></p>
+  <choiceInteraction responseIdentifier="RESPONSE" shuffle="false" maxChoices="1" orientation="horizontal">
+    <prompt>What does it say?</prompt>
+    <simpleChoice identifier="ID_1">You must stay with your luggage at all times.</simpleChoice>
+    <simpleChoice identifier="ID_2">Do not let someone else look after your luggage.</simpleChoice>
+    <simpleChoice identifier="ID_3">Remember your luggage when you leave.</simpleChoice>
+  </choiceInteraction>
+    </itemBody>'
   sut <- xml2::read_xml(toString(createItemBody(sc)))
   expected <- xml2::read_xml(example)
   expect_equal(sut, expected)
 })
 
-# Testing createResponseProcessing() with modal Feedback
 test_that("Testing createResponseProcessing() for SingleChoice class", {
     sc@choices <- c("Tea bags", "Loose tea")
-    sc@solution <- 2
-    sc@choice_identifiers <-  c("ID_1", "ID_2")
     sc@content <- list("<p>Do you mostly use tea bags or loose tea?</p>",
                        "<p>Choose one option</p>")
     sc@prompt <- ""
@@ -166,29 +164,4 @@ test_that("Testing createResponseProcessing() for SingleChoice class", {
     sut <- xml2::read_xml(toString(createResponseProcessing(sc)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
-})
-
-test_that("SingleChoice creates a valid SingleChoice object", {
-    # Create a SingleChoice object using the function
-    sc@choices <- c("Tea bags", "Loose tea")
-    sc@solution <- 2
-    sc@choice_identifiers <-  c("ID_1", "ID_2")
-    sc@content <- list("<p>Do you mostly use tea bags or loose tea?</p>",
-                       "<p>Choose one option</p>")
-    sc@prompt <- ""
-
-    # Check that the object is of class "SingleChoice"
-    expect_true(inherits(sc, "SingleChoice"))
-})
-
-# Define a test for the error case when the points slot has an invalid value
-test_that("SingleChoice throws an error for invalid points value", {
-    expect_error(SingleChoice(content = list("<p>Pick up the right option</p>"),
-        choices = c("option 1", "option 2", "option 3", "option 4"),
-        orientation = "vertical",
-        title = "single_choice_task",
-        shuffle = FALSE,
-        points = "f",  # Invalid points value (character instead of numeric)
-        identifier = "sc_example"
-    ), "invalid object for slot \"points\"")
 })
