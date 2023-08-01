@@ -140,5 +140,5 @@ stop_server <- function() {
 render_opal <- function(input, ...) {
     rmd2zip(input)
     auth_opal()
-    upload_opal_test("test.zip")
+    upload2opal("test.zip")
 }

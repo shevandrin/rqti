@@ -145,7 +145,7 @@ create_manifest <- function(object) {
     item_resources <- Map(create_resource_item, names(items), items)
     resources <- tag("resources", list(test_resource, item_resources))
 
-    tagAppendChildren(manifest, metadata, organisations,resources)
+    tagAppendChildren(manifest, metadata, organisations, resources)
 }
 
 # create tag 'dependency' for minifest file

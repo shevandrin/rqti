@@ -32,76 +32,115 @@ auth_opal <- function() {
     cat(content(response, as = "text", encoding = "UTF-8"))
     cookie_value <- response$cookies$value
     if (length(cookie_value) > 0) Sys.setenv("COOKIE" = cookie_value)
+    if (response$status_code != 200) {
+        message("Authentification failed. You may need to run a VPN client")
+    }
     return(response$status_code)
 }
 
-
-#'Upload test on OPAL
+#'Upload resource on OPAL
 #'
-#'Function `upload_opal_test()` takes full prepared zip archive of QTI-test and
-#'uploads it to the OPAL. before calling `upload_opal_test()` authentication
-#'procedure has been performed. See [auth_opal]
+#'Function `upload2opal()` takes full prepared zip archive of QTI-test or
+#'QTI-task and uploads it to the OPAL. before calling `upload2opal()`
+#'authentication procedure has to be performed. See [auth_opal]
 #'
 #'@param file required; a length one character vector
 #'@param display_name optional; a length one character vector to entitle file in
 #'  OPAL; file name without extension by default
+#'@param in_browser logical, optional; the parameter that controls whether to
+#'  open a URL in default browser; TRUE by default
 #'@param access optional; is responsible for publication status, where 1 - only
 #'  those responsible for this learning resource; 2 - responsible and other
 #'  authors; 3 - all registered users; 4 - default value, registered users and
 #'  guests
-#'@param in_browser logical, optional; the parameter that controls whether to
-#'  open a URL in default browser; TRUE by default
+#'@param endpoint endpoint
 #'@return status code
 #'@importFrom utils browseURL
 #'@export
-upload_opal_test <- function(file, display_name = NULL, access = 4,
-                             in_browser = TRUE) {
-    if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
+upload2opal <- function(file, display_name = NULL, access = 4,
+                        endpoint =  paste0("https://bildungsportal.sachsen.de/",
+                                           "opal/"), in_browser = TRUE) {
 
+    if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
 
-    url_task <- "https://bildungsportal.sachsen.de/opal/restapi/repo/entries"
-    body <- list(file = upload_file(file),
-                 displayname = display_name,
-                 access = access,
-                 repoType = "FileResource.TEST")
-    response <- PUT(url_task, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
-                    body = body, encode = "multipart")
+    # check if we have a test with display name
+    url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
+    response <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
+                    encode = "multipart")
+    rlist <- content(response, as = "parse", encoding = "UTF-8")
+    rtype <- ifelse(is_test(file), "FileResource.TEST", "FileResource.QUESTION")
+    filtered_rlist <- purrr::keep(rlist, ~ .x$resourceableTypeName == rtype)
+    filtered_rlist <- purrr::keep(rlist, ~ .x$displayname == display_name)
+    if (length(filtered_rlist) > 0) {
+        message("Found files with the same display name: ",
+                length(filtered_rlist))
+        menu_options <- c(sapply(filtered_rlist, function(x) x$key),
+                          "Add new as duplicate", "Abort")
+        key <- menu(title = "Choose a key:", menu_options)
+        if (key == length(menu_options)) return(NULL)
+        # update the resource
+        if (key %in% seq(length(menu_options) - 2)) {
+            print(seq(length(menu_options) - 2))
+            response <- update_resource(file, menu_options[key], endpoint)
+        } else {
+            # create new resource
+            response <- upload_resource(file, display_name, rtype, access,
+                                        in_browser, endpoint)
+        }
+    } else {
+        # create new resource
+        response <- upload_resource(file, display_name, rtype, access,
+                                    in_browser, endpoint)
+    }
     parse <- content(response, as = "parse", encoding = "UTF-8")
-    url_test <- NULL
     if ((in_browser) & (!is.null(parse$key)) ){
-        url_test <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
+        url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
                            "RepositoryEntry/", parse$key)
-        browseURL(url_test)
+        browseURL(url_res)
     }
     res <- list(status_code = response$status_code, key = parse$key,
-                url = url_test)
+                url = url_res)
+    print(res$status_code)
     return(res)
 }
 
+upload_resource <- function(file, display_name, rtype, access, in_browser,
+                            endpoint) {
 
-#'Upload task(question) on OPAL
-#'
-#'Function `upload_opal_task()` takes full prepared zip archive of QTI-test and
-#'uploads it to the OPAL. before calling `upload_opal_task()` authentication
-#'procedure has been performed. See [auth_opal]
-#'
-#'@param file required; a length one character vector
-#'@param display_name optional; a length one character vector to entitle file in
-#'  OPAL; file name without extension by default
-#'@return status code
-#'@export
-upload_opal_task <- function(file, display_name = NULL) {
-    if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
 
-    if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
-
-    url_task <- "https://bildungsportal.sachsen.de/opal/restapi/repo/entries"
+    url_upl <- paste0(endpoint, "restapi/repo/entries")
     body <- list(file = upload_file(file),
                  displayname = display_name,
-                 repoType = "FileResource.QUESTION")
-    response <- PUT(url_task, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
+                 access = access,
+                 repoType = rtype)
+    response <- PUT(url_upl, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                     body = body, encode = "multipart")
-    cat(content(response, as = "text", encoding = "UTF-8"))
-    return(response$status_code)
+    return(response)
+}
+
+# open url with resource by id
+opent <- function(id) {
+    url_test <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
+                       "RepositoryEntry/", id)
+    browseURL(url_test)
+}
+
+# update resource
+update_resource <- function(file, id, endpoint) {
+    url_upd <- paste0(endpoint, "restapi/repo/entries/", id,
+                      "/update")
+    body <- list(file = upload_file(file))
+    response <- PUT(url_upd, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
+                    body = body, encode = "multipart")
+    return(response)
+}
+
+# check whether it is a test by manifest file
+is_test <- function(file) {
+    zip_con <- unz(file, "imsmanifest.xml")
+    file_content <- readLines(zip_con, n = -1L)
+    close(zip_con)
+    result <- grepl("imsqti_test_xmlv2p1", file_content)
+    return(any(result))
 }
