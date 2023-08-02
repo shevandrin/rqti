@@ -73,10 +73,16 @@ create_assessment_test <-function(object, folder, data_downloads = NULL,
                                      submissionMode = object@submission_mode,
                                      tagList(session_control,
                                              sections)))
+    # create outcome processing
+    tvar <- tag("testVariables", list(variableIdentifier="SCORE"))
+    tsum <- tag("sum", list(tvar))
+    tsov <- tag("setOutcomeValue", list(identifier="SCORE", tsum))
+    out_proc <- tag("outcomeProcessing", list(tsov))
     tagAppendChildren(assesment_test,
                       createOutcomeDeclaration(object),
                       time_limits,
-                      testPart)
+                      testPart,
+                      out_proc)
 }
 
 # creates tag "assessmentSection" in test file
