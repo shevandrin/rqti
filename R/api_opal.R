@@ -18,24 +18,28 @@
 #'   `API_USER=xxxxxxxxxxxxxxx`
 #'   `API_PASSWORD=xxxxxxxxxxxxxxx`
 #'
-#' @return status code
+#' @return user id
 #' @name auth_opal
 #' @rdname auth_opal
 #' @import httr
 #' @import dotenv
 #' @export
 auth_opal <- function() {
+    user_id <- NULL
     url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
                         Sys.getenv("API_USER"),
                         "?password=", Sys.getenv("API_PASSWORD"))
     response <- GET(url_login)
-    cat(content(response, as = "text", encoding = "UTF-8"))
-    cookie_value <- response$cookies$value
-    if (length(cookie_value) > 0) Sys.setenv("COOKIE" = cookie_value)
-    if (response$status_code != 200) {
+    if (response$status_code == 200) {
+        parse <- content(response, as = "text", encoding = "UTF-8")
+        user_id <- xml2::xml_attr(read_xml(parse), "identityKey")
+        cookie_value <- response$cookies$value
+        Sys.setenv("COOKIE" = cookie_value)
+    } else {
         message("Authentification failed. You may need to run a VPN client")
     }
-    return(response$status_code)
+    print(paste("login:", response$status_code))
+    return(user_id)
 }
 
 #'Upload resource on OPAL
@@ -54,7 +58,7 @@ auth_opal <- function() {
 #'  authors; 3 - all registered users; 4 - default value, registered users and
 #'  guests
 #'@param endpoint endpoint
-#'@return status code
+#'@return list with key and url
 #'@importFrom utils browseURL
 #'@export
 upload2opal <- function(file, display_name = NULL, access = 4,
@@ -64,11 +68,14 @@ upload2opal <- function(file, display_name = NULL, access = 4,
     if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
 
+    # check auth
+    if (!is_logged(endpoint)) auth_opal()
+
     # check if we have a test with display name
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
-    response <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
+    resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                     encode = "multipart")
-    rlist <- content(response, as = "parse", encoding = "UTF-8")
+    rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
     rtype <- ifelse(is_test(file), "FileResource.TEST", "FileResource.QUESTION")
     filtered_rlist <- purrr::keep(rlist, ~ .x$resourceableTypeName == rtype)
     filtered_rlist <- purrr::keep(rlist, ~ .x$displayname == display_name)
@@ -76,32 +83,29 @@ upload2opal <- function(file, display_name = NULL, access = 4,
         message("Found files with the same display name: ",
                 length(filtered_rlist))
         menu_options <- c(sapply(filtered_rlist, function(x) x$key),
-                          "Add new as duplicate", "Abort")
+                          "Add new as a duplicate", "Abort")
         key <- menu(title = "Choose a key:", menu_options)
-        if (key == length(menu_options)) return(NULL)
+        # abort uploading
+        if (key %in% c(length(menu_options), 0)) return(NULL)
         # update the resource
         if (key %in% seq(length(menu_options) - 2)) {
-            print(seq(length(menu_options) - 2))
             response <- update_resource(file, menu_options[key], endpoint)
-        } else {
-            # create new resource
-            response <- upload_resource(file, display_name, rtype, access,
-                                        in_browser, endpoint)
         }
-    } else {
-        # create new resource
+    }
+    # create new resource
+    if (!exists("response")) {
         response <- upload_resource(file, display_name, rtype, access,
                                     in_browser, endpoint)
     }
+
     parse <- content(response, as = "parse", encoding = "UTF-8")
     if ((in_browser) & (!is.null(parse$key)) ){
         url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
                            "RepositoryEntry/", parse$key)
         browseURL(url_res)
     }
-    res <- list(status_code = response$status_code, key = parse$key,
-                url = url_res)
-    print(res$status_code)
+    res <- list(key = parse$key, url = url_res)
+    print(response$status_code)
     return(res)
 }
 
@@ -143,4 +147,12 @@ is_test <- function(file) {
     close(zip_con)
     result <- grepl("imsqti_test_xmlv2p1", file_content)
     return(any(result))
+}
+
+is_logged <- function(endpoint) {
+    url_log <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
+    response <- GET(url_log, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
+                       encode = "multipart")
+    res <- ifelse(response$status_code == 200, TRUE, FALSE)
+    return(res)
 }
