@@ -7,7 +7,7 @@
 auth_opal()
 }
 \value{
-status code
+user id
 }
 \description{
 Function \code{auth_opal()} performs the necessary authentication steps in OPAL

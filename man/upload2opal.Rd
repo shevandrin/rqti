@@ -29,7 +29,7 @@ guests}
 open a URL in default browser; TRUE by default}
 }
 \value{
-status code
+list with key and url
 }
 \description{
 Function \code{upload2opal()} takes full prepared zip archive of QTI-test or
