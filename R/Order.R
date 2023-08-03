@@ -54,14 +54,8 @@ setMethod("createResponseDeclaration", signature(object = "Order"),
 setMethod("createResponseProcessing", signature(object = "Order"),
           function(object) {
               points_cond <- createResponseCondition(object)
-              if (length(object@feedback) > 0) {
-                  rp <- create_default_resp_processing_order(object)
-                  tagAppendChildren(rp, points_cond)
-              } else {
-                  if (object@points_per_answer) {
-                      tag("responseProcessing", list(points_cond))
-                  }
-              }
+              rp <- create_default_resp_processing_order(object)
+              tagAppendChildren(rp, points_cond)
           })
 
 create_response_declaration_order <- function(object) {

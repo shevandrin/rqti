@@ -39,13 +39,6 @@ setMethod("createResponseDeclaration", signature(object = "MultipleChoice"),
               create_response_declaration_multiple_choice(object)
           })
 
-#' @rdname createOutcomeDeclaration-methods
-#' @aliases createOutcomeDeclaration,MultipleChoice
-setMethod("createOutcomeDeclaration", signature(object = "MultipleChoice"),
-          function(object) {
-              create_outcome_declaration_multiple_choice(object)
-          })
-
 #' @rdname getPoints-methods
 #' @aliases getPoints,MultipleChoice
 setMethod("getPoints", signature(object = "MultipleChoice"),

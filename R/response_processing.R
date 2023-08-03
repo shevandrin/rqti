@@ -9,16 +9,33 @@ create_default_resp_processing <- function(object) {
     response_if <- tag("responseIf", list(tag_not, set_ov))
     resp_cond1 <- tag("responseCondition", list(response_if))
 
-    resp_cond234 <- make_default_resp_cond()
+    resp_cond23 <- make_default_resp_cond()
+
+    resp_cond4 <- NULL
+    if (length(object@feedback) > 0) resp_cond4 <- make_default_feedback_cond()
 
     conditions <- Map(createResponseCondition, object@feedback)
-    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond234,
-                                                conditions))
+
+    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond23,
+                                                resp_cond4, conditions))
     return(resp_proc)
 }
 
 #process modalfeedback for sc
 create_default_resp_processing_sc <- function(object) {
+    resp_cond1 <- make_first_cond_sc_order()
+    resp_cond23 <- make_default_resp_cond()
+    resp_cond4 <- NULL
+    if (length(object@feedback) > 0) resp_cond4 <- make_default_feedback_cond()
+
+    conditions <- Map(createResponseCondition, object@feedback)
+
+    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond23,
+                                                resp_cond4, conditions))
+    return(resp_proc)
+}
+
+make_first_cond_sc_order <- function() {
     var_resp <- tag("variable", list(identifier = "RESPONSE"))
     tag_isnull <- tag("isNull", list(var_resp))
     response_if <- tag("responseIf", list(tag_isnull))
@@ -28,20 +45,19 @@ create_default_resp_processing_sc <- function(object) {
     set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", var_maxscore))
     response_elseif <- tag("responseElseIf", list(tag_match, set_ov))
     resp_cond1 <- tag("responseCondition", list(response_if, response_elseif))
-
-    resp_cond234 <- make_default_resp_cond()
-
-    conditions <- Map(createResponseCondition, object@feedback)
-    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond234,
-                                                conditions))
-    return(resp_proc)
+    return(resp_cond1)
 }
 
 #process modalfeedback for order
 create_default_resp_processing_order <- function(object) {
-    resp_cond234 <- make_default_resp_cond()
+    resp_cond1 <- NULL
+    if (!object@points_per_answer) resp_cond1 <- make_first_cond_sc_order()
+    resp_cond23 <- make_default_resp_cond()
+    resp_cond4 <- NULL
+    if (length(object@feedback) > 0) resp_cond4 <- make_default_feedback_cond()
     conditions <- Map(createResponseCondition, object@feedback)
-    resp_proc <- tag("responseProcessing", list(resp_cond234, conditions))
+    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond23,
+                                                resp_cond4, conditions))
     return(resp_proc)
 }
 
@@ -64,7 +80,8 @@ create_response_processing_entry <- function(object) {
         #this form 5 and 6 conditions
         resp_conds <- Map(createResponseCondition, object@feedback)
         #this form 2, 3 and 4 conditions and gathering all together
-        conditions <- tagList(make_default_resp_cond(answers),
+        conditions <- tagList(make_default_resp_cond(),
+                              make_default_feedback_cond(answers),
                               resp_conds)
     }
     tag("responseProcessing", list(processing, set_ov, conditions))
@@ -82,7 +99,7 @@ make_response_condition <- function(object = NULL) {
     tag("isNull", list(tag_var))
 }
 
-make_default_resp_cond <- function(answers = list(NULL)) {
+make_default_resp_cond <- function() {
     tag_gt <- tag("gt",
                   list(tag("variable", list(identifier = "SCORE")),
                        tag("variable", list(identifier = "MAXSCORE"))))
@@ -101,6 +118,10 @@ make_default_resp_cond <- function(answers = list(NULL)) {
     response_if <- tag("responseIf", list(tag_lt, set_ov))
     resp_cond2 <- tag("responseCondition", list(response_if))
 
+    return(tagList(resp_cond1, resp_cond2))
+}
+
+make_default_feedback_cond <- function(answers = list(NULL)) {
     tag_isnull <- Map(make_response_condition, answers)
     if (length(tag_isnull) > 1) {
         tag_isnull <- tag("and", tag_isnull)
@@ -121,13 +142,11 @@ make_default_resp_cond <- function(answers = list(NULL)) {
                   list(identifier = "FEEDBACKBASIC", tag_bv))
     response_else <- tag("responseElse", list(set_ov))
 
-    resp_cond3 <- tag("responseCondition",
+    resp_cond <- tag("responseCondition",
                         list(response_if, response_elseif,
                              response_else))
-
-    return(tagList(resp_cond1, resp_cond2, resp_cond3))
+    return(resp_cond)
 }
-
 
 create_response_processing_gap_basic <- function(object) {
     var_tag <- tag("variable", list(identifier = object@response_identifier))

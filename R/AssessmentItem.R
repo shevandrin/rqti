@@ -173,9 +173,7 @@ setMethod("createQtiTask", signature(object = "AssessmentItem"),
 
 setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
           function(object) {
-              if (length(object@feedback) >0) {
               create_default_resp_processing(object)
-              }
 })
 
 #' @rdname createResponseDeclaration-methods
@@ -199,10 +197,10 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
                                            value = "",
                                            base_type = "identifier"))
               }
-
+              points <- sum(object@points[object@points > 0])
               tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
-                                               value = object@points),
+                                               value = points),
                       make_outcome_declaration("MINSCORE", value = 0),
                       feedbacks)
           })
