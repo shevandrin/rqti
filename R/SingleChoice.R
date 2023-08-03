@@ -26,19 +26,11 @@
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric"), prototype = list(solution = 1))
 
+#' @export
 SingleChoice <- function(content, identifier, title, prompt, feedback,
                          choices, shuffle = TRUE, choice_identifiers,
                          orientation = "vertical", solution = 1, points = 1)
-    {   new("SingleChoice", content = content, identifier = identifier,
-        title = title, prompt = prompt,
-        feedback = feedback,
-        choices = choices, shuffle = shuffle,
-        choice_identifiers = choice_identifiers,
-        orientation = orientation, solution = solution,
-        points = points)
-}
-#' @export
-SingleChoice <- function(...) {
+    {
     args <- c(as.list(environment()), list(...))
     args["Class"] <- "SingleChoice"
     object <- do.call(new, args)
