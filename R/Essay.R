@@ -52,6 +52,6 @@ setMethod("createResponseDeclaration", signature(object = "Essay"),
 
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,Essay
-setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
+setMethod("createResponseProcessing", signature(object = "Essay"),
           function(object) {
           })
