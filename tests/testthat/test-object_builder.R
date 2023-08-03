@@ -1,4 +1,3 @@
-# SingleChoice
 test_that("Testing SingleChoice where answer is $nummer", {
     path <- test_path("file/md/test_sc_example3.md")
     sut <- create_question_object(path)
@@ -24,91 +23,115 @@ test_that("Testing SingleChoice where answer is $nummer", {
     )
     expect_equal(sut, expected)
 })
-test_that("create_question_object", {
+
+test_that("Testing create_question_object() for SingleChoice class", {
     path <- test_path("file/md/test_sc_example1.md")
     sut <- create_question_object(path)
 
-    content <- "<p>This is a mock question<br/>\nIn economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"
     expected <- new("SingleChoice",
-                   content = list(content),
-                   identifier = "eco",
-                   qti_version = "v2p1",
-                   title = "Economics and Physic",
-                   choices = c("Employ more and more people",
-                               "Maximize total production",
-                               "Maximize total profits",
-                               "Sell the goods at subsidized cost"),
-                   shuffle = TRUE,
-                   prompt = "",
-                   choice_identifiers = c("ChoiceA",
-                                          "ChoiceB",
-                                          "ChoiceC",
-                                          "ChoiceD"),
-                   orientation = "vertical",
-                   solution = 1
+                    content = list(paste0("<p>This is a mock question.<br/>\n",
+                                           "In economics it is generally ",
+                                           "believed that the main ",
+                                           "objective of a Public Sector ",
+                                           "Financial Company ",
+                                           "like Bank is to:</p>")),
+                    identifier = "eco",
+                    qti_version = "v2p1",
+                    title = "Economics and Physic",
+                    choices = c("Employ more and more people",
+                                "Maximize total production",
+                                "Maximize total profits",
+                                "Sell the goods at subsidized cost"),
+                    shuffle = TRUE,
+                    prompt = "",
+                    choice_identifiers = c("ChoiceA",
+                                           "ChoiceB",
+                                           "ChoiceC",
+                                           "ChoiceD"),
+                    orientation = "vertical")
+
+    expect_equal(sut, expected)
+})
+
+test_that("Testing create_question_object() for SingleChoice class: solution", {
+    path <- test_path("file/md/test_sc_example2.md")
+    sut <- create_question_object(path)
+
+    expected <- new("SingleChoice",
+                    content = list(paste0("<p>Which term is used to describe the study ",
+                           "of how people make decisions in a world where ",
+                           "resources are limited?</p>")),
+                    points = 2,
+                    identifier = "sample 2",
+                    qti_version = "v2p1",
+                    title = "Economics 2",
+                    choices = c("scarcity",
+                               "decision-making modeling",
+                               "economics",
+                               "cost-benefit analysis"),
+                    shuffle = TRUE,
+                    prompt = "",
+                    choice_identifiers = c("ChoiceA",
+                                           "ChoiceB",
+                                           "ChoiceC",
+                                           "ChoiceD"),
+                    orientation = "vertical",
+                    solution = 2
     )
     expect_equal(sut, expected)
 })
 
-test_that("create_question_object", {
-    path <- test_path("file/md/test_sc_example2.md")
-    cqc <- create_question_object(path)
-    expected <- new("SingleChoice",
-                   content = list(
-    "<p>Which term is used to describe the study of how people make decisions in a world where resources are limited?</p>"),
-                   points = 2,
-                   identifier = "sample 2",
-                   qti_version = "v2p1",
-                   title = "Economics 2",
-                   choices = c("scarcity",
-                               "decision-making modeling",
-                               "economics",
-                               "cost-benefit analysis"),
-                   shuffle = TRUE,
-                   prompt = "",
-                   choice_identifiers = c("ChoiceA",
-                                          "ChoiceB",
-                                          "ChoiceC",
-                                          "ChoiceD"),
-                   orientation = "vertical",
-                   solution = 2
-    )
-    expect_equal(cqc, expected)
-})
-
-# MultipleChoice - 1
-test_that("create_question_object", {
+test_that("Testing create_question_object() for MultipleChoice class:
+          solution 1 and 2", {
     path <- test_path("file/md/test_mc_example.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
-                   content = list(
-    "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
-                   points = c(1, 2, 0, 0),
-                   identifier = "test 2",
-                   qti_version = "v2p1",
-                   title = "Economics",
-                   choices = c("scarcity vs. resources",
-                               "wages vs. prices",
-                               "wants vs. needs",
-                               "consumers vs. producers"),
-                   shuffle = TRUE,
-                   prompt = "",
-                   choice_identifiers = c("ChoiceA",
-                                          "ChoiceB",
-                                          "ChoiceC",
-                                          "ChoiceD"),
-                   orientation = "vertical"
+                    content = list(paste0("<p>When deciding between ",
+                                          "renovating a water treatment plant ",
+                                          "or building a new community pool, ",
+                                          "what is the government most likely ",
+                                          "to consider?</p>")),
+                    points = c(1, 2, 0, 0),
+                    identifier = "test 2",
+                    qti_version = "v2p1",
+                    title = "Economics",
+                    choices = c("scarcity vs. resources",
+                                "wages vs. prices",
+                                "wants vs. needs",
+                                "consumers vs. producers"),
+                    shuffle = TRUE,
+                    prompt = "",
+                    choice_identifiers = c("ChoiceA",
+                                           "ChoiceB",
+                                           "ChoiceC",
+                                           "ChoiceD"),
+                    orientation = "vertical"
     )
     sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
 })
 
-# MultipleChoice - 2
-test_that("create_question_object", {
+test_that("Testing create_question_object() for MultipleChoice class:
+          solution 1 and 3", {
     path <- test_path("file/md/test_mc_example2.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
-                    content = list("<p>Economic systems are ways that countries answer the 5 fundamental questions:</p>\n<ul>\n<li>What will be produced?</li>\n<li>How will goods and services be produced?</li>\n<li>Who will get the output?</li>\n<li>How will the system accommodate change?</li>\n<li>How will the system promote progress?</li>\n</ul>\n<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+                    content = list(paste0("<p>Economic systems are ways ",
+                                          "that countries answer the 5 ",
+                                          "fundamental questions:",
+                                          "</p>\n<ul>\n<li>What will be ",
+                                          "produced?</li>\n<li>How will goods ",
+                                          "and services be produced?",
+                                          "</li>\n<li>Who will get the output?",
+                                          "</li>\n<li>How will the system ",
+                                          "accommodate change?</li>\n<li>How ",
+                                          "will the system promote progress?",
+                                          "</li>\n</ul>\n<p>When deciding ",
+                                          "between renovating a water ",
+                                          "treatment plant or building a new ",
+                                          "community pool, what is the ",
+                                          "government most likely to ",
+                                          "consider?</p>")),
                     points = c(2.5, 0, 2.5, 0),
                     identifier = "test 2",
                     qti_version = "v2p1",
@@ -128,8 +151,8 @@ test_that("create_question_object", {
     sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
 })
-# Essay
-test_that("create_question_object", {
+
+test_that("Testing create_question_object() for Essay class", {
     path <- test_path("file/md/test_essay_example.md")
     sut <- create_question_object(path)
     expected <- new("Essay",
@@ -143,8 +166,8 @@ test_that("create_question_object", {
                    )
     expect_equal(sut, expected)
 })
-# Entry
-test_that("create_question_object", {
+
+test_that("Testing create_question_object() for Entry class", {
 path <- test_path("file/md/test_entry_example1.md")
 sut <- suppressMessages(create_question_object(path))
 expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
@@ -155,11 +178,11 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 identifier = "test 2",
                 qti_version = "v2p1",
                 title = "Germany"
-))
+                ))
 expect_equal(sut, expected)
 })
-# Entry with YAML
-test_that("create_question_object", {
+
+test_that("Testing create_question_object() for Entry with YAML", {
 path <- test_path("file/md/test_entry_example2.md")
 sut <- suppressMessages(create_question_object(path))
 expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
@@ -175,11 +198,11 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 identifier = "test 2",
                 qti_version = "v2p1",
                 title = "Germany"
-))
+                ))
 expect_equal(sut, expected)
 })
- # Entry - Testing function create_outcome_declaration_entry
-test_that("Testing function create_outcome_declaration_entry", {
+
+test_that("Testing create_outcome_declaration() for Entry class", {
     expected <- suppressMessages(new("Entry",
                                      content = list("<p>Hast du",
                                      new("TextGap",
@@ -232,85 +255,98 @@ test_that("Testing function create_outcome_declaration_entry", {
     expect_equal(xml1, xml2)
 })
 
-test_that("Test parsing md for Order task", {
+test_that("Testing create_question_object() for Order task", {
     path <- test_path("file/md/test_order_example.md")
     sut <- create_question_object(path)
-    expected <- new("Order", content = list("<p>Arrange German cities in ascending order of population</p>"),
+    expected <- new("Order",
+                    content = list(paste0("<p>Arrange German cities ",
+                                          "in ascending order of ",
+                                          "population</p>")),
                     identifier = "test_order_example",
                     choices = c("Berlin", "Hamburg", "Munich",
                                 "Cologne", "Düsseldorf",  "Leipzig")
-    )
+                    )
     expect_equal(sut, expected)
 })
-test_that("Test parsing md for Direct Pair task", {
+
+test_that("Testing create_question_object() for Direct Pair task", {
     path <- test_path("file/md/test_directedPair_example.md")
     sut <- create_question_object(path)
-    expected <- new("DirectedPair", content = list("<p>Associate the cities with lands.</p>"),
+    expected <- new("DirectedPair",
+                    content = list("<p>Associate the cities with lands.</p>"),
                     identifier = "test_direct_pair_example",
                     rows = c("Munchen", "Chemnitz", "Dusseldorf",
-                                        "Karlsruhe", "Erfurt"),
+                             "Karlsruhe", "Erfurt"),
                     rows_identifiers = c("row_1", "row_2", "row_3",
                                          "row_4","row_5"),
                     cols = c("Bayern", "Sachsen", "NRW",
-                                         "Baden-Württemberg", "Thüringen"),
+                             "Baden-Württemberg", "Thüringen"),
                     cols_identifiers = c("col_1", "col_2", "col_3",
                                          "col_4","col_5"),
                     answers_identifiers = c("row_1 col_1", "row_2 col_2",
-                                    "row_3 col_3", "row_4 col_4", "row_5 col_5"),
+                                            "row_3 col_3", "row_4 col_4",
+                                            "row_5 col_5"),
                     answers_scores = c(1, 1, 1, 1, 0.5)
     )
     expect_equal(sut, expected)
 })
-test_that("Test parsing md for OnInColTable task", {
+
+test_that("Testing create_question_object() for OnInColTable task", {
     path <- test_path("file/md/test_OnInColTable_example.md")
     sut <- create_question_object(path)
     expected <- new("OneInColTable",
-                         content = list("<p>Choose the correct order in the multiplication table</p>"),
-                         identifier = "test_OnInColTable_example",
-                         title = "test_OnInColTable_example",
-                         rows = c("2*3 =", "4*7 =", "12*3 =",
-                                              "3*9 =", "5*5 ="),
-                         rows_identifiers = c("row_1", "row_2", "row_3",
-                                              "row_4", "row_5"),
-                         cols = c("6", "36", "27", "72/2", "25"),
-                         cols_identifiers = c("col_1", "col_2", "col_3",
-                                              "col_4", "col_5"),
-                         answers_identifiers =c("row_1 col_1", "row_3 col_2",
-                                "row_3 col_4", "row_4 col_3", "row_5 col_5"),
-                         answers_scores = c(0.5, 1, 1, 1, 1)
+                    content = list(paste0("<p>Choose the correct order in ",
+                                          "the multiplication table</p>")),
+                    identifier = "test_OnInColTable_example",
+                    title = "test_OnInColTable_example",
+                    rows = c("2*3 =", "4*7 =", "12*3 =","3*9 =", "5*5 ="),
+                    rows_identifiers = c("row_1", "row_2", "row_3",
+                                         "row_4", "row_5"),
+                    cols = c("6", "36", "27", "72/2", "25"),
+                    cols_identifiers = c("col_1", "col_2", "col_3",
+                                         "col_4", "col_5"),
+                    answers_identifiers =c("row_1 col_1", "row_3 col_2",
+                                           "row_3 col_4", "row_4 col_3",
+                                           "row_5 col_5"),
+                    answers_scores = c(0.5, 1, 1, 1, 1)
     )
     expect_equal(sut, expected)
 })
-test_that("Test parsing md for OneInRowTable task", {
+
+test_that("Testing create_question_object() for OneInRowTable task", {
     path1 <- test_path("file/md/test_OneInRowTable_example.md")
     sut1 <- create_question_object(path1)
     path2 <- test_path("file/rmd/test_OneInRowTable_example.Rmd")
     sut2 <- create_question_object(path2)
     expected <- new("OneInRowTable",
-                         content = list("<p>Choose the correct order in the multiplication table</p>"),
-                         identifier = "test_OneInRowTable_example",
-                         title = "OneInRowTable",
-                         rows = c("4*9 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
-                         rows_identifiers = c("row_1", "row_2", "row_3",
-                                              "row_4", "row_5"),
-                         cols = c("27", "36", "25", "6"),
-                         cols_identifiers = c("col_1", "col_2",
-                                              "col_3", "col_4"),
-                         answers_identifiers = c("row_1 col_2", "row_2 col_1",
-                                "row_3 col_3", "row_4 col_4", "row_5 col_2"),
-                         answers_scores = c(0.5, 1, 1, 1, 1))
+                    content = list(paste0("<p>Choose the correct order in ",
+                                          "the multiplication table</p>")),
+                    identifier = "test_OneInRowTable_example",
+                    title = "OneInRowTable",
+                    rows = c("4*9 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
+                    rows_identifiers = c("row_1", "row_2", "row_3",
+                                         "row_4", "row_5"),
+                    cols = c("27", "36", "25", "6"),
+                    cols_identifiers = c("col_1", "col_2",
+                                         "col_3", "col_4"),
+                    answers_identifiers = c("row_1 col_2", "row_2 col_1",
+                                            "row_3 col_3", "row_4 col_4",
+                                            "row_5 col_2"),
+                    answers_scores = c(0.5, 1, 1, 1, 1))
     expect_equal(sut1, expected)
     expect_equal(sut2, expected)
 })
-test_that("Test parsing md for MultipleChoiceTable task", {
+
+test_that("Testing create_question_object() for  MultipleChoiceTable task", {
     path <- test_path("file/md/test_MultipleChoiceTable_example.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoiceTable",
-                    content = list("<p>Choose the correct order in the multiplication table</p>"),
+                    content = list(paste0("<p>Choose the correct order in ",
+                                          "the multiplication table</p>")),
                     identifier = "test_MultipleChoiceTable_example",
                     rows = c("4*7-1 =", "3*9 =", "5*5 =", "2*3 =", "12*3 ="),
-                    rows_identifiers = c("row_1", "row_2", "row_3",
-                                         "row_4", "row_5"),
+                    rows_identifiers = c("row_1", "row_2", "row_3","row_4",
+                                         "row_5"),
                     cols = c("27", "36", "25", "6", "72/2"),
                     cols_identifiers = c("col_1", "col_2", "col_3",
                                          "col_4", "col_5"),
@@ -319,13 +355,19 @@ test_that("Test parsing md for MultipleChoiceTable task", {
                     answers_scores = c(1, 1, 1, 1, 1, 1))
     expect_equal(sut, expected)
 })
-test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
+
+test_that("Testing create_question_object() for TextGap
+          (yaml and primitive) tasks", {
     path <- test_path("file/rmd/test_entry_Gap_primitive.Rmd")
     sut <- suppressMessages(create_question_object(path))
+
+    content <- paste0("<p><strong>Diese Aufgabe dient zum Testen ",
+                           "verschiedener Möglichkeiten zum Erstellen von ",
+                           "Lücken</strong></p>\n<p>Hast du ")
     expected <- suppressMessages(new("Entry",
            identifier = "test_entry_example",
            title = "test_entry_example",
-           content = list('<p><strong>Diese Aufgabe dient zum Testen verschiedener Möglichkeiten zum Erstellen von Lücken</strong></p>\n<p>Hast du ',
+           content = list(content,
                      new("TextGap",
                           response_identifier = "response_1",
                           solution = c("ein","EIN", "Ein"),
@@ -338,11 +380,13 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
                      new("TextGap",
                           response_identifier = "response_3",
                           solution = "ein"),
-                     ' Computer? Der beliebteste Prozessor im ersten Quartal 2023 ist der Core i',
+                          paste0(" Computer? Der beliebteste Prozessor ",
+                          "im ersten Quartal 2023 ist der Core i"),
                      new("NumericGap",
                           response_identifier = "response_4",
                           solution = 5),
-                     '.</p>\n<p>neue numerische Lücke, die mit der Funktion gebaut würde ',
+                          paste0(".</p>\n<p>neue numerische Lücke, die mit ",
+                                 "der Funktion gebaut würde "),
                      new("NumericGap",
                          response_identifier = "response_5",
                          solution = 8,
@@ -351,14 +395,17 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
                          tolerance_type = "relative",
                          tolerance = 10,
                          include_lower_bound = FALSE),
-                     '</p>\n<p>eine texte Lücke, die mit der Funktion gebaut würde ',
-                     new("TextGap",
+                         paste0("</p>\n<p>eine texte Lücke, die mit der ",
+                                "Funktion gebaut würde "),
+                      new("TextGap",
                          response_identifier = "response_6",
                          solution = c("answer0", "answer1", "answer2"),
                          score = 3,
                          placeholder = "put answer here",
                          expected_length = 70, case_sensitive = FALSE),
-                     '</p>\n<p>eine texte Lücke <strong>für opal</strong>, die mit der Funktion gebaut würde ',
+                         paste0("</p>\n<p>eine texte Lücke <strong>für ",
+                                "opal</strong>, die mit der Funktion ",
+                                "gebaut würde "),
                      new("TextGapOpal",
                          response_identifier = "response_7",
                          solution = c("answer0", "answer1", "answer2"),
@@ -371,7 +418,9 @@ test_that("Test parsing md for TextGap (yaml and primitive) tasks", {
                                 content = list("<p>general feedback</p>")))))
     expect_equal(sut, expected)
 })
-test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
+
+test_that("Testing create_question_object() for InlineChoice
+          (yaml and primitive) tasks", {
     path <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
     sut <- suppressMessages(create_question_object(path))
     expected <- suppressMessages(new("Entry",
@@ -383,14 +432,18 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
                                                     "Realme GT Master Edition",
                                                     "Samsung Galaxy A52"),
                                        response_identifier = "response_1"),
-                    '. Das meistverkaufte Telefonmodell in Deutschland ist ',
+                                       paste0(". Das meistverkaufte ",
+                                       "Telefonmodell in Deutschland ist "),
                                    new("InlineChoice",
                                        solution = c("Apple iPhone 13 Pro",
                                                     "Apple iPhone 13 Pro Max",
                                                     "Apple iPhone 13"),
                                        response_identifier = "response_2",
                                        answer_index = 3),
-                                   '.</p>\n<p>In welchem Jahr begann das iPhone auf dem europäischen Markt zu verkaufen?',
+                                       paste0(".</p>\n<p>In welchem Jahr ",
+                                              "begann das iPhone auf dem ",
+                                              "europäischen Markt zu ",
+                                              "verkaufen?"),
                                    new("InlineChoice",
                                        response_identifier = "response_3",
                                        solution = c(2007, 2008)),
@@ -403,12 +456,17 @@ test_that("Test parsing md for InlineChoice (yaml and primitive) tasks", {
                     ))
     expect_equal(sut, expected)
 })
-test_that("Testing of creating mc object from Rmd without points", {
+
+test_that("Testing create_question_object() for MultipleChoice class
+          without points", {
     path <- test_path("file/rmd/test_mc_no_point.Rmd")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
-                    content = list(
-                        "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider?</p>"),
+                    content = list(paste0("<p>When deciding between ",
+                                          "renovating a water treatment plant ",
+                                          "or building a new community pool, ",
+                                          "what is the government most likely ",
+                                          "to consider?</p>")),
                     identifier = "test 2",
                     points = c(0.5, 0.5, 0, 0),
                     qti_version = "v2p1",
@@ -428,7 +486,8 @@ test_that("Testing of creating mc object from Rmd without points", {
 
     expect_equal(sut@points, expected@points)
 })
-test_that("Testing the order task, points are awarded for each correct answer.",
+
+test_that("Testing the Order task, points are awarded for each correct answer.",
           {
     path <- test_path("file/rmd/test_order.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))

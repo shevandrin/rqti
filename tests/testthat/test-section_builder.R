@@ -6,7 +6,7 @@ mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
                       "consumers vs. producers"),
           points = c(0.5, 0.5, 0, 0))
 sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
-          content = list("<p>This is a mock question<br/>
+          content = list("<p>This is a mock question.<br/>
 In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"),
           choices = c("Employ more and more people", "Maximize total production",
                       "Maximize total profits", "Sell the goods at subsidized cost"))
@@ -103,7 +103,7 @@ test_that("Testing function section() to build variable AssessmentSection for ne
             seed <- c(seed, s)
         }
     }
-    # reassign identifeir and titles for expected items
+    # reassign identifier and titles for expected items
     for (i in seq(length(item))) {
         item[[i]]@identifier <- paste0(item[[i]]@identifier, "_S", seed[i])
         item[[i]]@title <- paste0(item[[i]]@title, "_S", seed[i])

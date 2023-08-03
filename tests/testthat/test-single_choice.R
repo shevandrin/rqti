@@ -188,15 +188,17 @@ test_that("Test fuction for SingleChoice class", {
                                     "option 4"),
                         orientation = "vertical",
                         title = "single_choice_task",
+                        prompt = "test",
                         shuffle = FALSE,
                         points = 2,
-                        identifier = "sc_example")
+                        identifier = "sc_example" )
     expected <- new("SingleChoice",
                     content = list("<p>Pick up the right option</p>"),
                     choices = c("option 1", "option 2", "option 3",
                                 "option 4"),
                     orientation = "vertical",
                     title = "single_choice_task",
+                    prompt = "test",
                     shuffle = FALSE,
                     points = 2,
                     identifier = "sc_example")

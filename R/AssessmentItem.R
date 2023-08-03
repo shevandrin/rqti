@@ -171,6 +171,8 @@ setMethod("createQtiTask", signature(object = "AssessmentItem"),
               create_qti_task(object, dir, verification)
           })
 
+#' @rdname createResponseProcessing-methods
+#' @aliases createResponseProcessing,AssessmentItem
 setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
           function(object) {
               create_default_resp_processing(object)

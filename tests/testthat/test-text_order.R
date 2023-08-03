@@ -122,6 +122,22 @@ test_that("Testing createResponseProcessing() for Order class", {
 <responseProcessing>
   <responseCondition>
     <responseIf>
+      <isNull>
+        <variable identifier="RESPONSE"></variable>
+      </isNull>
+    </responseIf>
+    <responseElseIf>
+      <match>
+        <variable identifier="RESPONSE"></variable>
+        <correct identifier="RESPONSE"></correct>
+      </match>
+      <setOutcomeValue identifier="SCORE">
+        <variable identifier="MAXSCORE"></variable>
+      </setOutcomeValue>
+    </responseElseIf>
+  </responseCondition>
+  <responseCondition>
+    <responseIf>
       <gt>
         <variable identifier="SCORE"></variable>
         <variable identifier="MAXSCORE"></variable>

@@ -6,7 +6,7 @@ test_that("create_qti_task", {
     essay <- new("Essay", prompt = "Test task",
                  title = "Essay",
                  identifier = "new")
-    suppressMessages(create_qti_task(essay))
+    suppressMessages(createQtiTask(essay))
     sut <- readLines("new.xml")
 
     expect_equal(sut, expected)
@@ -24,7 +24,7 @@ test_that("create_qti_task", {
                choice_identifiers = c("a1", "a2", "a3", "a4"),
                points = c(1, 0, 0, 1)
     )
-    suppressMessages(create_qti_task(mc))
+    suppressMessages(createQtiTask(mc))
     sut <- readLines("mpc.xml")
 
     expect_equal(sut, expected)
@@ -41,7 +41,7 @@ test_that("create_qti_task", {
                choices = c("15%", "20%", "30%"),
                choice_identifiers = "1",
                identifier = "new")
-    suppressMessages(create_qti_task(sc))
+    suppressMessages(createQtiTask(sc))
     sut <- readLines("new.xml")
 
     expect_equal(sut, expected)
@@ -62,7 +62,7 @@ test_that("create_qti_task", {
                   choices_identifiers = c("a1", "a2", "a3", "a4"),
                   points = 1,
                  points_per_answer = FALSE)
-    suppressMessages(create_qti_task(order))
+    suppressMessages(createQtiTask(order))
     sut <- readLines("ord.xml")
 
     expect_equal(sut, expected)
@@ -86,7 +86,7 @@ test_that("create_qti_task", {
                  answers_identifiers =c("b k", "c m", "d n", "e l", "e p"),
                  points = 5
     )
-    suppressMessages(create_qti_task(oneInColTable))
+    suppressMessages(createQtiTask(oneInColTable))
     sut <- readLines("new.xml")
 
     expect_equal(sut, expected)
@@ -109,7 +109,7 @@ test_that("create_qti_task", {
              cols_identifiers = c("k", "l", "m", "n"),
              answers_identifiers = c("a l", "b k", "c m", "d n", "e l"),
              points = 5)
-    suppressMessages(create_qti_task(OneInRowTable))
+    suppressMessages(createQtiTask(OneInRowTable))
     sut <- readLines("new.xml")
 
     expect_equal(sut, expected)
@@ -134,7 +134,7 @@ test_that("create_qti_task", {
                 answers_identifiers =c("b k", "c m", "d n", "e l", "e p"),
                 points = 5
     )
-    suppressMessages(create_qti_task(MultipleChoiceTable))
+    suppressMessages(createQtiTask(MultipleChoiceTable))
     sut <- readLines("new.xml")
 
     expect_equal(sut, expected)
@@ -156,7 +156,7 @@ test_that("create_qti_task", {
                     answers_identifiers = c("a k", "b l", 'c m'),
                     points = 5
 )
-    suppressMessages(create_qti_task(DirectedPair))
+    suppressMessages(createQtiTask(DirectedPair))
     sut <- readLines("dpr.xml")
 
     expect_equal(sut, expected)
@@ -179,7 +179,7 @@ TextGapOpal <- new("Entry",
                                       tolerance = 2),
                                   'than the speed of sound</p>'))
 
-    suppressMessages(create_qti_task(TextGapOpal))
+    suppressMessages(createQtiTask(TextGapOpal))
     sut <- readLines("tgo.xml")
 
     expect_equal(sut, expected)
@@ -202,7 +202,7 @@ NumericGap <- new("Entry",
                                      tolerance = 2),
                                  'm/s')
 )
-    suppressMessages(create_qti_task(NumericGap))
+    suppressMessages(createQtiTask(NumericGap))
     sut <- readLines("new.xml")
 
     expect_equal(sut, expected)
@@ -225,9 +225,10 @@ InlineChoice <- new("Entry",
                                        score = 1),
                                    'm/s')
 )
-    suppressMessages(create_qti_task(InlineChoice))
+    suppressMessages(createQtiTask(InlineChoice))
     sut <- readLines("new.xml")
 
     expect_equal(sut, expected)
     file.remove("new.xml")
 })
+
