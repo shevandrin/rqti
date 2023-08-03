@@ -49,3 +49,9 @@ setMethod("createResponseDeclaration", signature(object = "Essay"),
                                               cardinality = "single",
                                               baseType = "string"))
           })
+
+#' @rdname createResponseProcessing-methods
+#' @aliases createResponseProcessing,Essay
+setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
+          function(object) {
+          })
