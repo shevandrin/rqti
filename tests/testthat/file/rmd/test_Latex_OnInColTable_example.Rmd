@@ -7,7 +7,27 @@ Choose the correct order in the multiplication table
 
 |Formulas|Mean|Standard Deviation|Normal Distribution|Hypothesis Testing (t-test)|
 |------|-----|------------------|-------------------|---------------------------|
-|$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$]|1|0|0|0|
+|$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$|1|0|0|0|
 |$$s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2}$$|0|1|0|0|
 |$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$|0|0|1|0|
 |$$t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$|0|0|0|1|
+
+```{r data_generation, echo = FALSE, results = "hide"}
+library(ggplot2)
+# Display the histogram plot
+v <- c(5, 9, 13, 2, 50, 20, 59, 36, 23, 2, 8, 27, 72, 14)
+
+histogram_2 <- ggplot(data = NULL, aes(x = v)) +
+  geom_histogram(binwidth = 5, fill = "red", color = "black") +
+  xlab("Weight")
+ggsave("pic_1.png", plot = histogram_2, width = 5, height = 3, dpi = 300)
+```
+
+![](pic_1.png){width=300px height=200px} 
+
+Histogram of Normal Distribution Values
+
+# feedback
+The correct answer is Histogram of Distribution of a numeric variable’s values.
+
+![](pic_1.png){width=300px height=200px}
