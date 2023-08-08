@@ -31,14 +31,15 @@ setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     answ_count <- length(.Object@answers_identifiers)
 
-    if (is.na(.Object@points)) {
-        .Object@points <- answ_count
-    }
-
     if (length(.Object@answers_scores) == 0) {
         score <- .Object@points / answ_count
         .Object@answers_scores  <- rep(score, answ_count)
     }
+
+    if (is.na(.Object@points)) {
+        .Object@points <- sum(.Object@answers_scores)
+    }
+
     validObject(.Object)
     .Object
 })
