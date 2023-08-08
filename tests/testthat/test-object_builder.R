@@ -58,9 +58,11 @@ test_that("Testing create_question_object() for SingleChoice class: solution", {
     sut <- create_question_object(path)
 
     expected <- new("SingleChoice",
-                    content = list(paste0("<p>Which term is used to describe the study ",
-                           "of how people make decisions in a world where ",
-                           "resources are limited?</p>")),
+                    content = list(paste0("<p>Which term is used to ",
+                                          "describe the study ",
+                                          "of how people make decisions",
+                                          " in a world where ",
+                                          "resources are limited?</p>")),
                     points = 2,
                     identifier = "sample 2",
                     qti_version = "v2p1",
