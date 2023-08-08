@@ -7,6 +7,7 @@ test_that("Testing CreateItemBody DirectedPair", {
               answers_identifiers = c("ID_3 IDT_3", "ID_1 IDT_1", "ID_2 IDT_2"),
               points = 5,
               title = "directed_pair",
+              orientation = "horizontal",
               prompt = "Associated left elements with the right category"
     )
 
@@ -14,17 +15,24 @@ test_that("Testing CreateItemBody DirectedPair", {
     # qti does not provide it
 
     example <- '<itemBody>
-<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
+<matchInteraction responseIdentifier="RESPONSE" shuffle="true"
+                                maxAssociations="0" orientation="horizontal">
 <prompt>Associated left elements with the right category</prompt>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="ID_1" fixed="false" matchMax="1">Lion</simpleAssociableChoice>
-<simpleAssociableChoice identifier="ID_2" fixed="false" matchMax="1">Flower</simpleAssociableChoice>
-<simpleAssociableChoice identifier="ID_3" fixed="false"  matchMax="1">Mushrooms</simpleAssociableChoice>
+<simpleAssociableChoice identifier="ID_1" fixed="false"
+                                matchMax="1">Lion</simpleAssociableChoice>
+<simpleAssociableChoice identifier="ID_2" fixed="false"
+                                matchMax="1">Flower</simpleAssociableChoice>
+<simpleAssociableChoice identifier="ID_3" fixed="false"
+                                matchMax="1">Mushrooms</simpleAssociableChoice>
 </simpleMatchSet>
 <simpleMatchSet>
-<simpleAssociableChoice identifier="IDT_1" fixed="false" matchMax="1">Animal</simpleAssociableChoice>
-<simpleAssociableChoice identifier="IDT_2" fixed="false" matchMax="1">Plant</simpleAssociableChoice>
-<simpleAssociableChoice identifier="IDT_3" fixed="false" matchMax="1">Fungi</simpleAssociableChoice>
+<simpleAssociableChoice identifier="IDT_1" fixed="false"
+                                matchMax="1">Animal</simpleAssociableChoice>
+<simpleAssociableChoice identifier="IDT_2" fixed="false"
+                                matchMax="1">Plant</simpleAssociableChoice>
+<simpleAssociableChoice identifier="IDT_3" fixed="false"
+                                matchMax="1">Fungi</simpleAssociableChoice>
 </simpleMatchSet>
 </matchInteraction>
     </itemBody>'
@@ -50,7 +58,8 @@ test_that("Testing ResponseDeclaration DirectedPair", {
 
     # The example was based on OPAL question type "Match Interaction" because
     # qti does not provide it
-    example <- '<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+    example <- '<responseDeclaration identifier="RESPONSE"
+                            cardinality="multiple" baseType="directedPair">
 <correctResponse>
 <value>ID_3 IDT_3</value>
 <value>ID_1 IDT_1</value>
