@@ -99,7 +99,8 @@ skip_on_covr()
 skip_on_ci()
 test_that("Testing Rmd file for MultipleChoice that contains two images", {
 
-    path <- test_path("file/test_image_MC.Rmd")
+    path <- test_path("file/rmd/test_image_MC.Rmd")
+    q <- create_question_object(path)
     suppressMessages(rmd2xml(path, path = test_path()))
 
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
@@ -132,7 +133,7 @@ skip_on_covr()
 skip_on_ci()
 test_that("Testing Rmd file for MultipleChoice that contain image in Feedback",
           {
-    path <- test_path("file/test_image_MC.Rmd")
+    path <- test_path("file/rmd/test_image_MC.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
 
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))
@@ -161,7 +162,7 @@ test_that("Testing Rmd file for MultipleChoice that contain image in Feedback",
 })
 
 test_that("Testing Rmd file for MultipleChoice that contain formula by Latex", {
-    path <- test_path("file/test_mc_no_point.Rmd")
+    path <- test_path("file/rmd/test_mc_no_point.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
 
     xml_file_sut <- xml2::read_xml(test_path("test 2.xml"))

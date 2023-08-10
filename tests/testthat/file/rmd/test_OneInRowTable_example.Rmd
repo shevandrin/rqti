@@ -5,6 +5,7 @@ title: OneInRowTable
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE}
+library(readr)
 df <- readr::read_csv("table.csv", col_types = "c")
 ```
 # question

@@ -8,6 +8,7 @@
 \alias{createResponseProcessing,AssessmentItem}
 \alias{createResponseProcessing,Entry-method}
 \alias{createResponseProcessing,Entry}
+\alias{createResponseProcessing,Essay-method}
 \alias{createResponseProcessing,Essay}
 \alias{createResponseProcessing,Gap-method}
 \alias{createResponseProcessing,Gap}
@@ -27,7 +28,7 @@ createResponseProcessing(object)
 
 \S4method{createResponseProcessing}{Entry}(object)
 
-\S4method{createResponseProcessing}{AssessmentItem}(object)
+\S4method{createResponseProcessing}{Essay}(object)
 
 \S4method{createResponseProcessing}{Gap}(object)
 

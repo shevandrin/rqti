@@ -6,4 +6,4 @@ points: 5
 ---
 
 # question
-Hast du <<ein>> Handy?
+Hast du [[ein]] Handy?

@@ -104,6 +104,7 @@ setGeneric("createText", function(object) {
 
 #' @rdname createText-methods
 #' @aliases createText,character
+#' @importFrom htmltools HTML
 setMethod("createText", "character", function(object) {
     HTML(object)
 })

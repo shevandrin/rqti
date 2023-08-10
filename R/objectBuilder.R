@@ -31,68 +31,50 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
     createQtiTask(task, dir = path, verification = verification)
 }
 
-#' Create S4 object according to content of markdown file
-#'
-#' @param file a file with markdown description of question.
-#' @importFrom commonmark markdown_html
-#' @importFrom htmltools HTML p
-#' @importFrom stringr str_extract_all str_sub str_trim str_split_1
-#' @importFrom rmarkdown pandoc_convert
+#' @importFrom stringr str_split_1
 #' @import yaml
-#' @import parsermd
-#' @importFrom utils read.delim
-#' @importFrom knitr knit
-#' @return an instance of the S4 object (SingleChoice, MultipleChoice,
-#'   Entry, Order, OneInRowTable, OneInColTable, MultipleChoiceTable,
-#'   DirectedPair).
-#' @export
-create_question_object <- function(file) {
-
-    file_dir <- dirname(file)
-    file_name <- tools::file_path_sans_ext(basename(file))
-    exts <- tools::file_ext(file)
-    if (exts == "Rmd") {
-        tdir <- tempdir()
-        file <- knitr::knit(file,
-                            output = file.path(tdir, paste0(file_name, ".md")),
-                            quiet = TRUE)
-    }
-
-    doc_tree <- parsermd::parse_rmd(file)
-
-    attrs_sec <- parsermd::rmd_select(doc_tree,
-                                      parsermd::has_type("rmd_yaml_list"))
-    attrs <- yaml.load(parsermd::as_document(attrs_sec))
+create_question_object <- function(file, file_dir = NULL) {
+    attrs <- rmarkdown::yaml_front_matter(file)
     # ignore parameters that are not related to object creation
     attrs <- attrs[! names(attrs) %in% c("knit")]
-    question <- parsermd::rmd_select(doc_tree,
-                                     parsermd::by_section("question"))[-1]
-    html <- transform_to_html(parsermd::as_document(question), file_dir)
+
+    file_name <- tools::file_path_sans_ext(basename(file))
+    tdir <- tempdir()
+    tdoc <- rmarkdown::render(file, output_format = "html_document",
+                              output_file = "_temp_task.html",
+                              output_dir = tdir,
+                              quiet = TRUE, knit_meta = list(title="xxx"))
+    # print(tdoc)
+    doc <- xml2::read_html(tdoc)
+    doc_body <- xml2::xml_find_all(doc, "body")
+    html_qstn <- xml2::xml_find_first(doc_body, "//div[@id='question']")
 
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
-        create_sc_object(html, attrs)
+        create_sc_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {
-        create_mc_object(html, attrs)
+        create_mc_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
-        create_entry_object(question, attrs)
+        create_entry_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) == "order") {
-        create_order_object(html, attrs)
+        create_order_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) == "essay") {
-        create_essay_object(attrs)
+        create_essay_slots(attrs)
     } else if (tolower(attrs$type) %in% c("dp", "directedpair", "pair")) {
-        create_dp_object(html, attrs)
+        create_dp_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("match", "table", "matchtable")) {
         if (!any(names(attrs) == "abbr_id")) attrs$abbr_id <- FALSE
-        create_matchtable_object(html, attrs)
+        create_matchtable_slots(html_qstn, attrs)
     } else {
-        stop("The type of task is not specified properly")
+        stop("The type of the task is not specified properly")
     }
 
     if (is.null(slots$identifier)) slots$identifier <- file_name
-    feedback <- list(parse_feedback(file, file_dir))
-    if (is.null(slots$content)) slots$content <- as.list((clean_question(html)))
+    feedback <- list(parse_feedback(doc_body, file_dir))
     slots <- c(slots, feedback = feedback)
-    slots[["type"]] <- NULL # rid of type attribute from slots
+    if (is.null(slots$content)) {
+        slots$content <- as.list(paste(clean_question(html_qstn),
+                                       collapse = ""))}
+    slots[["type"]] <- NULL
 
     if (!is.null(slots[["seed"]])) {
         id <- paste0(slots[["identifier"]], "_S", slots[["seed"]])
@@ -104,19 +86,83 @@ create_question_object <- function(file) {
     return(object)
 }
 
-# creates SingleChoice type of qti-object
-create_sc_object <- function(html, attrs) {
+create_entry_slots <- function(html, attrs) {
+
+    html_str <- as.character(html)
+    html_str <- gsub("\\[\\[", "<entry>", html_str)
+    html_str <- gsub("\\]\\]", "</entry>", html_str)
+    html <- xml2::read_html(html_str)
+    html <- xml2::xml_find_all(html, "//div[@id='question']")
+    html_str <- paste(clean_question(html), collapse = "")
+
+    entry_gaps <- xml2::xml_find_all(html, "//entry")
+    ids <- make_ids(length(entry_gaps), "response")
+
+    gaps <- Map(create_gap_object, entry_gaps, ids)
+    end <- unlist(gregexpr("<entry>", html_str)) - 1L
+    begin <- unlist(gregexpr("</entry>", html_str)) + 8L
+    all <- sort(c(begin, end, 1, nchar(html_str)))
+
+    content <- list()
+    for (i in seq(length(all) - 1)) {
+        text_chank <- substring(html_str, all[i], all[i + 1L])
+        if ((i %% 2) == 0) {
+            text_chank <- gaps[i/2]
+        }
+        content <- append(content, text_chank)
+    }
+
+    attrs <- c(Class = "Entry", content = as.list(list(content)), attrs)
+    return(attrs)
+}
+
+create_gap_object <- function(entry, id) {
+    gap_str <- xml2::xml_text(entry)
+    gap_str <- sub("\r\n", " ", gap_str)
+    attrs <- yaml::yaml.load(gap_str)
+    if (!is.list(attrs)) {
+        if (!is.na(suppressWarnings(as.numeric(gap_str)))) {
+            object <- new("NumericGap", response_identifier = id,
+                          solution = as.numeric(gap_str))
+        } else if (length(str_split_1(gap_str, "\\|")) == 1) {
+            object <- new("TextGap", response_identifier = id,
+                          solution = gap_str)
+        } else {
+            object <- new("InlineChoice", response_identifier = id,
+                          solution = str_split_1(gap_str, "\\|"))
+        }
+    } else {
+        object_class <- switch(attrs$type,
+                               "text" = "TextGap",
+                               "numeric" = "NumericGap",
+                               "text_opal" = "TextGapOpal",
+                               "InlineChoice")
+        attrs[["type"]] <- NULL
+        if (!("response_identifier" %in% names(attrs)))  {
+            attrs["response_identifier"] <- id}
+        attrs <- c(Class = object_class, attrs)
+        object <- do.call(new, attrs)
+    }
+    sign_tag <- xml2::read_xml("<sign/>")
+    xml2::xml_replace(entry, sign_tag)
+
+    return(object)
+}
+
+
+# creates slots of SingleChoice-object
+create_sc_slots <- function(html, attrs) {
     choices_options <- parse_list(html)
-    em <- choices_options$solution
+    sl <- choices_options$solution
     choices <- choices_options$choices
-    if (length(em) > 1) stop("More than 1 option marked as the correct answer")
-    if (length(em) > 0) attrs$solution = em
+    if (length(sl) > 1) stop("More than 1 option marked as the correct answer")
+    if (length(sl) > 0) attrs$solution <- sl
 
     attrs <- c(Class = "SingleChoice", choices = list(choices), attrs)
     return(attrs)
 }
 
-create_mc_object <- function(html, attrs) {
+create_mc_slots <- function(html, attrs) {
     choices_options <- parse_list(html)
     choices <- choices_options$choices
     # define default points as number of right answers * 0.5
@@ -134,89 +180,53 @@ create_mc_object <- function(html, attrs) {
     return(attrs)
 }
 
-create_entry_object <- function(question, attrs) {
-    question <- parsermd::as_document(question)
-    question <- gsub("<<", "<entry>", question)
-    question <- gsub(">>", "</entry>", question)
-    html <- transform_to_html(question)
+create_matchtable_slots <- function(html, attrs) {
+    tbl <- read_table(html, attrs)
 
-    entry_gaps <- xml2::xml_find_all(html, "//entry")
-    gaps_content <- xml2::xml_text(entry_gaps)
-    ids <- make_ids(length(entry_gaps), "response")
-    # new_gaps <- Map(create_gap_object, ids, gaps_content)
-
-    html_ <- clean_question(html)
-    end <- unlist(gregexpr("<entry>", html_)) - 1L
-    begin <- unlist(gregexpr("</entry>", html_)) + 8L
-    all <- sort(c(begin, end, 1, nchar(html_)))
-
-    content <- list()
-    for (i in seq(length(all) - 1)) {
-        text_chank <- substring(html_, all[i], all[i + 1L])
-        if ((i %% 2) == 0) {
-            text_chank <- create_gap_object(ids[i/2], gaps_content[i/2])
-        }
-        content <- append(content, text_chank)
+    if (attrs$abbr_id) {
+        rows_ids <- make_abbr_ids(tbl$rows)
+        cols_ids <- make_abbr_ids(tbl$cols)
+    } else {
+        rows_ids <- make_ids(length(tbl$rows), "row")
+        cols_ids <- make_ids(length(tbl$cols), "col")
     }
 
-    attrs <- c(Class = "Entry", content = as.list(list(content)), attrs)
+    answers_ids <- c()
+    answers_scores <- c()
+    for (i in seq_len(nrow(tbl$table))) {
+        for (j in seq_len(ncol(tbl$table))) {
+            points <- tbl$table[i, j]
+            if (points > 0) {
+                answer_pair <- paste(rows_ids[i], cols_ids[j])
+                answers_ids <- c(answers_ids, answer_pair)
+                answers_scores <- c(answers_scores, points)
+            }
+        }
+    }
+    cls <- define_match_class(answers_ids, rows_ids, cols_ids)
+    attrs$abbr_id <- NULL
+    attrs <- c(Class = cls, rows = list(tbl$rows), cols = list(tbl$cols),
+               answers_identifiers = list(answers_ids),
+               rows_identifiers = list(rows_ids),
+               cols_identifiers = list(cols_ids),
+               answers_scores = list(answers_scores),
+               attrs)
     return(attrs)
 }
 
-create_gap_object <- function(id, value) {
-    attrs <- yaml::yaml.load(value)
-    if (!is.list(attrs)) {
-        if (!is.na(suppressWarnings(as.numeric(value)))) {
-            object <- new("NumericGap", response_identifier = id,
-                          solution = as.numeric(value))
-        } else if (length(str_split_1(value, "\\|")) == 1) {
-            object <- new("TextGap", response_identifier = id, solution = value)
-        } else {
-            object <- new("InlineChoice", response_identifier = id,
-                solution = str_split_1(value, "\\|"))
-        }
-    } else {
-        object_class <- switch(attrs$type,
-            "text" = "TextGap",
-            "numeric" = "NumericGap",
-            "text_opal" = "TextGapOpal",
-            "InlineChoice")
-        attrs[["type"]] <- NULL
-        if (!("response_identifier" %in% names(attrs)))  attrs["response_identifier"] <- id
-        attrs <- c(Class = object_class, attrs)
-        object <- do.call(new, attrs)
-    }
-    return(object)
-}
-
-make_ids <- function(n, type) {
-    paste(type, formatC(1:n, flag = "0", width = nchar(n)), sep = "_")
-}
-
-make_abbr_ids <- function(items) {
-    ids <- abbreviate(items, minlength = 6)
-    counts <- table(ids)
-    dupl <- which(counts > 1)
-    for (i in dupl) {
-        ids[ids == names(counts)[i]] <- paste0(names(counts)[i], seq_len(counts[i]))
-    }
-    return(unname(ids))
-}
-
-create_essay_object <- function(attrs) {
+create_essay_slots <- function(attrs) {
     attrs <- c(Class = "Essay", attrs)
     return(attrs)
 }
 
-create_order_object <- function(html, attrs) {
+create_order_slots <- function(html, attrs) {
     choices_options <- parse_list(html)
     choices <- choices_options$choices
-
     attrs <- c(Class = "Order", choices = list(choices), attrs)
     return(attrs)
 }
 
-create_dp_object <- function(html, attrs) {
+create_dp_slots <- function(html, attrs) {
     choices_options <- parse_list(html)
     choices <- choices_options$choices
     answer_pairs <- sub(" ", "", unlist(strsplit(choices, "\\|")))
@@ -238,46 +248,6 @@ create_dp_object <- function(html, attrs) {
     return(attrs)
 }
 
-create_matchtable_object <- function(html, attrs) {
-
-    # get answers - choices
-    table <- read_table(html)
-    rows <- as.character(unlist(table[,1]))
-    cols <- as.character(colnames(table)[-1])
-    if (attrs$abbr_id) {
-        rows_ids <- make_abbr_ids(rows)
-        cols_ids <- make_abbr_ids(cols)
-    } else {
-        rows_ids <- make_ids(length(rows), "row")
-        cols_ids <- make_ids(length(cols), "col")
-    }
-
-    answers_ids <- c()
-    answers_scores <- c()
-    for (i in 1:nrow(table)) {
-        for (j in 2:ncol(table)) {
-            points <- table[i, j]
-            if (points > 0) {
-                answer_pair = paste(rows_ids[i], cols_ids[j - 1L])
-                answers_ids = c(answers_ids, answer_pair)
-                answers_scores <- c(answers_scores, points)
-            }
-        }
-    }
-
-    answers_scores <- unlist(answers_scores)
-    names(answers_scores) <- NULL
-    cls <- define_match_class(answers_ids, rows_ids, cols_ids)
-    attrs$abbr_id <- NULL
-    attrs <- c(Class = cls, rows = list(rows), cols = list(cols),
-               answers_identifiers = list(answers_ids),
-               rows_identifiers = list(rows_ids),
-               cols_identifiers = list(cols_ids),
-               answers_scores = list(answers_scores),
-               attrs)
-    return(attrs)
-}
-
 parse_list <- function(html) {
     # find solution indexed in list with possible answers
     question_list <- xml2::xml_find_all(html, "//ul")
@@ -291,99 +261,69 @@ parse_list <- function(html) {
     choices_str <- c()
     for (choice in choices) {
         content <- xml2::xml_contents(choice)
-        em_node <- xml_find_all(choice, ".//em")
-        if (length(em_node) > 0) content <- xml2::xml_contents(em_node)
         content <- paste0(as.character(content), collapse = "")
+        content <- gsub("\r\n", " ", content)
+        if (grepl("^<em>", content)) {
+            content <- gsub("^<em>|</em>$", "", content)
+        }
         choices_str <- c(choices_str, content)
     }
     xml_remove(question_list[length(question_list)])
     return(list(choices = as.character(choices_str), solution = solution))
 }
 
-parse_feedback <- function(file, image_dir = NULL) {
-    sections <- c("feedback", "feedback\\-", "feedback\\+")
-    classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
-
-    create_fb_object <- function(sec, cls, file, image_dir) {
-        rmd <- parsermd::parse_rmd(file)
-        feedback <- rmd_select(rmd, parsermd::by_section(sec))[-1]
-        if (length(feedback) == 1) {
-            html <- clean_question(transform_to_html(as_document(feedback),
-                                   image_dir))
-            f_object <- new(cls, content = as.list(html))
-        }
-    }
-
-    result <- Map(create_fb_object, sections, classes, file, rep(image_dir, 3))
-    result <- unname(Filter(Negate(is.null), result))
-    return(result)
-}
-
-# get content of section
-# restun text chank
-get_task_section <- function(file, section) {
-    sec_bord <- grep("^====", file)
-    headers <- file[sec_bord - 1L]
-    ind <- which(section == tolower(headers))
-    begin <- sec_bord[ind] + 1L
-    end <- sec_bord[ind + 1L] - 2L
-    if (is.na(end)) end <- length(file)
-    result <- file[begin:end]
-    if (section != "question") {
-       result <- result[sapply(result, nchar, USE.NAMES = FALSE) !=  0]
-    }
-    return(result)
-}
-
-# get attributes of question
-# return named vector
 clean_question <- function(html) {
-    content <- as.character(xml2::xml_find_all(html, ".//body"))
-    content <- gsub("<\\/?(body)>", "", content)
-    content <- gsub("^\\n|\\n$", "", content)
+    h1 <- xml2::xml_find_first(html, "h1")
+    xml2::xml_remove(h1)
+    content <- xml2::xml_contents(html)
+
     content <- gsub("<br>", "<br/>", content)
     content <- gsub("\r", "", content)
-    content <- as.list(content)
+    content <- gsub("^\\n|\\n$", "", content)
+    content <- gsub(">\n<", "><", content)
+    content <- gsub("\n", " ", content)
+    content <- gsub("<br/> ", "<br/>", content)
+    content <- as.character(content)
+    content <- Filter(function(x) x != "", content)
     return(content)
 }
 
-#' @importFrom base64enc base64encode
-transform_to_html <- function(sec, image_dir = ".") {
-    # write section in temp md file
-    mdtempfile <- "_deleteme.md"
-    writeLines(sec, mdtempfile)
-    # read via pandoc
-    # it writes result of transformation to temp html file
-    htmltempfile <- "_deleteme.html"
-    options <- c("-o", htmltempfile, "-f", "markdown", "-t", "html",
-                 "--mathml", "--wrap=none", "+RTS", "-M30m")
+read_table <- function(html, attrs) {
+    tbl <- xml2::xml_find_all(html, "//table")
+    tbl <- tbl[length(tbl)]
 
-    rmarkdown::pandoc_convert(mdtempfile, options=options)
-    # delete temp md file
-    unlink(mdtempfile)
-    # read html file
-    sect <- xml2::read_html("_deleteme.html", encoding = "UTF-8")
-    #find img tags
-    imgs <- xml2::xml_find_all(sect, "//img")
-    # process each image
-    for (img in imgs) {
-        # make path to image in the directory of the document
-        path_image <- file.path(image_dir, xml2::xml_attr(img, "src"))
-        if (!file.exists(path_image)) {
-            # remake path to image in with working directory
-            path_image <- file.path(".", xml2::xml_attr(img, "src"))
-        }
-        if (file.exists(path_image)) {
-            image_binary <- readBin(path_image, "raw", file.info(path_image)$size)
-            image_base64 <- base64enc::base64encode(image_binary)
-            image_source <- paste0("data:image/png;base64,", image_base64)
-            xml2::xml_set_attr(img, "src", image_source)
-        }
+    cols <- xml2::xml_find_all(tbl, ".//tr[@class='header']//th")
+    cols <- as.character(xml2::xml_contents(cols))
+
+    tbd <- xml2::xml_find_all(tbl, "//tbody")
+    tbd <- tbd[length(tbd)]
+    tr <- xml2::xml_find_all(tbd, ".//tr/td[1]")
+    rows <- as.character(xml2::xml_contents(tr))
+    xml2::xml_remove(tr)
+
+    cells <- xml2::xml_find_all(tbd, "./tr/td")
+    cells <- as.numeric(xml2::xml_text(cells))
+    n_cols <- length(xml2::xml_find_all(tbd, "./tr[1]/td"))
+    # rid of the first header of columns if it is given
+    cols <- cols[(1 + length(cols) - n_cols):length(cols)]
+    table <- matrix(cells, nrow = length(rows), ncol = n_cols, byrow = TRUE)
+    xml2::xml_remove(tbl)
+    return(list(rows = rows, cols = cols, table = table))
+}
+
+make_ids <- function(n, type) {
+    paste(type, formatC(1:n, flag = "0", width = nchar(n)), sep = "_")
+}
+
+make_abbr_ids <- function(items) {
+    ids <- abbreviate(items, minlength = 6)
+    counts <- table(ids)
+    dupl <- which(counts > 1)
+    for (i in dupl) {
+        ids[ids == names(counts)[i]] <- paste0(names(counts)[i],
+                                               seq_len(counts[i]))
     }
-    # delete temp html file
-    unlink("_deleteme.html")
-    # return lines of processed section
-    return(sect)
+    return(unname(ids))
 }
 
 define_match_class <- function(ids, rows, cols) {
@@ -393,9 +333,9 @@ define_match_class <- function(ids, rows, cols) {
     unique_rows <- !any(occurrences[rows] > 1)
     unique_cols <- !any(occurrences[cols] > 1)
 
-    if (unique_rows & !unique_cols) {
+    if (unique_rows && !unique_cols) {
         cls <- "OneInRowTable"
-    } else if (!unique_rows & unique_cols) {
+    } else if (!unique_rows && unique_cols) {
         cls <- "OneInColTable"
     } else {
         cls <- "MultipleChoiceTable"
@@ -403,11 +343,21 @@ define_match_class <- function(ids, rows, cols) {
     return(cls)
 }
 
-#' @importFrom rvest html_table
-read_table <- function(html) {
-    tbl <- xml2::xml_find_all(html, "//table")
-    tbl <- tbl[length(tbl)]
-    df <- rvest::html_table(tbl, fill = TRUE)[[1]]
-    xml_remove(tbl)
-    return(df)
+parse_feedback <- function(html, image_dir = NULL) {
+    sections <- c("feedback", "feedback-", "feedback+")
+    classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
+
+    create_fb_object <- function(sec, cls, html, image_dir) {
+        feedback <- xml2::xml_find_first(html, paste0("//h1[text()='", sec, "']"))
+        feedback <- xml2::xml_parent(feedback)
+        if (length(feedback) > 0) {
+            html <- clean_question(feedback)
+            f_object <- new(cls, content = as.list(html))
+            return(f_object)
+        }
+    }
+
+    result <- Map(create_fb_object, sections, classes, html)
+    result <- unname(Filter(Negate(is.null), result))
+    return(result)
 }

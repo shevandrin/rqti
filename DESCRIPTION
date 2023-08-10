@@ -23,7 +23,6 @@ Imports:
     xml2,
     ids,
     yaml,
-    commonmark,
     rmarkdown,
     servr,
     rstudioapi,
@@ -35,17 +34,15 @@ Imports:
     magrittr,
     httr,
     dotenv,
-    parsermd,
-    rvest,
-    knitr,
-    digest,
-    base64enc
+    digest
 Suggests: 
     covr,
     dplyr,
     testthat (>= 3.0.0),
     textclean,
-    XML
+    XML,
+    readr,
+    knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 URL: https://github.com/shevandrin/qti

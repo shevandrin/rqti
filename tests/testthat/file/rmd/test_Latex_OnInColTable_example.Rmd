@@ -1,11 +1,26 @@
 ---
 type: Match
 identifier: test_OnInColTable_example
+abbr_id: false
 ---
 # question
 Choose the correct order in the multiplication table
 
-|Formulas|Mean|Standard Deviation|Normal Distribution|Hypothesis Testing (t-test)|
+other table:
+
+|w|w|w|
+|-|-|-|
+|a|b|c|
+|1|2|3|
+
+html table:
+
+<table border = 1>
+<tr><td>col1</td><td>col2</td></tr>
+<tr><td>1</td><td>2</td></tr>
+</table>
+
+|formulas|Mean|Standard Deviation|Normal Distribution|Hypothesis Testing (t-test)|
 |------|-----|------------------|-------------------|---------------------------|
 |$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$|1|0|0|0|
 |$$s = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2}$$|0|1|0|0|

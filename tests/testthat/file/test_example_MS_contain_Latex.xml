@@ -18,7 +18,7 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    <p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>x</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">x-1=y</annotation></semantics></math></p>
+    <p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class="math display">\[x-1=y\]</span></p>
     <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0" orientation="vertical">
       <simpleChoice identifier="ChoiceA">scarcity vs. resources</simpleChoice>
       <simpleChoice identifier="ChoiceB">wages vs. prices</simpleChoice>

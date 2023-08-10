@@ -1,13 +1,12 @@
 mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
-          content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>x</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi></mrow><annotation encoding=\"application/x-tex\">x-1=y</annotation></semantics></math></p>"),
+          content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
           choices = c("scarcity vs. resources",
                       "wages vs. prices",
                       "wants vs. needs",
                       "consumers vs. producers"),
           points = c(0.5, 0.5, 0, 0))
 sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
-          content = list("<p>This is a mock question.<br/>
-In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"),
+          content = list("<p>This is a mock question.<br/>In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"),
           choices = c("Employ more and more people", "Maximize total production",
                       "Maximize total profits", "Sell the goods at subsidized cost"))
 
@@ -16,20 +15,11 @@ path2 <-  test_path("file/test_create_qti_task_Essay.xml")
 path3 <- test_path("file/md/test_sc_example1.md")
 
 test_that("Testing function section() to build permanent AssessmentSection", {
-    path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
-    path2 <- test_path("file/test_create_qti_task_Essay.xml")
     sut <- section(c(path1, path2), id = "permanent_section")
     # to clean invisible symbols
     sut@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@choices)
     # rid of the name from @assessment_item
     names(sut@assessment_item) <- NULL
-    mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
-              content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <math display=\"block\" xmlns=\"http://www.w3.org/1998/Math/MathML\"><semantics><mrow><mi>x</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi></mrow><annotation encoding=\"application/x-tex\">x-1=y</annotation></semantics></math></p>"),
-              choices = c("scarcity vs. resources",
-                          "wages vs. prices",
-                          "wants vs. needs",
-                          "consumers vs. producers"),
-              points = c(0.5, 0.5, 0, 0))
     expected <- new("AssessmentSection", identifier = "permanent_section",
                     assessment_item = list(mc, path2),
                     selection = 0)
