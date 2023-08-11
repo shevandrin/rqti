@@ -60,8 +60,3 @@ create_response_declaration_multiple_choice <- function(object) {
                                     baseType = "identifier",
                                     correct_response, mapping))
 }
-
-create_outcome_declaration_multiple_choice <- function(object) {
-    max_score <- sum(object@points[object@points > 0])
-    make_outcome_declaration("MAXSCORE", value = max_score)
-}
