@@ -73,8 +73,6 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
 #' @param object an instance of the S4 object (AssessmentSection)
 #' @docType methods
 #' @rdname getAssessmentItems-methods
-#'
-#' @export
 setGeneric("getAssessmentItems", function(object) {
     standardGeneric("getAssessmentItems")
 })
@@ -88,8 +86,6 @@ setGeneric("getAssessmentItems", function(object) {
 #' @param folder string; a folder to store xml file
 #' @docType methods
 #' @rdname buildAssessmentSection-methods
-#'
-#' @export
 setGeneric("buildAssessmentSection", function(object, folder = NULL) {
     standardGeneric("buildAssessmentSection")
 })

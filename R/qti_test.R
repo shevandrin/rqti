@@ -19,7 +19,6 @@
 #'            title = "some title", section = list(exam_section))
 #' create_qti_test(exam, "exam_folder/exam.zip", "TRUE")
 #' }
-#' @export
 create_qti_test <- function(object, path = getwd(), verification = FALSE) {
     ext <- tools::file_ext(path)
     if (ext == "") {

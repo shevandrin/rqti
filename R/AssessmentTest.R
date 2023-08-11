@@ -127,8 +127,6 @@ setGeneric("createQtiTest", function(object, dir = NULL, verification = FALSE) {
 #' @docType methods
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest
-#'
-#' @export
 setGeneric("createAssessmentTest", function(object, folder) {
     standardGeneric("createAssessmentTest")
 })
