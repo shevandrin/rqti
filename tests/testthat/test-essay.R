@@ -1,90 +1,66 @@
-test_that("Testing createItemBody for the Essay object", {
-    essay <- new("Essay",
-             content = list("<p>Read this postcard from your English pen-friend, Sam.</p>
-                                                <div>
-                                                <object type=\"image/png\" data=\"images/postcard.png\">
-                                                <blockquote class=\"postcard\">
-                                                <p>Here is a postcard of my town. Please send me<br/>a postcard from your town. What size is your<br/>town? What is the nicest part of your town?<br/>Where do you go in the evenings?<br/>Sam.</p>
-                                                </blockquote>
-                                                </object>
-                                                </div>
-                                                "),
-              title = "extended_text",
-              expected_length = 200,
-              prompt = "Write Sam a postcard. Answer the questions. Write 25-35 words.")
-    example <- "
-                <itemBody>
-                <p>Read this postcard from your English pen-friend, Sam.</p>
-                <div>
-                <object type=\"image/png\" data=\"images/postcard.png\">
-                <blockquote class=\"postcard\">
-                <p>Here is a postcard of my town. Please send me<br/>a postcard from your town. What size is your<br/>town? What is the nicest part of your town?<br/>Where do you go in the evenings?<br/>Sam.</p>
-                </blockquote>
-                </object>
-                </div>
-                <extendedTextInteraction responseIdentifier=\"RESPONSE\"
-                expectedLength=\"200\">
-                <prompt>Write Sam a postcard. Answer the questions. Write 25-35 words.</prompt>
-                </extendedTextInteraction>
-                </itemBody>
-                "
+source(test_path("test_helpers.R"))
+essay <- new("Essay",
 
-    sut <- xml2::read_xml(toString(createItemBody(essay)))
-    expected <- xml2::read_xml(example)
-    expect_equal(sut, expected)
+             content = list(paste0("<p>Earlier technological developments ",
+                                   "brought more benefits and changed ",
+                                   "the lives of ordinary people more",
+                                   " than recent developments ever will.</p>",
+                                   "<p>To what extent do you agree ",
+                                   "or disagree?</p>")),
+             title = "Example essay IELTS",
+             prompt = "Write at least 250 words.",
+             expected_length = 250)
+
+test_that("Test createItemBody for the Essay class", {
+
+  example <- '
+  <itemBody>
+  <p>Earlier technological developments brought more benefits and changed the lives of ordinary people more than recent developments ever will.</p><p>To what extent do you agree or disagree?</p>
+  <extendedTextInteraction responseIdentifier="RESPONSE" expectedLength="250">
+    <prompt>Write at least 250 words.</prompt>
+  </extendedTextInteraction>
+  </itemBody>'
+
+  sut <- xml2::read_xml(toString(createItemBody(essay)))
+  expected <- xml2::read_xml(example)
+  equal_xml(sut, expected)
 })
 
-test_that("Testing attributes values in extendedTextInteraction for Essay
-object", {
-    essay <- new("Essay",
-                 content = list("some question text"),
-                 title = "extendedText",
-                 expected_length = 100,
-                 expected_lines = 10,
-                 max_strings = 50,
-                 min_strings = 1,
-                 data_allow_paste = FALSE)
-    example <- "
-<itemBody>
-  some question text
-  <extendedTextInteraction responseIdentifier=\"RESPONSE\"
-  expectedLength=\"100\"
-  expectedLines=\"10\"
-  maxStrings=\"50\"
-  minStrings=\"1\"
-  data-allowPaste=\"false\"/>
-</itemBody>
-                "
-    sut <- xml2::read_xml(toString(createItemBody(essay)))
-    expected <- xml2::read_xml(toString(example))
-    expect_equal(sut, expected)
+test_that("Test values of attributes in extendedTextInteraction for Essay class", {
+
+  essay@expected_length <- 100
+  essay@expected_lines <- 10
+  essay@max_strings <- 50
+  essay@min_strings <- 1
+  essay@data_allow_paste <- FALSE
+
+  example <-'
+  <itemBody>
+  <p>Earlier technological developments brought more benefits and changed the lives of ordinary people more than recent developments ever will.</p>
+  <p>To what extent do you agree or disagree?</p>
+  <extendedTextInteraction responseIdentifier="RESPONSE" expectedLength="100" expectedLines="10" maxStrings="50" minStrings="1" data-allowPaste="false">
+    <prompt>Write at least 250 words.</prompt>
+  </extendedTextInteraction>
+  </itemBody>'
+
+  sut <- xml2::read_xml(toString(createItemBody(essay)))
+  expected <- xml2::read_xml(toString(example))
+  equal_xml(sut, expected)
 })
 
-test_that("Testing attributes values in extendedTextInteraction for Essay
-object", {
-    sut <- suppressWarnings(new("Essay",
-                 content = list("some question text"),
-                 title = "extendedText",
-                 expected_length = 100,
-                 expected_lines = 10,
-                 max_strings = 50,
-                 min_strings = 1,
-                 data_allow_paste = FALSE,
-                 feedback = list(new("ModalFeedback", title = "common",
-                                   content = list("general feedback")))))
+test_that("Test feedback for Essay class", {
+    essay@feedback <- list(new("ModalFeedback", title = "common",
+                                content = list("general feedback")))
 
-    example <- "
-<itemBody>
-  some question text
-  <extendedTextInteraction responseIdentifier=\"RESPONSE\"
-  expectedLength=\"100\"
-  expectedLines=\"10\"
-  maxStrings=\"50\"
-  minStrings=\"1\"
-  data-allowPaste=\"false\"/>
-</itemBody>
-                "
-    sut <- xml2::read_xml(toString(suppressWarnings(createItemBody(sut))))
+    example <- '
+  <itemBody>
+  <p>Earlier technological developments brought more benefits and changed the lives of ordinary people more than recent developments ever will.</p><p>To what extent do you agree or disagree?</p>
+  <extendedTextInteraction responseIdentifier="RESPONSE" expectedLength="250">
+    <prompt>Write at least 250 words.</prompt>
+  </extendedTextInteraction>
+  </itemBody>'
+
+    sut <- xml2::read_xml(toString(createItemBody(essay)))
     expected <- xml2::read_xml(toString(example))
-    expect_equal(sut, expected)
+    equal_xml(sut, expected)
 })
