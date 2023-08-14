@@ -57,11 +57,13 @@ auth_opal <- function() {
 #'  those responsible for this learning resource; 2 - responsible and other
 #'  authors; 3 - all registered users; 4 - default value, registered users and
 #'  guests
+#'@param overwrite logical; if only one file with the specified display name is
+#'  found, it will be overwritten
 #'@param endpoint endpoint
 #'@return list with key and url
 #'@importFrom utils browseURL
 #'@export
-upload2opal <- function(file, display_name = NULL, access = 4,
+upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint =  paste0("https://bildungsportal.sachsen.de/",
                                            "opal/"), in_browser = TRUE) {
 
@@ -75,38 +77,46 @@ upload2opal <- function(file, display_name = NULL, access = 4,
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
     resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                     encode = "multipart")
-    rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
-    rtype <- ifelse(is_test(file), "FileResource.TEST", "FileResource.QUESTION")
-    filtered_rlist <- purrr::keep(rlist, ~ .x$resourceableTypeName == rtype)
-    filtered_rlist <- purrr::keep(rlist, ~ .x$displayname == display_name)
-    if (length(filtered_rlist) > 0) {
-        message("Found files with the same display name: ",
-                length(filtered_rlist))
-        menu_options <- c(sapply(filtered_rlist, function(x) x$key),
-                          "Add new as a duplicate", "Abort")
-        key <- menu(title = "Choose a key:", menu_options)
-        # abort uploading
-        if (key %in% c(length(menu_options), 0)) return(NULL)
-        # update the resource
-        if (key %in% seq(length(menu_options) - 2)) {
-            response <- update_resource(file, menu_options[key], endpoint)
-        }
-    }
-    # create new resource
-    if (!exists("response")) {
-        response <- upload_resource(file, display_name, rtype, access,
-                                    in_browser, endpoint)
-    }
+    if (is_logged(endpoint)) {
+        rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
+        rtype <- ifelse(is_test(file), "FileResource.TEST", "FileResource.QUESTION")
+        filtered_rlist <- purrr::keep(rlist, ~ .x$resourceableTypeName == rtype)
+        filtered_rlist <- purrr::keep(rlist, ~ .x$displayname == display_name)
+        if (length(filtered_rlist) > 0) {
 
-    parse <- content(response, as = "parse", encoding = "UTF-8")
-    if ((in_browser) & (!is.null(parse$key)) ){
-        url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
-                           "RepositoryEntry/", parse$key)
-        browseURL(url_res)
-    }
-    res <- list(key = parse$key, url = url_res)
-    print(response$status_code)
-    return(res)
+            if (length(filtered_rlist) == 1 && overwrite) {
+                response <- update_resource(file, filtered_rlist[[1]]$key,
+                                            endpoint)
+            } else {
+                message("Found files with the same display name: ",
+                    length(filtered_rlist))
+                menu_options <- c(sapply(filtered_rlist, function(x) x$key),
+                            "Add new as a duplicate", "Abort")
+                key <- menu(title = "Choose a key:", menu_options)
+                # abort uploading
+                if (key %in% c(length(menu_options), 0)) return(NULL)
+                # update the resource
+                if (key %in% seq(length(menu_options) - 2)) {
+                response <- update_resource(file, menu_options[key], endpoint)
+             }
+            }
+        }
+        # create new resource
+        if (!exists("response")) {
+         response <- upload_resource(file, display_name, rtype, access,
+                                        in_browser, endpoint)
+        }
+
+        parse <- content(response, as = "parse", encoding = "UTF-8")
+        if ((in_browser) & (!is.null(parse$key)) ){
+            url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
+                               "RepositoryEntry/", parse$key)
+            browseURL(url_res)
+        }
+        res <- list(key = parse$key, url = url_res)
+        print(response$status_code)
+        return(res)
+    } else return(NULL)
 }
 
 upload_resource <- function(file, display_name, rtype, access, in_browser,

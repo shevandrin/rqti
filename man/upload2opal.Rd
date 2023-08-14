@@ -8,6 +8,7 @@ upload2opal(
   file,
   display_name = NULL,
   access = 4,
+  overwrite = TRUE,
   endpoint = paste0("https://bildungsportal.sachsen.de/", "opal/"),
   in_browser = TRUE
 )
@@ -22,6 +23,9 @@ OPAL; file name without extension by default}
 those responsible for this learning resource; 2 - responsible and other
 authors; 3 - all registered users; 4 - default value, registered users and
 guests}
+
+\item{overwrite}{logical; if only one file with the specified display name is
+found, it will be overwritten}
 
 \item{endpoint}{endpoint}
 
