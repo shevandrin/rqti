@@ -40,11 +40,22 @@ create_question_object <- function(file, file_dir = NULL) {
 
     file_name <- tools::file_path_sans_ext(basename(file))
     tdir <- tempdir()
+
+    # to rid of pandoc message about missing title assign temp one
+    if (is.null(attrs$title)) {
+        rmd_content <- readLines(file, warn=FALSE)
+        yaml_start <- grep("^---", rmd_content)[1]
+        new_yaml <- c(rmd_content[seq_len(yaml_start[1])], "title: temp_file",
+                      rmd_content[seq(yaml_start[1] + 1, length(rmd_content))])
+        file <- file.path(tdir, "temp.rmd")
+        writeLines(new_yaml, con = file)
+    }
+
     tdoc <- rmarkdown::render(file, output_format = "html_document",
                               output_file = "_temp_task.html",
                               output_dir = tdir,
-                              quiet = TRUE, knit_meta = list(title="xxx"))
-    # print(tdoc)
+                              quiet = TRUE)
+
     doc <- xml2::read_html(tdoc)
     doc_body <- xml2::xml_find_all(doc, "body")
     html_qstn <- xml2::xml_find_first(doc_body, "//div[@id='question']")
@@ -73,7 +84,8 @@ create_question_object <- function(file, file_dir = NULL) {
     slots <- c(slots, feedback = feedback)
     if (is.null(slots$content)) {
         slots$content <- as.list(paste(clean_question(html_qstn),
-                                       collapse = ""))}
+                                       collapse = ""))
+        }
     slots[["type"]] <- NULL
 
     if (!is.null(slots[["seed"]])) {
@@ -107,7 +119,7 @@ create_entry_slots <- function(html, attrs) {
     for (i in seq(length(all) - 1)) {
         text_chank <- substring(html_str, all[i], all[i + 1L])
         if ((i %% 2) == 0) {
-            text_chank <- gaps[i/2]
+            text_chank <- gaps[i / 2]
         }
         content <- append(content, text_chank)
     }
@@ -139,7 +151,8 @@ create_gap_object <- function(entry, id) {
                                "InlineChoice")
         attrs[["type"]] <- NULL
         if (!("response_identifier" %in% names(attrs)))  {
-            attrs["response_identifier"] <- id}
+            attrs["response_identifier"] <- id
+            }
         attrs <- c(Class = object_class, attrs)
         object <- do.call(new, attrs)
     }
@@ -348,7 +361,8 @@ parse_feedback <- function(html, image_dir = NULL) {
     classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
 
     create_fb_object <- function(sec, cls, html, image_dir) {
-        feedback <- xml2::xml_find_first(html, paste0("//h1[text()='", sec, "']"))
+        feedback <- xml2::xml_find_first(html,
+                                         paste0("//h1[text()='", sec, "']"))
         feedback <- xml2::xml_parent(feedback)
         if (length(feedback) > 0) {
             html <- clean_question(feedback)
