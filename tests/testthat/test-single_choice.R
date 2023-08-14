@@ -1,3 +1,4 @@
+source("test_helpers.R")
 sc <- new("SingleChoice",
           content = list(paste0("<p>Look at the text in the picture.</p><p>",
                                 "<img src=\"images/sign.png\" alt=\"NEVER ",
@@ -34,22 +35,22 @@ test_that("Test createItemBody() for SingleChoice class", {
                     "</itemBody>")
   sut <- xml2::read_xml(toString(createItemBody(sc)))
   expected <- xml2::read_xml(example)
-  expect_equal(sut, expected)
+  equal_xml(sut, expected)
 })
 
 test_that("Test createResponseDeclaration()
           for SingleChoice class:solution = 2", {
-            sc@solution <- 2
-            example <- paste0("<responseDeclaration identifier=\"RESPONSE\" ",
-                              "cardinality=\"single\" baseType=\"identifier\">",
-                              "<correctResponse>",
-                              "<value>ID_2</value>",
-                              "</correctResponse>",
-                              "</responseDeclaration>")
-            sut <- xml2::read_xml(toString(createResponseDeclaration(sc)))
-            expected <- xml2::read_xml(example)
-            expect_equal(sut, expected)
-          })
+  sc@solution <- 2
+  example <- paste0("<responseDeclaration identifier=\"RESPONSE\" ",
+                    "cardinality=\"single\" baseType=\"identifier\">",
+                    "<correctResponse>",
+                    "<value>ID_2</value>",
+                    "</correctResponse>",
+                    "</responseDeclaration>")
+  sut <- xml2::read_xml(toString(createResponseDeclaration(sc)))
+  expected <- xml2::read_xml(example)
+  equal_xml(sut, expected)
+})
 
 test_that("Test outcomeDeclaration() for SingleChoice class", {
   example <- paste0("<outcomeDeclaration identifier=\"SCORE\" ",
@@ -67,32 +68,32 @@ test_that("Test outcomeDeclaration() for SingleChoice class", {
 
 test_that("Test createItemBody() for SingleChoice class:
           orientation = horizontal", {
-            sc@orientation <- "horizontal"
-            example <- paste0("<itemBody>",
-                              "<p>Look at the text in the picture.</p>",
-                              "<p><img src=\"images/sign.png\" ",
-                              "alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>",
-                              "<choiceInteraction ",
-                              "responseIdentifier=\"RESPONSE\" ",
-                              "shuffle=\"false\" maxChoices=\"1\" ",
-                              "orientation=\"horizontal\">",
-                              "<prompt>What does it say?</prompt>",
-                              "<simpleChoice identifier=\"ID_1\">",
-                              "You must stay with your luggage at all times.",
-                              "</simpleChoice>",
-                              "<simpleChoice identifier=\"ID_2\">",
-                              "Do not let someone else look after ",
-                              "your luggage.",
-                              "</simpleChoice>",
-                              "<simpleChoice identifier=\"ID_3\">",
-                              "Remember your luggage when you leave.",
-                              "</simpleChoice>",
-                              "</choiceInteraction>",
-                              "</itemBody>")
+  sc@orientation <- "horizontal"
+  example <- paste0("<itemBody>",
+                    "<p>Look at the text in the picture.</p>",
+                    "<p><img src=\"images/sign.png\" ",
+                    "alt=\"NEVER LEAVE LUGGAGE UNATTENDED\"/></p>",
+                    "<choiceInteraction ",
+                    "responseIdentifier=\"RESPONSE\" ",
+                    "shuffle=\"false\" maxChoices=\"1\" ",
+                    "orientation=\"horizontal\">",
+                    "<prompt>What does it say?</prompt>",
+                    "<simpleChoice identifier=\"ID_1\">",
+                    "You must stay with your luggage at all times.",
+                    "</simpleChoice>",
+                    "<simpleChoice identifier=\"ID_2\">",
+                    "Do not let someone else look after ",
+                    "your luggage.",
+                    "</simpleChoice>",
+                    "<simpleChoice identifier=\"ID_3\">",
+                    "Remember your luggage when you leave.",
+                    "</simpleChoice>",
+                    "</choiceInteraction>",
+                    "</itemBody>")
 
-            sut <- xml2::read_xml(toString(createItemBody(sc)))
-            expected <- xml2::read_xml(example)
-            expect_equal(sut, expected)
+  sut <- xml2::read_xml(toString(createItemBody(sc)))
+  expected <- xml2::read_xml(example)
+  equal_xml(sut, expected)
           })
 
 test_that("Test createResponseProcessing() for SingleChoice class", {
@@ -180,10 +181,10 @@ test_that("Test createResponseProcessing() for SingleChoice class", {
 
   sut <- xml2::read_xml(toString(createResponseProcessing(sc)))
   expected <- xml2::read_xml(example)
-  expect_equal(sut, expected)
+  equal_xml(sut, expected)
 })
-test_that("Test fuction for SingleChoice class", {
-    sut <- SingleChoice(content = list("<p>Pick up the right option</p>"),
+test_that("Test function for SingleChoice class", {
+  sut <- SingleChoice(content = list("<p>Pick up the right option</p>"),
                         choices = c("option 1", "option 2", "option 3",
                                     "option 4"),
                         orientation = "vertical",
@@ -192,7 +193,7 @@ test_that("Test fuction for SingleChoice class", {
                         shuffle = FALSE,
                         points = 2,
                         identifier = "sc_example" )
-    expected <- new("SingleChoice",
+  expected <- new("SingleChoice",
                     content = list("<p>Pick up the right option</p>"),
                     choices = c("option 1", "option 2", "option 3",
                                 "option 4"),
@@ -202,6 +203,6 @@ test_that("Test fuction for SingleChoice class", {
                     shuffle = FALSE,
                     points = 2,
                     identifier = "sc_example")
-    expect_equal(sut, expected)
-    expect_true(inherits(sut, "SingleChoice"))
+  expect_equal(sut, expected)
+  expect_true(inherits(sut, "SingleChoice"))
 })
