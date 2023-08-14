@@ -1,14 +1,16 @@
-test_that("Testing  method of createItemBody
-          for MultipleChoice class", {
-    mc <- new("MultipleChoice",
-              content = list(),
-              choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
-                          "Chlorine"),
-              choice_identifiers = c("H","He","C","O","N","Cl"),
-              points = c(1,0,0,1,0,-1),
-              title = "filename_sc",
-              prompt = paste0("Which of the following elements ",
-                              "are used to form water?"))
+source("test_helpers.R")
+
+mc <- new("MultipleChoice",
+          content = list(),
+          choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
+                      "Chlorine"),
+          choice_identifiers = c("H","He","C","O","N","Cl"),
+          points = c(1,0,0,1,0,-1),
+          title = "title_mc",
+          prompt = paste0("Which of the following elements ",
+                          "are used to form water?"))
+
+test_that("Test createItemBody for MultipleChoice class", {
 
     example <- '<itemBody>
 <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0"
@@ -25,12 +27,11 @@ orientation="vertical">
 
     sut <- xml2::read_xml(toString(createItemBody(mc)))
     expected <- xml2::read_xml(example)
-    expect_equal(sut, expected)
+    equal_xml(sut, expected)
 })
 
-test_that("Testing method of createResponseDeclaration
-          for MultipleChoice class",{
-    skip_if_not_installed("XML")
+
+test_that("Test createResponseDeclaration for MultipleChoice class",{
     mc <- new("MultipleChoice",
               content = list(""),
               choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
@@ -41,19 +42,17 @@ test_that("Testing method of createResponseDeclaration
               prompt = paste0("Which of the following elements ",
                                        "are used to form water?"))
 
-    # The default value was changed from -2 to 0 because the package
-    # not allow negative points for Total score
-
-    example <- '<responseDeclaration identifier="RESPONSE"
+    example <- '
+    <responseDeclaration identifier="RESPONSE"
                             cardinality="multiple" baseType="identifier">
     <correctResponse>
         <value>H</value>
         <value>O</value>
     </correctResponse>
     <mapping lowerBound="0" upperBound="2" defaultValue="0">
-        <mapEntry mapKey="H" mappedValue="1"/>
-        <mapEntry mapKey="O" mappedValue="1"/>
         <mapEntry mapKey="Cl" mappedValue="-1"/>
+        <mapEntry mappedValue="1" mapKey="H"/>
+        <mapEntry mapKey="O" mappedValue="1"/>
     </mapping>
     </responseDeclaration>'
 
@@ -61,85 +60,40 @@ test_that("Testing method of createResponseDeclaration
     sut <- xml2::read_xml(qtiXML)
     expected <- xml2::read_xml(example)
 
-    if(isTRUE(identical(sut,expected)) == FALSE){
-
-    # Convert the String in atomic vector to compare
-    # the 2 XML are equal in content
-        vxml1 <- unlist(strsplit(as.character(sut),split = ""))
-        vxml2 <- unlist(strsplit(as.character(expected),split = ""))
-
-        if (identical(stringr::str_sort(vxml2),
-                      stringr::str_sort(vxml1)) == FALSE){
-            print("XML content differs")
-            expect_equal(sut, expected)
-        }
-        else{
-            # Compare if the 2 XML are equal in structure.
-            # It omits attributes and other values, only validate de tag names
-            a <- XML::xmlParse(sut, asText = TRUE)
-            b <- XML::xmlParse(expected, asText = TRUE)
-            result <- XML::compareXMLDocs(a,b)
-
-            if(is.logical(result$countDiffs) &&
-               length(result$countDiffs) == 1 &&
-               !is.na(result$countDiffs) && lengths(result$countDiffs) > 0){
-                print("XML structure differs")
-                expect_equal(sut, expected)
-            }
-            else{
-                expect_equal(0, 0)
-            }
-        }
-    }else{
-        print("Direct test passed")
-        expect_equal(sut, expected)
-    }
-
+    equal_xml(sut, expected)
 })
 
-test_that("Testing  method of getPoints for MultipleChoice class", {
-              mc <- new("MultipleChoice",
-                        content = list(),
-                        choices = c("Hydrogen","Helium","Carbon",
-                                    "Oxygen","Nitrogen",
-                                    "Chlorine"),
-                        choice_identifiers = c("H","He","C","O","N","Cl"),
-                        points = c(1,0,0,1,0,-1),
-                        title = "filename_sc",
-                        prompt = paste0("Which of the following elements ",
-                                        "are used to form water?"))
+test_that("Test getPoints for MultipleChoice class", {
 
-              sut <- getPoints(mc)
+    sut <- getPoints(mc)
+    expect_equal(sut, 2)
+})
 
-             # To calculate only positive points points for
-             # MultipleChoice class
+test_that("Test createOutcomeDeclaration() for Multiple Choice",{
 
-              positive_points <- mc@points[mc@points > 0]
-              expected <- sum(positive_points)
-
-              expect_equal(sut, expected)
-          })
-
-test_that("Testing outcomeDeclaration() for Multiple Choice",{
-        mc <- new("MultipleChoice",
-                  content = list(""),
-                  choices = c("Hydrogen","Helium","Carbon","Oxygen","Nitrogen",
-                              "Chlorine"),
-                  points = c(1,0,0,1,0,-1),
-                  title = "filename_sc",
-                  prompt = paste0("Which of the following elements ",
-                                           "are used to form water?"))
-
-        example <- '
-    <outcomeDeclaration identifier="MAXSCORE"
-                            cardinality="single" baseType="float">
+    example <- '
+<additionalTag>
+<outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
     <defaultValue>
-    <value>2</value>
+        <value>0</value>
     </defaultValue>
-    </outcomeDeclaration>'
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+        <value>2</value>
+    </defaultValue>
+</outcomeDeclaration>
+<outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+        <value>0</value>
+    </defaultValue>
+</outcomeDeclaration>
+</additionalTag>'
 
-        sut <- xml2::read_xml(
-            toString(create_outcome_declaration_multiple_choice(mc)))
-        expected <- xml2::read_xml(example)
-        expect_equal(sut, expected)
-    })
+    responseDe <- as.character(htmltools::tag(
+        "additionalTag", list(createOutcomeDeclaration(mc))))
+    sut <- xml2::read_xml(responseDe)
+
+    expected <- xml2::read_xml(example)
+    equal_xml(sut, expected)
+})
