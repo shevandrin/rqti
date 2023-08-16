@@ -24,7 +24,7 @@ feedback'}
 
 \item{\code{title}}{string, optional; title of model feedback item}
 
-\item{\code{content}}{list; list of strings with formatting and images (\linkS4class{Img})
-to form the text of the question}
+\item{\code{content}}{list; list of strings with formatting to form the text of the
+question}
 }}
 

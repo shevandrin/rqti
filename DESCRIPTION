@@ -61,7 +61,6 @@ Collate:
     'Entry.R'
     'Essay.R'
     'Gap.R'
-    'Img.R'
     'InlineChoice.R'
     'MultipleChoice.R'
     'MultipleChoiceTable.R'
