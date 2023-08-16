@@ -5,5 +5,5 @@
 #' @slot identifier string; identifier of model feedback item; default 'modal
 #'   feedback'
 #' @slot title string, optional; title of model feedback item
-#' @slot content list; list of strings with formatting and images ([Img-class])
-#'   to form the text of the question
+#' @slot content list; list of strings with formatting to form the text of the
+#'   question
