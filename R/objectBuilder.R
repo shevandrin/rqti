@@ -33,6 +33,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 
 #' @importFrom stringr str_split_1
 #' @import yaml
+#' @importFrom rmarkdown render
 create_question_object <- function(file, file_dir = NULL) {
     attrs <- rmarkdown::yaml_front_matter(file)
     # ignore parameters that are not related to object creation
@@ -51,7 +52,7 @@ create_question_object <- function(file, file_dir = NULL) {
         writeLines(new_yaml, con = file)
     }
 
-    tdoc <- rmarkdown::render(file, output_format = "html_document",
+    tdoc <- render(file, output_format = "html_document",
                               output_file = "_temp_task.html",
                               output_dir = tdir,
                               quiet = TRUE)
