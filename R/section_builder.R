@@ -32,7 +32,7 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
         stop("The items in seed_number must be equal to number of files",
              call. = FALSE)
     } else if (num_variants < length(seed_number)) {
-        warning(paste("From seed_number only first", length(file),
+        warning(paste("From seed_number only first", num_variants,
                       "items are taken"), call. = FALSE)
         seed_number <- seed_number[1:num_variants]
     }
