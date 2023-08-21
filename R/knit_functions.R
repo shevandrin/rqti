@@ -138,7 +138,6 @@ stop_server <- function() {
 #' @param ... required for passing arguments when knitting
 #' @export
 render_opal <- function(input, ...) {
-    rmd2zip(input)
-    auth_opal()
-    upload2opal("test.zip")
+    knit_test <- rmd2zip(input)
+    upload2opal(knit_test)
 }

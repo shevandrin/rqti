@@ -72,7 +72,7 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
 
     # check auth
     if (!is_logged(endpoint)) auth_opal()
-
+    if (!interactive()) display_name <- paste0("knit_", display_name)
     # check if we have a test with display name
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
     resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
@@ -92,7 +92,11 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
                     length(filtered_rlist))
                 menu_options <- c(sapply(filtered_rlist, function(x) x$key),
                             "Add new as a duplicate", "Abort")
-                key <- menu(title = "Choose a key:", menu_options)
+                if (interactive()) {
+                    key <- menu(title = "Choose a key:", menu_options)
+                } else {
+                    key <- length(menu_options) - 1
+                }
                 # abort uploading
                 if (key %in% c(length(menu_options), 0)) return(NULL)
                 # update the resource
@@ -113,7 +117,8 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
                                "RepositoryEntry/", parse$key)
             browseURL(url_res)
         }
-        res <- list(key = parse$key, url = url_res)
+        res <- list(key = parse$key, display_name = parse$displayname,
+                    url = url_res)
         print(response$status_code)
         return(res)
     } else return(NULL)
