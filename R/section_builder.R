@@ -37,7 +37,6 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
     }
 
     # check uniqueness of seed_number items
-    print(seed_number)
     if (any(duplicated(seed_number))) {
         stop("The items in seed_number are not unique", call. = FALSE)
     }
