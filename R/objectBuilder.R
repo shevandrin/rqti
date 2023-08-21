@@ -33,6 +33,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 
 #' @importFrom stringr str_split_1
 #' @import yaml
+#' @importFrom rmarkdown render
 create_question_object <- function(file, file_dir = NULL) {
     attrs <- rmarkdown::yaml_front_matter(file)
     # ignore parameters that are not related to object creation
@@ -51,7 +52,16 @@ create_question_object <- function(file, file_dir = NULL) {
         writeLines(new_yaml, con = file)
     }
 
-    tdoc <- rmarkdown::render(file, output_format = "html_document",
+    # if Entry task given, replace <<>> by <tag>
+    if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
+        rmd_content <- readLines(file, warn=FALSE)
+        rmd_mdf <- gsub("<<", "<gap>", rmd_content)
+        rmd_mdf <- gsub(">>", "</gap>", rmd_mdf)
+        file <- file.path(tdir, "temp.rmd")
+        writeLines(rmd_mdf, con = file)
+    }
+
+    tdoc <- render(file, output_format = "html_document",
                               output_file = "_temp_task.html",
                               output_dir = tdir,
                               quiet = TRUE)
@@ -100,19 +110,15 @@ create_question_object <- function(file, file_dir = NULL) {
 
 create_entry_slots <- function(html, attrs) {
 
-    html_str <- as.character(html)
-    html_str <- gsub("\\[\\[", "<entry>", html_str)
-    html_str <- gsub("\\]\\]", "</entry>", html_str)
-    html <- xml2::read_html(html_str)
     html <- xml2::xml_find_all(html, "//div[@id='question']")
     html_str <- paste(clean_question(html), collapse = "")
 
-    entry_gaps <- xml2::xml_find_all(html, "//entry")
+    entry_gaps <- xml2::xml_find_all(html, "//gap")
     ids <- make_ids(length(entry_gaps), "response")
 
     gaps <- Map(create_gap_object, entry_gaps, ids)
-    end <- unlist(gregexpr("<entry>", html_str)) - 1L
-    begin <- unlist(gregexpr("</entry>", html_str)) + 8L
+    end <- unlist(gregexpr("<gap>", html_str)) - 1L
+    begin <- unlist(gregexpr("</gap>", html_str)) + 6L
     all <- sort(c(begin, end, 1, nchar(html_str)))
 
     content <- list()

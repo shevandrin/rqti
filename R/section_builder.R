@@ -27,15 +27,21 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
                     time_limits = NA_integer_, visible = TRUE,
                     shuffle = FALSE, max_attempts = NA_integer_,
                     allow_comment = TRUE) {
-
+    # check conflicts between seed_number and num_variants
     if (num_variants > length(seed_number) & !is.null(seed_number)) {
-        stop("The items in seed_number must be equal to number of files",
-             call. = FALSE)
+        stop("The items in seed_number must be equal to number of files")
     } else if (num_variants < length(seed_number)) {
-        warning(paste("From seed_number only first", length(file),
+        warning(paste("From seed_number only first", num_variants,
                       "items are taken"), call. = FALSE)
         seed_number <- seed_number[1:num_variants]
     }
+
+    # check uniqueness of seed_number items
+    if (any(duplicated(seed_number))) {
+        stop("The items in seed_number are not unique", call. = FALSE)
+    }
+
+    if (is.null(seed_number)) seed_number <- sample.int(10000, num_variants)
 
     if (num_variants <= 1) {
         rmd_files <- file[grep("\\.Rmd$|\\.md$", file)]
@@ -89,13 +95,11 @@ make_variant <- function(file, seed_number) {
     return(object)
 }
 
-make_seed_subsection <- function(file, seed_number = NULL) {
-    if (is.null(seed_number)) seed_number <- sample.int(10000, 1)
-    file_name <-
+make_seed_subsection <- function(file, seed_number) {
     id <- ifelse(length(file) == 1,
                  paste0(tools::file_path_sans_ext(basename(file)), "_S",
                         seed_number),
-                 paste0("seed_section_S", seed_number))
+                 paste0("exam_S", seed_number))
     asmt_items <- Map(make_variant, file, rep(seed_number, length(file)))
     names(asmt_items) <- NULL
     exam_subsection <- new("AssessmentSection", identifier = id,
@@ -103,10 +107,8 @@ make_seed_subsection <- function(file, seed_number = NULL) {
     return(exam_subsection)
 }
 
-make_variant_subsection <- function(file, num_variants, seed_number = NULL) {
-    if (is.null(seed_number)) seed_number <- sample.int(10000, num_variants)
-    id <- paste0(tools::file_path_sans_ext(basename(file)),"_S",
-                 sample.int(1000, 1))
+make_variant_subsection <- function(file, num_variants, seed_number) {
+    id <- tools::file_path_sans_ext(basename(file))
 
     asmt_items <- Map(make_variant, file, seed_number)
     names(asmt_items) <- NULL

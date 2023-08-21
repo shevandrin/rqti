@@ -95,7 +95,7 @@ clean_yaml_str <- function(params, type){
     result <- gsub("\r", ", ", result)
     result <- gsub(", $", "", result)
     result <- gsub("'", "", result)
-    result <- paste0("[[{", result, "}]]")
+    result <- paste0("<gap>{", result, "}</gap>")
     return(result)
 }
 
@@ -119,7 +119,7 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
             print("*Error*: Number of Gaps must be equal to number of list
                   items")
         }
-        gaps <- paste0(" [[", gaps, "]]")
+        gaps <- paste0(" <gap>", gaps, "</gap>")
     }
 
     md_list <- paste0("- ", vect, gaps)
