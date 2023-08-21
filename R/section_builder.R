@@ -91,11 +91,10 @@ make_variant <- function(file, seed_number) {
 
 make_seed_subsection <- function(file, seed_number = NULL) {
     if (is.null(seed_number)) seed_number <- sample.int(10000, 1)
-    file_name <-
     id <- ifelse(length(file) == 1,
                  paste0(tools::file_path_sans_ext(basename(file)), "_S",
                         seed_number),
-                 paste0("seed_section_S", seed_number))
+                 paste0("exam_S", seed_number))
     asmt_items <- Map(make_variant, file, rep(seed_number, length(file)))
     names(asmt_items) <- NULL
     exam_subsection <- new("AssessmentSection", identifier = id,
@@ -105,8 +104,7 @@ make_seed_subsection <- function(file, seed_number = NULL) {
 
 make_variant_subsection <- function(file, num_variants, seed_number = NULL) {
     if (is.null(seed_number)) seed_number <- sample.int(10000, num_variants)
-    id <- paste0(tools::file_path_sans_ext(basename(file)),"_S",
-                 sample.int(1000, 1))
+    id <- tools::file_path_sans_ext(basename(file))
 
     asmt_items <- Map(make_variant, file, seed_number)
     names(asmt_items) <- NULL

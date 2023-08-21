@@ -55,10 +55,10 @@ test_that("Testing function section() to build variable nested AssessmentSection
     item2_2@title <- paste0(sc@title, "_S", seed2)
 
     variant1 <- new("AssessmentSection",
-                    identifier = paste0("seed_section_S", seed1),
+                    identifier = paste0("exam_S", seed1),
                     assessment_item = list(item1_1, item1_2))
     variant2 <- new("AssessmentSection",
-                    identifier = paste0("seed_section_S", seed2),
+                    identifier = paste0("exam_S", seed2),
                     assessment_item = list(item2_1, item2_2))
 
     expected <- new("AssessmentSection", identifier = "variable_section",
