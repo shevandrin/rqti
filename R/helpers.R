@@ -125,3 +125,12 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
     md_list <- paste0("- ", vect, gaps)
     return(cat(md_list, sep = "\n"))
 }
+
+size_gap <- function(number) {
+    num <- nchar(as.character(number))
+    if (num <= 2) {
+        return(1)
+    } else {
+        return(num-1)
+    }
+}
