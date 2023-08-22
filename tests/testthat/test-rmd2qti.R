@@ -3,17 +3,13 @@ test_that("test rmd2zip", {
     file <- test_path("file/rmd/test_entry_Gap_primitive.Rmd")
     suppressMessages(rmd2zip(file, "to_delete/subfolder/test_exam.zip"))
     sut1 <- sort(list.files("to_delete/subfolder"))
-    expected1 <- sort(c("test_exam.zip", "imsmanifest.xml",
-                        "test_test_entry_example.xml",
-                        "test_entry_example.xml"))
+    expected1 <- "test_exam.zip"
     expect_equal(sut1, expected1)
     unlink("to_delete", recursive = TRUE)
     # this part tests path without file name
     suppressMessages(rmd2zip(file, "to_delete/subfolder"))
     sut2 <- sort(list.files("to_delete/subfolder"))
-    expected2 <- sort(c("test_test_entry_example.zip", "imsmanifest.xml",
-                        "test_test_entry_example.xml",
-                        "test_entry_example.xml"))
+    expected2 <- "test_test_entry_example.zip"
     expect_equal(sut2, expected2)
     unlink("to_delete", recursive = TRUE)
 })

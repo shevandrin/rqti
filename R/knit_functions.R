@@ -140,4 +140,5 @@ stop_server <- function() {
 render_opal <- function(input, ...) {
     knit_test <- rmd2zip(input)
     upload2opal(knit_test)
+    unlink(knit_test)
 }

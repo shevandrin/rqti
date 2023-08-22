@@ -14,7 +14,8 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
     test <- new("AssessmentTestOpal",
                 identifier = paste0("test_", task@identifier),
                 title = "QTIJS Preview", section = list(section))
-    createQtiTest(test, dir = path, verification = verification)
+    createQtiTest(test, dir = path, verification = verification,
+                  zip_only = TRUE)
 }
 
 #' Create qti-XML task file from Rmd (md) description
