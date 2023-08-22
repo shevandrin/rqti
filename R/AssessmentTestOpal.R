@@ -40,13 +40,6 @@ setClass("AssessmentTestOpal", contains = "AssessmentTest",
                                mark_items = TRUE,
                                keep_responses = FALSE))
 
-#' #' @rdname createQtiTest-methods
-#' #' @aliases createQtiTest,AssessmentTestOpal
-#' setMethod("createQtiTest", signature(object = "AssessmentTestOpal"),
-#'           function(object, dir = NULL, verification = FALSE) {
-#'               create_qti_test(object, dir, verification)
-#'           })
-
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTestOpal
 setMethod("createAssessmentTest", signature(object = "AssessmentTestOpal"),
@@ -85,7 +78,7 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTestOpal"),
 #' @rdname createZip-methods
 #' @aliases createZip,AssessmentTestOpal
 setMethod("createZip", signature(object = "AssessmentTestOpal"),
-          function(object, folder, file_name) {
+          function(object, input, output, file_name, zip_only) {
               if (is.null(file_name)) file_name <- object@identifier
-              zip_wrapper(file_name, object@files, folder)
+              zip_wrapper(file_name, input, output, object@files, zip_only)
           })

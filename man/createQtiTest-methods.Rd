@@ -8,9 +8,10 @@
 \alias{createQtiTest,AssessmentTest}
 \title{Create XML file for exam test specification}
 \usage{
-createQtiTest(object, dir = NULL, verification = FALSE)
+createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
+  FALSE)
 
-\S4method{createQtiTest}{AssessmentTest}(object, dir = getwd(), verification = FALSE)
+\S4method{createQtiTest}{AssessmentTest}(object, dir = getwd(), verification = FALSE, zip_only = FALSE)
 }
 \arguments{
 \item{object}{an instance of the \link{AssessmentTest} or \link{AssessmentTestOpal} S4
@@ -21,6 +22,9 @@ default}
 
 \item{verification}{boolean, optional; to check validity of xml file, default
 \code{FALSE}}
+
+\item{zip_only}{boolean, optional; returns only zip file in case of TRUE or
+zip, xml and downloads files in case of FALSE value; FALSE by default}
 }
 \value{
 xml document.

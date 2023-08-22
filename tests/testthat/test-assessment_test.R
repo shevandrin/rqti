@@ -96,7 +96,7 @@ exam <- new("AssessmentTestOpal", identifier = "id_test",
 suppressMessages(createQtiTest(exam, "todelete", "TRUE"))
 
 sut <- sort(list.files("todelete"))
-expected <- sort(c("e1.xml", "e2.xml", "e3.xml", "q1.xml", "q2.xml", "q3.xml",
+expected <- sort(c("downloads", "e1.xml", "e2.xml", "e3.xml", "q1.xml", "q2.xml", "q3.xml",
               "id_test.xml", "id_test.zip", "imsmanifest.xml"))
 expect_equal(sut, expected)
 unlink("todelete", recursive = TRUE)

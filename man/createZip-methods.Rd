@@ -9,20 +9,25 @@
 \alias{createZip,AssessmentTestOpal}
 \title{Create an Zip archive of QTI test}
 \usage{
-createZip(object, folder, file_name)
+createZip(object, input, output, file_name, zip_only)
 
-\S4method{createZip}{AssessmentTest}(object, folder, file_name)
+\S4method{createZip}{AssessmentTest}(object, input, output, file_name, zip_only)
 
-\S4method{createZip}{AssessmentTestOpal}(object, folder, file_name)
+\S4method{createZip}{AssessmentTestOpal}(object, input, output, file_name, zip_only)
 }
 \arguments{
 \item{object}{an instance of the S4 object \link{AssessmentTest} or
 \link{AssessmentTestOpal}}
 
-\item{folder}{string, optional; a folder to store xml file; working directory
-by default}
+\item{input}{string, optional; a source folder with xml files}
+
+\item{output}{string, optional; a folder to store zip and xml files; working
+directory by default}
 
 \item{file_name}{string, optional; file name of zip archive}
+
+\item{zip_only}{boolean, optional; returns only zip file in case of TRUE or
+zip, xml and downloads files in case of FALSE value}
 }
 \description{
 Generic function for creating zip archive with set of XML documents of

@@ -86,13 +86,16 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 
 #' Create XML file for exam test specification
 #'
-#' @usage createQtiTest(object, dir = NULL, verification = FALSE)
+#' @usage createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
+#'   FALSE)
 #' @param object an instance of the [AssessmentTest] or [AssessmentTestOpal] S4
 #'   object
 #' @param dir string, optional; a folder to store xml file; working directory by
 #'   default
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
+#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
+#'   zip, xml and downloads files in case of FALSE value; FALSE by default
 #' @return xml document.
 #' @examples
 #' \dontrun{
@@ -111,7 +114,8 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #' @aliases createQtiTest
 #' @docType methods
 #' @export
-setGeneric("createQtiTest", function(object, dir = NULL, verification = FALSE) {
+setGeneric("createQtiTest", function(object, dir = NULL, verification = FALSE,
+                                     zip_only = FALSE) {
     standardGeneric("createQtiTest")
 })
 
@@ -138,13 +142,16 @@ setGeneric("createAssessmentTest", function(object, folder) {
 #'
 #' @param object an instance of the S4 object [AssessmentTest] or
 #'   [AssessmentTestOpal]
-#' @param folder string, optional; a folder to store xml file; working directory
-#'   by default
+#' @param input string, optional; a source folder with xml files
+#' @param output string, optional; a folder to store zip and xml files; working
+#'   directory by default
 #' @param file_name string, optional; file name of zip archive
+#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
+#'   zip, xml and downloads files in case of FALSE value
 #' @docType methods
 #' @rdname createZip-methods
 #' @aliases createZip
-setGeneric("createZip", function(object, folder, file_name) {
+setGeneric("createZip", function(object, input, output, file_name, zip_only) {
     StandartGeneric("createZip")
 })
 
@@ -158,8 +165,9 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTest"),
 #' @rdname createQtiTest-methods
 #' @aliases createQtiTest,AssessmentTest
 setMethod("createQtiTest", signature(object = "AssessmentTest"),
-          function(object, dir = getwd(), verification = FALSE) {
-              create_qti_test(object, dir, verification)
+          function(object, dir = getwd(), verification = FALSE,
+                   zip_only = FALSE) {
+              create_qti_test(object, dir, verification, zip_only)
           })
 
 #' @rdname createOutcomeDeclaration-methods
@@ -175,9 +183,9 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
 #' @rdname createZip-methods
 #' @aliases createZip,AssessmentTest
 setMethod("createZip", signature(object = "AssessmentTest"),
-          function(object, folder, file_name) {
+          function(object, input, output, file_name, zip_only) {
               if (is.null(file_name)) file_name <- object@identifier
-              zip_wrapper(file_name, NULL, folder)
+              zip_wrapper(file_name, input, output, NULL, zip_only)
           })
 
 #' @rdname getPoints-methods

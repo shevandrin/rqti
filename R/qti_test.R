@@ -1,11 +1,14 @@
 #' Create XML file for exam test specification
 #'
-#' @usage create_qti_test(object, path = getwd(), verification = FALSE)
+#' @usage create_qti_test(object, path = ".", verification = FALSE, zip_only
+#'   = FALSE)
 #' @param object an instance of the [AssessmentTest] S4 object
-#' @param path string, optional; a path to folder to store zip file with possible
-#'   file name; working directory by default
+#' @param path string, optional; a path to folder to store zip file with
+#'   possible file name; working directory by default
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
+#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
+#'   zip, xml and downloads files in case of FALSE value
 #' @return xml document.
 #' @examples
 #' \dontrun{
@@ -17,9 +20,10 @@
 #'                    title = "section", assessment_item = list(essay, sc))
 #' exam <- new("AssessmentTestOpal", identifier = "id_test",
 #'            title = "some title", section = list(exam_section))
-#' create_qti_test(exam, "exam_folder/exam.zip", "TRUE")
+#' create_qti_test(exam, "exam_folder/exam.zip", TRUE)
 #' }
-create_qti_test <- function(object, path = getwd(), verification = FALSE) {
+create_qti_test <- function(object, path = ".", verification = FALSE,
+                            zip_only = FALSE) {
     ext <- tools::file_ext(path)
     if (ext == "") {
         dir <- path
@@ -31,20 +35,21 @@ create_qti_test <- function(object, path = getwd(), verification = FALSE) {
 
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
-    content <- createAssessmentTest(object, dir)
+    tdir <- tempfile()
+    dir.create(tdir)
+
+    content <- createAssessmentTest(object, tdir)
     doc_test <- xml2::read_xml(as.character(content))
 
-    path_test <- paste0(dir, "/", object@identifier, ".xml")
+    path_test <- paste0(tdir, "/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)
-    message(paste("see assessment test:", path_test))
 
     manifest <- create_manifest(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
-    path_manifest <- paste0(dir, "/imsmanifest.xml")
+    path_manifest <- paste0(tdir, "/imsmanifest.xml")
     xml2::write_xml(doc_manifest, path_manifest)
-    message(paste("see manifest file:", path_manifest))
 
-    path <- createZip(object, dir, file_name)
+    path <- createZip(object, tdir, dir, file_name, zip_only)
     return(path)
 }
 
@@ -86,8 +91,8 @@ create_assessment_test <-function(object, folder, data_downloads = NULL,
 
 # creates tag "assessmentSection" in test file
 create_section_test <- function(object, folder) {
-    assessment_items <- Map(buildAssessmentSection, object@assessment_item,
-                            folder)
+    assessment_items <- suppressMessages(Map(buildAssessmentSection,
+                                             object@assessment_item, folder))
     if (!is.na(object@time_limits)) {
        time_limits <- tag("timeLimits", list(maxTime = object@time_limits * 60))
     } else {time_limits = c()}
@@ -167,32 +172,27 @@ create_resource_item <- function(id, href) {
                          file))
 }
 
-zip_wrapper <- function(id, files, dir_xml) {
-    # create temp directory
-    tdir <- tempfile()
-    dir.create(tdir)
-    test_dir <- file.path(tools::file_path_as_absolute(tdir), "qti_test")
-    dir.create(test_dir)
+zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
+
     if (length(files) > 0) {
-        download_dir <- file.path(tools::file_path_as_absolute(test_dir),
+        download_dir <- file.path(tools::file_path_as_absolute(dir_xml),
                                   "downloads")
         dir.create(download_dir)
         file.copy(files, download_dir)
     }
 
-    #  copy files from working directory to temporary
-    files <- list.files(dir_xml)
-    dir_xml <- paste0(dir_xml, "/")
-    items_files <-unlist(lapply(dir_xml, paste0, files))
-    file.copy(items_files, test_dir)
-
     # make and copy final zip in folder exams
-    files_temp <- list.files(test_dir)
+    files_temp <- list.files(dir_xml)
     wd <- getwd()
-    setwd(test_dir)
+    setwd(dir_xml)
     zip_name <- paste0(id, ".zip")
-    utils::zip(zip_name, list.files(test_dir), extras = "-qdgds 10m")
+    utils::zip(zip_name, list.files(dir_xml), extras = "-qdgds 10m")
     setwd(wd)
-    file.copy(file.path(test_dir, zip_name), dir_xml, recursive = TRUE)
-    return(paste0(dir_xml, zip_name))
+
+    files2copy <- list.files(dir_xml, full.names = TRUE)
+    if (zip_only) files2copy <- file.path(dir_xml, zip_name)
+
+    file.copy(files2copy, output, recursive = TRUE)
+
+    return(file.path(output, zip_name))
 }

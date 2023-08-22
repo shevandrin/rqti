@@ -4,16 +4,20 @@
 \alias{create_qti_test}
 \title{Create XML file for exam test specification}
 \usage{
-create_qti_test(object, path = getwd(), verification = FALSE)
+create_qti_test(object, path = ".", verification = FALSE, zip_only
+  = FALSE)
 }
 \arguments{
 \item{object}{an instance of the \link{AssessmentTest} S4 object}
 
-\item{path}{string, optional; a path to folder to store zip file with possible
-file name; working directory by default}
+\item{path}{string, optional; a path to folder to store zip file with
+possible file name; working directory by default}
 
 \item{verification}{boolean, optional; to check validity of xml file, default
 \code{FALSE}}
+
+\item{zip_only}{boolean, optional; returns only zip file in case of TRUE or
+zip, xml and downloads files in case of FALSE value}
 }
 \value{
 xml document.
@@ -31,6 +35,6 @@ exam_section <- new("AssessmentSection", identifier = "sec_id",
                    title = "section", assessment_item = list(essay, sc))
 exam <- new("AssessmentTestOpal", identifier = "id_test",
            title = "some title", section = list(exam_section))
-create_qti_test(exam, "exam_folder/exam.zip", "TRUE")
+create_qti_test(exam, "exam_folder/exam.zip", TRUE)
 }
 }
