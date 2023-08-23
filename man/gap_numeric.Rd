@@ -12,7 +12,7 @@ gap_numeric(
   response_identifier = NULL,
   include_lower_bound = TRUE,
   include_upper_bound = TRUE,
-  expected_length = NULL,
+  expected_length = size_gap(solution),
   placeholder = NULL
 )
 }

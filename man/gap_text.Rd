@@ -10,7 +10,7 @@ gap_text(
   case_sensitive = TRUE,
   score = 1,
   response_identifier = NULL,
-  expected_length = NULL,
+  expected_length = size_gap(solution),
   placeholder = NULL
 )
 }
