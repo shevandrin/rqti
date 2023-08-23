@@ -20,9 +20,11 @@ setClass("TextGap", contains = "Gap",
 
 setMethod("initialize", "TextGap", function(.Object,...){
     .Object <- callNextMethod()
+
     if (length(.Object@expected_length) == 0) {
-        .Object@expected_length <- nchar(.Object@solution[1]) + 3
+        .Object@expected_length <- size_gap(.Object@solution)
     }
+
     validObject(.Object)
     .Object
 })

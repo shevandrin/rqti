@@ -38,9 +38,11 @@ setValidity("NumericGap", function(object) {
 
 setMethod("initialize", "NumericGap", function(.Object, ...) {
     .Object <- callNextMethod()
-    if (nchar(.Object@solution) > 4 & (length(.Object@expected_length) == 0)) {
-        .Object@expected_length <- nchar(.Object@solution) - 3
+
+    if (length(.Object@expected_length) == 0) {
+        .Object@expected_length = size_gap(.Object@solution)
     }
+
     validObject(.Object)
     .Object
 })

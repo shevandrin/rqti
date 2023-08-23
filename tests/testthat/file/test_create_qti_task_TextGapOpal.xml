@@ -42,7 +42,7 @@
   </outcomeDeclaration>
   <itemBody>
     <p>The speed of light is
-    <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="7"/>
+    <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="3"/>
     than the speed of sound</p>
   </itemBody>
   <responseProcessing>
