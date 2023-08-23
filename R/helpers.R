@@ -18,7 +18,7 @@
 #' @export
 gap_text <- function(solution, tolerance = NULL, case_sensitive = TRUE,
                      score = 1, response_identifier = NULL,
-                     expected_length = NULL, placeholder = NULL) {
+                     expected_length = size_gap(solution), placeholder = NULL) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
@@ -51,7 +51,7 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = TRUE,
 gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
                         score = 1, response_identifier = NULL,
                         include_lower_bound = TRUE, include_upper_bound = TRUE,
-                        expected_length = NULL, placeholder = NULL) {
+                        expected_length = size_gap(solution), placeholder = NULL) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
@@ -126,11 +126,8 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
     return(cat(md_list, sep = "\n"))
 }
 
-size_gap <- function(number) {
-    num <- nchar(as.character(number))
-    if (num <= 2) {
-        return(1)
-    } else {
-        return(num-1)
-    }
+size_gap <- function(input) {
+    num <- nchar(as.character(input[1]))
+    size <- ifelse(num <= 2, 1, num-1)
+    return(size)
 }
