@@ -35,7 +35,8 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 
 #' @importFrom stringr str_split_1
 #' @import yaml
-#' @importFrom rmarkdown render
+#' @importFrom rmarkdown pandoc_convert
+#' @importFrom knitr knit
 create_question_object <- function(file, file_dir = NULL) {
     attrs <- rmarkdown::yaml_front_matter(file)
     # ignore parameters that are not related to object creation
@@ -44,34 +45,30 @@ create_question_object <- function(file, file_dir = NULL) {
     file_name <- tools::file_path_sans_ext(basename(file))
     tdir <- tempdir()
 
-    # to rid of pandoc message about missing title assign temp one
-    if (is.null(attrs$title)) {
-        rmd_content <- readLines(file, warn=FALSE)
-        yaml_start <- grep("^---", rmd_content)[1]
-        new_yaml <- c(rmd_content[seq_len(yaml_start[1])], "title: temp_file",
-                      rmd_content[seq(yaml_start[1] + 1, length(rmd_content))])
-        file <- file.path(tdir, "temp.rmd")
-        writeLines(new_yaml, con = file)
-    }
-
+    md_path <- file.path(tdir, "_temp_md.md")
+    wd <- getwd()
+    setwd(tdir)
+    file_p <- knit(input = file.path(wd, file), output = md_path, quiet = TRUE)
     # if Entry task given, replace <<>> by <tag>
     if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
-        rmd_content <- readLines(file, warn=FALSE)
+        rmd_content <- readLines(file_p, warn=FALSE)
         rmd_mdf <- gsub("<<", "<gap>", rmd_content)
         rmd_mdf <- gsub(">>", "</gap>", rmd_mdf)
-        file <- file.path(tdir, "temp.rmd")
-        writeLines(rmd_mdf, con = file)
+        file_p <- file.path("temp.rmd")
+        writeLines(rmd_mdf, con = file_p)
     }
 
-    tdoc <- render(file, output_format = "html_document",
-                              output_file = "_temp_task.html",
-                              output_dir = tdir,
-                              quiet = TRUE)
+    options <- c("-o", "_temp_pandoc.html", "-f", "markdown", "-t", "html5",
+                 "--embed-resources",
+                 "--mathjax",
+                 "--section-divs",
+                 "--wrap=none", "+RTS", "-M30m")
+    pandoc_convert(file_p, options=options, wd = tdir)
+    setwd(wd)
+    tdoc <- file.path(tdir, "_temp_pandoc.html")
 
-    doc <- xml2::read_html(tdoc)
-    doc_body <- xml2::xml_find_all(doc, "body")
-    html_qstn <- xml2::xml_find_first(doc_body, "//div[@id='question']")
-
+    doc <- xml2::read_html(tdoc, encoding = "utf-8")
+    html_qstn <- xml2::xml_find_first(doc, "//section[@id='question']")
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
         create_sc_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {
@@ -91,8 +88,9 @@ create_question_object <- function(file, file_dir = NULL) {
         stop("The type of the task is not specified properly")
     }
 
+
     if (is.null(slots$identifier)) slots$identifier <- file_name
-    feedback <- list(parse_feedback(doc_body, file_dir))
+    feedback <- list(parse_feedback(doc, file_dir))
     slots <- c(slots, feedback = feedback)
     if (is.null(slots$content)) {
         slots$content <- as.list(paste(clean_question(html_qstn),
@@ -112,7 +110,7 @@ create_question_object <- function(file, file_dir = NULL) {
 
 create_entry_slots <- function(html, attrs) {
 
-    html <- xml2::xml_find_all(html, "//div[@id='question']")
+    html <- xml2::xml_find_all(html, "//section[@id='question']")
     html_str <- paste(clean_question(html), collapse = "")
 
     entry_gaps <- xml2::xml_find_all(html, "//gap")
@@ -169,7 +167,6 @@ create_gap_object <- function(entry, id) {
 
     return(object)
 }
-
 
 # creates slots of SingleChoice-object
 create_sc_slots <- function(html, attrs) {
@@ -367,8 +364,10 @@ define_match_class <- function(ids, rows, cols) {
 parse_feedback <- function(html, image_dir = NULL) {
     sections <- c("feedback", "feedback-", "feedback+")
     classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
-
+    html <- xml2::xml_find_first(html, "body")
+    html_txt <- as.character(html)
     create_fb_object <- function(sec, cls, html, image_dir) {
+        html <- xml2::read_html(html)
         feedback <- xml2::xml_find_first(html,
                                          paste0("//h1[text()='", sec, "']"))
         feedback <- xml2::xml_parent(feedback)
@@ -379,7 +378,7 @@ parse_feedback <- function(html, image_dir = NULL) {
         }
     }
 
-    result <- Map(create_fb_object, sections, classes, html)
+    result <- Map(create_fb_object, sections, classes, html_txt)
     result <- unname(Filter(Negate(is.null), result))
     return(result)
 }

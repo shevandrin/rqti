@@ -34,15 +34,15 @@ Imports:
     magrittr,
     httr,
     dotenv,
-    digest
+    digest,
+    knitr
 Suggests: 
     covr,
     dplyr,
     testthat (>= 3.0.0),
     textclean,
     XML,
-    readr,
-    knitr
+    readr
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 URL: https://github.com/shevandrin/qti
