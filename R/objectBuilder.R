@@ -35,10 +35,10 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 
 #' @importFrom stringr str_split_1
 #' @import yaml
-#' @importFrom rmarkdown pandoc_convert
+#' @importFrom rmarkdown pandoc_convert yaml_front_matter
 #' @importFrom knitr knit opts_knit
 create_question_object <- function(file, file_dir = NULL) {
-    attrs <- rmarkdown::yaml_front_matter(file)
+    attrs <- yaml_front_matter(file)
     # ignore parameters that are not related to object creation
     attrs <- attrs[! names(attrs) %in% c("knit")]
 
