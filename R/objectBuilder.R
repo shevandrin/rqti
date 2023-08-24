@@ -36,7 +36,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' @importFrom stringr str_split_1
 #' @import yaml
 #' @importFrom rmarkdown pandoc_convert
-#' @importFrom knitr knit
+#' @importFrom knitr knit opts_knit
 create_question_object <- function(file, file_dir = NULL) {
     attrs <- rmarkdown::yaml_front_matter(file)
     # ignore parameters that are not related to object creation
@@ -46,15 +46,15 @@ create_question_object <- function(file, file_dir = NULL) {
     tdir <- tempdir()
 
     md_path <- file.path(tdir, "_temp_md.md")
-    wd <- getwd()
-    setwd(tdir)
-    file_p <- knit(input = file.path(wd, file), output = md_path, quiet = TRUE)
+    knitr::opts_knit$set(base.dir = tdir)
+
+    file_p <- knit(input = file, output = md_path, quiet = TRUE)
     # if Entry task given, replace <<>> by <tag>
     if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
-        rmd_content <- readLines(file_p, warn=FALSE)
+        rmd_content <- readLines(file_p, warn = FALSE)
         rmd_mdf <- gsub("<<", "<gap>", rmd_content)
         rmd_mdf <- gsub(">>", "</gap>", rmd_mdf)
-        file_p <- file.path("temp.rmd")
+        file_p <- file.path(tdir, "temp.rmd")
         writeLines(rmd_mdf, con = file_p)
     }
 
@@ -64,7 +64,6 @@ create_question_object <- function(file, file_dir = NULL) {
                  "--section-divs",
                  "--wrap=none", "+RTS", "-M30m")
     pandoc_convert(file_p, options=options, wd = tdir)
-    setwd(wd)
     tdoc <- file.path(tdir, "_temp_pandoc.html")
 
     doc <- xml2::read_html(tdoc, encoding = "utf-8")
@@ -87,7 +86,6 @@ create_question_object <- function(file, file_dir = NULL) {
     } else {
         stop("The type of the task is not specified properly")
     }
-
 
     if (is.null(slots$identifier)) slots$identifier <- file_name
     feedback <- list(parse_feedback(doc, file_dir))
