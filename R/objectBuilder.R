@@ -59,7 +59,7 @@ create_question_object <- function(file, file_dir = NULL) {
     }
 
     options <- c("-o", "_temp_pandoc.html", "-f", "markdown", "-t", "html5",
-                 "--embed",
+                 "--self-contained",
                  "--mathjax",
                  "--section-divs",
                  "--wrap=none", "+RTS", "-M30m")
