@@ -154,6 +154,7 @@ create_gap_object <- function(entry, id) {
                                "text_opal" = "TextGapOpal",
                                "InlineChoice")
         attrs[["type"]] <- NULL
+        attrs[["placeholder"]] <- as.character(attrs[["placeholder"]])
         if (!("response_identifier" %in% names(attrs)))  {
             attrs["response_identifier"] <- id
             }
