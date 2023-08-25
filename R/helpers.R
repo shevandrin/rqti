@@ -122,8 +122,8 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
         gaps <- paste0(" <gap>", gaps, "</gap>")
     }
 
-    md_list <- paste0("- ", vect, gaps)
-    return(cat(md_list, sep = "\n"))
+    md_list <- paste0("- ", vect, gaps, collapse = "\n")
+    return(md_list)
 }
 
 size_gap <- function(input) {
