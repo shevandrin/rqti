@@ -59,8 +59,9 @@ create_question_object <- function(file, file_dir = NULL) {
     }
 
     options <- c("-o", "_temp_pandoc.html", "-f", "markdown", "-t", "html5",
-                 "--embed",
                  "--mathjax",
+                 "--embed-resources",
+                 "--standalone",
                  "--section-divs",
                  "--wrap=none", "+RTS", "-M30m")
     pandoc_convert(file_p, options=options, wd = tdir)
