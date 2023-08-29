@@ -48,3 +48,13 @@ jobs:
         with:
           name: coverage-test-failures
           path: ${{ runner.temp }}/package
+
+      - name: Print Environment Information
+        run: |
+        echo "Environment Variables:"
+        printenv
+        echo "System PATHs:"
+        echo $PATH
+        echo "Installed Software:"
+        pandoc --version
+        Rscript -e 'sessionInfo()'
