@@ -21,6 +21,10 @@ jobs:
         with:
           use-public-rspm: true
 
+      - uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: '2.19'
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::covr
@@ -49,12 +53,3 @@ jobs:
           name: coverage-test-failures
           path: ${{ runner.temp }}/package
 
-      - name: Print Environment Information
-        run: |
-        echo "Environment Variables:"
-        printenv
-        echo "System PATHs:"
-        echo $PATH
-        echo "Installed Software:"
-        pandoc --version
-        Rscript -e 'sessionInfo()'
