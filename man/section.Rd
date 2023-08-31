@@ -31,8 +31,8 @@ result of calculations}
 
 \item{nested}{boolean; the type of the test structure; \code{TRUE} by default}
 
-\item{selection}{numeric, optional; defines how many children of the section are
-delivered in test}
+\item{selection}{numeric, optional; defines how many children of the section
+are delivered in test}
 
 \item{title}{string, optional; title of the section}
 

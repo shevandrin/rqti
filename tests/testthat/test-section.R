@@ -24,7 +24,7 @@ test_that("Testing of function section where handles mismatched num_variants
     expect_error(section(file,
                          num_variants = num_variants,
                          seed_number = seed_number),
-                 "The items in seed_number must be equal to number of files")
+                 "The items in seed_number must be equal to number of variants")
 })
 
 test_that("Testing of function section() creates assessment section correctly

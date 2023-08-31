@@ -6,8 +6,8 @@
 #'   result of calculations
 #' @param id string, optional; identifier of the assessment section
 #' @param nested boolean; the type of the test structure; `TRUE` by default
-#' @param selection numeric, optional; defines how many children of the section are
-#'   delivered in test
+#' @param selection numeric, optional; defines how many children of the section
+#'   are delivered in test
 #' @param title string, optional; title of the section
 #' @param time_limits integer, optional; controls the amount of time a candidate
 #'   is allowed for this part of the test
@@ -29,7 +29,7 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
                     allow_comment = TRUE) {
     # check conflicts between seed_number and num_variants
     if (num_variants > length(seed_number) & !is.null(seed_number)) {
-        stop("The items in seed_number must be equal to number of files")
+        stop("The items in seed_number must be equal to number of variants")
     } else if (num_variants < length(seed_number)) {
         warning(paste("From seed_number only first", num_variants,
                       "items are taken"), call. = FALSE)
@@ -57,19 +57,12 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
 
         if (nested) {
             selection <- 1
-            for (n  in seq(num_variants)) {
-                sec <- make_seed_subsection(file, seed_number[n])
-                names(sec) <- NULL
-                sub_items <- c(sub_items, sec)
-            }
+            files <- replicate(num_variants, file, simplify = FALSE)
+            sub_items <- mapply(make_seed_subsection, files, seed_number)
         } else {
             selection <- NA_integer_
-            for (f in file) {
-
-                sec <- make_variant_subsection(f, num_variants, seed_number)
-                names(sec) <- NULL
-                sub_items <- c(sub_items, sec)
-            }
+            sub_items <- lapply(file, FUN=make_variant_subsection,
+                                num_variants, seed_number)
         }
     }
 
@@ -100,8 +93,7 @@ make_seed_subsection <- function(file, seed_number) {
                  paste0(tools::file_path_sans_ext(basename(file)), "_S",
                         seed_number),
                  paste0("exam_S", seed_number))
-    asmt_items <- Map(make_variant, file, rep(seed_number, length(file)))
-    names(asmt_items) <- NULL
+    asmt_items <- mapply(make_variant, file, rep(seed_number, length(file)), USE.NAMES = FALSE)
     exam_subsection <- new("AssessmentSection", identifier = id,
                            assessment_item = asmt_items)
     return(exam_subsection)
@@ -110,8 +102,8 @@ make_seed_subsection <- function(file, seed_number) {
 make_variant_subsection <- function(file, num_variants, seed_number) {
     id <- tools::file_path_sans_ext(basename(file))
 
-    asmt_items <- Map(make_variant, file, seed_number)
-    names(asmt_items) <- NULL
+    asmt_items <- mapply(FUN=make_variant, rep(file, num_variants), seed_number,
+                         USE.NAMES = FALSE)
 
     exam_subsection <- new("AssessmentSection", identifier = id,
                            assessment_item = asmt_items, selection = 1)
