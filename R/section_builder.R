@@ -58,7 +58,7 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
         if (nested) {
             selection <- 1
             files <- replicate(num_variants, file, simplify = FALSE)
-            sub_items <- mapply(make_seed_subsection, files, seed_number)
+            sub_items <- mapply(make_exam_subsection, files, seed_number)
         } else {
             selection <- NA_integer_
             sub_items <- lapply(file, FUN=make_variant_subsection,
@@ -88,12 +88,14 @@ make_variant <- function(file, seed_number) {
     return(object)
 }
 
-make_seed_subsection <- function(file, seed_number) {
+make_exam_subsection <- function(file, seed_number) {
     id <- ifelse(length(file) == 1,
                  paste0(tools::file_path_sans_ext(basename(file)), "_S",
                         seed_number),
                  paste0("exam_S", seed_number))
-    asmt_items <- mapply(make_variant, file, rep(seed_number, length(file)), USE.NAMES = FALSE)
+
+    asmt_items <- mapply(make_variant, file, rep(seed_number, length(file)),
+                           USE.NAMES = FALSE)
     exam_subsection <- new("AssessmentSection", identifier = id,
                            assessment_item = asmt_items)
     return(exam_subsection)
