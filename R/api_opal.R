@@ -26,9 +26,30 @@
 #' @export
 auth_opal <- function() {
     user_id <- NULL
+
+    data_path<- system.file("extdata", "user_information.csv", package = "qti")
+
+    if (!file.exists(data_path)) {
+        print("You need to store your password in an operating system (credential store)")
+        register_user()
+    } else {
+        username <-readline("Please enter your USERNAME for access API: ")
+    }
+
+    data_path <- system.file("extdata", "user_information.csv", package = "qti")
+    data<-read.csv(data_path)
+    filtered_data <- subset(data, username == username)
+    API_USER <- filtered_data$username
+    service <- filtered_data$service
+
+    API_PASSWORD <- try(keyring::key_get(service = service, username = API_USER))
+    if (class(API_PASSWORD) == 'try-error') {
+        print("Credentials not found. Please check your username.")
+    }
+
     url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
-                        Sys.getenv("API_USER"),
-                        "?password=", Sys.getenv("API_PASSWORD"))
+                          API_USER, "?password=", API_PASSWORD)
+
     response <- GET(url_login)
     if (response$status_code == 200) {
         parse <- content(response, as = "text", encoding = "UTF-8")
@@ -41,6 +62,37 @@ auth_opal <- function() {
     print(paste("login:", response$status_code))
     return(user_id)
 }
+
+# Store your password in an operating system (credential store)
+register_user <- function() {
+    service <- readline("Enter Service: ")
+    username <- readline("Enter Username: ")
+    password <- readline("Enter Password: ")
+
+    # Store the service, username, and password
+    new_data <- data.frame(service = service, username = username, stringsAsFactors = FALSE)
+
+    # Store password in the operating system (credential store)
+    keyring::key_set_with_value(service = service, username = username, password = password)
+
+    # Load existing data if available, or create a new data frame
+    data_path <- system.file("extdata", "user_information.csv", package = "qti")
+    if (!file.exists(data_path)) {
+        path <- paste0(system.file(package = "qti"), "/extdata")
+        dir.create(path, recursive = TRUE)
+        write.csv(new_data, paste0(path,"/user_information.csv"), row.names = FALSE)
+    } else {
+        # Append user_data to an existing CSV file
+        existing_data <- read.csv(data_path)
+        combined_data <- rbind(existing_data, new_data)
+        write.csv(combined_data, data_path, row.names = FALSE)
+    }
+
+    cat("\n Your password has been saved in your OS.
+        Please remember your service name and username needed to access API. \n")
+    return(username)
+}
+
 
 #'Upload resource on OPAL
 #'
