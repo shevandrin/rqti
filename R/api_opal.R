@@ -23,6 +23,7 @@
 #' @rdname auth_opal
 #' @import httr
 #' @import dotenv
+#' @import keyring
 #' @export
 auth_opal <- function() {
     user_id <- NULL
@@ -40,9 +41,11 @@ auth_opal <- function() {
     data<-read.csv(data_path)
     filtered_data <- subset(data, username == username)
     API_USER <- filtered_data$username
+    print(API_USER)
     service <- filtered_data$service
 
     API_PASSWORD <- try(keyring::key_get(service = service, username = API_USER))
+    print(API_PASSWORD)
     if (class(API_PASSWORD) == 'try-error') {
         print("Credentials not found. Please check your username.")
     }
@@ -64,10 +67,12 @@ auth_opal <- function() {
 }
 
 # Store your password in an operating system (credential store)
+#' @import getPass
+#' @import keyring
 register_user <- function() {
     service <- readline("Enter Service: ")
     username <- readline("Enter Username: ")
-    password <- readline("Enter Password: ")
+    password <- getPass("Enter Password: ")
 
     # Store the service, username, and password
     new_data <- data.frame(service = service, username = username, stringsAsFactors = FALSE)
