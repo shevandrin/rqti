@@ -333,14 +333,20 @@ make_ids <- function(n, type) {
 }
 
 make_abbr_ids <- function(items) {
-    ids <- abbreviate(items, minlength = 6)
+    make_abbr <- function(x) {
+        pos <- regexpr(" ", x)[1][1]
+        abbr <- paste0(substr(x, 1, pos-1), "_",
+                       abbreviate(substr(x, pos+1, nchar(x)), minlength = 6))
+    }
+
+    ids <- sapply(items, make_abbr, USE.NAMES = FALSE)
     counts <- table(ids)
     dupl <- which(counts > 1)
     for (i in dupl) {
         ids[ids == names(counts)[i]] <- paste0(names(counts)[i],
                                                seq_len(counts[i]))
     }
-    return(unname(ids))
+    return(ids)
 }
 
 define_match_class <- function(ids, rows, cols) {
