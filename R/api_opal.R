@@ -58,9 +58,31 @@ auth_opal <- function() {
         parse <- content(response, as = "text", encoding = "UTF-8")
         user_id <- xml2::xml_attr(read_xml(parse), "identityKey")
         cookie_value <- response$cookies$value
-        Sys.setenv("COOKIE" = cookie_value)
-    } else {
+        Sys.setenv("COOKIE" = cookie_value)}
+    if (response$status_code == 401){
         message("Authentification failed. You may need to run a VPN client")
+        message("If you want to change the password in the credential store, please choose yes/no ")
+        choice <- readline("Enter 'yes' or 'no': ")
+        # Check the user's choice
+        if (tolower(choice) == "yes") {
+            message("The old password will be deleted from the credential store. Please create a new password.")
+            # clear the storing keys
+            a <- data.frame(keyring::key_list())
+
+             for (x in seq(1, nrow(a))) {
+                keyring::key_delete(a[x, 1], a[x, 2])
+             }
+
+            directory_path <- dirname(data_path)
+            unlink(directory_path, recursive = TRUE)
+            register_user()
+
+        } else if (tolower(choice) == "no") {
+            message("You chose not to change the password. Please check and run the VPN client.")
+        } else {
+            message("Invalid choice. Please enter 'Y' or 'N'.")
+        }
+
     }
     print(paste("login:", response$status_code))
     return(user_id)
@@ -70,7 +92,7 @@ auth_opal <- function() {
 #' @import getPass
 #' @import keyring
 register_user <- function() {
-    service <- readline("Enter Service: ")
+    service <- readline("Enter Name of Service: ")
     username <- readline("Enter Username: ")
     password <- getPass("Enter Password: ")
 
@@ -94,7 +116,7 @@ register_user <- function() {
     }
 
     cat("\n Your password has been saved in your OS.
-        Please remember your service name and username needed to access API. \n")
+        Please remember your username that will be needed to access API.\n")
     return(username)
 }
 
