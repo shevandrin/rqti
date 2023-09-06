@@ -35,6 +35,7 @@ auth_opal <- function() {
         register_user()
     } else {
         username <-readline("Please enter your USERNAME for access API: ")
+
     }
 
     data_path <- system.file("extdata", "user_information.csv", package = "qti")
@@ -45,9 +46,12 @@ auth_opal <- function() {
     service <- filtered_data$service
 
     API_PASSWORD <- try(keyring::key_get(service = service, username = API_USER))
-    print(API_PASSWORD)
+
     if (class(API_PASSWORD) == 'try-error') {
-        print("Credentials not found. Please check your username.")
+        print("Credentials NOT FOUND. Please check your username and try again.")
+        print("You have the follow credentionals:")
+        print(keyring::key_list())
+        register_user()
     }
 
     url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
@@ -84,6 +88,9 @@ auth_opal <- function() {
         }
 
     }
+    if (tolower(choice) == "yes") {
+        auth_opal()}
+    print("Please try again your attempt of connecting to API later")
     print(paste("login:", response$status_code))
     return(user_id)
 }
