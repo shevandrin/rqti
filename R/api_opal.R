@@ -27,8 +27,7 @@
 #' @export
 auth_opal <- function() {
     user_id <- NULL
-
-    data_path<- system.file("extdata", "user_information.csv", package = "qti")
+    data_path<- system.file("extdata", "user_information.yaml", package = "qti")
 
     if (!file.exists(data_path)) {
         print("You need to store your password in an operating system (credential store)")
@@ -38,19 +37,17 @@ auth_opal <- function() {
 
     }
 
-    data_path <- system.file("extdata", "user_information.csv", package = "qti")
-    data<-read.csv(data_path)
-    filtered_data <- subset(data, username == username)
-    API_USER <- filtered_data$username
-    print(API_USER)
-    service <- filtered_data$service
+    data_path <- system.file("extdata", "user_information.yaml", package = "qti")
+    data<-read_yaml(data_path)
+    service <- data$service
+    API_USER <- data$username
 
-    API_PASSWORD <- try(keyring::key_get(service = service, username = API_USER))
+    API_PASSWORD <- try(key_get(service = service, username = API_USER))
 
     if (class(API_PASSWORD) == 'try-error') {
         print("Credentials NOT FOUND. Please check your username and try again.")
         print("You have the follow credentionals:")
-        print(keyring::key_list())
+        print(key_list())
         register_user()
     }
 
@@ -71,10 +68,10 @@ auth_opal <- function() {
         if (tolower(choice) == "yes") {
             message("The old password will be deleted from the credential store. Please create a new password.")
             # clear the storing keys
-            a <- data.frame(keyring::key_list())
+            a <- data.frame(key_list())
 
              for (x in seq(1, nrow(a))) {
-                keyring::key_delete(a[x, 1], a[x, 2])
+                 key_delete(a[x, 1], a[x, 2])
              }
 
             directory_path <- dirname(data_path)
@@ -107,19 +104,19 @@ register_user <- function() {
     new_data <- data.frame(service = service, username = username, stringsAsFactors = FALSE)
 
     # Store password in the operating system (credential store)
-    keyring::key_set_with_value(service = service, username = username, password = password)
+    key_set_with_value(service = service, username = username, password = password)
 
     # Load existing data if available, or create a new data frame
-    data_path <- system.file("extdata", "user_information.csv", package = "qti")
+    data_path <- system.file("extdata", "user_information.yaml", package = "qti")
     if (!file.exists(data_path)) {
         path <- paste0(system.file(package = "qti"), "/extdata")
         dir.create(path, recursive = TRUE)
-        write.csv(new_data, paste0(path,"/user_information.csv"), row.names = FALSE)
+        write_yaml(new_data, paste0(path,"/user_information.yaml"))
     } else {
         # Append user_data to an existing CSV file
         existing_data <- read.csv(data_path)
         combined_data <- rbind(existing_data, new_data)
-        write.csv(combined_data, data_path, row.names = FALSE)
+        write_yaml(combined_data, data_path, row.names = FALSE)
     }
 
     cat("\n Your password has been saved in your OS.
