@@ -22,37 +22,34 @@
 #' @name auth_opal
 #' @rdname auth_opal
 #' @import httr
-#' @import dotenv
 #' @import keyring
 #' @export
 auth_opal <- function() {
     user_id <- NULL
-    data_path<- system.file("extdata", "user_information.yaml", package = "qti")
 
-    if (!file.exists(data_path)) {
-        print("You need to store your password in an operating system (credential store)")
-        register_user()
-    } else {
-        username <-readline("Please enter your USERNAME for access API: ")
-
+    if (!exists("API_USER", envir = globalenv())) {
+        API_USER <<- readline("Please enter your USERNAME for access API: ")
     }
+    # if (!file.exists(data_path)) {
+    #     print("You need to store your password in an
+    #           operating system (credential store)")
+    #     register_user()
+    # } else {
+    #     username <-readline("Please enter your USERNAME for access API: ")
+    # }
 
-    data_path <- system.file("extdata", "user_information.yaml", package = "qti")
-    data<-read_yaml(data_path)
-    service <- data$service
-    API_USER <- data$username
-
-    API_PASSWORD <- try(key_get(service = service, username = API_USER))
+    API_PASSWORD <- try(key_get(service = "opal", username = API_USER))
 
     if (class(API_PASSWORD) == 'try-error') {
-        print("Credentials NOT FOUND. Please check your username and try again.")
-        print("You have the follow credentionals:")
+        print(paste0("Credentials for usrer \'", API_USER , "\' NOT FOUND"))
         print(key_list())
-        register_user()
+        API_PASSWORD <- register_user()
     }
 
     url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
                           API_USER, "?password=", API_PASSWORD)
+
+    print(url_login)
 
     response <- GET(url_login)
     if (response$status_code == 200) {
@@ -60,35 +57,26 @@ auth_opal <- function() {
         user_id <- xml2::xml_attr(read_xml(parse), "identityKey")
         cookie_value <- response$cookies$value
         Sys.setenv("COOKIE" = cookie_value)}
-    if (response$status_code == 401){
+    if (response$status_code == 403) {
         message("Authentification failed. You may need to run a VPN client")
-        message("If you want to change the password in the credential store, please choose yes/no ")
-        choice <- readline("Enter 'yes' or 'no': ")
-        # Check the user's choice
-        if (tolower(choice) == "yes") {
-            message("The old password will be deleted from the credential store. Please create a new password.")
-            # clear the storing keys
-            a <- data.frame(key_list())
-
-             for (x in seq(1, nrow(a))) {
-                 key_delete(a[x, 1], a[x, 2])
-             }
-
-            directory_path <- dirname(data_path)
-            unlink(directory_path, recursive = TRUE)
-            register_user()
-
-        } else if (tolower(choice) == "no") {
-            message("You chose not to change the password. Please check and run the VPN client.")
-        } else {
-            message("Invalid choice. Please enter 'Y' or 'N'.")
-        }
-
     }
-    if (tolower(choice) == "yes") {
-        auth_opal()}
-    print("Please try again your attempt of connecting to API later")
-    print(paste("login:", response$status_code))
+    if (response$status_code == 401){
+        message("401 Unauthorized")
+        choice <- readline("If you want to change the password in the credential
+        store, please choose y/n")
+        # Check the user's choice
+        if (tolower(choice) == "y") {
+            message("The old password will be deleted from the credential store.")
+            # clear the storing keys
+            data <- key_list()
+            key_delete(data$service, data$username)
+            register_user()
+            auth_opal()
+
+        } else {
+            message("You chose not to change the password. Please check and run the VPN client.")
+        }
+    }
     return(user_id)
 }
 
@@ -96,32 +84,15 @@ auth_opal <- function() {
 #' @import getPass
 #' @import keyring
 register_user <- function() {
-    service <- readline("Enter Name of Service: ")
     username <- readline("Enter Username: ")
     password <- getPass("Enter Password: ")
 
-    # Store the service, username, and password
-    new_data <- data.frame(service = service, username = username, stringsAsFactors = FALSE)
-
     # Store password in the operating system (credential store)
-    key_set_with_value(service = service, username = username, password = password)
-
-    # Load existing data if available, or create a new data frame
-    data_path <- system.file("extdata", "user_information.yaml", package = "qti")
-    if (!file.exists(data_path)) {
-        path <- paste0(system.file(package = "qti"), "/extdata")
-        dir.create(path, recursive = TRUE)
-        write_yaml(new_data, paste0(path,"/user_information.yaml"))
-    } else {
-        # Append user_data to an existing CSV file
-        existing_data <- read.csv(data_path)
-        combined_data <- rbind(existing_data, new_data)
-        write_yaml(combined_data, data_path, row.names = FALSE)
-    }
-
+    key_set_with_value(service = "opal", username = username, password = password)
+    API_USER <<- username
     cat("\n Your password has been saved in your OS.
-        Please remember your username that will be needed to access API.\n")
-    return(username)
+        Please remember your username that will be needed to access Opal API.\n")
+    return(password)
 }
 
 

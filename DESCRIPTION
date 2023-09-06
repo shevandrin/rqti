@@ -33,9 +33,10 @@ Imports:
     lubridate,
     magrittr,
     httr,
-    dotenv,
     digest,
-    knitr
+    knitr,
+    keyring,
+    getPass
 Suggests: 
     covr,
     dplyr,
