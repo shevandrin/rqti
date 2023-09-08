@@ -21,7 +21,7 @@ Which version of the QTI standard is used by the R package qti?
 
 General feedback will be displayed every time (without conditions).
 
-<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment the following:
+<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
 
 # feedback+
 
