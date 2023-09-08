@@ -1,10 +1,10 @@
 ---
-type: multiplechoice
-knit: qti::render_rmd
-identifier: TOPIC2_Q001
+type: multiplechoice # equivalent to mpc
+qti::render_rmd # if you do not want our preview renderer, remove this
+identifier: TOPIC2_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
-shuffle: false
-orientation: horizontal
+shuffle: true # random order of choices
+orientation: vertical # OR horizontal
 points: 1, 1, -1, -1
 ---
 
