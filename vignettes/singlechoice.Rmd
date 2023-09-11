@@ -78,7 +78,7 @@ The last function will return a url, which you can fire up in a browser:
 browseURL(url)
 ```
 
-We set the rights to public, so we do not need to login in the browser again (you can only be logged in once).
+By default the rights of the uploaded material are set to public, so no login is required to view the material. Otherwise you have to login into OPAL, which will log you out in the API.
 
 The function `upload2opal` will aks you for credentials first. Depending on the OPAL setup you might need to use a VPN. Furthermore only password-based authentication accounts work (Shibboleth does not work). You probably need to consult your IT before using `upload2opal`. More information on this can be found in the article: OPAL API. Specifically, we describe how to setup the API at TU Chemnitz.
 
@@ -98,18 +98,18 @@ Of course you can specify the correct choice if need be. Our preferred way of do
 cat(readLines(fs::path_package("exercises", "sc1b.Rmd", package = "qti")), sep = '\n')
 ```
 
-Which renders as:
-
-```{r eval=FALSE}
+```{r eval=FALSE, include=FALSE}
 rmd2qti(fs::path_package("exercises", "sc1b.Rmd", package = "qti"))
-upload2opal("sc1b.xml") # hide
+url <- upload2opal("sc1b.xml") # hide
 ```
 
-```{r eval=FALSE}
+<!-- ![Preview of single choice exercise rendered by QTIJS](screenshot_sc1b.png){width="400"} -->
+
+```{r eval=FALSE, include=FALSE}
 system(paste0("wkhtmltoimage ", url, "sc1b.png"))
 ```
 
-Once again, this is much easier to read than providing the solution somewhere else (in the yaml section). Furthermore, producing a preview as html directly shows you which element is correct.
+Once again, this is much easier to read than providing the solution somewhere else (e.g. in the yaml section). Furthermore, producing a preview as html directly shows you which element is correct.
 
 An important note: Do not forget to put a blank line before your question and the answer list, otherwise the list will not be a proper list:
 
@@ -127,10 +127,10 @@ Renders as:
 
 ## More control
 
-If you want to have more fine-grained control, consider the available attributes for the yaml section. In addition you can also set feedback for correct and incorrect responses.
+If you want to have more fine-grained control, consider the RMD template `QTI: singlechoice-complex`, wich uses many yaml attributes. In addition you can also set feedback for correct and incorrect responses.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("exercises", "sc1c.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-complex/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
 ```
 
 Which renders as:
@@ -152,7 +152,7 @@ Has to be `singlechoice` or `sc` (a shortcut for singlechoice) or `schoice` (com
 
 ### identifier
 
-This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
+This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
@@ -160,11 +160,11 @@ Title of the exercise. Can be displayed to students depending on the learning ma
 
 ### shuffle
 
-If `true`, randomizes the order of the choices. Defaults to `true`. Only in rare occasions it makes sense to have a strict order of choices (setting shuffle to `false`.
+If `true`, randomizes the order of the choices. Defaults to `true`. Only in rare occasions it makes sense to have a strict order of choices (setting shuffle to `false`).
 
 ### orientation
 
-Should the items be displayed in `vertical` or `horizontal` mode? Default is vertical.
+Should the items be displayed in `vertical` or `horizontal` mode? Default is `vertical`.
 
 ### solution
 
@@ -206,6 +206,6 @@ From a psychometric perspective single choice exercises are the worst option for
 
 In the `exams` package you will see many examples where numeric gaps are transformed into single choice exercises. In our opinion this only makes sense if the learning management system does not support gap exercises, the support is poor or a print exam with automatic grading is a strict requirement. Otherwise, most exercises will be better with numeric (or string) gaps.
 
-There are situations where single choice exercises cannot be avoided. For instance, exercises regarding the level of measurement only have five choices (nominal, ordinal, interval, ratio, absolute). In this case we recommend to ask several questions, not just one. Also you might want to give less points to single choice exercises in general to reduce the variance caused by guessing.
+There are situations where single choice exercises cannot be avoided. For instance, exercises regarding the level of measurement only have five choices (nominal, ordinal, interval, ratio, absolute). In this case we recommend to ask several questions, not just one. Also, you might want to give less points to single choice exercises in general to reduce the variance caused by guessing.
 
 In summary, try to avoid single choice exercises. Specifically, do not transform numeric gap exercises to single choice exercises, unless you have a good reason. If you cannot avoid single choice exercises, ask several questions, not just one. Consider giving less weight to single choice exercises in grading.

@@ -8,6 +8,6 @@ knit: qti::render_rmd
 Which version of the QTI standard is used by the R package qti?
 
 - 1.2
-- **2.1**
+- *2.1*
 - 3.0
 - 2.2

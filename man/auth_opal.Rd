@@ -17,16 +17,16 @@ required to access the OPAL API system."
 }
 \section{Authentication}{
  To use OPAL API, you need to provide your OPAL-
-username and password. This function will look for API_USER and
-API_PASSWORD environment variables. To set a global environment variables,
+username and password. This function will look for api_user and
+api_password environment variables. To set a global environment variables,
 you need to use the following commands:
-\code{Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')}
-\code{Sys.setenv(API_PASSWORD =  'xxxxxxxxxxxxxxx')}
+\code{Sys.setenv(api_user ='xxxxxxxxxxxxxxx')}
+\code{Sys.setenv(api_password =  'xxxxxxxxxxxxxxx')}
 Another way to assign environment variables in case of regular using is to
 create a file named .env in the root directory of your project. The .env
 file should contain the environment variables you want to set in the
 following format:
-\code{API_USER=xxxxxxxxxxxxxxx}
-\code{API_PASSWORD=xxxxxxxxxxxxxxx}
+\code{api_user=xxxxxxxxxxxxxxx}
+\code{api_password=xxxxxxxxxxxxxxx}
 }
 
