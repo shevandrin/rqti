@@ -41,3 +41,11 @@ test_that("test abbreviate for rmd2xml() in OneInColTable class", {
     equal_xml(sut, expected)
     unlink("to_delete", recursive = TRUE)
 })
+test_that("test abbreviate for rmd2xml() in MultipleChoiceTable class", {
+    file_sut <- test_path("file/rmd/test_abbr_MultipleChoiceTable_example.Rmd")
+    sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
+    sut <- readLines(sut)
+    expected <- readLines(test_path("file/rmd/test_example_abbr_MultipleChoiceTable.xml"))
+    equal_xml(sut, expected)
+    unlink("to_delete", recursive = TRUE)
+})
