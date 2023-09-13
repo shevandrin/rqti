@@ -2,16 +2,16 @@
 <assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="test_OneInRowTable_example" title="OneInRowTable" adaptive="false" timeDependent="false">
   <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
     <correctResponse>
-      <value>Fahrst_dmdFnD _True</value>
-      <value>Nimm_dPadS. _True</value>
-      <value>Sie_fadAiK _False</value>
-      <value>Musst_dadSHm _False</value>
+      <value>Fahrst_dmdFnD True</value>
+      <value>Nimm_dPadS. True</value>
+      <value>Sie_fadAiK False</value>
+      <value>Musst_dadSHm False</value>
     </correctResponse>
     <mapping defaultValue="0">
-      <mapEntry mapKey="Fahrst_dmdFnD _True" mappedValue="1"/>
-      <mapEntry mapKey="Nimm_dPadS. _True" mappedValue="1"/>
-      <mapEntry mapKey="Sie_fadAiK _False" mappedValue="1"/>
-      <mapEntry mapKey="Musst_dadSHm _False" mappedValue="1"/>
+      <mapEntry mapKey="Fahrst_dmdFnD True" mappedValue="1"/>
+      <mapEntry mapKey="Nimm_dPadS. True" mappedValue="1"/>
+      <mapEntry mapKey="Sie_fadAiK False" mappedValue="1"/>
+      <mapEntry mapKey="Musst_dadSHm False" mappedValue="1"/>
     </mapping>
   </responseDeclaration>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -39,8 +39,8 @@
         <simpleAssociableChoice identifier="Musst_dadSHm" fixed="false" matchMax="1">Musst du an der Schule Hausaufgabe machen?</simpleAssociableChoice>
       </simpleMatchSet>
       <simpleMatchSet>
-        <simpleAssociableChoice identifier="_True" fixed="false" matchMax="4">True</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="_False" fixed="false" matchMax="4">False</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="True" fixed="false" matchMax="4">True</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="False" fixed="false" matchMax="4">False</simpleAssociableChoice>
       </simpleMatchSet>
     </matchInteraction>
   </itemBody>

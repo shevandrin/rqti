@@ -2,24 +2,24 @@
 <assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="test_OneInColTable_abbr_example" title="OneInColTable" adaptive="false" timeDependent="false">
   <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
     <correctResponse>
-      <value>Spielen_ShrbkF _True</value>
-      <value>Fliegen_SbtadF _False</value>
-      <value>Fliegen_SbtadF _mit</value>
-      <value>Schicken_SmbeB! _True</value>
+      <value>Spielen_ShrbkF True</value>
+      <value>Fliegen_SbtadF False</value>
+      <value>Fliegen_SbtadF mit</value>
+      <value>Schicken_SmbeB! True</value>
     </correctResponse>
     <mapping defaultValue="0">
-      <mapEntry mapKey="Spielen_ShrbkF _True" mappedValue="1"/>
-      <mapEntry mapKey="Fliegen_SbtadF _False" mappedValue="1"/>
-      <mapEntry mapKey="Fliegen_SbtadF _mit" mappedValue="1"/>
-      <mapEntry mapKey="Schicken_SmbeB! _True" mappedValue="1"/>
-      <mapEntry mapKey="Spielen_ShrbkF _False" mappedValue="-0.5"/>
-      <mapEntry mapKey="Spielen_ShrbkF _mit" mappedValue="-0.5"/>
-      <mapEntry mapKey="Spielen_ShrbkF _ein" mappedValue="-0.5"/>
-      <mapEntry mapKey="Fliegen_SbtadF _True" mappedValue="-0.5"/>
-      <mapEntry mapKey="Fliegen_SbtadF _ein" mappedValue="-0.5"/>
-      <mapEntry mapKey="Schicken_SmbeB! _False" mappedValue="-0.5"/>
-      <mapEntry mapKey="Schicken_SmbeB! _mit" mappedValue="-0.5"/>
-      <mapEntry mapKey="Schicken_SmbeB! _ein" mappedValue="-0.5"/>
+      <mapEntry mapKey="Spielen_ShrbkF True" mappedValue="1"/>
+      <mapEntry mapKey="Fliegen_SbtadF False" mappedValue="1"/>
+      <mapEntry mapKey="Fliegen_SbtadF mit" mappedValue="1"/>
+      <mapEntry mapKey="Schicken_SmbeB! True" mappedValue="1"/>
+      <mapEntry mapKey="Spielen_ShrbkF False" mappedValue="-0.5"/>
+      <mapEntry mapKey="Spielen_ShrbkF mit" mappedValue="-0.5"/>
+      <mapEntry mapKey="Spielen_ShrbkF ein" mappedValue="-0.5"/>
+      <mapEntry mapKey="Fliegen_SbtadF True" mappedValue="-0.5"/>
+      <mapEntry mapKey="Fliegen_SbtadF ein" mappedValue="-0.5"/>
+      <mapEntry mapKey="Schicken_SmbeB! False" mappedValue="-0.5"/>
+      <mapEntry mapKey="Schicken_SmbeB! mit" mappedValue="-0.5"/>
+      <mapEntry mapKey="Schicken_SmbeB! ein" mappedValue="-0.5"/>
     </mapping>
   </responseDeclaration>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -46,10 +46,10 @@
         <simpleAssociableChoice identifier="Schicken_SmbeB!" fixed="false" matchMax="4">Schicken Sie mir bitte einen Brief!</simpleAssociableChoice>
       </simpleMatchSet>
       <simpleMatchSet>
-        <simpleAssociableChoice identifier="_True" fixed="false" matchMax="3">True</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="_False" fixed="false" matchMax="3">False</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="_mit" fixed="false" matchMax="3">mit</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="_ein" fixed="false" matchMax="3">ein</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="True" fixed="false" matchMax="3">True</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="False" fixed="false" matchMax="3">False</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="mit" fixed="false" matchMax="3">mit</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="ein" fixed="false" matchMax="3">ein</simpleAssociableChoice>
       </simpleMatchSet>
     </matchInteraction>
   </itemBody>
