@@ -244,10 +244,12 @@ create_order_slots <- function(html, attrs) {
     return(attrs)
 }
 
+#' @importFrom stringr str_trim
 create_dp_slots <- function(html, attrs) {
     choices_options <- parse_list(html)
     choices <- choices_options$choices
-    answer_pairs <- sub(" ", "", unlist(strsplit(choices, "\\|")))
+    answer_pairs <- unlist(strsplit(choices, "\\|"))
+    answer_pairs <- str_trim(answer_pairs)
     rows <- answer_pairs[c(TRUE, FALSE)]
     cols <- answer_pairs[c(FALSE, TRUE)]
 
@@ -342,9 +344,14 @@ make_ids <- function(n, type) {
 
 make_abbr_ids <- function(items) {
     make_abbr <- function(x) {
-        pos <- regexpr(" ", x)[1][1]
-        abbr <- paste0(substr(x, 1, pos-1), "_",
-                       abbreviate(substr(x, pos+1, nchar(x)), minlength = 6))
+        count_words <- lengths(strsplit(x, " "))
+        if (count_words > 1) {
+            pos <- regexpr(" ", x)[1][1]
+            x <- paste0(substr(x, 1, pos-1), "_",
+                       abbreviate(substr(x, pos+1, nchar(x)), minlength = 4,
+                                  use.classes = FALSE))
+        }
+        return(x)
     }
 
     ids <- sapply(items, make_abbr, USE.NAMES = FALSE)
