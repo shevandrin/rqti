@@ -28,27 +28,27 @@ test_that("test abbreviate for rmd2xml() in OneInRowTable class", {
     file_sut <- test_path("file/rmd/test_OneInRowTable_abbr_example.Rmd")
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
     sut <- readLines(sut)
-    expected <- readLines(test_path("file/rmd/test_example_abbr_OneInRowTable.xml"))
-    equal_xml(sut, expected)
     unlink("to_delete", recursive = TRUE)
+    expected <- readLines(test_path("file/test_example_abbr_OneInRowTable.xml"))
+    equal_xml(sut, expected)
 })
 
 test_that("test abbreviate for rmd2xml() in OneInColTable class", {
     file_sut <- test_path("file/rmd/test_OnInColTable_abbr_example.Rmd")
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
     sut <- readLines(sut)
-    expected <- readLines(test_path("file/rmd/test_example_abbr_OneInColTable.xml"))
-    equal_xml(sut, expected)
     unlink("to_delete", recursive = TRUE)
+    expected <- readLines(test_path("file/test_example_abbr_OneInColTable.xml"))
+    equal_xml(sut, expected)
 })
 
 test_that("test abbreviate for rmd2xml() in MultipleChoiceTable class", {
     file_sut <- test_path("file/rmd/test_abbr_MultipleChoiceTable_example.Rmd")
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
     sut <- readLines(sut)
-    expected <- readLines(test_path("file/rmd/test_example_abbr_MultipleChoiceTable.xml"))
-    equal_xml(sut, expected)
     unlink("to_delete", recursive = TRUE)
+    expected <- readLines(test_path("file/test_example_abbr_MultipleChoiceTable.xml"))
+    equal_xml(sut, expected)
 })
 
 test_that("test abbreviate for rmd2xml() in DirectPair class", {
@@ -56,6 +56,6 @@ test_that("test abbreviate for rmd2xml() in DirectPair class", {
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
     sut <- readLines(sut)
     unlink("to_delete", recursive = TRUE)
-    expected <- readLines(test_path("file/rmd/test_example_abbr_DirectedPair.xml"))
+    expected <- readLines(test_path("file/test_example_abbr_DirectedPair.xml"))
     equal_xml(sut, expected)
 })

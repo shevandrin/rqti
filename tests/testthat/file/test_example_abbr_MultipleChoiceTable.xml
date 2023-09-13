@@ -3,45 +3,45 @@
   <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
     <correctResponse>
       <value>Fahrst_dmdFnD True</value>
-      <value>Nimm_dPadS. True</value>
+      <value>Nimm_dPadS True</value>
       <value>Ich_gimFiT False</value>
       <value>Ich_gimFiT mit</value>
-      <value>Ich_heMrs. False</value>
-      <value>Ich_heMrs. ein</value>
-      <value>Spielen_ShrbkF True</value>
-      <value>Fliegen_SbtadF False</value>
-      <value>Fliegen_SbtadF mit</value>
-      <value>Schicken_SmbeB! True</value>
+      <value>Ich_haeM False</value>
+      <value>Ich_haeM ein</value>
+      <value>Spielen_ShbkF True</value>
+      <value>Fliegen_SbadF False</value>
+      <value>Fliegen_SbadF mit</value>
+      <value>Schicken_SmbeB True</value>
     </correctResponse>
     <mapping defaultValue="0">
       <mapEntry mapKey="Fahrst_dmdFnD True" mappedValue="1"/>
-      <mapEntry mapKey="Nimm_dPadS. True" mappedValue="1"/>
+      <mapEntry mapKey="Nimm_dPadS True" mappedValue="1"/>
       <mapEntry mapKey="Ich_gimFiT False" mappedValue="1"/>
       <mapEntry mapKey="Ich_gimFiT mit" mappedValue="1"/>
-      <mapEntry mapKey="Ich_heMrs. False" mappedValue="1"/>
-      <mapEntry mapKey="Ich_heMrs. ein" mappedValue="1"/>
-      <mapEntry mapKey="Spielen_ShrbkF True" mappedValue="1"/>
-      <mapEntry mapKey="Fliegen_SbtadF False" mappedValue="1"/>
-      <mapEntry mapKey="Fliegen_SbtadF mit" mappedValue="1"/>
-      <mapEntry mapKey="Schicken_SmbeB! True" mappedValue="1"/>
+      <mapEntry mapKey="Ich_haeM False" mappedValue="1"/>
+      <mapEntry mapKey="Ich_haeM ein" mappedValue="1"/>
+      <mapEntry mapKey="Spielen_ShbkF True" mappedValue="1"/>
+      <mapEntry mapKey="Fliegen_SbadF False" mappedValue="1"/>
+      <mapEntry mapKey="Fliegen_SbadF mit" mappedValue="1"/>
+      <mapEntry mapKey="Schicken_SmbeB True" mappedValue="1"/>
       <mapEntry mapKey="Fahrst_dmdFnD False" mappedValue="-0.555555555555556"/>
       <mapEntry mapKey="Fahrst_dmdFnD mit" mappedValue="-0.555555555555556"/>
       <mapEntry mapKey="Fahrst_dmdFnD ein" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Nimm_dPadS. False" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Nimm_dPadS. mit" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Nimm_dPadS. ein" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Nimm_dPadS False" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Nimm_dPadS mit" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Nimm_dPadS ein" mappedValue="-0.555555555555556"/>
       <mapEntry mapKey="Ich_gimFiT True" mappedValue="-0.555555555555556"/>
       <mapEntry mapKey="Ich_gimFiT ein" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Ich_heMrs. True" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Ich_heMrs. mit" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Spielen_ShrbkF False" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Spielen_ShrbkF mit" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Spielen_ShrbkF ein" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Fliegen_SbtadF True" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Fliegen_SbtadF ein" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Schicken_SmbeB! False" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Schicken_SmbeB! mit" mappedValue="-0.555555555555556"/>
-      <mapEntry mapKey="Schicken_SmbeB! ein" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Ich_haeM True" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Ich_haeM mit" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Spielen_ShbkF False" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Spielen_ShbkF mit" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Spielen_ShbkF ein" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Fliegen_SbadF True" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Fliegen_SbadF ein" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Schicken_SmbeB False" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Schicken_SmbeB mit" mappedValue="-0.555555555555556"/>
+      <mapEntry mapKey="Schicken_SmbeB ein" mappedValue="-0.555555555555556"/>
     </mapping>
   </responseDeclaration>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -64,12 +64,12 @@
     <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="7">
       <simpleMatchSet>
         <simpleAssociableChoice identifier="Fahrst_dmdFnD" fixed="false" matchMax="4">Fahrst du mit der Familie nach Deutschland?</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Nimm_dPadS." fixed="false" matchMax="4">Nimm den Pullover aus dem Schrank.</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Nimm_dPadS" fixed="false" matchMax="4">Nimm den Pullover aus dem Schrank.</simpleAssociableChoice>
         <simpleAssociableChoice identifier="Ich_gimFiT" fixed="false" matchMax="4">Ich gehe in meiner Freundin ins Theater.</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Ich_heMrs." fixed="false" matchMax="4">Ich habe eine Meerschweinchen.</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Spielen_ShrbkF" fixed="false" matchMax="4">Spielen Sie hier bitte kein Fahrrad</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Fliegen_SbtadF" fixed="false" matchMax="4">Fliegen Sie bitte an dem Flugzeug</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Schicken_SmbeB!" fixed="false" matchMax="4">Schicken Sie mir bitte einen Brief!</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Ich_haeM" fixed="false" matchMax="4">Ich habe eine Meerschweinchen.</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Spielen_ShbkF" fixed="false" matchMax="4">Spielen Sie hier bitte kein Fahrrad</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Fliegen_SbadF" fixed="false" matchMax="4">Fliegen Sie bitte an dem Flugzeug</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Schicken_SmbeB" fixed="false" matchMax="4">Schicken Sie mir bitte einen Brief!</simpleAssociableChoice>
       </simpleMatchSet>
       <simpleMatchSet>
         <simpleAssociableChoice identifier="True" fixed="false" matchMax="7">True</simpleAssociableChoice>

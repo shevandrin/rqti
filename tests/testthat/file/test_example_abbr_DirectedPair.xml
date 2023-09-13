@@ -2,15 +2,15 @@
 <assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="test_abb_direct_pair_example" title="test_abb_direct_pair_example" adaptive="false" timeDependent="false">
   <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
     <correctResponse>
-      <value>Die_eZzÜdJ Antwort_adeZ</value>
-      <value>Die_zZzÜdJ Antwort_adzZ</value>
-      <value>Die_dZzÜdJ Antwort_addZ</value>
+      <value>Die_eZzUdJ Antwort_adeZ</value>
+      <value>Die_zZzUdJ Antwort_adzZ</value>
+      <value>Die_dZzUdJ Antwort_addZ</value>
       <value>Chemnitz Sachsen</value>
     </correctResponse>
     <mapping defaultValue="0">
-      <mapEntry mapKey="Die_eZzÜdJ Antwort_adeZ" mappedValue="1"/>
-      <mapEntry mapKey="Die_zZzÜdJ Antwort_adzZ" mappedValue="1"/>
-      <mapEntry mapKey="Die_dZzÜdJ Antwort_addZ" mappedValue="1"/>
+      <mapEntry mapKey="Die_eZzUdJ Antwort_adeZ" mappedValue="1"/>
+      <mapEntry mapKey="Die_zZzUdJ Antwort_adzZ" mappedValue="1"/>
+      <mapEntry mapKey="Die_dZzUdJ Antwort_addZ" mappedValue="1"/>
       <mapEntry mapKey="Chemnitz Sachsen" mappedValue="0.5"/>
     </mapping>
   </responseDeclaration>
@@ -33,9 +33,9 @@
     <p>Associate the tasks with answers.</p>
     <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
       <simpleMatchSet>
-        <simpleAssociableChoice identifier="Die_eZzÜdJ" fixed="false" matchMax="1">Die erste Zeile zur Überprüfung des Jobtyps</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Die_zZzÜdJ" fixed="false" matchMax="1">Die zweite Zeile zur Überprüfung des Jobtyps</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Die_dZzÜdJ" fixed="false" matchMax="1">Die dritte Zeile zur Überprüfung des Jobtyps</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Die_eZzUdJ" fixed="false" matchMax="1">Die erste Zeile zur Uberprüfung des Jobtyps</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Die_zZzUdJ" fixed="false" matchMax="1">Die zweite Zeile zur Uberprüfung des Jobtyps</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Die_dZzUdJ" fixed="false" matchMax="1">Die dritte Zeile zur Uberprüfung des Jobtyps</simpleAssociableChoice>
         <simpleAssociableChoice identifier="Chemnitz" fixed="false" matchMax="1">Chemnitz</simpleAssociableChoice>
       </simpleMatchSet>
       <simpleMatchSet>

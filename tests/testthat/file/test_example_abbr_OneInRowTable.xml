@@ -3,13 +3,13 @@
   <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
     <correctResponse>
       <value>Fahrst_dmdFnD True</value>
-      <value>Nimm_dPadS. True</value>
+      <value>Nimm_dPadS True</value>
       <value>Sie_fadAiK False</value>
       <value>Musst_dadSHm False</value>
     </correctResponse>
     <mapping defaultValue="0">
       <mapEntry mapKey="Fahrst_dmdFnD True" mappedValue="1"/>
-      <mapEntry mapKey="Nimm_dPadS. True" mappedValue="1"/>
+      <mapEntry mapKey="Nimm_dPadS True" mappedValue="1"/>
       <mapEntry mapKey="Sie_fadAiK False" mappedValue="1"/>
       <mapEntry mapKey="Musst_dadSHm False" mappedValue="1"/>
     </mapping>
@@ -34,7 +34,7 @@
     <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="4">
       <simpleMatchSet>
         <simpleAssociableChoice identifier="Fahrst_dmdFnD" fixed="false" matchMax="1">Fahrst du mit der Familie nach Deutschland?</simpleAssociableChoice>
-        <simpleAssociableChoice identifier="Nimm_dPadS." fixed="false" matchMax="1">Nimm den Pullover aus dem Schrank.</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Nimm_dPadS" fixed="false" matchMax="1">Nimm den Pullover aus dem Schrank.</simpleAssociableChoice>
         <simpleAssociableChoice identifier="Sie_fadAiK" fixed="false" matchMax="1">Sie fahrt an dem Auto ins Krankenhaus.</simpleAssociableChoice>
         <simpleAssociableChoice identifier="Musst_dadSHm" fixed="false" matchMax="1">Musst du an der Schule Hausaufgabe machen?</simpleAssociableChoice>
       </simpleMatchSet>
