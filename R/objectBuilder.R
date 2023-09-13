@@ -79,6 +79,7 @@ create_question_object <- function(file, file_dir = NULL) {
     } else if (tolower(attrs$type) == "essay") {
         create_essay_slots(attrs)
     } else if (tolower(attrs$type) %in% c("dp", "directedpair", "pair")) {
+        if (!any(names(attrs) == "abbr_id")) attrs$abbr_id <- FALSE
         create_dp_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("match", "table", "matchtable")) {
         if (!any(names(attrs) == "abbr_id")) attrs$abbr_id <- FALSE
@@ -262,6 +263,7 @@ create_dp_slots <- function(html, attrs) {
 
     attrs$answers_scores <- as.numeric(strsplit(as.character(
         attrs$answers_scores), ",")[[1]])
+    attrs$abbr_id <- NULL
 
     attrs <- c(Class = "DirectedPair", rows = list(rows), cols = list(cols),
                answers_identifiers = list(pairs_ids),
