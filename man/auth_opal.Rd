@@ -4,7 +4,12 @@
 \alias{auth_opal}
 \title{Authentification in OPAL API}
 \usage{
-auth_opal()
+auth_opal(api_user = NULL, api_password = NULL)
+}
+\arguments{
+\item{api_user}{username on OPAL}
+
+\item{api_password}{password on OPAL}
 }
 \value{
 user id
@@ -12,7 +17,7 @@ user id
 \description{
 Function \code{auth_opal()} performs the necessary authentication steps in OPAL
 API. If the authentication is successful, the function sets the cookie value
-in the system environment and returns the status code. The cookie value is
+in the system environment and returns the user's identity key in OPAL. The cookie value is
 required to access the OPAL API system."
 }
 \section{Authentication}{
@@ -22,11 +27,5 @@ api_password environment variables. To set a global environment variables,
 you need to use the following commands:
 \code{Sys.setenv(api_user ='xxxxxxxxxxxxxxx')}
 \code{Sys.setenv(api_password =  'xxxxxxxxxxxxxxx')}
-Another way to assign environment variables in case of regular using is to
-create a file named .env in the root directory of your project. The .env
-file should contain the environment variables you want to set in the
-following format:
-\code{api_user=xxxxxxxxxxxxxxx}
-\code{api_password=xxxxxxxxxxxxxxx}
 }
 

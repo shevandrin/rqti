@@ -2,8 +2,11 @@
 #'
 #' Function `auth_opal()` performs the necessary authentication steps in OPAL
 #' API. If the authentication is successful, the function sets the cookie value
-#' in the system environment and returns the status code. The cookie value is
+#' in the system environment and returns the user's identity key in OPAL. The cookie value is
 #' required to access the OPAL API system."
+#'
+#' @param api_user username on OPAL
+#' @param api_password password on OPAL
 #'
 #' @section Authentication: To use OPAL API, you need to provide your OPAL-
 #'   username and password. This function will look for api_user and
@@ -11,34 +14,27 @@
 #'   you need to use the following commands:
 #'   `Sys.setenv(api_user ='xxxxxxxxxxxxxxx')`
 #'   `Sys.setenv(api_password =  'xxxxxxxxxxxxxxx')`
-#'   Another way to assign environment variables in case of regular using is to
-#'   create a file named .env in the root directory of your project. The .env
-#'   file should contain the environment variables you want to set in the
-#'   following format:
-#'   `api_user=xxxxxxxxxxxxxxx`
-#'   `api_password=xxxxxxxxxxxxxxx`
 #'
 #' @return user id
 #' @name auth_opal
 #' @rdname auth_opal
 #' @import httr
 #' @import keyring
+#' @import getPass
 #' @export
-auth_opal <- function() {
+auth_opal <- function(api_user = NULL, api_password = NULL) {
     user_id <- NULL
+    if (is.null(api_user)) api_user <- Sys.getenv("api_user")
+    if (is.null(api_password)) api_password <- Sys.getenv("api_password")
 
-    api_user <- getOption("api_user")
-    if (is.null(api_user)) {
-        api_user <- readline("Please enter your USERNAME for access API: ")
-        options("api_user" = api_user)
+    if (api_user == "") {
+        api_user <- readline("Enter Username on Opal: ")
+        Sys.setenv(api_user = api_user)
     }
 
-    api_password <- try(key_get(service = "opal", username = api_user))
-
-    if (is(api_password, "try-error")) {
-        print(paste0("Credentials for usrer \'", api_user, "\' NOT FOUND"))
-        print(key_list())
-        api_password <- register_user()
+    if (api_password == "") {
+        api_password <- getPass("Enter Password: ")
+        Sys.setenv(api_password = api_password)
     }
 
     url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
@@ -53,45 +49,22 @@ auth_opal <- function() {
         }
     if (response$status_code == 403) {
         message("Authentification failed. You may need to run a VPN client")
+        user_id <-  NULL
         }
     if (response$status_code == 401) {
         message("401 Unauthorized")
-        choice <- readline("If you want to change the password in the credential
-        store, please choose y/n")
+        cat("Would you like to try with other username and password?")
+        choice <- readline("Press \'y\' to change data or any key to exit: ")
         # Check the user's choice
         if (tolower(choice) == "y") {
-            message("The old password will be deleted from the credential
-                    store.")
-            # clear the storing keys
-            data <- key_list()
-            key_delete(data$service, data$username)
-            register_user()
+            Sys.unsetenv("api_user")
+            Sys.unsetenv("api_password")
             auth_opal()
-
-        } else {
-            message("You chose not to change the password. Please check and run
-                    the VPN client.")
         }
+        user_id <-  NULL
     }
     return(user_id)
 }
-
-# Store your password in an operating system (credential store)
-#' @import getPass
-#' @import keyring
-register_user <- function() {
-    username <- readline("Enter Username: ")
-    password <- getPass("Enter Password: ")
-
-    # Store password in the operating system (credential store)
-    key_set_with_value(service = "opal", username = username,
-                       password = password)
-    options("api_user" = username)
-    cat("\n Your password has been saved in your OS. Please remember your
-        username that will be needed to access Opal API.\n")
-    return(password)
-}
-
 
 #'Upload resource on OPAL
 #'
