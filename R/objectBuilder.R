@@ -250,8 +250,14 @@ create_dp_slots <- function(html, attrs) {
     rows <- answer_pairs[c(TRUE, FALSE)]
     cols <- answer_pairs[c(FALSE, TRUE)]
 
-    rows_ids <- make_ids(length(choices), "row")
-    cols_ids <- make_ids(length(choices), "col")
+    if (attrs$abbr_id) {
+        rows_ids <- make_abbr_ids(rows)
+        cols_ids <- make_abbr_ids(cols)
+    } else {
+        rows_ids <- make_ids(length(choices), "row")
+        cols_ids <- make_ids(length(choices), "col")
+    }
+
     pairs_ids <- paste(rows_ids, cols_ids)
 
     attrs$answers_scores <- as.numeric(strsplit(as.character(
