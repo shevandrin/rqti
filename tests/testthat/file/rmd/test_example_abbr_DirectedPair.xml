@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="test_direct_pair_example" title="test_direct_pair_example" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
+    <correctResponse>
+      <value>Die_eZzÜdJ Antwort_adeZ</value>
+      <value>Die_zZzÜdJ Antwort_adzZ</value>
+      <value>Die_dZzÜdJ Antwort_addZ</value>
+      <value>Chemnitz Sachsen</value>
+    </correctResponse>
+    <mapping defaultValue="0">
+      <mapEntry mapKey="Die_eZzÜdJ Antwort_adeZ" mappedValue="1"/>
+      <mapEntry mapKey="Die_zZzÜdJ Antwort_adzZ" mappedValue="1"/>
+      <mapEntry mapKey="Die_dZzÜdJ Antwort_addZ" mappedValue="1"/>
+      <mapEntry mapKey="Chemnitz Sachsen" mappedValue="1"/>      
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>3.5</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>Associate the tasks with answers.</p>
+    <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="0">
+      <simpleMatchSet>
+        <simpleAssociableChoice identifier="Die_eZzÜdJ" fixed="false" matchMax="1">Die erste Zeile zur Überprüfung des Jobtyps</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Die_zZzÜdJ" fixed="false" matchMax="1">Die zweite Zeile zur Überprüfung des Jobtyps</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Die_dZzÜdJ" fixed="false" matchMax="1">Die dritte Zeile zur Überprüfung des Jobtyps
+		</simpleAssociableChoice>
+		<simpleAssociableChoice identifier="Chemnitz" fixed="false" matchMax="1">Chemnitz
+		</simpleAssociableChoice>
+      </simpleMatchSet>
+      <simpleMatchSet>
+        <simpleAssociableChoice identifier="Antwort_adeZ" fixed="false" matchMax="1">Antwort auf die erste Zeile</simpleAssociableChoice>
+        <simpleAssociableChoice identifier="Antwort_addZ" fixed="false" matchMax="1">Antwort auf die dritte Zeile</simpleAssociableChoice>
+		<simpleAssociableChoice identifier="Sachsen" fixed="false" matchMax="1">Sachsen</simpleAssociableChoice>
+      </simpleMatchSet>
+    </matchInteraction>
+  </itemBody>
+  <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <not>
+          <isNull>
+            <variable identifier="RESPONSE"/>
+          </isNull>
+        </not>
+        <setOutcomeValue identifier="SCORE">
+          <sum>
+            <variable identifier="SCORE"/>
+            <mapResponse identifier="RESPONSE"/>
+          </sum>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <gt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MAXSCORE"/>
+        </gt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MAXSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <lt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MINSCORE"/>
+        </lt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MINSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+  </responseProcessing>
+</assessmentItem>
