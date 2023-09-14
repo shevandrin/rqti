@@ -142,8 +142,8 @@ test_that("Testing method createAssessmentTest for AssessmentTest class", {
     unlink("todelete", recursive = TRUE)
 })
 
-test_that("Testing Error for non-unique identifiers
-          in AssessmentSection class", {
+test_that("Testing of AssessmentSection class that contains
+          non-unique identifiers of AssessmentItem class", {
     mc1 <- new("MultipleChoice",
                identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
                title = "MultipleChoice",
@@ -165,4 +165,34 @@ test_that("Testing Error for non-unique identifiers
             assessment_item = list(mc1, sc2)
         )
     }, "Items of section id:sec_id contain non-unique values: theSame, theSame")
+})
+
+test_that("Testing of AssessmentTest class that contains non-unique identifiers
+          of AssessmentSection", {
+    mc1 <- new("MultipleChoice",
+                identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
+                title = "MultipleChoice",
+                choices = c("1", "4/8", "8/4", "4/4"),
+                choice_identifiers = c("1", "2", "3", "4"),
+                points = c(1, 0, 0, 1))
+    sc2 <- new("SingleChoice",
+               prompt = "What is the percentage of 3/20?",
+               title = "SingleChoice",
+               choices = c("15%", "20%", "30%"),
+               choice_identifiers = "1",
+               identifier = "theSame")
+    section1 <- new("AssessmentSection",
+                    identifier = "sec_id",
+                    title = "section",
+                    assessment_item = list(mc1))
+    section2 <- new("AssessmentSection",
+                     identifier = "sec_id",
+                     title = "section",
+                     assessment_item = list(sc2))
+
+    expect_warning({ exam <- new("AssessmentTest",
+                                  identifier = "id_test",
+                                  title = "some title",
+                                  section = list(section1, section2))
+    }, "Identifiers of test sections contain non-unique values: sec_id, sec_id")
 })
