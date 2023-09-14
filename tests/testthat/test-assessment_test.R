@@ -141,3 +141,28 @@ test_that("Testing method createAssessmentTest for AssessmentTest class", {
     file.remove("q3.xml")
     unlink("todelete", recursive = TRUE)
 })
+
+test_that("Testing Error for non-unique identifiers
+          in AssessmentSection class", {
+    mc1 <- new("MultipleChoice",
+               identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
+               title = "MultipleChoice",
+               choices = c("1", "4/8", "8/4", "4/4"),
+               choice_identifiers = c("1", "2", "3", "4"),
+               points = c(1, 0, 0, 1))
+
+    sc2 <- new("SingleChoice",
+               prompt = "What is the percentage of 3/20?",
+               title = "SingleChoice",
+               choices = c("15%", "20%", "30%"),
+               choice_identifiers = "1",
+               identifier = "theSame")
+
+    expect_error({
+        new("AssessmentSection",
+            identifier = "sec_id",
+            title = "section",
+            assessment_item = list(mc1, sc2)
+        )
+    }, "Items of section id:sec_id contain non-unique values: theSame, theSame")
+})
