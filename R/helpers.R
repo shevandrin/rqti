@@ -87,9 +87,12 @@ dropdown <- function(solution, answer_index = 1, score = 1, shuffle = TRUE,
 }
 
 clean_yaml_str <- function(params, type){
-
     solution <- paste(params$solution, collapse = ",")
     params$solution <- paste0("[", solution, "]")
+    if (!is.null(params$choices_identifiers)) {
+        choices_identifiers <- paste(params$choices_identifiers, collapse = ",")
+        params$choices_identifiers <- paste0("[", choices_identifiers, "]")
+    }
 
     result <- as.yaml(c(params, type = type), line.sep = "\r")
     result <- gsub("\r", ", ", result)
