@@ -64,8 +64,6 @@ test_that("Testing method createOutcomeDeclaration()
     expect_equal(xml1, xml2)
 })
 
-skip_on_cran()
-skip_on_covr()
 test_that("Testing method createAssessmentTest for AssessmentTestOpal class", {
 sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
            identifier = "q1", choices = c("a", "b", "c"))
@@ -143,3 +141,77 @@ test_that("Testing method createAssessmentTest for AssessmentTest class", {
     file.remove("q3.xml")
     unlink("todelete", recursive = TRUE)
 })
+
+test_that("Testing of AssessmentSection class that contains
+          non-unique identifiers of AssessmentItem class", {
+    mc1 <- new("MultipleChoice",
+               identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
+               title = "MultipleChoice",
+               choices = c("1", "4/8", "8/4", "4/4"),
+               choice_identifiers = c("1", "2", "3", "4"),
+               points = c(1, 0, 0, 1))
+
+    sc2 <- new("SingleChoice",
+               prompt = "What is the percentage of 3/20?",
+               title = "SingleChoice",
+               choices = c("15%", "20%", "30%"),
+               choice_identifiers = "1",
+               identifier = "theSame")
+
+    expect_error({
+        new("AssessmentSection",
+            identifier = "sec_id",
+            title = "section",
+            assessment_item = list(mc1, sc2)
+        )
+    }, "Items of section id:sec_id contain non-unique values: theSame, theSame")
+})
+
+test_that("Testing of AssessmentTest class that contains non-unique identifiers
+          of AssessmentSection", {
+    mc1 <- new("MultipleChoice",
+                identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
+                title = "MultipleChoice",
+                choices = c("1", "4/8", "8/4", "4/4"),
+                choice_identifiers = c("1", "2", "3", "4"),
+                points = c(1, 0, 0, 1))
+    sc2 <- new("SingleChoice",
+               prompt = "What is the percentage of 3/20?",
+               title = "SingleChoice",
+               choices = c("15%", "20%", "30%"),
+               choice_identifiers = "1",
+               identifier = "theSame")
+    section1 <- new("AssessmentSection",
+                    identifier = "sec_id",
+                    title = "section",
+                    assessment_item = list(mc1))
+    section2 <- new("AssessmentSection",
+                     identifier = "sec_id",
+                     title = "section",
+                     assessment_item = list(sc2))
+
+    expect_warning({ exam <- new("AssessmentTest",
+                                  identifier = "id_test",
+                                  title = "some title",
+                                  section = list(section1, section2))
+    }, "Identifiers of test sections contain non-unique values: sec_id, sec_id")
+})
+test_that("Testing of time_limits in AssessmentTest class", {
+              mc1 <- new("MultipleChoice",
+                         identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
+                         title = "MultipleChoice",
+                         choices = c("1", "4/8", "8/4", "4/4"),
+                         choice_identifiers = c("1", "2", "3", "4"),
+                         points = c(1, 0, 0, 1))
+              section <- new("AssessmentSection",
+                              identifier = "sec_id",
+                              title = "section",
+                              assessment_item = list(mc1))
+              expect_warning({
+                  exam <- new("AssessmentTest",
+                               identifier = "id_test",
+                               title = "some title",
+                               time_limits = 190,
+                               section = list(section))
+              }, "Value of time_limits does not seem plausible.")
+          })
