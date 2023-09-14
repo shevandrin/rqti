@@ -196,3 +196,22 @@ test_that("Testing of AssessmentTest class that contains non-unique identifiers
                                   section = list(section1, section2))
     }, "Identifiers of test sections contain non-unique values: sec_id, sec_id")
 })
+test_that("Testing of time_limits in AssessmentTest class", {
+              mc1 <- new("MultipleChoice",
+                         identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
+                         title = "MultipleChoice",
+                         choices = c("1", "4/8", "8/4", "4/4"),
+                         choice_identifiers = c("1", "2", "3", "4"),
+                         points = c(1, 0, 0, 1))
+              section <- new("AssessmentSection",
+                              identifier = "sec_id",
+                              title = "section",
+                              assessment_item = list(mc1))
+              expect_warning({
+                  exam <- new("AssessmentTest",
+                               identifier = "id_test",
+                               title = "some title",
+                               time_limits = 190,
+                               section = list(section))
+              }, "Value of time_limits does not seem plausible.")
+          })
