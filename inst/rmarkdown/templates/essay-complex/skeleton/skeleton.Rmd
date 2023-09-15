@@ -1,0 +1,20 @@
+---
+type: essay # type of exercise
+knit: qti::render_rmd # if you do not want our preview renderer, remove this
+identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+title: A meaningful title that can be displayed in the LMS
+expected_length: 30 # defines the width of the text input field
+expected_lines: 3 # defines the number of lines of the text input field
+max_strings: 100 # how many words can be written in the text input field
+min_strings: 10 # the minimum number of words to send a response
+data_allow_paste: false # whether the candidate is allowed to copy text from the clipboard
+points: 2
+---
+
+# question
+
+What are the advantages and disadvantages of the `qti` package as compared to the `exams` package?
+
+# feedback
+
+The qti package can only export to the QTI format, which makes it less general than the `exams` package. But the qti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.

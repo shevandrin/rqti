@@ -1,0 +1,4 @@
+name: "QTI: gap (complex)"
+description: >
+   A complex example of a gap exercise including numeric and text gaps
+create_dir: FALSE

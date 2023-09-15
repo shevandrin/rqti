@@ -1,0 +1,16 @@
+---
+type: dd # type of exercise
+knit: qti::render_rmd # if you do not want our preview renderer, remove this
+identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+title: A meaningful title that can be displayed in the LMS
+---
+
+# question
+
+The philosophy of the qti package is <<do one thing and do it well|one for all>>.
+
+Under the hood, the qti package uses `r dropdown(c("no OOP", "S4 OOP", "S3 OOP", "R6 OOP"), answer_index = 2, score = 5, response_identifier = "OOP_task", choices_identifiers = c("noOOP", "S4", "S3", "S6"))`.
+
+# feedback
+
+The package `qti` is specialized for producing xml qti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.

@@ -1,0 +1,4 @@
+name: "QTI: dropdown (simple)"
+description: >
+   A simple example of a dropdown exercise
+create_dir: FALSE
