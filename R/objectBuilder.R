@@ -201,32 +201,24 @@ create_mc_slots <- function(html, attrs) {
 create_matchtable_slots <- function(html, attrs) {
     tbl <- read_table(html, attrs)
 
-    if (attrs$abbr_id) {
-        rows_ids <- make_abbr_ids(tbl$rows)
-        cols_ids <- make_abbr_ids(tbl$cols)
-    } else {
-        rows_ids <- make_ids(length(tbl$rows), "row")
-        cols_ids <- make_ids(length(tbl$cols), "col")
-    }
-
     answers_ids <- c()
     answers_scores <- c()
     for (i in seq_len(nrow(tbl$table))) {
         for (j in seq_len(ncol(tbl$table))) {
             points <- tbl$table[i, j]
             if (points > 0) {
-                answer_pair <- paste(rows_ids[i], cols_ids[j])
+                answer_pair <- paste(tbl$rows_ids[i], tbl$cols_ids[j])
                 answers_ids <- c(answers_ids, answer_pair)
                 answers_scores <- c(answers_scores, points)
             }
         }
     }
-    cls <- define_match_class(answers_ids, rows_ids, cols_ids)
+    cls <- define_match_class(answers_ids, tbl$rows_ids, tbl$cols_ids)
     attrs$abbr_id <- NULL
     attrs <- c(Class = cls, rows = list(tbl$rows), cols = list(tbl$cols),
                answers_identifiers = list(answers_ids),
-               rows_identifiers = list(rows_ids),
-               cols_identifiers = list(cols_ids),
+               rows_identifiers = list(tbl$rows_ids),
+               cols_identifiers = list(tbl$cols_ids),
                answers_scores = list(answers_scores),
                attrs)
     return(attrs)
@@ -328,14 +320,40 @@ read_table <- function(html, attrs) {
     rows <- as.character(xml2::xml_contents(tr))
     xml2::xml_remove(tr)
 
-    cells <- xml2::xml_find_all(tbd, "./tr/td")
-    cells <- as.numeric(xml2::xml_text(cells))
     n_cols <- length(xml2::xml_find_all(tbd, "./tr[1]/td"))
     # rid of the first header of columns if it is given
     cols <- cols[(1 + length(cols) - n_cols):length(cols)]
+
+    rows_ids <- define_ids(rows, attrs$abbr, "row")
+    cols_ids <- define_ids(cols, attrs$abbr, "col")
+
+    # find rowid col and delete it
+    if ("rowid" %in% cols) {
+        id_col <- which(cols == "rowid")
+        rowid_c <- xml2::xml_find_all(tbd, paste0("./tr/td[", id_col, "]"))
+        rows_ids <- xml_text(rowid_c)
+        xml2::xml_remove(rowid_c)
+        cols <- cols[-id_col]
+        cols_ids <- define_ids(cols, attrs$abbr, "col")
+        n_cols <- n_cols - 1
+    }
+
+    cells <- xml2::xml_find_all(tbd, "./tr/td")
+    cells <- as.numeric(xml2::xml_text(cells))
     table <- matrix(cells, nrow = length(rows), ncol = n_cols, byrow = TRUE)
     xml2::xml_remove(tbl)
-    return(list(rows = rows, cols = cols, table = table))
+    return(list(rows = rows, rows_ids= rows_ids,
+                cols = cols, cols_ids = cols_ids,
+                table = table))
+}
+
+define_ids <- function(vect, abbr, type) {
+    if (abbr) {
+        ids <- make_abbr_ids(vect)
+    } else {
+        ids <- make_ids(length(vect), type)
+    }
+    return(ids)
 }
 
 make_ids <- function(n, type) {
