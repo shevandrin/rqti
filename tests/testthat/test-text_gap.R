@@ -340,3 +340,33 @@ test_that("Testing function of create_outcome_declaration_entry
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
+
+test_that("Testing of the warning message about response_identifier
+          in Entry class", {
+    warning_message <- NULL
+    suppressWarnings(withCallingHandlers(
+        {
+            sut <- new("Entry", identifier = "new",
+                       points = 3,
+                       title = "NumericGap",
+                       content = list(
+                           'The speed of light is equal',
+                                new("NumericGap",
+                                   # "response_identifier" is empty
+                                   score = 3,
+                                   solution = 300,
+                                   tolerance = 2,
+                                   include_lower_bound = TRUE,
+                                   include_upper_bound = TRUE)
+                           , 'm/s'))
+
+    response_identifier <- sut@content[[2]]@response_identifier
+    sut_warning <- paste0(
+        "There is no response_identifier in Gap-object. A random  value is assigned: ", response_identifier)
+    },
+        warning = function(w) {
+            warning_message <<- w$message
+        }
+    ))
+    expect_equal(warning_message, sut_warning)
+})
