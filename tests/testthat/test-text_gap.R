@@ -341,8 +341,8 @@ test_that("Testing function of create_outcome_declaration_entry
     expect_equal(sut, expected)
 })
 
-test_that("Testing of the warning message about response_identifier
-          in Entry class", {
+test_that("Testing of the warning message in case response_identifier
+          in NumericGap class is empty", {
     warning_message <- NULL
     suppressWarnings(withCallingHandlers(
         {
