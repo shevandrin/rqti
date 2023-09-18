@@ -36,7 +36,7 @@ test_that("Testing method createOutcomeDeclaration()
     )
     exam <- new("AssessmentTest",
                 identifier = "id_test",
-                title = "some title",
+                # exclude "title"
                 section = list(exam_section)
                 )
 
@@ -215,3 +215,23 @@ test_that("Testing of time_limits in AssessmentTest class", {
                                section = list(section))
               }, "Value of time_limits does not seem plausible.")
           })
+test_that("Testing getPoints() method in case the point of Task
+          in XML file is not defined", {
+    path <- test_path("file/test_Essay_without_Maxscore_Minscore.xml")
+    sut_points <- getPoints(path)
+    expect_equal(sut_points, 1)
+})
+
+test_that("Testing getPoints() method in case of XML file does not exist", {
+    path <- test_path("file/test.xml")
+    expect_warning({
+        sut_points <- suppressMessages(getPoints(path))
+    }, "file file/test.xml does not exist")
+})
+
+test_that("Testing getIdentifier() method in case of XML file does not exist", {
+    path <- test_path("file/test.xml")
+    expect_warning({
+        sut_points <- getIdentifier(path)
+    }, "file file/test.xml does not exist")
+})
