@@ -31,7 +31,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/gap-simple/skeleton", "skele
 There are 2 ways to denote a gap-element in Rmd content:
 
 - put inside `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`) the right answer. Example: `<<3.14>>` or `<<mean>>`
-- use the helper functions `gap_numeric` and `gap_text` (see more details below)
+- use the helper functions [`gap_numeric`](#gapnumeric) and [`gap_text`](#gaptext) (see more details below)
 
 By default, each gap gives 1 point for the correct answer. The total number of points for completing a task is defined as the sum of points for each dropdown-element.
 
@@ -82,9 +82,9 @@ Feedback can be provided with the section
 -   **\# feedback+** (only provided if student reaches all points)
 -   **\# feedback-** (only provided if student does not reach all points)
 
-## Helper function `gap_numeric`
+## Helper function `gap_numeric` {#gapnumeric}
 
-This helper function `gap_numeric` provides the formation of a string describing  a gap with numeric answer in Rmd content:
+This `gap_numeric` helper function is designed to generate a formatted string describing a gap in Rmd content, where the answer has a numeric type:
 
 ```{r results="plaintext", comment=""}
 gap1 <- gap_numeric(solution = 1.4, tolerance = 10, tolerance_type = "relative",
@@ -107,7 +107,7 @@ Determines the boundaries of values within which the answer is considered as cor
 
 Determines how the tolerance is calculated. If we have `solution = 50` and `tolerance 10`:
 - setting `tolreance_type` to `relative`, would make the interval of right answser from 45 to 55 (50+-10%)
-- setting to `absolute`, would make the right answer in interval from 40 to  60 (50+-10)
+- setting to `absolute`, would make the right answer in interval between 40 and 60 (50+-10)
 
 ### score
 
@@ -133,9 +133,9 @@ Sets a size of text input field in content delivery engine. If it is not assigne
 
 Some helpful text in the text field.
 
-## Helper function `gap_text`
+## Helper function `gap_text` {#gaptext}
 
-This helper function `gap_text` provides the formation of a string describing  a gap with string answer in Rmd content:
+This `gap_text` helper function is designed to generate a formatted string describing a gap in Rmd content, where the answer has a character type:
 
 ```{r results="plaintext", comment=""}
 gap2 <- gap_text(gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"), tolerance = 4, case_sensitive = FALSE, placeholder = "text without special characters", expected_length = 25))

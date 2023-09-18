@@ -52,7 +52,7 @@ Which renders as:
 
 ![Preview of essay exercise in LMS OPAL](screenshot_essay2.png){width="400"}
 
-# yaml attributes
+## yaml attributes
 
 ### type
 
