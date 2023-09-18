@@ -114,3 +114,21 @@ test_that("Testing function section() to build variable AssessmentSection for ne
 
     expect_equal(sut, expected)
 })
+
+test_that("Testing warning for selection exceeding number of items", {
+    items <- list(mc, sc, path2)
+    warning_message <- NULL
+    withCallingHandlers(
+        section <- new("AssessmentSection",
+                       identifier = "section1",
+                       title = "Section 1",
+                       assessment_item = items,
+                       selection = 4)  # Invalid selection value exceeding the number of items
+        ,
+        warning = function(w) {
+            warning_message <<- w$message
+            invokeRestart("muffleWarning")
+        })
+    expected_warning <- ("value of selection (4) must be less than number of items in assessment_item slot (3). Selection is assigned to 2")
+    expect_equal(warning_message, expected_warning)
+})
