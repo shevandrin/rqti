@@ -327,15 +327,25 @@ read_table <- function(html, attrs) {
     rows_ids <- define_ids(rows, attrs$abbr, "row")
     cols_ids <- define_ids(cols, attrs$abbr, "col")
 
-    # find rowid col and delete it
+    # find column with id for rows and delete it
     if ("rowid" %in% cols) {
         id_col <- which(cols == "rowid")
         rowid_c <- xml2::xml_find_all(tbd, paste0("./tr/td[", id_col, "]"))
         rows_ids <- xml_text(rowid_c)
         xml2::xml_remove(rowid_c)
         cols <- cols[-id_col]
-        cols_ids <- define_ids(cols, attrs$abbr, "col")
+        cols_ids <- cols_ids[-id_col]
         n_cols <- n_cols - 1
+    }
+
+    # find column with id for cols and delete it
+    if ("colid" %in% rows) {
+        id_row <- which(rows == "colid")
+        colid_c <- xml2::xml_find_all(tbd, paste0("./tr[", id_row, "]/td"))
+        cols_ids <- xml_text(colid_c)
+        xml2::xml_remove(colid_c)
+        rows <- rows[-id_row]
+        rows_ids <- rows_ids[-id_row]
     }
 
     cells <- xml2::xml_find_all(tbd, "./tr/td")
