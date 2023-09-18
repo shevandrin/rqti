@@ -48,19 +48,10 @@ test_that("Test values of attributes in extendedTextInteraction for Essay class"
   equal_xml(sut, expected)
 })
 
-test_that("Test feedback for Essay class", {
-    essay@feedback <- list(new("ModalFeedback", title = "common",
-                                content = list("general feedback")))
-
-    example <- '
-  <itemBody>
-  <p>Earlier technological developments brought more benefits and changed the lives of ordinary people more than recent developments ever will.</p><p>To what extent do you agree or disagree?</p>
-  <extendedTextInteraction responseIdentifier="RESPONSE" expectedLength="250">
-    <prompt>Write at least 250 words.</prompt>
-  </extendedTextInteraction>
-  </itemBody>'
-
-    sut <- xml2::read_xml(toString(createItemBody(essay)))
-    expected <- xml2::read_xml(toString(example))
-    equal_xml(sut, expected)
+test_that("Test the warning message of the feedback in Essay class", {
+  essay@feedback <- list(new("ModalFeedback", title = "common",
+                               content = list("general feedback")))
+  expect_warning({
+  initialize(essay)
+}, "Feedback messages are not meaningful for this type of excercise")
 })
