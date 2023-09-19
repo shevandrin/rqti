@@ -1,0 +1,37 @@
+---
+type: dp
+knit: qti::render_rmd
+identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+title: A meaningful title that can be displayed in the LMS
+orientation: horizontal # how items are placed on screen
+shuffle: true # random order of choices
+answers_scores: 1, 1, 0.5
+---
+
+# question
+
+In this task candidate is requested to combine a pairs from given items.
+
+As a source of data just provide a markdown list with right pairs of items, separated by `|`.
+
+Match `QTI` functions with their purposes:
+
+* rmd2zip | from Rmd-file create zip-file with exercise
+* rmd2xml | from Rmd-file create xml-file with exercise
+* render_opal | render Rmd directly on LMS OPAL
+
+
+# feedback
+
+Provide your feedback here.
+
+<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
+
+# feedback+
+
+Nice. (Only displayed when the solution is correct.)
+
+# feedback-
+
+Try again. (Only displayed if the solution is not correct.)
+-->

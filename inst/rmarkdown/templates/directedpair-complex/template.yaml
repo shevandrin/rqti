@@ -1,0 +1,4 @@
+name: "QTI: directedpair (complex)"
+description: >
+   A complex example of an exercise where a candidate should match pairs from given items
+create_dir: FALSE

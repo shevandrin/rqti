@@ -1,0 +1,21 @@
+---
+type: pair
+knit: qti::render_rmd
+---
+
+# question
+
+In this task candidate is requested to combine a pairs from given items.
+
+As a source of data just provide a markdown list with right pairs of items, separated by `|`.
+
+Match `QTI` functions with their purposes:
+
+* rmd2zip | from Rmd-file create zip-file with exercise
+* rmd2xml | from Rmd-file create xml-file with exercise
+* render_opal | render Rmd directly on LMS OPAL
+
+
+# feedback
+
+Provide your feedback here.
