@@ -44,14 +44,13 @@ test_that("Testing CreateItemBody DirectedPair", {
 })
 
 test_that("Testing createResponseDeclaration() method in DirectedPair class
-          where its slot answer_score is undefine", {
+          where its slots answer_score and points are undefined", {
     dp <- new("DirectedPair",
               rows = c("Lion", "Flower", "Mushrooms"),
               rows_identifiers = c("ID_1", "ID_2", "ID_3"),
               cols = c("Animal", "Plant", "Fungi"),
               cols_identifiers = c("IDT_1", "IDT_2", "IDT_3"),
               answers_identifiers = c("ID_3 IDT_3", "ID_1 IDT_1", "ID_2 IDT_2"),
-              points = 3,
               title = "directed_pair",
               prompt = "Associated left elements with the right category"
     )
@@ -66,9 +65,9 @@ test_that("Testing createResponseDeclaration() method in DirectedPair class
 <value>ID_2 IDT_2</value>
 </correctResponse>
 <mapping defaultValue="0">
-<mapEntry mapKey="ID_3 IDT_3" mappedValue="1"/>
-<mapEntry mapKey="ID_1 IDT_1" mappedValue="1"/>
-<mapEntry mapKey="ID_2 IDT_2" mappedValue="1"/>
+<mapEntry mapKey="ID_3 IDT_3" mappedValue="0.333333333333333"/>
+<mapEntry mapKey="ID_1 IDT_1" mappedValue="0.333333333333333"/>
+<mapEntry mapKey="ID_2 IDT_2" mappedValue="0.333333333333333"/>
 </mapping>
 </responseDeclaration>'
 
