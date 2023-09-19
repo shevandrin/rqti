@@ -1,6 +1,11 @@
 ---
 type: table
 knit: qti::render_rmd
+identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+title: A meaningful title that can be displayed in the LMS
+rows_shuffle: false
+cols_shuffle: true
+abbr_id: true
 ---
 
 # question
@@ -23,14 +28,3 @@ Use visual editing mode in RStudio to quickly change your table.
 # feedback
 
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.
-
-<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
-
-# feedback+
-
-Nice. (Only displayed when the solution is correct.)
-
-# feedback-
-
-Try again. (Only displayed if the solution is not correct.)
--->
