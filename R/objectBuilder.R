@@ -245,18 +245,16 @@ create_dp_slots <- function(html, attrs) {
     rows <- answer_pairs[c(TRUE, FALSE)]
     cols <- answer_pairs[c(FALSE, TRUE)]
 
-    if (attrs$abbr_id) {
-        rows_ids <- make_abbr_ids(rows)
-        cols_ids <- make_abbr_ids(cols)
-    } else {
-        rows_ids <- make_ids(length(choices), "row")
-        cols_ids <- make_ids(length(choices), "col")
-    }
+    rows_ids <- define_ids(rows, attrs$abbr, "row")
+    cols_ids <- define_ids(cols, attrs$abbr, "col")
 
     pairs_ids <- paste(rows_ids, cols_ids)
 
-    attrs$answers_scores <- as.numeric(strsplit(as.character(
-        attrs$answers_scores), ",")[[1]])
+    if (!is.null(attrs$answers_scores)) {
+        attrs$answers_scores <- as.numeric(strsplit(as.character(
+            attrs$answers_scores), ",")[[1]])
+    }
+
     attrs$abbr_id <- NULL
 
     attrs <- c(Class = "DirectedPair", rows = list(rows), cols = list(cols),

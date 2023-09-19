@@ -34,6 +34,27 @@ setClass("DirectedPair", contains = "MatchTable",
          slots = c(orientation = "character"),
          prototype = prototype(orientation = "vertical"))
 
+setMethod("initialize", "MatchTable", function(.Object, ...) {
+    .Object <- callNextMethod()
+
+    if (is.na(.Object@points)) {
+        if (length(.Object@answers_scores) == 0) {
+            .Object@points <- 1
+        } else {
+               .Object@points <- sum(.Object@answers_scores)
+        }
+    }
+
+    if (length(.Object@answers_scores) == 0) {
+        answ_count <- length(.Object@answers_identifiers)
+        score = .Object@points / answ_count
+        .Object@answers_scores  <- rep(score, answ_count)
+    }
+
+    validObject(.Object)
+    .Object
+})
+
 # TODO provide validation that cols is equal to rows
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,DirectedPair
