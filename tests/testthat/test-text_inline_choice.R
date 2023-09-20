@@ -220,29 +220,28 @@ test_that("Testing CreateItemBody Inline", {
     expect_equal(sut, expected)
 })
 
-test_that("Testing construction function for InlineChoice class", {
-    sut <- suppressMessages(new("Entry", identifier = "new",
-                  points = 4,
-                  title = "InlineChoice",
-                  content = list('The speed of light is equal',
-                                 new("InlineChoice",
-                                     solution = c("400","300","500"),
-                                     response_identifier = "RESPONSE_1",
-                                     answer_index = 2,
-                                     score = 0),
-                                 'm/s')))
-
-    example <- suppressMessages(new("Entry",
-                   identifier = "new",
-                   points = 4,
-                   title = "InlineChoice",
-                   content = list('The speed of light is equal',
-                                  new("InlineChoice",
-                                      solution = c("400","300","500"),
-                                      response_identifier = "RESPONSE_1",
-                                      answer_index = 2,
-                                      score = 0),
-                                  'm/s')))
-
-    expect_equal(sut, example)
+test_that("Testing InlineChoice class in case its score is undefined", {
+    sut_1 <- suppressMessages(new("Entry", identifier = "new",
+                           points = 4,
+                           title = "InlineChoice",
+                           content = list('The speed of light is equal',
+                                            new("InlineChoice",
+                                            solution = c("400","300","500"),
+                                            response_identifier = "RESPONSE_1",
+                                            answer_index = 2),
+                                            'm/s')))
+    sut_2 <- suppressMessages(new("Entry", identifier = "new",
+                           points = 4,
+                           title = "InlineChoice",
+                           content = list('The speed of light is equal',
+                                           new("InlineChoice",
+                                           solution = c("400","300","500"),
+                                           response_identifier = "RESPONSE_1",
+                                           answer_index = 2,
+                                           score = as.integer(NA)),
+                                           'm/s')))
+    inline_choice_1 <- sut_1@content[[2]]
+    inline_choice_2 <- sut_2@content[[2]]
+    expect_equal(inline_choice_1@score, 1)
+    expect_equal(inline_choice_2@score, 1)
 })
