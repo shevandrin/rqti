@@ -1,0 +1,32 @@
+test_that("Testing mdlist function", {
+    # Test case 1: Single choice task with solutions
+    options1 <- c("Option A", "Option B", "Option C")
+    solutions1 <- 1  # Option A is the correct answer
+    expected_output1 <- "- *Option A*\n- Option B\n- Option C"
+    result1 <- mdlist(options1, solutions1)
+    expect_equal(result1, expected_output1)
+
+    # Test case 2: Multiple choice task with solutions
+    options2 <- c("Option 1", "Option 2", "Option 3", "Option 4")
+    solutions2 <- c(2, 4)  # Options 2 and 4 are correct answers
+    expected_output2 <- "- Option 1\n- *Option 2*\n- Option 3\n- *Option 4*"
+    result2 <- mdlist(options2, solutions2)
+    expect_equal(result2, expected_output2)
+
+    # Test case 3: Single choice task with gaps
+    options3 <- c("Sentence 1", "Sentence 2", "Sentence 3")
+    gaps3 <- c(1, 2, 3)  # Define gaps for each option
+    expected_output3 <- "- Sentence 1 <gap>1</gap>\n- Sentence 2 <gap>2</gap>\n- Sentence 3 <gap>3</gap>"
+    result3 <- mdlist(options3, gaps = gaps3)
+    expect_equal(result3, expected_output3)
+
+    # Test case 4: Error case - mismatch between options and gaps
+    options4 <- c("Option A", "Option B")
+    gaps4 <- c(1, 2, 3)  # There are more gaps than options
+    expected_error_message <- "\"*Error*: Number of Gaps must be equal to number of list\\n                  items\""
+    result4 <- capture.output({
+        mdlist(options4, gaps = gaps4)
+    })
+    result4 <- sub("\\[1\\] ", "", result4[1])
+    expect_equal(result4, expected_error_message)
+})
