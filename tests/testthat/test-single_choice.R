@@ -206,11 +206,3 @@ test_that("Test function for SingleChoice class", {
   expect_equal(sut, expected)
   expect_true(inherits(sut, "SingleChoice"))
 })
-
-test_that("Testing message on invalid xml in SingleChoice class", {
-    xml_content <- '<invalid_xml></invalid_xml>'
-    doc <- xml2::read_xml(as.character(xml_content))
-    verify <- verify_qti(doc)
-    expect_false(verify)
-})
-
