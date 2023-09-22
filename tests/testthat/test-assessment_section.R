@@ -273,10 +273,28 @@ test_that("Testing buildAssessmentSection() that returns a warning
     expect_warning(suppressMessages(buildAssessmentSection(
                                     invalid_xml, temp_folder)),"is not valid")
 })
+
 test_that("Testing buildAssessmentSection() that returns a warning
           for incorrect file or path", {
     expect_warning(
         buildAssessmentSection("nonexistent.xml", "nonexistent_folder"),
         "is not correct. This file will be omitted in test"
     )
+})
+
+test_that("Testing values of slot prompt and slot identifier
+          in AssessmentItem class", {
+mc <- new("MultipleChoice",
+           prompt = as.character(NA))
+
+sc <- new("SingleChoice")
+
+# Check the values of prompt and identifier for MultipleChoice
+expect_equal(mc@prompt, "")
+expect_true(!is.na(mc@identifier) && nchar(mc@identifier) > 0)
+
+# Check the values of prompt and identifier for SingleChoice
+expect_equal(sc@prompt, "")
+expect_equal(sc@title, sc@identifier)
+expect_true(!is.na(sc@identifier) && nchar(sc@identifier) > 0)
 })
