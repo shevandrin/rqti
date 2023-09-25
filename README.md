@@ -46,34 +46,10 @@ QTI stick to `exams`.
 
 ``` r
 install.packages("librarian") # skip if you have librarian already
-#> Installing package into '/home/jt/R/x86_64-pc-linux-gnu-library/4.3'
-#> (as 'lib' is unspecified)
 librarian::shelf(shevandrin/qti)
 ```
 
-## Supported Exercise Types
-
-| Types                                                              | Notes                 | S4 Class name       |
-|--------------------------------------------------------------------|-----------------------|---------------------|
-| singlechoice                                                       | partially implemented | SingleChoice        |
-| multiplechoice                                                     | partially implemented | MultipleChoice      |
-| text entry                                                         | partially implemented | TextEntry           |
-| numbers entry                                                      | in progress           | NumericEntry        |
-| dropdown list                                                      | partially implemented | InlineChoice        |
-| order                                                              | partially implemented | Order               |
-| match (directed pair)                                              | partially implemented | DirectedPair        |
-| match (table, one right answer in a row)                           | partially implemented | OneInRowTable       |
-| match (table, one right answer in a column)                        | partially implemented | OneInColTable       |
-| match (table, many right answers in columns and rows are possible) | partially implemented | MultipleChoiceTable |
-| essay                                                              | partially implemented | Essay               |
-
-## S4 Class diagramm
-
-<figure>
-<img src="man/figures/README-S4_classes_diagramm.jpg"
-alt="Class diagramm S4." />
-<figcaption aria-hidden="true">Class diagramm S4.</figcaption>
-</figure>
+## 
 
 ## What is not possible
 
@@ -81,47 +57,6 @@ alt="Class diagramm S4." />
   because they do not work in our LMS (OPAL); several gaps do work,
   though
 - Associates are not implemented because they does not work in OPAL
-
-## making gaps
-
-for gaps with text:  
-- Simply use <code>\<\<\>\></code> for a gap, example:  
-*Some text, and now the gap <code>\<\<Right answer\>\>\></code>*  
-- or use YAML description inside \<\<\>\> to add more attributes:  
-*Some Text, and then the gap: <code>\<\<{type: text, response: Right
-answer, alternatives: \[Right answer, right answer, answer\],
-case_sensitive: false, lenghth: 10, placeholder: some text\>\></code>
-Some more text.*
-
-#### List of attributes for YAML description of a gap with text content
-
-| attribute      | type                    | description                                                                                                                                                      |
-|----------------|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| type           | text                    | “type” attribute should assign “text” for gap with text content                                                                                                  |
-| response       | text                    | string value that is a right response for the gap                                                                                                                |
-| alternatives   | vector of string values | provides a set of alternative values that are considered as a right answer for the gap; the set of alternatives must not include the value of the correct answer |
-| case_sensitive | logical                 | controls whether or not the candidate answer is case sensitive. In case of omission, “true” is assigned                                                          |
-| length         | integer                 | sets the size of the text field                                                                                                                                  |
-| placeholder    | string                  | provides placeholder text in the text field, can be used to show some pattern of answer                                                                          |
-| score          | integer                 | mark for the correct answer to the question                                                                                                                      |
-
-for gaps with numbers:
-
-#### List of attributes for YAML description of a gap with numeric content
-
-| attribute       | type    | description                                                                                                     |
-|-----------------|---------|-----------------------------------------------------------------------------------------------------------------|
-| type            | text    | “type” attribute should assign “numeric” for gap with numeric content                                           |
-| response        | numeric | numeric value that is a right response for the gap                                                              |
-| value_precision | numeric | number to indicate the upper and lower bounds within which the candidate’s answer is considered correct         |
-| type_precision  | string  | can be "exact", "absolute", or "relative" only                                                                  |
-| lower_bound     | logical | controls whether or not the lower bound is included in tolerance range. In case of omission, “true” is assigned |
-| upper_bound     | logical | controls whether or not the upper bound is included in tolerance range. In case of omission, “true” is assigned |
-| length          | integer | sets the size of the text field                                                                                 |
-| placeholder     | string  | provides placeholder text in the text field, can be used to show some pattern of answer                         |
-| score           | integer | mark for the correct answer to the question                                                                     |
-
-for combination:
 
 ## Comparison between exams and qti
 

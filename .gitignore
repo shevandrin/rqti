@@ -7,3 +7,4 @@ code_notes/**
 .env
 s4_*
 .Rprofile
+inst/doc

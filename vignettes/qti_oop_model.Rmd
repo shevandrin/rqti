@@ -1,0 +1,23 @@
+---
+title: "QTI OOP Model"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{qti_oop_model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(qti)
+```
+
+## qti S4 Class diagramm
+
+![Class diagramm S4.](S4_classes_diagramm.jpg){width="100%"}
