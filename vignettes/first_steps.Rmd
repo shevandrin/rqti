@@ -1,0 +1,66 @@
+---
+title: "First steps"
+output: rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{First steps}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+The `qti` package is still under development. The only way to install it so far is installing from GitHub:
+
+```{r eval=FALSE}
+library(devtools)
+install_github("shevandrin/qti")
+```
+
+`qti` have not published yet on CRAN. After publishing it will be possible to install package as follows:
+
+```{r eval=FALSE}
+install.packages("qti")
+```
+
+After installation the package has to be called:
+
+```{r }
+library(qti)
+```
+
+## Workflow
+
+The basic workflow with `qti` can be presented in 4 main stages:
+
+1. Create Exercise files.
+2. Setup Test-object, where Exercises are organized in sections.
+3. Generate Test-file according to QTI standard.
+4. Upload assessment result file and get raw data for further analysis.
+
+Each step includes certain `qti` functions, the most useful of them are shown in the following diagram:
+
+![Basic workflow to create exercises and test](workflow1.png){width=60%}
+
+A more effective approach to learning the workflow is to create a simple exercise, such as "Single Choice", as presented [in this article.](singlechoice.html)
+
+Full list of articles:
+
+- [Single choice](singlechoice.html)
+- [Multiple choice]()
+- [Essay]()
+- [Gap]()
+- [Dropdown]()
+- [Order]()
+- [Directed pairs]()
+- [Tables]()
+
+## Bug report
+
+Feel free to [let me know](mailto://shevandrin@gmail.com) if `QTI` goes wrong or just [open an issue on GitHub.](https://github.com/shevandrin/qti/issues) 
