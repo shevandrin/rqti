@@ -1,5 +1,5 @@
 Package: qti
-Title: Create XML Files For Tests According To QTI 2.1 Standart
+Title: Create Tests According To QTI 2.1 Standart
 Version: 0.0.0.9000
 Authors@R: c(
     person("Andrey", "Shevandrin", email = "shevanrin@gmail.com", 
