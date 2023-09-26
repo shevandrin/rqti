@@ -88,8 +88,8 @@ test_that("Testing function section() in the case
     expect_equal(warning_message, expected_warning)
 })
 
-test_that("Testing function section() in the case
-          the items in seed_number are not unique)", {
+test_that("Testing function section() in the case  the items
+          in seed_number are not unique)", {
     error_message <- NULL
     tryCatch(
         {
