@@ -12,3 +12,6 @@ s4_example.R
 ^TODO\.Rmd$
 ^curl\.sh$
 ^gitstats\.txt$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

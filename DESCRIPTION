@@ -46,7 +46,7 @@ Suggests:
     readr
 Config/testthat/edition: 3
 Config/testthat/parallel: false
-URL: https://github.com/shevandrin/qti
+URL: https://github.com/shevandrin/qti, https://shevandrin.github.io/qti/
 BugReports: https://github.com/shevandrin/qti/issues
 Collate: 
     'ModalFeedback.R'
