@@ -1,8 +1,8 @@
 ---
-title: "First steps"
+title: "Get started"
 output: rmarkdown::html_vignette
 vignette: >
-    %\VignetteIndexEntry{First steps}
+    %\VignetteIndexEntry{Get started}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -58,14 +58,14 @@ A more effective approach to learning the workflow is to create a simple exercis
 Full list of articles:
 
 - [Single choice](singlechoice.html)
-- [Multiple choice]()
-- [Essay]()
-- [Gap]()
-- [Dropdown]()
-- [Order]()
-- [Directed pairs]()
-- [Tables]()
+- [Multiple choice](multiplechoice.html)
+- [Essay](essay.html)
+- [Gap](gap.html)
+- [Dropdown](dropdown.html)
+- [Order](html)
+- [Directed pairs](directedpairs.html)
+- [Tables](table.html)
 
 ## Bug report
 
-Feel free to [let me know](mailto://shevandrin@gmail.com) if `QTI` goes wrong or just [open an issue on GitHub.](https://github.com/shevandrin/qti/issues) 
+Feel free to [let us know](mailto://shevandrin@gmail.com) if `QTI` goes wrong or just [open an issue on GitHub.](https://github.com/shevandrin/qti/issues) 
