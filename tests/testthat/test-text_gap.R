@@ -370,3 +370,42 @@ test_that("Testing of the warning message in case response_identifier
     ))
     expect_equal(warning_message, sut_warning)
 })
+
+test_that("Testing warning message in the case Identifiers of objects
+          in content-slot are non-unique for Entry class", {
+    warning_message <- NULL
+    suppressWarnings(withCallingHandlers(
+        {
+            sut <-suppressMessages(new("Entry", identifier = "new",
+                       points = 3,
+                       title = "test",
+                       content = list(
+                           'The speed of light is equal',
+                           new("NumericGap",
+                               response_identifier ="RESPONSE_1",
+                               score = 3,
+                               solution = 300,
+                               tolerance = 2),
+                           'm/s','The speed of sound is equal',
+                           new("NumericGap",
+                                response_identifier ="RESPONSE_1",
+                                score = 3,
+                                solution = 343,
+                                tolerance = 2),
+                            'm/s', 'The speed of light is',
+                           new("TextGapOpal",
+                               response_identifier = "RESPONSE_1",
+                               score = 1,
+                               solution = c("more", "MORE", "More"),
+                               tolerance = 4),
+                           'than the speed of sound')))
+        entry <- initialize(sut)
+    sut_warning <- (
+        "Identifiers of objects in content-slot are non-unique : RESPONSE_1, RESPONSE_1, RESPONSE_1")
+    },
+    warning = function(w) {
+        warning_message <<- w$message
+    }
+    ))
+    expect_equal(warning_message, sut_warning)
+})
