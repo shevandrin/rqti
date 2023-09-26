@@ -75,6 +75,34 @@ test_that("Testing function section() to build variable nested AssessmentSection
     expect_equal(sut, expected)
 })
 
+test_that("Testing function section() in the case
+          num_variants < length(seed_number))", {
+    warning_message <- NULL
+    withCallingHandlers(
+        sut <- section(c(path1, path3), num_variants = 2, seed_number = c(4,7,9)),
+    warning = function(w) {
+        warning_message <<- w$message
+        invokeRestart("muffleWarning")
+        })
+    expected_warning <- ("From seed_number only first 2 items are taken")
+    expect_equal(warning_message, expected_warning)
+})
+
+test_that("Testing function section() in the case
+          the items in seed_number are not unique)", {
+    error_message <- NULL
+    tryCatch(
+        {
+          section(c("path1", "path3"), num_variants = 2, seed_number = c(7, 7))
+            },
+        error = function(e) {
+            error_message <<- conditionMessage(e)
+        }
+        )
+    expected_error <- ("The items in seed_number are not unique")
+    expect_equal(error_message, expected_error)
+})
+
 test_that("Testing function section() to build variable AssessmentSection for nested = False ", {
     path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
     path3 <- test_path("file/md/test_sc_example1.md")
@@ -154,7 +182,7 @@ test_that("Testing a warning message for getPoints method", {
 })
 
 test_that("Testing test4opal() and test() function in section_builder.R ", {
-    sut <- section(c(path1, path2), id = "permanent_section")
+    sut <- section(c(path1, path2))
     result_1 <- test4opal(sut)
     result_2 <- test(sut)
 
