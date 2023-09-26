@@ -41,7 +41,7 @@ The basic workflow with `qti` can be presented in 4 main stages:
 
 1. Create Exercise files.
     1. Create Rmd document. Use Rmd templates (starts with prefix `QTI:`).
-    1. Write a section entitled `# question`. If necessary, include instances of the `r` code.
+    1. Write a section entitled `# question`. If necessary, include instances of the `r` code and use helper functions.
     1. Customize yaml section of Rmd document.
     1. Choose the way of visualization: QTIJS engine or LMS OPAL. Add `knit` attribute in yaml section.
     1. Check behavior and appearance of the task. Store the Rmd document in your repo.
