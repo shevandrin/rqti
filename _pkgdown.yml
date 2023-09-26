@@ -1,0 +1,19 @@
+url: https://shevandrin.github.io/qti/
+template:
+  bootstrap: 5
+articles:
+- title: Exersices
+  navbar: ~
+  contents:
+  - singlechoice
+  - multiplechoice
+  - gap
+  - dropdown
+  - essay
+  - order
+  - directedpairs
+  - table
+- title: Workflow at the S4-classes level
+  navbar: ~
+  contents:
+  - qti_oop_model
