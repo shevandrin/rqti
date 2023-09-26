@@ -5,6 +5,13 @@ mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
                       "wants vs. needs",
                       "consumers vs. producers"),
           points = c(0.5, 0.5, 0, 0))
+mc2 <- new("MultipleChoice", identifier = "Test 2 duplication", title = "Economics",
+          content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
+          choices = c("scarcity vs. resources",
+                      "wages vs. prices",
+                      "wants vs. needs",
+                      "consumers vs. producers"),
+          points = c(1.5, 0.5, 0, 0))
 sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
           content = list("<p>This is a mock question.<br/>In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"),
           choices = c("Employ more and more people", "Maximize total production",
@@ -131,4 +138,26 @@ test_that("Testing warning for selection exceeding number of items", {
         })
     expected_warning <- ("value of selection (4) must be less than number of items in assessment_item slot (3). Selection is assigned to 2")
     expect_equal(warning_message, expected_warning)
+})
+
+test_that("Testing a warning message for getPoints method", {
+    items <- list(mc, mc2, sc) # ms: points = 1, mc2: points = 2
+    section <- new("AssessmentSection",
+                   identifier = "section1",
+                   title = "Section 1",
+                   assessment_item = items,
+                   selection = 2)
+    # Selected the first 2 items with different points
+    expect_warning({
+        sut_points <- getPoints(section)
+    }, "In section id:section1 there are items with different points. In selection mode, this leads to inconsistent overall score in different test variants:  = 1,  = 2, eco = 1")
+})
+
+test_that("Testing test4opal() and test() function in section_builder.R ", {
+    sut <- section(c(path1, path2), id = "permanent_section")
+    result_1 <- test4opal(sut)
+    result_2 <- test(sut)
+
+    expect_s4_class(result_1, "AssessmentTestOpal")
+    expect_s4_class(result_2, "AssessmentTest")
 })
