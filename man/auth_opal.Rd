@@ -17,15 +17,15 @@ user id
 \description{
 Function \code{auth_opal()} performs the necessary authentication steps in OPAL
 API. If the authentication is successful, the function sets the cookie value
-in the system environment and returns the user's identity key in OPAL. The cookie value is
-required to access the OPAL API system."
+in the system environment and returns the user's identity key in OPAL. The
+cookie value is required to access the OPAL API system."
 }
 \section{Authentication}{
- To use OPAL API, you need to provide your OPAL-
-username and password. This function will look for api_user and
-api_password environment variables. To set a global environment variables,
-you need to use the following commands:
-\code{Sys.setenv(api_user ='xxxxxxxxxxxxxxx')}
-\code{Sys.setenv(api_password =  'xxxxxxxxxxxxxxx')}
+ To use OPAL API, you need to provide your
+OPAL-username and password. This function can get \code{api_user} from
+environment variables. To set a global environment variable, you need to
+call \code{Sys.setenv(api_user ='xxxxxxxxxxxxxxx')} or you can put this command
+into .Rprofile. To store \code{api_password }value keyring record after first
+calling will be created. Otherwise it will be asked from a dialog.
 }
 
