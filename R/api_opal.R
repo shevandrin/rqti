@@ -2,18 +2,18 @@
 #'
 #' Function `auth_opal()` performs the necessary authentication steps in OPAL
 #' API. If the authentication is successful, the function sets the cookie value
-#' in the system environment and returns the user's identity key in OPAL. The cookie value is
-#' required to access the OPAL API system."
+#' in the system environment and returns the user's identity key in OPAL. The
+#' cookie value is required to access the OPAL API system."
 #'
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
 #'
-#' @section Authentication: To use OPAL API, you need to provide your OPAL-
-#'   username and password. This function will look for api_user and
-#'   api_password environment variables. To set a global environment variables,
-#'   you need to use the following commands:
-#'   `Sys.setenv(api_user ='xxxxxxxxxxxxxxx')`
-#'   `Sys.setenv(api_password =  'xxxxxxxxxxxxxxx')`
+#' @section Authentication: To use OPAL API, you need to provide your
+#'   OPAL-username and password. This function can get `api_user` from
+#'   environment variables. To set a global environment variable, you need to
+#'   call `Sys.setenv(api_user ='xxxxxxxxxxxxxxx')` or you can put this command
+#'   into .Rprofile. To store `api_password `value keyring record after first
+#'   calling will be created. Otherwise it will be asked from a dialog.
 #'
 #' @return user id
 #' @name auth_opal
@@ -25,16 +25,29 @@
 auth_opal <- function(api_user = NULL, api_password = NULL) {
     user_id <- NULL
     if (is.null(api_user)) api_user <- Sys.getenv("api_user")
-    if (is.null(api_password)) api_password <- Sys.getenv("api_password")
 
     if (api_user == "") {
         api_user <- readline("Enter Username on Opal: ")
         Sys.setenv(api_user = api_user)
     }
 
-    if (api_password == "") {
-        api_password <- getPass("Enter Password: ")
-        Sys.setenv(api_password = api_password)
+    if (has_keyring_support()) {
+        # OS suppourts keyring
+        if (!any(keyring_list()$keyring == "opal")) {
+            keyring_create("opal", password = "opal")
+        }
+
+        keyring_unlock("opal", "opal")
+
+        if (!any(key_list("opal")$username == api_user)) {
+            key_set("opal", username = api_user, keyring = "opal",
+                    prompt = paste0("Password for ", api_user, ":"))
+        }
+        api_password <- key_get(service = "opal", keyring = 'opal',
+                                username = api_user)
+    } else {
+        # OS does not support keyring
+        api_password <- getPass("Your OS does not support keyring. Enter Password: ")
     }
 
     url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
