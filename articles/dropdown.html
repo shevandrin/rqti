@@ -85,6 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Dropdown Exercises</h1>
             
+            <h4 data-toc-skip class="date">2023-09-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/dropdown.Rmd" class="external-link"><code>vignettes/dropdown.Rmd</code></a></small>
       <div class="d-none name"><code>dropdown.Rmd</code></div>
@@ -92,8 +93,6 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shevandrin/qti" class="external-link">qti</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h3>
@@ -218,7 +217,7 @@ reach all points)</li>
 <p>For more complex exercises the set of answers is often just available
 as a variable. In this case you can use the helper function
 <code>dropdown</code> to convert the vector into a dropdown-element:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">answers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S4 OOP"</span>, <span class="st">"S3 OOP"</span>, <span class="st">"no OOP"</span>, <span class="st">"R6 OOP"</span><span class="op">)</span></span>
 <span><span class="va">dd_element</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dropdown.html">dropdown</a></span><span class="op">(</span>solution <span class="op">=</span> <span class="va">answers</span>, answer_index <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                             response_identifier <span class="op">=</span> <span class="st">"OOP_task"</span><span class="op">)</span></span></code></pre></div>
