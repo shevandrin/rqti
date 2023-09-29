@@ -18,8 +18,3 @@ articles:
   navbar: S4 qti classes
   contents:
   - qti_oop_model
-reference:
-- title: S4 classes
-  desc: Lowlever workflow
-- contents:
-  - ends_with("class")
