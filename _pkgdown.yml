@@ -3,7 +3,7 @@ template:
   bootstrap: 5
 articles:
 - title: Exersices
-  navbar: ~
+  navbar: How to create Rmd for exercises
   contents:
   - singlechoice
   - multiplechoice
@@ -15,6 +15,11 @@ articles:
   - table
   - section
 - title: Workflow at the S4-classes level
-  navbar: ~
+  navbar: S4 qti classes
   contents:
   - qti_oop_model
+reference:
+- title: S4 classes
+  desc: Lowlever workflow
+- contents:
+  - ends_with("class")
