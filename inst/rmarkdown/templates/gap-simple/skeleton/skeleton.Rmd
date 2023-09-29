@@ -1,6 +1,6 @@
 ---
 type: gap
-knit: qti::render_rmd
+knit: qti::render_qtijs
 ---
 
 # question

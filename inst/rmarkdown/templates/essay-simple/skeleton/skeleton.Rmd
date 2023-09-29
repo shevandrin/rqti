@@ -1,6 +1,6 @@
 ---
 type: essay # type of exercise
-knit: qti::render_rmd # if you do not want our preview renderer, remove this
+knit: qti::render_qtijs # if you do not want our preview renderer, remove this
 ---
 
 # question

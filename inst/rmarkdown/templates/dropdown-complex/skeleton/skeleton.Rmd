@@ -1,6 +1,6 @@
 ---
 type: dd # type of exercise
-knit: qti::render_rmd # if you do not want our preview renderer, remove this
+knit: qti::render_qtijs # if you do not want our preview renderer, remove this
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 ---

@@ -21,7 +21,7 @@
 #' \dontrun{qti::knit_qti}
 #'
 #' @export
-render_rmd <- function(input, ...) {
+render_qtijs <- function(input, ...) {
     clean_qtijs()
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
