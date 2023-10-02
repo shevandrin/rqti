@@ -1,6 +1,6 @@
 ---
 type: sc
-knit: qti::render_rmd
+knit: qti::render_qtijs
 shuffle: false
 ---
 
