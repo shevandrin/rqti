@@ -107,7 +107,7 @@ list with at least two elements in a section called <strong>#
 question</strong>:</p>
 <pre><code>---
 type: mpc
-knit: qti::render_rmd
+knit: qti::render_qtijs
 ---
 
 # question
@@ -142,20 +142,20 @@ attributes for the yaml section in the RMD template
 set feedback for correct and incorrect responses.</p>
 <pre><code>---
 type: multiplechoice # equivalent to mpc
-qti::render_qtijs # if you do not want our preview renderer, remove this
+knit: qti::render_qtijs # if you do not want our preview renderer, remove this
 identifier: TOPIC2_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 shuffle: true # random order of choices
 orientation: vertical # OR horizontal
-points: 1, 1, -1, -1
+points: 2
 ---
 
 # question
 
 Which exercise types are supported by the R package qti?
 
-- match pair (pair several elements)
-- match tables (single choice or multiple choice tables)
+- *match pair (pair several elements)*
+- *match tables (single choice or multiple choice tables)*
 - drawing
 - graphical match (drag selection to specific position)
 
