@@ -81,7 +81,10 @@ authentication procedure has to be performed. See <a href="auth_opal.html">auth_
 <span>  access <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  endpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://bildungsportal.sachsen.de/"</span>, <span class="st">"opal/"</span><span class="op">)</span>,</span>
-<span>  in_browser <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  in_browser <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  api_user <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  api_password <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cached <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -116,12 +119,34 @@ found, it will be overwritten</p></dd>
 <dd><p>logical, optional; the parameter that controls whether to
 open a URL in default browser; TRUE by default</p></dd>
 
+
+<dt>api_user</dt>
+<dd><p>username on OPAL</p></dd>
+
+
+<dt>api_password</dt>
+<dd><p>password on OPAL</p></dd>
+
+
+<dt>cached</dt>
+<dd><p>boolean; if <code>TRUE</code> (default) it keeps password in environment
+variable</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
 <p>list with key and url</p>
+    </div>
+    <div class="section level2">
+    <h2 id="authentication">Authentication<a class="anchor" aria-label="anchor" href="#authentication"></a></h2>
+    <p>To use OPAL API, you need to provide your
+OPAL-username and password. This function can get <code>api_user</code> and
+<code>api_password</code> from environment variables. To set a global environment
+variable, you need to call <code>Sys.setenv(api_user ='xxxxxxxxxxxxxxx')</code> and
+<code>Sys.setenv(api_password ='xxxxxxxxxxxxxxx')</code>or you can put these commands
+into .Rprofile.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

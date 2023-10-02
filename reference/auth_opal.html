@@ -78,7 +78,7 @@ cookie value is required to access the OPAL API system."</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">auth_opal</span><span class="op">(</span>api_user <span class="op">=</span> <span class="cn">NULL</span>, api_password <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">auth_opal</span><span class="op">(</span>api_user <span class="op">=</span> <span class="cn">NULL</span>, api_password <span class="op">=</span> <span class="cn">NULL</span>, cached <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,6 +90,11 @@ cookie value is required to access the OPAL API system."</p>
 <dt>api_password</dt>
 <dd><p>password on OPAL</p></dd>
 
+
+<dt>cached</dt>
+<dd><p>boolean; if <code>TRUE</code> (default) it keeps password in environment
+variable</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -100,11 +105,11 @@ cookie value is required to access the OPAL API system."</p>
     <div class="section level2">
     <h2 id="authentication">Authentication<a class="anchor" aria-label="anchor" href="#authentication"></a></h2>
     <p>To use OPAL API, you need to provide your
-OPAL-username and password. This function can get <code>api_user</code> from
-environment variables. To set a global environment variable, you need to
-call <code>Sys.setenv(api_user ='xxxxxxxxxxxxxxx')</code> or you can put this command
-into .Rprofile. To store <code>api_password </code>value keyring record after first
-calling will be created. Otherwise it will be asked from a dialog.</p>
+OPAL-username and password. This function can get <code>api_user</code> and
+<code>api_password</code> from environment variables. To set a global environment
+variable, you need to call <code>Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')</code> and
+<code>Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')</code>or you can put these commands
+into .Rprofile.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
