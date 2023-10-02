@@ -30,3 +30,13 @@ test_that("Testing mdlist function", {
     result4 <- sub("\\[1\\] ", "", result4[1])
     expect_equal(result4, expected_error_message)
 })
+
+test_that("Testing gap_numeric() function", {
+    sut<- gap_numeric(solution = 300,
+                      tolerance = 1,
+                      score = 2)
+
+    expected <- '<gap>{solution: [300], tolerance: 1.0, tolerance_type: absolute, score: 2.0, include_lower_bound: yes, include_upper_bound: yes, expected_length: 2.0, type: numeric}</gap>'
+
+    expect_equal(sut, expected)
+})
