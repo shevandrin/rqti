@@ -7,47 +7,36 @@
 #'
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
+#' @param cached boolean; if `TRUE` (default) it keeps password in environment
+#'   variable
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
-#'   OPAL-username and password. This function can get `api_user` from
-#'   environment variables. To set a global environment variable, you need to
-#'   call `Sys.setenv(api_user ='xxxxxxxxxxxxxxx')` or you can put this command
-#'   into .Rprofile. To store `api_password `value keyring record after first
-#'   calling will be created. Otherwise it will be asked from a dialog.
+#'   OPAL-username and password. This function can get `api_user` and
+#'   `api_password` from environment variables. To set a global environment
+#'   variable, you need to call `Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')` and
+#'   `Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
+#'   into .Rprofile.
 #'
 #' @return user id
 #' @name auth_opal
 #' @rdname auth_opal
 #' @import httr
-#' @import keyring
 #' @import getPass
 #' @export
-auth_opal <- function(api_user = NULL, api_password = NULL) {
+auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
     user_id <- NULL
-    if (is.null(api_user)) api_user <- Sys.getenv("api_user")
+    if (is.null(api_user)) api_user <- Sys.getenv("API_USER")
+    if (is.null(api_password)) api_password <- Sys.getenv("API_PASSWORD")
 
     if (api_user == "") {
         api_user <- readline("Enter Username on Opal: ")
-        Sys.setenv(api_user = api_user)
+        Sys.setenv(API_USER = api_user)
     }
 
-    if (has_keyring_support()) {
-        # OS suppourts keyring
-        if (!any(keyring_list()$keyring == "opal")) {
-            keyring_create("opal", password = "opal")
-        }
-
-        keyring_unlock("opal", "opal")
-
-        if (!any(key_list("opal")$username == api_user)) {
-            key_set("opal", username = api_user, keyring = "opal",
-                    prompt = paste0("Password for ", api_user, ":"))
-        }
-        api_password <- key_get(service = "opal", keyring = 'opal',
-                                username = api_user)
-    } else {
-        # OS does not support keyring
-        api_password <- getPass("Your OS does not support keyring. Enter Password: ")
+    if (api_password == "") {
+        api_password <- getPass(paste0("Enter password for user ",
+                                       api_user, ": "))
+        if (cached) Sys.setenv(API_PASSWORD = api_password)
     }
 
     url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
@@ -70,8 +59,8 @@ auth_opal <- function(api_user = NULL, api_password = NULL) {
         choice <- readline("Press \'y\' to change data or any key to exit: ")
         # Check the user's choice
         if (tolower(choice) == "y") {
-            Sys.unsetenv("api_user")
-            Sys.unsetenv("api_password")
+            Sys.unsetenv("API_USER")
+            Sys.unsetenv("API_PASSWORD")
             auth_opal()
         }
         user_id <-  NULL
@@ -88,8 +77,6 @@ auth_opal <- function(api_user = NULL, api_password = NULL) {
 #'@param file required; a length one character vector
 #'@param display_name optional; a length one character vector to entitle file in
 #'  OPAL; file name without extension by default
-#'@param in_browser logical, optional; the parameter that controls whether to
-#'  open a URL in default browser; TRUE by default
 #'@param access optional; is responsible for publication status, where 1 - only
 #'  those responsible for this learning resource; 2 - responsible and other
 #'  authors; 3 - all registered users; 4 - default value, registered users and
@@ -97,18 +84,34 @@ auth_opal <- function(api_user = NULL, api_password = NULL) {
 #'@param overwrite logical; if only one file with the specified display name is
 #'  found, it will be overwritten
 #'@param endpoint endpoint
+#'@param in_browser logical, optional; the parameter that controls whether to
+#'  open a URL in default browser; TRUE by default
+#' @param api_user username on OPAL
+#' @param api_password password on OPAL
+#' @param cached boolean; if `TRUE` (default) it keeps password in environment
+#'   variable
+#' @section Authentication: To use OPAL API, you need to provide your
+#'   OPAL-username and password. This function can get `api_user` and
+#'   `api_password` from environment variables. To set a global environment
+#'   variable, you need to call `Sys.setenv(api_user ='xxxxxxxxxxxxxxx')` and
+#'   `Sys.setenv(api_password ='xxxxxxxxxxxxxxx')`or you can put these commands
+#'   into .Rprofile.
+#'
 #'@return list with key and url
 #'@importFrom utils browseURL
 #'@export
 upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint =  paste0("https://bildungsportal.sachsen.de/",
-                                           "opal/"), in_browser = TRUE) {
+                                           "opal/"), in_browser = TRUE,
+                        api_user = NULL, api_password = NULL, cached = TRUE) {
 
     if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
 
     # check auth
-    if (!is_logged(endpoint)) auth_opal()
+    if (!is_logged(endpoint)) {
+        auth_opal(api_user = NULL, api_password = NULL, cached = TRUE)
+    }
     if (!interactive()) display_name <- paste0("knit_", display_name)
     # check if we have a test with display name
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")

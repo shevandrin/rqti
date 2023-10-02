@@ -10,7 +10,10 @@ upload2opal(
   access = 4,
   overwrite = TRUE,
   endpoint = paste0("https://bildungsportal.sachsen.de/", "opal/"),
-  in_browser = TRUE
+  in_browser = TRUE,
+  api_user = NULL,
+  api_password = NULL,
+  cached = TRUE
 )
 }
 \arguments{
@@ -31,6 +34,13 @@ found, it will be overwritten}
 
 \item{in_browser}{logical, optional; the parameter that controls whether to
 open a URL in default browser; TRUE by default}
+
+\item{api_user}{username on OPAL}
+
+\item{api_password}{password on OPAL}
+
+\item{cached}{boolean; if \code{TRUE} (default) it keeps password in environment
+variable}
 }
 \value{
 list with key and url
@@ -40,3 +50,12 @@ Function \code{upload2opal()} takes full prepared zip archive of QTI-test or
 QTI-task and uploads it to the OPAL. before calling \code{upload2opal()}
 authentication procedure has to be performed. See \link{auth_opal}
 }
+\section{Authentication}{
+ To use OPAL API, you need to provide your
+OPAL-username and password. This function can get \code{api_user} and
+\code{api_password} from environment variables. To set a global environment
+variable, you need to call \code{Sys.setenv(api_user ='xxxxxxxxxxxxxxx')} and
+\code{Sys.setenv(api_password ='xxxxxxxxxxxxxxx')}or you can put these commands
+into .Rprofile.
+}
+

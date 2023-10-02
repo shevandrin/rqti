@@ -4,12 +4,15 @@
 \alias{auth_opal}
 \title{Authentification in OPAL API}
 \usage{
-auth_opal(api_user = NULL, api_password = NULL)
+auth_opal(api_user = NULL, api_password = NULL, cached = TRUE)
 }
 \arguments{
 \item{api_user}{username on OPAL}
 
 \item{api_password}{password on OPAL}
+
+\item{cached}{boolean; if \code{TRUE} (default) it keeps password in environment
+variable}
 }
 \value{
 user id
@@ -22,10 +25,10 @@ cookie value is required to access the OPAL API system."
 }
 \section{Authentication}{
  To use OPAL API, you need to provide your
-OPAL-username and password. This function can get \code{api_user} from
-environment variables. To set a global environment variable, you need to
-call \code{Sys.setenv(api_user ='xxxxxxxxxxxxxxx')} or you can put this command
-into .Rprofile. To store \code{api_password }value keyring record after first
-calling will be created. Otherwise it will be asked from a dialog.
+OPAL-username and password. This function can get \code{api_user} and
+\code{api_password} from environment variables. To set a global environment
+variable, you need to call \code{Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')} and
+\code{Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')}or you can put these commands
+into .Rprofile.
 }
 
