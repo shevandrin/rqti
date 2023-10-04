@@ -1,13 +1,44 @@
+# functions for creating tags
+#' @importFrom htmltools tag
+create_tag <- function(x) {
+    function(attrs = list()) {
+        if (class(attrs) == "shiny.tag") attrs = list(attrs)
+        tag(x, attrs)
+    }
+}
+create_vartag <- function(x) {
+    function(id) {
+        tag(x, list(identifier = id))
+    }
+}
+variable <- create_vartag("variable")
+correct <- create_vartag("correct")
+mapResponse <- create_vartag("mapResponse")
+not <- create_tag("not")
+isNull <- create_tag("isNull")
+setOutcomeValue <- create_tag("setOutcomeValue")
+sum_tag <- create_tag("sum")
+responseIf <- create_tag("responseIf")
+responseElseIf <- create_tag("responseElseIf")
+responseElse <- create_tag("responseElse")
+responseCondition <- create_tag("responseCondition")
+responseProcessing <- create_tag("responseProcessing")
+match <- create_tag("match")
+gt <- create_tag("gt")
+lt <- create_tag("lt")
+and <- create_tag("and")
+baseValue <- create_tag("baseValue")
+mapTolResponse <- create_tag("mapTolResponse")
+equal <- create_tag("equal")
+multiple <- create_tag("multiple")
+
 # process modalfeedback for all match types and mc
 create_default_resp_processing <- function(object) {
-    var_resp <- tag("variable", list(identifier = "RESPONSE"))
-    tag_not <- tag("not", list(tag("isNull", list(var_resp))))
-    var_score <- tag("variable", list(identifier = "SCORE"))
-    map_res <- tag("mapResponse", list(identifier = "RESPONSE"))
-    tag_sum <- tag("sum", list(var_score, map_res))
-    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", tag_sum))
-    response_if <- tag("responseIf", list(tag_not, set_ov))
-    resp_cond1 <- tag("responseCondition", list(response_if))
+    not_tag <- not(isNull(variable("RESPONSE")))
+    sum_tag <- sum_tag(list(variable("SCORE"), mapResponse("RESPONSE")))
+    set_ov_tag <- setOutcomeValue(list(identifier = "SCORE", sum_tag))
+    responseIf_tag <- responseIf(list(not_tag, set_ov_tag))
+    resp_cond1 <- responseCondition(responseIf_tag)
 
     resp_cond23 <- make_default_resp_cond()
 
@@ -16,8 +47,8 @@ create_default_resp_processing <- function(object) {
 
     conditions <- Map(createResponseCondition, object@feedback)
 
-    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond23,
-                                                resp_cond4, conditions))
+    resp_proc <- responseProcessing(list(resp_cond1, resp_cond23, resp_cond4,
+                                         conditions))
     return(resp_proc)
 }
 
@@ -30,21 +61,17 @@ create_default_resp_processing_sc <- function(object) {
 
     conditions <- Map(createResponseCondition, object@feedback)
 
-    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond23,
-                                                resp_cond4, conditions))
+    resp_proc <- responseProcessing(list(resp_cond1, resp_cond23, resp_cond4,
+                                         conditions))
     return(resp_proc)
 }
 
 make_first_cond_sc_order <- function() {
-    var_resp <- tag("variable", list(identifier = "RESPONSE"))
-    tag_isnull <- tag("isNull", list(var_resp))
-    response_if <- tag("responseIf", list(tag_isnull))
-    var_corr <- tag("correct", list(identifier = "RESPONSE"))
-    tag_match <- tag("match", list(var_resp, var_corr))
-    var_maxscore <- tag("variable", list(identifier =  "MAXSCORE"))
-    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", var_maxscore))
-    response_elseif <- tag("responseElseIf", list(tag_match, set_ov))
-    resp_cond1 <- tag("responseCondition", list(response_if, response_elseif))
+    response_if <- responseIf(isNull(variable("RESPONSE")))
+    match_tag <- match(list(variable("RESPONSE"), correct("RESPONSE")))
+    set_ov_tag <- setOutcomeValue(list(identifier = "SCORE", variable("MAXSCORE")))
+    response_elseif <- responseElseIf(list(match_tag, set_ov_tag))
+    resp_cond1 <- responseCondition(list(response_if, response_elseif))
     return(resp_cond1)
 }
 
@@ -56,8 +83,8 @@ create_default_resp_processing_order <- function(object) {
     resp_cond4 <- NULL
     if (length(object@feedback) > 0) resp_cond4 <- make_default_feedback_cond()
     conditions <- Map(createResponseCondition, object@feedback)
-    resp_proc <- tag("responseProcessing", list(resp_cond1, resp_cond23,
-                                                resp_cond4, conditions))
+    resp_proc <- responseProcessing(list(resp_cond1, resp_cond23, resp_cond4,
+                                         conditions))
     return(resp_proc)
 }
 
@@ -67,8 +94,8 @@ create_response_processing_entry <- function(object) {
     answers[sapply(answers, is.null)] <- NULL
 
     #set outcome value for SCORE
-    tag_sum <- tag("sum", Map(set_outcome_value_entry, answers))
-    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE", tag_sum))
+    tag_sum <- sum_tag(Map(set_outcome_value_entry, answers))
+    set_ov <- setOutcomeValue(list(identifier = "SCORE", tag_sum))
 
     #this form the 1th condition
     processing <- Map(createResponseProcessing, answers)
@@ -84,136 +111,101 @@ create_response_processing_entry <- function(object) {
                               make_default_feedback_cond(answers),
                               resp_conds)
     }
-    tag("responseProcessing", list(processing, set_ov, conditions))
+    return(responseProcessing(list(processing, set_ov, conditions)))
 }
 
 set_outcome_value_entry <- function(object) {
-    tag_var <- tag("variable",
-        list(identifier = paste0("SCORE_", object@response_identifier)))
+    tag_var <- variable(paste0("SCORE_", object@response_identifier))
     return(tag_var)
 }
 
 make_response_condition <- function(object = NULL) {
     identifier <- ifelse(is.null(object), "RESPONSE", object@response_identifier)
-    tag_var <- tag("variable", list(identifier = identifier))
-    tag("isNull", list(tag_var))
+    return(isNull(variable(identifier)))
 }
 
 make_default_resp_cond <- function() {
-    tag_gt <- tag("gt",
-                  list(tag("variable", list(identifier = "SCORE")),
-                       tag("variable", list(identifier = "MAXSCORE"))))
-    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE",
-                                          list(tag("variable",
-                                               list(identifier = "MAXSCORE")))))
-    response_if <- tag("responseIf", list(tag_gt, set_ov))
-    resp_cond1 <- tag("responseCondition", list(response_if))
+    tag_gt <- gt(list(variable("SCORE"), variable("MAXSCORE")))
+    set_ov <- setOutcomeValue(list(identifier = "SCORE", variable("MAXSCORE")))
+    resp_cond1 <- responseCondition(responseIf(list(tag_gt, set_ov)))
 
-    tag_lt <- tag("lt",
-                  list(tag("variable", list(identifier = "SCORE")),
-                       tag("variable", list(identifier = "MINSCORE"))))
-    set_ov <- tag("setOutcomeValue", list(identifier = "SCORE",
-                                          list(tag("variable",
-                                               list(identifier = "MINSCORE")))))
-    response_if <- tag("responseIf", list(tag_lt, set_ov))
-    resp_cond2 <- tag("responseCondition", list(response_if))
-
+    tag_lt <- lt(list(variable("SCORE"), variable("MINSCORE")))
+    set_ov <- setOutcomeValue(list(identifier = "SCORE", variable("MINSCORE")))
+    resp_cond2 <- responseCondition(responseIf(list(tag_lt, set_ov)))
     return(tagList(resp_cond1, resp_cond2))
 }
 
 make_default_feedback_cond <- function(answers = list(NULL)) {
     tag_isnull <- Map(make_response_condition, answers)
     if (length(tag_isnull) > 1) {
-        tag_isnull <- tag("and", tag_isnull)
+        tag_isnull <- and(tag_isnull)
     }
-    tag_bv <- tag("baseValue", list(baseType = "identifier", "empty"))
-    set_ov <- tag("setOutcomeValue",
-                  list(identifier = "FEEDBACKBASIC", tag_bv))
-    response_if <- tag("responseIf", list(tag_isnull, set_ov))
-    tag_lt <- tag("lt", list(tag("variable", list(identifier = "SCORE")),
-                             tag("variable", list(identifier = "MAXSCORE"))))
-    tag_bv <- tag("baseValue", list(baseType = "identifier", "incorrect"))
-    set_ov <- tag("setOutcomeValue",
-                  list(identifier = "FEEDBACKBASIC", tag_bv))
-    response_elseif <- tag("responseElseIf", list(tag_lt, set_ov))
+    tag_bv <- baseValue(list(baseType = "identifier", "empty"))
+    set_ov <- setOutcomeValue(list(identifier = "FEEDBACKBASIC", tag_bv))
+    response_if <- responseIf(list(tag_isnull, set_ov))
+    tag_lt <- lt(list(variable("SCORE"), variable("MAXSCORE")))
 
-    tag_bv <- tag("baseValue", list(baseType = "identifier", "correct"))
-    set_ov <- tag("setOutcomeValue",
-                  list(identifier = "FEEDBACKBASIC", tag_bv))
-    response_else <- tag("responseElse", list(set_ov))
+    tag_bv <- baseValue(list(baseType = "identifier", "incorrect"))
+    set_ov <- setOutcomeValue(list(identifier = "FEEDBACKBASIC", tag_bv))
+    response_elseif <- responseElseIf(list(tag_lt, set_ov))
 
-    resp_cond <- tag("responseCondition",
-                        list(response_if, response_elseif,
-                             response_else))
+    tag_bv <- baseValue(list(baseType = "identifier", "correct"))
+    set_ov <- setOutcomeValue(list(identifier = "FEEDBACKBASIC", tag_bv))
+    response_else <- responseElse(list(set_ov))
+
+    resp_cond <- responseCondition(list(response_if, response_elseif,
+                                        response_else))
     return(resp_cond)
 }
 
 create_response_processing_gap_basic <- function(object) {
-    var_tag <- tag("variable", list(identifier = object@response_identifier))
-    not_tag <- tag("not", list(tag("isNull", list(var_tag))))
-    map_tag <- tag("mapResponse", list(identifier = object@response_identifier))
-    outcome_tag <- tag("setOutcomeValue",
-                list(identifier = paste0("SCORE_", object@response_identifier),
-                     map_tag))
-    response_if <- tag("responseIf", tagList(not_tag, outcome_tag))
-    tag("responseCondition", list(response_if))
+    not_tag <- not(isNull(variable(object@response_identifier)))
+    map_tag <- mapResponse(object@response_identifier)
+    outcome_tag <- setOutcomeValue(list(
+        identifier = paste0("SCORE_", object@response_identifier), map_tag))
+    response_if <- responseIf(list(not_tag, outcome_tag))
+    return(responseCondition(response_if))
 }
 
 create_response_processing_text_entry_opal <- function(object) {
     # url to scheme that process the answer with tolerance
     url_scheme <- "http://bps-system.de/xsd/imsqti_ext_maptolresponse"
-    var_tag <- tag("variable", list(identifier = object@response_identifier))
-    not_tag <- tag("not", list(tag("isNull", list(var_tag))))
-    map_tag <- tag("mapTolResponse",
-                       list(xmlns = url_scheme,
+    not_tag <- not(isNull(variable(object@response_identifier)))
+    map_tag <- mapTolResponse(list(xmlns = url_scheme,
                             identifier = object@response_identifier,
                             tolerance = object@tolerance,
                             toleranceMode = "absolute"))
-    outcome_tag <- tag("setOutcomeValue",
-                       list(identifier = paste0("SCORE_",
-                                                object@response_identifier),
-                            map_tag))
-    if_tag <- tag("responseIf", list(not_tag, outcome_tag))
-    tag("responseCondition", list(if_tag))
+    outcome_tag <- setOutcomeValue(list(
+        identifier = paste0("SCORE_",object@response_identifier), map_tag))
+    return(responseCondition(responseIf(list(not_tag, outcome_tag))))
 }
 
 create_response_processing_num_entry <- function(object) {
     tolerance_str <- paste(object@tolerance, object@tolerance)
-    child <- tagList(tag("variable",
-                         list(identifier = object@response_identifier)),
-                     tag("correct",
-                         list(identifier = object@response_identifier)))
-    equal_tag <- tag("equal", list(toleranceMode = object@tolerance_type,
+    child <- tagList(variable(object@response_identifier),
+                     correct(object@response_identifier))
+    equal_tag <- equal(list(toleranceMode = object@tolerance_type,
                                    tolerance = tolerance_str,
                                    includeLowerBound =
                                        tolower(object@include_lower_bound),
                                    includeUpperBound =
                                        tolower(object@include_upper_bound),
                                    child))
-    var_outcome <- tag("variable",
-                       list(identifier = paste0("MAXSCORE_",
-                                                object@response_identifier)))
-    outcome_tag <- tag("setOutcomeValue",
-                       list(identifier = paste0("SCORE_",
-                                                object@response_identifier),
-                            var_outcome))
-    if_tag <- tag("responseIf", list(equal_tag, outcome_tag))
-    tag("responseCondition", list(if_tag))
+    var_outcome <- variable(paste0("MAXSCORE_", object@response_identifier))
+    outcome_tag <- setOutcomeValue(list(identifier = paste0("SCORE_",
+                                    object@response_identifier), var_outcome))
+    return(responseCondition(responseIf(list(equal_tag, outcome_tag))))
 }
 
 # this response condition makes link between Response and Feedback message
 create_resp_cond_set_feedback <- function(object) {
-    variab <- tag("variable", list(identifier = "FEEDBACKMODAL"))
-    base_value <- tag("baseValue", list(baseType = "identifier",
-                                        object@identifier))
-    multiple <- tag("multiple", list(variab, base_value))
+    variab <- variable("FEEDBACKMODAL")
+    base_value <- baseValue(list(baseType = "identifier", object@identifier))
+    multiple_tag <- multiple(list(variab, base_value))
 
-    tag_mt_var <- tag("variable", list(identifier = "FEEDBACKBASIC"))
-    tag_match <- tag("match", list(base_value, tag_mt_var))
-    tag_and <- tag("and", list(tag_match))
-    set_out_value <- tag("setOutcomeValue",
-                         list(identifier = object@outcome_identifier, multiple))
-    tag_resp_if <- tag("responseIf", list(tag_and, set_out_value))
-    tag_resp_cond <- tag("responseCondition", list(tag_resp_if))
-    return(tag_resp_cond)
+    tag_mt_var <- variable("FEEDBACKBASIC")
+    tag_and <- and(match(list(base_value, tag_mt_var)))
+    set_out_value <- setOutcomeValue(list(
+        identifier = object@outcome_identifier, multiple_tag))
+    return(responseCondition(responseIf(list(tag_and, set_out_value))))
 }
