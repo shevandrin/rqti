@@ -1,6 +1,6 @@
 ---
 type: pair
-knit: qti::render_qtijs
+knit: qti::render_opal
 ---
 
 # question
