@@ -47,7 +47,7 @@ Each step includes certain `qti` functions, the most useful of them are
 shown in the following diagram:
 
 <figure>
-<img src="../man/figures/workflow1.png" style="width:100.0%"
+<img src="workflow1.png" style="width:100.0%"
 alt="Basic workflow to create exercises and test" />
 <figcaption aria-hidden="true">Basic workflow to create exercises and
 test</figcaption>
