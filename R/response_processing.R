@@ -2,7 +2,7 @@
 #' @importFrom htmltools tag
 create_tag <- function(x) {
     function(attrs = list()) {
-        if (class(attrs) == "shiny.tag") attrs = list(attrs)
+        if (inherits(attrs, "shiny.tag")) attrs = list(attrs)
         tag(x, attrs)
     }
 }
