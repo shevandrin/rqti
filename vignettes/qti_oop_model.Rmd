@@ -21,4 +21,4 @@ library(qti)
 
 ## qti S4 Class diagramm
 
-![Class diagramm S4.](S4_classes_diagramm.jpg){width="100%"}
+![Class diagramm S4.](S4_classes.png){width="100%"}
