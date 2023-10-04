@@ -55,7 +55,7 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
-    if (!is.null(params$tolerance) & (is.null(params$tolerance_type))) {
+    if (!is.null(params$tolerance) & (params$tolerance_type == 'exact')) {
         params$tolerance_type <- "absolute" }
     result <- clean_yaml_str(params, "numeric")
     return(result)
