@@ -78,55 +78,64 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-<div class="section level1">
-<div class="page-header"><h1 id="qti">qti<a class="anchor" aria-label="anchor" href="#qti"></a>
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="get-started">Get started<a class="anchor" aria-label="anchor" href="#get-started"></a>
 </h1></div>
-<p>Note: this is work in progress, a stable release can be expected in Q4 2023.</p>
-<p>The goal of <code>qti</code> is to provide a clean and independent library for creating exercises and exams according to the <a href="https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html" class="external-link">QTI</a> standard directly from R.</p>
-<p>Why do we need another package for creating exams when there is already the <code>exams</code>-package? The philosophy of <code>exams</code> is <strong>one for all</strong>, whereas <code>qti</code> follows the Unix-philosophy: <strong>do one thing and do it well</strong>. tldr:</p>
-<ul>
-<li>
-<code>qti</code> has more (QTI) features (e.g. exercise type) than <code>exams</code>
-</li>
-<li>
-<code>qti</code> uses OOP (S4), the system is easy to extend (LMS specific needs)</li>
-<li>the Rmd-interface is cleaner as it just focues on QTI</li>
-<li>low-level functions can be used flexibly to create exercises</li>
-<li>
-<code>qti</code> puts a premium on testing, with currently over 100 tests</li>
-<li>rendering of QTI files in the browser (or viewer pane of RStudio) directly from R</li>
-<li>functions to upload files via REST API to LMS (for us OPAL, but you can implement your own)</li>
-</ul>
-<p>If you just use QTI-exercises, you should check out our package. If you need different formats next to QTI, e.g. print, LMS that do not support QTI stick to <code>exams</code>.</p>
-<!-- Just focusing on QTI gives us more time to support great features of the QTI standard that are missing in `exams`. For instance, `qti` offers dropdown-inputs, ordering-exercises, and match-tables. -->
+<p>2023-10-04</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
+<p>The <code>qti</code> package is still under development. The only way to install it so far is installing from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"librarian"</span><span class="op">)</span> <span class="co"># skip if you have librarian already</span></span>
-<span><span class="fu">librarian</span><span class="fu">::</span><span class="fu">shelf</span><span class="op">(</span><span class="va">shevandrin</span><span class="op">/</span><span class="va">qti</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu">install_github</span><span class="op">(</span><span class="st">"shevandrin/qti"</span><span class="op">)</span></span></code></pre></div>
+<p><code>qti</code> have not published yet on CRAN. After publishing it will be possible to install package as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"qti"</span><span class="op">)</span></span></code></pre></div>
+<p>After installation the package has to be called:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shevandrin/qti" class="external-link">qti</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="section"></h2>
-</div>
-<div class="section level2">
-<h2 id="what-is-not-possible">What is not possible<a class="anchor" aria-label="anchor" href="#what-is-not-possible"></a>
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h2>
+<p>The basic workflow with <code>qti</code> can be presented in 4 main stages:</p>
+<ol style="list-style-type: decimal">
+<li>Create Exercise files.
+<ol style="list-style-type: decimal">
+<li>Create Rmd document. Use Rmd templates (starts with prefix <code>QTI:</code>).</li>
+<li>Write a section entitled <code># question</code>. If necessary, include instances of the <code>r</code> code and use helper functions.</li>
+<li>Customize yaml section of Rmd document.</li>
+<li>Choose the way of visualization: QTIJS engine or LMS OPAL. Add <code>knit</code> attribute in yaml section.</li>
+<li>Check behavior and appearance of the task. Store the Rmd document in your repo.</li>
+</ol>
+</li>
+<li>Setup Test-object, where Exercises are organized in sections.</li>
+<li>Generate Test-file according to QTI standard.</li>
+<li>Upload assessment result file and get raw data for further analysis.</li>
+</ol>
+<p>Each step includes certain <code>qti</code> functions, the most useful of them are shown in the following diagram:</p>
+<figure><img src="../articles/workflow1.png" style="width:100.0%" alt="Basic workflow to create exercises and test"><figcaption aria-hidden="true">
+Basic workflow to create exercises and test
+</figcaption></figure><p>A more effective approach to learning the workflow is to create a simple exercise, such as “Single Choice”, as presented <a href="singlechoice.html">in this article.</a></p>
+<p>Full list of articles:</p>
 <ul>
-<li>Composites (several exercise types in one task) are not implemented because they do not work in our LMS (OPAL); several gaps do work, though</li>
-<li>Associates are not implemented because they does not work in OPAL</li>
+<li><a href="singlechoice.html">Single choice</a></li>
+<li><a href="multiplechoice.html">Multiple choice</a></li>
+<li><a href="essay.html">Essay</a></li>
+<li><a href="gap.html">Gap</a></li>
+<li><a href="dropdown.html">Dropdown</a></li>
+<li><a href="html">Order</a></li>
+<li><a href="directedpairs.html">Directed pairs</a></li>
+<li><a href="table.html">Tables</a></li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="comparison-between-exams-and-qti">Comparison between exams and qti<a class="anchor" aria-label="anchor" href="#comparison-between-exams-and-qti"></a>
+<h2 id="bug-report">Bug report<a class="anchor" aria-label="anchor" href="#bug-report"></a>
 </h2>
-<p>The <code>exams</code> package uses templates and pastes strings together to create qti files. This has some disadvantages: it is error prone, not easy to maintain and difficult to extend. If for instance, a new exercise type needs to be added, many locations have to be changed. <code>qti</code> is supposed to make life easier by providing some standard functions to create all parts of the QTI xml file.</p>
-<p>Extending exams is just a matter of composing the correct <code>qti</code> functions. Testing small <code>qti</code> functions is easy, whereas the main function of <code>exams</code> <code>make_item_body</code> consists of 736 lines. Indeed, this function has grown substantially over time (todo: provide evidence).</p>
-<p>Based on qti one can also develop new interfaces for creating exercises.</p>
+<p>Feel free to <a href="mailto://shevandrin@gmail.com">let us know</a> if <code>QTI</code> goes wrong or just <a href="https://github.com/shevandrin/qti/issues" class="external-link">open an issue on GitHub.</a></p>
 </div>
 </div>
-
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -161,15 +170,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/shevandrin/qti/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/shevandrin/qti/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://github.com/shevandrin/qti/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/shevandrin/qti/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
-<li><a href="https://app.codecov.io/gh/shevandrin/qti?branch=main" class="external-link"><img src="https://codecov.io/gh/shevandrin/qti/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://www.repostatus.org/#wip" class="external-link"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
-</ul>
-</div>
+
 
   </aside>
 </div>
