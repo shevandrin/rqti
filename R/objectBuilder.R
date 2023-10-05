@@ -22,7 +22,7 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 #'
 #' Create XML file for question specification from Rmd (md) description
 #' according to qti 2.1 infromation model
-#' @param file a file with markdown description of question.
+#' @param file a file with markdown description of the question.
 #' @param path string, optional; a folder to store xml file, can contain file
 #'   name; working directory by default
 #' @param verification boolean, optional; to check validity of xml file, default
@@ -31,6 +31,17 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 rmd2xml <- function(file, path = getwd(), verification = FALSE) {
     task <- create_question_object(file)
     createQtiTask(task, dir = path, verification = verification)
+}
+
+#' Upload task on LMS OPAL
+#'
+#' Direct uploading a task from Rmd file on OPAL.
+#' @param file a file with markdown description of the question.
+#' @export
+rmd2opal <- function(file) {
+    path <- qti::rmd2zip(file)
+    upload2opal(path)
+    unlink(path)
 }
 
 #' @importFrom stringr str_split_1
