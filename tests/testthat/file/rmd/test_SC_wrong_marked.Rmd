@@ -1,0 +1,16 @@
+---
+identifier: test 2
+type: sc
+title: statistical
+points: 3
+---
+
+# question
+Which type of histogram is symmetrically distributed with no skew?
+
+* *Histogram of Normal Distribution Values*
+* *Bernoulli Distribution*
+* Binomial Distribution
+* Poisson Distribution
+
+# feedback
