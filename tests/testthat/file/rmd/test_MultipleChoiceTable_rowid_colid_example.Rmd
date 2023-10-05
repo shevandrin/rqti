@@ -1,0 +1,16 @@
+---
+type: match
+identifier: test_MultipleChoice_example
+title: MultipleChoice
+abbr_id: true
+---
+
+```{r setup, echo=FALSE, warning=FALSE}
+library(readr)
+df <- readr::read_csv("table_MultipleChoice_rowid_colid.csv", col_types = "c")
+
+```
+# question
+Choose the correct order in the multiplication table
+`r knitr::kable(df)`
+

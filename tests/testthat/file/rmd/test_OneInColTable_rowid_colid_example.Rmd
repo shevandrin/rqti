@@ -1,0 +1,14 @@
+---
+type: match
+identifier: test_OneInColTable_example
+title: OneInColTable
+---
+
+```{r setup, echo=FALSE, warning=FALSE}
+library(readr)
+df <- readr::read_csv("table_OneInColTable_rowid_colid.csv", col_types = "c")
+```
+# question
+Choose the correct order in the multiplication table
+`r knitr::kable(df)`
+
