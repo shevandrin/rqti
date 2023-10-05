@@ -523,3 +523,18 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
     expect_equal(list_bv_sut, list_bv_expected )
     unlink(test_path("test_order.xml"))
 })
+test_that("Testing stop message for create_question_object() function
+          in case the type of the task is not specified properly )", {
+    error_message <- NULL
+    path <- test_path("file/rmd/test_wrong_file.Rmd")
+    tryCatch(
+        {
+            create_question_object(path)
+            },
+        error = function(e) {
+            error_message <<- conditionMessage(e)
+        }
+        )
+    expected_error <- ("The type of the task is not specified properly")
+    expect_equal(error_message, expected_error)
+})
