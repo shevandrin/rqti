@@ -44,6 +44,20 @@ rmd2opal <- function(file) {
     unlink(path)
 }
 
+
+#' Upload xml-file with task on LMS OPAL
+#'
+#' Direct uploading a task from xml file on OPAL.
+#' @param file a xml-file with QTI task specification
+#' @export
+xml2opal <- function(file) {
+    section_obj <- section(file, title = "Preview")
+    test_obj <- test4opal(content = section_obj, identifier = "Preview")
+    path <- create_qti_test(test_obj, zip_only=TRUE)
+    upload2opal(path)
+    unlink(path)
+}
+
 #' @importFrom stringr str_split_1
 #' @import yaml
 #' @importFrom rmarkdown pandoc_convert yaml_front_matter
