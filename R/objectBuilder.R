@@ -97,12 +97,6 @@ create_question_object <- function(file, file_dir = NULL) {
         }
     slots[["type"]] <- NULL
 
-    if (!is.null(slots[["seed"]])) {
-        id <- paste0(slots[["identifier"]], "_S", slots[["seed"]])
-        slots[["identifier"]] <- id
-        slots[["seed"]] <- NULL
-    }
-
     object <- do.call(new, slots)
     return(object)
 }
