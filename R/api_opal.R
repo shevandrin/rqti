@@ -84,7 +84,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'@param overwrite logical; if only one file with the specified display name is
 #'  found, it will be overwritten
 #'@param endpoint endpoint
-#'@param in_browser logical, optional; the parameter that controls whether to
+#'@param open_in_browser logical, optional; the parameter that controls whether to
 #'  open a URL in default browser; TRUE by default
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
@@ -102,7 +102,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'@export
 upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint =  paste0("https://bildungsportal.sachsen.de/",
-                                           "opal/"), in_browser = TRUE,
+                                           "opal/"), open_in_browser = TRUE,
                         api_user = NULL, api_password = NULL, cached = TRUE) {
 
     if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
@@ -153,9 +153,9 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
         }
 
         parse <- content(response, as = "parse", encoding = "UTF-8")
-        if ((in_browser) && (!is.null(parse$key))) {
-            url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
+        url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
                                "RepositoryEntry/", parse$key)
+        if ((open_in_browser) && (!is.null(parse$key))) {
             browseURL(url_res)
         }
         res <- list(key = parse$key, display_name = parse$displayname,
