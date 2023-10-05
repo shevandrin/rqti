@@ -149,7 +149,7 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
         # create new resource
         if (!exists("response")) {
          response <- upload_resource(file, display_name, rtype, access,
-                                        in_browser, endpoint)
+                                        open_in_browser, endpoint)
         }
 
         parse <- content(response, as = "parse", encoding = "UTF-8")
@@ -167,7 +167,7 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
         }
 }
 
-upload_resource <- function(file, display_name, rtype, access, in_browser,
+upload_resource <- function(file, display_name, rtype, access, open_in_browser,
                             endpoint) {
 
 
