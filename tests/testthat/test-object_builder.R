@@ -538,3 +538,20 @@ test_that("Testing stop message for create_question_object() function
     expected_error <- ("The type of the task is not specified properly")
     expect_equal(error_message, expected_error)
 })
+
+test_that("Testing stop message for create_question_object() function
+          in case more than 1 option marked as the correct answer
+          in SingleChoice object)", {
+              error_message <- NULL
+              path <- test_path("file/rmd/test_SC_wrong_marked.Rmd")
+              tryCatch(
+                  {
+                      create_question_object(path)
+                  },
+                  error = function(e) {
+                      error_message <<- conditionMessage(e)
+                  }
+              )
+              expected_error <- ("More than 1 option marked as the correct answer")
+              expect_equal(error_message, expected_error)
+          })
