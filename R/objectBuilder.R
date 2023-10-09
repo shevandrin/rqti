@@ -33,30 +33,6 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
     createQtiTask(task, dir = path, verification = verification)
 }
 
-#' Upload task on LMS OPAL
-#'
-#' Direct uploading a task from Rmd file on OPAL.
-#' @param file a file with markdown description of the question.
-#' @export
-rmd2opal <- function(file) {
-    path <- qti::rmd2zip(file)
-    upload2opal(path)
-    unlink(path)
-}
-
-
-#' Upload xml-file with task on LMS OPAL
-#'
-#' Direct uploading a task from xml file on OPAL.
-#' @param file a xml-file with QTI task specification
-#' @export
-xml2opal <- function(file) {
-    section_obj <- section(file, title = "Preview")
-    test_obj <- test4opal(content = section_obj, identifier = "Preview")
-    path <- create_qti_test(test_obj, zip_only=TRUE)
-    upload2opal(path)
-    unlink(path)
-}
 
 #' @importFrom stringr str_split_1
 #' @import yaml

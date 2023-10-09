@@ -108,6 +108,8 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
     if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
 
+    file <- process_raw_file(file)
+
     # check auth
     if (!is_logged(endpoint)) {
         auth_opal(api_user = NULL, api_password = NULL, cached = TRUE)
@@ -213,4 +215,18 @@ is_logged <- function(endpoint) {
                        encode = "multipart")
     res <- ifelse(response$status_code == 200, TRUE, FALSE)
     return(res)
+}
+
+
+process_raw_file <- function(file) {
+    ext <- tools::file_ext(path)
+    tdir <- tempfile()
+    dir.create(tdir)
+    if (ext == "rmd") path <- rmd2zip(file, path = tdir)
+    if (ext == "xml") {
+        section_obj <- section(file, title = "Preview")
+        test_obj <- test4opal(content = section_obj, identifier = "Preview")
+        path <- create_qti_test(test_obj, path = tdir, zip_only = TRUE)
+    }
+    return(path)
 }
