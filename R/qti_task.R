@@ -21,19 +21,20 @@ create_assessment_item <- function(object) {
         Map(createModalFeedback, object@feedback))
 }
 
-create_correct_response <- function(values) {
-    tags_value <- lapply(values, create_value)
-    tag("correctResponse", tags_value)
-}
-
 create_assessment_attributes <- function(object) {
     c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
       "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-      "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd",
+      "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imsqti_v2p1 ",
+                    "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"),
       "identifier" = object@identifier,
       "title" = paste(object@title),
       "adaptive" =  "false",
       "timeDependent" = "false")
+}
+
+create_correct_response <- function(values) {
+    tags_value <- lapply(values, create_value)
+    tag("correctResponse", tags_value)
 }
 
 create_value <- function(value) {
@@ -110,7 +111,6 @@ create_item_body_match_table <- function(object,  row_associations,
                          match_interactioin))
 }
 
-
 make_associable_choice <- function(id, text, match_max = 1, fixed) {
     tag("simpleAssociableChoice", list(identifier =  id,
                                        "fixed" = fixed,
@@ -136,7 +136,7 @@ make_inline_choice_interaction <- function(object) {
                           object@choices_identifiers,
                           object@solution)
     inline_choice_interaction <- tag("inlineChoiceInteraction",
-                              list(responseIdentifier = object@response_identifier,
+                        list(responseIdentifier = object@response_identifier,
                                    shuffle = tolower(object@shuffle),
                                    inline_choices))
     tagList(inline_choice_interaction)
@@ -145,7 +145,6 @@ make_inline_choice_interaction <- function(object) {
 make_choice <- function(type_choice, identifier, text) {
     tag(type_choice, list(identifier = identifier, text))
 }
-
 
 create_mapping <- function(object) {
     sum <- sum(object@points[object@points > 0])
@@ -157,8 +156,7 @@ create_mapping <- function(object) {
     tag("mapping", list(lowerBound = 0,
                         upperBound = sum,
                         defaultValue = 0,
-                        map_entries)
-    )
+                        map_entries))
 }
 
 create_mapping_gap <- function(object) {
@@ -216,7 +214,7 @@ create_prompt <- function(object) {
 #' @aliases create_qti_task
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     content <- as.character(create_assessment_item(object))
-    content <- gsub('(<img[^>]*[^/])>', "\\1/>", content)
+    content <- gsub("(<img[^>]*[^/])>", "\\1/>", content)
     doc <- xml2::read_xml(as.character(content))
     if (verification) {
         ver <- verify_qti(doc)
@@ -240,23 +238,17 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     return(stringr::str_remove(path, getwd()))
 }
 
-# function to verify xml with xsd scheme
+# verifies xml according to xsd scheme
 verify_qti <- function(doc) {
-    file <- file.path(system.file(package="qti"), "imsqti_v2p1.xsd")
+    file <- file.path(system.file(package = "qti"), "imsqti_v2p1.xsd")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(doc, schema)
-    ifelse ((validation[1]), return(validation[1]), return(validation))
+    ifelse(validation[1], return(validation[1]), return(validation))
 }
 
-# function return manifest for task
+# returns manifest for task
 create_manifest_task <- function(object) {
-    # Create the root element 'manifest'
-    manifest_attributes <- c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
-                             "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-                             "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd",
-                             "identifier" = paste0(object@title, "_manifest"))
-
-    manifest <- tag("manifest", manifest_attributes)
+    manifest <- tag("manifest", create_manifest_attributes(object))
     metadata <- tag("metadata", c())
     organisations <- tag("organisations", c())
 
@@ -268,5 +260,21 @@ create_manifest_task <- function(object) {
                                        href = paste0(object@identifier,
                                                      ".xml"),
                                        file))
-    tagAppendChildren(manifest, metadata, organisations,resources)
+    tagAppendChildren(manifest, metadata, organisations, resources)
+}
+
+create_manifest_attributes <- function(object) {
+    c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
+      "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
+      "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imscp_v1p1 ",
+        "http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd ",
+        "http://www.imsglobal.org/xsd/imsqti_v2p1 ",
+        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd ",
+        "http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 ",
+        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd ",
+        "http://ltsc.ieee.org/xsd/LOM ",
+        "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
+        "http://www.w3.org/1998/Math/MathML ",
+        "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
+      "identifier" = paste0(object@title, "_manifest"))
 }
