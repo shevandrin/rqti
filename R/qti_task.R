@@ -255,11 +255,12 @@ create_manifest_task <- function(object) {
     file_name <- paste0(object@identifier, ".xml")
     file <-  tag("file", list(href = file_name))
 
-    resources <- tag("resources", list(identifier = object@identifier,
-                                       type = "imsqti_test_xmlv2p1",
+    resource <- tag("resource", list(identifier = object@identifier,
+                                       type = "imsqti_item_xmlv2p1",
                                        href = paste0(object@identifier,
                                                      ".xml"),
                                        file))
+    resources <- tag("resources", list(resource))
     tagAppendChildren(manifest, metadata, organisations, resources)
 }
 
@@ -277,4 +278,34 @@ create_manifest_attributes <- function(object) {
         "http://www.w3.org/1998/Math/MathML ",
         "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
       "identifier" = paste0(object@title, "_manifest"))
+}
+
+create_task_zip <- function(object, path = ".", verification = FALSE,
+                            zip_only = TRUE) {
+    ext <- tools::file_ext(path)
+
+    if (ext == "") {
+        dir <- path
+        file_name <- object@identifier
+    } else {
+        dir <- dirname(path)
+        file_name <- tools::file_path_sans_ext(basename(path))
+    }
+
+    if (!dir.exists(path)) dir.create(path, recursive = TRUE)
+
+    tdir <- tempfile()
+    dir.create(tdir)
+
+    task_path <- create_qti_task(object, tdir)
+    print(task_path)
+
+    manifest <- create_manifest_task(object)
+    doc_manifest <- xml2::read_xml(as.character(manifest))
+    manifest_path <- paste0(tdir, "/imsmanifest.xml")
+    xml2::write_xml(doc_manifest, manifest_path)
+    print(manifest_path)
+
+    path <- zip_wrapper(file_name, tdir, path, NULL, zip_only)
+    return(path)
 }

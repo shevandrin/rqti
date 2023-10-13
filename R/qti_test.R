@@ -25,6 +25,7 @@
 create_qti_test <- function(object, path = ".", verification = FALSE,
                             zip_only = FALSE) {
     ext <- tools::file_ext(path)
+
     if (ext == "") {
         dir <- path
         file_name <- NULL
@@ -90,7 +91,7 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
                       out_proc)
 }
 
-# creates tag "assessmentSection" in test file
+# creates tag assessmentSection in test file
 create_section_test <- function(object, folder) {
     assessment_items <- suppressMessages(Map(buildAssessmentSection,
                                              object@assessment_item, folder))
@@ -191,7 +192,6 @@ create_resource_item <- function(id, href) {
 }
 
 zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
-
     if (length(files) > 0) {
         download_dir <- file.path(tools::file_path_as_absolute(dir_xml),
                                   "downloads")
