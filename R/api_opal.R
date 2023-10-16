@@ -220,7 +220,7 @@ is_logged <- function(endpoint) {
 
 
 process_raw_file <- function(file) {
-    ext <- tools::file_ext(path)
+    ext <- tools::file_ext(file)
     tdir <- tempfile()
     dir.create(tdir)
     if (ext == "rmd") path <- rmd2zip(file, path = tdir)
