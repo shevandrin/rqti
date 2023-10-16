@@ -106,10 +106,10 @@ content to LMS OPAL for the following use-cases:</p>
 <li><p><strong>Uploading a Zip Archive:</strong> If you already have a
 zip archive containing a test, you can use the <code>qti</code> package
 to upload it directly to LMS OPAL.</p></li>
-<li><p><strong>Uploading an Rmd File:</strong> If you have an
+<li><p><strong>Uploading from an Rmd File:</strong> If you have an
 independent Rmd file with a task, the <code>qti</code> package can wrap
 it into a zip archive and deliver it to LMS OPAL.</p></li>
-<li><p><strong>Uploading an XML File:</strong> If you have an
+<li><p><strong>Uploading from an XML File:</strong> If you have an
 independent XML file with a task, the <code>qti</code> package can wrap
 it into a zip archive and deliver it to LMS OPAL.</p></li>
 </ol>
@@ -117,15 +117,15 @@ it into a zip archive and deliver it to LMS OPAL.</p></li>
 <div class="section level2">
 <h2 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
 </h2>
-<p>To use the OPAL API, the user must have specific privileges. Your
-username must allow you to log in to the system using a password,
-working with the api system through shibboleth authorization is not
-possible.</p>
+<p>To use the OPAL API, the user must have certain permissions. Your
+username should allow you to log in using a password. Working with the
+api system via shibboleth authorization is not possible.</p>
 <p>For authentication on OPAL <code>qti</code> works with two global
-environment variable: API_USER and API_PASSWORD. To set them, you need
-to call Sys.setenv(API_USER =‘xxxxxxxxxxxxxxx’) and
-Sys.setenv(API_PASSWORD =‘xxxxxxxxxxxxxxx’) or you can put these
-commands into .Rprofile.</p>
+environment variable: <code>API_USER</code> and
+<code>API_PASSWORD</code>. To set them, you need to call
+<code>Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')</code> and
+<code>Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')</code> or you can put
+these commands into .Rprofile.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>API_USER <span class="op">=</span><span class="st">'__your_username__'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>API_PASSWORD <span class="op">=</span><span class="st">'__your_password__'</span><span class="op">)</span></span></code></pre></div>
@@ -137,32 +137,41 @@ here</a></p>
 <div class="section level2">
 <h2 id="uploading-testtask-on-opal">Uploading test/task on OPAL<a class="anchor" aria-label="anchor" href="#uploading-testtask-on-opal"></a>
 </h2>
-<p>To do this just call <code><a href="../reference/upload2opal.html">upload2opal()</a></code> with the file as a
+<p>To do this just call <code><a href="../reference/upload2opal.html">upload2opal()</a></code> with the file as the
 first parameter:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre></div>
-<p>As a result you get:</p>
+<p>As a result you can expect the following outcomes:</p>
 <ol style="list-style-type: decimal">
-<li>A browser will open the OPAL page with test/task.</li>
-<li>In R console there will be code ‘200’ (this status code means that
-the request was successful).</li>
-<li>Variable <code>result</code> will get a list with:
-<ul>
-<li>$key - this is an identifier of this resource on OPAL.</li>
-<li>$display_name - this is a title of the resource on OPAL, it shows in
-browser.</li>
-<li>$url - the permanent link on this resource.</li>
-</ul>
-</li>
+<li>Opening OPAL Page:</li>
 </ol>
+<p>A web browser will automatically open, displaying the OPAL page with
+your uploaded test or task.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Response Status Code 200</li>
+</ol>
+<p>In your R console, you will receive a status code 200. This status
+code indicates that the request to upload the content to OPAL was
+successful.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Result Variable:</li>
+</ol>
+<p>The result variable will contain a list with the following data:</p>
+<ul>
+<li>$key: An identifier for this resource on OPAL, which you can use for
+reference.</li>
+<li>$display_name: The title of the resource as it appears in the
+browser on OPAL.</li>
+<li>$url: A permanent link to access this resource on OPAL.</li>
+</ul>
 <p><code><a href="../reference/upload2opal.html">upload2opal()</a></code> always checks uniqueness of
-<code>display_name</code> in your personal repo of resources on OPAL. If
-some resources found, <code>qti</code> ask you what to do: rewrite,
-create new with the same <code>display_name</code>, or abort the
-uploading. By default <code><a href="../reference/upload2opal.html">upload2opal()</a></code> uses file name as a
-<code>display_name</code>. But you can define your own as the second
-parameter:</p>
+<code>display_name</code> in your personal repository of resources on
+OPAL. If any resources are found, <code>qti</code> will ask you what to
+do: rewrite, create a new one with the same <code>display_name</code>,
+or abort the uploading. By default <code><a href="../reference/upload2opal.html">upload2opal()</a></code> uses file
+name as a <code>display_name</code>. But you can define your own as the
+second parameter:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"Exam WS"</span><span class="op">)</span></span></code></pre></div>
 </div>
