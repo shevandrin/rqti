@@ -7,7 +7,7 @@
 rmd2xml(file, path = getwd(), verification = FALSE)
 }
 \arguments{
-\item{file}{a file with markdown description of question.}
+\item{file}{a file with markdown description of the question.}
 
 \item{path}{string, optional; a folder to store xml file, can contain file
 name; working directory by default}

@@ -523,3 +523,89 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
     expect_equal(list_bv_sut, list_bv_expected )
     unlink(test_path("test_order.xml"))
 })
+test_that("Testing stop message for create_question_object() function
+          in case the type of the task is not specified properly )", {
+    error_message <- NULL
+    path <- test_path("file/rmd/test_wrong_file.Rmd")
+    tryCatch(
+        {
+            create_question_object(path)
+            },
+        error = function(e) {
+            error_message <<- conditionMessage(e)
+        }
+        )
+    expected_error <- ("The type of the task is not specified properly")
+    expect_equal(error_message, expected_error)
+})
+
+test_that("Testing stop message for create_question_object() function
+          in case more than 1 option marked as the correct answer
+          in SingleChoice object)", {
+              error_message <- NULL
+              path <- test_path("file/rmd/test_SC_wrong_marked.Rmd")
+              tryCatch(
+                  {
+                      create_question_object(path)
+                  },
+                  error = function(e) {
+                      error_message <<- conditionMessage(e)
+                  }
+              )
+              expected_error <- ("More than 1 option marked as the correct answer")
+              expect_equal(error_message, expected_error)
+          })
+
+test_that("Testing read_table() function: delete the name of cols and rows
+          for MultipleChoiceTable", {
+    path <- test_path("file/rmd/test_MultipleChoiceTable_rowid_colid_example.Rmd")
+    sut <- create_question_object(path)
+
+    expected <- new("MultipleChoiceTable",
+                    content = list("<p>Choose the correct order in the multiplication table</p>"),
+                    identifier = "test_MultipleChoice_example",
+                    title = "MultipleChoice",
+                    rows = c("row1", "row2", "row3"),
+                    rows_identifiers = c("id1", "id2", "id3"),
+                    cols = c("alfa", "beta", "gamma"),
+                    cols_identifiers = c("alf", "bet", "gmm"),
+                    answers_identifiers =c("id1 alf", "id1 gmm", "id2 bet", "id3 bet"),
+                    points = 4)
+    expect_equal(sut, expected)
+})
+
+test_that("Testing read_table() function: delete the name of cols and rows
+          for OneInRowTable", {
+    path <- test_path("file/rmd/test_OneInRowTable_rowid_colid_example.Rmd")
+    sut <- create_question_object(path)
+
+    expected <- new("OneInRowTable",
+                    content = list("<p>Choose the correct order in the multiplication table</p>"),
+                    identifier = "test_OneInRowTable_example",
+                    title = "OneInRowTable",
+                    rows = c("row1", "row2", "row3"),
+                    rows_identifiers = c("id1", "id2", "id3"),
+                    cols = c("alfa", "beta", "gamma"),
+                    cols_identifiers = c("alf", "bet", "gmm"),
+                    answers_identifiers =c("id1 alf", "id2 alf", "id3 gmm"),
+                    points = 3)
+    expect_equal(sut, expected)
+})
+
+test_that("Testing read_table() function: delete the name of cols and rows
+          for OneInColTable", {
+    path <- test_path("file/rmd/test_OneInColTable_rowid_colid_example.Rmd")
+    sut <- create_question_object(path)
+
+    expected <- new("OneInColTable",
+                    content = list("<p>Choose the correct order in the multiplication table</p>"),
+                    identifier = "test_OneInColTable_example",
+                    title = "OneInColTable",
+                    rows = c("row1", "row2", "row3"),
+                    rows_identifiers = c("id1", "id2", "id3"),
+                    cols = c("alfa", "beta", "gamma"),
+                    cols_identifiers = c("alf", "bet", "gmm"),
+                    answers_identifiers =c("id1 alf", "id1 bet", "id3 gmm"),
+                    points = 3)
+    expect_equal(sut, expected)
+})

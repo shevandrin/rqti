@@ -14,6 +14,10 @@ articles:
   - directedpairs
   - table
   - section
+- title: Workflow with API
+  navbar: API
+  contents:
+  - api_opal
 - title: Workflow at the S4-classes level
   navbar: S4 qti classes
   contents:

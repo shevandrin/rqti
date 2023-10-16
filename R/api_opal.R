@@ -11,8 +11,8 @@
 #'   variable
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
-#'   OPAL-username and password. This function can get `api_user` and
-#'   `api_password` from environment variables. To set a global environment
+#'   OPAL-username and password. This function can get `API_USER` and
+#'   `API_PASSWORD` from environment variables. To set a global environment
 #'   variable, you need to call `Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')` and
 #'   `Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
 #'   into .Rprofile.
@@ -84,7 +84,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'@param overwrite logical; if only one file with the specified display name is
 #'  found, it will be overwritten
 #'@param endpoint endpoint
-#'@param in_browser logical, optional; the parameter that controls whether to
+#'@param open_in_browser logical, optional; the parameter that controls whether to
 #'  open a URL in default browser; TRUE by default
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
@@ -99,14 +99,17 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'
 #'@return list with key and url
 #'@importFrom utils browseURL
+#'@importFrom tools file_ext
 #'@export
 upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
-                        endpoint =  paste0("https://bildungsportal.sachsen.de/",
-                                           "opal/"), in_browser = TRUE,
-                        api_user = NULL, api_password = NULL, cached = TRUE) {
+                        endpoint = "https://bildungsportal.sachsen.de/opal/",
+                        open_in_browser = TRUE, api_user = NULL,
+                        api_password = NULL, cached = TRUE) {
 
     if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
+
+    if (file_ext(file) != "zip") file <- process_raw_file(file)
 
     # check auth
     if (!is_logged(endpoint)) {
@@ -149,13 +152,13 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
         # create new resource
         if (!exists("response")) {
          response <- upload_resource(file, display_name, rtype, access,
-                                        in_browser, endpoint)
+                                        open_in_browser, endpoint)
         }
 
         parse <- content(response, as = "parse", encoding = "UTF-8")
-        if ((in_browser) && (!is.null(parse$key))) {
-            url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
+        url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
                                "RepositoryEntry/", parse$key)
+        if ((open_in_browser) && (!is.null(parse$key))) {
             browseURL(url_res)
         }
         res <- list(key = parse$key, display_name = parse$displayname,
@@ -167,7 +170,7 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
         }
 }
 
-upload_resource <- function(file, display_name, rtype, access, in_browser,
+upload_resource <- function(file, display_name, rtype, access, open_in_browser,
                             endpoint) {
 
 
@@ -213,4 +216,18 @@ is_logged <- function(endpoint) {
                        encode = "multipart")
     res <- ifelse(response$status_code == 200, TRUE, FALSE)
     return(res)
+}
+
+
+process_raw_file <- function(file) {
+    ext <- tools::file_ext(file)
+    tdir <- tempfile()
+    dir.create(tdir)
+    if (ext == "Rmd") path <- rmd2zip(file, path = tdir)
+    if (ext == "xml") {
+        section_obj <- section(file, title = "Preview")
+        test_obj <- test4opal(content = section_obj, identifier = "Preview")
+        path <- create_qti_test(test_obj, path = tdir, zip_only = TRUE)
+    }
+    return(path)
 }

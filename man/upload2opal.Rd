@@ -9,8 +9,8 @@ upload2opal(
   display_name = NULL,
   access = 4,
   overwrite = TRUE,
-  endpoint = paste0("https://bildungsportal.sachsen.de/", "opal/"),
-  in_browser = TRUE,
+  endpoint = "https://bildungsportal.sachsen.de/opal/",
+  open_in_browser = TRUE,
   api_user = NULL,
   api_password = NULL,
   cached = TRUE
@@ -32,7 +32,7 @@ found, it will be overwritten}
 
 \item{endpoint}{endpoint}
 
-\item{in_browser}{logical, optional; the parameter that controls whether to
+\item{open_in_browser}{logical, optional; the parameter that controls whether to
 open a URL in default browser; TRUE by default}
 
 \item{api_user}{username on OPAL}

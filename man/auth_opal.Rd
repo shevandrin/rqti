@@ -25,8 +25,8 @@ cookie value is required to access the OPAL API system."
 }
 \section{Authentication}{
  To use OPAL API, you need to provide your
-OPAL-username and password. This function can get \code{api_user} and
-\code{api_password} from environment variables. To set a global environment
+OPAL-username and password. This function can get \code{API_USER} and
+\code{API_PASSWORD} from environment variables. To set a global environment
 variable, you need to call \code{Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')} and
 \code{Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')}or you can put these commands
 into .Rprofile.

@@ -25,6 +25,7 @@
 create_qti_test <- function(object, path = ".", verification = FALSE,
                             zip_only = FALSE) {
     ext <- tools::file_ext(path)
+
     if (ext == "") {
         dir <- path
         file_name <- NULL
@@ -54,54 +55,60 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
 }
 
 # creates xml root and children of test file
-create_assessment_test <-function(object, folder, data_downloads = NULL,
+create_assessment_test <- function(object, folder, data_downloads = NULL,
                                   data_features = NULL) {
-    assessment_attributes <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
-                               "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-                               "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd",
-                               "identifier" = object@identifier,
-                               "title" = paste(object@title),
-                               "data-downloads" = data_downloads,
-                               "data-features" = data_features)
-    assesment_test <- tag("assessmentTest", assessment_attributes)
+    assessment_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
+                    "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
+      "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imsqti_v2p1 ",
+                    "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"),
+                        "identifier" = object@identifier,
+                        "title" = paste(object@title),
+                        "data-downloads" = data_downloads,
+                        "data-features" = data_features)
+    assesment_test <- tag("assessmentTest", assessment_attrs)
+    time_limits <- c()
     if (!is.na(object@time_limits)) {
        time_limits <- tag("timeLimits", list(maxTime = object@time_limits * 60))
-    } else {time_limits = c()}
+    }
 
     session_control <- create_item_session_control(object@max_attempts,
                                                    object@allow_comment,
                                                    object@rebuild_variables)
     sections <- Map(create_section_test, object@section, folder)
-    testPart <- tag("testPart", list(identifier = object@test_part_identifier,
-                                     navigationMode = object@navigation_mode,
-                                     submissionMode = object@submission_mode,
-                                     tagList(session_control,
-                                             sections)))
+    test_part <- tag("testPart", list(identifier = object@test_part_identifier,
+                                      navigationMode = object@navigation_mode,
+                                      submissionMode = object@submission_mode,
+                                      tagList(session_control, sections)))
     # create outcome processing
-    tvar <- tag("testVariables", list(variableIdentifier="SCORE"))
+    tvar <- tag("testVariables", list(variableIdentifier = "SCORE"))
     tsum <- tag("sum", list(tvar))
-    tsov <- tag("setOutcomeValue", list(identifier="SCORE", tsum))
+    tsov <- tag("setOutcomeValue", list(identifier = "SCORE", tsum))
     out_proc <- tag("outcomeProcessing", list(tsov))
     tagAppendChildren(assesment_test,
                       createOutcomeDeclaration(object),
                       time_limits,
-                      testPart,
+                      test_part,
                       out_proc)
 }
 
-# creates tag "assessmentSection" in test file
+# creates tag assessmentSection in test file
 create_section_test <- function(object, folder) {
     assessment_items <- suppressMessages(Map(buildAssessmentSection,
                                              object@assessment_item, folder))
+    time_limits <- c()
     if (!is.na(object@time_limits)) {
        time_limits <- tag("timeLimits", list(maxTime = object@time_limits * 60))
-    } else {time_limits = c()}
+    }
+
+    shuffle <- c()
     if (object@shuffle) {
         shuffle <- tag("ordering", list(shuffle = "true"))
-    } else {shuffle <- c()}
+    }
+
+    selection <- c()
     if (!is.na(object@selection)) {
         selection <- tag("selection", list(select = object@selection))
-    } else {selection <- c()}
+    }
 
     session_control <- create_item_session_control(object@max_attempts,
                                                    object@allow_comment,
@@ -120,25 +127,37 @@ create_section_test <- function(object, folder) {
 
 # creates tag "itemSessionControl" with attrs in test file
 create_item_session_control <- function(attempts, comments, rebuild) {
-    if ((att <- !is.na(attempts)) |
-        (com <- !is.na(comments)) |
-        (reb <- !is.na(rebuild))) {
-        if (att) { att <- list(maxAttempts = attempts)} else {att <- list()}
-        if (com) { com <- list(allowComment = tolower(comments))}
-        else {com <- list()}
-        if (reb) { reb <- list(rebuildVariables = tolower(rebuild))}
-        else {reb <- list()}
+    att <- NULL
+    com <- NULL
+    reb <- NULL
+
+    if (!is.na(attempts)) att <- list(maxAttempts = attempts)
+    if (!is.na(comments)) com <- list(allowComment = tolower(comments))
+    if (!is.na(rebuild)) reb <- list(rebuildVariables = tolower(rebuild))
+
+    session_control <- c()
+    if (any(!sapply(list(attr, com, reb), is.null))) {
         session_control <- tag("itemSessionControl", c(att, com, reb))
-    } else {session_control = c()}
+    }
+    return(session_control)
 }
 
 # creates manifest file wiht root tag "manifest"
 create_manifest <- function(object) {
-    manifest_attributes <- c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
-                             "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-                             "xsi:schemaLocation" = "http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd",
-                             "identifier" = paste0(object@title, "_manifest"))
-    manifest <- tag("manifest", manifest_attributes)
+    manifest_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
+                      "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
+        "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imscp_v1p1",
+        " http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd ",
+        "http://www.imsglobal.org/xsd/imsqti_v2p1 ",
+        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd ",
+        "http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 ",
+        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd ",
+        "http://ltsc.ieee.org/xsd/LOM ",
+        "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
+        "http://www.w3.org/1998/Math/MathML ",
+        "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
+                      "identifier" = paste0(object@title, "_manifest"))
+    manifest <- tag("manifest", manifest_attrs)
     metadata <- tag("metadata", c())
     organisations <- tag("organisations", c())
 
@@ -173,7 +192,6 @@ create_resource_item <- function(id, href) {
 }
 
 zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
-
     if (length(files) > 0) {
         download_dir <- file.path(tools::file_path_as_absolute(dir_xml),
                                   "downloads")
@@ -182,7 +200,6 @@ zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
     }
 
     # make and copy final zip in folder exams
-    files_temp <- list.files(dir_xml)
     wd <- getwd()
     setwd(dir_xml)
     zip_name <- paste0(id, ".zip")

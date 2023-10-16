@@ -22,7 +22,7 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 #'
 #' Create XML file for question specification from Rmd (md) description
 #' according to qti 2.1 infromation model
-#' @param file a file with markdown description of question.
+#' @param file a file with markdown description of the question.
 #' @param path string, optional; a folder to store xml file, can contain file
 #'   name; working directory by default
 #' @param verification boolean, optional; to check validity of xml file, default
@@ -32,6 +32,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
     task <- create_question_object(file)
     createQtiTask(task, dir = path, verification = verification)
 }
+
 
 #' @importFrom stringr str_split_1
 #' @import yaml
@@ -96,12 +97,6 @@ create_question_object <- function(file, file_dir = NULL) {
                                        collapse = ""))
         }
     slots[["type"]] <- NULL
-
-    if (!is.null(slots[["seed"]])) {
-        id <- paste0(slots[["identifier"]], "_S", slots[["seed"]])
-        slots[["identifier"]] <- id
-        slots[["seed"]] <- NULL
-    }
 
     object <- do.call(new, slots)
     return(object)
