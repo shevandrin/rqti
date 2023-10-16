@@ -11,8 +11,8 @@
 #'   variable
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
-#'   OPAL-username and password. This function can get `api_user` and
-#'   `api_password` from environment variables. To set a global environment
+#'   OPAL-username and password. This function can get `API_USER` and
+#'   `API_PASSWORD` from environment variables. To set a global environment
 #'   variable, you need to call `Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')` and
 #'   `Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
 #'   into .Rprofile.
@@ -99,16 +99,17 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'
 #'@return list with key and url
 #'@importFrom utils browseURL
+#'@importFrom tools file_ext
 #'@export
 upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
-                        endpoint =  paste0("https://bildungsportal.sachsen.de/",
-                                           "opal/"), open_in_browser = TRUE,
-                        api_user = NULL, api_password = NULL, cached = TRUE) {
+                        endpoint = "https://bildungsportal.sachsen.de/opal/",
+                        open_in_browser = TRUE, api_user = NULL,
+                        api_password = NULL, cached = TRUE) {
 
     if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
 
-    file <- process_raw_file(file)
+    if (file_ext(file) != "zip") file <- process_raw_file(file)
 
     # check auth
     if (!is_logged(endpoint)) {

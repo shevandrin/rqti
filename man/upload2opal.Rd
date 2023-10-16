@@ -9,7 +9,7 @@ upload2opal(
   display_name = NULL,
   access = 4,
   overwrite = TRUE,
-  endpoint = paste0("https://bildungsportal.sachsen.de/", "opal/"),
+  endpoint = "https://bildungsportal.sachsen.de/opal/",
   open_in_browser = TRUE,
   api_user = NULL,
   api_password = NULL,
