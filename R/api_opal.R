@@ -223,7 +223,7 @@ process_raw_file <- function(file) {
     ext <- tools::file_ext(file)
     tdir <- tempfile()
     dir.create(tdir)
-    if (ext == "rmd") path <- rmd2zip(file, path = tdir)
+    if (ext == "Rmd") path <- rmd2zip(file, path = tdir)
     if (ext == "xml") {
         section_obj <- section(file, title = "Preview")
         test_obj <- test4opal(content = section_obj, identifier = "Preview")
