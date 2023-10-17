@@ -29,29 +29,32 @@ path_sc1 <- fs::path_package("exercises", "sc1.Rmd", package = "qti")
 cat(readLines(path_sc1), sep = '\n')
 ```
 
-Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students (here not really since it is trivial).
+Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students.
 
 Further note that the `knit` parameter is set to a custom qti function, which will handle the preview. This is not necessarily required, but simplifies the workflow substantially. If you leave it out, the default preview is just an html file. If you add our knit function, you will get a more realistic preview.
 
 To see what the final result might look like in a learning management system you can just click the `Knit` button in RStudio. This will produce a qti xml file and render it in the viewer pane via QTIJS (you can also just fire up the displayed server url in the browser).
-<!-- The same is achieved when you run `render_qti` on the Rmd-file or first `rmd2qti` (producing the qti xml) and then `render_xml` to render the file. In every case the output looks like this: -->
 
-![Preview of single choice exercise rendered by QTIJS](screenshot_sc1.png){width="400"}
+![Preview of single choice exercise rendered by QTIJS](images/sc1_qtijs.png)
 
 The corresponding xml file is created in the same folder as the Rmd file if you click the Knit-Button.
 <!-- or in the current directory if you execute the functions from the console. Usually, the Knit button will be sufficient for most use cases, but if you need more control the functions `rmd2qti, render_xml, render_zip` are handy. The functions give a message about the path of the created file. -->
 
-Most learning management systems can directly import an xml-file, so all you need to do is upload the generated file. Compositions of exercises are covered in the article: [Tests (Compositions of exercises)](tests.html).
+Most learning management systems can directly import a QTI-xml-file, so all you need to do is upload the generated file. Compositions of exercises are covered in the article: [Tests (Compositions of exercises)](tests.html).
 
-If you happen to use OPAL/ONYX, you can also upload your exercises with the knit parameter:
+If you happen to use OPAL/ONYX, you can also upload your exercises with the knit parameter directly:
 
 ```{r eval=FALSE}
 knit: render_opal
 ```
 
-This will again render to the Viewer in RStudio or open a browser if you are not using RStudio. Setting up OPAL requires some additional steps, which are covered in the article: [Setting up OPAL](opal.html).
+This will upload the file and open a browser with the opal url. It should look like this:
 
-By default the rights of the uploaded material are set to public, so no authentication is required to view the material. Otherwise you have to login into OPAL, which will log you out in the API.
+![](images/singlechoice-simple.jpg)
+
+Setting up OPAL requires some additional steps, which are covered in the article: [Setting up OPAL](api_opal.html).
+
+By default the rights of the uploaded material in OPAL are set to public, so no authentication is required to view the material. Otherwise you have to login into OPAL, which will log you out in the API. Please take this into account when testing your material. Without changing the defaults anyone with the link has access to your questions.
 
 <!-- The function `render_opal` will aks you for credentials first. Depending on the OPAL setup you might need to use a VPN. Furthermore only password-based authentication accounts work (Shibboleth does not work). You probably need to consult your IT before using `upload2opal`. More information on this can be found in the article: OPAL API. Specifically, we describe how to setup the API at TU Chemnitz. -->
 
@@ -97,20 +100,9 @@ cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-complex/skeleto
 
 Which renders in OPAL as:
 
-```{r eval=T}
-# wait for andrey to add convenience functions # sc1c.Rmd
-res <- upload2opal(fs::path_package("exercises", "sc1c.Rmd", package = "qti"), in_browser = T)
-```
+![](images/singlechoice-complex.jpg)
 
-```{r eval=T}
-webshot2::webshot(url = res$url, file = "sc1c.png",
-                  #selector = "div.iframe-container",
-                  selector = ".content-container-inner")
-# b <- chromote::ChromoteSession$new(width = 600)
-# b$Page$navigate(res$url)
-# b$screenshot(show = T, selector = "div.iframe-container")
-```
-![](sc1c.png)
+Let us now discuss all yaml attributes that can be used
 
 ## yaml attributes
 
@@ -128,7 +120,7 @@ Title of the exercise. Can be displayed to students depending on the learning ma
 
 ### shuffle
 
-If `true`, randomizes the order of the choices. Defaults to `true`. Only in rare occasions it makes sense to have a strict order of choices (setting shuffle to `false`).
+If `true` (the default), randomizes the order of the choices. Only in rare occasions it makes sense to have a strict order of choices (setting shuffle to `false`).
 
 ### orientation
 
@@ -149,6 +141,8 @@ Feedback can be provided with the section
 -   **\# feedback** (general feedback, displayed every time, without conditions)
 -   **\# feedback+** (only provided if student reaches all points)
 -   **\# feedback-** (only provided if student does not reach all points)
+
+We are generally not fans of conditional feedback. Usually, it will be better to present the whole solution but group it into chunks that can be opened and closed (e.g. html-element details and summary).
 
 ## List of answers as a variable
 
