@@ -95,14 +95,13 @@
 
     
     
-<!-- todo: wait until BPS replies, then we can take screenshots with the approach below -->
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
 <p>The simplest exercise type in the qti package is single choice. A
 template is available in RStudio when you click on
 <code>New file -&gt; R Markdown -&gt; From Template</code>. The qti
-templates start with <code>QTI:</code>. Here we look at the templates
+templates start with <code>QTI</code>. Here we look at the templates
 <code>QTI: singlechoice (simple)</code> and
 <code>QTI: singlechoice (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: sc</code> (or the
@@ -126,70 +125,44 @@ Which version of the QTI standard is used by the R package qti?
 # feedback
 
 The used qti version is 2.1.</code></pre>
-<!-- Iframe does not seem to work out of the box -->
-<!-- <iframe src="http://127.0.0.1:4321" sandbox="allow-scripts"></iframe> -->
 <p>Note that in this example, a feedback section was also provided. This
 is optional, but usually it is a good idea to give some explanation for
-students (here not really since it is trivial).</p>
+students.</p>
 <p>Further note that the <code>knit</code> parameter is set to a custom
 qti function, which will handle the preview. This is not necessarily
 required, but simplifies the workflow substantially. If you leave it
 out, the default preview is just an html file. If you add our knit
 function, you will get a more realistic preview.</p>
-<!-- Calling `rmd2qti` on the file produces the xml-file in the current folder. In the QTI player ONYX this file renders as: -->
-<!-- ADD: function rmd2opal...but leaves out important step for non-opal users -->
-<!-- ```{r eval=FALSE} -->
-<!-- rmd2qti(fs::path_package("exercises", "sc1.Rmd", package = "qti")) -->
-<!-- url <- upload2opal("sc1.xml") # you need an OPAL account for that! -->
-<!-- ``` -->
-<!-- ```{r eval=FALSE} -->
-<!-- system(paste0("wkhtmltoimage ", url, " sc1.png")) -->
-<!-- ``` -->
-<!-- ```{r eval=FALSE} -->
-<!-- # does not work, produces something strange -->
-<!-- # try out pageres instead? -->
-<!-- system(paste0("wkhtmltoimage ", "http://127.0.0.1:6052 ", "sc1.png")) -->
-<!-- ``` -->
 <p>To see what the final result might look like in a learning management
 system you can just click the <code>Knit</code> button in RStudio. This
 will produce a qti xml file and render it in the viewer pane via QTIJS
-(you can also just fire up the displayed server url in the browser). The
-same is achieved when you run <code>render_qti</code> on the Rmd-file or
-first <code>rmd2qti</code> (producing the qti xml) and then
-<code>render_xml</code> to render the file. In every case the output
-looks like this:</p>
+(you can also just fire up the displayed server url in the browser).</p>
 <div class="figure">
-<img src="screenshot_sc1.png" width="400" alt=""><p class="caption">Preview of single choice exercise rendered by
+<img src="images/sc1_qtijs.png" alt=""><p class="caption">Preview of single choice exercise rendered by
 QTIJS</p>
 </div>
 <p>The corresponding xml file is created in the same folder as the Rmd
-file if you click the Knit-Button or in the current directory if you
-execute the functions from the console. Usually, the Knit button will be
-sufficient for most use cases, but if you need more control the
-functions <code>rmd2qti, render_xml, render_zip</code> are handy. The
-functions give a message about the path of the created file.</p>
-<p>Most learning management systems can directly import an xml-file, so
-all you need to do is upload the generated file. Compositions of
-exercises are covered in the article: ….TODO</p>
+file if you click the Knit-Button.
+<!-- or in the current directory if you execute the functions from the console. Usually, the Knit button will be sufficient for most use cases, but if you need more control the functions `rmd2qti, render_xml, render_zip` are handy. The functions give a message about the path of the created file. --></p>
+<p>Most learning management systems can directly import a QTI-xml-file,
+so all you need to do is upload the generated file. Compositions of
+exercises are covered in the article: <a href="tests.html">Tests
+(Compositions of exercises)</a>.</p>
 <p>If you happen to use OPAL/ONYX, you can also upload your exercises
-via:</p>
+with the knit parameter directly:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">rmd2qti</span><span class="op">(</span><span class="st">"sc1.Rmd"</span><span class="op">)</span> <span class="co"># generates xml</span></span>
-<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"sc1.xml"</span><span class="op">)</span></span></code></pre></div>
-<p>The last function will return a url, which you can fire up in a
-browser:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/browseURL.html" class="external-link">browseURL</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span></code></pre></div>
-<p>By default the rights of the uploaded material are set to public, so
-no login is required to view the material. Otherwise you have to login
-into OPAL, which will log you out in the API.</p>
-<p>The function <code>upload2opal</code> will aks you for credentials
-first. Depending on the OPAL setup you might need to use a VPN.
-Furthermore only password-based authentication accounts work (Shibboleth
-does not work). You probably need to consult your IT before using
-<code>upload2opal</code>. More information on this can be found in the
-article: OPAL API. Specifically, we describe how to setup the API at TU
-Chemnitz.</p>
+<code class="sourceCode R"><span><span class="va">knit</span><span class="op">:</span> <span class="va">render_opal</span></span></code></pre></div>
+<p>This will upload the file and open a browser with the opal url. It
+should look like this:</p>
+<p><img src="images/singlechoice-simple.jpg"></p>
+<p>Setting up OPAL requires some additional steps, which are covered in
+the article: <a href="api_opal.html">Setting up OPAL</a>.</p>
+<p>By default the rights of the uploaded material in OPAL are set to
+public, so no authentication is required to view the material. Otherwise
+you have to login into OPAL, which will log you out in the API. Please
+take this into account when testing your material. Without changing the
+defaults anyone with the link has access to your questions.</p>
+<!-- The function `render_opal` will aks you for credentials first. Depending on the OPAL setup you might need to use a VPN. Furthermore only password-based authentication accounts work (Shibboleth does not work). You probably need to consult your IT before using `upload2opal`. More information on this can be found in the article: OPAL API. Specifically, we describe how to setup the API at TU Chemnitz. -->
 </div>
 <div class="section level2">
 <h2 id="syntax-explained">Syntax explained<a class="anchor" aria-label="anchor" href="#syntax-explained"></a>
@@ -213,10 +186,10 @@ Which version of the QTI standard is used by the R package qti?
 
 The used qti version is 2.1.</code></pre>
 <p>Note that you do not necessarily need to specify which list element
-is correct. The first one is treated as the correct one, which is a nice
-shortcut. If you communicate this to your collaborators, it is also much
-easier to read. They do not need to look anywhere else in the file for
-checking the correct answer.</p>
+is correct. The first one is treated as the correct one, which is a
+useful shortcut. If you communicate this to your collaborators, it is
+also much easier to read. They do not need to look anywhere else in the
+file for checking the correct answer.</p>
 <p>Of course you can specify the correct choice if need be. Our
 preferred way of doing this is by putting asterisks around this
 option:</p>
@@ -233,18 +206,17 @@ Which version of the QTI standard is used by the R package qti?
 - *2.1*
 - 3.0
 - 2.2</code></pre>
-<!-- ![Preview of single choice exercise rendered by QTIJS](screenshot_sc1b.png){width="400"} -->
 <p>Once again, this is much easier to read than providing the solution
 somewhere else (e.g. in the yaml section). Furthermore, producing a
 preview as html directly shows you which element is correct.</p>
 <p>An important note: Do not forget to put a blank line before your
 question and the answer list, otherwise the list will not be a proper
 list:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>A question text that is not separated by a blank line</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>- 1.2</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>- 2.1</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>- 3.0</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>- 2.2</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>A question text that is not separated by a blank line</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>- 1.2</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>- 2.1</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>- 3.0</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>- 2.2</span></code></pre></div>
 <p>Renders as:</p>
 <blockquote>
 <p>My question text, not separated by a blank line - 1.2 - 2.1 - 3.0 -
@@ -263,9 +235,9 @@ type: sc # equivalent to singlechoice and schoice
 knit: qti::render_qtijs # if you do not want our preview renderer, remove this
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
-shuffle: true # random order of choices
-orientation: vertical # OR horizontal
-points: 1
+shuffle: false # random order of choices
+orientation: horizontal # OR horizontal
+points: 0.5
 ---
 
 # question
@@ -291,12 +263,9 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 --&gt;</code></pre>
-<p>Which renders as:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">rmd2qti</span><span class="op">(</span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"exercises"</span>, <span class="st">"sc1c.Rmd"</span>, package <span class="op">=</span> <span class="st">"qti"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"sc1c.xml"</span><span class="op">)</span> <span class="co">#hide?</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"wkhtmltoimage "</span>, <span class="va">url</span>, <span class="st">"sc1c.png"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Which renders in OPAL as:</p>
+<p><img src="images/singlechoice-complex.jpg"></p>
+<p>Let us now discuss all yaml attributes that can be used</p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -306,7 +275,7 @@ Try again. (Only displayed if the solution is not correct.)
 </h3>
 <p>Has to be <code>singlechoice</code> or <code>sc</code> (a shortcut
 for singlechoice) or <code>schoice</code> (compatible with
-<code>exams</code>package)</p>
+<code>exams</code> package)</p>
 </div>
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
@@ -325,9 +294,9 @@ learning management system settings. Default is the file name.</p>
 <div class="section level3">
 <h3 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
 </h3>
-<p>If <code>true</code>, randomizes the order of the choices. Defaults
-to <code>true</code>. Only in rare occasions it makes sense to have a
-strict order of choices (setting shuffle to <code>false</code>).</p>
+<p>If <code>true</code> (the default), randomizes the order of the
+choices. Only in rare occasions it makes sense to have a strict order of
+choices (setting shuffle to <code>false</code>).</p>
 </div>
 <div class="section level3">
 <h3 id="orientation">orientation<a class="anchor" aria-label="anchor" href="#orientation"></a>
@@ -346,8 +315,7 @@ than specifying the correct choice directly in the list of all choices
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>How many points are given for the correct solution. Default is 1. You
-cannot do much wrong giving 1 point for a single choice exercise.</p>
+<p>How many points are given for the correct solution. Default is 1.</p>
 </div>
 </div>
 <div class="section level2">
@@ -365,6 +333,9 @@ points)</li>
 <strong># feedback-</strong> (only provided if student does not
 reach all points)</li>
 </ul>
+<p>We are generally not fans of conditional feedback. Usually, it will
+be better to present the whole solution but group it into chunks that
+can be opened and closed (e.g. html-element details and summary).</p>
 </div>
 <div class="section level2">
 <h2 id="list-of-answers-as-a-variable">List of answers as a variable<a class="anchor" aria-label="anchor" href="#list-of-answers-as-a-variable"></a>
@@ -372,13 +343,11 @@ reach all points)</li>
 <p>For more complex exercises the list of answers is often just
 available as a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="fu">c</span>(<span class="dv">2</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
 <!-- make a separate vignette for this -->
 <!-- ## A programatic low level approach -->
 <!-- The `qti` package is very flexible in that you can also use low level functions to create qti content. Let us say you have a csv table with many single choice exercises. It is quite easy to transform this to a qti section: -->
-<!-- ```{r} -->
-<!-- ``` -->
 </div>
 <div class="section level2">
 <h2 id="some-advice-on-single-choice-exercises">Some advice on single choice exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-single-choice-exercises"></a>
@@ -389,8 +358,8 @@ be ruled out. Psychometric properties will usually be worse than for gap
 exercises that are similar in content.</p>
 <p>In the <code>exams</code> package you will see many examples where
 numeric gaps are transformed into single choice exercises. In our
-opinion this only makes sense if the learning management system does not
-support gap exercises, the support is poor or a print exam with
+opinion, this only makes sense if the learning management system does
+not support gap exercises, the support is poor or a print exam with
 automatic grading is a strict requirement. Otherwise, most exercises
 will be better with numeric (or string) gaps.</p>
 <p>There are situations where single choice exercises cannot be avoided.
