@@ -6,10 +6,10 @@
 #' @name Gap-class
 #' @rdname Gap-class
 #' @aliases Gap
-setClass("Gap", slots = c(response_identifier = "character", score = "numeric",
+setClass("Gap", slots = c(response_identifier = "character", points = "numeric",
                           placeholder = "character",
                           expected_length = "numeric"),
-         prototype = prototype(score = 1))
+         prototype = prototype(points = 1))
 
 setMethod("initialize", "Gap", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -78,7 +78,7 @@ create_outcome_declaration_gap <- function(object) {
                                       value = 0)
     MAXSCORE <- make_outcome_declaration(paste0("MAXSCORE_",
                                                 object@response_identifier),
-                                         value = object@score)
+                                         value = object@points)
     MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
                                                 object@response_identifier),
                                          value = 0)

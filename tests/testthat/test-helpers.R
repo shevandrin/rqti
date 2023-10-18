@@ -34,9 +34,9 @@ test_that("Testing mdlist function", {
 test_that("Testing gap_numeric() function", {
     sut<- gap_numeric(solution = 300,
                       tolerance = 1,
-                      score = 2)
+                      points = 2)
 
-    expected <- '<gap>{solution: [300], tolerance: 1.0, tolerance_type: absolute, score: 2.0, include_lower_bound: yes, include_upper_bound: yes, expected_length: 2.0, type: numeric}</gap>'
+    expected <- '<gap>{solution: [300], tolerance: 1.0, tolerance_type: absolute, points: 2.0, include_lower_bound: yes, include_upper_bound: yes, expected_length: 2.0, type: numeric}</gap>'
 
     expect_equal(sut, expected)
 })

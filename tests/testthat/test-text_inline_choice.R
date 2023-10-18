@@ -9,7 +9,7 @@ Made glorious summer by this sun of",
         new("InlineChoice",
             response_identifier = "RESPONSE",
             answer_index = 3,
-            score = 2,
+            points = 2,
             shuffle = FALSE,
             solution = c("Gloucester", "Lancaster", "York"),
             choices_identifiers = c("G","L","Y")),";<br/>
@@ -57,7 +57,7 @@ Made glorious summer by this sun of",
        new("InlineChoice",
        response_identifier = "RESPONSE",
        answer_index = 3,
-       score = 2,
+       points = 2,
        solution = c("Gloucester", "Lancaster", "York"),
        choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
@@ -94,7 +94,7 @@ Made glorious summer by this sun of",
         new("InlineChoice",
         response_identifier = "RESPONSE",
         answer_index = 3,
-        score = 2,
+        points = 2,
         solution = c("Gloucester", "Lancaster", "York"),
         choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
@@ -153,7 +153,7 @@ test_that("Testing CreateItemBody Inline", {
                     content = list("<p>One hour is",new("InlineChoice",
                               response_identifier = "RESPONSE",
                               answer_index = 3,
-                              score = 1,
+                              points = 1,
                               shuffle = FALSE,
                               solution = c("160","90","60"),
                               choices_identifiers = c("1","2","3")),
@@ -238,10 +238,10 @@ test_that("Testing InlineChoice class in case its score is undefined", {
                                            solution = c("400","300","500"),
                                            response_identifier = "RESPONSE_1",
                                            answer_index = 2,
-                                           score = as.integer(NA)),
+                                           points = as.integer(NA)),
                                            'm/s')))
     inline_choice_1 <- sut_1@content[[2]]
     inline_choice_2 <- sut_2@content[[2]]
-    expect_equal(inline_choice_1@score, 1)
-    expect_equal(inline_choice_2@score, 1)
+    expect_equal(inline_choice_1@points, 1)
+    expect_equal(inline_choice_2@points, 1)
 })

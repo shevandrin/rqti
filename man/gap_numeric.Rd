@@ -8,7 +8,7 @@ gap_numeric(
   solution,
   tolerance = NULL,
   tolerance_type = "exact",
-  score = 1,
+  points = 1,
   response_identifier = NULL,
   include_lower_bound = TRUE,
   include_upper_bound = TRUE,
@@ -25,7 +25,7 @@ boundaries of tolerance rate for candidate answer}
 \item{tolerance_type}{string, optional; specifies tolerance mode; possible
 values:"exact", "absolute", "relative"}
 
-\item{score}{numeric, optional; the number of points for this gap; default 1}
+\item{points}{numeric, optional; the number of points for this gap; default 1}
 
 \item{response_identifier}{string; an identifier for the answer; by default
 it is generated automatically}

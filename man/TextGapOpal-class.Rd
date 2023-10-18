@@ -16,7 +16,7 @@ according to QTI 2.1. for LMS Opal
 \item{\code{response_identifier}}{string; an identifier for thy answer; by default it
 is generated automatically}
 
-\item{\code{score}}{numeric, optional; the number of points for this gap;
+\item{\code{points}}{numeric, optional; the number of points for this gap;
 default \code{1}}
 
 \item{\code{placeholder}}{string, optional; is responsible to place some helpful text

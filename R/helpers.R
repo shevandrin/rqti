@@ -7,7 +7,7 @@
 #'   answer
 #' @param case_sensitive logical, optional; determines whether the evaluation of
 #'   the correct answer is case sensitive; default `FALSE`
-#' @param score numeric, optional; the number of points for this gap; default 1
+#' @param points numeric, optional; the number of points for this gap; default 1
 #' @param response_identifier string; an identifier for the answer; by default
 #'   it is generated automatically
 #' @param expected_length numeric, optional; is responsible to set a size of
@@ -17,7 +17,7 @@
 #' @return string; map yaml
 #' @export
 gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
-                     score = 1, response_identifier = NULL,
+                     points = 1, response_identifier = NULL,
                      expected_length = size_gap(solution), placeholder = NULL) {
 
     params <- as.list(environment())
@@ -35,7 +35,7 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 #'   boundaries of tolerance rate for candidate answer
 #' @param tolerance_type string, optional; specifies tolerance mode; possible
 #'   values:"exact", "absolute", "relative"
-#' @param score numeric, optional; the number of points for this gap; default 1
+#' @param points numeric, optional; the number of points for this gap; default 1
 #' @param response_identifier string; an identifier for the answer; by default
 #'   it is generated automatically
 #' @param include_lower_bound boolean, optional; specifies whether or not the
@@ -49,7 +49,7 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 #' @return string; map yaml
 #' @export
 gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
-                        score = 1, response_identifier = NULL,
+                        points = 1, response_identifier = NULL,
                         include_lower_bound = TRUE, include_upper_bound = TRUE,
                         expected_length = size_gap(solution), placeholder = NULL) {
 
@@ -67,7 +67,7 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
 #'   answers
 #' @param answer_index integer, optional; the number of right answer in the
 #'   `solution` vector, default `1`
-#' @param score numeric, optional; the number of points for this gap; default
+#' @param points numeric, optional; the number of points for this gap; default
 #'   `1`
 #' @param shuffle boolean, optional; is responsible to randomize the order in
 #'   which the choices are initially presented to the candidate; default `TRUE`
@@ -77,7 +77,7 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
 #'   for answers; by default identifiers are generated automatically
 #' @return string; map yaml
 #' @export
-dropdown <- function(solution, answer_index = 1, score = 1, shuffle = TRUE,
+dropdown <- function(solution, answer_index = 1, points = 1, shuffle = TRUE,
                      response_identifier = NULL, choices_identifiers = NULL) {
 
     params <- as.list(environment())

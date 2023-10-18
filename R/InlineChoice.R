@@ -33,8 +33,8 @@ setMethod("initialize", "InlineChoice", function(.Object, ...) {
                                               LETTERS[seq(.Object@solution)])
     }
 
-    if (length(.Object@score) == 0) .Object@score <- 1
-    if (is.na(.Object@score)) .Object@score <- 1
+    if (length(.Object@points) == 0) .Object@points <- 1
+    if (is.na(.Object@points)) .Object@points <- 1
     validObject(.Object)
     .Object
 })
@@ -61,7 +61,7 @@ create_response_declaration_inline_choice <- function(object) {
     correct_choice_identifier <- object@choices_identifiers[object@answer_index]
     child <- create_correct_response(correct_choice_identifier)
     map_entry <- tag("mapping",
-                     list(create_map_entry(object@score,
+                     list(create_map_entry(object@points,
                                            correct_choice_identifier)))
     tag("responseDeclaration", list(identifier = object@response_identifier,
                                     cardinality = "single",

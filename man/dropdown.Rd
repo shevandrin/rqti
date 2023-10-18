@@ -7,7 +7,7 @@
 dropdown(
   solution,
   answer_index = 1,
-  score = 1,
+  points = 1,
   shuffle = TRUE,
   response_identifier = NULL,
   choices_identifiers = NULL
@@ -20,7 +20,7 @@ answers}
 \item{answer_index}{integer, optional; the number of right answer in the
 \code{solution} vector, default \code{1}}
 
-\item{score}{numeric, optional; the number of points for this gap; default
+\item{points}{numeric, optional; the number of points for this gap; default
 \code{1}}
 
 \item{shuffle}{boolean, optional; is responsible to randomize the order in

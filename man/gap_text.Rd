@@ -8,7 +8,7 @@ gap_text(
   solution,
   tolerance = NULL,
   case_sensitive = FALSE,
-  score = 1,
+  points = 1,
   response_identifier = NULL,
   expected_length = size_gap(solution),
   placeholder = NULL
@@ -25,7 +25,7 @@ answer}
 \item{case_sensitive}{logical, optional; determines whether the evaluation of
 the correct answer is case sensitive; default \code{FALSE}}
 
-\item{score}{numeric, optional; the number of points for this gap; default 1}
+\item{points}{numeric, optional; the number of points for this gap; default 1}
 
 \item{response_identifier}{string; an identifier for the answer; by default
 it is generated automatically}

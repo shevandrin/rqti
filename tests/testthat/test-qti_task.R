@@ -174,7 +174,7 @@ TextGapOpal <- new("Entry",
                    content = list('<p>The speed of light is',
                                   new("TextGapOpal",
                                       response_identifier = "RESPONSE_1",
-                                      score = 3,
+                                      points = 3,
                                       solution = c("more", "MORE", "More"),
                                       tolerance = 2),
                                   'than the speed of sound</p>'))
@@ -197,7 +197,7 @@ NumericGap <- new("Entry",
                   content = list('The speed of light is equal',
                                  new("NumericGap",
                                      response_identifier = "RESPONSE_1",
-                                     score = 1,
+                                     points = 1,
                                      solution = 300,
                                      tolerance = 2),
                                  'm/s')
@@ -222,7 +222,7 @@ InlineChoice <- new("Entry",
                                        solution = c("400","300","500"),
                                        response_identifier = "RESPONSE_1",
                                        answer_index = 2,
-                                       score = 1),
+                                       points = 1),
                                    'm/s')
 )
     suppressMessages(createQtiTask(InlineChoice))
