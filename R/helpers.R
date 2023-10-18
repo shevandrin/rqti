@@ -6,7 +6,7 @@
 #'   taken into account to tolerate spelling mistake in evaluation of candidate
 #'   answer
 #' @param case_sensitive logical, optional; determines whether the evaluation of
-#'   the correct answer is case sensitive; default `TRUE`
+#'   the correct answer is case sensitive; default `FALSE`
 #' @param score numeric, optional; the number of points for this gap; default 1
 #' @param response_identifier string; an identifier for the answer; by default
 #'   it is generated automatically
@@ -16,7 +16,7 @@
 #'   text in text input field in content delivery engine
 #' @return string; map yaml
 #' @export
-gap_text <- function(solution, tolerance = NULL, case_sensitive = TRUE,
+gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
                      score = 1, response_identifier = NULL,
                      expected_length = size_gap(solution), placeholder = NULL) {
 

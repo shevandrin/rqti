@@ -7,7 +7,7 @@
 gap_text(
   solution,
   tolerance = NULL,
-  case_sensitive = TRUE,
+  case_sensitive = FALSE,
   score = 1,
   response_identifier = NULL,
   expected_length = size_gap(solution),
@@ -23,7 +23,7 @@ taken into account to tolerate spelling mistake in evaluation of candidate
 answer}
 
 \item{case_sensitive}{logical, optional; determines whether the evaluation of
-the correct answer is case sensitive; default \code{TRUE}}
+the correct answer is case sensitive; default \code{FALSE}}
 
 \item{score}{numeric, optional; the number of points for this gap; default 1}
 
