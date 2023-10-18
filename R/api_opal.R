@@ -164,13 +164,30 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
     return(res)
 }
 
-#'@importFrom purrr keep
-get_resources_by_name <- function(display_name, endpoint, rtype = NULL) {
-    # check if we have a test with display name
+#' Get list of all user's resources on LMS OPAL
+#'
+#' @param endpoint endpoint of LMS Opal; default is
+#'   "https://bildungsportal.sachsen.de/opal/"
+#' @param api_user username on OPAL
+#' @param api_password password on OPAL
+#' @export
+get_resources <- function(endpoint = "https://bildungsportal.sachsen.de/opal/",
+                         api_user = NULL, api_password = NULL) {
+    # check auth
+    if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
+        user_id <- auth_opal(api_user, api_password, cached = TRUE)
+        if (is.null(user_id)) return(NULL)
+    }
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
     resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                        encode = "multipart")
     rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
+    return(rlist)
+}
+
+#'@importFrom purrr keep
+get_resources_by_name <- function(display_name, endpoint, rtype = NULL) {
+    rlist <- get_resouces(endpoint)
     if (!is.null(rtype)) {
         rlist <- keep(rlist, ~ .x$resourceableTypeName == rtype)
     }
@@ -243,6 +260,7 @@ is_test <- function(file) {
 
 is_logged <- function(endpoint) {
     url_log <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
+    print(url_log)
     response <- GET(url_log, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                        encode = "multipart")
     res <- ifelse(response$status_code == 200, TRUE, FALSE)
