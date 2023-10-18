@@ -206,3 +206,11 @@ test_that("Test function for SingleChoice class", {
   expect_equal(sut, expected)
   expect_true(inherits(sut, "SingleChoice"))
 })
+
+test_that("Testing of function and SingleChoice class with default parameters", {
+    sut <- SingleChoice()
+    expected <- new("SingleChoice")
+
+    expect_equal(sut, expected)
+    expect_true(inherits(sut, "SingleChoice"))
+})

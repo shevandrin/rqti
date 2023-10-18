@@ -231,3 +231,21 @@ InlineChoice <- new("Entry",
     expect_equal(sut, expected)
     file.remove("new.xml")
 })
+
+test_that("Testing of create_manifest_task() function", {
+sc <- new("SingleChoice",
+          identifier = "SingleChoice")
+sut <- toString(create_manifest_task(sc))
+
+expected <- '<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd" identifier="SingleChoice_manifest">
+  <metadata></metadata>
+  <organisations></organisations>
+  <resources>
+    <resource identifier="SingleChoice" type="imsqti_item_xmlv2p1" href="SingleChoice.xml">
+      <file href="SingleChoice.xml"></file>
+    </resource>
+  </resources>
+</manifest>'
+
+expect_equal(sut, expected)
+})
