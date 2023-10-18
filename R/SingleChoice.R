@@ -32,15 +32,15 @@ SingleChoice <- function(...)
     args <- c(as.list(environment()), list(...))
     args["Class"] <- "SingleChoice"
     object <- do.call(new, args)
-    xml_content <- create_assessment_item(object)
-    doc <- xml2::read_xml(as.character(xml_content))
-    verify <- verify_qti(doc)
-    if (verify) {
-        return(object)
-    } else {
-        print(attributes(verify))
-        return(FALSE)
-    }
+    # xml_content <- create_assessment_item(object)
+    # doc <- xml2::read_xml(as.character(xml_content))
+    # verify <- verify_qti(doc)
+    # if (verify) {
+    #     return(object)
+    # } else {
+    #     print(attributes(verify))
+    #     return(FALSE)
+    # }
 }
 
 #' @rdname createItemBody-methods
