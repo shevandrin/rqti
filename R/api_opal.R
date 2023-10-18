@@ -187,7 +187,7 @@ get_resources <- function(endpoint = "https://bildungsportal.sachsen.de/opal/",
 
 #'@importFrom purrr keep
 get_resources_by_name <- function(display_name, endpoint, rtype = NULL) {
-    rlist <- get_resouces(endpoint)
+    rlist <- get_resources(endpoint)
     if (!is.null(rtype)) {
         rlist <- keep(rlist, ~ .x$resourceableTypeName == rtype)
     }
@@ -260,7 +260,6 @@ is_test <- function(file) {
 
 is_logged <- function(endpoint) {
     url_log <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
-    print(url_log)
     response <- GET(url_log, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                        encode = "multipart")
     res <- ifelse(response$status_code == 200, TRUE, FALSE)
