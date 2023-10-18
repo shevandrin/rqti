@@ -3,7 +3,7 @@ title: "Working with API OPAL from qti"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{api_opal}
+    %\VignetteIndexEntry{Working with API OPAL from qti}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---

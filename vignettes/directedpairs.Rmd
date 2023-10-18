@@ -3,7 +3,7 @@ title: "Directed Pairs Exercises"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Directed pPairs Exercises}
+    %\VignetteIndexEntry{Directed Pairs Exercises}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---

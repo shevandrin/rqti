@@ -92,7 +92,7 @@ This helper function is designed to generate a formatted string describing a gap
 
 ```{r results="plaintext", comment=""}
 gap1 <- gap_numeric(solution = 1.4, tolerance = 10, tolerance_type = "relative",
-                    score = 5, response_identifier = "mean_value",
+                    points = 5, response_identifier = "mean_value",
                     include_lower_bound = TRUE, include_upper_bound = TRUE,
                     expected_length = 10, placeholder = "put mean value here")
 cat(gap1)
