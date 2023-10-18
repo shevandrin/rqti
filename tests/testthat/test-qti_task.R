@@ -258,4 +258,6 @@ test_that("Testing of create_task_zip() function", {
 
 expect_true(any(grepl("./SingleChoice.zip", sut1)))
 expect_true(any(grepl("main/SingleChoice.zip", sut2, fixed = TRUE)))
+file.remove("SingleChoice.zip")
+unlink("main", recursive = TRUE)
 })
