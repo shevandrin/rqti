@@ -116,27 +116,22 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
         user_id <- auth_opal(api_user, api_password, cached = TRUE)
         if (is.null(user_id)) return(NULL)
     }
+
     if (!interactive()) display_name <- paste0("knit_", display_name)
-    # check if we have a test with display name
-    url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
-    resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
-                    encode = "multipart")
 
-
-
-    rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
+    # get resources with given display_name
     rtype <- ifelse(is_test(file), "FileResource.TEST", "FileResource.QUESTION")
-    filtered_rlist <- purrr::keep(rlist, ~ .x$resourceableTypeName == rtype)
-    filtered_rlist <- purrr::keep(rlist, ~ .x$displayname == display_name)
-    if (length(filtered_rlist) > 0 && overwrite) {
+    rlist <- get_resources_by_name(display_name, endpoint, rtype)
 
-        if (length(filtered_rlist) == 1) {
-            response <- update_resource(file, filtered_rlist[[1]]$key,
+    if (length(rlist) > 0 && overwrite) {
+
+        if (length(rlist) == 1) {
+            response <- update_resource(file, rlist[[1]]$key,
                                             endpoint)
         } else {
             message("Found files with the same display name: ",
-                length(filtered_rlist))
-            menu_options <- c(sapply(filtered_rlist, function(x) x$key),
+                length(rlist))
+            menu_options <- c(sapply(rlist, function(x) x$key),
                             "Add new as a duplicate", "Abort")
             if (interactive()) {
                 key <- menu(title = "Choose a key:", menu_options)
@@ -169,8 +164,41 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
     return(res)
 }
 
-get_resources_by_name <- function() {
+#'@importFrom purrr keep
+get_resources_by_name <- function(display_name, endpoint, rtype = NULL) {
+    # check if we have a test with display name
+    url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
+    resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
+                       encode = "multipart")
+    rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
+    if (!is.null(rtype)) {
+        rlist <- keep(rlist, ~ .x$resourceableTypeName == rtype)
+    }
+    rlist <- keep(rlist, ~ .x$displayname == display_name)
+    return(rlist)
+}
 
+#' Create a URL using the resource's display name in LMS OPAL
+#'
+#' @param display_name character; target display_name
+#' @param endpoint endpoint of LMS Opal; default is
+#'   "https://bildungsportal.sachsen.de/opal/"
+#' @param api_user username on OPAL
+#' @param api_password password on OPAL
+#' @export
+fetch_resource_url <- function(display_name,
+                        endpoint = "https://bildungsportal.sachsen.de/opal/",
+                        api_user = NULL, api_password = NULL) {
+    # check auth
+    if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
+        user_id <- auth_opal(api_user, api_password, cached = TRUE)
+        if (is.null(user_id)) return(NULL)
+    }
+    rlist <- get_resources_by_name(display_name, endpoint)
+    keys <- unlist(lapply(rlist, function(item) item$key))
+    url <- sapply(keys,
+                function(item) paste0(endpoint, "auth/RepositoryEntry/", item))
+    return(url)
 }
 
 upload_resource <- function(file, display_name, rtype, access, open_in_browser,
