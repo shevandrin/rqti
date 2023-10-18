@@ -112,8 +112,9 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
     if (file_ext(file) != "zip") file <- process_raw_file(file)
 
     # check auth
-    if (!is_logged(endpoint)) {
-        auth_opal(api_user = NULL, api_password = NULL, cached = TRUE)
+    if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
+        user_id <- auth_opal(api_user, api_password, cached = TRUE)
+        if (is.null(user_id)) return(NULL)
     }
     if (!interactive()) display_name <- paste0("knit_", display_name)
     # check if we have a test with display name
@@ -122,6 +123,7 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
                     encode = "multipart")
 
     if (is_logged(endpoint)) {
+
         rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
         rtype <- ifelse(is_test(file), "FileResource.TEST",
                         "FileResource.QUESTION")
@@ -169,6 +171,10 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
     } else {
         return(NULL)
         }
+}
+
+get_resources_by_name <- function() {
+
 }
 
 upload_resource <- function(file, display_name, rtype, access, open_in_browser,
