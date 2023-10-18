@@ -47,7 +47,7 @@
     <h6 class="dropdown-header" data-toc-skip>How to create Rmd for exercises</h6>
     <a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a>
     <a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a>
-    <a class="dropdown-item" href="../articles/gap.html">Gaps Exercises</a>
+    <a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a>
     <a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a>
     <a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a>
     <a class="dropdown-item" href="../articles/order.html">Order Exercises</a>
@@ -232,7 +232,7 @@ attributes. In addition you can also set feedback for correct and
 incorrect responses.</p>
 <pre><code>---
 type: sc # equivalent to singlechoice and schoice
-knit: qti::render_qtijs # if you do not want our preview renderer, remove this
+knit: qti::render_opal # if you do not want our preview renderer, remove this
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 shuffle: false # random order of choices
@@ -249,12 +249,6 @@ Which version of the QTI standard is used by the R package qti?
 - 2.2
 - 3.0
 
-# feedback
-
-General feedback will be displayed every time (without conditions).
-
-&lt;!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
-
 # feedback+
 
 Nice. (Only displayed when the solution is correct.)
@@ -262,7 +256,8 @@ Nice. (Only displayed when the solution is correct.)
 # feedback-
 
 Try again. (Only displayed if the solution is not correct.)
---&gt;</code></pre>
+
+&lt;!-- If you prefer general feedback, just use the the section # feedback and delete the other feedback sections--&gt;</code></pre>
 <p>Which renders in OPAL as:</p>
 <p><img src="images/singlechoice-complex.jpg"></p>
 <p>Let us now discuss all yaml attributes that can be used</p>
@@ -302,15 +297,9 @@ choices (setting shuffle to <code>false</code>).</p>
 <h3 id="orientation">orientation<a class="anchor" aria-label="anchor" href="#orientation"></a>
 </h3>
 <p>Should the items be displayed in <code>vertical</code> or
-<code>horizontal</code> mode? Default is <code>vertical</code>.</p>
-</div>
-<div class="section level3">
-<h3 id="solution">solution<a class="anchor" aria-label="anchor" href="#solution"></a>
-</h3>
-<p>An alternative way to specify the correct solution by giving the
-integer of the correct choice. Usually not needed and less intuitive
-than specifying the correct choice directly in the list of all choices
-(see above).</p>
+<code>horizontal</code> mode? Default is <code>vertical</code>.
+<!-- ### solution --></p>
+<!-- An alternative way to specify the correct solution by giving the integer of the correct choice. Usually not needed and less intuitive than specifying the correct choice directly in the list of all choices (see above). Note that specifying `solution` will override the manual selection with asterisks. -->
 </div>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
@@ -368,11 +357,13 @@ five choices (nominal, ordinal, interval, ratio, absolute). In this case
 we recommend to ask several questions, not just one. Also, you might
 want to give less points to single choice exercises in general to reduce
 the variance caused by guessing.</p>
+<p>If you have several single choice exercises where the answer options
+stay the same, consider using a match table instead: <a href="table.html">Match Tables</a></p>
 <p>In summary, try to avoid single choice exercises. Specifically, do
 not transform numeric gap exercises to single choice exercises, unless
 you have a good reason. If you cannot avoid single choice exercises, ask
-several questions, not just one. Consider giving less weight to single
-choice exercises in grading.</p>
+several questions (with a match table), not just one. Consider giving
+less weight to single choice exercises in grading.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

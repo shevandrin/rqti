@@ -47,7 +47,7 @@
     <h6 class="dropdown-header" data-toc-skip>How to create Rmd for exercises</h6>
     <a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a>
     <a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a>
-    <a class="dropdown-item" href="../articles/gap.html">Gaps Exercises</a>
+    <a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a>
     <a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a>
     <a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a>
     <a class="dropdown-item" href="../articles/order.html">Order Exercises</a>
@@ -105,9 +105,9 @@ templates start with <code>QTI:</code>. Here we look at the templates
 <code>QTI: multiplechoice (simple)</code> and
 <code>QTI: multiplechoice (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: mpc</code> (or the
-equivalent <code>type: multiplechoice</code>) in the yaml-section and a
-list with at least two elements in a section called <strong>#
-question</strong>:</p>
+equivalent <code>type: multiplechoice</code> or
+<code>type: mchoice</code>) in the yaml-section and a list with at least
+two elements in a section called <strong># question</strong>:</p>
 <pre><code>---
 type: mpc
 knit: qti::render_qtijs
@@ -130,19 +130,28 @@ students.</p>
 custom qti knit function, which will handle the preview. Clicking the
 Knit button in RStudio produces the following in the viewer pane (or
 browser of your choice):</p>
-<p><img src="mpc1.png"></p>
+<p><img src="images/mpc1.png"></p>
+<p>You can also use the opal (set it up before, see: <a href="api_opall">API Opal</a>) render function
+(<code>knit: qti::render_opal</code>), which should produce the
+following:</p>
+<p><img src="images/multiplechoice-simple.jpg"></p>
 <p>Multiple choice exercises are essentially the same as single choice
 exercises, except that none or several choices can be correct. The
 correct choices are specified by surrounding them with asterisks
-(markdown for italic).</p>
+(markdown for italic). If you need to use italic in your choices,
+surround the whole question with the <code>&lt;i&gt; &lt;/i&gt;</code>
+tag, instead. Note that the default points are <span class="math inline">\(0.5n\)</span>, where <span class="math inline">\(n\)</span> is the number of choices. Here we have
+4 choices, so 2 points can be reached. For a correct choice 0.5 points
+are gained, for an incorrect 0.5 are deducted. The minimum number of
+points is 0 in any case.</p>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
 <p>If you want to have more fine-grained control, consider the available
 attributes for the yaml section in the RMD template
-<code>QTI:multiple-choice (complex)</code> . In addition you can also
-set feedback for correct and incorrect responses.</p>
+<code>QTI:multiple-choice (complex)</code>. In addition you can also set
+feedback for correct and incorrect responses.</p>
 <pre><code>---
 type: multiplechoice # equivalent to mpc
 knit: qti::render_qtijs # if you do not want our preview renderer, remove this
@@ -165,8 +174,8 @@ Which exercise types are supported by the R package qti?
 # feedback
 
 All basic types of QTI are supported. More advanced exercises (as available in OPAL/ONYX) are not yet supported because they are LMS specific.</code></pre>
-<p>Which renders as:</p>
-<p><img src="mpc1c.png"></p>
+<p>Which renders in Opal as:</p>
+<p><img src="images/multiplechoice-complex.jpg"></p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -175,7 +184,7 @@ All basic types of QTI are supported. More advanced exercises (as available in O
 <h3 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
 </h3>
 <p>Has to be <code>multiplechoice</code> or <code>mpc</code> or
-<code>mchoice</code> (compatible with <code>exams</code>package).</p>
+<code>mchoice</code> (compatible with <code>exams</code> package).</p>
 </div>
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
@@ -203,24 +212,19 @@ strict order of choices (setting shuffle to <code>false</code>).</p>
 </h3>
 <p>Should the items be displayed in <code>vertical</code> or
 <code>horizontal</code> mode? Default is <code>vertical</code>.</p>
-<p>TODO, is this really possible? or do we always use points instead?
-### solution</p>
-<p>An alternative way to specify the correct solution is by giving the
-integer of the correct choice. Usually not needed and less intuitive
-than specifying the correct choices directly in the list of all choices
-(see above).</p>
+<!-- TODO, is this really possible? or do we always use points instead? -->
+<!-- ### solution -->
+<!-- An alternative way to specify the correct solution is by giving the integer of the correct choice. Usually not needed and less intuitive than specifying the correct choices directly in the list of all choices (see above). -->
 </div>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
 <p>How many points are given for the wholte exercise. Default is the
-number of choices. The points <span class="math inline">\(p\)</span> are
-divided by the number of choices <span class="math inline">\(c\)</span>
-and then distributed over all choices. A correct choice will get the
-student +<span class="math inline">\(p/c\)</span>, an incorrect choice
--<span class="math inline">\(p/c\)</span>. If there is no such
-procedure, a student could always select all answers and get the maximum
-number of points. See also the section <a href="#some-advice-on-multiple-choice-exercises">Some advice on multiple
+number of choices times 0.5. The points <span class="math inline">\(p\)</span> are divided by the number of choices
+<span class="math inline">\(c\)</span> and then distributed over all
+choices. A correct choice will get the student +<span class="math inline">\(p/c\)</span>, an incorrect choice -<span class="math inline">\(p/c\)</span>. If there is no such procedure, a
+student could always select all answers and get the maximum number of
+points. See also the section <a href="#some-advice-on-multiple-choice-exercises">Some advice on multiple
 choice exercises</a>.</p>
 </div>
 </div>
@@ -246,8 +250,9 @@ reach all points)</li>
 <p>For more complex exercises the list of answers is often just
 available as a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"dropdown list"</span>, <span class="st">"programming language evaluation"</span>, <span class="st">"numeric gap"</span>), <span class="at">solutions =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- *dropdown list*</span><span class="sc">\n</span><span class="st">- programming language evaluation</span><span class="sc">\n</span><span class="st">- *numeric gap*"</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"dropdown list"</span>, <span class="st">"programming language evaluation"</span>, <span class="st">"numeric gap"</span>), </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">solutions =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- *dropdown list*</span><span class="sc">\n</span><span class="st">- programming language evaluation</span><span class="sc">\n</span><span class="st">- *numeric gap*"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="some-advice-on-multiple-choice-exercises">Some advice on multiple choice exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-multiple-choice-exercises"></a>
@@ -255,7 +260,7 @@ available as a variable. In this case you can use the helper function
 <p>A multiple choice exercise can always be transformed to multiple
 single choice exercises with the choices true/false or yes/no. Thus,
 from a psychometric perspective both types suffer from the same
-problems. They should be avoided at all costs. This is mainly because
+problems. They should be avoided if possible. This is mainly because
 guessing can never be ruled out. Psychometric properties will usually be
 worse than for numeric or string gap exercises that are similar in
 content.</p>
@@ -276,7 +281,7 @@ Without even attempting to solve this exercise, a student would get all
 points. If you use multiple choice exercises you have to balance out the
 yes/no responses. For single choices, dropdowns and match tables, this
 is not the case. So although we do support multiple choice exercises, we
-advise stronlgy against using them at all.</p>
+advise strongly against using them at all.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
