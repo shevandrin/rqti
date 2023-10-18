@@ -125,10 +125,9 @@ If `true` (the default), randomizes the order of the choices. Only in rare occas
 ### orientation
 
 Should the items be displayed in `vertical` or `horizontal` mode? Default is `vertical`.
+<!-- ### solution -->
 
-### solution
-
-An alternative way to specify the correct solution by giving the integer of the correct choice. Usually not needed and less intuitive than specifying the correct choice directly in the list of all choices (see above).
+<!-- An alternative way to specify the correct solution by giving the integer of the correct choice. Usually not needed and less intuitive than specifying the correct choice directly in the list of all choices (see above). Note that specifying `solution` will override the manual selection with asterisks. -->
 
 ### points
 

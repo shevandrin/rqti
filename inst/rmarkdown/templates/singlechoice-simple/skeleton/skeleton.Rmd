@@ -1,6 +1,7 @@
 ---
 type: sc
-knit: qti::render_qtijs
+knit: qti::render_opal
+solution: 3
 ---
 
 # question
