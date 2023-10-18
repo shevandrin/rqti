@@ -120,15 +120,16 @@ upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
     resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                     encode = "multipart")
+
     if (is_logged(endpoint)) {
         rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
         rtype <- ifelse(is_test(file), "FileResource.TEST",
                         "FileResource.QUESTION")
         filtered_rlist <- purrr::keep(rlist, ~ .x$resourceableTypeName == rtype)
         filtered_rlist <- purrr::keep(rlist, ~ .x$displayname == display_name)
-        if (length(filtered_rlist) > 0) {
+        if (length(filtered_rlist) > 0 && overwrite) {
 
-            if (length(filtered_rlist) == 1 && overwrite) {
+            if (length(filtered_rlist) == 1) {
                 response <- update_resource(file, filtered_rlist[[1]]$key,
                                             endpoint)
             } else {
