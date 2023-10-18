@@ -94,9 +94,9 @@ test_that("Testing create Response Declaration Gap ", {
 <value>winter</value>
 </correctResponse>
 <mapping>
-<mapEntry mapKey="winter" mappedValue="0.5" caseSensitive="true"/>
-<mapEntry mapKey="WINTER" mappedValue="0.5" caseSensitive="true"/>
-<mapEntry mapKey="Winter" mappedValue="0.5" caseSensitive="true"/>
+<mapEntry mapKey="winter" mappedValue="0.5" caseSensitive="false"/>
+<mapEntry mapKey="WINTER" mappedValue="0.5" caseSensitive="false"/>
+<mapEntry mapKey="Winter" mappedValue="0.5" caseSensitive="false"/>
 </mapping>
 </responseDeclaration>'
 

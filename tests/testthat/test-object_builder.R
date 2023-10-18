@@ -374,7 +374,7 @@ test_that("Testing create_question_object() for TextGap
                           response_identifier = "response_1",
                           solution = c("ein","EIN", "Ein"),
                           expected_length = 2,
-                          case_sensitive = TRUE),
+                          case_sensitive = FALSE),
                      ' Handy? Dieses Telefonmodell ist Nokia ',
                      new("NumericGap",
                           response_identifier = "response_2",

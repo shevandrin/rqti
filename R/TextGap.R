@@ -16,7 +16,7 @@
 #' @importFrom htmltools tag p span tagList tagAppendChildren
 setClass("TextGap", contains = "Gap",
          slots = c(solution = "character", case_sensitive = "logical"),
-         prototype = prototype(case_sensitive = TRUE))
+         prototype = prototype(case_sensitive = FALSE))
 
 setMethod("initialize", "TextGap", function(.Object,...){
     .Object <- callNextMethod()
