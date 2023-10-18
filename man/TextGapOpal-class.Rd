@@ -29,7 +29,7 @@ input field in content delivery engine}
 considered as correct answers}
 
 \item{\code{case_sensitive}}{logical; determines whether the evaluation of the
-correct answer is case sensitive; default \code{TRUE}}
+correct answer is case sensitive; default \code{FALSE}}
 
 \item{\code{tolerance}}{numeric; defines how many characters will be taken into
 account to tolerate spelling mistake in evaluation of candidate answer}
