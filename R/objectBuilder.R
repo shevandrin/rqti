@@ -266,8 +266,11 @@ parse_list <- function(html) {
     question_list <- question_list[length(question_list)]
     choices  <- xml2::xml_find_all(question_list, ".//li")
     em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
-    solution <- which(xml2::xml_text(choices) %in% em)
-
+    is_em <- sapply(choices, function(item) {
+                                    item <- unlist(xml_find_first(item, ".//em"))
+                                    !is.null(item)
+    })
+    solution <- which(is_em)
     # build a list with possible answers, that keeps formatting of the content
     # (mathml)
     choices_str <- c()
