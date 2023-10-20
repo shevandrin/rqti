@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Dropdown Exercises</h1>
             
-            <h4 data-toc-skip class="date">2023-10-19</h4>
+            <h4 data-toc-skip class="date">2023-10-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/dropdown.Rmd" class="external-link"><code>vignettes/dropdown.Rmd</code></a></small>
       <div class="d-none name"><code>dropdown.Rmd</code></div>
@@ -96,13 +96,15 @@
 
     
     
-<div class="section level3">
-<h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
-</h3>
-<p>In this type of exercise, the candidate is asked to fill in the
-blanks from a set of options available from a dropdown list. A template
-is available in RStudio when you click on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. The qti
+<div class="section level2">
+<h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
+</h2>
+<p>In this type of exercise, the candidate has to select an element form
+a dropdown-list. Note that our package implements dropdowns as gaps
+because this is essentialy what dropwdowns are. Several dropdowns can be
+combined in a single exercise, but a combination with numeric and text
+gaps is not possible. A template is available in RStudio when you click
+on <code>New file -&gt; R Markdown -&gt; From Template</code>. The qti
 templates start with <code>QTI:</code>. Here we look at the templates
 <code>QTI: dropdown (simple)</code> and
 <code>QTI: dropdown (complex)</code>.</p>
@@ -124,36 +126,37 @@ Under the hood, the qti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no OOP",
 # feedback
 
 The package `qti` is specialized for producing xml qti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
-<p>There are 2 ways to denote a dropdown-element in Rmd content:</p>
+<p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
+<p><img src="images/dropdown.png"></p>
+<p>Alternatively, change the knit parameter to
+<code>knit: render_opal</code> (see <a href="opal_api">API Opal</a>) to
+upload to Opal directly, producing:</p>
+<p><img src="images/dropdown-simple.jpg"></p>
+<p>There are 2 ways to specify a dropdown-element in Rmd content:</p>
 <ul>
-<li>put inside <code>&lt;&lt;</code> … <code>&gt;&gt;</code> (or the
-equivalent <code>&lt;gap&gt;</code> … <code>&lt;/gap&gt;</code>) set of
-answer options separating them by <code>|</code>. Example:
-<code>&lt;&lt;element 1|element 2|element 3&gt;&gt;</code>
+<li>Put the right answer inside <code>&lt;&lt;</code> …
+<code>&gt;&gt;</code> (or the equivalent <code>&lt;gap&gt;</code> …
+<code>&lt;/gap&gt;</code>). Example:
+<code>&lt;&lt;element1|element2|element3&gt;&gt;</code>
 </li>
-<li>use the helper function <code>dropdown</code> (see more details
-below)</li>
+<li>use the helper function <a href="#helper-function-dropdown"><code>dropdown</code></a>
+</li>
 </ul>
-<p>By default, each dropdown-elements gives 1 point for the correct
-answer. The total number of points for completing a task is defined as
-the sum of points for each dropdown-element.</p>
+<p>By default, 1 point can be reached for each dropdown (specify
+<code>points</code> to your needs). The total number of points for
+completing a task is defined as the sum of points of all dropdowns.</p>
 <p>Note that in this example, a feedback section was also provided. The
 feedback is optional, but usually it is a good idea to give some
-explanation for students. In this type of exercise the feedback relates
-to the whole task, not to a specific gap.</p>
-<p>Further note that the <code>knit</code> parameter is set to the
-custom qti knit function, which will handle the preview. Clicking the
-Knit button in RStudio produces the following in the viewer pane (or
-browser of your choice):</p>
-<div class="figure">
-<img src="screenshot_dropdown1.png" width="400" alt=""><p class="caption">Preview of dropdown exercise rendered by QTIJS</p>
+explanation for students. In dropdown exercises the feedback refers to
+the whole task, not to a specific dropdown. Group your feedback into
+appropriate sections, which can be opened/closed for better user
+experience (use details and summary html tags).</p>
 </div>
-</div>
-<div class="section level3">
-<h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
-</h3>
+<div class="section level2">
+<h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
+</h2>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>QTI: dropdown (complex)</code>, wich uses more yaml
+template <code>QTI: dropdown (complex)</code>, which uses more yaml
 attributes.</p>
 <pre><code>---
 type: dd # type of exercise
@@ -172,35 +175,34 @@ Under the hood, the qti package uses `r dropdown(c("no OOP", "S4 OOP", "S3 OOP",
 
 The package `qti` is specialized for producing xml qti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
 <p>Which renders as:</p>
-<div class="figure">
-<img src="screenshot_dropdown2.png" width="400" alt=""><p class="caption">Preview of dropdown exercise in LMS OPAL</p>
-</div>
+<p><img src="images/dropdown-complex.jpg"></p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
 </h2>
-<div class="section level4">
-<h4 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
-</h4>
+<div class="section level3">
+<h3 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
+</h3>
 <p>Has to be <code>dropdown</code> or <code>dd</code>.</p>
 </div>
-<div class="section level4">
-<h4 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
-</h4>
+<div class="section level3">
+<h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
+</h3>
 <p>This is the id of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
 </div>
-<div class="section level4">
-<h4 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
-</h4>
+<div class="section level3">
+<h3 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
+</h3>
 <p>Title of the exercise. Can be displayed to students depending on the
 learning management system settings. Default is the file name.</p>
 </div>
-<div class="section level3">
-<h3 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
+</h2>
 <p>Feedback can be provided with the section</p>
 <ul>
 <li>
@@ -214,62 +216,64 @@ points)</li>
 reach all points)</li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="helper-function-dropdown">Helper function <code>dropdown</code><a class="anchor" aria-label="anchor" href="#helper-function-dropdown"></a>
-</h3>
-<p>For more complex exercises the set of answers is often just available
-as a variable. In this case you can use the helper function
-<code>dropdown</code> to convert the vector into a dropdown-element:</p>
+<div class="section level2">
+<h2 id="helper-function-dropdown">Helper function <code>dropdown</code><a class="anchor" aria-label="anchor" href="#helper-function-dropdown"></a>
+</h2>
+<p>This helper function is used to generate a formatted string
+describing a dropdown in Rmd content:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">answers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S4 OOP"</span>, <span class="st">"S3 OOP"</span>, <span class="st">"no OOP"</span>, <span class="st">"R6 OOP"</span><span class="op">)</span></span>
-<span><span class="va">dd_element</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dropdown.html">dropdown</a></span><span class="op">(</span>solution <span class="op">=</span> <span class="va">answers</span>, answer_index <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                             response_identifier <span class="op">=</span> <span class="st">"OOP_task"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">choices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c1"</span> <span class="op">=</span> <span class="st">"S4 OOP"</span>, <span class="st">"c2"</span> <span class="op">=</span> <span class="st">"S3 OOP"</span>, <span class="st">"c3"</span> <span class="op">=</span> <span class="st">"no OOP"</span>, <span class="st">"c4"</span> <span class="op">=</span> <span class="st">"R6 OOP"</span><span class="op">)</span></span>
+<span><span class="va">oop_task</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dropdown.html">dropdown</a></span><span class="op">(</span>choices <span class="op">=</span> <span class="va">choices</span>, solution <span class="op">=</span> <span class="st">"S4 OOP"</span>,</span>
+<span>                     response_identifier <span class="op">=</span> <span class="st">"OOP_task"</span><span class="op">)</span></span>
+<span><span class="va">oop_task</span></span>
+<span><span class="co">#&gt; [1] "&lt;gap&gt;{solution: [S4 OOP], answer_index: 1.0, points: 1.0, shuffle: yes, response_identifier: OOP_task, choices_identifiers: [S4 OOP,S3 OOP,no OOP,R6 OOP], type: InlineChoice}&lt;/gap&gt;"</span></span></code></pre></div>
 <p>Argument list of <code>dropdown</code>:</p>
-<div class="section level4">
-<h4 id="solution">solution<a class="anchor" aria-label="anchor" href="#solution"></a>
-</h4>
-<p>String vector with set of possible answers.</p>
+<div class="section level3">
+<h3 id="choices">choices<a class="anchor" aria-label="anchor" href="#choices"></a>
+</h3>
+<p>Elements of dropdown. If you use a named vector, the names will be
+used as identifiers. This is useful for later data analysis.</p>
 </div>
-<div class="section level4">
-<h4 id="answer_index">answer_index<a class="anchor" aria-label="anchor" href="#answer_index"></a>
-</h4>
-<p>the number of the right answer in the solution vector. Default is
-1.</p>
+<div class="section level3">
+<h3 id="solution">solution<a class="anchor" aria-label="anchor" href="#solution"></a>
+</h3>
+<p>Either the index of the correct choice as a numeric or a character
+that is identical to the correct element (for the above example
+<code>solution = "S4 OOP"</code>). Note that this is optional. Simply
+use the correct choice as the first element of <code>choices</code>,
+which is more concise.</p>
 </div>
-<div class="section level4">
-<h4 id="score">score<a class="anchor" aria-label="anchor" href="#score"></a>
-</h4>
-<p>The number of points for this gap. Default is 1.</p>
+<div class="section level3">
+<h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
+</h3>
+<p>The number of points for the dropdown. Default is 1.</p>
 </div>
-<div class="section level4">
-<h4 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
-</h4>
-<p>If <code>true</code>, randomizes the order of the choices. Defaults
-to <code>true</code>. Only in rare occasions it makes sense to have a
-strict order of choices (setting shuffle to <code>false</code>).</p>
+<div class="section level3">
+<h3 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
+</h3>
+<p>If <code>TRUE</code>, randomizes the order of the choices. Defaults
+to <code>TRUE</code>. Only in rare occasions it makes sense to have a
+strict order of choices (setting shuffle to <code>FALSE</code>).</p>
 </div>
-<div class="section level4">
-<h4 id="response_identifier">response_identifier<a class="anchor" aria-label="anchor" href="#response_identifier"></a>
-</h4>
-<p>This is the id of the dropdown-element, useful for later data
-analysis of results. The default has format as “response_1”. If you are
-doing extensive data analysis later on, it makes sense to specify a
+<div class="section level3">
+<h3 id="response_identifier">response_identifier<a class="anchor" aria-label="anchor" href="#response_identifier"></a>
+</h3>
+<p>This is the ID of the dropdown-element, useful for later data
+analysis of results. The default has the format “response_1”,
+“response_2”, …“response_n” for several dropdowns. If you are doing
+extensive data analysis later on, it makes sense to specify a more
 meaningful identifier.</p>
 </div>
-<div class="section level4">
-<h4 id="choices_identifier">choices_identifier<a class="anchor" aria-label="anchor" href="#choices_identifier"></a>
-</h4>
-<p>This is the id of the answer-option of the dropdown-element, useful
-for deeper data analysis of results. The default has format as
-“OptionA”. If you are doing extensive data analysis later on, it makes
-sense to specify a meaningful identifier.</p>
 </div>
-</div>
-<div class="section level3">
-<h3 id="some-advice-on-essay-exercises">Some advice on essay exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-exercises"></a>
-</h3>
-<p>TODO</p>
-</div>
+<div class="section level2">
+<h2 id="some-advice-on-dropdown-exercises">Some advice on dropdown exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-dropdown-exercises"></a>
+</h2>
+<p>Dropdown exercises seem to be similar to numeric and text gaps, but
+they are forced choice items, so are actually equivalent to single
+choice exercises. The advantage is that they can be placed in between
+other text and several of them can be used in a single exercise. Still,
+they suffer from the same problems as <a href="singlechoice.html">single
+choice exercises</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

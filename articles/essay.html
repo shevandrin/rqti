@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Essay Exercises</h1>
             
-            <h4 data-toc-skip class="date">2023-10-19</h4>
+            <h4 data-toc-skip class="date">2023-10-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/essay.Rmd" class="external-link"><code>vignettes/essay.Rmd</code></a></small>
       <div class="d-none name"><code>essay.Rmd</code></div>
@@ -99,10 +99,8 @@
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>This type of exercise is an open question and refers to an assessment
-task that allows the candidate to give an answer in a free form without
-predefined answer options or formats. A template is available in RStudio
-when you click on
+<p>This is just a typical essay exercise. A template is available in
+RStudio when you click on
 <code>New file -&gt; R Markdown -&gt; From Template</code>. The qti
 templates start with <code>QTI:</code>. Here we look at the templates
 <code>QTI: essay (simple)</code> and
@@ -122,18 +120,18 @@ What are the advantages and disadvantages of the `qti` package as compared to th
 # feedback
 
 The qti package can only export to the QTI format, which makes it less general than the `exams` package. But the qti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.</code></pre>
+<p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
+<p><img src="images/essay.png"></p>
+<p>Alternatively, change the knit parameter to
+<code>knit: render_opal</code> (see <a href="opal_api">API Opal</a>) to
+upload to Opal directly, producing:</p>
+<p><img src="images/essay-simple.jpg"></p>
 <p>Note that in this example, a feedback section was also provided.
-Since only manual review is possible in this type of exercise, only
-general feedback is reasonable, which will be shown after the answer is
-submitted. The feedback is optional, but usually it is a good idea to
-give some explanation for students.</p>
-<p>Further note that the <code>knit</code> parameter is set to the
-custom qti knit function, which will handle the preview. Clicking the
-Knit button in RStudio produces the following in the viewer pane (or
-browser of your choice):</p>
-<div class="figure">
-<img src="screenshot_essay1.png" width="400" alt=""><p class="caption">Preview of essay exercise rendered by QTIJS</p>
-</div>
+Since an open question requires manual review, only general feedback
+without conditions should be provided. The feedback is optional, but
+usually it is a good idea to give some explanation for students.
+Furthermore, a feedback section for essay exercises can serve as a good
+basis for grading student’s answers.</p>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
@@ -161,10 +159,8 @@ What are the advantages and disadvantages of the `qti` package as compared to th
 # feedback
 
 The qti package can only export to the QTI format, which makes it less general than the `exams` package. But the qti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.</code></pre>
-<p>Which renders as:</p>
-<div class="figure">
-<img src="screenshot_essay2.png" width="400" alt=""><p class="caption">Preview of essay exercise in LMS OPAL</p>
-</div>
+<p>Which on Opal renders as:</p>
+<p><img src="images/essay-complex.jpg"></p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -177,7 +173,7 @@ The qti package can only export to the QTI format, which makes it less general t
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the id of the exercise, useful for later data analysis of
+<p>This is the ID of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
@@ -212,7 +208,7 @@ candidate in the text input field.</p>
 <div class="section level3">
 <h3 id="min_strings">min_strings<a class="anchor" aria-label="anchor" href="#min_strings"></a>
 </h3>
-<p>Defines the minimum number of words that can be written by the
+<p>Defines the minimum number of words that must be written by the
 candidate in the text input field.</p>
 </div>
 <div class="section level3">
@@ -231,11 +227,21 @@ clipboard to the text input field. Default is <code>FALSE</code>.</p>
 <strong># feedback</strong> (general feedback, displayed every time,
 without conditions)</li>
 </ul>
+<p>The feedback plays an important role in essay exercises because the
+expected length and maximum words are calculated from the feedback
+section, if one is given. Providing useful feedback also defines
+explicit criteria for grading, so do not skip it for essay exercises,
+unless you have good reasons to.</p>
 </div>
 <div class="section level2">
 <h2 id="some-advice-on-essay-exercises">Some advice on essay exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-exercises"></a>
 </h2>
-<p>TODO</p>
+<p>Essay exercises can be one of the best exercises if the instructor
+asks a good question. Unfortunately, many instructors are not very
+creative and unspecific when they come up with essay questions. This
+often leads to vague criteria for grading. To avoid this, always write
+an ideal solution in the feedback section. Your students and colleagues
+will thank you.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
