@@ -21,7 +21,7 @@ library(qti)
 
 ## Minimum version
 
-In this type of exercise, the candidate is asked to fill in the blanks from a set of options available from a dropdown list. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: dropdown (simple)` and `QTI: dropdown (complex)`.
+In this type of exercise, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as gaps because this is essentialy what dropwdowns are. Several dropdowns can be combined in a single exercise, but a combination with numeric and text gaps is not possible. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: dropdown (simple)` and `QTI: dropdown (complex)`.
 
 The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**:
 
@@ -29,26 +29,27 @@ The minimum you need to provide is the `type: dropdown` (or the equivalent `type
 cat(readLines(fs::path_package("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
 ```
 
-There are 2 ways to denote a dropdown-element in Rmd content:
+Knitting via the Knit-Button to qtijs, this exercise renders as:
 
-- put inside `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`) set of answer options separating them by `|`. Example: `<<element 1|element 2|element 3>>`
-- use the helper function `dropdown` (see more details below)
+![](images/dropdown.png)
 
-By default, each dropdown-elements gives 1 point for the correct answer. The total number of points for completing a task is defined as the sum of points for each dropdown-element.
+Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](opal_api)) to upload to Opal directly, producing:
 
+![](images/dropdown-simple.jpg)
+
+There are 2 ways to specify a dropdown-element in Rmd content:
+
+- Put the right answer inside `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`). Example: `<<element1|element2|element3>>`
+- use the helper function [`dropdown`](#helper-function-dropdown)
+
+By default, 1 point can be reached for each dropdown (specify `points` to your needs). The total number of points for completing a task is defined as the sum of points of all dropdowns.
 
 Note that in this example, a feedback section was also provided. The feedback is
-optional, but usually it is a good idea to give some explanation for students. In this type of exercise the feedback relates to the whole task, not to a specific gap.
-
-Further note that the `knit` parameter is set to the custom qti knit function,
-which will handle the preview. Clicking the Knit button in RStudio produces the
-following in the viewer pane (or browser of your choice):
-
-![Preview of dropdown exercise rendered by QTIJS](screenshot_dropdown1.png){width="400"}
+optional, but usually it is a good idea to give some explanation for students. In dropdown exercises the feedback refers to the whole task, not to a specific dropdown. Group your feedback into appropriate sections, which can be opened/closed for better user experience (use details and summary html tags).
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `QTI: dropdown (complex)`, wich uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template `QTI: dropdown (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
@@ -56,9 +57,9 @@ cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", 
 
 Which renders as:
 
-![Preview of dropdown exercise in LMS OPAL](screenshot_dropdown2.png){width="400"}
+![](images/dropdown-complex.jpg)
 
-# yaml attributes
+## yaml attributes
 
 ### type
 
@@ -66,14 +67,11 @@ Has to be `dropdown` or `dd`.
 
 ### identifier
 
-This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
-specify a meaningful identifier. In all other cases, the file name should be
-fine.
+This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on
-the learning management system settings. Default is the file name.
+Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
 
 ## Feedback
 
@@ -85,40 +83,37 @@ Feedback can be provided with the section
 
 ## Helper function `dropdown`
 
-For more complex exercises the set of answers is often just available as a variable. In this case you can use the helper function `dropdown` to convert the vector into a dropdown-element:
+This helper function is used to generate a formatted string describing a dropdown in Rmd content:
 
-```{r results="plaintext", comment=""}
-answers <- c("S4 OOP", "S3 OOP", "no OOP", "R6 OOP")
-dd_element <- dropdown(solution = answers, answer_index = 1,
-                             response_identifier = "OOP_task")
+```{r}
+choices <- c("c1" = "S4 OOP", "c2" = "S3 OOP", "c3" = "no OOP", "c4" = "R6 OOP")
+oop_task <- dropdown(choices = choices, solution = "S4 OOP",
+                     response_identifier = "OOP_task")
+oop_task
 ```
+
 Argument list of `dropdown`:
+
+### choices
+
+Elements of dropdown. If you use a named vector, the names will be used as identifiers. This is useful for later data analysis.
 
 ### solution
 
-String vector with set of possible answers.
+Either the index of the correct choice as a numeric or a character that is identical to the correct element (for the above example `solution = "S4 OOP"`). Note that this is optional. Simply use the correct choice as the first element of `choices`, which is more concise.
 
-### answer_index
+### points
 
-the number of the right answer in the solution vector. Default is 1.
-
-### score
-
-The number of points for this gap. Default is 1.
+The number of points for the dropdown. Default is 1.
 
 ### shuffle
 
-If `true`, randomizes the order of the choices. Defaults to `true`. Only in rare occasions it makes sense to have a strict order of choices (setting shuffle to `false`).
+If `TRUE`, randomizes the order of the choices. Defaults to `TRUE`. Only in rare occasions it makes sense to have a strict order of choices (setting shuffle to `FALSE`).
 
 ### response_identifier
 
-This is the id of the dropdown-element, useful for later data analysis of results. The default has format as "response_1". If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier.
+This is the ID of the dropdown-element, useful for later data analysis of results. The default has the format "response_1", "response_2", ..."response_n" for several dropdowns. If you are doing extensive data analysis later on, it makes sense to specify a more meaningful identifier.
 
-### choices_identifier
+## Some advice on dropdown exercises 
 
-This is the id of the answer-option of the dropdown-element, useful for deeper data analysis of results. The default has format as "OptionA". If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier.
-
-
-## Some advice on essay exercises 
-
-TODO
+Dropdown exercises seem to be similar to numeric and text gaps, but they are forced choice items, so are actually equivalent to single choice exercises. The advantage is that they can be placed in between other text and several of them can be used in a single exercise. Still, they suffer from the same problems as [single choice exercises](singlechoice.html).

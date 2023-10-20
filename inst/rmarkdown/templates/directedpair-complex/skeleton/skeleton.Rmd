@@ -1,20 +1,19 @@
 ---
 type: dp
 knit: qti::render_opal
-identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+identifier: TOPIC1_Q006 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 orientation: horizontal # how items are placed on screen
-shuffle: true # random order of choices
-answers_scores: 1, 1, 0.5
+shuffle: true # random order of elements
 ---
 
 # question
 
-In this task candidate is requested to combine a pairs from given items.
+In this task the candidate has to match elements from two sets.
 
-As a source of data just provide a markdown list with right pairs of items, separated by `|`.
+As a source of data just provide a markdown list with the correct pairs, separated by `|`.
 
-Match `QTI` functions with their purposes:
+Match the following `QTI` functions with their purpose:
 
 * rmd2zip | from Rmd-file create zip-file with exercise
 * rmd2xml | from Rmd-file create xml-file with exercise

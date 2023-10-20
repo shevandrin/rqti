@@ -21,8 +21,7 @@ library(qti)
 
 ## Minimum version
 
-This type of exercise is an open question and refers to an assessment task that allows the candidate to give an answer in a free form without predefined answer options or formats. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: essay (simple)`
-and `QTI: essay (complex)`.
+This is just a typical essay exercise. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: essay (simple)` and `QTI: essay (complex)`.
 
 The minimum you need to provide is the `type: essay` in the yaml-section and some text as a task description in a section called **\#question**:
 
@@ -30,16 +29,15 @@ The minimum you need to provide is the `type: essay` in the yaml-section and som
 cat(readLines(fs::path_package("rmarkdown/templates/essay-simple/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
 ```
 
-Note that in this example, a feedback section was also provided. Since only
-manual review is possible in this type of exercise, only general feedback is
-reasonable, which will be shown after the answer is submitted. The feedback is
-optional, but usually it is a good idea to give some explanation for students.
+Knitting via the Knit-Button to qtijs, this exercise renders as:
 
-Further note that the `knit` parameter is set to the custom qti knit function,
-which will handle the preview. Clicking the Knit button in RStudio produces the
-following in the viewer pane (or browser of your choice):
+![](images/essay.png)
 
-![Preview of essay exercise rendered by QTIJS](screenshot_essay1.png){width="400"}
+Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](opal_api)) to upload to Opal directly, producing:
+
+![](images/essay-simple.jpg)
+
+Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay exercises can serve as a good basis for grading student's answers.
 
 ## More control
 
@@ -49,9 +47,9 @@ If you want to have more fine-grained control, consider the RMD template `QTI: e
 cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
 ```
 
-Which renders as:
+Which on Opal renders as:
 
-![Preview of essay exercise in LMS OPAL](screenshot_essay2.png){width="400"}
+![](images/essay-complex.jpg)
 
 ## yaml attributes
 
@@ -61,14 +59,11 @@ Has to be `essay`.
 
 ### identifier
 
-This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
-specify a meaningful identifier. In all other cases, the file name should be
-fine.
+This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on
-the learning management system settings. Default is the file name.
+Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
 
 ### points
 
@@ -88,7 +83,7 @@ Defines the maximum number of words that can be written by the candidate in the 
 
 ### min_strings
 
-Defines the minimum number of words that can be written by the candidate in the text input field.
+Defines the minimum number of words that must be written by the candidate in the text input field.
 
 ### data_allow_paste
 
@@ -98,8 +93,10 @@ Determines whether the candidate is allowed to copy text from the clipboard to t
 
 Feedback can be provided with the section
 
--   **\# feedback** (general feedback, displayed every time, without conditions)
+-  **\# feedback** (general feedback, displayed every time, without conditions)
 
-## Some advice on essay exercises 
+The feedback plays an important role in essay exercises because the expected length and maximum words are calculated from the feedback section, if one is given. Providing useful feedback also defines explicit criteria for grading, so do not skip it for essay exercises, unless you have good reasons to.
 
-TODO
+## Some advice on essay exercises
+
+Essay exercises can be one of the best exercises if the instructor asks a good question. Unfortunately, many instructors are not very creative and unspecific when they come up with essay questions. This often leads to vague criteria for grading. To avoid this, always write an ideal solution in the feedback section. Your students and colleagues will thank you.
