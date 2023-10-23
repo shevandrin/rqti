@@ -73,8 +73,8 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dropdown</span><span class="op">(</span></span>
-<span>  <span class="va">solution</span>,</span>
-<span>  answer_index <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">choices</span>,</span>
+<span>  solution_index <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  response_identifier <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -84,14 +84,14 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>solution</dt>
+    <dl><dt>choices</dt>
 <dd><p>numeric or character vector; contains values of possible
 answers</p></dd>
 
 
-<dt>answer_index</dt>
+<dt>solution_index</dt>
 <dd><p>integer, optional; the number of right answer in the
-<code>solution</code> vector, default <code>1</code></p></dd>
+<code>choices</code> vector, default <code>1</code></p></dd>
 
 
 <dt>points</dt>
