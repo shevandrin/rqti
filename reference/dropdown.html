@@ -77,8 +77,7 @@
 <span>  solution_index <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  response_identifier <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  choices_identifiers <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  response_identifier <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -86,7 +85,7 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>choices</dt>
 <dd><p>numeric or character vector; contains values of possible
-answers</p></dd>
+answers. If you use a named vector, the names will be used as identifiers</p></dd>
 
 
 <dt>solution_index</dt>
@@ -107,11 +106,6 @@ which the choices are initially presented to the candidate; default <code>TRUE</
 <dt>response_identifier</dt>
 <dd><p>string; an identifier for the answer; by default
 it is generated automatically</p></dd>
-
-
-<dt>choices_identifiers</dt>
-<dd><p>character vector, optional; a set of identifiers
-for answers; by default identifiers are generated automatically</p></dd>
 
 </dl></div>
     <div class="section level2">

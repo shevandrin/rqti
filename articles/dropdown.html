@@ -169,7 +169,7 @@ title: A meaningful title that can be displayed in the LMS
 
 The philosophy of the qti package is &lt;&lt;do one thing and do it well|one for all&gt;&gt;.
 
-Under the hood, the qti package uses `r dropdown(c("no OOP", "S4 OOP", "S3 OOP", "R6 OOP"), solution_index = 2, score = 5, response_identifier = "OOP_task", choices_identifiers = c("noOOP", "S4", "S3", "S6"))`.
+Under the hood, the qti package uses `r dropdown(c(noOOP = "no OOP", S4 = "S4 OOP", S3 = "S3 OOP", S6 = "R6 OOP"), solution_index = 2, points = 5, response_identifier = "OOP_task")`.
 
 # feedback
 
@@ -226,7 +226,7 @@ describing a dropdown in Rmd content:</p>
 <span><span class="va">oop_task</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dropdown.html">dropdown</a></span><span class="op">(</span>choices <span class="op">=</span> <span class="va">choices</span>, solution <span class="op">=</span> <span class="st">"S4 OOP"</span>,</span>
 <span>                     response_identifier <span class="op">=</span> <span class="st">"OOP_task"</span><span class="op">)</span></span>
 <span><span class="va">oop_task</span></span>
-<span><span class="co">#&gt; [1] "&lt;gap&gt;{choices: [S4 OOP,S3 OOP,no OOP,R6 OOP], solution_index: S4 OOP, points: 1.0, shuffle: yes, response_identifier: OOP_task, type: InlineChoice}&lt;/gap&gt;"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "&lt;gap&gt;{choices: [S4 OOP,S3 OOP,no OOP,R6 OOP], solution_index: S4 OOP, points: 1.0, shuffle: yes, response_identifier: OOP_task, choices_identifiers: [c1,c2,c3,c4], type: InlineChoice}&lt;/gap&gt;"</span></span></code></pre></div>
 <p>Argument list of <code>dropdown</code>:</p>
 <div class="section level3">
 <h3 id="choices">choices<a class="anchor" aria-label="anchor" href="#choices"></a>
