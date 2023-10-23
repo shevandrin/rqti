@@ -42,6 +42,13 @@ setMethod("initialize", "Essay", function(.Object, ...) {
         warning("The data_allow_paste property only works on LMS Opal.")
     }
 
+    # set default max count of words
+    if (length(.Object@words_max) == 0 && length(.Object@feedback) == 1) {
+        answer_str <- paste(.Object@feedback[[1]]@content, collapse = " ")
+        nwords <- length(unlist(strsplit(answer_str, "\\s+")))
+        .Object@words_max <- nwords * 2
+    }
+
     validObject(.Object)
     .Object
 })
