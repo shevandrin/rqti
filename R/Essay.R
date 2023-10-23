@@ -28,9 +28,15 @@ setClass("Essay", contains = "AssessmentItem",
 
 setMethod("initialize", "Essay", function(.Object, ...) {
     .Object <- callNextMethod()
-    if (length(.Object@feedback) > 0) {
-       warning("Feedback messages are not meaningful for this type of excercise"
-               , immediate. = TRUE, call. = FALSE)}
+
+    # detect not general feedback to throw an error
+    not_general_fb <- c("CorrectFeedback", "WrongFeedback")
+    log_fb <- sapply(.Object@feedback, function(x) class(x) %in% not_general_fb)
+    if (any(log_fb)) {
+       stop("Only general feedback is possible for this type of task",
+            call. = FALSE)
+    }
+
     validObject(.Object)
     .Object
 })
