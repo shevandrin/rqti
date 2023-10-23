@@ -134,7 +134,7 @@ make_choice_interaction <- function(object, max_choices) {
 make_inline_choice_interaction <- function(object) {
     inline_choices <- Map(make_choice, "inlineChoice",
                           object@choices_identifiers,
-                          object@solution)
+                          object@choices)
     inline_choice_interaction <- tag("inlineChoiceInteraction",
                         list(responseIdentifier = object@response_identifier,
                                    shuffle = tolower(object@shuffle),

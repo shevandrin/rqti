@@ -8,10 +8,10 @@ Now is the winter of our discontent
 Made glorious summer by this sun of",
         new("InlineChoice",
             response_identifier = "RESPONSE",
-            answer_index = 3,
+            solution_index = 3,
             points = 2,
             shuffle = FALSE,
-            solution = c("Gloucester", "Lancaster", "York"),
+            choices = c("Gloucester", "Lancaster", "York"),
             choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>
@@ -56,9 +56,9 @@ Now is the winter of our discontent
 Made glorious summer by this sun of",
        new("InlineChoice",
        response_identifier = "RESPONSE",
-       answer_index = 3,
+       solution_index = 3,
        points = 2,
-       solution = c("Gloucester", "Lancaster", "York"),
+       choices = c("Gloucester", "Lancaster", "York"),
        choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>
@@ -93,9 +93,9 @@ Now is the winter of our discontent
 Made glorious summer by this sun of",
         new("InlineChoice",
         response_identifier = "RESPONSE",
-        answer_index = 3,
+        solution_index = 3,
         points = 2,
-        solution = c("Gloucester", "Lancaster", "York"),
+        choices = c("Gloucester", "Lancaster", "York"),
         choices_identifiers = c("G","L","Y")),";<br/>
 And all the clouds that lour'd upon our house
 <br/>
@@ -152,10 +152,10 @@ test_that("Testing CreateItemBody Inline", {
     sc <- suppressMessages(new("Entry",
                     content = list("<p>One hour is",new("InlineChoice",
                               response_identifier = "RESPONSE",
-                              answer_index = 3,
+                              solution_index = 3,
                               points = 1,
                               shuffle = FALSE,
-                              solution = c("160","90","60"),
+                              choices = c("160","90","60"),
                               choices_identifiers = c("1","2","3")),
                               "minutes</p>")))
     example <- '<itemBody>
@@ -178,9 +178,9 @@ test_that("Testing CreateItemBody Inline", {
                                content = list(
                                    "<p>One hour is",new("InlineChoice",
                                           response_identifier = "RESPONSE",
-                                          answer_index = 3,
+                                          solution_index = 3,
                                           shuffle = FALSE,
-                                          solution = c("160","90","60"),
+                                          choices = c("160","90","60"),
                                           choices_identifiers = c("1","2","3")),
                                       "minutes</p>")))
     example <- '<itemBody>
@@ -202,9 +202,9 @@ test_that("Testing CreateItemBody Inline", {
     sc <- suppressMessages(new("Entry",
                         content = list("<p>One hour is",new("InlineChoice",
                                            response_identifier = "RESPONSE",
-                                           answer_index = 3,
+                                           solution_index = 3,
                                            shuffle = FALSE,
-                                           solution = c("160","90","60")),
+                                           choices = c("160","90","60")),
                                            "minutes</p>")))
     example <- '<itemBody>
 	    <p>One hour is
@@ -226,18 +226,18 @@ test_that("Testing InlineChoice class in case its score is undefined", {
                            title = "InlineChoice",
                            content = list('The speed of light is equal',
                                             new("InlineChoice",
-                                            solution = c("400","300","500"),
+                                            choices = c("400","300","500"),
                                             response_identifier = "RESPONSE_1",
-                                            answer_index = 2),
+                                            solution_index = 2),
                                             'm/s')))
     sut_2 <- suppressMessages(new("Entry", identifier = "new",
                            points = 4,
                            title = "InlineChoice",
                            content = list('The speed of light is equal',
                                            new("InlineChoice",
-                                           solution = c("400","300","500"),
+                                           choices = c("400","300","500"),
                                            response_identifier = "RESPONSE_1",
-                                           answer_index = 2,
+                                           solution_index = 2,
                                            points = as.integer(NA)),
                                            'm/s')))
     inline_choice_1 <- sut_1@content[[2]]

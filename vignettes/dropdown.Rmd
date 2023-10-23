@@ -98,9 +98,9 @@ Argument list of `dropdown`:
 
 Elements of dropdown. If you use a named vector, the names will be used as identifiers. This is useful for later data analysis.
 
-### solution
+### solution_index
 
-Either the index of the correct choice as a numeric or a character that is identical to the correct element (for the above example `solution = "S4 OOP"`). Note that this is optional. Simply use the correct choice as the first element of `choices`, which is more concise.
+The index of the correct choice as a numeric. Note that this is optional. Simply use the correct choice as the first element of `choices`, which is more concise.
 
 ### points
 
