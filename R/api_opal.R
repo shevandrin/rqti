@@ -203,7 +203,7 @@ get_resources_by_name <- function(display_name, endpoint, rtype = NULL) {
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
 #' @export
-fetch_resource_url <- function(display_name,
+get_resource_url <- function(display_name,
                         endpoint = "https://bildungsportal.sachsen.de/opal/",
                         api_user = NULL, api_password = NULL) {
     # check auth
