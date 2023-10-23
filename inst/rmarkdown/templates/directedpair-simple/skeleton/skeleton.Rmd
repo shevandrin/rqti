@@ -5,16 +5,15 @@ knit: qti::render_opal
 
 # question
 
-In this task candidate is requested to combine a pairs from given items.
+In this task the candidate has to match elements from two sets.
 
 As a source of data just provide a markdown list with right pairs of items, separated by `|`.
 
-Match `QTI` functions with their purposes:
+Match the following `QTI` functions with their purpose:
 
 * rmd2zip | from Rmd-file create zip-file with exercise
 * rmd2xml | from Rmd-file create xml-file with exercise
 * render_opal | render Rmd directly on LMS OPAL
-
 
 # feedback
 

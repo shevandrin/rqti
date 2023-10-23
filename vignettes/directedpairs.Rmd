@@ -21,7 +21,7 @@ library(qti)
 
 ## Minimum version
 
-In this type of exercise, the candidate is given two sets of items and is required to match pairs from them. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: directedpair (simple)` and `QTI: directedpair (complex)`.
+In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: directedpair (simple)` and `QTI: directedpair (complex)`.
 
 The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -29,16 +29,19 @@ The minimum you need to provide is the `type: pair` (or the equivalent `type: dp
 cat(readLines(fs::path_package("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
 ```
 
-In this task candidate is requested to combine a pairs from given items. As a source of data just provide a markdown list with pairs of items, separated by `|`. This list has to be the last element of the question section!
+Which renders as:
+
+![](images/dp.png)
+
+The pairs are specified by a markdown list in which the matching elements are separated by `|`. This list has to be the last element of the question section!
 
 Note that in this example, a feedback section was also provided. The feedback is
 optional, but usually it is a good idea to give some explanation for students.
 
-Further note that the `knit` parameter is set to the custom qti knit function,
-which will handle the preview. Clicking the Knit button in RStudio produces the
-following in the viewer pane (or browser of your choice):
+Note that the `knit` parameter is set to the custom qti knit function,
+which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](opal_api)) to upload to opal directly, producing:
 
-![Preview of directedpair exercise on LMS OPAL](screenshot_pair1.png){width="400"}
+![](images/directedpair-simple.jpg)
 
 ## More control
 
@@ -50,9 +53,9 @@ cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleto
 
 Which renders as:
 
-![Preview of directed pair exercise in LMS OP](screenshot_pair2.png){width="400"}
+![Preview of directed pair exercise in LMS OP](images/directedpair-complex.jpg)
 
-# yaml attributes
+## yaml attributes
 
 ### type
 
@@ -75,11 +78,11 @@ Defines the `vertical` or `horizontal` mode of displaying responses. Default is 
 
 ### shuffle
 
-It mixes the order of answer items. Default is `TRUE`.
+If `true` (the default), randomizes the order of the elements. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to `false`).
 
 ###  points
 
-How many points are given for the whole exercise. Default is 1. 
+How many points are given for the whole exercise. Default is 1.
 
 ### answers_scores
 
@@ -88,7 +91,7 @@ as the sum of 'answers_scores', and the attribute 'points', if set, will be igno
 
 ### abbr_id
 
-Defines the use of an abbreviation as a way to generate answer items identifiers. If `abbr_id` is omitted, then 'qti' generates identifiers as `right_1`...`right_N` and `left_1`...`left_N`
+If `abbr_id` is omitted, then 'qti' generates identifiers as `right_1`, `right_2`, ...`right_N` and `left_1`, `left_2`...`left_N`. This does not contain any semantics, so it can be more useful to abbreviate the identifiers, which `abbr_id` does. Depending on the length of items, the abbreivations are more or less useful, but in any case more useful than non-semantic identifiers.
 
 ## Feedback
 
@@ -98,6 +101,8 @@ Feedback can be provided with the section
 -   **\# feedback+** (only provided if student reaches all points)
 -   **\# feedback-** (only provided if student does not reach all points)
 
-## Some advice on Directed Pair exercises 
+## Some advice on directed pair exercises 
 
-TODO
+Directed pairs are forced choice exercises, so they have similar problems as single choice and multiple choice exercises (guessing increases variance). A specific problem of directed pairs is that answers are not independent. Making a mistake will lead to additional mistakes because two elements are blocked by one match. Use directed pairs with care.
+
+One might think that directed pairs are superfluous because match tables serve the same purpose. The difference is that in match tables either the row or column can be used more than once. For directed pairs, matching a pair makes both elements unavailable for further matching. This is unique, so there are use cases for directed pairs.
