@@ -53,8 +53,8 @@ create_item_body_essay <- function(object) {
                     list("responseIdentifier" = "RESPONSE",
                          "expectedLength" = object@expected_length,
                          "expectedLines" = object@expected_lines,
-                         "maxStrings" = object@max_strings,
-                         "minStrings" = object@min_strings,
+                         "maxStrings" = object@words_max,
+                         "minStrings" = object@words_min,
                          "data-allowPaste" = tolower(object@data_allow_paste),
                                                     prompt))
     tag("itemBody", list(Map(createText, object@content), ext_text))
