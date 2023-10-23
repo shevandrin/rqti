@@ -37,6 +37,11 @@ setMethod("initialize", "Essay", function(.Object, ...) {
             call. = FALSE)
     }
 
+    # warning for data_allow_paste
+    if (length(.Object@data_allow_paste) > 0) {
+        warning("The data_allow_paste property only works on LMS Opal.")
+    }
+
     validObject(.Object)
     .Object
 })

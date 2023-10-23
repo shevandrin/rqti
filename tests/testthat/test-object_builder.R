@@ -156,8 +156,8 @@ test_that("Testing create_question_object() for MultipleChoice class:
 
 test_that("Testing create_question_object() for Essay class", {
     path <- test_path("file/md/test_essay_example.md")
-    sut <- create_question_object(path)
-    expected <- new("Essay",
+    sut <- suppressWarnings(create_question_object(path))
+    expected <- suppressWarnings(new("Essay",
                     content = list(
                 "<p>Defining Good Students Means More Than Just Grades.</p>"),
                    points = 10,
@@ -165,7 +165,7 @@ test_that("Testing create_question_object() for Essay class", {
                    qti_version = "v2p1",
                    title = "Definition Essay",
                    data_allow_paste = FALSE
-                   )
+                   ))
     expect_equal(sut, expected)
 })
 
