@@ -142,8 +142,8 @@ test_that("XML validation with schema file Essay", {
                  title = "extendedText",
                  expected_length = 100,
                  expected_lines = 10,
-                 max_strings = 50,
-                 min_strings = 1)
+                 words_max = 50,
+                 words_min = 1)
     sut <- xml2::read_xml(toString(create_assessment_item(essay)))
     file <- system.file("imsqti_v2p1.xsd", package = "qti")
     schema <- xml2::read_xml(file)

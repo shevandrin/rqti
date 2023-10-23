@@ -11,7 +11,7 @@
 #' es <- new("Essay", content = list("<p>Develop some idea and write it down in
 #'                                   the text field</p>"),
 #'           title = "essay_example",
-#'           max_strings = 100,
+#'           words_max = 100,
 #'           points = 3)
 #' @name Essay-class
 #' @rdname Essay-class
@@ -22,8 +22,8 @@
 setClass("Essay", contains = "AssessmentItem",
          slots = c(expected_length = "numeric",
                    expected_lines = "numeric",
-                   max_strings = "numeric",
-                   min_strings = "numeric",
+                   words_max = "numeric",
+                   words_min = "numeric",
                    data_allow_paste = "logical"))
 
 setMethod("initialize", "Essay", function(.Object, ...) {

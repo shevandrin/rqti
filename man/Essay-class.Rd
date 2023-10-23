@@ -33,10 +33,10 @@ input field in content delivery engine}
 \item{\code{expected_lines}}{numeric, optional; is responsible to set a number of
 rows of text input field in content delivery engine}
 
-\item{\code{max_strings}}{numeric, optional; is responsible to set a max number of
+\item{\code{words_max}}{numeric, optional; is responsible to set a max number of
 words that candidate can write in the text input field}
 
-\item{\code{min_strings}}{numeric, optional; is responsible to set a min number of
+\item{\code{words_min}}{numeric, optional; is responsible to set a min number of
 words that candidate should write in the text input field}
 
 \item{\code{data_allow_paste}}{boolean, optional; determines whether it is possible
@@ -53,6 +53,6 @@ use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a
 es <- new("Essay", content = list("<p>Develop some idea and write it down in
                                   the text field</p>"),
           title = "essay_example",
-          max_strings = 100,
+          words_max = 100,
           points = 3)
 }
