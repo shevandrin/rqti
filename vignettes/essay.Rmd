@@ -77,11 +77,11 @@ Defines the width of the text input field.
 
 Defines the number of lines of the text input field.
 
-### max_strings
+### words_max
 
 Defines the maximum number of words that can be written by the candidate in the text input field.
 
-### min_strings
+### words_min
 
 Defines the minimum number of words that must be written by the candidate in the text input field.
 

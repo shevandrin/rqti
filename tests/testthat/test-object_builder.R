@@ -156,8 +156,8 @@ test_that("Testing create_question_object() for MultipleChoice class:
 
 test_that("Testing create_question_object() for Essay class", {
     path <- test_path("file/md/test_essay_example.md")
-    sut <- create_question_object(path)
-    expected <- new("Essay",
+    sut <- suppressWarnings(create_question_object(path))
+    expected <- suppressWarnings(new("Essay",
                     content = list(
                 "<p>Defining Good Students Means More Than Just Grades.</p>"),
                    points = 10,
@@ -165,7 +165,7 @@ test_that("Testing create_question_object() for Essay class", {
                    qti_version = "v2p1",
                    title = "Definition Essay",
                    data_allow_paste = FALSE
-                   )
+                   ))
     expect_equal(sut, expected)
 })
 
@@ -435,25 +435,25 @@ test_that("Testing create_question_object() for InlineChoice
                     title = "test_entry_example",
                     content = list('<p>Das beliebteste Telefon der Welt ist ',
                                    new("InlineChoice",
-                                       solution = c("Realme 9 Pro",
+                                       choices = c("Realme 9 Pro",
                                                     "Realme GT Master Edition",
                                                     "Samsung Galaxy A52"),
                                        response_identifier = "response_1"),
                                        paste0(". Das meistverkaufte ",
                                        "Telefonmodell in Deutschland ist "),
                                    new("InlineChoice",
-                                       solution = c("Apple iPhone 13 Pro",
+                                       choices = c("Apple iPhone 13 Pro",
                                                     "Apple iPhone 13 Pro Max",
                                                     "Apple iPhone 13"),
                                        response_identifier = "response_2",
-                                       answer_index = 3),
+                                       solution_index = 3),
                                        paste0(".</p><p>In welchem Jahr ",
                                               "begann das iPhone auf dem ",
                                               "europäischen Markt zu ",
                                               "verkaufen?"),
                                    new("InlineChoice",
                                        response_identifier = "response_3",
-                                       solution = c(2007, 2008)),
+                                       choices = c(2007, 2008)),
                                    '</p>'),
                     feedback = list(new("WrongFeedback",
                                     content = list("<p>wrong feedback</p>")),

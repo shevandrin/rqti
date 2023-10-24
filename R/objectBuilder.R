@@ -141,7 +141,7 @@ create_gap_object <- function(entry, id) {
                           solution = gap_str)
         } else {
             object <- new("InlineChoice", response_identifier = id,
-                          solution = str_split_1(gap_str, "\\|"))
+                          choices = str_split_1(gap_str, "\\|"))
         }
     } else {
         object_class <- switch(attrs$type,

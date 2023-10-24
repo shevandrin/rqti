@@ -24,7 +24,7 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
     params <- Filter(Negate(is.null), params)
     # define gap-type
     type <- ifelse(is.null(tolerance), "text", "text_opal")
-    result <- clean_yaml_str(params, type)
+    result <- clean_yaml_str(params, params$solution, type)
     return(result)
 }
 
@@ -57,38 +57,43 @@ gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
     params <- Filter(Negate(is.null), params)
     if (!is.null(params$tolerance) & (params$tolerance_type == 'exact')) {
         params$tolerance_type <- "absolute" }
-    result <- clean_yaml_str(params, "numeric")
+    result <- clean_yaml_str(params, params$solution, "numeric")
     return(result)
 }
 
 #' Create YAML string for InlineChoice object (dropdown list)
 #'
-#' @param solution numeric or character vector; contains values of possible
-#'   answers
-#' @param answer_index integer, optional; the number of right answer in the
-#'   `solution` vector, default `1`
+#' @param choices numeric or character vector; contains values of possible
+#'   answers. If you use a named vector, the names will be used as identifiers
+#' @param solution_index integer, optional; the number of right answer in the
+#'   `choices` vector, default `1`
 #' @param points numeric, optional; the number of points for this gap; default
 #'   `1`
 #' @param shuffle boolean, optional; is responsible to randomize the order in
 #'   which the choices are initially presented to the candidate; default `TRUE`
 #' @param response_identifier string; an identifier for the answer; by default
 #'   it is generated automatically
-#' @param choices_identifiers character vector, optional; a set of identifiers
-#'   for answers; by default identifiers are generated automatically
 #' @return string; map yaml
 #' @export
-dropdown <- function(solution, answer_index = 1, points = 1, shuffle = TRUE,
-                     response_identifier = NULL, choices_identifiers = NULL) {
+dropdown <- function(choices, solution_index = 1, points = 1, shuffle = TRUE,
+                     response_identifier = NULL) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
-    result <- clean_yaml_str(params, "InlineChoice")
+    ids <- names(choices)
+    if (!is.null(ids)) params$choices_identifiers <- ids
+    result <- clean_yaml_str(params, params$choices, "InlineChoice")
     return(result)
 }
 
-clean_yaml_str <- function(params, type){
-    solution <- paste(params$solution, collapse = ",")
-    params$solution <- paste0("[", solution, "]")
+clean_yaml_str <- function(params, solution, type){
+    solution <- paste(solution, collapse = ",")
+    if (type == "InlineChoice") {
+        params$choices <- paste0("[", solution, "]")
+    } else {
+        params$solution <- paste0("[", solution, "]")
+    }
+
     if (!is.null(params$choices_identifiers)) {
         choices_identifiers <- paste(params$choices_identifiers, collapse = ",")
         params$choices_identifiers <- paste0("[", choices_identifiers, "]")

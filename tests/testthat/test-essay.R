@@ -30,8 +30,8 @@ test_that("Test values of attributes in extendedTextInteraction for Essay class"
 
   essay@expected_length <- 100
   essay@expected_lines <- 10
-  essay@max_strings <- 50
-  essay@min_strings <- 1
+  essay@words_max <- 50
+  essay@words_min <- 1
   essay@data_allow_paste <- FALSE
 
   example <-'
@@ -49,9 +49,8 @@ test_that("Test values of attributes in extendedTextInteraction for Essay class"
 })
 
 test_that("Test the warning message of the feedback in Essay class", {
-  essay@feedback <- list(new("ModalFeedback", title = "common",
-                               content = list("general feedback")))
-  expect_warning({
-  initialize(essay)
-}, "Feedback messages are not meaningful for this type of excercise")
+  essay@feedback <- list(new("CorrectFeedback", title = "correct",
+                               content = list("positeve feedback")))
+  expect_error({initialize(essay)},
+               "Only general feedback is possible for this type of task")
 })

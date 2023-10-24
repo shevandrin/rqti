@@ -11,7 +11,7 @@
 #' es <- new("Essay", content = list("<p>Develop some idea and write it down in
 #'                                   the text field</p>"),
 #'           title = "essay_example",
-#'           max_strings = 100,
+#'           words_max = 100,
 #'           points = 3)
 #' @name Essay-class
 #' @rdname Essay-class
@@ -22,15 +22,37 @@
 setClass("Essay", contains = "AssessmentItem",
          slots = c(expected_length = "numeric",
                    expected_lines = "numeric",
-                   max_strings = "numeric",
-                   min_strings = "numeric",
+                   words_max = "numeric",
+                   words_min = "numeric",
                    data_allow_paste = "logical"))
 
 setMethod("initialize", "Essay", function(.Object, ...) {
     .Object <- callNextMethod()
-    if (length(.Object@feedback) > 0) {
-       warning("Feedback messages are not meaningful for this type of excercise"
-               , immediate. = TRUE, call. = FALSE)}
+
+    # detect not general feedback to throw an error
+    not_general_fb <- c("CorrectFeedback", "WrongFeedback")
+    log_fb <- sapply(.Object@feedback, function(x) class(x) %in% not_general_fb)
+    if (any(log_fb)) {
+       stop("Only general feedback is possible for this type of task",
+            call. = FALSE)
+    }
+
+    # warning for data_allow_paste
+    if (length(.Object@data_allow_paste) > 0) {
+        warning("The data_allow_paste property only works on LMS Opal.")
+    }
+
+    if (length(.Object@feedback) == 1) {
+        answer_str <- paste(.Object@feedback[[1]]@content, collapse = " ")
+        nwords <- length(unlist(strsplit(answer_str, "\\s+")))
+        # set default max count of words
+        if (length(.Object@words_max) == 0) .Object@words_max <- nwords * 2
+        # set default size as expected length parameter
+        if (length(.Object@expected_length) == 0) {
+            .Object@expected_length <- round(nwords * 1.5)
+        }
+    }
+
     validObject(.Object)
     .Object
 })

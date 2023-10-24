@@ -8,21 +8,21 @@
 #' @include Gap.R
 #' @examples
 #' ng <- new("InlineChoice",
-#'           solution=  c("answer1", "answer2", "answer3"),
+#'           choices =  c("answer1", "answer2", "answer3"),
 #'           response_identifier = "dropdown_gap_example")
 #' @name InlineChoice-class
 #' @rdname InlineChoice-class
 #' @aliases InlineChoice
 #' @exportClass InlineChoice
 setClass("InlineChoice", contains = "Gap",
-         slots = c(solution = "ANY",
-                   answer_index = "numeric",
+         slots = c(choices = "ANY",
+                   solution_index = "numeric",
                    choices_identifiers = "character",
                    shuffle = "logical"),
-         prototype = list(shuffle = TRUE, answer_index = 1),
+         prototype = list(shuffle = TRUE, solution_index = 1),
          validity = function(object) {
-          if (!any(is.character(object@solution), is.numeric(object@solution))){
-                stop("slot \'solution\' must be of type \'character'\ or \'numeric\'")
+          if (!any(is.character(object@choices), is.numeric(object@choices))){
+                stop("slot \'choices\' must be of type \'character'\ or \'numeric\'")
            }
          })
 
@@ -30,7 +30,7 @@ setMethod("initialize", "InlineChoice", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@choices_identifiers) == 0) {
         .Object@choices_identifiers <- paste0("Option",
-                                              LETTERS[seq(.Object@solution)])
+                                              LETTERS[seq(.Object@choices)])
     }
 
     if (length(.Object@points) == 0) .Object@points <- 1
@@ -58,7 +58,7 @@ setMethod("createResponseDeclaration", "InlineChoice", function(object)  {
 })
 
 create_response_declaration_inline_choice <- function(object) {
-    correct_choice_identifier <- object@choices_identifiers[object@answer_index]
+    correct_choice_identifier <- object@choices_identifiers[object@solution_index]
     child <- create_correct_response(correct_choice_identifier)
     map_entry <- tag("mapping",
                      list(create_map_entry(object@points,

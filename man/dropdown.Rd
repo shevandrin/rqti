@@ -5,20 +5,19 @@
 \title{Create YAML string for InlineChoice object (dropdown list)}
 \usage{
 dropdown(
-  solution,
-  answer_index = 1,
+  choices,
+  solution_index = 1,
   points = 1,
   shuffle = TRUE,
-  response_identifier = NULL,
-  choices_identifiers = NULL
+  response_identifier = NULL
 )
 }
 \arguments{
-\item{solution}{numeric or character vector; contains values of possible
-answers}
+\item{choices}{numeric or character vector; contains values of possible
+answers. If you use a named vector, the names will be used as identifiers}
 
-\item{answer_index}{integer, optional; the number of right answer in the
-\code{solution} vector, default \code{1}}
+\item{solution_index}{integer, optional; the number of right answer in the
+\code{choices} vector, default \code{1}}
 
 \item{points}{numeric, optional; the number of points for this gap; default
 \code{1}}
@@ -28,9 +27,6 @@ which the choices are initially presented to the candidate; default \code{TRUE}}
 
 \item{response_identifier}{string; an identifier for the answer; by default
 it is generated automatically}
-
-\item{choices_identifiers}{character vector, optional; a set of identifiers
-for answers; by default identifiers are generated automatically}
 }
 \value{
 string; map yaml
