@@ -51,12 +51,14 @@ create_question_object <- function(file, file_dir = NULL) {
 
     file_p <- knit(input = file, output = md_path, quiet = TRUE)
     # if Entry task given, replace <<>> by <tag>
-    if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
+    if ((tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) ||
+        is.null(attrs$type)) {
         rmd_content <- readLines(file_p, warn = FALSE)
         rmd_mdf <- gsub("<<", "<gap>", rmd_content)
         rmd_mdf <- gsub(">>", "</gap>", rmd_mdf)
         file_p <- file.path(tdir, "temp.rmd")
         writeLines(rmd_mdf, con = file_p)
+        attrs$type <- "gap"
     }
 
     options <- c("-o", "_temp_pandoc.html", "-f", "markdown", "-t", "html5",
