@@ -19,6 +19,14 @@ knitr::opts_chunk$set(
 library(qti)
 ```
 
-## qti S4 Class diagramm
+This section is still under construction and only relevant if you want to create exercises without relying on Rmd files. Under the hood, qti uses S4 OOP. This means that you can create all exercise types as objects, which gives you more flexibility and is much faster. If you are happy with Rmd, there is nothing wrong using it. If you want to go to the next level, consider creating exercise objects directly.
+
+First, check out the overview of our classes:
 
 ![Class diagramm S4.](S4_classes.png){width="100%"}
+
+## A simple example
+
+## Using sections
+
+## Using tests

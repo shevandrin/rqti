@@ -98,13 +98,18 @@ Argument list of `dropdown`:
 
 Elements of dropdown. If you use a named vector, the names will be used as identifiers. This is useful for later data analysis.
 
-### solution
+### solution_index
 
-Either the index of the correct choice as a numeric or a character that is identical to the correct element (for the above example `solution = "S4 OOP"`). Note that this is optional. Simply use the correct choice as the first element of `choices`, which is more concise.
+The index of the correct choice as a numeric. Default is 1, meaning that you can simply put the correct element as the first one in the vector `choices`.
+<!-- An alternative is to use `solution_string`. Using both, will throw an error. -->
+
+<!-- ### solution_string -->
+
+<!-- String that is identical to the correct element (for the above example `solution = "S4 OOP"`). Note that this is optional. Simply use the correct choice as the first element of `choices`, which is more concise. An alternative is to use `solution_index`. Using both, will throw an error. -->
 
 ### points
 
-The number of points for the dropdown. Default is 1.
+The number of points for the exercise. Default is 1.
 
 ### shuffle
 
