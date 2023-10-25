@@ -26,18 +26,6 @@ setClass("MatchTable", contains = "AssessmentItem",
          prototype = list(shuffle = TRUE, points = NA_real_,
          rows_shuffle = TRUE, cols_shuffle = TRUE))
 
-match_table_validity <- function(object) {
-    nids <- length(object@answers_identifiers)
-    nscr <- length(object@answers_scores)
-    if (nids != nscr) {
-        return("Error: \'answers_identifiers\' and \'answers_scores\' must have the same number of items.")
-    } else {
-        TRUE
-    }
-}
-
-setValidity("MatchTable", match_table_validity)
-
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     answ_count <- length(.Object@answers_identifiers)
@@ -52,8 +40,13 @@ setMethod("initialize", "MatchTable", function(.Object, ...) {
 
     if (!is.na(.Object@points) && length(.Object@answers_scores) == 0) {
         score <- .Object@points / answ_count
-        print(score)
         .Object@answers_scores  <- rep(score, answ_count)
+    }
+
+    nids <- length(.Object@answers_identifiers)
+    nscr <- length(.Object@answers_scores)
+    if (nids != nscr) {
+        stop("Error: \'answers_identifiers\' and \'answers_scores\' must have the same number of items.")
     }
 
     validObject(.Object)
