@@ -212,8 +212,11 @@ create_matchtable_slots <- function(html, attrs) {
             }
         }
     }
-    cls <- define_match_class(answers_ids, tbl$rows_ids, tbl$cols_ids)
+    if (is.null(attrs$as_table)) attrs$as_table <- FALSE
+    cls <- define_match_class(answers_ids, tbl$rows_ids, tbl$cols_ids,
+                              attrs$as_table)
     attrs$abbr_id <- NULL
+    attrs$as_table <- NULL
     attrs <- c(Class = cls, rows = list(tbl$rows), cols = list(tbl$cols),
                answers_identifiers = list(answers_ids),
                rows_identifiers = list(tbl$rows_ids),
@@ -392,19 +395,36 @@ make_abbr_ids <- function(items) {
     return(ids)
 }
 
-define_match_class <- function(ids, rows, cols) {
+define_match_class <- function(ids, rows, cols, as_table = FALSE) {
 
     ids <- unlist(strsplit(ids, " "))
-    occurrences <- table(c(ids, setdiff(rows, ids), setdiff(cols, ids)))
-    unique_rows <- !any(occurrences[rows] > 1)
-    unique_cols <- !any(occurrences[cols] > 1)
+    occurrences <- table(c(ids, rows, cols)) - 1
+    occ_rows <- occurrences[rows]
+    occ_cols <- occurrences[cols]
 
-    if (unique_rows && !unique_cols) {
-        cls <- "OneInRowTable"
-    } else if (!unique_rows && unique_cols) {
-        cls <- "OneInColTable"
-    } else {
-        cls <- "MultipleChoiceTable"
+    # condition one - all rows are equal 1
+    cond1 <- all(occ_rows == 1)
+    # condition two - all cols are equal 1
+    cond2 <- all(occ_cols == 1)
+    # condition three - all rows are less or equal than one
+    cond3 <- all(occ_rows <= 1)
+
+    if (!cond1 && !cond2) cls <- "MultipleChoiceTable"
+
+    if (cond1) {
+        if (cond2) {
+            cls <- ifelse(as_table, "OneInRowTable", "DirectedPair")
+        } else {
+            cls <- "OneInRowTable"
+        }
+    }
+
+    if (!cond1 && cond2) {
+        if (cond3) {
+            cls <- ifelse(as_table, "OneInColTable", "DirectedPair")
+        } else {
+            cls <- "OneInColTable"
+        }
     }
     return(cls)
 }
