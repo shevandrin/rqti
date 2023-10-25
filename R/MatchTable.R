@@ -25,8 +25,19 @@ setClass("MatchTable", contains = "AssessmentItem",
                      cols_shuffle = "logical"),
          prototype = list(shuffle = TRUE, points = NA_real_,
          rows_shuffle = TRUE, cols_shuffle = TRUE))
-#TODO validation number of items in answer_identifiers must be the same as answer_scores
-# constructor
+
+match_table_validity <- function(object) {
+    nids <- length(object@answers_identifiers)
+    nscr <- length(object@answers_scores)
+    if (nids != nscr) {
+        return("Error: \'answers_identifiers\' and \'answers_scores\' must have the same number of items.")
+    } else {
+        TRUE
+    }
+}
+
+setValidity("MatchTable", match_table_validity)
+
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     answ_count <- length(.Object@answers_identifiers)
