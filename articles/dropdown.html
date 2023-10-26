@@ -169,7 +169,7 @@ title: A meaningful title that can be displayed in the LMS
 
 The philosophy of the qti package is &lt;&lt;do one thing and do it well|one for all&gt;&gt;.
 
-Under the hood, the qti package uses `r dropdown(c(noOOP = "no OOP", S4 = "S4 OOP", S3 = "S3 OOP", S6 = "R6 OOP"), solution_index = 2, points = 5, response_identifier = "OOP_task")`.
+Under the hood, the qti package uses `r dropdown(c("no OOP", "S4 OOP", "S3 OOP", "R6 OOP"), answer_index = 2, points = 2, response_identifier = "OOP_task", choices_identifiers = c("noOOP", "S4", "S3", "S6"))`.
 
 # feedback
 
@@ -237,14 +237,17 @@ used as identifiers. This is useful for later data analysis.</p>
 <div class="section level3">
 <h3 id="solution_index">solution_index<a class="anchor" aria-label="anchor" href="#solution_index"></a>
 </h3>
-<p>The index of the correct choice as a numeric. Note that this is
-optional. Simply use the correct choice as the first element of
-<code>choices</code>, which is more concise.</p>
+<p>The index of the correct choice as a numeric. Default is 1, meaning
+that you can simply put the correct element as the first one in the
+vector <code>choices</code>.
+<!-- An alternative is to use `solution_string`. Using both, will throw an error. --></p>
+<!-- ### solution_string -->
+<!-- String that is identical to the correct element (for the above example `solution = "S4 OOP"`). Note that this is optional. Simply use the correct choice as the first element of `choices`, which is more concise. An alternative is to use `solution_index`. Using both, will throw an error. -->
 </div>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>The number of points for the dropdown. Default is 1.</p>
+<p>The number of points for the exercise. Default is 1.</p>
 </div>
 <div class="section level3">
 <h3 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>

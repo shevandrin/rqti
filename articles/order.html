@@ -96,14 +96,14 @@
 
     
     
-<div class="section level3">
-<h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
-</h3>
-<p>In this type of exercise, the candidate is asked to arrange the list
-items in a certain order. A template is available in RStudio when you
-click on <code>New file -&gt; R Markdown -&gt; From Template</code>. The
-qti templates start with <code>QTI:</code>. Here we look at the
-templates <code>QTI: order (simple)</code> and
+<div class="section level2">
+<h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
+</h2>
+<p>In this type of exercise, the candidate has to bring a list of items
+in the correct order. A template is available in RStudio when you click
+on <code>New file -&gt; R Markdown -&gt; From Template</code>. The qti
+templates start with <code>QTI:</code>. Here we look at the templates
+<code>QTI: order (simple)</code> and
 <code>QTI: order (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: order</code> in
 the yaml-section and a list with at least two elements in a section
@@ -125,23 +125,22 @@ What is the structure of an exam in QTI terms, starting from the top (the exam) 
 # feedback
 
 For oder exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.</code></pre>
-<p>The order of the items in the list is considered the correct answer
-to the question.</p>
-<p>Note that in this example, a feedback section was also provided. The
+<p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
+<p><img src="images/order.png"></p>
+<p>Alternatively, change the knit parameter to
+<code>knit: render_opal</code> (see <a href="opal_api">API Opal</a>) to
+upload to Opal directly, producing:</p>
+<p><img src="images/order-simple.jpg"></p>
+<p>The order of the items in the Rmd-list is considered to be the
+correct one.</p>
+<p>Note that in this example, a feedback section was provided. The
 feedback is optional, but usually it is a good idea to give some
 explanation for students.</p>
-<p>Further note that the <code>knit</code> parameter is set to the
-custom qti knit function, which will handle the preview. Clicking the
-Knit button in RStudio produces the following in the viewer pane (or
-browser of your choice):</p>
-<div class="figure">
-<img src="screenshot_order1.png" width="400" alt=""><p class="caption">Preview of order exercise rendered by QTIJS</p>
 </div>
-</div>
-<div class="section level3">
-<h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
-</h3>
-<p>If you want to have more fine-grained control, consider the RMD
+<div class="section level2">
+<h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
+</h2>
+<p>If you want to have more fine-grained control, consider the Rmd
 template <code>QTI: order (complex)</code>, wich uses more yaml
 attributes.</p>
 <pre><code>---
@@ -176,50 +175,49 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 --&gt;</code></pre>
-<p>Which renders as:</p>
-<div class="figure">
-<img src="screenshot_order2.png" width="400" alt=""><p class="caption">Preview of order exercise in LMS OPAL</p>
-</div>
+<p>Which on Opal renders as:</p>
+<p><img src="images/order-complex.jpg"></p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
 </h2>
-<div class="section level4">
-<h4 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
-</h4>
+<div class="section level3">
+<h3 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
+</h3>
 <p>Has to be <code>order</code>.</p>
 </div>
-<div class="section level4">
-<h4 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
-</h4>
+<div class="section level3">
+<h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
+</h3>
 <p>This is the id of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
 </div>
-<div class="section level4">
-<h4 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
-</h4>
+<div class="section level3">
+<h3 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
+</h3>
 <p>Title of the exercise. Can be displayed to students depending on the
 learning management system settings. Default is the file name.</p>
 </div>
-<div class="section level4">
-<h4 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
-</h4>
-<p>How many points are given for the whole exercise. Default is 1.</p>
-</div>
-<div class="section level4">
-<h4 id="points_per_answer">points_per_answer<a class="anchor" aria-label="anchor" href="#points_per_answer"></a>
-</h4>
-<p>Defines the scoring method. in case of <code>TRUE</code> each
-selected answer will be scored individually (according to absolute
-position of the answer-item in the list), in case of <code>FALSE</code>
-only answer which is fully correct will be scored with maximum score.
-Default is <code>TRUE</code>.</p>
+<div class="section level3">
+<h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
+</h3>
+<p>How many points are given for the whole exercise. Default is <span class="math inline">\(0.25*n\)</span>, where <span class="math inline">\(n\)</span> is the length of the list.</p>
 </div>
 <div class="section level3">
-<h3 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
+<h3 id="points_per_answer">points_per_answer<a class="anchor" aria-label="anchor" href="#points_per_answer"></a>
 </h3>
+<p>Defines the scoring method. If <code>TRUE</code> each selected answer
+will be scored individually (according to absolute position of the
+element in the list), if <code>FALSE</code> the whole task will be
+scored and a single mistake leads to 0 points. Default is
+<code>TRUE</code>.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
+</h2>
 <p>Feedback can be provided with the section</p>
 <ul>
 <li>
@@ -232,8 +230,12 @@ points)</li>
 <strong># feedback-</strong> (only provided if student does not
 reach all points)</li>
 </ul>
-<p>For more complex exercises the list of answers is often just
-available as a variable. In this case you can use the helper function
+</div>
+<div class="section level2">
+<h2 id="helpers">helpers<a class="anchor" aria-label="anchor" href="#helpers"></a>
+</h2>
+<p>For more complex exercises the list of answers is sometimes available
+as a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">order_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdlist.html">mdlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Test"</span>, <span class="st">"Section"</span>, <span class="st">"Item"</span>, <span class="st">"Interaction"</span><span class="op">)</span><span class="op">)</span></span>
@@ -243,11 +245,15 @@ available as a variable. In this case you can use the helper function
 <span><span class="op">-</span> <span class="va">Item</span></span>
 <span><span class="op">-</span> <span class="va">Interaction</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="some-advice-on-essay-exercises">Some advice on essay exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-exercises"></a>
-</h3>
-<p>TODO</p>
-</div>
+<div class="section level2">
+<h2 id="some-advice-on-order-exercises">Some advice on order exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-order-exercises"></a>
+</h2>
+<p>Usually, order exercises are focusing on an aspect of knowledge that
+is not particularly important. Knowing steps of procedures by heart is
+often not useful. Even professionals will have a checklist or a
+cheatsheet for these cases. Furthermore, grading of order exercises can
+be complicated because the absolute position of an item is less
+important than the relative position.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
