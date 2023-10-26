@@ -54,3 +54,15 @@ test_that("Test the warning message of the feedback in Essay class", {
   expect_error({initialize(essay)},
                "Only general feedback is possible for this type of task")
 })
+
+test_that("Testing of set default max count of words and
+          default size as expected length parameter of the feedback",{
+  essay@feedback <- list(new("ModalFeedback", title = "correct",
+                           content = list("General feedback for Essay")))
+  # nwords = 4
+
+  sut<- initialize(essay)
+
+  expect_equal(sut@words_max, 8)
+  expect_equal(sut@expected_length, 6)
+})

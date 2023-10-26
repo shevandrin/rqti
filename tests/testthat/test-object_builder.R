@@ -293,8 +293,8 @@ test_that("Testing create_question_object() for Direct Pair task", {
     expect_equal(sut, expected)
 })
 
-test_that("Testing create_question_object() for OnInColTable task", {
-    path <- test_path("file/md/test_OnInColTable_example.md")
+test_that("Testing create_question_object() for OnInColTable task, where as_table=T", {
+    path <- test_path("file/md/test_OneInColTable_example.md")
     sut <- create_question_object(path)
     expected <- new("OneInColTable",
                     content = list(paste0("<p>Choose the correct order in ",
@@ -311,6 +311,25 @@ test_that("Testing create_question_object() for OnInColTable task", {
                                            "row_3 col_4", "row_4 col_3",
                                            "row_5 col_5"),
                     answers_scores = c(0.5, 1, 1, 1, 1)
+    )
+    expect_equal(sut, expected)
+})
+
+test_that("Testing create_question_object() with conditions: OnInColTable and as_table=F", {
+    path <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
+    sut <- create_question_object(path)
+    expected <- new("DirectedPair",
+                    content = list("<p>Choose the right classes:</p>"),
+                    identifier = "test_DirectedPair_from_table",
+                    title = "test_DirectedPair_from_table",
+                    rows = c("Sparrow", "Bear", "Pine tree", "Airplane", "Earth"),
+                    rows_identifiers = c("row_1", "row_2", "row_3",
+                                         "row_4", "row_5"),
+                    cols = c("Animal", "Plant", "Bird"),
+                    cols_identifiers = c("col_1", "col_2", "col_3"),
+                    answers_identifiers =c("row_1 col_3", "row_2 col_1",
+                                           "row_3 col_2"),
+                    answers_scores = c(0.5, 1, 1)
     )
     expect_equal(sut, expected)
 })

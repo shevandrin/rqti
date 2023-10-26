@@ -2,6 +2,7 @@
 type: match
 identifier: test_OneInColTable_example
 title: OneInColTable
+as_table: T
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE}

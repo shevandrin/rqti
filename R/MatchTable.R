@@ -26,18 +26,27 @@ setClass("MatchTable", contains = "AssessmentItem",
          prototype = list(shuffle = TRUE, points = NA_real_,
          rows_shuffle = TRUE, cols_shuffle = TRUE))
 
-# constructor
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     answ_count <- length(.Object@answers_identifiers)
 
-    if (length(.Object@answers_scores) == 0) {
+    if (is.na(.Object@points) && length(.Object@answers_scores) == 0) {
+        .Object@answers_scores  <- rep(0.5, answ_count)
+    }
+
+    if (is.na(.Object@points) && length(.Object@answers_scores) != 0) {
+        .Object@points <- sum(.Object@answers_scores)
+    }
+
+    if (!is.na(.Object@points) && length(.Object@answers_scores) == 0) {
         score <- .Object@points / answ_count
         .Object@answers_scores  <- rep(score, answ_count)
     }
 
-    if (is.na(.Object@points)) {
-        .Object@points <- sum(.Object@answers_scores)
+    nids <- length(.Object@answers_identifiers)
+    nscr <- length(.Object@answers_scores)
+    if (nids != nscr) {
+        stop("Error: \'answers_identifiers\' and \'answers_scores\' must have the same number of items.")
     }
 
     validObject(.Object)

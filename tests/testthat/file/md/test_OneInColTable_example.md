@@ -1,6 +1,7 @@
 ---
 type: match
 identifier: test_OnInColTable_example
+as_table: T
 ---
 # question
 Choose the correct order in the multiplication table

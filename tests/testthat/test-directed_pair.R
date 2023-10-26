@@ -65,9 +65,9 @@ test_that("Testing createResponseDeclaration() method in DirectedPair class
 <value>ID_2 IDT_2</value>
 </correctResponse>
 <mapping defaultValue="0">
-<mapEntry mapKey="ID_3 IDT_3" mappedValue="0.333333333333333"/>
-<mapEntry mapKey="ID_1 IDT_1" mappedValue="0.333333333333333"/>
-<mapEntry mapKey="ID_2 IDT_2" mappedValue="0.333333333333333"/>
+<mapEntry mapKey="ID_3 IDT_3" mappedValue="0.5"/>
+<mapEntry mapKey="ID_1 IDT_1" mappedValue="0.5"/>
+<mapEntry mapKey="ID_2 IDT_2" mappedValue="0.5"/>
 </mapping>
 </responseDeclaration>'
 
