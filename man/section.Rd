@@ -5,8 +5,8 @@
 \title{Create a section as a part of test content}
 \usage{
 section(
-  file,
-  num_variants = 1,
+  files,
+  n_variants = 1,
   seed_number = NULL,
   id = NULL,
   nested = TRUE,
@@ -20,9 +20,9 @@ section(
 )
 }
 \arguments{
-\item{file}{string; vector of Rmd, md, or xml files}
+\item{files}{string; vector of Rmd, md, or xml files}
 
-\item{num_variants}{integer; number of variants to create from Rmd files}
+\item{n_variants}{integer; number of variants to create from Rmd files}
 
 \item{seed_number}{integer vector, optional; seed numbers to reproduce the
 result of calculations}
