@@ -59,7 +59,7 @@ test_that("Testing of set default max count of words and
           default size as expected length parameter of the feedback",{
   essay@feedback <- list(new("ModalFeedback", title = "correct",
                            content = list("General feedback for Essay")))
-  # nwords = 4
+  essay@expected_length <- numeric(0)
 
   sut<- initialize(essay)
 
