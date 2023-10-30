@@ -23,7 +23,7 @@ This section is still under construction and only relevant if you want to create
 
 First, check out the overview of our classes:
 
-![Class diagramm S4.](S4_classes.png){width="100%"}
+![Class diagramm S4.](s4model.png)
 
 ## A simple example
 
