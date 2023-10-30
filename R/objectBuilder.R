@@ -67,6 +67,7 @@ create_question_object <- function(file, file_dir = NULL) {
                  "--mathjax",
                  "--embed-resources",
                  "--section-divs",
+                 "--no-highlight",
                  "--wrap=none", "+RTS", "-M512M")
     pandoc_convert(file_p, options=options, wd = tdir)
     tdoc <- file.path(tdir, "_temp_pandoc.html")
