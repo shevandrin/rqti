@@ -74,6 +74,9 @@ create_question_object <- function(file, file_dir = NULL) {
 
     doc <- xml2::read_html(tdoc, encoding = "utf-8")
     html_qstn <- xml2::xml_find_first(doc, "//section[@id='question']")
+    if (length(html_qstn) == 0) {
+        stop("The \'question\' section was not found in Rmd", call. = FALSE)
+    }
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
         create_sc_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {
