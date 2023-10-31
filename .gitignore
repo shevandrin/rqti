@@ -9,3 +9,9 @@ s4_*
 .Rprofile
 inst/doc
 docs
+TODO.Rmd
+PUTrequest.txt
+curl.sh
+gistats.txt
+upload
+vignettes/section_cache/
