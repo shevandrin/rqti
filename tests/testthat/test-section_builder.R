@@ -79,7 +79,7 @@ test_that("Testing function section() in the case
           num_variants < length(seed_number))", {
     warning_message <- NULL
     withCallingHandlers(
-        sut <- section(c(path1, path3), num_variants = 2, seed_number = c(4,7,9)),
+        sut <- section(c(path1, path3), n_variants = 2, seed_number = c(4,7,9)),
     warning = function(w) {
         warning_message <<- w$message
         invokeRestart("muffleWarning")
@@ -93,7 +93,7 @@ test_that("Testing function section() in the case  the items
     error_message <- NULL
     tryCatch(
         {
-          section(c("path1", "path3"), num_variants = 2, seed_number = c(7, 7))
+          section(c("path1", "path3"), n_variants = 2, seed_number = c(7, 7))
             },
         error = function(e) {
             error_message <<- conditionMessage(e)

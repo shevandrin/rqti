@@ -1,7 +1,7 @@
 #' Create a section as a part of test content
 #'
-#' @param file string; vector of Rmd, md, or xml files
-#' @param num_variants integer; number of variants to create from Rmd files
+#' @param files string; vector of Rmd, md, or xml files
+#' @param n_variants integer; number of variants to create from Rmd files
 #' @param seed_number integer vector, optional; seed numbers to reproduce the
 #'   result of calculations
 #' @param id string, optional; identifier of the assessment section
@@ -22,18 +22,18 @@
 #'   comments in each question of the section; `TRUE` by default
 #' @return object of [AssessmentSection]-class
 #' @export
-section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
+section <- function(files, n_variants = 1, seed_number = NULL, id = NULL,
                     nested = TRUE, selection = 0, title = character(0),
                     time_limits = NA_integer_, visible = TRUE,
                     shuffle = FALSE, max_attempts = NA_integer_,
                     allow_comment = TRUE) {
-    # check conflicts between seed_number and num_variants
-    if (num_variants > length(seed_number) & !is.null(seed_number)) {
+    # check conflicts between seed_number and n_variants
+    if (n_variants > length(seed_number) & !is.null(seed_number)) {
         stop("The items in seed_number must be equal to number of variants")
-    } else if (num_variants < length(seed_number)) {
-        warning(paste("From seed_number only first", num_variants,
+    } else if (n_variants < length(seed_number)) {
+        warning(paste("From seed_number only first", n_variants,
                       "items are taken"), call. = FALSE)
-        seed_number <- seed_number[1:num_variants]
+        seed_number <- seed_number[1:n_variants]
     }
 
     # check uniqueness of seed_number items
@@ -41,11 +41,11 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
         stop("The items in seed_number are not unique", call. = FALSE)
     }
 
-    if (is.null(seed_number)) seed_number <- sample.int(10000, num_variants)
+    if (is.null(seed_number)) seed_number <- sample.int(10000, n_variants)
 
-    if (num_variants <= 1) {
-        rmd_files <- file[grep("\\.Rmd$|\\.md$", file)]
-        xml_files <- file[grep("\\.xml$", file)]
+    if (n_variants <= 1) {
+        rmd_files <- files[grep("\\.Rmd$|\\.md$", files)]
+        xml_files <- files[grep("\\.xml$", files)]
         rmd_items <- Map(create_question_object, rmd_files)
         names(rmd_items) <- NULL
         sub_items <- append(rmd_items, xml_files)
@@ -57,18 +57,18 @@ section <- function(file, num_variants = 1, seed_number = NULL, id = NULL,
 
         if (nested) {
             selection <- 1
-            files <- replicate(num_variants, file, simplify = FALSE)
-            sub_items <- mapply(make_exam_subsection, files, seed_number)
+            files_ <- replicate(n_variants, files, simplify = FALSE)
+            sub_items <- mapply(make_exam_subsection, files_, seed_number)
         } else {
             selection <- NA_integer_
-            sub_items <- lapply(file, FUN=make_variant_subsection,
-                                num_variants, seed_number)
+            sub_items <- lapply(files, FUN=make_variant_subsection,
+                                n_variants, seed_number)
         }
     }
 
     if (is.null(id)) {
-        id <- ifelse(length(file) == 1,
-                  paste0(tools::file_path_sans_ext(basename(file)), "_section"),
+        id <- ifelse(length(files) == 1,
+                  paste0(tools::file_path_sans_ext(basename(files)), "_section"),
                   paste0("variable_section_", sample.int(100, 1)))
     }
     section <- new("AssessmentSection", identifier = id, selection = selection,
@@ -101,10 +101,10 @@ make_exam_subsection <- function(file, seed_number) {
     return(exam_subsection)
 }
 
-make_variant_subsection <- function(file, num_variants, seed_number) {
+make_variant_subsection <- function(file, n_variants, seed_number) {
     id <- tools::file_path_sans_ext(basename(file))
 
-    asmt_items <- mapply(FUN=make_variant, rep(file, num_variants), seed_number,
+    asmt_items <- mapply(FUN=make_variant, rep(file, n_variants), seed_number,
                          USE.NAMES = FALSE)
 
     exam_subsection <- new("AssessmentSection", identifier = id,
@@ -182,6 +182,7 @@ test <- function(content, identifier = NULL, title = NULL,
 #'   questions, default `TRUE`
 #' @param keep_responses boolean, optional; determines to save candidate's
 #'   answers of the previous attempt, default `FALSE`
+#' @export
 test4opal <- function(content, identifier = NULL, title = NULL,
                       navigation_mode = "nonlinear", submission_mode = "individual",
                       time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,

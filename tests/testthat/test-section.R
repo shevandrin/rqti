@@ -7,7 +7,7 @@ test_that("Testing of function section() creates assessment
     seed_number <- c(1,2,3)
 
     # Call the function under test
-    sut <- section(file, num_variants = num_variants, seed_number = seed_number)
+    sut <- section(file, n_variants = num_variants, seed_number = seed_number)
 
     expect_true(inherits(sut, "AssessmentSection"))
     expect_equal(length(sut@assessment_item), num_variants)
@@ -22,7 +22,7 @@ test_that("Testing of function section where handles mismatched num_variants
 
     # Call the function under test and expect an error
     expect_error(section(file,
-                         num_variants = num_variants,
+                         n_variants = num_variants,
                          seed_number = seed_number),
                  "The items in seed_number must be equal to number of variants")
 })
@@ -38,7 +38,7 @@ test_that("Testing of function section() creates assessment section correctly
 
     # Call the function under test
     sut <- section(file,
-                   num_variants = num_variants,
+                   n_variants = num_variants,
                    seed_number = seed_number,
                    nested = nested)
 
