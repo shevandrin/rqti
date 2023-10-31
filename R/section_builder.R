@@ -182,6 +182,7 @@ test <- function(content, identifier = NULL, title = NULL,
 #'   questions, default `TRUE`
 #' @param keep_responses boolean, optional; determines to save candidate's
 #'   answers of the previous attempt, default `FALSE`
+#' @export
 test4opal <- function(content, identifier = NULL, title = NULL,
                       navigation_mode = "nonlinear", submission_mode = "individual",
                       time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
