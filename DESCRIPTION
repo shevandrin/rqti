@@ -36,7 +36,7 @@ Imports:
     digest,
     knitr,
     getPass
-Suggests: 
+Suggests:
     covr,
     dplyr,
     testthat (>= 3.0.0),
@@ -77,7 +77,6 @@ Collate:
     'helpers.R'
     'knit_functions.R'
     'objectBuilder.R'
-    'pageres.R'
     'qti_task.R'
     'qti_test.R'
     'response_processing.R'
