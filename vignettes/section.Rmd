@@ -3,7 +3,7 @@ title: "Sections and Tests"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{How to create a section}
+    %\VignetteIndexEntry{Sections and Tests}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -12,15 +12,13 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  cache = TRUE
+  cache = T
 )
 ```
 
 ```{r setup, echo=FALSE}
 library(qti)
 ```
-
-## Introduction to sections in `qti`
 
 Creating single exercises is not particularly useful as one usually wants to combine different exercises into a test. A test in the QTI standard typically consists of one or more sections. Each Section can contain a combination of exercises or other subsections, providing great flexibility in test structure. Sections can be customized with respect to various parameters, such as time limit and shuffling.
 
@@ -30,76 +28,66 @@ The `qti` package makes it very simple to mix different sources of exercise file
 - **QTI XML files**: These files should be valid regarding the QTI standard. To use your Rmd-files from the `exams` package you can convert them to xml first.
 - **Objects of S4 `qti` classes**: You can also use objects from the `qti` package directly. See [QTI OOP model](qti_oop_model.html).
 
-##  Using the `section` function
+##  Using the `section` and `test` functions
 
 Although it is possible to feed a test with exercises directly, we suggest to always use a section, as this provides more flexibility and avoids several problems. Even if you do not need a section, you can just create a root section and put the exercises there.
 
-We created a simple wrapper for sections. Here we load some files from our package and use the function `section` to create the section. Note that we request 4 different variants of all exercises.
+We designed a simple wrapper for sections. Here we load some files from our package and use the function `section` to create the section. Note that we request 10 different variants of all exercises.
 
 ```{r section1, eval=T}
 path <- fs::path_package("exercises", package = "qti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
-root_section <- section(files = files, n_variants = 4)
+root_section <- section(files = files, n_variants = 10)
 ```
 
-Now we can make a test out of this and upload it to Opal. Again there are helpers for that: `test` and `test4opal`. `test` is more general and always consistnt withe QTI model, whereas test4opal can use additional Opal-specific parameters.
+Now we can make a test out of this and upload it to Opal. Again there are helpers for that: `test` and `test4opal`. `test` is more general and is always consistent with the QTI model, whereas `test4opal` can use additional Opal-specific parameters that are not necessarily consistent with QTI.
 
-```{r section1upload}
+```{r section1upload, eval = F}
 test <- qti:::test(root_section, "test1")
 # createQtiTest is a method of the OOP test class
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test1.zip", open_in_browser = F)
 ```
 
-```{r webshot_opal, echo=F}
-qti:::webshot_opal(repo, "A")
-qti:::webshot_opal(repo, "B")
-```
+We now have 10 versions of the test, two of which look like this:
 
-We now have 4 versions of the test, two of which look like this:
+![](images/Atest1.jpg)
+![](images/Btest1.jpg)
 
-![](Atest1.jpg)
-![](Btest1.jpg)
+After the root section you can see the section exam_8833 (image 1) and exam_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: `r get_resource_url("test1")`.
 
-After the root section you can see the section exam_S4771 (image 1) and exam_S4713 (image 2). There are actually two more (4 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: `r repo$url`.
-
-To summarize so far: You can just pass your exercise files to the `files` parameter in `section` and define how many versions you would like to create of each file.
+To summarize so far: You can just pass your exercise files to the `files` parameter in `section` and define how many variants you would like to create of each file.
 
 Of course, creating several versions only makes sense for random exercises. Single choice and multiple choice exercises could be part of different sections:
 
 ```{r section2, eval=T}
 non_random_exercises <- paste0(path, "/", c("sc1.Rmd", "mpc1.Rmd"))
-root_section = list(section(files, num_variants = 4), 
+root_section = list(section(files, n_variants = 10), 
                     section(non_random_exercises))
 ```
 
 Note that we use a list here. Now we can again make a test out of this and upload it to Opal:
 
-```{r section2upload}
+```{r section2upload, eval = F}
 test <- qti:::test4opal(root_section, "test2")
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test2.zip", open_in_browser = F)
 ```
 
-```{r section2shot, echo=F}
-qti:::webshot_opal(repo, "A")
-qti:::webshot_opal(repo, "B")
-```
-
 In Opal this will create the following structure:
 
-![](Aknit_test2.jpg)
-![](Bknit_test2.jpg)
+![](images/Atest2.jpg)
+![](images/Btest2.jpg)
 
-As you can see, we still have our variable section with 4 different versions (you see two of them in the images). But now, we also have a fixed section that is the same for all tests.
+As you can see, we still have our variable section with different variants (you see two of them in the images). But now, we also have a fixed section that is the same for all tests.
 
 Note that the function `section` returns an `AssessmentSection` qti-object:
 
 ```{r class}
-lapply(section, class)
+lapply(root_section, class)
 ```
 
-Indeed, the whole qti-package is based on S4 OOP, so exercises, sections and tests are all objects. If you have no experience with OOP, this might feel a little bit unfamiliar, but to use it, you do not need to know all details. Just follow the instructions and it will feel natural at some point. 
+Indeed, the whole qti-package is based on S4 OOP, so exercises, sections and tests are all objects. If you have no experience with OOP, this might feel a little bit unfamiliar, but to use it, you do not need to know all details. Just use the helper functions and you should be fine.
 
 To customize your sections and tests, check out the references: [section](reference/section.html) and [test](reference/test.html) or [test4opal](reference/test4opal.html)
 
@@ -111,7 +99,7 @@ To customize your sections and tests, check out the references: [section](refere
 
 <!-- ``` -->
 
-## Two approaches to different variants of a single exercise
+## Two approaches for different variants of a single exercise
 
 By default the `section` function creates different variants of an exercise by drawing different seeds and creating subsections with these seeds. There is also a different approach to introduce randomness. Check out the following figure:
 

@@ -1,0 +1,17 @@
+---
+type: gap
+knit: qti::render_qtijs
+---
+
+```{r echo=F}
+library(qti)
+iq <- round(rnorm(sample(7:13, 1), 100, sd = 15))
+```
+
+# question
+
+You have a small sample of IQ values:
+
+`r iq`
+
+The mean is `r gap_numeric(round(mean(iq), 2))`.

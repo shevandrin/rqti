@@ -1,0 +1,16 @@
+---
+knit: qti::render_qtijs
+type: gap
+---
+
+```{r echo=F}
+library(qti)
+n1 <- round(runif(1, 10, 1e3))
+n2 <- round(n1*(1+runif(1, 0, 0.3)))
+n1
+n2
+```
+
+# question
+
+You want to run a t-test for two samples with $n_1=`r n1`$ and $n_2=`r n2`$. The degrees of freedom are: `r gap_numeric(n1+n2-2)`.
