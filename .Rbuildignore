@@ -16,3 +16,5 @@ s4_example.R
 ^docs$
 ^pkgdown$
 ^vignettes/section_cache$
+^upload$
+^pageres\.R$
