@@ -5,7 +5,7 @@ pageres <- function(filename, res) {
            wait = F)
 }
 
-pageres_opal <- function(repo, path) {
+webshot_opal <- function(repo, path) {
     file <- paste0(path, repo$display_name, ".jpg")
     webshot2::webshot(url = repo$url,
                       file = file,
