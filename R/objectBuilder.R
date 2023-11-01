@@ -39,6 +39,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' @importFrom rmarkdown pandoc_convert yaml_front_matter
 #' @importFrom knitr knit opts_knit
 create_question_object <- function(file, file_dir = NULL) {
+    rmd_checker(file)
     attrs <- yaml_front_matter(file)
     # ignore parameters that are not related to object creation
     attrs <- attrs[! names(attrs) %in% c("knit")]
@@ -453,4 +454,14 @@ parse_feedback <- function(html, image_dir = NULL) {
     result <- Map(create_fb_object, sections, classes, html_txt)
     result <- unname(Filter(Negate(is.null), result))
     return(result)
+}
+
+rmd_checker <- function(file) {
+    content <- readLines(file)
+    helpers <- c("gap_text", "gap_numeric", "dropdown", "mdlist")
+    has_helpers <- any(grepl(paste(helpers, collapse = "|"), content))
+    has_qti <- any(grepl("library\\(qti\\)", content))
+    if (all(has_helpers, !has_qti)) {
+        stop("Helper function are found. Call \'library(qti)\' inside Rmd file.")
+    }
 }
