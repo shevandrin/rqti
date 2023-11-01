@@ -473,7 +473,7 @@ parse_feedback <- function(html, image_dir = NULL) {
 
 rmd_checker <- function(file) {
     content <- readLines(file)
-    helpers <- c("gap_text", "gap_numeric", "dropdown", "mdlist")
+    helpers <- c("gap_text\\(", "gap_numeric\\(", "dropdown\\(", "mdlist\\(")
     has_helpers <- any(grepl(paste(helpers, collapse = "|"), content))
     has_qti <- any(grepl("library\\(qti\\)", content))
     if (all(has_helpers, !has_qti)) {
