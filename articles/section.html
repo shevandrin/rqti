@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Sections and Tests</h1>
             
-            <h4 data-toc-skip class="date">2023-10-31</h4>
+            <h4 data-toc-skip class="date">2023-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/section.Rmd" class="external-link"><code>vignettes/section.Rmd</code></a></small>
       <div class="d-none name"><code>section.Rmd</code></div>
@@ -142,16 +142,16 @@ parameters that are not necessarily consistent with QTI.</p>
 <span><span class="co"># createQtiTest is a method of the OOP test class</span></span>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">test</span>, zip_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test1.zip"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>We now have 10 versions of the test, two of which look like this:</p>
+<p>We now have 10 variants of the test, two of which look like this:</p>
 <p><img src="images/Atest1.jpg"><img src="images/Btest1.jpg"></p>
 <p>After the root section you can see the section exam_8833 (image 1)
 and exam_S7829 (image 2). There are actually 8 more (10 in total) and if
 you restart the exam, you will get one randomly assigned. You can try it
-yourself: .</p>
+yourself: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/42069852163" class="external-link uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/42069852163</a>.</p>
 <p>To summarize so far: You can just pass your exercise files to the
 <code>files</code> parameter in <code>section</code> and define how many
 variants you would like to create of each file.</p>
-<p>Of course, creating several versions only makes sense for random
+<p>Of course, creating several variants only makes sense for random
 exercises. Single choice and multiple choice exercises could be part of
 different sections:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -214,15 +214,15 @@ exercises, which is also useful for psychometric analysis. The
 disadvantage is that if two students know they are in the same
 subsection, they could help each other.</p>
 <p>On the right-hand side for each exercise file a subsection was
-created, containing the different versions of the exercise. Each
+created, containing the different variants of the exercise. Each
 participant goes through each section, but will only be assigned a
-single version from the section. The obvious difference to the first
+single variant from the section. The obvious difference to the first
 approach is that there are many paths through such a test. Indeed, with
-3 versions and 4 files, there are <span class="math inline">\(3^4 =
+3 variants and 4 files, there are <span class="math inline">\(3^4 =
 81\)</span> paths. This is not particularly useful for psychometric
 analysis and could lead to other problems. For instance, if you did not
 carefully construct your exercises, they might differ substantially in
-difficulty between different versions. With 81 possible paths, there
+difficulty between different variants. With 81 possible paths, there
 might be some that are particularly difficult and others that are fairly
 easy. You will have no way to know, which is which because each path
 will only have few participants. The advantage of this setup is that
@@ -231,7 +231,7 @@ likely differ. Still, we advise to only use this approach if you know
 what you are doing, especially for exams.</p>
 <ol style="list-style-type: decimal">
 <li>For “by variant” (left scheme on the picture) use
-<code>by_variant = TRUE</code>
+<code>by_variants = TRUE</code>
 </li>
 <li>For “by files” (right scheme) use <code>by_files = TRUE</code>
 </li>

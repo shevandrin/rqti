@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Directed Pairs Exercises</h1>
             
-            <h4 data-toc-skip class="date">2023-10-31</h4>
+            <h4 data-toc-skip class="date">2023-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/directedpairs.Rmd" class="external-link"><code>vignettes/directedpairs.Rmd</code></a></small>
       <div class="d-none name"><code>directedpairs.Rmd</code></div>
@@ -124,7 +124,7 @@ Match the following `QTI` functions with their purpose:
 
 * rmd2zip | from Rmd-file create zip-file with exercise
 * rmd2xml | from Rmd-file create xml-file with exercise
-* render_opal | render Rmd directly on LMS OPAL
+* render_opal | render Rmd directly to LMS OPAL
 
 # feedback
 
@@ -134,13 +134,15 @@ Provide your feedback here.</code></pre>
 <p>The pairs are specified by a markdown list in which the matching
 elements are separated by <code>|</code>. This list has to be the last
 element of the question section!</p>
-<p>Note that in this example, a feedback section was also provided. The
-feedback is optional, but usually it is a good idea to give some
+<p>An alternative is to provide a table exercise with the matching
+elements, see <a href="table.html">Tables</a></p>
+<p>Note that in the used example, a feedback section was also provided.
+The feedback is optional, but usually it is a good idea to give some
 explanation for students.</p>
 <p>Note that the <code>knit</code> parameter is set to the custom qti
 knit function, which will handle the preview. Clicking the Knit button
 in RStudio renders the file in the viewer pane. Alternatively, change
-the knit parameter to <code>knit: render_opal</code> (see <a href="opal_api">API Opal</a>) to upload to opal directly, producing:</p>
+the knit parameter to <code>knit: qti::render_opal</code> (see <a href="opal_api">API Opal</a>) to upload to opal directly, producing:</p>
 <p><img src="images/directedpair-simple.jpg"></p>
 </div>
 <div class="section level2">

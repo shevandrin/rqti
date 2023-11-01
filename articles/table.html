@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Table Exercises</h1>
             
-            <h4 data-toc-skip class="date">2023-10-31</h4>
+            <h4 data-toc-skip class="date">2023-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/table.Rmd" class="external-link"><code>vignettes/table.Rmd</code></a></small>
       <div class="d-none name"><code>table.Rmd</code></div>
@@ -99,16 +99,15 @@
 <div class="section level3">
 <h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h3>
-<p>In this type of exercise, the candidate is given a table in which he
-is required to match elements from rows and columns. A template is
-available in RStudio when you click on
+<p>In this type of exercise, the candidate must match rows and columns
+of a table. A template is available in RStudio when you click on
 <code>New file -&gt; R Markdown -&gt; From Template</code>. The qti
 templates start with <code>QTI:</code>. Here we look at the templates
 <code>QTI: table (simple)</code> and
 <code>QTI: table (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: table</code> in
-the yaml-section and a list with at least two elements in a section
-called <strong>#question</strong>:</p>
+the yaml-section and a table in a section called
+<strong>#question</strong>:</p>
 <pre><code>---
 type: table
 knit: qti::render_qtijs
@@ -118,7 +117,7 @@ knit: qti::render_qtijs
 
 Specify any kind of table with the table entries representing the number of points for the response. The table has to be the last element of the question section!
 
-The `qti` package is clever enough to transform your table into the appropriate QTI object (single choice or multiple choice). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
+The `qti` package is clever enough to transform your table into the appropriate QTI object (single choice, multiple choice, directed pair). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
 
 Use visual editing mode in RStudio to quickly change your table.
 
@@ -130,44 +129,42 @@ Use visual editing mode in RStudio to quickly change your table.
 |2*3 = |0 |0  |0 | 1 |
 |12*3 =|0 |1  |0 | 0 |
 
-
 # feedback
 
-Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.
-
-&lt;!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
-
-# feedback+
-
-Nice. (Only displayed when the solution is correct.)
-
-# feedback-
-
-Try again. (Only displayed if the solution is not correct.)
---&gt;</code></pre>
-<p>The table entries contains the number of points for the response. Any
-figure above 0 is considered as a right answer. How many correct answers
-there can be in any row or column is up to the creator. The overall
-points for the exercise is calculated a sum of the positive table
-entries.</p>
+Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.</code></pre>
+<p>Clicking the Knit-Button will produce:</p>
+<div class="figure">
+<img src="images/table1.png" alt=""><p class="caption">Preview of table exercise rendered by QTIJS</p>
+</div>
+<p>Alternatively, change the knit parameter to
+<code>knit: qti::render_opal</code> (see <a href="opal_api">API
+Opal</a>) to upload to opal directly, producing:</p>
+<p><img src="images/table-simple.jpg"></p>
+<p>The table entries in the Rmd-file contain the number of points for
+the response. Any number above 0 is considered correct. You can also use
+negative numbers, which will reduce the points reached, but never below
+0. The number of correct responses per row and column can be specified
+as needed. This usually has an effect on the presentation of the table.
+For instance, there are special tables where only one row per column is
+correct and where only one column per row is correct. The
+<code>qti</code> package takes care of this automatically, so you do not
+need to do anything. In this regard it is important to know that if you
+create a table that is actually a directed pair, it will be transformed
+into a directed pair exercise. If you do not want this, use
+<code>as_table = true</code> in the yaml-section.</p>
+<p>The overall points for the exercise are calculated as the sum of the
+positive table entries.</p>
 <p>Of course you can also just load a csv and print it as a markdown
-table via <code>knitr::kable(yourtable)</code>. The table has to be the
-last element of the question section!</p>
+table via <code>knitr::kable(yourtable)</code>. Just do not forget that
+the table has to be the last element of the question section.</p>
 <p>Note that in this example, a feedback section was also provided. The
 feedback is optional, but usually it is a good idea to give some
 explanation for students.</p>
-<p>Further note that the <code>knit</code> parameter is set to the
-custom qti knit function, which will handle the preview. Clicking the
-Knit button in RStudio produces the following in the viewer pane (or
-browser of your choice):</p>
-<div class="figure">
-<img src="screenshot_table1.png" width="400" alt=""><p class="caption">Preview of table exercise rendered by QTIJS</p>
-</div>
 </div>
 <div class="section level3">
 <h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h3>
-<p>If you want to have more fine-grained control, consider the RMD
+<p>If you want to have more fine-grained control, consider the Rmd
 template <code>QTI: table (complex)</code>, wich uses more yaml
 attributes.</p>
 <pre><code>---
@@ -202,7 +199,7 @@ Use visual editing mode in RStudio to quickly change your table.
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.</code></pre>
 <p>Which renders as:</p>
 <div class="figure">
-<img src="screenshot_table2.png" width="400" alt=""><p class="caption">Preview of table exercise in LMS OPAL</p>
+<img src="images/table-complex.jpg" alt=""><p class="caption">Preview of table exercise in LMS OPAL</p>
 </div>
 </div>
 <div class="section level2">
@@ -216,7 +213,7 @@ Provide your feedback here. For tables it is difficult to provide useful feedbac
 <div class="section level4">
 <h4 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h4>
-<p>This is the id of the exercise, useful for later data analysis of
+<p>This is the ID of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
@@ -230,20 +227,19 @@ learning management system settings. Default is the file name.</p>
 <div class="section level4">
 <h4 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
 </h4>
-<p>It mixes the order of rows and columns in the table. Default is
-<code>TRUE</code>.</p>
+<p>If <code>true</code> (the default), randomizes the order of rows and
+columns. Only in rare occasions it makes sense to have a strict order of
+elements (setting shuffle to <code>false</code>).</p>
 </div>
 <div class="section level4">
 <h4 id="rows_shuffle">rows_shuffle<a class="anchor" aria-label="anchor" href="#rows_shuffle"></a>
 </h4>
-<p>It mixes only the row order, while the column order is preserved by
-default. Default is <code>TRUE</code>.</p>
+<p>Only shuffle the rows. Default is <code>true</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="cols_shuffle">cols_shuffle<a class="anchor" aria-label="anchor" href="#cols_shuffle"></a>
 </h4>
-<p>It mixes only the column order, while the row order is preserved by
-default. Default is <code>TRUE</code>.</p>
+<p>Only shuffle the columns. Default is <code>true</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="abbr_id">abbr_id<a class="anchor" aria-label="anchor" href="#abbr_id"></a>
@@ -276,17 +272,17 @@ it makes sense to specify meaningful identifiers, or at least make them
 more recognizable.</p>
 <p>There 3 ways to form identifiers of rows and columns:</p>
 <ol style="list-style-type: decimal">
-<li>By default <code>qti</code> makes them like
+<li>By default <code>qti</code> uses
 <code>row_1</code>…<code>row_N</code>,
 <code>col_1</code>…<code>col_N</code>.</li>
 <li>Using <code>abbr_id: true</code> in the yaml section of the Rmd
 file, <code>qti</code> takes the first word of a row or column element
-and associates it with the abbreviation of the remaining text of the
-element. Example: for element “Mean Value Theorem for Integrals”
-<code>qti</code> makes id as “Mean_VTfI”.</li>
-<li>If you are interested in further in-depth analysis, you will
-probably want to assign your own values as identifiers. In this case, in
-the markdown table or csv file you need to put:</li>
+and combines it with the abbreviation of the remaining text of the
+element. Example: for the element “Mean Value Theorem for Integrals”
+<code>qti</code> makes the identifier “Mean_VTfI”.</li>
+<li>For mor control, you will probably want to assign your own values as
+identifiers. In this case, in the markdown table or csv file you need to
+put:</li>
 </ol>
 <ul>
 <li>a column with a predefined header ‘rowid’ with values for row
@@ -300,9 +296,12 @@ identifiers</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="some-advice-on-essay-exercises">Some advice on essay exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-exercises"></a>
+<h3 id="some-advice-on-table-exercises">Some advice on table exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-table-exercises"></a>
 </h3>
-<p>TODO</p>
+<p>Table exercises are forced choice exercises, so they suffer from the
+sample problems as <a href="singlechoice.html">single choice</a> and <a href="multiplechoice.html">multiple choice</a> exercises. The advantage
+of table exercises is that they are easy so manage (e.g. in csv-tables)
+and many questions can be asked at once, using little space.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

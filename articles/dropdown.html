@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Dropdown Exercises</h1>
             
-            <h4 data-toc-skip class="date">2023-10-31</h4>
+            <h4 data-toc-skip class="date">2023-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/dropdown.Rmd" class="external-link"><code>vignettes/dropdown.Rmd</code></a></small>
       <div class="d-none name"><code>dropdown.Rmd</code></div>
@@ -169,7 +169,7 @@ title: A meaningful title that can be displayed in the LMS
 
 The philosophy of the qti package is &lt;&lt;do one thing and do it well|one for all&gt;&gt;.
 
-Under the hood, the qti package uses `r dropdown(c("no OOP", "S4 OOP", "S3 OOP", "R6 OOP"), answer_index = 2, points = 2, response_identifier = "OOP_task", choices_identifiers = c("noOOP", "S4", "S3", "S6"))`.
+Under the hood, the qti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2, response_identifier = "OOP_task")`.
 
 # feedback
 
