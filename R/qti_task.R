@@ -86,14 +86,14 @@ create_item_body_match_table <- function(object,  row_associations,
     if (is.null(max_associations)) max_associations <- max(c(row_associations,
                                                col_associations))
     prompt <- create_prompt(object)
-    fixed <- ifelse(object@rows_shuffle, "false", "true")
+    fixed <- ifelse(object@shuffle_rows, "false", "true")
     rows <- Map(make_associable_choice,
                 object@rows_identifiers,
                 object@rows,
                 row_associations,
                 fixed)
     rows_match <- tag("simpleMatchSet", list(rows))
-    fixed <- ifelse(object@cols_shuffle, "false", "true")
+    fixed <- ifelse(object@shuffle_cols, "false", "true")
     cols <- Map(make_associable_choice,
                 object@cols_identifiers,
                 object@cols,

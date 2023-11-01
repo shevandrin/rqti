@@ -4,9 +4,9 @@
 #' OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are
 #' meaningful.
 #' @template MTSlotsTemplate
-#' @slot rows_shuffle boolean, optional; shuffle possible answers in rows,
+#' @slot shuffle_rows boolean, optional; shuffle possible answers in rows,
 #'   default `TRUE`
-#' @slot cols_shuffle boolean, optional; shuffle possible answers in columns;
+#' @slot shuffle_cols boolean, optional; shuffle possible answers in columns;
 #'   defalut `TRUE`
 #' @inheritSection AssessmentItem-class Warning
 #' @name MatchTaable-classs
@@ -21,11 +21,13 @@ setClass("MatchTable", contains = "AssessmentItem",
                      answers_identifiers = "character",
                      answers_scores = "numeric",
                      shuffle = "logical",
-                     rows_shuffle = "logical",
-                     cols_shuffle = "logical"),
+                     shuffle_rows = "logical",
+                     shuffle_cols = "logical"),
          prototype = list(shuffle = TRUE, points = NA_real_,
-         rows_shuffle = TRUE, cols_shuffle = TRUE))
+         shuffle_rows = TRUE, shuffle_cols = TRUE))
 
+
+#TODO conflict between points slot and sum(answers_scores)
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     answ_count <- length(.Object@answers_identifiers)
