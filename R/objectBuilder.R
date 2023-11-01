@@ -418,7 +418,15 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
 
     if (cond1) {
         if (cond2) {
-            cls <- ifelse(as_table, "OneInRowTable", "DirectedPair")
+            if (as_table) {
+                cls <- "OneInRowTable"
+            } else {
+                 cls <- "DirectedPair"
+                 message(paste("The task is converted into \'Directed pair\'",
+                               "type. To keep table put \'as_table=T\'",
+                               "in yaml section of the Rmd file"))
+            }
+
         } else {
             cls <- "OneInRowTable"
         }
@@ -426,7 +434,14 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
 
     if (!cond1 && cond2) {
         if (cond3) {
-            cls <- ifelse(as_table, "OneInColTable", "DirectedPair")
+            if (as_table) {
+                cls <- "OneInColTable"
+            } else {
+                cls <- "DirectedPair"
+                message(paste("The task is converted into \'Directed pair\'",
+                              "type. To keep table put \'as_table=T\'",
+                              "in yaml section of the Rmd file"))
+            }
         } else {
             cls <- "OneInColTable"
         }
