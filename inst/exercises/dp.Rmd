@@ -1,0 +1,16 @@
+---
+type: match
+knit: qti::render_opal
+---
+
+# question
+
+In this task the candidate has to match elements from two sets.
+
+Match the following `QTI` functions with their purpose:
+
+`r knitr::kable(readr::read_csv("dp.csv"))`
+
+# feedback
+
+Provide your feedback here.

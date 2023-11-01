@@ -1,0 +1,4 @@
+row,from RMD-file create qti zip, from RMD create qti xml, render RMD directly to LMS Opal
+rmd2zip, 1, 0, 0
+rmd2xml, 0, 1, 0
+render_opal, 0, 0, 1

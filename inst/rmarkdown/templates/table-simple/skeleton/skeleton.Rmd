@@ -7,7 +7,7 @@ knit: qti::render_qtijs
 
 Specify any kind of table with the table entries representing the number of points for the response. The table has to be the last element of the question section!
 
-The `qti` package is clever enough to transform your table into the appropriate QTI object (single choice or multiple choice). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
+The `qti` package is clever enough to transform your table into the appropriate QTI object (single choice, multiple choice, directed pair). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
 
 Use visual editing mode in RStudio to quickly change your table.
 
@@ -19,18 +19,6 @@ Use visual editing mode in RStudio to quickly change your table.
 |2*3 = |0 |0  |0 | 1 |
 |12*3 =|0 |1  |0 | 0 |
 
-
 # feedback
 
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.
-
-<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
-
-# feedback+
-
-Nice. (Only displayed when the solution is correct.)
-
-# feedback-
-
-Try again. (Only displayed if the solution is not correct.)
--->

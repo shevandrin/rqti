@@ -9,7 +9,7 @@ title: A meaningful title that can be displayed in the LMS
 
 The philosophy of the qti package is <<do one thing and do it well|one for all>>.
 
-Under the hood, the qti package uses `r dropdown(c("no OOP", "S4 OOP", "S3 OOP", "R6 OOP"), answer_index = 2, points = 2, response_identifier = "OOP_task", choices_identifiers = c("noOOP", "S4", "S3", "S6"))`.
+Under the hood, the qti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2, response_identifier = "OOP_task")`.
 
 # feedback
 

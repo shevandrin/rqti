@@ -35,11 +35,13 @@ Knitting via the Knit-Button to qtijs, this exercise renders as:
 
 The pairs are specified by a markdown list in which the matching elements are separated by `|`. This list has to be the last element of the question section!
 
-Note that in this example, a feedback section was also provided. The feedback is
+An alternative is to provide a table exercise with the matching elements, see [Tables](table.html)
+
+Note that in the used example, a feedback section was also provided. The feedback is
 optional, but usually it is a good idea to give some explanation for students.
 
 Note that the `knit` parameter is set to the custom qti knit function,
-which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](opal_api)) to upload to opal directly, producing:
+which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: qti::render_opal` (see [API Opal](opal_api)) to upload to opal directly, producing:
 
 ![](images/directedpair-simple.jpg)
 
