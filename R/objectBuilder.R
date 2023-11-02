@@ -53,7 +53,7 @@ create_question_object <- function(file, file_dir = NULL) {
     file_p <- knit(input = file, output = md_path, quiet = TRUE)
 
     # without type attr assign 'gap'
-    if (is.null(attrs$type)) attrs$type <- "gap"
+    if (is.null(attrs$type)) attrs$type <- rmd_detect_type(file_p)
 
     # if Entry task given, replace <<>> by <tag>
     if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
@@ -478,5 +478,16 @@ rmd_checker <- function(file) {
     has_qti <- any(grepl("library\\(qti\\)", content))
     if (all(has_helpers, !has_qti)) {
         stop("Helper function are found. Call \'library(qti)\' inside Rmd file.")
+    }
+}
+
+rmd_detect_type <- function(file) {
+    content <- readLines(file)
+    pattern <- c("<<.*?>>", "<gap>.*?</gap>")
+    matches <- any(grepl(paste(pattern, collapse = "|"), content))
+    if (!matches) {
+        stop("Define correct type of the task in yaml section of Rmd file")
+    } else {
+        return("gap")
     }
 }
