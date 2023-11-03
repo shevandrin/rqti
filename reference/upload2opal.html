@@ -79,7 +79,7 @@ authentication procedure has to be performed. See <a href="auth_opal.html">auth_
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">upload2opal</span><span class="op">(</span></span>
-<span>  <span class="va">file</span>,</span>
+<span>  <span class="va">test</span>,</span>
 <span>  display_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  access <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -93,8 +93,9 @@ authentication procedure has to be performed. See <a href="auth_opal.html">auth_
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>file</dt>
-<dd><p>required; a length one character vector</p></dd>
+    <dl><dt>test</dt>
+<dd><p>required; a length one character vector or <a href="AssessmentTest-class.html">AssessmentTest</a> or
+<a href="AssessmentTestOpal-class.html">AssessmentTestOpal</a> objects</p></dd>
 
 
 <dt>display_name</dt>
