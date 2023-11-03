@@ -6,12 +6,16 @@
 \alias{createQtiTest}
 \alias{createQtiTest,AssessmentTest-method}
 \alias{createQtiTest,AssessmentTest}
+\alias{createQtiTest,character-method}
+\alias{createQtiTest,character}
 \title{Create XML file for exam test specification}
 \usage{
 createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
   FALSE)
 
 \S4method{createQtiTest}{AssessmentTest}(object, dir = getwd(), verification = FALSE, zip_only = FALSE)
+
+\S4method{createQtiTest}{character}(object, dir = getwd())
 }
 \arguments{
 \item{object}{an instance of the \link{AssessmentTest} or \link{AssessmentTestOpal} S4

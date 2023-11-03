@@ -74,7 +74,8 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'QTI-task and uploads it to the OPAL. before calling `upload2opal()`
 #'authentication procedure has to be performed. See [auth_opal]
 #'
-#'@param file required; a length one character vector
+#'@param test required; a length one character vector or [AssessmentTest] or
+#' [AssessmentTestOpal] objects
 #'@param display_name optional; a length one character vector to entitle file in
 #'  OPAL; file name without extension by default
 #'@param access optional; is responsible for publication status, where 1 - only
@@ -101,15 +102,14 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'@importFrom utils browseURL
 #'@importFrom tools file_ext
 #'@export
-upload2opal <- function(file, display_name = NULL, access = 4, overwrite = TRUE,
+upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = "https://bildungsportal.sachsen.de/opal/",
                         open_in_browser = TRUE, api_user = NULL,
                         api_password = NULL, cached = TRUE) {
 
-    if (!all(file.exists(file))) stop("The file does not exist", call. = FALSE)
-    if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
+    file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE)
 
-    if (file_ext(file) != "zip") file <- process_raw_file(file)
+    if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
 
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
@@ -264,18 +264,4 @@ is_logged <- function(endpoint) {
                        encode = "multipart")
     res <- ifelse(response$status_code == 200, TRUE, FALSE)
     return(res)
-}
-
-
-process_raw_file <- function(file) {
-    ext <- tools::file_ext(file)
-    tdir <- tempfile()
-    dir.create(tdir)
-    if (ext == "Rmd") path <- rmd2zip(file, path = tdir)
-    if (ext == "xml") {
-        section_obj <- section(file, title = "Preview")
-        test_obj <- test4opal(content = section_obj, identifier = "Preview")
-        path <- create_qti_test(test_obj, path = tdir, zip_only = TRUE)
-    }
-    return(path)
 }
