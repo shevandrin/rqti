@@ -29,7 +29,7 @@ cat('<style>
     height: auto;
   }
   .zoomable-image img:hover {
-    transform: scale(1.5); /* Adjust the zoom level as needed */
+    transform: scale(1.2); /* Adjust the zoom level as needed */
     transition: transform 0.3s; /* Adjust the transition duration as needed */
   }
 </style>')
