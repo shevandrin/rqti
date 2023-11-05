@@ -96,6 +96,21 @@
 
     
     
+```{r cat(’
+<style>
+  .zoomable-image {
+    position: relative;
+  }
+  .zoomable-image img {
+    width: 100%; /* Adjust the image size as needed */
+    height: auto;
+  }
+  .zoomable-image img:hover {
+    transform: scale(1.5); /* Adjust the zoom level as needed */
+    transition: transform 0.3s; /* Adjust the transition duration as needed */
+  }
+</style>
+<p>’) }</p>
 <p>This section is still under construction and only relevant if you
 want to create exercises without relying on Rmd files. Under the hood,
 qti uses S4 OOP. This means that you can create all exercise types as
@@ -103,9 +118,11 @@ objects, which gives you more flexibility and is much faster. If you are
 happy with Rmd, there is nothing wrong using it. If you want to go to
 the next level, consider creating exercise objects directly.</p>
 <p>First, check out the overview of our classes:</p>
-<div class="figure">
-<img src="s4model.png" alt=""><p class="caption">Class diagramm S4.</p>
+cat(’
+<div class="zoomable-image">
+<p><img src="s4model.png" alt="Class diagram S4"></p>
 </div>
+<p>’)</p>
 <div class="section level2">
 <h2 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
 </h2>
