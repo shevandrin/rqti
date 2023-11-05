@@ -15,12 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, echo=FALSE}
+```{r, echo=FALSE}
 library(qti)
 ```
 
-```{r
-cat('<style>
+<style>
   .zoomable-image {
     position: relative;
   }
@@ -29,11 +28,11 @@ cat('<style>
     height: auto;
   }
   .zoomable-image img:hover {
-    transform: scale(1.2); /* Adjust the zoom level as needed */
+    transform: scale(1.3); /* Adjust the zoom level as needed */
     transition: transform 0.3s; /* Adjust the transition duration as needed */
   }
-</style>')
-}
+</style>
+
 
 This section is still under construction and only relevant if you want to create exercises without relying on Rmd files. Under the hood, qti uses S4 OOP. This means that you can create all exercise types as objects, which gives you more flexibility and is much faster. If you are happy with Rmd, there is nothing wrong using it. If you want to go to the next level, consider creating exercise objects directly.
 
