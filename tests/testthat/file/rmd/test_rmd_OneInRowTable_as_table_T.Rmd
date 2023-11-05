@@ -1,0 +1,15 @@
+---
+type: match
+identifier: test_from_table
+knit: qti::render_opal
+as_table: T
+---
+
+# question
+Choose the correct order in the table
+
+|     |Col_1 |Col_2|Col_3|
+|-----|------|-----|-----|
+|Row_1| 0    | 0   | 1   | 
+|Row_2| 1    | 0   | 0   | 
+|Row_3| 0    | 1   | 0   |
