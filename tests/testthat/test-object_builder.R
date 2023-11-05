@@ -444,7 +444,7 @@ test_that("Testing create_question_object() for TextGap
                                 content = list("<p>general feedback</p>")))))
     expect_equal(sut, expected)
 })
-
+# Rmd file without type of attribute for InlineChoice
 test_that("Testing create_question_object() for InlineChoice
           (yaml and primitive) tasks", {
     path <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
@@ -481,6 +481,16 @@ test_that("Testing create_question_object() for InlineChoice
                                        )
                     ))
     expect_equal(sut, expected)
+})
+
+test_that("Testing of incorrect Rmd file (without parameter: type)
+          for MultipleChoice class that calls the error.", {
+
+   error <- tryCatch({
+       sut <- create_question_object(path)
+       }, error = function(e) e)
+
+   expect_true(inherits(error, "error"))
 })
 
 test_that("Testing create_question_object() for MultipleChoice class
