@@ -42,7 +42,7 @@ First, check out the overview of our classes:
   <img src="s4model.png" alt="Class diagram S4" />
 </div>
 
-`qti` class model consists of classes that represent types of tasks (`SingleChoice`, `MultipleChoice`, `Essay`, `Entry`, `Order`, `DirectedPair`, `MultipleChoiceTable`, `OneInRowTable`, `OneInColTable`), elements of interactive content of tasks (`ModalFeedback`, `CorrectFeedback`, `WrongFeedback`, `TextGap`, `NumericGap`, `InlineChoice`, `TextGapOpal`), tests and their sections (`AssessmentSection`, `AssessmentTest`, `AssessmentTestOpal`).
+`qti` class model consists of classes that represent types of tasks (`[?SingleChoice]`, [MultipleChoice], `Essay`, `Entry`, `Order`, `DirectedPair`, `MultipleChoiceTable`, `OneInRowTable`, `OneInColTable`), elements of interactive content of tasks (`ModalFeedback`, `CorrectFeedback`, `WrongFeedback`, `TextGap`, `NumericGap`, `InlineChoice`, `TextGapOpal`), tests and their sections (`AssessmentSection`, `AssessmentTest`, `AssessmentTestOpal`).
 
 ## How to create task objects
 
