@@ -13,7 +13,10 @@ articles:
   - order
   - directedpairs
   - table
-  - section
+- title: Sections and Tests
+  navbar: How to create Sections and Tests
+  contents:
+    - section
 - title: Workflow with API
   navbar: API
   contents:
