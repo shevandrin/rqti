@@ -49,11 +49,21 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                allow_comment = TRUE,
                                rebuild_variables = NA
          ))
-# TODO verification procedure for calculator values: they must be from factor:scientific-calculator/simple-calculator
-# TODO verification of files slot
-# TODO verification procedure for navigation mode values: they must be from factor: linear/nonlinear
-# TODO verification procedure for submission mode values: they must be from factor: individual/simultaneous
-# TODO there is a conflict between keep_responses and rebuild_variables, if the second one is true - the first one will be ignored
+
+setValidity("AssessmentTest", function(object) {
+    # nav_mode <- c("linear", "nonlinear")
+    # print(object@identifier)
+    # if (!(object@navigation_mode %in% nav_mode)) {
+    #     stop("'navigation_mode' has to be 'linear' or 'nonlinear'",
+    #          call. = FALSE)
+    # }
+
+    # sbms_mode <- c("individual", "simultaneous")
+    # if (!(object@submission_mode %in% sbms_mode)) {
+    #     stop("'submission_mode' has to be 'individual' or 'simultaneolus'",
+    #          call. = FALSE)
+    # }
+})
 
 setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -218,4 +228,27 @@ setMethod("getIdentifier", signature(object = "character"),
               ai_tag  <- xml2::xml_find_all(doc, "//d1:assessmentItem")
               id <- xml2::xml_attr(ai_tag, "identifier")
               return(id)
+          })
+
+#' @rdname createQtiTest-methods
+#' @aliases createQtiTest,character
+setMethod("createQtiTest", signature(object = "character"),
+          function(object, dir = getwd()) {
+              file <- object
+              if (!all(file.exists(file))) {
+                  stop("The file does not exist", call. = FALSE)
+              }
+
+              ext <- file_ext(file)
+              if (ext != "zip") {
+                  if (ext == "Rmd") file <- rmd2zip(file, path = dir)
+                  if (ext == "xml") {
+                      section_obj <- section(file, title = "Preview")
+                      test_obj <- test4opal(content = section_obj,
+                                            identifier = "Preview")
+                      file <- create_qti_test(test_obj, path = dir,
+                                              zip_only = TRUE)
+                  }
+              }
+          return(file)
           })

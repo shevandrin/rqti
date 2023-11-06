@@ -1,0 +1,16 @@
+---
+type: match
+identifier: test_MultipleChoiceTable
+knit: qti::render_opal
+---
+
+# question
+
+Choose the right answers:
+
+|     |Col_1 |Col_2|Col_3|Col_4|
+|-----|------|-----|-----|-----
+|Row_1| 1    | 0   | 0   | 0   |
+|Row_2| 0    | 0   | 0   | 0   |
+|Row_3| 1    | 0   | 0   | 0   |
+|Row_4| 1    | 1   | 1   | 0   |

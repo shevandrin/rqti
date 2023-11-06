@@ -39,6 +39,7 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' @importFrom rmarkdown pandoc_convert yaml_front_matter
 #' @importFrom knitr knit opts_knit
 create_question_object <- function(file, file_dir = NULL) {
+    rmd_checker(file)
     attrs <- yaml_front_matter(file)
     # ignore parameters that are not related to object creation
     attrs <- attrs[! names(attrs) %in% c("knit")]
@@ -52,7 +53,7 @@ create_question_object <- function(file, file_dir = NULL) {
     file_p <- knit(input = file, output = md_path, quiet = TRUE)
 
     # without type attr assign 'gap'
-    if (is.null(attrs$type)) attrs$type <- "gap"
+    if (is.null(attrs$type)) attrs$type <- rmd_detect_type(file_p)
 
     # if Entry task given, replace <<>> by <tag>
     if (tolower(attrs$type) %in% c("gap", "cloze", "dropdown", "dd")) {
@@ -417,7 +418,15 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
 
     if (cond1) {
         if (cond2) {
-            cls <- ifelse(as_table, "OneInRowTable", "DirectedPair")
+            if (as_table) {
+                cls <- "OneInRowTable"
+            } else {
+                 cls <- "DirectedPair"
+                 message(paste("The task is converted into \'Directed pair\'",
+                               "type. To keep table put \'as_table=T\'",
+                               "in yaml section of the Rmd file"))
+            }
+
         } else {
             cls <- "OneInRowTable"
         }
@@ -425,7 +434,14 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
 
     if (!cond1 && cond2) {
         if (cond3) {
-            cls <- ifelse(as_table, "OneInColTable", "DirectedPair")
+            if (as_table) {
+                cls <- "OneInColTable"
+            } else {
+                cls <- "DirectedPair"
+                message(paste("The task is converted into \'Directed pair\'",
+                              "type. To keep table put \'as_table=T\'",
+                              "in yaml section of the Rmd file"))
+            }
         } else {
             cls <- "OneInColTable"
         }
@@ -453,4 +469,25 @@ parse_feedback <- function(html, image_dir = NULL) {
     result <- Map(create_fb_object, sections, classes, html_txt)
     result <- unname(Filter(Negate(is.null), result))
     return(result)
+}
+
+rmd_checker <- function(file) {
+    content <- readLines(file)
+    helpers <- c("gap_text\\(", "gap_numeric\\(", "dropdown\\(", "mdlist\\(")
+    has_helpers <- any(grepl(paste(helpers, collapse = "|"), content))
+    has_qti <- any(grepl("library\\(qti\\)", content))
+    if (all(has_helpers, !has_qti)) {
+        stop("Helper function are found. Call \'library(qti)\' inside Rmd file.")
+    }
+}
+
+rmd_detect_type <- function(file) {
+    content <- readLines(file)
+    pattern <- c("<<.*?>>", "<gap>.*?</gap>")
+    matches <- any(grepl(paste(pattern, collapse = "|"), content))
+    if (!matches) {
+        stop("Define correct type of the task in yaml section of Rmd file")
+    } else {
+        return("gap")
+    }
 }

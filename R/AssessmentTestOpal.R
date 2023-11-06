@@ -39,6 +39,10 @@ setClass("AssessmentTestOpal", contains = "AssessmentTest",
                                calculator = NA_character_,
                                mark_items = TRUE,
                                keep_responses = FALSE))
+# TODO verification procedure for calculator values: they must be from factor:scientific-calculator/simple-calculator
+# TODO verification of files slot
+# TODO there is a conflict between keep_responses and rebuild_variables, if the second one is true - the first one will be ignored
+
 
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTestOpal

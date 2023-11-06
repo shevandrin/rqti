@@ -64,5 +64,6 @@ test_that("Testing of set default max count of words and
   sut<- initialize(essay)
 
   expect_equal(sut@words_max, 8)
-  expect_equal(sut@expected_length, 6)
+  expect_equal(sut@expected_length, 24)
+  expect_equal(sut@expected_lines, 1)
 })

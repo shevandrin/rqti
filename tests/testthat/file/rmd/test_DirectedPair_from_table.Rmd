@@ -10,7 +10,7 @@ Choose the right classes:
 
 |         | Animal |Plant|Bird|
 |---------|--------|-----|----|
-|Sparrow  |0       |0    |0.5 | 
+|Sparrow  | 0      |0    |0.5 | 
 |Bear     | 1      |0    |0   | 
 |Pine tree| 0      |1    |0   |
 |Airplane | 0      |0    |0   | 

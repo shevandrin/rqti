@@ -39,10 +39,16 @@ of right options}
 \item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
 which the choices are initially presented to the candidate; default \code{TRUE}}
 
-\item{\code{rows_shuffle}}{boolean, optional; shuffle possible answers in rows,
+\item{\code{shuffle_rows}}{boolean, optional; to randomize the order of the choices
+only in rows; default \code{TRUE}}
+
+\item{\code{shuffle_cols}}{boolean, optional; to randomize the order of the choices
+only in columns; default \code{TRUE}}
+
+\item{\code{shuffle_rows}}{boolean, optional; shuffle possible answers in rows,
 default \code{TRUE}}
 
-\item{\code{cols_shuffle}}{boolean, optional; shuffle possible answers in columns;
+\item{\code{shuffle_cols}}{boolean, optional; shuffle possible answers in columns;
 defalut \code{TRUE}}
 }}
 

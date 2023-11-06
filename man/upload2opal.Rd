@@ -5,7 +5,7 @@
 \title{Upload resource on OPAL}
 \usage{
 upload2opal(
-  file,
+  test,
   display_name = NULL,
   access = 4,
   overwrite = TRUE,
@@ -17,7 +17,8 @@ upload2opal(
 )
 }
 \arguments{
-\item{file}{required; a length one character vector}
+\item{test}{required; a length one character vector or \link{AssessmentTest} or
+\link{AssessmentTestOpal} objects}
 
 \item{display_name}{optional; a length one character vector to entitle file in
 OPAL; file name without extension by default}

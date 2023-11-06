@@ -1,5 +1,5 @@
 ---
-title: "Gap Exercises"
+title: "Gaps Exercises"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
