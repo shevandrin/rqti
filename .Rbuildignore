@@ -18,3 +18,4 @@ s4_example.R
 ^vignettes/section_cache$
 ^upload$
 ^pageres\.R$
+^workflow1\.png$

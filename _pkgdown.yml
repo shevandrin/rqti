@@ -2,8 +2,8 @@ url: https://shevandrin.github.io/qti/
 template:
   bootstrap: 5
 articles:
-- title: Exersices
-  navbar: How to create Rmd for exercises
+- title: Exercises
+  navbar: Create Rmd exercises
   contents:
   - singlechoice
   - multiplechoice
@@ -14,7 +14,7 @@ articles:
   - directedpairs
   - table
 - title: Sections and Tests
-  navbar: How to create Sections and Tests
+  navbar: Create sections and tests
   contents:
     - section
 - title: Workflow with API
