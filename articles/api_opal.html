@@ -44,7 +44,7 @@
     <h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6>
     <a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a>
     <a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a>
-    <a class="dropdown-item" href="../articles/gap.html">Gaps Exercises</a>
+    <a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a>
     <a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a>
     <a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a>
     <a class="dropdown-item" href="../articles/order.html">Order Exercises</a>
@@ -99,64 +99,59 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p><code>qti</code> package has functionality for uploading learning
-content to LMS OPAL for the following use-cases:</p>
+<p>The <code>qti</code> package can upload content directly to the
+learning management system OPAL via the function
+<code>upload2opal</code>, which uses the OPAL API.</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Uploading a Zip Archive:</strong> If you already have a
-zip archive containing a test, you can use the <code>qti</code> package
-to upload it directly to LMS OPAL.</p></li>
-<li><p><strong>Uploading from an Rmd File:</strong> If you have an
-independent Rmd file with a task, the <code>qti</code> package can wrap
-it into a zip archive and deliver it to LMS OPAL.</p></li>
-<li><p><strong>Uploading from an XML File:</strong> If you have an
-independent XML file with a task, the <code>qti</code> package can wrap
-it into a zip archive and deliver it to LMS OPAL.</p></li>
+zip archive containing a QTI compliant test, it will be uploaded
+directly to OPAL.</p></li>
+<li><p><strong>Uploading an Rmd File:</strong> If you have an Rmd
+exercise file, <code>upload2opal</code> wraps it into a zip archive and
+then uploads it to OPAL.</p></li>
+<li><p><strong>Uploading an XML File:</strong> If you have a QTI
+compliant exercise file as XML, <code>upload2opal</code> wraps it into a
+zip archive and then uploads it to OPAL.</p></li>
 </ol>
 </div>
 <div class="section level2">
 <h2 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
 </h2>
-<p>To use the OPAL API, the user must have certain permissions. Your
-username should allow you to log in using a password. Working with the
-api system via shibboleth authorization is not possible.</p>
-<p>For authentication on OPAL <code>qti</code> works with two global
+<p>To use the OPAL API, the OPAL user must have sufficient permissions.
+Your username should allow you to log in using a password. Working with
+the API system via shibboleth authorization is not possible.</p>
+<p>For authentication to OPAL <code>qti</code> uses two global
 environment variable: <code>API_USER</code> and
 <code>API_PASSWORD</code>. To set them, you need to call
 <code>Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')</code> and
-<code>Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')</code> or you can put
-these commands into .Rprofile.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>API_USER <span class="op">=</span><span class="st">'__your_username__'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>API_PASSWORD <span class="op">=</span><span class="st">'__your_password__'</span><span class="op">)</span></span></code></pre></div>
-<p>Some universities use secure connection via Virtual Private Network.
-Before calling <code><a href="../reference/upload2opal.html">upload2opal()</a></code> install, launch and log in VPN
-client of your university. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client" class="external-link">see
-here</a></p>
+<code>Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')</code> or you can set
+these variables in .Renviron:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">API_USER</span><span class="op">=</span><span class="st">"your_username"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">API_PASSWORD</span><span class="op">=</span><span class="st">"your_password"</span></span></code></pre></div>
+<p>Some universities only allow to use the OPAL API in the network of
+the university. Before calling <code><a href="../reference/upload2opal.html">upload2opal()</a></code> set up a VPN
+client accordingly. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client" class="external-link">see
+the instructions here</a></p>
 </div>
 <div class="section level2">
-<h2 id="uploading-testtask-on-opal">Uploading test/task on OPAL<a class="anchor" aria-label="anchor" href="#uploading-testtask-on-opal"></a>
+<h2 id="uploading-testexercise-to-opal">Uploading test/exercise to OPAL<a class="anchor" aria-label="anchor" href="#uploading-testexercise-to-opal"></a>
 </h2>
-<p>To do this just call <code><a href="../reference/upload2opal.html">upload2opal()</a></code> with the file as the
-first parameter:</p>
+<p>You can either set the <code>knit: qti::render_opal</code> parameter
+in the yaml-section of your Rmd file or just call
+<code><a href="../reference/upload2opal.html">upload2opal()</a></code> with the file as the first parameter:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span></span>
+<code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span> <span class="co"># or "exercise.Rmd" or "exercise.xml"</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre></div>
-<p>As a result you can expect the following outcomes:</p>
+<p>If this is successful you can expect the following outcomes:</p>
 <ol style="list-style-type: decimal">
-<li>Opening OPAL Page:</li>
+<li><p>A web browser will open automatically, displaying the OPAL page
+with your uploaded test or exercise.</p></li>
+<li><p>In your R console, you will receive a status code 200. This
+status code indicates that the request to upload the content to OPAL was
+successful.</p></li>
+<li><p>The result variable will contain a list with the following
+data:</p></li>
 </ol>
-<p>A web browser will automatically open, displaying the OPAL page with
-your uploaded test or task.</p>
-<ol start="2" style="list-style-type: decimal">
-<li>Response Status Code 200</li>
-</ol>
-<p>In your R console, you will receive a status code 200. This status
-code indicates that the request to upload the content to OPAL was
-successful.</p>
-<ol start="3" style="list-style-type: decimal">
-<li>Result Variable:</li>
-</ol>
-<p>The result variable will contain a list with the following data:</p>
 <ul>
 <li>$key: An identifier for this resource on OPAL, which you can use for
 reference.</li>
@@ -164,103 +159,74 @@ reference.</li>
 browser on OPAL.</li>
 <li>$url: A permanent link to access this resource on OPAL.</li>
 </ul>
-<p><code><a href="../reference/upload2opal.html">upload2opal()</a></code> always checks uniqueness of
+<p><code><a href="../reference/upload2opal.html">upload2opal()</a></code> always checks the uniqueness of the
 <code>display_name</code> in your personal repository of resources on
-OPAL. If any resources are found, <code>qti</code> will ask you what to
-do: rewrite, create a new one with the same <code>display_name</code>,
-or abort the uploading. By default <code><a href="../reference/upload2opal.html">upload2opal()</a></code> uses file
-name as a <code>display_name</code>. But you can define your own as the
-second parameter:</p>
+OPAL. If a resource with the same name is found, <code>qti</code> will
+overwrite it by default. This is useful for incrementally improving and
+previewing/testing the exercise. It avoids cluttering your OPAL repo
+with dozens of versions of the same exercise. If there are several
+resources with the same name, <code>upload2opal</code> will ask you what
+to do.</p>
+<p>By default <code><a href="../reference/upload2opal.html">upload2opal()</a></code> uses the file name as the
+<code>display_name</code>. But you can define your own as the second
+parameter:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"Exam WS"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span>, display_name <span class="op">=</span> <span class="st">"Exam123"</span><span class="op">)</span></span></code></pre></div>
+<p>Currently, there is no option to delete exercises via the API. But
+you can display the URL of an exercise via:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_resource_url.html">get_resource_url</a></span><span class="op">(</span>display_name <span class="op">=</span> <span class="st">"Exam123"</span><span class="op">)</span></span></code></pre></div>
+<p>Or show all resources via:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_resources.html">get_resources</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This will return a list with all resources, again nested in a
+list.</p>
+<p>If you want to have more fine-grained control for uploading, check
+out the documentation <code><a href="../reference/upload2opal.html">?upload2opal</a></code></p>
 </div>
 <div class="section level2">
-<h2 id="more-control">More Control<a class="anchor" aria-label="anchor" href="#more-control"></a>
+<h2 id="access-rights">Access rights<a class="anchor" aria-label="anchor" href="#access-rights"></a>
 </h2>
-<p>If you want to have more fine-grained control, consider all
-<code><a href="../reference/upload2opal.html">upload2opal()</a></code> parameters:</p>
-<div class="section level3">
-<h3 id="file">file<a class="anchor" aria-label="anchor" href="#file"></a>
-</h3>
-<p>A length one character vector with path to file.</p>
-</div>
-<div class="section level3">
-<h3 id="display_name">display_name<a class="anchor" aria-label="anchor" href="#display_name"></a>
-</h3>
-<p>Character string to entitle test/task on OPAL. Default is file name
-without extension.</p>
-</div>
-<div class="section level3">
-<h3 id="access">access<a class="anchor" aria-label="anchor" href="#access"></a>
-</h3>
-<p>Integer that indicates access level:</p>
+<p>Note that the access rights of the resource are set to public by
+default. This might appear very unusual, but for creating exercises
+incrementally this is the best option. If you use any other access
+rights, you need to login to OPAL via your browser to see the web page,
+which will log you out via the API. Currently, there is not better
+solution for this procedure. Take this into account if you upload
+sensitive content! For instance, exercises that will be used in an
+upcoming exam. You can set the access rights via</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uplod2opal</span>(..., <span class="at">access =</span> ?)</span></code></pre></div>
 <ul>
-<li>1 - only the persons responsible for this learning resource.</li>
-<li>2 - responsible and other authors.</li>
-<li>3 - all registered users.</li>
-<li>4 - public, default value.</li>
+<li>1: only the persons responsible for this learning resource</li>
+<li>2: responsible and other authors</li>
+<li>3: all registered users</li>
+<li>4: public, default value</li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="overwrite">overwrite<a class="anchor" aria-label="anchor" href="#overwrite"></a>
-</h3>
-<p>Logical. If <code>TRUE</code>, it overwrites a resource in opal with
-the same <code>display_name</code>, in case there is only one resource
-with the specified <code>display_name.</code> Default is
-<code>TRUE.</code></p>
-</div>
-<div class="section level3">
-<h3 id="endpoint">endpoint<a class="anchor" aria-label="anchor" href="#endpoint"></a>
-</h3>
-<p>In case of not using “E-Learning-Informationsportal für Sächsische
-Hochschulen” you need to provide the url of your learning platform.</p>
-</div>
-<div class="section level3">
-<h3 id="open_in_browser">open_in_browser<a class="anchor" aria-label="anchor" href="#open_in_browser"></a>
-</h3>
-<p><code>TRUE</code> if you want to get your test/task opend after
-uploading immediately, <code>FALSE</code> for quiet uploading.</p>
-</div>
-<div class="section level3">
-<h3 id="api_user">api_user<a class="anchor" aria-label="anchor" href="#api_user"></a>
-</h3>
-<p>If you need to try to upload under other credentials (not from the
-global environment).</p>
-</div>
-<div class="section level3">
-<h3 id="api_password">api_password<a class="anchor" aria-label="anchor" href="#api_password"></a>
-</h3>
-<p>If you need to try to upload under other credentials (not from the
-global environment).</p>
-</div>
-<div class="section level3">
-<h3 id="cached">cached<a class="anchor" aria-label="anchor" href="#cached"></a>
-</h3>
-<p>If <code>TRUE</code> (default) it keeps password in environment
-variable. Convenient for recurrent uploading during one session.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># this is an example</span></span>
-<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span>,</span>
-<span>                      display_name <span class="op">=</span> <span class="st">"Exam WS"</span>,</span>
-<span>                      access <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                      overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                      open_in_browser <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                      cached <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-</div>
+<div class="section level2">
+<h2 id="endpoint">Endpoint<a class="anchor" aria-label="anchor" href="#endpoint"></a>
+</h2>
+<p>We are using the OPAL instance <strong>E-Learning-Informationsportal
+für Sächsische Hochschulen</strong>, so our package sets the endpoint
+for <code>upload2opal</code> to <em><a href="https://bildungsportal.sachsen.de/opal/" class="external-link uri">https://bildungsportal.sachsen.de/opal/</a></em>. If you use
+a different OPAL instance, you can either pass this to
+<code>endpoint</code> of <code>upload2opal</code> or just set it as an
+environment variable in the .Renviron file:
+QTI_API_ENDPOINT=“yoururl”.</p>
 </div>
 <div class="section level2">
 <h2 id="error-handling">Error Handling<a class="anchor" aria-label="anchor" href="#error-handling"></a>
 </h2>
-<p><strong>403</strong> - Authorization failed. You may need to run a
-VPN client</p>
-<p>Some universities use secure connection via Virtual Private Network.
-To handle this install and login in VPN client of your university. For
-TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client" class="external-link">see
+<p><strong>403</strong> - Authorization failed. Some universities allow
+the use of the API only within the university network. You may need to
+run a VPN client to use the API. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client" class="external-link">see
 here</a></p>
+<p>If you already run a VPN client, please check with your IT and/or
+OPAL provider, whether the API can be used and what configuration you
+need.</p>
 <p><strong>401</strong> Unauthorized</p>
 <p>Your API_USER and/or API_PASSWORD are wrong or your credentials are
-not enough to work with API.</p>
+not sufficient to work with API.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
