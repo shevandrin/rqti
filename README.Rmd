@@ -1,9 +1,7 @@
 ---
 output: github_document
 ---
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -12,8 +10,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
-
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/shevandrin/qti/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shevandrin/qti/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/shevandrin/qti/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/shevandrin/qti/actions/workflows/test-coverage.yaml)
 [![Codecov test coverage](https://codecov.io/gh/shevandrin/qti/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shevandrin/qti?branch=main)
@@ -83,7 +81,7 @@ The basic workflow with the `qti` package can be described as follows:
 
 Each step includes certain `qti` functions, the most useful of them are shown in the following diagram:
 
-![Basic workflow to create exercises and tests with qti](workflow1.png){width=60%}
+![Basic workflow to create exercises and tests with qti](vignettes/workflow1.png){width=60%}
 
 The best way to learn the workflow is to create a simple exercise, such as "Single Choice", as presented [in this article.](singlechoice.html)
 
