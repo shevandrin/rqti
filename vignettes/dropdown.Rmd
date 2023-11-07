@@ -33,7 +33,7 @@ Knitting via the Knit-Button to qtijs, this exercise renders as:
 
 ![](images/dropdown.png)
 
-Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](opal_api)) to upload to Opal directly, producing:
+Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](opal_api.html)) to upload to Opal directly, producing:
 
 ![](images/dropdown-simple.jpg)
 

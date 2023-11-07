@@ -44,7 +44,7 @@ API_PASSWORD="your_password"
 ```
 
 Some universities only allow to use the OPAL API in the network of the university. Before calling `upload2opal()` set up a VPN client accordingly. 
-For TU Chemnitz [see the instructions here](https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client)
+For TU Chemnitz [see the instructions here](https://www.tu-chemnitz.de/urz/network/access/vpn.html)
 
 ## Uploading test/exercise to OPAL
 
@@ -111,7 +111,7 @@ We are using the OPAL instance **E-Learning-Informationsportal für Sächsische 
 ## Error Handling
 
 **403** - Authorization failed. Some universities allow the use of the API only within the university network. You may need to run a VPN client to use the API. 
-For TU Chemnitz [see here](https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client)
+For TU Chemnitz [see here](https://www.tu-chemnitz.de/urz/network/access/vpn.html)
 
 If you already run a VPN client, please check with your IT and/or OPAL provider, whether the API can be used and what configuration you need.
 

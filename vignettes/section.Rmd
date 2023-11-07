@@ -89,7 +89,7 @@ lapply(root_section, class)
 
 Indeed, the whole qti-package is based on S4 OOP, so exercises, sections and tests are all objects. If you have no experience with OOP, this might feel a little bit unfamiliar, but to use it, you do not need to know all details. Just use the helper functions and you should be fine.
 
-To customize your sections and tests, check out the references: [section](reference/section.html) and [test](reference/test.html) or [test4opal](reference/test4opal.html)
+To customize your sections and tests, check out the references: `?section` and `?test` or `?test4opal`.
 
 <!-- If you happen to know OOP and want to take advantage of your skills, you can also create sections and tests directly with our OOP functions. -->
 

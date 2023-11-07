@@ -57,14 +57,14 @@ Knit-Button and you should see a rendered exercise in the Viewer pane.
 The templates are self-explanatory, but more details about the exercise
 types can be found in the other articles:
 
-- [Single choice](singlechoice.html)
-- [Multiple choice](multiplechoice.html)
-- [Essay](essay.html)
-- [Gap](gap.html)
-- [Dropdown](dropdown.html)
-- [Order](html)
-- [Directed pairs](directedpairs.html)
-- [Tables](table.html)
+- [Single choice](articles/singlechoice.html)
+- [Multiple choice](articles/multiplechoice.html)
+- [Essay](articles/essay.html)
+- [Gap](articles/gap.html)
+- [Dropdown](articles/dropdown.html)
+- [Order](articles/order.html)
+- [Directed pairs](articles/directedpairs.html)
+- [Tables](articles/table.html)
 
 To combine different exercises into a test, read: [Sections and
 Tests](section.html)
@@ -113,14 +113,14 @@ as “Single Choice”, as presented [in this article.](singlechoice.html)
 
 Each exercise type is described in a separate article:
 
-- [Single choice](singlechoice.html)
-- [Multiple choice](multiplechoice.html)
-- [Essay](essay.html)
-- [Gap](gap.html)
-- [Dropdown](dropdown.html)
-- [Order](html)
-- [Directed pairs](directedpairs.html)
-- [Tables](table.html)
+- [Single choice](articles/singlechoice.html)
+- [Multiple choice](articles/multiplechoice.html)
+- [Essay](articles/essay.html)
+- [Gap](articles/gap.html)
+- [Dropdown](articles/dropdown.html)
+- [Order](articles/order.html)
+- [Directed pairs](articles/directedpairs.html)
+- [Tables](articles/table.html)
 
 ## Feedback and bug reports
 

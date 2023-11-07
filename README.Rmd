@@ -52,14 +52,14 @@ Note that this will start a qtijs server, which will be used for previewing exer
 
 Using RStudio, create a new Rmarkdown file, select **from Template** and choose one of the templates starting with **QTI: ...**. The *simple* ones include the minimum, the *complex* ones have more parameters. Click the Knit-Button and you should see a rendered exercise in the Viewer pane. The templates are self-explanatory, but more details about the exercise types can be found in the other articles:
 
-- [Single choice](singlechoice.html)
-- [Multiple choice](multiplechoice.html)
-- [Essay](essay.html)
-- [Gap](gap.html)
-- [Dropdown](dropdown.html)
-- [Order](html)
-- [Directed pairs](directedpairs.html)
-- [Tables](table.html)
+- [Single choice](articles/singlechoice.html)
+- [Multiple choice](articles/multiplechoice.html)
+- [Essay](articles/essay.html)
+- [Gap](articles/gap.html)
+- [Dropdown](articles/dropdown.html)
+- [Order](articles/order.html)
+- [Directed pairs](articles/directedpairs.html)
+- [Tables](articles/table.html)
 
 To combine different exercises into a test, read: [Sections and Tests](section.html)
 
@@ -87,14 +87,14 @@ The best way to learn the workflow is to create a simple exercise, such as "Sing
 
 Each exercise type is described in a separate article:
 
-- [Single choice](singlechoice.html)
-- [Multiple choice](multiplechoice.html)
-- [Essay](essay.html)
-- [Gap](gap.html)
-- [Dropdown](dropdown.html)
-- [Order](html)
-- [Directed pairs](directedpairs.html)
-- [Tables](table.html)
+- [Single choice](articles/singlechoice.html)
+- [Multiple choice](articles/multiplechoice.html)
+- [Essay](articles/essay.html)
+- [Gap](articles/gap.html)
+- [Dropdown](articles/dropdown.html)
+- [Order](articles/order.html)
+- [Directed pairs](articles/directedpairs.html)
+- [Tables](articles/table.html)
 
 ## Feedback and bug reports
 
