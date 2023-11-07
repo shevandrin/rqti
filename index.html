@@ -116,8 +116,8 @@
 <li><a href="articles/directedpairs.html">Directed pairs</a></li>
 <li><a href="articles/table.html">Tables</a></li>
 </ul>
-<p>To combine different exercises into a test, read: <a href="section.html">Sections and Tests</a></p>
-<p>If you are using the learning management system Opal, please check out <a href="api_opal.html">Opal API</a></p>
+<p>To combine different exercises into a test, read: <a href="articles/section.html">Sections and Tests</a></p>
+<p>If you are using the learning management system Opal, please check out <a href="articles/api_opal.html">Opal API</a></p>
 </div>
 <div class="section level2">
 <h2 id="general-workflow">General workflow<a class="anchor" aria-label="anchor" href="#general-workflow"></a>
@@ -129,7 +129,7 @@
 <li>Create an Rmd document. You can start from scratch (specify <code>type</code> in the yaml section) or use Rmd templates starting with the prefix <code>QTI</code>.</li>
 <li>Write a section titled <code># question</code> and create your interactions (gaps, choices, etc.). Use qti helper functions where needed.</li>
 <li>Set additional attributes in the yaml section. All types are explained in detail in the <strong>Articles</strong> menu on this website (top).</li>
-<li>Choose a previewer: Either qtijs (<code>knit: qti::render_qtijs</code>), which will render your exercise locally or the learning management system Opal (<code>knit: qti::render_opal</code>). Note that using Opal requires you to set it up first: <a href="api_opal.html">Opal API</a>.</li>
+<li>Choose a previewer: Either qtijs (<code>knit: qti::render_qtijs</code>), which will render your exercise locally or the learning management system Opal (<code>knit: qti::render_opal</code>). Note that using Opal requires you to set it up first: <a href="articles/api_opal.html">Opal API</a>.</li>
 <li>Check if your task looks as desired. Modify until your are satisfied.</li>
 </ol>
 </li>
@@ -140,7 +140,7 @@
 <p>Each step includes certain <code>qti</code> functions, the most useful of them are shown in the following diagram:</p>
 <figure><img src="articles/workflow1.png" style="width:60.0%" alt="Basic workflow to create exercises and tests with qti"><figcaption aria-hidden="true">
 Basic workflow to create exercises and tests with qti
-</figcaption></figure><p>The best way to learn the workflow is to create a simple exercise, such as “Single Choice”, as presented <a href="singlechoice.html">in this article.</a></p>
+</figcaption></figure><p>The best way to learn the workflow is to create a simple exercise, such as “Single Choice”, as presented <a href="articles/singlechoice.html">in this article.</a></p>
 <p>Each exercise type is described in a separate article:</p>
 <ul>
 <li><a href="articles/singlechoice.html">Single choice</a></li>
