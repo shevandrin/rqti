@@ -18,123 +18,103 @@ knitr::opts_chunk$set(
 ```{r setup, echo=FALSE}
 library(qti)
 ```
+
 ## Introduction
-`qti` package has functionality for uploading learning content to LMS OPAL for the following use-cases:
+
+The `qti` package can upload content directly to the learning management system OPAL via the function `upload2opal`, which uses the OPAL API.
 
 1. **Uploading a Zip Archive:**
-If you already have a zip archive containing a test, you can use the `qti` package to upload it directly to LMS OPAL.
+If you already have a zip archive containing a QTI compliant test, it will be uploaded directly to OPAL.
 
-2. **Uploading from an Rmd File:**
-If you have an independent Rmd file with a task, the `qti` package can wrap it into a zip archive and deliver it to LMS OPAL.
+2. **Uploading an Rmd File:**
+If you have an Rmd exercise file, `upload2opal` wraps it into a zip archive and then uploads it to OPAL.
 
-3. **Uploading from an XML File:**
-If you have an independent XML file with a task, the `qti` package can wrap it into a zip archive and deliver it to LMS OPAL.
+3. **Uploading an XML File:**
+If you have a QTI compliant exercise file as XML, `upload2opal` wraps it into a zip archive and then uploads it to OPAL.
 
 ## Prerequisites
-To use the OPAL API, the user must have certain permissions. Your username should allow you to log in using a password. Working with the api system via shibboleth authorization is not possible.
 
-For authentication on OPAL `qti` works with two global environment variable: `API_USER` and `API_PASSWORD`. To set them, you need to call `Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')` and `Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')` or you can put these commands into .Rprofile.
+To use the OPAL API, the OPAL user must have sufficient permissions. Your username should allow you to log in using a password. Working with the API system via shibboleth authorization is not possible.
 
-```{r results="plaintext", comment=""}
-Sys.setenv(API_USER ='__your_username__')
-Sys.setenv(API_PASSWORD ='__your_password__')
+For authentication to OPAL `qti` uses two global environment variable: `API_USER` and `API_PASSWORD`. To set them, you need to call `Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')` and `Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')` or you can set these variables in .Renviron:
+
+```{bash}
+API_USER="your_username"
+API_PASSWORD="your_password"
 ```
 
-Some universities use secure connection via Virtual Private Network. Before calling `upload2opal()` install, launch and log in VPN client of your university.
-For TU Chemnitz [see here](https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client)
+Some universities only allow to use the OPAL API in the network of the university. Before calling `upload2opal()` set up a VPN client accordingly. 
+For TU Chemnitz [see the instructions here](https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client)
 
-## Uploading test/task on OPAL
-To do this just call `upload2opal()` with the file as the first parameter:
+## Uploading test/exercise to OPAL
+
+You can either set the `knit: qti::render_opal` parameter in the yaml-section of your Rmd file or just call `upload2opal()` with the file as the first parameter:
+
 ```{r results="plaintext", comment="", eval=FALSE}
-file <- "my_zip_file.zip"
+file <- "my_zip_file.zip" # or "exercise.Rmd" or "exercise.xml"
 result <- upload2opal(file)
 ```
-As a result you can expect the following outcomes:
 
-1. Opening OPAL Page:
+If this is successful you can expect the following outcomes:
 
-A web browser will automatically open, displaying the OPAL page with your uploaded test or task.
+1. A web browser will open automatically, displaying the OPAL page with your uploaded test or exercise.
 
-2. Response Status Code 200
+2. In your R console, you will receive a status code 200. This status code indicates that the request to upload the content to OPAL was successful.
 
-In your R console, you will receive a status code 200. This status code indicates that the request to upload the content to OPAL was successful.
-
-3. Result Variable:
-
-The result variable will contain a list with the following data:
+3. The result variable will contain a list with the following data:
 
 - $key: An identifier for this resource on OPAL, which you can use for reference.
 - $display_name: The title of the resource as it appears in the browser on OPAL.
 - $url: A permanent link to access this resource on OPAL.
 
+`upload2opal()` always checks the uniqueness of the `display_name` in your personal repository of resources on OPAL. If a resource with the same name is found, `qti` will overwrite it by default. This is useful for incrementally improving and previewing/testing the exercise. It avoids cluttering your OPAL repo with dozens of versions of the same exercise. If there are several resources with the same name, `upload2opal` will ask you what to do.
 
-`upload2opal()` always checks uniqueness of `display_name` in your personal repository of resources on OPAL. If any resources are found, `qti` will ask you what to do: rewrite, create a new one with the same `display_name`, or abort the uploading. By default `upload2opal()` uses file name as a `display_name`. But you can define your own as the second parameter:
-```{r results="plaintext", comment="", eval=FALSE}
-result <- upload2opal(file, "Exam WS")
+By default `upload2opal()` uses the file name as the `display_name`. But you can define your own as the second parameter:
+
+```{r eval=FALSE}
+result <- upload2opal(file, display_name = "Exam123")
 ```
-## More Control
 
-If you want to have more fine-grained control, consider all `upload2opal()` parameters:
+Currently, there is no option to delete exercises via the API. But you can display the URL of an exercise via:
 
-### file
-
-A length one character vector with path to file.
-
-### display_name
-
-Character string to entitle test/task on OPAL. Default is file name without extension.
-
-### access
-
-Integer that indicates access level:
-
-- 1 - only the persons responsible for this learning resource.
-- 2 - responsible and other authors.
-- 3 - all registered users.
-- 4 - public, default value.
-
-### overwrite
-
-Logical. If `TRUE`, it overwrites a resource in opal with the same `display_name`, in case there is only one resource with the specified `display_name.` Default is `TRUE.`
-
-### endpoint
-
-In case of not using "E-Learning-Informationsportal für Sächsische Hochschulen" you need to provide the url of your learning platform.
-
-### open_in_browser
-
-`TRUE` if you want to get your test/task opend after uploading immediately, `FALSE` for quiet uploading.
-
-### api_user
-
-If you need to try to upload under other credentials (not from the global environment).
-
-### api_password
-
-If you need to try to upload under other credentials (not from the global environment).
-
-### cached
-
-If `TRUE` (default) it keeps password in environment variable. Convenient for recurrent uploading during one session.
-
-```{r results="plaintext", comment="", eval=FALSE}
-# this is an example
-file <- "my_zip_file.zip"
-result <- upload2opal(file,
-                      display_name = "Exam WS",
-                      access = 1,
-                      overwrite = FALSE,
-                      open_in_browser = FALSE,
-                      cached = FALSE)
+```{r eval=F}
+get_resource_url(display_name = "Exam123")
 ```
+
+Or show all resources via:
+
+```{r eval=F}
+get_resources()
+```
+
+This will return a list with all resources, again nested in a list.
+ 
+If you want to have more fine-grained control for uploading, check out the documentation `?upload2opal`
+
+## Access rights
+
+Note that the access rights of the resource are set to public by default. This might appear very unusual, but for creating exercises incrementally this is the best option. If you use any other access rights, you need to login to OPAL via your browser to see the web page, which will log you out via the API. Currently, there is not better solution for this procedure. Take this into account if you upload sensitive content! For instance, exercises that will be used in an upcoming exam. You can set the access rights via
+
+```{r, eval = F}
+uplod2opal(..., access = ?)
+```
+
+- 1: only the persons responsible for this learning resource
+- 2: responsible and other authors
+- 3: all registered users
+- 4: public, default value
+
+## Endpoint
+
+We are using the OPAL instance **E-Learning-Informationsportal für Sächsische Hochschulen**, so our package sets the endpoint for `upload2opal` to *https://bildungsportal.sachsen.de/opal/*. If you use a different OPAL instance, you can either pass this to `endpoint` of `upload2opal` or just set it as an environment variable in the .Renviron file: QTI_API_ENDPOINT="yoururl".
 
 ## Error Handling
 
-**403** - Authorization failed. You may need to run a VPN client
-
-Some universities use secure connection via Virtual Private Network. To handle this install and login in VPN client of your university.
+**403** - Authorization failed. Some universities allow the use of the API only within the university network. You may need to run a VPN client to use the API. 
 For TU Chemnitz [see here](https://www.tu-chemnitz.de/urz/network/access/vpn.html.en#client)
+
+If you already run a VPN client, please check with your IT and/or OPAL provider, whether the API can be used and what configuration you need.
 
 **401** Unauthorized
 
-Your API_USER and/or API_PASSWORD are wrong or your credentials are not enough to work with API.
+Your API_USER and/or API_PASSWORD are wrong or your credentials are not sufficient to work with API.
