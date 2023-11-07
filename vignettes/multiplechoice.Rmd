@@ -35,7 +35,7 @@ Further note that the `knit` parameter is set to the custom qti knit function, w
 
 ![](images/mpc1.png)
 
-You can also use the opal (set it up before, see: [API Opal](api_opall)) render function (`knit: qti::render_opal`), which should produce the following:
+You can also use the opal (set it up before, see: [API Opal](api_opal.html)) render function (`knit: qti::render_opal`), which should produce the following:
 
 ![](images/multiplechoice-simple.jpg)
 
