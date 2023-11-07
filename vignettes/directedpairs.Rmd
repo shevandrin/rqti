@@ -41,7 +41,7 @@ Note that in the used example, a feedback section was also provided. The feedbac
 optional, but usually it is a good idea to give some explanation for students.
 
 Note that the `knit` parameter is set to the custom qti knit function,
-which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: qti::render_opal` (see [API Opal](opal_api.html)) to upload to opal directly, producing:
+which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: qti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
 
 ![](images/directedpair-simple.jpg)
 

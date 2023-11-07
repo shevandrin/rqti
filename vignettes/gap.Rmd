@@ -35,7 +35,7 @@ Clicking on the Knit-button will produce the following in the viewer pane:
 
 ![](images/gaps1.png)
 
-Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](opal_api.html)) to upload to opal directly, producing:
+Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
 
 ![](images/gap-simple.jpg)
 

@@ -67,10 +67,10 @@ types can be found in the other articles:
 - [Tables](articles/table.html)
 
 To combine different exercises into a test, read: [Sections and
-Tests](section.html)
+Tests](articles/section.html)
 
 If you are using the learning management system Opal, please check out
-[Opal API](api_opal.html)
+[Opal API](articles/api_opal.html)
 
 ## General workflow
 
@@ -89,7 +89,7 @@ The basic workflow with the `qti` package can be described as follows:
         which will render your exercise locally or the learning
         management system Opal (`knit: qti::render_opal`). Note that
         using Opal requires you to set it up first: [Opal
-        API](api_opal.html).
+        API](articles/api_opal.html).
     5.  Check if your task looks as desired. Modify until your are
         satisfied.
 2.  Create sections and tests based on your exercise files.
@@ -109,7 +109,8 @@ tests with qti</figcaption>
 </figure>
 
 The best way to learn the workflow is to create a simple exercise, such
-as “Single Choice”, as presented [in this article.](singlechoice.html)
+as “Single Choice”, as presented [in this
+article.](articles/singlechoice.html)
 
 Each exercise type is described in a separate article:
 

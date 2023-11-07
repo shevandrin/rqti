@@ -33,7 +33,7 @@ Clicking the Knit-Button will produce:
 
 ![Preview of table exercise rendered by QTIJS](images/table1.png)
 
-Alternatively, change the knit parameter to `knit: qti::render_opal` (see [API Opal](opal_api.html)) to upload to opal directly, producing:
+Alternatively, change the knit parameter to `knit: qti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
 
 ![](images/table-simple.jpg)
 

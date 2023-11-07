@@ -40,7 +40,7 @@ To see what the final result might look like in a learning management system you
 The corresponding xml file is created in the same folder as the Rmd file if you click the Knit-Button.
 <!-- or in the current directory if you execute the functions from the console. Usually, the Knit button will be sufficient for most use cases, but if you need more control the functions `rmd2qti, render_xml, render_zip` are handy. The functions give a message about the path of the created file. -->
 
-Most learning management systems can directly import a QTI-xml-file, so all you need to do is upload the generated file. Compositions of exercises are covered in the article: [sections and tests](test.html).
+Most learning management systems can directly import a QTI-xml-file, so all you need to do is upload the generated file. Compositions of exercises are covered in the article: [sections and tests](section.html).
 
 If you happen to use OPAL/ONYX, you can also upload your exercises with the knit parameter directly:
 
