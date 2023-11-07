@@ -1,5 +1,5 @@
 ---
-title: "Gaps Exercises"
+title: "Gap Exercises"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
@@ -42,7 +42,7 @@ Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](
 As you can see, there are two ways to create a gap in Rmd content:
 
 - Put the right answer inside `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`). Example: `<<3.14>>` or `<<sometext>>`
-- use the helper functions [`gap_numeric`](#gapnumeric) and [`gap_text`](#gaptext) (see details below)
+- use the helper functions `?gap_numeric` and `?gap_text` (see details below)
 
 By default, 1 point can be reached for each gap (specify `points` to your needs). The total number of points for completing a task is defined as the sum of points of all gaps.
 
