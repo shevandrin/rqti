@@ -36,11 +36,11 @@ If you have a QTI compliant exercise file as XML, `upload2opal` wraps it into a 
 
 To use the OPAL API, the OPAL user must have sufficient permissions. Your username should allow you to log in using a password. Working with the API system via shibboleth authorization is not possible.
 
-For authentication to OPAL `qti` uses two global environment variable: `API_USER` and `API_PASSWORD`. To set them, you need to call `Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')` and `Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')` or you can set these variables in .Renviron:
+For authentication to OPAL `qti` uses two global environment variable: `QTI_API_USER` and `QTI_API_PASSWORD`. To set them, you need to call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` and `Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')` or you can set these variables in .Renviron:
 
 ```{bash}
-API_USER="your_username"
-API_PASSWORD="your_password"
+QTI_API_USER="your_username"
+QTI_API_PASSWORD="your_password"
 ```
 
 Some universities only allow to use the OPAL API in the network of the university. Before calling `upload2opal()` set up a VPN client accordingly. 
@@ -117,4 +117,4 @@ If you already run a VPN client, please check with your IT and/or OPAL provider,
 
 **401** Unauthorized
 
-Your API_USER and/or API_PASSWORD are wrong or your credentials are not sufficient to work with API.
+Your QTI_API_USER and/or QTI_API_PASSWORD are wrong or your credentials are not sufficient to work with API.
