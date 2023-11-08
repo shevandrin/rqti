@@ -15,10 +15,10 @@
 #'   variable
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
-#'   OPAL-username and password. This function can get `API_USER` and
-#'   `API_PASSWORD` from environment variables. To set a global environment
-#'   variable, you need to call `Sys.setenv(API_USER ='xxxxxxxxxxxxxxx')` and
-#'   `Sys.setenv(API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
+#'   OPAL-username and password. This function can get `QTI_API_USER` and
+#'   `QTI_API_PASSWORD` from environment variables. To set a global environment
+#'   variable, you need to call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` and
+#'   `Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
 #'   into .Rprofile.
 #'
 #' @return user id
@@ -30,24 +30,22 @@
 auth_opal <- function(api_user = NULL, api_password = NULL,
                       endpoint = NULL, cached = TRUE) {
     user_id <- NULL
-    if (is.null(api_user)) api_user <- Sys.getenv("API_USER")
-    if (is.null(api_password)) api_password <- Sys.getenv("API_PASSWORD")
+    if (is.null(api_user)) api_user <- Sys.getenv("QTI_API_USER")
+    if (is.null(api_password)) api_password <- Sys.getenv("QTI_API_PASSWORD")
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
 
     if (api_user == "") {
         api_user <- readline("Enter Username on Opal: ")
-        Sys.setenv(API_USER = api_user)
+        Sys.setenv(QTI_API_USER = api_user)
     }
 
     if (api_password == "") {
         api_password <- getPass(paste0("Enter password for user ",
                                        api_user, ": "))
-        if (cached) Sys.setenv(API_PASSWORD = api_password)
+        if (cached) Sys.setenv(QTI_API_PASSWORD = api_password)
     }
 
-    url_login <- paste0("https://bildungsportal.sachsen.de/opal/restapi/auth/",
-                          api_user, "?password=", api_password)
-
+    url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
     response <- GET(url_login)
     if (response$status_code == 200) {
         parse <- content(response, as = "text", encoding = "UTF-8")
@@ -65,8 +63,8 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
         choice <- readline("Press \'y\' to change data or any key to exit: ")
         # Check the user's choice
         if (tolower(choice) == "y") {
-            Sys.unsetenv("API_USER")
-            Sys.unsetenv("API_PASSWORD")
+            Sys.unsetenv("QTI_API_USER")
+            Sys.unsetenv("QTI_API_PASSWORD")
             auth_opal()
         }
         user_id <-  NULL
@@ -100,8 +98,8 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
 #' @section Authentication: To use OPAL API, you need to provide your
 #'   OPAL-username and password. This function can get `api_user` and
 #'   `api_password` from environment variables. To set a global environment
-#'   variable, you need to call `Sys.setenv(api_user ='xxxxxxxxxxxxxxx')` and
-#'   `Sys.setenv(api_password ='xxxxxxxxxxxxxxx')`or you can put these commands
+#'   variable, you need to call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` and
+#'   `Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
 #'   into .Renviron.
 #'
 #'@return list with key and url
