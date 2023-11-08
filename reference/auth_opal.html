@@ -80,7 +80,7 @@ cookie value is required to access the OPAL API system."</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">auth_opal</span><span class="op">(</span>api_user <span class="op">=</span> <span class="cn">NULL</span>, api_password <span class="op">=</span> <span class="cn">NULL</span>, cached <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">auth_opal</span><span class="op">(</span>api_user <span class="op">=</span> <span class="cn">NULL</span>, api_password <span class="op">=</span> <span class="cn">NULL</span>, endpoint <span class="op">=</span> <span class="cn">NULL</span>, cached <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -91,6 +91,12 @@ cookie value is required to access the OPAL API system."</p>
 
 <dt>api_password</dt>
 <dd><p>password on OPAL</p></dd>
+
+
+<dt>endpoint</dt>
+<dd><p>endpoint of LMS Opal; default is set from environment variable
+<code>QTI_API_ENDPOINT</code>. To set a global environment variable, you need to call <code> </code>Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+commands into .Renviron.</p></dd>
 
 
 <dt>cached</dt>
