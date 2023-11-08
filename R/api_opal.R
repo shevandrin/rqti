@@ -7,6 +7,10 @@
 #'
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
+#' @param endpoint endpoint of LMS Opal; default is set from environment variable
+#' `QTI_API_ENDPOINT`. To set a global environment variable, you need to call `
+#'   `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+#' commands into .Renviron.
 #' @param cached boolean; if `TRUE` (default) it keeps password in environment
 #'   variable
 #'
@@ -23,10 +27,12 @@
 #' @import httr
 #' @import getPass
 #' @export
-auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
+auth_opal <- function(api_user = NULL, api_password = NULL,
+                      endpoint = NULL, cached = TRUE) {
     user_id <- NULL
     if (is.null(api_user)) api_user <- Sys.getenv("API_USER")
     if (is.null(api_password)) api_password <- Sys.getenv("API_PASSWORD")
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
 
     if (api_user == "") {
         api_user <- readline("Enter Username on Opal: ")
@@ -96,16 +102,18 @@ auth_opal <- function(api_user = NULL, api_password = NULL, cached = TRUE) {
 #'   `api_password` from environment variables. To set a global environment
 #'   variable, you need to call `Sys.setenv(api_user ='xxxxxxxxxxxxxxx')` and
 #'   `Sys.setenv(api_password ='xxxxxxxxxxxxxxx')`or you can put these commands
-#'   into .Rprofile.
+#'   into .Renviron.
 #'
 #'@return list with key and url
 #'@importFrom utils browseURL
 #'@importFrom tools file_ext
 #'@export
 upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
-                        endpoint = "https://bildungsportal.sachsen.de/opal/",
-                        open_in_browser = TRUE, api_user = NULL,
-                        api_password = NULL, cached = TRUE) {
+                        endpoint = NULL, open_in_browser = TRUE,
+                        api_user = NULL, api_password = NULL,
+                        cached = TRUE) {
+
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
 
     file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE)
 
@@ -113,7 +121,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
-        user_id <- auth_opal(api_user, api_password, cached = TRUE)
+        user_id <- auth_opal(api_user, api_password, endpoint, cached = TRUE)
         if (is.null(user_id)) return(NULL)
     }
 
@@ -153,8 +161,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
     }
 
     parse <- content(response, as = "parse", encoding = "UTF-8")
-    url_res <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
-                               "RepositoryEntry/", parse$key)
+    url_res <- paste0(endpoint, "auth/", "RepositoryEntry/", parse$key)
     if ((open_in_browser) && (!is.null(parse$key))) {
             browseURL(url_res)
         }
@@ -166,13 +173,16 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 
 #' Get list of all user's resources on LMS OPAL
 #'
-#' @param endpoint endpoint of LMS Opal; default is
-#'   "https://bildungsportal.sachsen.de/opal/"
+#' @param endpoint endpoint of LMS Opal; default is from environment variable
+#' `QTI_API_ENDPOINT`. To set a global environment variable, you need to call `
+#'   `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+#' commands into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
 #' @export
-get_resources <- function(endpoint = "https://bildungsportal.sachsen.de/opal/",
-                         api_user = NULL, api_password = NULL) {
+get_resources <- function(api_user = NULL, api_password = NULL,
+                          endpoint = NULL) {
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
         user_id <- auth_opal(api_user, api_password, cached = TRUE)
@@ -186,8 +196,9 @@ get_resources <- function(endpoint = "https://bildungsportal.sachsen.de/opal/",
 }
 
 #'@importFrom purrr keep
-get_resources_by_name <- function(display_name, endpoint, rtype = NULL) {
-    rlist <- get_resources(endpoint)
+get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    rlist <- get_resources(endpoint = endpoint)
     if (!is.null(rtype)) {
         rlist <- keep(rlist, ~ .x$resourceableTypeName == rtype)
     }
@@ -198,14 +209,18 @@ get_resources_by_name <- function(display_name, endpoint, rtype = NULL) {
 #' Create a URL using the resource's display name in LMS OPAL
 #'
 #' @param display_name character; target display_name
-#' @param endpoint endpoint of LMS Opal; default is
-#'   "https://bildungsportal.sachsen.de/opal/"
+#' @param endpoint endpoint of LMS Opal; default is from environment variable
+#' `QTI_API_ENDPOINT`. To set a global environment variable, you need to call `
+#'   `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+#' commands into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
 #' @export
-get_resource_url <- function(display_name,
-                        endpoint = "https://bildungsportal.sachsen.de/opal/",
+get_resource_url <- function(display_name, endpoint = NULL,
                         api_user = NULL, api_password = NULL) {
+
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
         user_id <- auth_opal(api_user, api_password, cached = TRUE)
@@ -220,8 +235,7 @@ get_resource_url <- function(display_name,
 
 upload_resource <- function(file, display_name, rtype, access, open_in_browser,
                             endpoint) {
-
-
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     url_upl <- paste0(endpoint, "restapi/repo/entries")
     body <- list(file = upload_file(file),
                  displayname = display_name,
@@ -232,15 +246,9 @@ upload_resource <- function(file, display_name, rtype, access, open_in_browser,
     return(response)
 }
 
-# open url with resource by id
-opent <- function(id) {
-    url_test <- paste0("https://bildungsportal.sachsen.de/opal/auth/",
-                       "RepositoryEntry/", id)
-    browseURL(url_test)
-}
-
 # update resource
-update_resource <- function(file, id, endpoint) {
+update_resource <- function(file, id, endpoint = NULL) {
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     url_upd <- paste0(endpoint, "restapi/repo/entries/", id,
                       "/update")
     body <- list(file = upload_file(file))
@@ -258,7 +266,8 @@ is_test <- function(file) {
     return(any(result))
 }
 
-is_logged <- function(endpoint) {
+is_logged <- function(endpoint = NULL) {
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     url_log <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
     response <- GET(url_log, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
                        encode = "multipart")
