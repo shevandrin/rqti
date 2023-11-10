@@ -32,7 +32,8 @@ Imports:
     methods,
     lubridate,
     magrittr,
-    httr,
+    httr2,
+    curl,
     digest,
     knitr,
     getPass

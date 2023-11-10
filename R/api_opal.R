@@ -24,7 +24,7 @@
 #' @return user id
 #' @name auth_opal
 #' @rdname auth_opal
-#' @import httr
+#' @importFrom httr2 request req_error req_perform resp_body_xml req_headers resp_body_json req_method req_body_multipart
 #' @import getPass
 #' @export
 auth_opal <- function(api_user = NULL, api_password = NULL,
@@ -46,12 +46,13 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
     }
 
     url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
-    response <- GET(url_login)
+    req <- request(url_login)
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     if (response$status_code == 200) {
-        parse <- content(response, as = "text", encoding = "UTF-8")
-        user_id <- xml2::xml_attr(read_xml(parse), "identityKey")
-        cookie_value <- response$cookies$value
-        Sys.setenv("COOKIE" = cookie_value)
+        parse <- resp_body_xml(response)
+        user_id <- xml2::xml_attr(parse, "identityKey")
+        token <- response$headers$`X-OLAT-TOKEN`
+        Sys.setenv("X-OLAT-TOKEN"=token)
         }
     if (response$status_code == 403) {
         message("Authentification failed. You may need to run a VPN client")
@@ -102,9 +103,10 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
 #'   `Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
 #'   into .Renviron.
 #'
-#'@return list with key and url
-#'@importFrom utils browseURL
-#'@importFrom tools file_ext
+#' @return list with key and url
+#' @importFrom utils browseURL
+#' @importFrom tools file_ext
+#' @importFrom curl form_file
 #'@export
 upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,
@@ -132,8 +134,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
     if (length(rlist) > 0 && overwrite) {
 
         if (length(rlist) == 1) {
-            response <- update_resource(file, rlist[[1]]$key,
-                                            endpoint)
+            resp <- update_resource(file, rlist[[1]]$key, endpoint)
         } else {
             message("Found files with the same display name: ",
                 length(rlist))
@@ -148,24 +149,25 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
             if (key %in% c(length(menu_options), 0)) return(NULL)
                 # update the resource
             if (key %in% seq(length(menu_options) - 2)) {
-                response <- update_resource(file, menu_options[key], endpoint)
+                resp <- update_resource(file, menu_options[key], endpoint)
                 }
         }
     }
         # create new resource
-    if (!exists("response")) {
-        response <- upload_resource(file, display_name, rtype, access,
-                                        open_in_browser, endpoint)
+    if (!exists("resp")) {
+        resp <- upload_resource(file, display_name, rtype, access, endpoint)
     }
+    parse <- resp_body_xml(resp)
+    key <- xml_find_first(parse, "key") %>% xml_text()
+    displayname <- xml_find_first(parse, "displayname") %>% xml_text()
 
-    parse <- content(response, as = "parse", encoding = "UTF-8")
-    url_res <- paste0(endpoint, "auth/", "RepositoryEntry/", parse$key)
-    if ((open_in_browser) && (!is.null(parse$key))) {
+    url_res <- paste0(endpoint, "auth/", "RepositoryEntry/", key)
+    if ((open_in_browser) && (!is.null(key))) {
             browseURL(url_res)
         }
-    res <- list(key = parse$key, display_name = parse$displayname,
+    res <- list(key = key, display_name = displayname,
                     url = url_res)
-    print(response$status_code)
+    print(resp$status_code)
     return(res)
 }
 
@@ -187,9 +189,10 @@ get_resources <- function(api_user = NULL, api_password = NULL,
         if (is.null(user_id)) return(NULL)
     }
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
-    resp_search <- GET(url_res, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
-                       encode = "multipart")
-    rlist <- content(resp_search, as = "parse", encoding = "UTF-8")
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    rlist <- resp_body_json(response)
     return(rlist)
 }
 
@@ -231,27 +234,28 @@ get_resource_url <- function(display_name, endpoint = NULL,
     return(url)
 }
 
-upload_resource <- function(file, display_name, rtype, access, open_in_browser,
-                            endpoint) {
+upload_resource <- function(file, display_name, rtype, access,
+                            endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     url_upl <- paste0(endpoint, "restapi/repo/entries")
-    body <- list(file = upload_file(file),
+    req <- request(url_upl) %>% req_method("PUT") %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_body_multipart(file = curl::form_file(file),
                  displayname = display_name,
-                 access = access,
+                 access = as.character(access),
                  repoType = rtype)
-    response <- PUT(url_upl, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
-                    body = body, encode = "multipart")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     return(response)
 }
 
 # update resource
 update_resource <- function(file, id, endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
-    url_upd <- paste0(endpoint, "restapi/repo/entries/", id,
-                      "/update")
-    body <- list(file = upload_file(file))
-    response <- PUT(url_upd, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
-                    body = body, encode = "multipart")
+    url_upd <- paste0(endpoint, "restapi/repo/entries/", id, "/update")
+    req <- request(url_upd) %>% req_method("PUT") %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_body_multipart(file = curl::form_file(file))
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     return(response)
 }
 
@@ -267,8 +271,9 @@ is_test <- function(file) {
 is_logged <- function(endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     url_log <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
-    response <- GET(url_log, set_cookies(JSESSIONID = Sys.getenv("COOKIE")),
-                       encode = "multipart")
+    req <- request(url_log) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     res <- ifelse(response$status_code == 200, TRUE, FALSE)
     return(res)
 }

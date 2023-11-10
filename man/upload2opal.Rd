@@ -55,8 +55,8 @@ authentication procedure has to be performed. See \link{auth_opal}
  To use OPAL API, you need to provide your
 OPAL-username and password. This function can get \code{api_user} and
 \code{api_password} from environment variables. To set a global environment
-variable, you need to call \code{Sys.setenv(api_user ='xxxxxxxxxxxxxxx')} and
-\code{Sys.setenv(api_password ='xxxxxxxxxxxxxxx')}or you can put these commands
+variable, you need to call \code{Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')} and
+\code{Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')}or you can put these commands
 into .Renviron.
 }
 
