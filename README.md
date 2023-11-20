@@ -17,111 +17,39 @@ Note: this is work in progress, a stable release can be expected in Q4
 2023.
 
 The goal of `qti` is to provide a clean and independent R library for
-creating exercises and exams according to the
-[QTI](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html)
+creating exercises and exams according to the [QTI
+v2.1](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html)
 standard directly from R. You can render the exercises locally (qtijs)
-or to the learning management system Opal.
+or to the learning management system OPAL. Our target audience is
+instructors who teach research methods and statistics and want to take
+full advantage of the power of R, while conforming with the QTI
+standard. Instructors who use OPAL will benefit most because OPAL offers
+a good API and our package takes advantage of that.
 
-## Installation
+## Documentation
 
-The `qti` package is still in development. The only way to install it at
-the moment is from GitHub:
+The documentation (including installation instructions, quick start,
+example usage, functionality documentation) is available at
+<https://shevandrin.github.io/qti/>
 
-``` r
-#install.pacakges("librarian") # install librarian if you do not have it yet
-librarian::shelf(shevandrin/qti)
-```
+## Testing
 
-<!-- `qti` have not published yet on CRAN. After publishing it will be possible to install package as follows: -->
-<!-- ```{r eval=FALSE} -->
-<!-- install.packages("qti") -->
-<!-- ``` -->
+We aim for a high test coverage with automated tests (see folder tests).
 
-Note that this will start a qtijs server, which will be used for
-previewing exercises. If you do not need this, turn it off with the
-environment variable: QTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or
-in .Renviron).
+## Support and bug reports
 
-## Quick start
+Feel free to [let us know via e-mail](mailto://shevandrin@gmail.com)
+which features your are missing or directly [open an issue on
+GitHub](https://github.com/shevandrin/qti/issues). Support will be
+available until the funding of the project ends (September 2024). After
+that we will maintain a stable, usable version, whereas support/new
+features will be provided as time allows.
 
-Using RStudio, create a new Rmarkdown file, select **from Template** and
-choose one of the templates starting with **QTI: …**. The *simple* ones
-include the minimum, the *complex* ones have more parameters. Click the
-Knit-Button and you should see a rendered exercise in the Viewer pane.
-The templates are self-explanatory, but more details about the exercise
-types can be found in the other articles:
+## Contribute
 
-- [Single choice](articles/singlechoice.html)
-- [Multiple choice](articles/multiplechoice.html)
-- [Essay](articles/essay.html)
-- [Gap](articles/gap.html)
-- [Dropdown](articles/dropdown.html)
-- [Order](articles/order.html)
-- [Directed pairs](articles/directedpairs.html)
-- [Tables](articles/table.html)
-
-To combine different exercises into a test, read: [Sections and
-Tests](articles/section.html)
-
-If you are using the learning management system Opal, please check out
-[Opal API](articles/api_opal.html)
-
-## General workflow
-
-The basic workflow with the `qti` package can be described as follows:
-
-1.  Create exercise files.
-    1.  Create an Rmd document. You can start from scratch (specify
-        `type` in the yaml section) or use Rmd templates starting with
-        the prefix `QTI`.
-    2.  Write a section titled `# question` and create your interactions
-        (gaps, choices, etc.). Use qti helper functions where needed.
-    3.  Set additional attributes in the yaml section. All types are
-        explained in detail in the **Articles** menu on this website
-        (top).
-    4.  Choose a previewer: Either qtijs (`knit: qti::render_qtijs`),
-        which will render your exercise locally or the learning
-        management system Opal (`knit: qti::render_opal`). Note that
-        using Opal requires you to set it up first: [Opal
-        API](articles/api_opal.html).
-    5.  Check if your task looks as desired. Modify until your are
-        satisfied.
-2.  Create sections and tests based on your exercise files.
-3.  Write test (xml) to disk according to QTI standard and upload test
-    file to your learning management system.
-4.  Download results data from your learning management system and read
-    it in with the qti package for statistical analysis.
-
-Each step includes certain `qti` functions, the most useful of them are
-shown in the following diagram:
-
-<figure>
-<img src="vignettes/workflow1.png" style="width:60.0%"
-alt="Basic workflow to create exercises and tests with qti" />
-<figcaption aria-hidden="true">Basic workflow to create exercises and
-tests with qti</figcaption>
-</figure>
-
-The best way to learn the workflow is to create a simple exercise, such
-as “Single Choice”, as presented [in this
-article.](articles/singlechoice.html)
-
-Each exercise type is described in a separate article:
-
-- [Single choice](articles/singlechoice.html)
-- [Multiple choice](articles/multiplechoice.html)
-- [Essay](articles/essay.html)
-- [Gap](articles/gap.html)
-- [Dropdown](articles/dropdown.html)
-- [Order](articles/order.html)
-- [Directed pairs](articles/directedpairs.html)
-- [Tables](articles/table.html)
-
-## Feedback and bug reports
-
-Feel free to [let us know](mailto://shevandrin@gmail.com) which features
-your are missing or directly [open an issue on
-GitHub.](https://github.com/shevandrin/qti/issues)
+If you would like to contribute to this package, clone the repo, add
+your feature and make a pull request. Please conform with the tidyverse
+style and the general package guidelines at <https://r-pkgs.org>.
 
 <!-- Why do we need another package for creating exams when there is already the `exams`-package? The philosophy of `exams` is **one for all**, whereas `qti` follows the Unix-philosophy: **do one thing and do it well**. tldr: -->
 <!-- - `qti` has more (QTI) features (e.g. exercise type) than `exams` -->
