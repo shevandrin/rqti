@@ -6,7 +6,7 @@
 \usage{
 get_resource_url(
   display_name,
-  endpoint = "https://bildungsportal.sachsen.de/opal/",
+  endpoint = NULL,
   api_user = NULL,
   api_password = NULL
 )
@@ -14,8 +14,9 @@ get_resource_url(
 \arguments{
 \item{display_name}{character; target display_name}
 
-\item{endpoint}{endpoint of LMS Opal; default is
-"https://bildungsportal.sachsen.de/opal/"}
+\item{endpoint}{endpoint of LMS Opal; default is from environment variable
+\code{QTI_API_ENDPOINT}. To set a global environment variable, you need to call \verb{ }Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+commands into .Renviron.}
 
 \item{api_user}{username on OPAL}
 
