@@ -67,9 +67,13 @@ section <- function(files, n_variants = 1, seed_number = NULL, id = NULL,
     }
 
     if (is.null(id)) {
-        id <- ifelse(length(files) == 1,
-                  paste0(tools::file_path_sans_ext(basename(files)), "_section"),
-                  paste0("variable_section_", sample.int(100, 1)))
+        if (length(files) == 1) {
+            id <- ifelse (typeof(files) == "character",
+                paste0(tools::file_path_sans_ext(basename(files)), "_section"),
+                files@identifier)
+        } else {
+            id <- paste0("variable_section_", sample.int(100, 1))
+        }
     }
     section <- new("AssessmentSection", identifier = id, selection = selection,
                    assessment_item = sub_items, title = title,
@@ -79,22 +83,27 @@ section <- function(files, n_variants = 1, seed_number = NULL, id = NULL,
     return(section)
 }
 
-make_variant <- function(file, seed_number) {
+make_variant <- function(object, seed_number) {
     set.seed(seed_number)
-    object <- create_question_object(file)
+    if (typeof(object) == "character") object <- create_question_object(object)
     id <- paste0(object@identifier, "_S", seed_number)
     object@identifier <- id
     object@title <- paste0(object@title, "_S", seed_number)
     return(object)
 }
 
-make_exam_subsection <- function(file, seed_number) {
-    id <- ifelse(length(file) == 1,
-                 paste0(tools::file_path_sans_ext(basename(file)), "_S",
-                        seed_number),
-                 paste0("exam_S", seed_number))
+make_exam_subsection <- function(object, seed_number) {
+    if (length(object) == 1) {
+        id <- ifelse(typeof(object) == "character",
+                     tools::file_path_sans_ext(basename(object)),
+                     object@identifier)
+        id <- paste0(id, "_S", seed_number)
+        object <- list(object)
+    } else {
+        id <- paste0("exam_S", seed_number)
+    }
 
-    asmt_items <- mapply(make_variant, file, rep(seed_number, length(file)),
+    asmt_items <- mapply(make_variant, object, rep(seed_number, length(object)),
                            USE.NAMES = FALSE)
     exam_subsection <- new("AssessmentSection", identifier = id,
                            assessment_item = asmt_items)
