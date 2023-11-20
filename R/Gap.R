@@ -39,11 +39,6 @@ setGeneric("getResponse", function(object) {
     standardGeneric("getResponse")
 })
 
-#' @rdname getResponse-methods
-#' @aliases getResponse,character
-setMethod("getResponse", "character", function(object) {
-})
-
 #' @rdname createText-methods
 #' @aliases createText,Gap
 setMethod("createText", "Gap", function(object) {

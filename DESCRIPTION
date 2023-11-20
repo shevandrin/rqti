@@ -74,6 +74,7 @@ Collate:
     'TextGapOpal.R'
     'WrongFeedback.R'
     'api_opal.R'
+    'character.R'
     'extract_results.R'
     'helpers.R'
     'knit_functions.R'

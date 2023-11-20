@@ -124,50 +124,6 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
                                                           ".xml")))
           })
 
-#' @rdname buildAssessmentSection-methods
-#' @aliases buildAssessementSection,character
-setMethod("buildAssessmentSection", signature(object = "character"),
-          function(object, folder) {
-
-              # if (is.null(folder) | (dirname(object) != ".")) {
-              #     f_path <- file.path(object)
-              # } else {
-              #     f_path <- file.path(folder, object)
-              # }
-
-              f_path <- file.path(object)
-
-              if (file.exists(f_path)) {
-                  doc <- xml2::read_xml(f_path)
-                  valid <- verify_qti(doc)
-                  if (!valid) warning("xml file \'", object, "\' is not valid")
-                  id <- xml2::xml_attr(doc, "identifier")
-
-                  file.copy(f_path, folder)
-                  message(paste("see assessment item:", file.path(folder, basename(f_path))))
-                  tag("assessmentItemRef", list(identifier = id,
-                                                href = basename(object)))
-              }
-              else {
-                  warning("File or path \'", object, "\' is not correct. This ",
-                  "file will be omitted in test", call. = FALSE,
-                  immediate. = TRUE)
-                  return(NULL)
-              }
-          })
-
-#' @rdname getAssessmentItems-methods
-#' @aliases getAssessmentItems,character
-setMethod("getAssessmentItems", signature(object = "character"),
-          function(object) {
-              if (file.exists(object)) {
-                  href <- basename(object)
-                  doc <- xml2::read_xml(object)
-                  names(href) <- xml2::xml_attr(doc, "identifier")
-                  return(href)
-              }
-          })
-
 #' @rdname getPoints-methods
 #' @aliases getPoints,AssessmentSection
 setMethod("getPoints", signature(object = "AssessmentSection"),
