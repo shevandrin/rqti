@@ -60,9 +60,15 @@ assessment section correctly", {
               # Call the function under test
               sut <- section(content, n_variants = num_variants,
                              seed_number = seed_number)
+              # Get sc object from outcome section
+              sut2 <- sut@assessment_item[[1]]@assessment_item[[3]]
+              # Call only with object
+              sut3 <- section(sc, n_variants = num_variants)
 
               expect_true(inherits(sut, "AssessmentSection"))
               expect_equal(length(sut@assessment_item), num_variants)
               expect_equal(sut@selection, 1)
+              expect_true(is(sut2, "SingleChoice"))
+              expect_equal(length(sut3@assessment_item), 3)
           })
 
