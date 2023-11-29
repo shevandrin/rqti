@@ -8,8 +8,8 @@
 <meta name="description" content="qti">
 <title>Working with API OPAL from qti • qti</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Working with API OPAL from qti">
 <meta property="og:description" content="qti">
@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Working with API OPAL from qti</h1>
             
-            <h4 data-toc-skip class="date">2023-11-20</h4>
+            <h4 data-toc-skip class="date">2023-11-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/vignettes/api_opal.Rmd" class="external-link"><code>vignettes/api_opal.Rmd</code></a></small>
       <div class="d-none name"><code>api_opal.Rmd</code></div>
@@ -99,27 +99,35 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <code>qti</code> package can upload content directly to the
-learning management system OPAL via the function
-<code>upload2opal</code>, which uses the OPAL API.</p>
+<p>The <code>qti</code> package facilitates seamless content uploads to
+the OPAL learning management system through its <code>upload2opal</code>
+function, leveraging the OPAL API.</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Uploading a Zip Archive:</strong> If you already have a
-zip archive containing a QTI compliant test, it will be uploaded
-directly to OPAL.</p></li>
-<li><p><strong>Uploading an Rmd File:</strong> If you have an Rmd
-exercise file, <code>upload2opal</code> wraps it into a zip archive and
-then uploads it to OPAL.</p></li>
-<li><p><strong>Uploading an XML File:</strong> If you have a QTI
-compliant exercise file as XML, <code>upload2opal</code> wraps it into a
-zip archive and then uploads it to OPAL.</p></li>
+<li><p><strong>Upload from a Zip Archive:</strong> If you possess a
+pre-existing zip archive containing a QTI-compliant test, it can be
+effortlessly uploaded to OPAL.</p></li>
+<li><p><strong>Upload from an Rmd File:</strong> For Rmd exercise files,
+the <code>upload2opal</code> function wraps them into a zip archive
+before initiating the upload process to OPAL.</p></li>
+<li><p><strong>Upload from an XML File:</strong> Should you have a
+QTI-compliant exercise file in XML format, the <code>upload2opal</code>
+function wraps it into a zip archive prior to uploading it to
+OPAL.</p></li>
 </ol>
 </div>
 <div class="section level2">
 <h2 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
 </h2>
-<p>To use the OPAL API, the OPAL user must have sufficient permissions.
-Your username should allow you to log in using a password. Working with
-the API system via shibboleth authorization is not possible.</p>
+<p>To leverage the functionality of the OPAL API, it is essential for
+OPAL users to possess the requisite permissions. Access to the system
+necessitates logging in with a username and password. Please note that
+utilizing the API through Shibboleth authorization is not supported.</p>
+<p>If you currently lack a password-based login, kindly submit a request
+for one through your IT department. For users affiliated with <strong>TU
+Chemnitz</strong>, you can expedite this process by sending an email to
+<a href="mailto:e-learning@tu-chemnitz.de" class="email">e-learning@tu-chemnitz.de</a>. In your email, explicitly
+state your need for a password-based login to facilitate API usage, and
+include your username for reference.</p>
 <p>For authentication to OPAL <code>qti</code> uses two global
 environment variable: <code>QTI_API_USER</code> and
 <code>QTI_API_PASSWORD</code>. To set them, you need to call
