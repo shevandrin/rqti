@@ -21,20 +21,22 @@ library(qti)
 
 ## Introduction
 
-The `qti` package can upload content directly to the learning management system OPAL via the function `upload2opal`, which uses the OPAL API.
+The `qti` package facilitates seamless content uploads to the OPAL learning management system through its `upload2opal` function, leveraging the OPAL API.
 
-1. **Uploading a Zip Archive:**
-If you already have a zip archive containing a QTI compliant test, it will be uploaded directly to OPAL.
+1. **Upload from a Zip Archive:**
+   If you possess a pre-existing zip archive containing a QTI-compliant test, it can be effortlessly uploaded to OPAL.
 
-2. **Uploading an Rmd File:**
-If you have an Rmd exercise file, `upload2opal` wraps it into a zip archive and then uploads it to OPAL.
+2. **Upload from an Rmd File:**
+   For Rmd exercise files, the `upload2opal` function wraps them into a zip archive before initiating the upload process to OPAL.
 
-3. **Uploading an XML File:**
-If you have a QTI compliant exercise file as XML, `upload2opal` wraps it into a zip archive and then uploads it to OPAL.
-
+3. **Upload from an XML File:**
+   Should you have a QTI-compliant exercise file in XML format, the `upload2opal` function wraps it into a zip archive prior to uploading it to OPAL.
+   
 ## Prerequisites
 
-To use the OPAL API, the OPAL user must have sufficient permissions. Your username should allow you to log in using a password. Working with the API system via shibboleth authorization is not possible.
+To leverage the functionality of the OPAL API, it is essential for OPAL users to possess the requisite permissions. Access to the system necessitates logging in with a username and password. Please note that utilizing the API through Shibboleth authorization is not supported.
+
+If you currently lack a password-based login, kindly submit a request for one through your IT department. For users affiliated with **TU Chemnitz**, you can expedite this process by sending an email to e-learning@tu-chemnitz.de. In your email, explicitly state your need for a password-based login to facilitate API usage, and include your username for reference.
 
 For authentication to OPAL `qti` uses two global environment variable: `QTI_API_USER` and `QTI_API_PASSWORD`. To set them, you need to call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` and `Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')` or you can set these variables in .Renviron:
 
