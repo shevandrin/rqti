@@ -102,13 +102,6 @@ setGeneric("createText", function(object) {
     standardGeneric("createText")
 })
 
-#' @rdname createText-methods
-#' @aliases createText,character
-#' @importFrom htmltools HTML
-setMethod("createText", "character", function(object) {
-    HTML(object)
-})
-
 create_item_body_text_entry <- function(object) {
     create_item_body_entry(object)
 }

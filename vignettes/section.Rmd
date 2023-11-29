@@ -37,7 +37,7 @@ We designed a simple wrapper for sections. Here we load some files from our pack
 ```{r section1, eval=T}
 path <- fs::path_package("exercises", package = "qti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
-root_section <- section(files = files, n_variants = 10)
+root_section <- section(content = files, n_variants = 10)
 ```
 
 Now we can make a test out of this and upload it to Opal. Again there are helpers for that: `test` and `test4opal`. `test` is more general and is always consistent with the QTI model, whereas `test4opal` can use additional Opal-specific parameters that are not necessarily consistent with QTI.
@@ -56,7 +56,7 @@ We now have 10 variants of the test, two of which look like this:
 
 After the root section you can see the section exam_8833 (image 1) and exam_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/42069852163.
 
-To summarize so far: You can just pass your exercise files to the `files` parameter in `section` and define how many variants you would like to create of each file.
+To summarize so far: You can just pass your exercise files to the `content` parameter in `section` and define how many variants you would like to create of each file.
 
 Of course, creating several variants only makes sense for random exercises. Single choice and multiple choice exercises could be part of different sections:
 
@@ -114,5 +114,5 @@ On the right-hand side for each exercise file a subsection was created, containi
 1. For "by files" (right scheme) use `by_files = TRUE`
 
 ```{r illustr, eval=FALSE}
-root_section = section(files = files, n_variants = 3, by_files = TRUE)
+root_section = section(content = files, n_variants = 3, by_files = TRUE)
 ```

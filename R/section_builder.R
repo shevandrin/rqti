@@ -1,6 +1,6 @@
 #' Create a section as a part of test content
 #'
-#' @param files string; vector of Rmd, md, or xml files
+#' @param content string; vector of Rmd, md, xml files or task objects
 #' @param n_variants integer; number of variants to create from Rmd files
 #' @param seed_number integer vector, optional; seed numbers to reproduce the
 #'   result of calculations
@@ -22,7 +22,7 @@
 #'   comments in each question of the section; `TRUE` by default
 #' @return object of [AssessmentSection]-class
 #' @export
-section <- function(files, n_variants = 1, seed_number = NULL, id = NULL,
+section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
                     nested = TRUE, selection = 0, title = character(0),
                     time_limits = NA_integer_, visible = TRUE,
                     shuffle = FALSE, max_attempts = NA_integer_,
@@ -44,8 +44,8 @@ section <- function(files, n_variants = 1, seed_number = NULL, id = NULL,
     if (is.null(seed_number)) seed_number <- sample.int(10000, n_variants)
 
     if (n_variants <= 1) {
-        rmd_files <- files[grep("\\.Rmd$|\\.md$", files)]
-        xml_files <- files[grep("\\.xml$", files)]
+        rmd_files <- content[grep("\\.Rmd$|\\.md$", content)]
+        xml_files <- content[grep("\\.xml$", content)]
         rmd_items <- Map(create_question_object, rmd_files)
         names(rmd_items) <- NULL
         sub_items <- append(rmd_items, xml_files)
@@ -57,19 +57,23 @@ section <- function(files, n_variants = 1, seed_number = NULL, id = NULL,
 
         if (nested) {
             selection <- 1
-            files_ <- replicate(n_variants, files, simplify = FALSE)
+            files_ <- replicate(n_variants, content, simplify = FALSE)
             sub_items <- mapply(make_exam_subsection, files_, seed_number)
         } else {
             selection <- NA_integer_
-            sub_items <- lapply(files, FUN=make_variant_subsection,
+            sub_items <- lapply(content, FUN=make_variant_subsection,
                                 n_variants, seed_number)
         }
     }
 
     if (is.null(id)) {
-        id <- ifelse(length(files) == 1,
-                  paste0(tools::file_path_sans_ext(basename(files)), "_section"),
-                  paste0("variable_section_", sample.int(100, 1)))
+        if (length(content) == 1) {
+            id <- ifelse (typeof(content) == "character",
+                paste0(tools::file_path_sans_ext(basename(content)), "_section"),
+                content@identifier)
+        } else {
+            id <- paste0("variable_section_", sample.int(100, 1))
+        }
     }
     section <- new("AssessmentSection", identifier = id, selection = selection,
                    assessment_item = sub_items, title = title,
@@ -79,22 +83,27 @@ section <- function(files, n_variants = 1, seed_number = NULL, id = NULL,
     return(section)
 }
 
-make_variant <- function(file, seed_number) {
+make_variant <- function(object, seed_number) {
     set.seed(seed_number)
-    object <- create_question_object(file)
+    if (typeof(object) == "character") object <- create_question_object(object)
     id <- paste0(object@identifier, "_S", seed_number)
     object@identifier <- id
     object@title <- paste0(object@title, "_S", seed_number)
     return(object)
 }
 
-make_exam_subsection <- function(file, seed_number) {
-    id <- ifelse(length(file) == 1,
-                 paste0(tools::file_path_sans_ext(basename(file)), "_S",
-                        seed_number),
-                 paste0("exam_S", seed_number))
+make_exam_subsection <- function(object, seed_number) {
+    if (length(object) == 1) {
+        id <- ifelse(typeof(object) == "character",
+                     tools::file_path_sans_ext(basename(object)),
+                     object@identifier)
+        id <- paste0(id, "_S", seed_number)
+        object <- list(object)
+    } else {
+        id <- paste0("exam_S", seed_number)
+    }
 
-    asmt_items <- mapply(make_variant, file, rep(seed_number, length(file)),
+    asmt_items <- mapply(make_variant, object, rep(seed_number, length(object)),
                            USE.NAMES = FALSE)
     exam_subsection <- new("AssessmentSection", identifier = id,
                            assessment_item = asmt_items)
