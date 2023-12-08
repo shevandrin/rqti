@@ -76,7 +76,7 @@
 <span>  n_variants <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  seed_number <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  id <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  nested <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  by <span class="op">=</span> <span class="st">"variants"</span>,</span>
 <span>  selection <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
 <span>  time_limits <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
@@ -106,8 +106,9 @@ result of calculations</p></dd>
 <dd><p>string, optional; identifier of the assessment section</p></dd>
 
 
-<dt>nested</dt>
-<dd><p>boolean; the type of the test structure; <code>TRUE</code> by default</p></dd>
+<dt>by</dt>
+<dd><p>"variants" or "files"; the type of the test structure; "variants"
+by default</p></dd>
 
 
 <dt>selection</dt>
