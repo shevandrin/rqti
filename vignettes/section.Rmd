@@ -110,9 +110,9 @@ On the left-hand side four different subsections with the same exercise files (b
 On the right-hand side for each exercise file a subsection was created, containing the different variants of the exercise. Each participant goes through each section, but will only be assigned a single variant from the section. The obvious difference to the first approach is that there are many paths through such a test. Indeed, with 3 variants and 4 files, there are $3^4 = 81$ paths. This is not particularly useful for psychometric analysis and could lead to other problems. For instance, if you did not carefully construct your exercises, they might differ substantially in difficulty between different variants. With 81 possible paths, there might be some that are particularly difficult and others that are fairly easy. You will have no way to know, which is which because each path will only have few participants. The advantage of this setup is that cheating becomes more difficult because the paths of two students will likely differ. Still, we advise to only use this approach if you know what you are doing, especially for exams.
 
 
-1. For "by variant" (left scheme on the picture) use `by_variants = TRUE`
-1. For "by files" (right scheme) use `by_files = TRUE`
+1. For "by variant" (left scheme on the picture) use `by = \"variants\"`
+1. For "by files" (right scheme) use `by = \"files\"`
 
 ```{r illustr, eval=FALSE}
-root_section = section(content = files, n_variants = 3, by_files = TRUE)
+root_section = section(content = files, n_variants = 3, by = "files")
 ```

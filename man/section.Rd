@@ -9,7 +9,7 @@ section(
   n_variants = 1,
   seed_number = NULL,
   id = NULL,
-  nested = TRUE,
+  by = "variants",
   selection = 0,
   title = character(0),
   time_limits = NA_integer_,
@@ -29,7 +29,8 @@ result of calculations}
 
 \item{id}{string, optional; identifier of the assessment section}
 
-\item{nested}{boolean; the type of the test structure; \code{TRUE} by default}
+\item{by}{"variants" or "files"; the type of the test structure; "variants"
+by default}
 
 \item{selection}{numeric, optional; defines how many children of the section
 are delivered in test}

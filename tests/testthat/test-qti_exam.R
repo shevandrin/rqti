@@ -1,5 +1,5 @@
 test_that("Testing of counting points in the test if all tasks
-          have the differ points, NESTED = TRUE", {
+          have the differ points, by = variants", {
               file1 <- test_path("file/rmd/test_order.Rmd")
               # points = 1
               file2 <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
@@ -11,13 +11,13 @@ test_that("Testing of counting points in the test if all tasks
 
               num_variants <- 3
               seed_number <- c(1,2,3)
-              nested <- TRUE
+              by <- "variants"
 
               # Call the function under test
               sut_section <- section(file,
                                      n_variants = num_variants,
                                      seed_number = seed_number,
-                                     nested = nested)
+                                     by = by)
 
               test <- test(sut_section, "test1")
               expect_equal(test@points, 6.5)

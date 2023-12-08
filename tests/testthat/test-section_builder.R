@@ -103,12 +103,12 @@ test_that("Testing function section() in the case  the items
     expect_equal(error_message, expected_error)
 })
 
-test_that("Testing function section() to build variable AssessmentSection for nested = False ", {
+test_that("Testing function section() to build variable AssessmentSection for by = \'files\' ", {
     path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
     path3 <- test_path("file/md/test_sc_example1.md")
     num_variants = 3
     file <- c(path1, path3)
-    sut <- section(file, num_variants, id = "variable_section", nested = FALSE)
+    sut <- section(file, num_variants, id = "variable_section", by = "files")
 
     # to clean invisible symbols
     sut@assessment_item[[1]]@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@assessment_item[[1]]@choices)

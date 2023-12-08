@@ -5,7 +5,8 @@
 #' @param seed_number integer vector, optional; seed numbers to reproduce the
 #'   result of calculations
 #' @param id string, optional; identifier of the assessment section
-#' @param nested boolean; the type of the test structure; `TRUE` by default
+#' @param by "variants" or "files"; the type of the test structure; "variants"
+#'   by default
 #' @param selection numeric, optional; defines how many children of the section
 #'   are delivered in test
 #' @param title string, optional; title of the section
@@ -23,10 +24,15 @@
 #' @return object of [AssessmentSection]-class
 #' @export
 section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
-                    nested = TRUE, selection = 0, title = character(0),
+                    by = "variants", selection = 0, title = character(0),
                     time_limits = NA_integer_, visible = TRUE,
                     shuffle = FALSE, max_attempts = NA_integer_,
                     allow_comment = TRUE) {
+    if (by %in% c("variants", "files")) {
+        nested <- ifelse(by == "variants", TRUE, FALSE)
+    } else {
+        stop("Error: Invalid value for parameter \'by\'. The \'by\' parameter must be set to either \"variants\" or \"files\".")
+    }
     # check conflicts between seed_number and n_variants
     if (n_variants > length(seed_number) & !is.null(seed_number)) {
         stop("The items in seed_number must be equal to number of variants")
