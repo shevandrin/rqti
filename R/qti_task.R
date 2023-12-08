@@ -298,13 +298,11 @@ create_task_zip <- function(object, path = ".", verification = FALSE,
     dir.create(tdir)
 
     task_path <- create_qti_task(object, tdir)
-    print(task_path)
 
     manifest <- create_manifest_task(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
     manifest_path <- paste0(tdir, "/imsmanifest.xml")
     xml2::write_xml(doc_manifest, manifest_path)
-    print(manifest_path)
 
     path <- zip_wrapper(file_name, tdir, path, NULL, zip_only)
     return(path)
