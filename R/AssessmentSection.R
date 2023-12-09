@@ -153,3 +153,10 @@ setMethod("getIdentifier", signature(object = "AssessmentSection"),
           function(object) {
               return(object@identifier)
           })
+
+#' @rdname getObject-methods
+#' @aliases getObject,AssessmentSection
+setMethod("getObject", signature(object = "AssessmentSection"),
+          function(object) {
+              return(object)
+          })

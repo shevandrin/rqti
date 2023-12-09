@@ -111,4 +111,16 @@ setMethod("createQtiTest", signature(object = "character"),
               return(file)
           })
 
-
+#' @rdname getObject-methods
+#' @aliases getObject,character
+setMethod("getObject", signature(object = "character"),
+          function(object) {
+              ext <- file_ext(object)
+              if (file.exists(object) & (ext %in% c("xml", "Rmd", "md"))) {
+                  if (ext %in% c("Rmd", "md")) {
+                      object <- create_question_object(object)
+                  }
+                  return(object)
+              }
+              return(NULL)
+          })

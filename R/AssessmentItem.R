@@ -164,6 +164,20 @@ setGeneric("getIdentifier", function(object) {
     standardGeneric("getIdentifier")
 })
 
+#' Get object
+#'
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
+#' @name getObject-methods
+#' @rdname getObject-methods
+#' @aliases getObject
+#' @docType methods
+setGeneric("getObject", function(object) {
+    standardGeneric("getObject")
+})
+
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
 setMethod("createQtiTask", signature(object = "AssessmentItem"),
@@ -221,4 +235,11 @@ setMethod("getPoints", signature(object = "AssessmentItem"),
 setMethod("getIdentifier", signature(object = "AssessmentItem"),
           function(object) {
               return(object@identifier)
+          })
+
+#' @rdname getObject-methods
+#' @aliases getObject,AssessmentItem
+setMethod("getObject", signature(object = "AssessmentItem"),
+          function(object) {
+              return(object)
           })

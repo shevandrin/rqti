@@ -50,11 +50,8 @@ section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
     if (is.null(seed_number)) seed_number <- sample.int(10000, n_variants)
 
     if (n_variants <= 1) {
-        rmd_files <- content[grep("\\.Rmd$|\\.md$", content)]
-        xml_files <- content[grep("\\.xml$", content)]
-        rmd_items <- Map(create_question_object, rmd_files)
-        names(rmd_items) <- NULL
-        sub_items <- append(rmd_items, xml_files)
+        if (length(content) == 1) content <- list(content)
+        sub_items <- Map(getObject, content)
         if (is.null(id)) id <- paste0("permanent_section_", sample.int(100, 1))
         selection <- 0
 
