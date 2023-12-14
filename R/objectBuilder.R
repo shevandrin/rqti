@@ -477,7 +477,7 @@ rmd_checker <- function(file) {
     has_helpers <- any(grepl(paste(helpers, collapse = "|"), content))
     has_qti <- any(grepl("library\\(qti\\)", content))
     if (all(has_helpers, !has_qti)) {
-        stop("Helper function are found. Call \'library(qti)\' inside Rmd file.")
+        stop("Helper functions are found. Call \'library(qti)\' inside Rmd file.")
     }
 }
 
