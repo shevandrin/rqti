@@ -63,7 +63,7 @@ and reshuffle the order of choices for each item-attempt}
 \item{\code{show_test_time}}{boolean, optional; determines to show candidate elapsed
 processing time without time limit; default 'FALSE'}
 
-\item{\code{calculator}}{style, optional; determines to show to candidate calculator;
+\item{\code{calculator}}{string, optional; determines to show to candidate calculator;
 possible values:
 \itemize{
 \item "simple-calculator"

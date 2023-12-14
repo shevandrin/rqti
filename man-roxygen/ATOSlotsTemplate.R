@@ -1,6 +1,6 @@
 #' @slot show_test_time boolean, optional; determines to show candidate elapsed
 #'   processing time without time limit; default 'FALSE'
-#' @slot calculator style, optional; determines to show to candidate calculator;
+#' @slot calculator string, optional; determines to show to candidate calculator;
 #'   possible values:
 #'   * "simple-calculator"
 #'   * "scientific-calculator"

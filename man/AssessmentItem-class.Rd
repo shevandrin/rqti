@@ -24,6 +24,18 @@ paragraph, can supplement or replace content}
 
 \item{\code{feedback}}{list of \linkS4class{ModalFeedback}, \link{CorrectFeedback}, or
 \linkS4class{WrongFeedback}; feedback messages for candidate}
+
+\item{\code{files}}{string, optional; the names of the attachment files that should
+be available in the test}
+
+\item{\code{calculator}}{string, optional; determines to show to candidate calculator
+during the test;
+possible values:
+\itemize{
+\item "simple-calculator"
+\item "scientific-calculator"
+\item "" - by default
+}}
 }}
 
 \section{Warning}{
