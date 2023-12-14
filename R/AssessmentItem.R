@@ -205,6 +205,20 @@ setGeneric("buildAssessmentSection", function(object, folder = NULL) {
     standardGeneric("buildAssessmentSection")
 })
 
+#' Get file paths for attachment of test
+#'
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
+#' @name getFiles-methods
+#' @rdname getFiles-methods
+#' @aliases getFiles
+#' @docType methods
+setGeneric("getFiles", function(object) {
+    standardGeneric("getFiles")
+})
+
 
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
@@ -289,4 +303,11 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
               tag("assessmentItemRef", list(identifier = object@identifier,
                                             href = paste0(object@identifier,
                                                           ".xml")))
+          })
+
+#' @rdname getFiles-methods
+#' @aliases getFiles,AssessmentItem
+setMethod("getFiles", signature(object = "AssessmentItem"),
+          function(object) {
+              return(object@files)
           })
