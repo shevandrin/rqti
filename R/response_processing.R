@@ -31,6 +31,9 @@ baseValue <- create_tag("baseValue")
 mapTolResponse <- create_tag("mapTolResponse")
 equal <- create_tag("equal")
 multiple <- create_tag("multiple")
+outcomeCondition <- create_tag("outcomeCondition")
+outcomeIf <- create_tag("outcomeIf")
+gte <- create_tag("gte")
 
 # process modalfeedback for all match types and mc
 create_default_resp_processing <- function(object) {
@@ -208,4 +211,54 @@ create_resp_cond_set_feedback <- function(object) {
     set_out_value <- setOutcomeValue(list(
         identifier = object@outcome_identifier, multiple_tag))
     return(responseCondition(responseIf(list(tag_and, set_out_value))))
+}
+
+# this response condition makes Feedback with Points according to grading system
+create_resp_cond_grade_feedback <- function(lower_bound, upper_bound,
+                                            id_grade_fb) {
+    t_variable <- variable("SCORE")
+    t_gte <- NULL
+    t_lt <- NULL
+    if (!is.null(lower_bound)) {
+        t_baseValue <- baseValue(list(baseType = "float", lower_bound))
+        t_gte <- gte(list(t_variable, t_baseValue))
+    }
+    if (!is.null(upper_bound)) {
+        t_baseValue <- baseValue(list(baseType = "float", upper_bound))
+        t_lt <- lt(list(t_variable, t_baseValue))
+    }
+    t_and <- and(list(t_gte, t_lt))
+    t_variable <- variable("FEEDBACKMODAL")
+    t_baseValue <- baseValue(list(baseType = "identifier", id_grade_fb))
+    t_multiple <- multiple(list(t_variable, t_baseValue))
+    t_setOutcomeValue <- setOutcomeValue(list(identifier = "FEEDBACKMODAL",
+                                              t_multiple))
+    t_outcomeIf <- outcomeIf(list(t_and, t_setOutcomeValue))
+    t_outcomeCondition <- outcomeCondition(list(t_outcomeIf))
+    return(t_outcomeCondition)
+}
+
+# this function creates set of outcomesConditions according to german grade system
+make_set_conditions_grade <- function(max_points) {
+    grades <- c("5.0", "4.0", "3.7", "3.3", "3.0", "2.7", "2.3", "2.0", "1.7",
+               "1.3", "1.0")
+    id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
+    grade_levels <- seq(50, 100, 5) * max_points / 100
+    grade_levels <- grade_levels[-length(grade_levels)]
+    lower_bounds <- append(list(NULL), as.list(grade_levels))
+    upper_bounds <- append(as.list(grade_levels), list(NULL))
+    conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
+                             upper_bounds, id_grade_fb)
+    feedbacks <- Map(create_feedback_grade, id_grade_fb, grades)
+
+    return(list(conditions = conditions, feedbacks = feedbacks))
+}
+
+# this function creates feedback tag according to German grading system
+create_feedback_grade <- function(id, grade) {
+    message <- paste("Grade", grade)
+    tag("testFeedback", list(identifier = id,
+                             outcomeIdentifier = "FEEDBACKMODAL",
+                             showHide = "show", access = "atEnd",
+                             tag("p", message)))
 }

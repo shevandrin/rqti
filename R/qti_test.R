@@ -83,12 +83,17 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
     tvar <- tag("testVariables", list(variableIdentifier = "SCORE"))
     tsum <- tag("sum", list(tvar))
     tsov <- tag("setOutcomeValue", list(identifier = "SCORE", tsum))
-    out_proc <- tag("outcomeProcessing", list(tsov))
+    # tags for grading system
+    tags_grades <- make_set_conditions_grade(object@points)
+    # gather all conditions
+    out_proc <- tag("outcomeProcessing", list(tsov, tags_grades$conditions))
+
     tagAppendChildren(assesment_test,
                       createOutcomeDeclaration(object),
                       time_limits,
                       test_part,
-                      out_proc)
+                      out_proc,
+                      tags_grades$feedbacks)
 }
 
 # creates tag assessmentSection in test file

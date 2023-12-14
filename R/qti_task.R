@@ -174,15 +174,16 @@ create_map_entry <- function(value, key, case_sensitive = NULL) {
 make_outcome_declaration <- function(identifier,
                                        cardinality = "single",
                                        base_type = "float",
-                                       value = 0) {
+                                       value = 0, view = NULL) {
     tag("outcomeDeclaration", list(identifier = identifier,
                                    cardinality = cardinality,
                                    baseType = base_type,
+                                   view = view,
                                    create_default_value(value)))
 }
 
 create_default_value <- function(value) {
-    tag("defaultValue", list(tag("value", value)))
+    if (!is.null(value)) tag("defaultValue", list(tag("value", value)))
 }
 
 create_prompt <- function(object) {
