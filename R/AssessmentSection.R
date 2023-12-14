@@ -66,30 +66,6 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     .Object
 })
 
-#' Get list of AssessmentItems for AssessmentSection
-#'
-#' Generic function for
-#'
-#' @param object an instance of the S4 object (AssessmentSection)
-#' @docType methods
-#' @rdname getAssessmentItems-methods
-setGeneric("getAssessmentItems", function(object) {
-    standardGeneric("getAssessmentItems")
-})
-
-#' Build tags for AssessmentSection in assessmentTest
-#'
-#' Generic function for tags that contains assessementSection in assessnetTest
-#'
-#' @param object an instance of the S4 object ([AssessmentSection],
-#' [AssessmentItemRef] and all types of [AssessmentItem])
-#' @param folder string; a folder to store xml file
-#' @docType methods
-#' @rdname buildAssessmentSection-methods
-setGeneric("buildAssessmentSection", function(object, folder = NULL) {
-    standardGeneric("buildAssessmentSection")
-})
-
 #' @rdname getAssessmentItems-methods
 #' @aliases getAssessmentItems,AssessmentSection
 setMethod("getAssessmentItems", signature(object = "AssessmentSection"),
@@ -103,25 +79,6 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentSection"),
           function(object, folder
                    ) {
               create_section_test(object, folder)
-          })
-
-#' @rdname getAssessmentItems-methods
-#' @aliases getAssessmentItems,AssessmentItem
-setMethod("getAssessmentItems", signature(object = "AssessmentItem"),
-          function(object) {
-              href <- paste0(object@identifier, ".xml")
-              names(href) <- object@identifier
-              return(href)
-          })
-
-#' @rdname buildAssessmentSection-methods
-#' @aliases buildAssessementSection,AssessmentItem
-setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
-          function(object, folder) {
-              res <- create_qti_task(object, folder)
-              tag("assessmentItemRef", list(identifier = object@identifier,
-                                            href = paste0(object@identifier,
-                                                          ".xml")))
           })
 
 #' @rdname getPoints-methods
