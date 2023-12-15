@@ -43,6 +43,15 @@ setClass("AssessmentTestOpal", contains = "AssessmentTest",
 # TODO verification of files slot
 # TODO there is a conflict between keep_responses and rebuild_variables, if the second one is true - the first one will be ignored
 
+setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
+    .Object <- callNextMethod()
+
+    found_files <- c(sapply(.Object@section, getFiles, USE.NAMES = FALSE))
+    .Object@files <- c(.Object@files, unique(unlist(found_files)))
+
+    validObject(.Object)
+    .Object
+})
 
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTestOpal

@@ -124,3 +124,15 @@ setMethod("getObject", signature(object = "character"),
               }
               return(NULL)
           })
+
+#' @rdname getFiles-methods
+#' @aliases getFiles,character
+setMethod("getFiles", signature(object = "character"),
+          function(object) {
+              # ext <- file_ext(object)
+              # if (file.exists(object) == xml") {
+                # read xml and finde files
+              #     return(object)
+              # }
+              return(character(0))
+          })
