@@ -20,7 +20,7 @@ section(
 )
 }
 \arguments{
-\item{content}{string; vector of Rmd, md, xml files or task objects}
+\item{content}{string; vector of Rmd, md, xml files, task- or section-objects}
 
 \item{n_variants}{integer; number of variants to create from Rmd files}
 

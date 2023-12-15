@@ -1,6 +1,6 @@
 #' Create a section as a part of test content
 #'
-#' @param content string; vector of Rmd, md, xml files or task objects
+#' @param content string; vector of Rmd, md, xml files, task- or section-objects
 #' @param n_variants integer; number of variants to create from Rmd files
 #' @param seed_number integer vector, optional; seed numbers to reproduce the
 #'   result of calculations
