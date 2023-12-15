@@ -16,7 +16,7 @@ test4opal(
   rebuild_variables = TRUE,
   files = NULL,
   show_test_time = FALSE,
-  calculator = "scientific-calculator",
+  calculator = NULL,
   mark_items = FALSE,
   keep_responses = FALSE
 )

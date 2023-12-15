@@ -219,6 +219,20 @@ setGeneric("getFiles", function(object) {
     standardGeneric("getFiles")
 })
 
+#' Get value of the slot 'calculator'
+#'
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
+#' @name getCalculator-methods
+#' @rdname getCalculator-methods
+#' @aliases getCalculator
+#' @docType methods
+setGeneric("getCalculator", function(object) {
+    standardGeneric("getCalculator")
+})
+
 
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
@@ -310,4 +324,11 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
 setMethod("getFiles", signature(object = "AssessmentItem"),
           function(object) {
               return(object@files)
+          })
+
+#' @rdname getCalculator-methods
+#' @aliases getCalculator,AssessmentItem
+setMethod("getCalculator", signature(object = "AssessmentItem"),
+          function(object) {
+              return(object@calculator)
           })

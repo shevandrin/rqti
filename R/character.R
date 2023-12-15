@@ -129,10 +129,12 @@ setMethod("getObject", signature(object = "character"),
 #' @aliases getFiles,character
 setMethod("getFiles", signature(object = "character"),
           function(object) {
-              # ext <- file_ext(object)
-              # if (file.exists(object) == xml") {
-                # read xml and finde files
-              #     return(object)
-              # }
+              return(character(0))
+          })
+
+#' @rdname getCalculator-methods
+#' @aliases getCalculator,character
+setMethod("getCalculator", signature(object = "character"),
+          function(object) {
               return(character(0))
           })
