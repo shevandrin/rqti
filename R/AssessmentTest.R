@@ -38,7 +38,8 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      time_limits = "numeric",
                                      max_attempts = "numeric",
                                      allow_comment = "logical",
-                                     rebuild_variables = "logical"),
+                                     rebuild_variables = "logical",
+                                     academic_grading = "logical"),
          prototype = prototype(identifier = paste0("test_", ids::adjective_animal()),
                                navigation_mode = "nonlinear",
                                submission_mode = "individual",
@@ -47,7 +48,8 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                time_limits = NA_integer_,
                                max_attempts = NA_integer_,
                                allow_comment = TRUE,
-                               rebuild_variables = NA
+                               rebuild_variables = NA,
+                               academic_grading = FALSE
          ))
 
 setValidity("AssessmentTest", function(object) {

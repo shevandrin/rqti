@@ -24,3 +24,6 @@
 #'   comments in each question
 #' @slot rebuild_variables boolean, optional; enables to recalculate variables
 #'   and reshuffle the order of choices for each item-attempt
+#' @slot academic_grading boolean, optional; enables to show to candidate at the
+#'   end of the testing a grade according to 5-point academic grade system as a
+#'   feedback; `FALSE` by default
