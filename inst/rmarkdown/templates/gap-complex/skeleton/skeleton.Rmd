@@ -5,6 +5,10 @@ identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 ---
 
+```{r echo=F}
+library(qti)
+```
+
 # question
 
 ## numeric gaps

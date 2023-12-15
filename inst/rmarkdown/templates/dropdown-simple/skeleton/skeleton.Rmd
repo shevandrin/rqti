@@ -3,6 +3,10 @@ type: dropdown
 knit: qti::render_qtijs
 ---
 
+```{r echo=F}
+library(qti)
+```
+
 # question
 
 The philosophy of the qti package is <<do one thing and do it well|one for all>>.
