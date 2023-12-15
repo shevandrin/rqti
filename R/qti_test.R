@@ -84,7 +84,10 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
     tsum <- tag("sum", list(tvar))
     tsov <- tag("setOutcomeValue", list(identifier = "SCORE", tsum))
     # tags for grading system
-    tags_grades <- make_set_conditions_grade(object@points)
+    tags_grades <- NULL
+    if (object@academic_grading) {
+        tags_grades <- make_set_conditions_grade(object@points)
+    }
     # gather all conditions
     out_proc <- tag("outcomeProcessing", list(tsov, tags_grades$conditions))
 

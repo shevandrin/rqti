@@ -46,7 +46,6 @@ test_that("Testing method createOutcomeDeclaration()
     <value>0</value>
   </defaultValue>
 </outcomeDeclaration>
-<outcomeDeclaration identifier=\"FEEDBACKMODAL\" cardinality=\"multiple\" baseType=\"identifier\" view=\"testConstructor\"/>
 <outcomeDeclaration identifier=\"MAXSCORE\" cardinality=\"single\" baseType=\"float\">
   <defaultValue>
     <value>6</value>
