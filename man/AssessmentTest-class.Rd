@@ -59,6 +59,10 @@ comments in each question}
 
 \item{\code{rebuild_variables}}{boolean, optional; enables to recalculate variables
 and reshuffle the order of choices for each item-attempt}
+
+\item{\code{academic_grading}}{boolean, optional; enables to show to candidate at the
+end of the testing a grade according to 5-point academic grade system as a
+feedback; \code{FALSE} by default}
 }}
 
 \examples{

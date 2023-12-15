@@ -124,3 +124,17 @@ setMethod("getObject", signature(object = "character"),
               }
               return(NULL)
           })
+
+#' @rdname getFiles-methods
+#' @aliases getFiles,character
+setMethod("getFiles", signature(object = "character"),
+          function(object) {
+              return(character(0))
+          })
+
+#' @rdname getCalculator-methods
+#' @aliases getCalculator,character
+setMethod("getCalculator", signature(object = "character"),
+          function(object) {
+              return(character(0))
+          })

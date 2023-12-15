@@ -117,3 +117,19 @@ setMethod("getObject", signature(object = "AssessmentSection"),
           function(object) {
               return(object)
           })
+
+#' @rdname getFiles-methods
+#' @aliases getFiles,AssessmentSection
+setMethod("getFiles", signature(object = "AssessmentSection"),
+          function(object) {
+              result <- unlist(sapply(object@assessment_item, getFiles))
+              return(result)
+          })
+
+#' @rdname getCalculator-methods
+#' @aliases getCalculator,AssessmentSection
+setMethod("getCalculator", signature(object = "AssessmentSection"),
+          function(object) {
+              result <- unlist(sapply(object@assessment_item, getCalculator))
+              return(result)
+          })

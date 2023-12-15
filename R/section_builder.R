@@ -1,6 +1,6 @@
 #' Create a section as a part of test content
 #'
-#' @param content string; vector of Rmd, md, xml files or task objects
+#' @param content string; vector of Rmd, md, xml files, task- or section-objects
 #' @param n_variants integer; number of variants to create from Rmd files
 #' @param seed_number integer vector, optional; seed numbers to reproduce the
 #'   result of calculations
@@ -199,7 +199,7 @@ test4opal <- function(content, identifier = NULL, title = NULL,
                       navigation_mode = "nonlinear", submission_mode = "individual",
                       time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
                       rebuild_variables = TRUE, files = NULL, show_test_time = FALSE,
-                      calculator = "scientific-calculator", mark_items  = FALSE,
+                      calculator = NULL, mark_items  = FALSE,
                       keep_responses = FALSE) {
 
     params <- as.list(environment())
