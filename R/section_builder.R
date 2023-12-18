@@ -8,7 +8,8 @@
 #' @param by "variants" or "files"; the type of the test structure; "variants"
 #'   by default
 #' @param selection numeric, optional; defines how many children of the section
-#'   are delivered in test
+#'   are delivered in test; default is `NULL`, it gives "no selection" on class
+#'   level
 #' @param title string, optional; title of the section
 #' @param time_limits integer, optional; controls the amount of time a candidate
 #'   is allowed for this part of the test
@@ -24,7 +25,7 @@
 #' @return object of [AssessmentSection]-class
 #' @export
 section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
-                    by = "variants", selection = 0, title = character(0),
+                    by = "variants", selection = NULL, title = character(0),
                     time_limits = NA_integer_, visible = TRUE,
                     shuffle = FALSE, max_attempts = NA_integer_,
                     allow_comment = TRUE) {
@@ -53,7 +54,7 @@ section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
         if (length(content) == 1) content <- list(content)
         sub_items <- Map(getObject, content)
         if (is.null(id)) id <- paste0("permanent_section_", sample.int(100, 1))
-        selection <- 0
+        if (is.null(selection)) selection <- 0
 
     } else {
         sub_items <- list()
