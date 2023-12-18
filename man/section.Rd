@@ -10,7 +10,7 @@ section(
   seed_number = NULL,
   id = NULL,
   by = "variants",
-  selection = 0,
+  selection = NULL,
   title = character(0),
   time_limits = NA_integer_,
   visible = TRUE,
@@ -33,7 +33,8 @@ result of calculations}
 by default}
 
 \item{selection}{numeric, optional; defines how many children of the section
-are delivered in test}
+are delivered in test; default is \code{NULL}, it gives "no selection" on class
+level}
 
 \item{title}{string, optional; title of the section}
 
