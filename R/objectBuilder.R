@@ -132,7 +132,6 @@ create_entry_slots <- function(html, attrs) {
         }
         content <- append(content, text_chank)
     }
-
     attrs <- c(Class = "Entry", content = as.list(list(content)), attrs)
     return(attrs)
 }
@@ -302,17 +301,25 @@ parse_list <- function(html) {
 clean_question <- function(html) {
     h1 <- xml2::xml_find_first(html, "h1")
     xml2::xml_remove(h1)
-    content <- xml2::xml_contents(html)
-
-    content <- gsub("<br>", "<br/>", content)
-    content <- gsub("\r", "", content)
-    content <- gsub("^\\n|\\n$", "", content)
-    content <- gsub(">\n<", "><", content)
-    content <- gsub("\n", " ", content)
-    content <- gsub("<br/> ", "<br/>", content)
-    content <- as.character(content)
+    content <- as.character(xml2::xml_contents(html))
+    content <- sapply(content, change_symbols, USE.NAMES = FALSE)
     content <- Filter(function(x) x != "", content)
     return(content)
+}
+
+change_symbols <- function(cont) {
+    if (!startsWith(cont, "<pre")) {
+       cont <- gsub("<br>", "<br/>", cont)
+       cont <- gsub("\r", "", cont)
+       cont <- gsub("^\\n|\\n$", "", cont)
+       cont <- gsub(">\n<", "><", cont)
+       cont <- gsub("\n", " ", cont)
+       cont <- gsub("<br/> ", "<br/>", cont)
+    } else {
+        cont <- gsub("<code>", "<code><br />", cont)
+        cont <- gsub("\\\r\\\n", "<br />", cont)
+    }
+    return(cont)
 }
 
 read_table <- function(html, attrs) {
