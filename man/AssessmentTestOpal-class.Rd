@@ -64,6 +64,9 @@ and reshuffle the order of choices for each item-attempt}
 end of the testing a grade according to 5-point academic grade system as a
 feedback; \code{FALSE} by default}
 
+\item{\code{grade_label}}{character, optional; a short message that shows with a
+grade in the final feedback}
+
 \item{\code{show_test_time}}{boolean, optional; determines to show candidate elapsed
 processing time without time limit; default 'FALSE'}
 
