@@ -353,33 +353,33 @@ test_that("Testing method createOutcomeDeclaration() with
 			</outcomeCondition>
 		</outcomeProcessing>
 		<testFeedback identifier=\"feedback_grade_50\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 5.0</p>\n  </testFeedback>
+			<p>Grade: 5.0</p>\n  </testFeedback>
 		<testFeedback identifier=\"feedback_grade_40\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 4.0</p>\n  </testFeedback>\n  <testFeedback identifier=\"feedback_grade_37\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">\n    <p>Grade 3.7</p>
+			<p>Grade: 4.0</p>\n  </testFeedback>\n  <testFeedback identifier=\"feedback_grade_37\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">\n    <p>Grade: 3.7</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_33\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 3.3</p>
+			<p>Grade: 3.3</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_30\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 3.0</p>
+			<p>Grade: 3.0</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_27\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 2.7</p>
+			<p>Grade: 2.7</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_23\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 2.3</p>
+			<p>Grade: 2.3</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_20\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 2.0</p>
+			<p>Grade: 2.0</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_17\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 1.7</p>
+			<p>Grade: 1.7</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_13\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 1.3</p>
+			<p>Grade: 1.3</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_10\" outcomeIdentifier=\"FEEDBACKMODAL\" showHide=\"show\" access=\"atEnd\">
-			<p>Grade 1.0</p>
+			<p>Grade: 1.0</p>
 		</testFeedback>
 	</assessmentTest>
     </additionalTag>"

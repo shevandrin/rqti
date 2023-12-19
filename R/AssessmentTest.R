@@ -50,7 +50,8 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                max_attempts = NA_integer_,
                                allow_comment = TRUE,
                                rebuild_variables = NA,
-                               academic_grading = FALSE
+                               academic_grading = FALSE,
+                               grade_label = "Grade:"
          ))
 
 setValidity("AssessmentTest", function(object) {

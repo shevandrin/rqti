@@ -28,4 +28,4 @@
 #'   end of the testing a grade according to 5-point academic grade system as a
 #'   feedback; `FALSE` by default
 #' @slot grade_label character, optional; a short message that shows with a
-#'   grade in the final feedback
+#'   grade in the final feedback; "Grade:" is default

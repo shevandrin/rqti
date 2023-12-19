@@ -239,7 +239,7 @@ create_resp_cond_grade_feedback <- function(lower_bound, upper_bound,
 }
 
 # this function creates set of outcomesConditions according to german grade system
-make_set_conditions_grade <- function(max_points) {
+make_set_conditions_grade <- function(max_points, label) {
     grades <- c("5.0", "4.0", "3.7", "3.3", "3.0", "2.7", "2.3", "2.0", "1.7",
                "1.3", "1.0")
     id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
@@ -249,14 +249,14 @@ make_set_conditions_grade <- function(max_points) {
     upper_bounds <- append(as.list(grade_levels), list(NULL))
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
                              upper_bounds, id_grade_fb)
-    feedbacks <- Map(create_feedback_grade, id_grade_fb, grades)
+    feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, label)
 
     return(list(conditions = conditions, feedbacks = feedbacks))
 }
 
 # this function creates feedback tag according to German grading system
-create_feedback_grade <- function(id, grade) {
-    message <- paste("Grade", grade)
+create_feedback_grade <- function(id, grade, label) {
+    message <- paste(label, grade)
     tag("testFeedback", list(identifier = id,
                              outcomeIdentifier = "FEEDBACKMODAL",
                              showHide = "show", access = "atEnd",
