@@ -188,16 +188,20 @@ setMethod("createQtiTest", signature(object = "AssessmentTest"),
 #' @aliases createOutcomeDeclaration,AssessmentTest
 setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
           function(object) {
-              feedback <- NULL
+              feedback_grade <- NULL
+              feedback_grade_table <- NULL
               if (object@academic_grading) {
-                  feedback <- make_outcome_declaration("FEEDBACKMODAL",
+                  feedback_grade <- make_outcome_declaration("FEEDBACKMODAL",
                                                        "multiple",
                                                        "identifier",
                                                        value = NULL,
                                                        view = "testConstructor")
+                  feedback_grade_table <- make_outcome_declaration(
+                      "FEEDBACKTABLE", "multiple", "identifier",
+                      value = NULL, view = "testConstructor")
               }
               tagList(make_outcome_declaration("SCORE", value = 0),
-                      feedback,
+                      feedback_grade, feedback_grade_table,
                       make_outcome_declaration("MAXSCORE",
                                                value = object@points),
                       make_outcome_declaration("MINSCORE", value = 0))

@@ -34,6 +34,9 @@ multiple <- create_tag("multiple")
 outcomeCondition <- create_tag("outcomeCondition")
 outcomeIf <- create_tag("outcomeIf")
 gte <- create_tag("gte")
+tr <- create_tag("tr")
+td <- create_tag("td")
+th <- create_tag("th")
 
 # process modalfeedback for all match types and mc
 create_default_resp_processing <- function(object) {
@@ -249,7 +252,12 @@ make_set_conditions_grade <- function(max_points, label) {
     upper_bounds <- append(as.list(grade_levels), list(NULL))
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
                              upper_bounds, id_grade_fb)
+    conditions <- tagList(conditions, create_resp_cond_grade_table())
     feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, label)
+    lower_bounds[1] <- 0
+    upper_bounds[length(upper_bounds)] <- max_points
+    feedback_table <- create_feedback_grade_table(grades, lower_bounds, upper_bounds)
+    feedbacks <- tagList(feedbacks, feedback_table)
 
     return(list(conditions = conditions, feedbacks = feedbacks))
 }
@@ -261,4 +269,38 @@ create_feedback_grade <- function(id, grade, label) {
                              outcomeIdentifier = "FEEDBACKMODAL",
                              showHide = "show", access = "atEnd",
                              tag("p", message)))
+}
+
+# this function creates feedback tag with grading table
+create_feedback_grade_table <- function(grades, lower_bounds, upper_bounds) {
+    make_table_row <- function(grade, min, max) {
+        tr(tagList(td(grade), td(min), td(max)))
+    }
+    header <- tag("tr", tagList(th("Grade"), th("Min"), th("Max")))
+    rows <- Map(make_table_row, grades, lower_bounds, upper_bounds)
+    tbody <- tag("tbody", list(style ="text-align: center;",
+                               tagList(header, rows)))
+    grade_table <- tag("table", list(border = 1,
+                        style = "border-collapse: collapse; min-width: 150px;",
+                                     tbody))
+    tag("testFeedback", list(identifier = "feedback_grade_table",
+                             outcomeIdentifier = "FEEDBACKTABLE",
+                             showHide = "show", access = "atEnd",
+                             grade_table))
+}
+
+# this function makes condition to show grading table in feedback
+create_resp_cond_grade_table <- function() {
+    t_variable <- variable("SCORE")
+    t_baseValue <- baseValue(list(baseType = "float", 0))
+    t_gte <- gte(list(t_variable, t_baseValue))
+    t_and <- and(list(t_gte))
+    t_variable <- variable("FEEDBACKTABLE")
+    t_baseValue <- baseValue(list(baseType = "identifier", "feedback_grade_table"))
+    t_multiple <- multiple(list(t_variable, t_baseValue))
+    t_setOutcomeValue <- setOutcomeValue(list(identifier = "FEEDBACKTABLE",
+                                              t_multiple))
+    t_outcomeIf <- outcomeIf(list(t_and, t_setOutcomeValue))
+    t_outcomeCondition <- outcomeCondition(list(t_outcomeIf))
+    return(t_outcomeCondition)
 }
