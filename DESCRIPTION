@@ -36,7 +36,8 @@ Imports:
     curl,
     digest,
     knitr,
-    getPass
+    getPass,
+    keyring
 Suggests:
     covr,
     dplyr,

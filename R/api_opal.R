@@ -11,8 +11,6 @@
 #' `QTI_API_ENDPOINT`. To set a global environment variable, you need to call `
 #'   `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
 #' commands into .Renviron.
-#' @param cached boolean; if `TRUE` (default) it keeps password in environment
-#'   variable
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
 #'   OPAL-username and password. This function can get `QTI_API_USER` and
@@ -26,12 +24,12 @@
 #' @rdname auth_opal
 #' @importFrom httr2 request req_error req_perform resp_body_xml req_headers resp_body_json req_method req_body_multipart
 #' @import getPass
+#' @import keyring
 #' @export
-auth_opal <- function(api_user = NULL, api_password = NULL,
-                      endpoint = NULL, cached = TRUE) {
+auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     user_id <- NULL
+
     if (is.null(api_user)) api_user <- Sys.getenv("QTI_API_USER")
-    if (is.null(api_password)) api_password <- Sys.getenv("QTI_API_PASSWORD")
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
 
     if (api_user == "") {
@@ -39,10 +37,24 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
         Sys.setenv(QTI_API_USER = api_user)
     }
 
-    if (api_password == "") {
-        api_password <- getPass(paste0("Enter password for user ",
-                                       api_user, ": "))
-        if (cached) Sys.setenv(QTI_API_PASSWORD = api_password)
+    if (has_keyring_support()) {
+        # OS supports keyring
+        if (!any(keyring_list()$keyring == "qtiopal")) {
+            keyring_create("qtiopal", password = "qtiopal")
+        }
+
+        keyring_unlock("qtiopal", "qtiopal")
+
+        if (!any(key_list("qtiopal", "qtiopal")$username == api_user)) {
+            key_set("qtiopal", username = api_user, keyring = "qtiopal",
+                    prompt = paste0("Password for ", api_user, ":"))
+        }
+        api_password <- key_get(service = "qtiopal", keyring = 'qtiopal',
+                                username = api_user)
+
+    } else {
+        # OS does not support keyring
+        api_password <- getPass("Your OS does not support keyring. Enter Password: ")
     }
 
     url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
@@ -65,7 +77,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
         # Check the user's choice
         if (tolower(choice) == "y") {
             Sys.unsetenv("QTI_API_USER")
-            Sys.unsetenv("QTI_API_PASSWORD")
+            if (has_keyring_support()) key_delete("qtiopal", api_user, "qtitest")
             auth_opal()
         }
         user_id <-  NULL
@@ -80,7 +92,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
 #'authentication procedure has to be performed. See [auth_opal]
 #'
 #'@param test required; a length one character vector or [AssessmentTest] or
-#' [AssessmentTestOpal] objects
+#'  [AssessmentTestOpal] objects
 #'@param display_name optional; a length one character vector to entitle file in
 #'  OPAL; file name without extension by default
 #'@param access optional; is responsible for publication status, where 1 - only
@@ -90,28 +102,26 @@ auth_opal <- function(api_user = NULL, api_password = NULL,
 #'@param overwrite logical; if only one file with the specified display name is
 #'  found, it will be overwritten
 #'@param endpoint endpoint
-#'@param open_in_browser logical, optional; the parameter that controls whether to
-#'  open a URL in default browser; TRUE by default
-#' @param api_user username on OPAL
-#' @param api_password password on OPAL
-#' @param cached boolean; if `TRUE` (default) it keeps password in environment
-#'   variable
-#' @section Authentication: To use OPAL API, you need to provide your
-#'   OPAL-username and password. This function can get `api_user` and
-#'   `api_password` from environment variables. To set a global environment
-#'   variable, you need to call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` and
-#'   `Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
-#'   into .Renviron.
+#'@param open_in_browser logical, optional; the parameter that controls whether
+#'  to open a URL in default browser; TRUE by default
+#'@param api_user username on OPAL
+#'@param api_password password on OPAL
+#'@section Authentication: To use OPAL API, you need to provide your
+#'  OPAL-username and password. This function can get `api_user` from
+#'  environment variables. To set a global environment variable, you need to
+#'  call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` or you can put these
+#'  commands into .Renviron. This package uses system credential store 'keyring'
+#'  to store user's password.
 #'
-#' @return list with key and url
-#' @importFrom utils browseURL
-#' @importFrom tools file_ext
-#' @importFrom curl form_file
+#'@return list with key and url
+#'@importFrom utils browseURL
+#'@importFrom tools file_ext
+#'@importFrom curl form_file
 #'@export
 upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,
-                        api_user = NULL, api_password = NULL,
-                        cached = TRUE) {
+                        api_user = NULL, api_password = NULL) {
+    print(access)
 
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
 
@@ -121,7 +131,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
-        user_id <- auth_opal(api_user, api_password, endpoint, cached = TRUE)
+        user_id <- auth_opal(api_user, api_password, endpoint)
         if (is.null(user_id)) return(NULL)
     }
 
@@ -185,7 +195,7 @@ get_resources <- function(api_user = NULL, api_password = NULL,
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
-        user_id <- auth_opal(api_user, api_password, cached = TRUE)
+        user_id <- auth_opal(api_user, api_password)
         if (is.null(user_id)) return(NULL)
     }
     url_res <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
@@ -224,7 +234,7 @@ get_resource_url <- function(display_name, endpoint = NULL,
 
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
-        user_id <- auth_opal(api_user, api_password, cached = TRUE)
+        user_id <- auth_opal(api_user, api_password)
         if (is.null(user_id)) return(NULL)
     }
     rlist <- get_resources_by_name(display_name, endpoint)

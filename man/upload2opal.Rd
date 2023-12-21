@@ -12,8 +12,7 @@ upload2opal(
   endpoint = NULL,
   open_in_browser = TRUE,
   api_user = NULL,
-  api_password = NULL,
-  cached = TRUE
+  api_password = NULL
 )
 }
 \arguments{
@@ -33,15 +32,12 @@ found, it will be overwritten}
 
 \item{endpoint}{endpoint}
 
-\item{open_in_browser}{logical, optional; the parameter that controls whether to
-open a URL in default browser; TRUE by default}
+\item{open_in_browser}{logical, optional; the parameter that controls whether
+to open a URL in default browser; TRUE by default}
 
 \item{api_user}{username on OPAL}
 
 \item{api_password}{password on OPAL}
-
-\item{cached}{boolean; if \code{TRUE} (default) it keeps password in environment
-variable}
 }
 \value{
 list with key and url
@@ -53,10 +49,10 @@ authentication procedure has to be performed. See \link{auth_opal}
 }
 \section{Authentication}{
  To use OPAL API, you need to provide your
-OPAL-username and password. This function can get \code{api_user} and
-\code{api_password} from environment variables. To set a global environment
-variable, you need to call \code{Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')} and
-\code{Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')}or you can put these commands
-into .Renviron.
+OPAL-username and password. This function can get \code{api_user} from
+environment variables. To set a global environment variable, you need to
+call \code{Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')} or you can put these
+commands into .Renviron. This package uses system credential store 'keyring'
+to store user's password.
 }
 

@@ -4,7 +4,7 @@
 \alias{auth_opal}
 \title{Authentification in OPAL API}
 \usage{
-auth_opal(api_user = NULL, api_password = NULL, endpoint = NULL, cached = TRUE)
+auth_opal(api_user = NULL, api_password = NULL, endpoint = NULL)
 }
 \arguments{
 \item{api_user}{username on OPAL}
@@ -14,9 +14,6 @@ auth_opal(api_user = NULL, api_password = NULL, endpoint = NULL, cached = TRUE)
 \item{endpoint}{endpoint of LMS Opal; default is set from environment variable
 \code{QTI_API_ENDPOINT}. To set a global environment variable, you need to call \verb{ }Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
 commands into .Renviron.}
-
-\item{cached}{boolean; if \code{TRUE} (default) it keeps password in environment
-variable}
 }
 \value{
 user id
