@@ -57,7 +57,6 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
             api_password <- getPass("Your OS does not support keyring. Enter Password: ")
         }
     }
-
     url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
     req <- request(url_login)
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
@@ -66,22 +65,25 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
         user_id <- xml2::xml_attr(parse, "identityKey")
         token <- response$headers$`X-OLAT-TOKEN`
         Sys.setenv("X-OLAT-TOKEN"=token)
-        }
+    }
     if (response$status_code == 403) {
         message("Authentification failed. You may need to run a VPN client")
         user_id <-  NULL
         }
     if (response$status_code == 401) {
+        if (has_keyring_support()) {
+            if (api_user %in% key_list("qtiopal", "qtiopal")$username) {
+                key_delete("qtiopal", api_user, "qtiopal")
+            }
+        }
         message("401 Unauthorized")
         cat("Would you like to change username and password?")
         choice <- readline("Press \'y\' to change data or any key to exit: ")
         # Check the user's choice
         if (tolower(choice) == "y") {
             Sys.unsetenv("QTI_API_USER")
-            if (has_keyring_support()) key_delete("qtiopal", api_user, "qtitest")
-            auth_opal()
+            user_id <- auth_opal()
         }
-        user_id <-  NULL
     }
     return(user_id)
 }
@@ -125,7 +127,6 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,
                         api_user = NULL, api_password = NULL) {
-    print(access)
 
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
 
