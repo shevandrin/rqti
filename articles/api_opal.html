@@ -128,14 +128,14 @@ Chemnitz</strong>, you can expedite this process by sending an email to
 <a href="mailto:e-learning@tu-chemnitz.de" class="email">e-learning@tu-chemnitz.de</a>. In your email, explicitly
 state your need for a password-based login to facilitate API usage, and
 include your username for reference.</p>
-<p>For authentication to OPAL <code>qti</code> uses two global
-environment variable: <code>QTI_API_USER</code> and
-<code>QTI_API_PASSWORD</code>. To set them, you need to call
-<code>Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')</code> and
-<code>Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')</code> or you can
-set these variables in .Renviron:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">QTI_API_USER</span><span class="op">=</span><span class="st">"your_username"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">QTI_API_PASSWORD</span><span class="op">=</span><span class="st">"your_password"</span></span></code></pre></div>
+<p>For authentication to OPAL <code>qti</code> uses a global environment
+variable: <code>QTI_API_USER</code>. To set it, you need to call
+<code>Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')</code> or you can set
+this variable in .Renviron:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">QTI_API_USER</span><span class="op">=</span><span class="st">"your_username"</span></span></code></pre></div>
+<p>To store the password, <code>qti</code> uses the keyring system
+credential storage. The first time authentication is attempted, it asks
+for a password and saves it in a keychain named “qtiopal”.</p>
 <p>Some universities only allow to use the OPAL API in the network of
 the university. Before calling <code><a href="../reference/upload2opal.html">upload2opal()</a></code> set up a VPN
 client accordingly. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link">see the
