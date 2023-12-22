@@ -7,17 +7,17 @@
 #'
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
-#' @param endpoint endpoint of LMS Opal; default is set from environment variable
-#' `QTI_API_ENDPOINT`. To set a global environment variable, you need to call `
-#'   `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
-#' commands into .Renviron.
+#' @param endpoint endpoint of LMS Opal; by default it is got from environment
+#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
+#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
+#'   these command into .Renviron.
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
-#'   OPAL-username and password. This function can get `QTI_API_USER` and
-#'   `QTI_API_PASSWORD` from environment variables. To set a global environment
-#'   variable, you need to call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` and
-#'   `Sys.setenv(QTI_API_PASSWORD ='xxxxxxxxxxxxxxx')`or you can put these commands
-#'   into .Rprofile.
+#'  OPAL-username and password. This function can get `api_user` from
+#'  environment variables. To set a global environment variable, you need to
+#'  call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` or you can put these
+#'  commands into .Renviron. This package uses system credential store 'keyring'
+#'  to store user's password.
 #'
 #' @return user id
 #' @name auth_opal
@@ -36,25 +36,26 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
         api_user <- readline("Enter Username on Opal: ")
         Sys.setenv(QTI_API_USER = api_user)
     }
+    if (is.null(api_password)) {
+            if (has_keyring_support()) {
+            # OS supports keyring
+            if (!any(keyring_list()$keyring == "qtiopal")) {
+                keyring_create("qtiopal", password = "qtiopal")
+            }
 
-    if (has_keyring_support()) {
-        # OS supports keyring
-        if (!any(keyring_list()$keyring == "qtiopal")) {
-            keyring_create("qtiopal", password = "qtiopal")
+            keyring_unlock("qtiopal", "qtiopal")
+
+            if (!any(key_list("qtiopal", "qtiopal")$username == api_user)) {
+                key_set("qtiopal", username = api_user, keyring = "qtiopal",
+                        prompt = paste0("Password for ", api_user, ":"))
+            }
+            api_password <- key_get(service = "qtiopal", keyring = 'qtiopal',
+                                    username = api_user)
+
+        } else {
+            # OS does not support keyring
+            api_password <- getPass("Your OS does not support keyring. Enter Password: ")
         }
-
-        keyring_unlock("qtiopal", "qtiopal")
-
-        if (!any(key_list("qtiopal", "qtiopal")$username == api_user)) {
-            key_set("qtiopal", username = api_user, keyring = "qtiopal",
-                    prompt = paste0("Password for ", api_user, ":"))
-        }
-        api_password <- key_get(service = "qtiopal", keyring = 'qtiopal',
-                                username = api_user)
-
-    } else {
-        # OS does not support keyring
-        api_password <- getPass("Your OS does not support keyring. Enter Password: ")
     }
 
     url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
@@ -101,7 +102,10 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 #'  guests
 #'@param overwrite logical; if only one file with the specified display name is
 #'  found, it will be overwritten
-#'@param endpoint endpoint
+#' @param endpoint endpoint of LMS Opal; by default it is got from environment
+#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
+#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
+#'   these command into .Renviron.
 #'@param open_in_browser logical, optional; the parameter that controls whether
 #'  to open a URL in default browser; TRUE by default
 #'@param api_user username on OPAL
@@ -183,10 +187,10 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 
 #' Get list of all user's resources on LMS OPAL
 #'
-#' @param endpoint endpoint of LMS Opal; default is from environment variable
-#' `QTI_API_ENDPOINT`. To set a global environment variable, you need to call `
-#'   `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
-#' commands into .Renviron.
+#' @param endpoint endpoint of LMS Opal; by default it is got from environment
+#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
+#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
+#'   these command into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
 #' @export
@@ -220,10 +224,10 @@ get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
 #' Create a URL using the resource's display name in LMS OPAL
 #'
 #' @param display_name character; target display_name
-#' @param endpoint endpoint of LMS Opal; default is from environment variable
-#' `QTI_API_ENDPOINT`. To set a global environment variable, you need to call `
-#'   `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
-#' commands into .Renviron.
+#' @param endpoint endpoint of LMS Opal; by default it is got from environment
+#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
+#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
+#'   these command into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
 #' @export
@@ -258,7 +262,6 @@ upload_resource <- function(file, display_name, rtype, access,
     return(response)
 }
 
-# update resource
 update_resource <- function(file, id, endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     url_upd <- paste0(endpoint, "restapi/repo/entries/", id, "/update")
@@ -269,7 +272,7 @@ update_resource <- function(file, id, endpoint = NULL) {
     return(response)
 }
 
-# check whether it is a test by manifest file
+# check if this is a test using the manifest file
 is_test <- function(file) {
     zip_con <- unz(file, "imsmanifest.xml")
     file_content <- readLines(zip_con, n = -1L)

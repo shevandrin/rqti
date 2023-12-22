@@ -11,9 +11,10 @@ get_resources(api_user = NULL, api_password = NULL, endpoint = NULL)
 
 \item{api_password}{password on OPAL}
 
-\item{endpoint}{endpoint of LMS Opal; default is from environment variable
-\code{QTI_API_ENDPOINT}. To set a global environment variable, you need to call \verb{ }Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
-commands into .Renviron.}
+\item{endpoint}{endpoint of LMS Opal; by default it is got from environment
+variable \code{QTI_API_ENDPOINT}. To set a global environment variable, you need
+to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
+these command into .Renviron.}
 }
 \description{
 Get list of all user's resources on LMS OPAL

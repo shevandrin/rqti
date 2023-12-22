@@ -30,7 +30,10 @@ guests}
 \item{overwrite}{logical; if only one file with the specified display name is
 found, it will be overwritten}
 
-\item{endpoint}{endpoint}
+\item{endpoint}{endpoint of LMS Opal; by default it is got from environment
+variable \code{QTI_API_ENDPOINT}. To set a global environment variable, you need
+to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
+these command into .Renviron.}
 
 \item{open_in_browser}{logical, optional; the parameter that controls whether
 to open a URL in default browser; TRUE by default}
