@@ -133,6 +133,14 @@ Should the items be displayed in `vertical` or `horizontal` mode? Default is `ve
 
 How many points are given for the correct solution. Default is 1.
 
+### calculator
+
+If a calculator is required for this task, you need to assign the 'calculator' attribute the type 'simple' or 'scientific'. This only works on OPAL.
+
+### files
+
+If additional files are required to complete this task, you need to assign the 'files' attribute a single file path or a list of paths to these files. This only works on OPAL.
+
 ## Feedback
 
 Feedback can be provided with the section
