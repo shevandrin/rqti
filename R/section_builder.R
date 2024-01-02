@@ -146,6 +146,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   comments in each question, `TRUE` by default
 #' @param rebuild_variables boolean, optional; enables to recalculate variables and
 #'   reshuffle the order of choices for each item-attempt
+#' @export
 test <- function(content, identifier = NULL, title = NULL,
                  navigation_mode = "nonlinear", submission_mode = "individual",
                  time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
