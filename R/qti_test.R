@@ -108,7 +108,9 @@ detect_label <- function(label) {
     lang <- regmatches(locale, lang_pos)[[1]]
     df <- read.csv("inst/language-codes_csv.csv")
     if (nchar(lang) > 2) lang <- df$alpha2[df$English==lang]
-    return(label[lang])
+    result <- label[lang]
+    if (is.na(result)) result <- label[1]
+    return(unname(result))
 }
 # creates tag assessmentSection in test file
 create_section_test <- function(object, folder) {

@@ -256,7 +256,8 @@ make_set_conditions_grade <- function(max_points, label) {
     feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, label)
     lower_bounds[1] <- 0
     upper_bounds[length(upper_bounds)] <- max_points
-    feedback_table <- create_feedback_grade_table(grades, lower_bounds, upper_bounds)
+    feedback_table <- create_feedback_grade_table(grades, label, lower_bounds,
+                                                  upper_bounds)
     feedbacks <- tagList(feedbacks, feedback_table)
 
     return(list(conditions = conditions, feedbacks = feedbacks))
@@ -272,11 +273,14 @@ create_feedback_grade <- function(id, grade, label) {
 }
 
 # this function creates feedback tag with grading table
-create_feedback_grade_table <- function(grades, lower_bounds, upper_bounds) {
+create_feedback_grade_table <- function(grades, grade_label, lower_bounds,
+                                        upper_bounds) {
     make_table_row <- function(grade, min, max) {
         tr(tagList(td(grade), td(min), td(max)))
     }
-    header <- tag("tr", tagList(th("Grade"), th("Min"), th("Max")))
+    print(grade_label)
+    header <- tag("tr", tagList(th(grade_label), th("Min"), th("Max")))
+    print(header)
     rows <- Map(make_table_row, grades, lower_bounds, upper_bounds)
     tbody <- tag("tbody", list(style ="text-align: center;",
                                tagList(header, rows)))
