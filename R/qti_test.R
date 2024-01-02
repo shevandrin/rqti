@@ -85,9 +85,9 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
     tsov <- tag("setOutcomeValue", list(identifier = "SCORE", tsum))
     # tags for grading system
     tags_grades <- NULL
+    label <- detect_label(object@grade_label)
     if (object@academic_grading) {
-        tags_grades <- make_set_conditions_grade(object@points,
-                                                 object@grade_label)
+        tags_grades <- make_set_conditions_grade(object@points, label)
     }
     # gather all conditions
     out_proc <- tag("outcomeProcessing", list(tsov, tags_grades$conditions))
@@ -100,6 +100,16 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
                       tags_grades$feedbacks)
 }
 
+# return label according to language in locales
+detect_label <- function(label) {
+    if (length(label) == 1) return(label)
+    locale <- Sys.getlocale("LC_COLLATE")
+    lang_pos <- regexpr("^([^_]+)", locale)
+    lang <- regmatches(locale, lang_pos)[[1]]
+    df <- read.csv("inst/language-codes_csv.csv")
+    if (nchar(lang) > 2) lang <- df$alpha2[df$English==lang]
+    return(label[lang])
+}
 # creates tag assessmentSection in test file
 create_section_test <- function(object, folder) {
     assessment_items <- suppressMessages(Map(buildAssessmentSection,
