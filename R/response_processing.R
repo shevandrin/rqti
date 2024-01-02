@@ -278,9 +278,7 @@ create_feedback_grade_table <- function(grades, grade_label, lower_bounds,
     make_table_row <- function(grade, min, max) {
         tr(tagList(td(grade), td(min), td(max)))
     }
-    print(grade_label)
     header <- tag("tr", tagList(th(grade_label), th("Min"), th("Max")))
-    print(header)
     rows <- Map(make_table_row, grades, lower_bounds, upper_bounds)
     tbody <- tag("tbody", list(style ="text-align: center;",
                                tagList(header, rows)))
