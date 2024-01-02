@@ -468,7 +468,7 @@ test_that("Testing method createOutcomeDeclaration() with
 </assessmentTest>
 </additionalTag>"
 
-    expected <- paste('<additionalTag>', toString(create_assessment_test(exam, ".")),'</additionalTag>')
+    expected <- paste('<additionalTag>', toString(create_assessment_test(exam, "to_delete")),'</additionalTag>')
     xml1 <- xml2::read_xml(expected)
     xml2 <- xml2::read_xml(example)
     expect_equal(xml1, xml2)
@@ -479,6 +479,7 @@ test_that("Testing method createOutcomeDeclaration() with
     unlink("id_test.xml", recursive = TRUE)
     unlink("id_test.zip", recursive = TRUE)
     unlink("imsmanifest.xml", recursive = TRUE)
+    unlink("to_delete", recursive = TRUE)
 })
 
 test_that("Testing method createAssessmentTest for AssessmentTestOpal class", {
