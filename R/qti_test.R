@@ -101,6 +101,7 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
 }
 
 # return label according to language in locales
+#' @importFrom utils read.csv
 detect_label <- function(label) {
     if (length(label) == 1) return(label)
     locale <- Sys.getlocale("LC_COLLATE")

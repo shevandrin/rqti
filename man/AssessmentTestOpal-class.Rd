@@ -65,7 +65,10 @@ end of the testing a grade according to 5-point academic grade system as a
 feedback; \code{FALSE} by default}
 
 \item{\code{grade_label}}{character, optional; a short message that shows with a
-grade in the final feedback; "Grade:" is default}
+grade in the final feedback; for multilingual use, it can be a named vector
+with two-letter ISO language codes as names (e.g., c(en="Grade",
+de="Note")); during test creation, it takes the value for the language of
+the operating system; "Grade" is default}
 
 \item{\code{show_test_time}}{boolean, optional; determines to show candidate elapsed
 processing time without time limit; default 'FALSE'}
