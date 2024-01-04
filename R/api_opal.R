@@ -1,9 +1,9 @@
 #' Authentification in OPAL API
 #'
 #' Function `auth_opal()` performs the necessary authentication steps in OPAL
-#' API. If the authentication is successful, the function sets the cookie value
+#' API. If the authentication is successful, the function sets the token value
 #' in the system environment and returns the user's identity key in OPAL. The
-#' cookie value is required to access the OPAL API system."
+#' token value is required to access the OPAL API system.
 #'
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
@@ -13,50 +13,64 @@
 #'   these command into .Renviron.
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
-#'  OPAL-username and password. This function can get `api_user` from
-#'  environment variables. To set a global environment variable, you need to
-#'  call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` or you can put these
-#'  commands into .Renviron. This package uses system credential store 'keyring'
-#'  to store user's password.
+#'   OPAL-username and password. This package uses system credential store
+#'   'keyring' to store user's name and password. After the first successful
+#'   access to the OPAL API, there is no need to specify the username and
+#'   password again, they will be extracted from the system credential store
 #'
 #' @return user id
 #' @name auth_opal
 #' @rdname auth_opal
-#' @importFrom httr2 request req_error req_perform resp_body_xml req_headers resp_body_json req_method req_body_multipart
+#' @importFrom httr2 request req_error req_perform resp_body_xml req_headers
+#'   resp_body_json req_method req_body_multipart
 #' @import getPass
 #' @import keyring
 #' @export
 auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     user_id <- NULL
-
-    if (is.null(api_user)) api_user <- Sys.getenv("QTI_API_USER")
     if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
 
-    if (api_user == "") {
-        api_user <- readline("Enter Username on Opal: ")
-        Sys.setenv(QTI_API_USER = api_user)
-    }
-    if (is.null(api_password)) {
-            if (has_keyring_support()) {
-            # OS supports keyring
-            if (!any(keyring_list()$keyring == "qtiopal")) {
-                keyring_create("qtiopal", password = "qtiopal")
-            }
-
-            keyring_unlock("qtiopal", "qtiopal")
-
-            if (!any(key_list("qtiopal", "qtiopal")$username == api_user)) {
-                key_set("qtiopal", username = api_user, keyring = "qtiopal",
-                        prompt = paste0("Password for ", api_user, ":"))
-            }
-            api_password <- key_get(service = "qtiopal", keyring = 'qtiopal',
-                                    username = api_user)
-
-        } else {
-            # OS does not support keyring
-            api_password <- getPass("Your OS does not support keyring. Enter Password: ")
+    if (has_keyring_support()) {
+        keys <- key_list("qtiopal")
+        if (!is.null(api_user)) {
+            keys <- keys[keys$username == api_user,]
         }
+        n_keys <- nrow(keys)
+
+        if (n_keys == 0) {
+            if (is.null(api_user)) api_user <- readline("Enter Username on Opal: ")
+            if (is.null(api_password)) api_password <- getPass("Enter Password: ")
+            key_set_with_value("qtiopal", api_user, api_password)
+        }
+
+        if (n_keys == 1) {
+            # handle options to rewrite or create new user
+            api_user <- keys$username
+            api_password <- key_get("qtiopal", api_user)
+        }
+
+        if (n_keys > 1) {
+            menu_options <- c(keys$username, "Abort")
+            if (interactive()) {
+                key <- menu(title = "Choose a user:", menu_options)
+            } else {
+                key <- length(menu_options)
+            }
+            # abort
+            if (key %in% c(length(menu_options), 0)) return(NULL)
+            # assign a user
+            if (key %in% seq(length(menu_options) - 1)) {
+                api_user <- menu_options[key]
+                print(api_user)
+                api_password <- key_get("qtiopal", api_user)
+            }
+        }
+    } else {
+        # OS does not support keyring
+        if (is.null(api_user)) api_user <- readline("Your OS does not support keyring. Enter Username on Opal: ")
+        if (is.null(api_password)) api_password <- getPass("Enter Password: ")
     }
+
     url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
     req <- request(url_login)
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
@@ -71,18 +85,16 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
         user_id <-  NULL
         }
     if (response$status_code == 401) {
-        if (has_keyring_support()) {
-            if (api_user %in% key_list("qtiopal", "qtiopal")$username) {
-                key_delete("qtiopal", api_user, "qtiopal")
-            }
-        }
         message("401 Unauthorized")
         cat("Would you like to change username and password?")
         choice <- readline("Press \'y\' to change data or any key to exit: ")
         # Check the user's choice
         if (tolower(choice) == "y") {
-            Sys.unsetenv("QTI_API_USER")
-            user_id <- auth_opal()
+            if (has_keyring_support()) {
+                key_delete("qtiopal", api_user)
+                api_user <- readline("Enter Username on Opal: ")
+            }
+            user_id <- auth_opal(api_user)
         }
     }
     return(user_id)
@@ -113,11 +125,10 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 #'@param api_user username on OPAL
 #'@param api_password password on OPAL
 #'@section Authentication: To use OPAL API, you need to provide your
-#'  OPAL-username and password. This function can get `api_user` from
-#'  environment variables. To set a global environment variable, you need to
-#'  call `Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')` or you can put these
-#'  commands into .Renviron. This package uses system credential store 'keyring'
-#'  to store user's password.
+#'   OPAL-username and password. This package uses system credential store
+#'   'keyring' to store user's name and password. After the first successful
+#'   access to the OPAL API, there is no need to specify the username and
+#'   password again, they will be extracted from the system credential store
 #'
 #'@return list with key and url
 #'@importFrom utils browseURL

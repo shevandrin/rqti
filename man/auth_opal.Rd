@@ -21,16 +21,15 @@ user id
 }
 \description{
 Function \code{auth_opal()} performs the necessary authentication steps in OPAL
-API. If the authentication is successful, the function sets the cookie value
+API. If the authentication is successful, the function sets the token value
 in the system environment and returns the user's identity key in OPAL. The
-cookie value is required to access the OPAL API system."
+token value is required to access the OPAL API system.
 }
 \section{Authentication}{
  To use OPAL API, you need to provide your
-OPAL-username and password. This function can get \code{api_user} from
-environment variables. To set a global environment variable, you need to
-call \code{Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')} or you can put these
-commands into .Renviron. This package uses system credential store 'keyring'
-to store user's password.
+OPAL-username and password. This package uses system credential store
+'keyring' to store user's name and password. After the first successful
+access to the OPAL API, there is no need to specify the username and
+password again, they will be extracted from the system credential store
 }
 
