@@ -5,37 +5,38 @@ qti_project <- function(path, ...) {
     dir.create(path, recursive = TRUE, showWarnings = FALSE)
     # collect inputs
     dots <- list(...)
+    sys_path <- system.file(package="qti")
     # copy templates
     if (dots$check_sc) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "sc.Rmd"))
     }
     if (dots$check_mc) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/multiplechoice-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/multiplechoice-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "mc.Rmd"))
     }
     if (dots$check_gp) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/gap-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/gap-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "gap.Rmd"))
     }
     if (dots$check_dd) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/dropdown-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/dropdown-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "dropdown.Rmd"))
     }
     if (dots$check_or) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/order-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/order-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "order.Rmd"))
     }
     if (dots$check_tb) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/table-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/table-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "table.Rmd"))
     }
     if (dots$check_dp) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/directedpair-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/directedpair-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "directedpair.Rmd"))
     }
     if (dots$check_es) {
-        temp <- normalizePath("qti/inst/rmarkdown/templates/essay-simple/skeleton/skeleton.Rmd")
+        temp <- file.path(sys_path, "rmarkdown/templates/essay-simple/skeleton/skeleton.Rmd")
         file.copy(temp, file.path(path, "essay.Rmd"))
     }
     # create Rprofile
