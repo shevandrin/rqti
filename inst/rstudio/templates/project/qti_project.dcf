@@ -1,0 +1,51 @@
+Binding: qti_project
+Title: QTI Project Template
+OpenFiles: INDEX
+
+Parameter: check_sc
+Widget: CheckboxInput
+Label: Single Choice Template
+Default: On
+Position: left
+
+Parameter: check_mc
+Widget: CheckboxInput
+Label: Multiple Choice Template
+Default: On
+Position: left
+
+Parameter: check_gp
+Widget: CheckboxInput
+Label: Gap Template
+Default: On
+Position: left
+
+Parameter: check_dd
+Widget: CheckboxInput
+Label: Dropdown Template
+Default: On
+Position: left
+
+Parameter: check_or
+Widget: CheckboxInput
+Label: Order Template
+Default: On
+Position: right
+
+Parameter: check_tb
+Widget: CheckboxInput
+Label: Table Template
+Default: On
+Position: right
+
+Parameter: check_dp
+Widget: CheckboxInput
+Label: Directed Pairs Template
+Default: On
+Position: right
+
+Parameter: check_es
+Widget: CheckboxInput
+Label: Essay Template
+Default: On
+Position: right
