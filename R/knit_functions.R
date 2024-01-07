@@ -95,7 +95,7 @@ start_server <- function() {
     # this will kill all servers that were started via
     # servr in the session; maybe this is not necessary
     servr::daemon_stop(which = servr::daemon_list())
-    server_info <- servr::httw(dir = path, verbose = F)
+    server_info <- servr::httw(dir = path, verbose = F, browser = F)
     message("To stop the server, run stop_server(). If you restart the R session, the server is restarted, too. Call start_server() to manually (re)start the server.\nServing the directory ", path, " at ", server_info$url)
     # only way to get the url when using Knit Button
     Sys.setenv("QTI_URL" = server_info$url)
