@@ -40,7 +40,7 @@ qti_project <- function(path, ...) {
         file.copy(temp, file.path(path, "essay.Rmd"))
     }
     # create Rprofile
-    text <- c("Sys.setenv(QTI_API_ENDPOINT=\"https://bildungsportal.sachsen.de/opal/\")",
+    text <- c(paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
               "library(qti)")
     contents <- paste(
         # paste(header, collapse = "\n"),

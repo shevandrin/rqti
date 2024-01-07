@@ -2,6 +2,19 @@ Binding: qti_project
 Title: QTI Project
 OpenFiles: INDEX
 
+Parameter: url_endpoint
+Widget: TextInput
+Label: BPS API Endpoint
+Default: https://bildungsportal.sachsen.de/opal/
+Position: left
+
+Parameter: start_server
+Widget: SelectInput
+Label: Autostart server
+Fields: TRUE, FALSE
+Default: TRUE
+Position: right
+
 Parameter: check_sc
 Widget: CheckboxInput
 Label: Single Choice Template
