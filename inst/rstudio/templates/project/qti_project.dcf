@@ -15,50 +15,57 @@ Fields: TRUE, FALSE
 Default: TRUE
 Position: right
 
-Parameter: check_sc
+Parameter: singlechoice
 Widget: CheckboxInput
 Label: Single Choice Template
 Default: On
 Position: left
 
-Parameter: check_mc
+Parameter: multiplechoice
 Widget: CheckboxInput
 Label: Multiple Choice Template
 Default: On
 Position: left
 
-Parameter: check_gp
+Parameter: gap
 Widget: CheckboxInput
 Label: Gap Template
 Default: On
 Position: left
 
-Parameter: check_dd
+Parameter: dropdown
 Widget: CheckboxInput
 Label: Dropdown Template
 Default: On
 Position: left
 
-Parameter: check_or
+Parameter: order
 Widget: CheckboxInput
 Label: Order Template
 Default: On
 Position: right
 
-Parameter: check_tb
+Parameter: table
 Widget: CheckboxInput
 Label: Table Template
 Default: On
 Position: right
 
-Parameter: check_dp
+Parameter: directedpair
 Widget: CheckboxInput
 Label: Directed Pairs Template
 Default: On
 Position: right
 
-Parameter: check_es
+Parameter: essay
 Widget: CheckboxInput
 Label: Essay Template
 Default: On
 Position: right
+
+Parameter: render
+Widget: SelectInput
+Label: Default way to render templates
+Fields: QTIJS, OPAL
+Default: OPAL
+Position: left

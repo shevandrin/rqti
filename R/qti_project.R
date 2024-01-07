@@ -7,48 +7,40 @@ qti_project <- function(path, ...) {
     dots <- list(...)
     sys_path <- system.file(package="qti")
     # copy templates
-    if (dots$check_sc) {
-        temp <- file.path(sys_path, "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "sc.Rmd"))
-    }
-    if (dots$check_mc) {
-        temp <- file.path(sys_path, "rmarkdown/templates/multiplechoice-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "mc.Rmd"))
-    }
-    if (dots$check_gp) {
-        temp <- file.path(sys_path, "rmarkdown/templates/gap-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "gap.Rmd"))
-    }
-    if (dots$check_dd) {
-        temp <- file.path(sys_path, "rmarkdown/templates/dropdown-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "dropdown.Rmd"))
-    }
-    if (dots$check_or) {
-        temp <- file.path(sys_path, "rmarkdown/templates/order-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "order.Rmd"))
-    }
-    if (dots$check_tb) {
-        temp <- file.path(sys_path, "rmarkdown/templates/table-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "table.Rmd"))
-    }
-    if (dots$check_dp) {
-        temp <- file.path(sys_path, "rmarkdown/templates/directedpair-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "directedpair.Rmd"))
-    }
-    if (dots$check_es) {
-        temp <- file.path(sys_path, "rmarkdown/templates/essay-simple/skeleton/skeleton.Rmd")
-        file.copy(temp, file.path(path, "essay.Rmd"))
-    }
+    temps <- c("singlechoice", "multiplechoice", "gap",
+               "dropdown", "order", "table",
+               "directedpair", "essay")
+    temps_dots <- dots[temps]
+    Map(copy_template, temps_dots, names(temps_dots), path, dots['render'])
+
     # create Rprofile
     text <- c(paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
               paste0("Sys.setenv(QTI_AUTOSTART_SERVER=\"", dots$start_server, "\")"),
               "library(qti)")
     contents <- paste(
-        # paste(header, collapse = "\n"),
         paste(text, collapse = "\n"),
         sep = "\n"
     )
     # write to Rprofile
     writeLines(contents, con = file.path(path, ".Rprofile"))
 
+}
+
+copy_template <- function(need_copy, name, path, render) {
+    if (need_copy) {
+        temp <- paste0("rmarkdown/templates/", name,
+                       "-simple/skeleton/skeleton.Rmd")
+        sys_path <- system.file(package="qti")
+        temp_path <- file.path(sys_path, temp)
+        file_t <- file.path(path, paste0(name, ".Rmd"))
+        file.copy(temp_path, file_t)
+        if (render == "OPAL") replace_knit_method(file_t)
+    }
+}
+
+#' @importFrom stringr str_replace
+replace_knit_method <- function(file_path) {
+    content <- readLines(file_path, warn = FALSE)
+    content <- stringr::str_replace(content, "knit: .*", "knit: qti::render_opal")
+    writeLines(content, file_path)
 }
