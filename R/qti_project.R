@@ -41,6 +41,7 @@ qti_project <- function(path, ...) {
     }
     # create Rprofile
     text <- c(paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
+              paste0("Sys.setenv(QTI_AUTOSTART_SERVER=\"", dots$start_server, "\")"),
               "library(qti)")
     contents <- paste(
         # paste(header, collapse = "\n"),

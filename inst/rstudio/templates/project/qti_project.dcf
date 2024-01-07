@@ -10,7 +10,7 @@ Position: left
 
 Parameter: start_server
 Widget: SelectInput
-Label: Autostart server
+Label: Launch QTIJS Server
 Fields: TRUE, FALSE
 Default: TRUE
 Position: right
