@@ -430,7 +430,7 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
             } else {
                  cls <- "DirectedPair"
                  message(paste("The task is converted into \'Directed pair\'",
-                               "type. To keep table put \'as_table=T\'",
+                               "type. To keep table put \'as_table: TRUE\'",
                                "in yaml section of the Rmd file"))
             }
 
