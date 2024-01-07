@@ -1,6 +1,6 @@
 ---
 type: dp
-knit: qti::render_opal
+knit: qti::render_qtijs
 identifier: TOPIC1_Q006 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 orientation: horizontal # how items are placed on screen

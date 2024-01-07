@@ -1,6 +1,6 @@
 ---
 type: order
-knit: qti::render_opal
+knit: qti::render_qtijs
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 points_per_answer: false # defines the scoring method, `false` means the completely correct order must be restored by the candidate in order to get points
