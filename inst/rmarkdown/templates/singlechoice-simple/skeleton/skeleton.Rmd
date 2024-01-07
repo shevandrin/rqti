@@ -7,7 +7,7 @@ knit: qti::render_qtijs
 
 An alpha error of 5% means that:
 
-- There is a 5% probability that you will mistakenly reject the null hypothesis (Type I error) when it is actually true.<!-- First option is treated as the correct one by default. -->
+- There is a 5% probability that you will mistakenly reject the null hypothesis, when it is actually correct <!-- First option is treated as the correct one by default. -->
 - There is a 5% probability that the null hypothesis is correct.
 - There is a 5% probability that you will mistakenly reject the alternative hypothesis, when it is correct.
 - The test power is 95%.
@@ -16,6 +16,6 @@ An alpha error of 5% means that:
 
 The correct interpretation is:
 
-There is a 5% probability that you will mistakenly reject the null hypothesis (Type I error) when it is actually true.
+There is a 5% probability that you will mistakenly reject the null hypothesis, when it is correct.
 
 This is based on the typical understanding of a 5% significance level in hypothesis testing, which means that you are willing to accept a 5% chance of making a Type I error.

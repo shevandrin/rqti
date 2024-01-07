@@ -3,22 +3,43 @@ type: gap
 knit: qti::render_qtijs
 ---
 
-```{r echo=F}
+```{r, preparation}
 library(qti)
+```
+
+```{r, data}
+iq <- round(rnorm(10, 100, 15))
+mean_iq <- mean(iq)
 ```
 
 # question
 
 ## numeric gaps
 
-The qti package has <<114>> tests. The test coverage of the package is `r gap_numeric(90, tolerance = 5)`%.
+IQ Tests are standardized to have a mean value of <<100>>.
 
-In the last gap, the tolerance was set to 5 and the correct solution to 90. This means that the interval from 85 to 95 is a correct response (90+-5). The parameter `tolerance_type` determines how the tolerance is calculated. Setting it to `relative`, would make the interval go from 0.855 to 0.945 (90+-5%).
+You conducted an IQ test for 10 persons and found the following values: 
+
+`r iq`
+
+What is the mean value of these IQ values? `r gap_numeric(mean(iq))`
+
+The same question, but now with a tolerance of +-5: `r gap_numeric(mean(iq), tolerance = 5)`
+
+The same question, but now with a relative tolerance of +-5%: `r gap_numeric(mean(iq), tolerance = 5, tolerance_type = "absolute")`
+
+In the last gap, the tolerance was set to 5, meaning that the solution+-5 is treated as correct. The parameter `tolerance_type` determines how the tolerance is calculated. Setting it to `relative`, would make the interval go from solution+-5% of the solution.
 
 ## text gaps
 
-The qti package can access the API of the learning management system <<OPAL>> (by BPS). BPS stands for `r gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"), tolerance = 4, case_sensitive = FALSE)`. OPAL allows a new attribute for text gaps (`tolerance`), which takes into account spelling mistakes. Only use it with the OPAL LMS as it is probably not supported on other LMS. Further note that using this attribute will make the xml files invalid regarding the QTI standard.
+The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A. Binet"))` in the early 20th century with the intention of identifying students who might need extra assistance. Over the years, IQ tests have evolved, and various versions exist today, such as the WAIS, standing for `r gap_text("Wechsler", case_sensitive = F, tolerance = 2)` Adult Intelligence Scale, and the <<Stanford>>-Binet Intelligence Scales.
+
+Please be advised that OPAL has introduced a new attribute for text gaps—`tolerance`—which now accommodates considerations for spelling errors. It is crucial to restrict the use of this attribute to the OPAL Learning Management System (LMS), as it may not be compatible with other Learning Management Systems. Furthermore, it is important to note that employing this attribute will result in the XML files being rendered invalid according to the QTI standard.
 
 # feedback
 
-For numeric gaps, the LMS will usually display the correct value inline, but you might still want to provide some detailed explanations here.
+1. IQ Tests are standardized to have a mean of 100.
+1. The correct mean value for `r iq` is `r mean_iq`.
+1. The original IQ test was developed by Alfred Binet.
+1. WAIS: W stands for Wechsler
+1. It is the Stanford-Binet Intelligence Scales.
