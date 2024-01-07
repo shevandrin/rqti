@@ -1,20 +1,21 @@
 ---
 type: sc
-knit: qti::render_opal
-solution: 3
+knit: qti::render_qtijs
 ---
 
 # question
 
-Which version of the QTI standard is used by the R package qti?
+An alpha error of 5% means that:
 
-- 2.1 <!-- First option is always the correct one-->
-- 1.2
-- 3.0
-- 2.2
+- There is a 5% probability that you will mistakenly reject the null hypothesis (Type I error) when it is actually true.<!-- First option is treated as the correct one by default. -->
+- There is a 5% probability that the null hypothesis is correct.
+- There is a 5% probability that you will mistakenly reject the alternative hypothesis, when it is correct.
+- The test power is 95%.
 
 # feedback
 
-The used qti version is 2.1. 
+The correct interpretation is:
 
-<!-- The whole feedback section is optional. For non-trivial examples you might still want to provide an explanation. -->
+There is a 5% probability that you will mistakenly reject the null hypothesis (Type I error) when it is actually true.
+
+This is based on the typical understanding of a 5% significance level in hypothesis testing, which means that you are willing to accept a 5% chance of making a Type I error.
