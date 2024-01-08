@@ -1,6 +1,6 @@
 Binding: qti_project
 Title: QTI Project
-OpenFiles: INDEX
+OpenFiles: main.R
 
 Parameter: url_endpoint
 Widget: TextInput
