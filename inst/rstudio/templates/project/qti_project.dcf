@@ -67,5 +67,5 @@ Parameter: render
 Widget: SelectInput
 Label: Default way to render templates
 Fields: QTIJS, OPAL
-Default: OPAL
+Default: QTIJS
 Position: left
