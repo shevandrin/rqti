@@ -33,11 +33,11 @@ qti_project <- function(path, ...) {
         "# demonstrating workflow.",
         "#",
         "# Step 1. Prepare set of Rmd files with individual exercises.",
-        "# To create Rmd choose one of the Rstudio file templates starting with QTI: ….",
+        "# To create Rmd choose one of the Rstudio file templates starting with QTI: .",
         "# or edit the templates that have been copied to your working directory.\n"
     )
     filter_files <- Filter(Negate(is.null), temps_files)
-    print_files <- sapply(filter_files, function(x) paste0('"', x, '"'))
+    print_files <- sapply(filter_files, function(x) paste0('\"', x, '\"'))
     list_files <- "\"muster_exercise1.Rmd\", \"muster_exercise2.Rmd\""
     if (length(print_files) != 0) {
         list_files <- paste(print_files, collapse = ", ")
@@ -53,7 +53,7 @@ qti_project <- function(path, ...) {
         "# Step 3. Create test.\n",
         "test <- test(section, \"muster_test\")\n",
         "# Step 4. Upload to LMS.\n",
-        "upload2opal(test)\n"
+        "upload2opal(test)"
     )
 
     contents <- paste(
