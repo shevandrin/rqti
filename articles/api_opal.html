@@ -128,14 +128,12 @@ Chemnitz</strong>, you can expedite this process by sending an email to
 <a href="mailto:e-learning@tu-chemnitz.de" class="email">e-learning@tu-chemnitz.de</a>. In your email, explicitly
 state your need for a password-based login to facilitate API usage, and
 include your username for reference.</p>
-<p>For authentication to OPAL <code>qti</code> uses a global environment
-variable: <code>QTI_API_USER</code>. To set it, you need to call
-<code>Sys.setenv(QTI_API_USER ='xxxxxxxxxxxxxxx')</code> or you can set
-this variable in .Renviron:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">QTI_API_USER</span><span class="op">=</span><span class="st">"your_username"</span></span></code></pre></div>
-<p>To store the password, <code>qti</code> uses the keyring system
-credential storage. The first time authentication is attempted, it asks
-for a password and saves it in a keychain named “qtiopal”.</p>
+<p>To store the username and password, <code>qti</code> uses the keyring
+system credential storage. The first time authentication is attempted,
+it asks for a username and a password and saves them in a key with
+service name “qtiopal”. Once the key is created, it is automatically
+used in further sessions. It is not recommended to create additional
+keys so that the workflow runs smoothly.</p>
 <p>Some universities only allow to use the OPAL API in the network of
 the university. Before calling <code><a href="../reference/upload2opal.html">upload2opal()</a></code> set up a VPN
 client accordingly. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link">see the
@@ -147,7 +145,7 @@ instructions here</a></p>
 <p>You can either set the <code>knit: qti::render_opal</code> parameter
 in the yaml-section of your Rmd file or just call
 <code><a href="../reference/upload2opal.html">upload2opal()</a></code> with the file as the first parameter:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span> <span class="co"># or "exercise.Rmd" or "exercise.xml"</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre></div>
 <p>If this is successful you can expect the following outcomes:</p>
@@ -178,14 +176,14 @@ to do.</p>
 <p>By default <code><a href="../reference/upload2opal.html">upload2opal()</a></code> uses the file name as the
 <code>display_name</code>. But you can define your own as the second
 parameter:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span>, display_name <span class="op">=</span> <span class="st">"Exam123"</span><span class="op">)</span></span></code></pre></div>
 <p>Currently, there is no option to delete exercises via the API. But
 you can display the URL of an exercise via:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_resource_url.html">get_resource_url</a></span><span class="op">(</span>display_name <span class="op">=</span> <span class="st">"Exam123"</span><span class="op">)</span></span></code></pre></div>
 <p>Or show all resources via:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_resources.html">get_resources</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>This will return a list with all resources, again nested in a
 list.</p>
@@ -203,7 +201,7 @@ which will log you out via the API. Currently, there is not better
 solution for this procedure. Take this into account if you upload
 sensitive content! For instance, exercises that will be used in an
 upcoming exam. You can set the access rights via</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uplod2opal</span>(..., <span class="at">access =</span> ?)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uplod2opal</span>(..., <span class="at">access =</span> ?)</span></code></pre></div>
 <ul>
 <li>1: only the persons responsible for this learning resource</li>
 <li>2: responsible and other authors</li>
