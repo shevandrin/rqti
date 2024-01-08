@@ -12,7 +12,7 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
     task <- create_question_object(file)
     section <- new("AssessmentSection", assessment_item = list(task))
     test <- new("AssessmentTestOpal",
-                identifier = paste0("test_", task@identifier),
+                identifier = task@identifier,
                 title = "QTIJS Preview", section = list(section))
     createQtiTest(test, dir = path, verification = verification,
                   zip_only = TRUE)
