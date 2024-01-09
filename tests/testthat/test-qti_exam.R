@@ -14,10 +14,10 @@ test_that("Testing of counting points in the test if all tasks
               by <- "variants"
 
               # Call the function under test
-              sut_section <- section(file,
+              sut_section <- suppressMessages(section(file,
                                      n_variants = num_variants,
                                      seed_number = seed_number,
-                                     by = by)
+                                     by = by))
 
               test <- test(sut_section, "test1")
               expect_equal(test@points, 6.5)
@@ -56,7 +56,7 @@ test_that("Testing of counting points in the test that had
             by <- "variants"
 
             # Call the function under test
-            root_section = list(section(files1,
+            root_section = suppressMessages(list(section(files1,
                                 n_variants = num_variants1,
                                 seed_number = seed_number1,
                                 by = by),
@@ -66,7 +66,7 @@ test_that("Testing of counting points in the test that had
                                 section(files3,
                                         n_variants = num_variants3,
                                         seed_number = seed_number3,
-                                        by = by))
+                                        by = by)))
               test <- test(root_section, "test1")
               expect_equal(test@points, 22)
 })
