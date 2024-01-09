@@ -18,7 +18,7 @@ test_that("Testing createQtiTest() method for the object of character
         sut_2 <- createQtiTest(path_2)
 
         expected_path_1 <- file.path(getwd(),"Preview.zip")
-        expected_path_2 <- file.path(getwd(),"test_test_OneInRowTable_example.zip")
+        expected_path_2 <- file.path(getwd(),"test_OneInRowTable_example.zip")
 
         expect_equal(sut_1,expected_path_1)
         expect_equal(sut_2,expected_path_2)
