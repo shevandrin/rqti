@@ -10,7 +10,7 @@ test_that("test rmd2zip", {
     # this part tests path without file name
     suppressMessages(rmd2zip(file, "to_delete/subfolder"))
     sut2 <- sort(list.files("to_delete/subfolder"))
-    expected2 <- "test_entry_example.zip"
+    expected2 <- "test_test_entry_example.zip"
     expect_equal(sut2, expected2)
     unlink("to_delete", recursive = TRUE)
 })
