@@ -10,11 +10,9 @@
 #' @export
 rmd2zip <- function(file, path = getwd(), verification = FALSE) {
     task <- create_question_object(file)
-    # to avoid using the same name for task and test due to the same id
+    # to avoid using the same file name for task and test due to the same id
     test_id <- task@identifier
-    if (basename(file) == paste0(task@identifier, ".Rmd")) {
-        task@identifier <- paste0("task_", task@identifier)
-    }
+    task@identifier <- paste0("task_", task@identifier)
     section <- new("AssessmentSection", assessment_item = list(task))
     test <- new("AssessmentTestOpal",
                 identifier = test_id,
