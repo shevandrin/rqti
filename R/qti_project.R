@@ -49,10 +49,18 @@ qti_project <- function(path, ...) {
         "",
         "# Step 2. Create sections.\n",
         "section <- section(exercises)\n",
-        "# Step 3. Create test.\n",
-        "test <- test(section, \"muster_test\")\n",
-        "# Step 4. Upload to LMS.\n",
-        "upload2opal(test)"
+        "# Step 3. Create test.",
+        "test <- test(section, \"muster_test_opal\", time_limits = 90,",
+        "             max_attempts = 2)\n",
+        "# Create test for LMS OPAL",
+        "test_opal <- test4opal(section, \"muster_test_opal\", time_limits = 90,",
+        "                       max_attempts = 2, files = \".Rprofile\",",
+        "                       calculator = \"scientific-calculator\")",
+        "# Step 4. Render Test using QTIJS server\n",
+        "zip_file <- createQtiTest(test, \"test_folder\")",
+        "render_zip(zip_file)\n",
+        "# Step 5. Upload to LMS.\n",
+        "upload2opal(test_opal)"
     )
 
     contents <- paste(
