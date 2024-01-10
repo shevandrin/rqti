@@ -10,9 +10,13 @@ qti_project <- function(path, ...) {
     temps <- c("singlechoice", "multiplechoice", "gap",
                "dropdown", "order", "table",
                "directedpair", "essay")
-    temps_dots <- dots[temps]
-    temps_files <- Map(copy_template, temps_dots, names(temps_dots),
-                       path, dots['render'])
+    if (dots$templates == "YES")  {
+        temps_files <- Map(copy_template, temps, path, dots['render'])
+        print_files <- sapply(temps_files, function(x) paste0('\"', x, '\"'))
+        list_files <- paste(print_files, collapse = ", ")
+    } else {
+        list_files <- "\"muster_exercise1.Rmd\", \"muster_exercise2.Rmd\""
+    }
 
     # create Rprofile
     text <- c(paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
@@ -36,12 +40,7 @@ qti_project <- function(path, ...) {
         "# To create Rmd choose one of the Rstudio file templates starting with QTI: .",
         "# or edit the templates that have been copied to your working directory.\n"
     )
-    filter_files <- Filter(Negate(is.null), temps_files)
-    print_files <- sapply(filter_files, function(x) paste0('\"', x, '\"'))
-    list_files <- "\"muster_exercise1.Rmd\", \"muster_exercise2.Rmd\""
-    if (length(print_files) != 0) {
-        list_files <- paste(print_files, collapse = ", ")
-    }
+
     text_rmd <- c(
         paste0("exercises = c(", list_files, ")")
     )
@@ -67,17 +66,17 @@ qti_project <- function(path, ...) {
     writeLines(contents, con = file.path(path, "main.R"))
 }
 
-copy_template <- function(need_copy, name, path, render) {
-    if (need_copy) {
-        temp <- paste0("rmarkdown/templates/", name,
-                       "-simple/skeleton/skeleton.Rmd")
-        sys_path <- system.file(package="qti")
-        temp_path <- file.path(sys_path, temp)
-        file_t <- file.path(path, paste0(name, ".Rmd"))
-        file.copy(temp_path, file_t)
-        if (render == "OPAL") replace_knit_method(file_t)
-        return(basename(file_t))
-    }
+copy_template <- function(name, path, render) {
+    temp <- paste0("rmarkdown/templates/", name,
+                   "-simple/skeleton/skeleton.Rmd")
+    sys_path <- system.file(package="qti")
+    temp_path <- file.path(sys_path, temp)
+    dir.create(file.path(path, name))
+    target_file <- file.path(name, paste0(name, ".Rmd"))
+    file_t <- file.path(path, target_file)
+    file.copy(temp_path, file_t)
+    if (render == "OPAL") replace_knit_method(file_t)
+    return(target_file)
 }
 
 #' @importFrom stringr str_replace

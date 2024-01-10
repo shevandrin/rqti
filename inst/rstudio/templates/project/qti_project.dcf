@@ -15,53 +15,12 @@ Fields: TRUE, FALSE
 Default: TRUE
 Position: right
 
-Parameter: singlechoice
-Widget: CheckboxInput
-Label: Single Choice Template
-Default: On
+Parameter: templates
+Widget: SelectInput
+Label: Create Templates
+Fields: YES, NO
+Default: YES
 Position: left
-
-Parameter: multiplechoice
-Widget: CheckboxInput
-Label: Multiple Choice Template
-Default: On
-Position: left
-
-Parameter: gap
-Widget: CheckboxInput
-Label: Gap Template
-Default: On
-Position: left
-
-Parameter: dropdown
-Widget: CheckboxInput
-Label: Dropdown Template
-Default: On
-Position: left
-
-Parameter: order
-Widget: CheckboxInput
-Label: Order Template
-Default: On
-Position: right
-
-Parameter: table
-Widget: CheckboxInput
-Label: Table Template
-Default: On
-Position: right
-
-Parameter: directedpair
-Widget: CheckboxInput
-Label: Directed Pairs Template
-Default: On
-Position: right
-
-Parameter: essay
-Widget: CheckboxInput
-Label: Essay Template
-Default: On
-Position: right
 
 Parameter: render
 Widget: SelectInput
