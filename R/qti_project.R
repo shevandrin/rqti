@@ -7,15 +7,20 @@ qti_project <- function(path, ...) {
     dots <- list(...)
     sys_path <- system.file(package="qti")
     # copy templates
-    temps <- c("singlechoice", "multiplechoice", "gap",
-               "dropdown", "order", "table",
+    temps <- c("singlechoice", "multiplechoice", "dropdown", "order", "table",
                "directedpair", "essay")
+    temps_r <- "gap"
     if (dots$templates == "YES")  {
-        temps_files <- Map(copy_template, temps, path, dots['render'])
-        print_files <- sapply(temps_files, function(x) paste0('\"', x, '\"'))
-        list_files <- paste(print_files, collapse = ", ")
+        text_rmd <- c(
+            paste0("exercises = ", print_vector(temps, path, dots['render'])),
+            paste0("exercises_r = ", print_vector(temps_r, path, dots['render']))
+        )
     } else {
-        list_files <- "\"muster_exercise1.Rmd\", \"muster_exercise2.Rmd\""
+        text_rmd <- c(
+           "exercises = c(\"muster_ex1.Rmd\", \"muster_ex2.Rmd\")",
+           "exercises_r = \"muster_ex_r.Rmd\""
+        )
+
     }
 
     # create Rprofile
@@ -41,25 +46,25 @@ qti_project <- function(path, ...) {
         "# or edit the templates that have been copied to your working directory.\n"
     )
 
-    text_rmd <- c(
-        paste0("exercises = c(", list_files, ")")
-    )
-
     text_other <- c(
         "",
         "# Step 2. Create sections.\n",
-        "section <- section(exercises)\n",
+        "permanent_section <- section(exercises)",
+        "variable_section <- section(exercises_r, n_variants = 3)",
+        "sections <- list(variable_section, permanent_section)\n",
         "# Step 3. Create test.",
-        "test <- test(section, \"muster_test_opal\", time_limits = 90,",
+        "test <- test(sections, \"muster_test_opal\", time_limits = 90,",
         "             max_attempts = 2)\n",
         "# Create test for LMS OPAL",
-        "test_opal <- test4opal(section, \"muster_test_opal\", time_limits = 90,",
+        "test_opal <- test4opal(sections, \"muster_test_opal\", time_limits = 90,",
         "                       max_attempts = 2, files = \".Rprofile\",",
         "                       calculator = \"scientific-calculator\")",
         "# Step 4. Render Test using QTIJS server\n",
         "zip_file <- createQtiTest(test, \"test_folder\")",
         "render_zip(zip_file)\n",
-        "# Step 5. Upload to LMS.\n",
+        "# Step 5. Upload to LMS with a final grade.\n",
+        "test_opal@academic_grading = TRUE",
+        "test_opal@grade_label = \"Note\"",
         "upload2opal(test_opal)"
     )
 
@@ -92,4 +97,12 @@ replace_knit_method <- function(file_path) {
     content <- readLines(file_path, warn = FALSE)
     content <- stringr::str_replace(content, "knit: .*", "knit: qti::render_opal")
     writeLines(content, file_path)
+}
+
+print_vector <- function(vec, path, render) {
+    temps_files <- Map(copy_template, vec, path, render)
+    print_files <- sapply(temps_files, function(x) paste0('\"', x, '\"'))
+    list_files <- paste(print_files, collapse = ", ")
+    if (length(vec) > 1) list_files <- paste0("c(", list_files, ")")
+    return(list_files)
 }
