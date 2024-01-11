@@ -62,7 +62,12 @@ section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
         if (nested) {
             selection <- 1
             files_ <- replicate(n_variants, content, simplify = FALSE)
-            sub_items <- mapply(make_exam_subsection, files_, seed_number)
+            if (length(content) > 1) {
+                sub_items <- mapply(make_exam_subsection, files_, seed_number)
+            } else {
+                sub_items <- mapply(make_variant, files_, seed_number)
+            }
+
         } else {
             selection <- NA_integer_
             sub_items <- lapply(content, FUN=make_variant_subsection,
