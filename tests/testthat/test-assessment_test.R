@@ -146,7 +146,7 @@ test_that("Testing method createOutcomeDeclaration() with
 					<and>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">3</baseValue>
+							<baseValue baseType=\"float\">2.99</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -166,7 +166,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">3.3</baseValue>
+							<baseValue baseType=\"float\">3.29</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -186,7 +186,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">3.6</baseValue>
+							<baseValue baseType=\"float\">3.59</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -206,7 +206,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">3.9</baseValue>
+							<baseValue baseType=\"float\">3.89</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -226,7 +226,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">4.2</baseValue>
+							<baseValue baseType=\"float\">4.19</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -246,7 +246,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">4.5</baseValue>
+							<baseValue baseType=\"float\">4.49</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -266,7 +266,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">4.8</baseValue>
+							<baseValue baseType=\"float\">4.79</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -286,7 +286,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">5.1</baseValue>
+							<baseValue baseType=\"float\">5.09</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -306,7 +306,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">5.4</baseValue>
+							<baseValue baseType=\"float\">5.39</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -326,7 +326,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">5.7</baseValue>
+							<baseValue baseType=\"float\">5.69</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -410,52 +410,52 @@ test_that("Testing method createOutcomeDeclaration() with
         <tr>
           <td>5.0</td>
           <td>0</td>
-          <td>3</td>
+          <td>2.99</td>
         </tr>
         <tr>
           <td>4.0</td>
           <td>3</td>
-          <td>3.3</td>
+          <td>3.29</td>
         </tr>
         <tr>
           <td>3.7</td>
           <td>3.3</td>
-          <td>3.6</td>
+          <td>3.59</td>
         </tr>
         <tr>
           <td>3.3</td>
           <td>3.6</td>
-          <td>3.9</td>
+          <td>3.89</td>
         </tr>
         <tr>
           <td>3.0</td>
           <td>3.9</td>
-          <td>4.2</td>
+          <td>4.19</td>
         </tr>
         <tr>
           <td>2.7</td>
           <td>4.2</td>
-          <td>4.5</td>
+          <td>4.49</td>
         </tr>
         <tr>
           <td>2.3</td>
           <td>4.5</td>
-          <td>4.8</td>
+          <td>4.79</td>
         </tr>
         <tr>
           <td>2.0</td>
           <td>4.8</td>
-          <td>5.1</td>
+          <td>5.09</td>
         </tr>
         <tr>
           <td>1.7</td>
           <td>5.1</td>
-          <td>5.4</td>
+          <td>5.39</td>
         </tr>
         <tr>
           <td>1.3</td>
           <td>5.4</td>
-          <td>5.7</td>
+          <td>5.69</td>
         </tr>
         <tr>
           <td>1.0</td>

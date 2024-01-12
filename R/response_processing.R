@@ -249,7 +249,7 @@ make_set_conditions_grade <- function(max_points, label) {
     grade_levels <- seq(50, 100, 5) * max_points / 100
     grade_levels <- grade_levels[-length(grade_levels)]
     lower_bounds <- append(list(NULL), as.list(grade_levels))
-    upper_bounds <- append(as.list(grade_levels), list(NULL))
+    upper_bounds <- append(as.list(grade_levels - 0.01), list(NULL))
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
                              upper_bounds, id_grade_fb)
     conditions <- tagList(conditions, create_resp_cond_grade_table())
