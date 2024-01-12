@@ -44,7 +44,9 @@ Note that this will start a qtijs server, which will be used for previewing exer
 
 ## Quick start
 
-Using RStudio, create a new Rmarkdown file, select **from Template** and choose one of the templates starting with **QTI: ...**. The *simple* ones include the minimum, the *complex* ones have more parameters. Click the Knit-Button and you should see a rendered exercise in the Viewer pane. The templates are self-explanatory, but more details about the exercise types can be found in the other articles:
+Using RStudio, go to create a New Project, select **"QTI Project"** as the project type in the New Project Wizard window and and configure some settings. Choose 'YES' for 'Create Templates' to get Rmarkdown templates for all types of tasks in the working directory.
+
+In addition, it is possible to add a new one from the templates. To do this, go to create a new Rmarkdown file, select **from Template** and choose one of the templates starting with **QTI: ...**. The *simple* ones include the minimum, the *complex* ones have more parameters. Click the Knit-Button and you should see a rendered exercise in the Viewer pane. The templates are self-explanatory, but more details about the exercise types can be found in the other articles:
 
 - [Single choice](articles/singlechoice.html)
 - [Multiple choice](articles/multiplechoice.html)
