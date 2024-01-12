@@ -656,12 +656,18 @@ test_that("Testing getIdentifier() method in case of XML file does not exist", {
 
 test_that("Testing a specific attribute 'files' in yaml section of Rmd file",
           {
+    tpath <- "file/test_rmd_files"
     path <- test_path("file/test_rmd_files/test_DirectedPair_from_table.Rmd")
     exam_section <- suppressMessages(section(path))
+    fls <- exam_section@assessment_item[[1]]@files
+    fls <- sapply(fls, function(x) test_path(tpath, x))
+    exam_section@assessment_item[[1]]@files <- fls
     exam <- new("AssessmentTestOpal",
             identifier = "id_test",
             section = list(exam_section))
-    expected <- c("test_fig2.jpg", "test_fig1.jpg",  "statistics.csv")
+    expected <- c(test_path(tpath, "test_fig2.jpg"),
+                  test_path(tpath, "test_fig1.jpg"),
+                  test_path(tpath, "statistics.csv"))
     expect_equal(exam@files, expected)
 })
 

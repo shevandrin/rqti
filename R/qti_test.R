@@ -235,3 +235,13 @@ zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
 
     return(file.path(output, zip_name))
 }
+
+check_files_existence <- function(files) {
+    missing_files <- files[!file.exists(files)]
+    if (length(missing_files) > 0) {
+        stop("The following files do not exist: ",
+             paste(missing_files, collapse = ", "), call. = FALSE)
+    } else {
+        return(invisible(NULL))
+    }
+}
