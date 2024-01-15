@@ -79,6 +79,8 @@
 <span>  max_attempts <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  files <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  calculator <span class="op">=</span> <span class="st">"scientific-calculator"</span>,</span>
+<span>  academic_grading <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  grade_label <span class="op">=</span> <span class="st">"Grade"</span>,</span>
 <span>  navigation_mode <span class="op">=</span> <span class="st">"nonlinear"</span>,</span>
 <span>  submission_mode <span class="op">=</span> <span class="st">"individual"</span>,</span>
 <span>  allow_comment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -122,8 +124,22 @@ accessible to the candidate during the test/exam.</p></dd>
 
 <dt>calculator</dt>
 <dd><p>A character, optional; determines whether to show a calculator to the candidate. Possible values:</p><ul><li><p>'simple-calculator'</p></li>
-<li><p>'scientific-calculator' (assigned by default)</p></li>
+<li><p>'scientific-calculator' (assigned by default).</p></li>
 </ul></dd>
+
+
+<dt>academic_grading</dt>
+<dd><p>A boolean, optional; enables to show to candidate at the
+end of the testing a grade according to 5-point academic grade system as a
+feedback; <code>FALSE</code> by default.</p></dd>
+
+
+<dt>grade_label</dt>
+<dd><p>A string, optional; a short message that shows with a
+grade in the final feedback; for multilingual use, it can be a named vector
+with two-letter ISO language codes as names (e.g., c(en="Grade",
+de="Note")); during test creation, it takes the value for the language of
+the operating system; "Grade" is default.</p></dd>
 
 
 <dt>navigation_mode</dt>
