@@ -206,7 +206,7 @@ test4opal <- function(content, identifier = NULL, title = NULL,
                       navigation_mode = "nonlinear", submission_mode = "individual",
                       time_limit = 90, max_attempts = 1, allow_comment = TRUE,
                       rebuild_variables = TRUE, files = NULL, show_test_time = TRUE,
-                      calculator = NULL, mark_items  = TRUE,
+                      calculator = "scientific-calculator", mark_items  = TRUE,
                       keep_responses = FALSE) {
 
     params <- as.list(environment())
