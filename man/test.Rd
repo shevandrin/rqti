@@ -10,6 +10,8 @@ test(
   title = "Test Title",
   time_limit = 90,
   max_attempts = 1,
+  academic_grading = FALSE,
+  grade_label = "Grade",
   navigation_mode = "nonlinear",
   submission_mode = "individual",
   allow_comment = TRUE,
@@ -29,6 +31,16 @@ candidate for the test in minutes. Default is 90 minutes.}
 
 \item{max_attempts}{A numeric value, optional, indicating the maximum number
 of attempts allowed for the candidate. Default is 1.}
+
+\item{academic_grading}{A boolean, optional; enables to show to candidate at the
+end of the testing a grade according to 5-point academic grade system as a
+feedback; \code{FALSE} by default.}
+
+\item{grade_label}{A string, optional; a short message that shows with a
+grade in the final feedback; for multilingual use, it can be a named vector
+with two-letter ISO language codes as names (e.g., c(en="Grade",
+de="Note")); during test creation, it takes the value for the language of
+the operating system; "Grade" is default}
 
 \item{navigation_mode}{A string, optional, determining the general paths that
 the candidate may have during the exam. Two mode options are possible:

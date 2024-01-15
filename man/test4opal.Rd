@@ -12,6 +12,8 @@ test4opal(
   max_attempts = 1,
   files = NULL,
   calculator = "scientific-calculator",
+  academic_grading = FALSE,
+  grade_label = "Grade",
   navigation_mode = "nonlinear",
   submission_mode = "individual",
   allow_comment = TRUE,
@@ -42,8 +44,18 @@ accessible to the candidate during the test/exam.}
 \item{calculator}{A character, optional; determines whether to show a calculator to the candidate. Possible values:
 \itemize{
 \item 'simple-calculator'
-\item 'scientific-calculator' (assigned by default)
+\item 'scientific-calculator' (assigned by default).
 }}
+
+\item{academic_grading}{A boolean, optional; enables to show to candidate at the
+end of the testing a grade according to 5-point academic grade system as a
+feedback; \code{FALSE} by default.}
+
+\item{grade_label}{A string, optional; a short message that shows with a
+grade in the final feedback; for multilingual use, it can be a named vector
+with two-letter ISO language codes as names (e.g., c(en="Grade",
+de="Note")); during test creation, it takes the value for the language of
+the operating system; "Grade" is default.}
 
 \item{navigation_mode}{A string, optional, determining the general paths that
 the candidate may have during the exam. Two mode options are possible:
