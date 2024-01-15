@@ -143,10 +143,10 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   `individual` - submit candidates' responses on an item-by-idem basis, used
 #'   by default; `simultaneous - candidates` - responses are submitted all
 #'   together by the end of the test
-#' @param time_limits numeric, optional; controls the amount of time a candidate
-#'   is given for the test
+#' @param time_limit numeric, optional; controls the amount of time in
+#' minutes, wich candidate is given for the test; default is 90
 #' @param max_attempts numeric, optional; enables the maximum number of
-#'   attempts, that candidate is allowed to pass
+#'   attempts, that candidate is allowed to pass; default is 1
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
 #'   comments in each question, `TRUE` by default
 #' @param rebuild_variables boolean, optional; enables to recalculate variables and
@@ -154,7 +154,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' @export
 test <- function(content, identifier = NULL, title = NULL,
                  navigation_mode = "nonlinear", submission_mode = "individual",
-                 time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
+                 time_limit = 90, max_attempts = 1, allow_comment = TRUE,
                  rebuild_variables = TRUE) {
 
     params <- as.list(environment())
@@ -185,7 +185,7 @@ test <- function(content, identifier = NULL, title = NULL,
 #' @param time_limit numeric, optional; controls the amount of time in minutes a
 #'   candidate is given for the test; default is 90 min
 #' @param max_attempts numeric, optional; enables the maximum number of
-#'   attempts, that candidate is allowed to pass
+#'   attempts, that candidate is allowed to pass; default is 1
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
 #'   comments in each question, `TRUE` by default
 #' @param rebuild_variables boolean, optional; enables to recalculate variables
@@ -204,7 +204,7 @@ test <- function(content, identifier = NULL, title = NULL,
 #' @export
 test4opal <- function(content, identifier = NULL, title = NULL,
                       navigation_mode = "nonlinear", submission_mode = "individual",
-                      time_limit = 90, max_attempts = NULL, allow_comment = TRUE,
+                      time_limit = 90, max_attempts = 1, allow_comment = TRUE,
                       rebuild_variables = TRUE, files = NULL, show_test_time = FALSE,
                       calculator = NULL, mark_items  = FALSE,
                       keep_responses = FALSE) {

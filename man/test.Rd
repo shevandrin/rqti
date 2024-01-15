@@ -10,8 +10,8 @@ test(
   title = NULL,
   navigation_mode = "nonlinear",
   submission_mode = "individual",
-  time_limits = NULL,
-  max_attempts = NULL,
+  time_limit = 90,
+  max_attempts = 1,
   allow_comment = TRUE,
   rebuild_variables = TRUE
 )
@@ -34,11 +34,11 @@ are submitted for response processing; two mode options are possible:
 by default; \code{simultaneous - candidates} - responses are submitted all
 together by the end of the test}
 
-\item{time_limits}{numeric, optional; controls the amount of time a candidate
-is given for the test}
+\item{time_limit}{numeric, optional; controls the amount of time in
+minutes, wich candidate is given for the test; default is 90}
 
 \item{max_attempts}{numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass}
+attempts, that candidate is allowed to pass; default is 1}
 
 \item{allow_comment}{boolean, optional; enables to allow candidate to leave
 comments in each question, \code{TRUE} by default}

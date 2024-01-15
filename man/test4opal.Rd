@@ -11,7 +11,7 @@ test4opal(
   navigation_mode = "nonlinear",
   submission_mode = "individual",
   time_limit = 90,
-  max_attempts = NULL,
+  max_attempts = 1,
   allow_comment = TRUE,
   rebuild_variables = TRUE,
   files = NULL,
@@ -43,7 +43,7 @@ submitted all together by the end of the test}
 candidate is given for the test; default is 90 min}
 
 \item{max_attempts}{numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass}
+attempts, that candidate is allowed to pass; default is 1}
 
 \item{allow_comment}{boolean, optional; enables to allow candidate to leave
 comments in each question, \code{TRUE} by default}
