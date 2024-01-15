@@ -17,37 +17,43 @@ test(
 )
 }
 \arguments{
-\item{content}{list contains \link{AssessmentSection} objects}
+\item{content}{A list containing \link{AssessmentSection} objects.}
 
-\item{identifier}{string; identifier of the test file; default
-'test_identifier'}
+\item{identifier}{A string indicating the identifier of the test file. Default is 'test_identifier'.}
 
-\item{title}{string, optional; file title; default 'Test Title'}
+\item{title}{A string, optional, representing the file title. Default is
+'Test Title'.}
 
-\item{time_limit}{numeric, optional; controls the amount of time in minutes,
-that is given to a candidate for the test; default is 90 min}
+\item{time_limit}{A numeric value, optional, controlling the time given to a
+candidate for the test in minutes. Default is 90 minutes.}
 
-\item{max_attempts}{numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass; default is 1}
+\item{max_attempts}{A numeric value, optional, indicating the maximum number
+of attempts allowed for the candidate. Default is 1.}
 
-\item{navigation_mode}{string, optional; determines the general paths that
-the candidate may have during exam; two mode options are possible: \code{linear}
+\item{navigation_mode}{A string, optional, determining the general paths that
+the candidate may have during the exam. Two mode options are possible:
 \itemize{
-\item candidate is not allowed to return to the previous questions;
-\code{nonlinear}- candidate is free to navigate, used by default
+\item 'linear': Candidate is not allowed to return to previous questions.
+\item 'nonlinear': Candidate is free to navigate; used by default.
 }}
 
-\item{submission_mode}{string, optional; determines when the candidate's
-responses are submitted for response processing; two mode options are
-possible: \code{individual} - submit candidates' responses on an item-by-idem
-basis, used by default; \code{simultaneous - candidates} - responses are
-submitted all together by the end of the test}
+\item{submission_mode}{A string, optional, determining when the candidate's
+responses are submitted for response processing. One of two mode options is
+possible:
+\itemize{
+\item 'individual': Submit candidates' responses on an item-by-item basis; used by default.
+\item 'simultaneous': Candidates' responses are submitted all together by the end of the test.
+}}
 
-\item{allow_comment}{boolean, optional; enables to allow candidate to leave
-comments in each question, \code{TRUE} by default}
+\item{allow_comment}{A boolean, optional, enabling the candidate to leave
+comments in each question. \code{TRUE} by default.}
 
-\item{rebuild_variables}{boolean, optional; enables to recalculate variables
-and reshuffle the order of choices for each item-attempt; \code{TRUE} by default}
+\item{rebuild_variables}{A boolean, optional, enabling the recalculation of
+variables and reshuffling the order of choices for each item-attempt. \code{TRUE}
+by default.}
+}
+\value{
+An \link{AssessmentTest} object
 }
 \description{
 Create test

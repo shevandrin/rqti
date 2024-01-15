@@ -131,27 +131,29 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 }
 #' Create test
 #'
-#' @param content list contains [AssessmentSection] objects
-#' @param identifier string; identifier of the test file; default
-#'   'test_identifier'
-#' @param title string, optional; file title; default 'Test Title'
-#' @param time_limit numeric, optional; controls the amount of time in minutes,
-#'   that is given to a candidate for the test; default is 90 min
-#' @param max_attempts numeric, optional; enables the maximum number of
-#'   attempts, that candidate is allowed to pass; default is 1
-#' @param navigation_mode string, optional; determines the general paths that
-#'   the candidate may have during exam; two mode options are possible: `linear`
-#'   - candidate is not allowed to return to the previous questions;
-#'   `nonlinear`- candidate is free to navigate, used by default
-#' @param submission_mode string, optional; determines when the candidate's
-#'   responses are submitted for response processing; two mode options are
-#'   possible: `individual` - submit candidates' responses on an item-by-idem
-#'   basis, used by default; `simultaneous - candidates` - responses are
-#'   submitted all together by the end of the test
-#' @param allow_comment boolean, optional; enables to allow candidate to leave
-#'   comments in each question, `TRUE` by default
-#' @param rebuild_variables boolean, optional; enables to recalculate variables
-#'   and reshuffle the order of choices for each item-attempt; `TRUE` by default
+#' @param content A list containing [AssessmentSection] objects.
+#' @param identifier A string indicating the identifier of the test file. Default is 'test_identifier'.
+#' @param title A string, optional, representing the file title. Default is
+#'   'Test Title'.
+#' @param time_limit A numeric value, optional, controlling the time given to a
+#'   candidate for the test in minutes. Default is 90 minutes.
+#' @param max_attempts A numeric value, optional, indicating the maximum number
+#'   of attempts allowed for the candidate. Default is 1.
+#' @param navigation_mode A string, optional, determining the general paths that
+#'   the candidate may have during the exam. Two mode options are possible:
+#'   - 'linear': Candidate is not allowed to return to previous questions.
+#'   - 'nonlinear': Candidate is free to navigate; used by default.
+#' @param submission_mode A string, optional, determining when the candidate's
+#'   responses are submitted for response processing. One of two mode options is
+#'   possible:
+#'   - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
+#'   - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
+#' @param allow_comment A boolean, optional, enabling the candidate to leave
+#'   comments in each question. `TRUE` by default.
+#' @param rebuild_variables A boolean, optional, enabling the recalculation of
+#'   variables and reshuffling the order of choices for each item-attempt. `TRUE`
+#'   by default.
+#' @return An [AssessmentTest] object
 #' @export
 test <- function(content, identifier = "test_identifier", title = "Test Title",
                  time_limit = 90, max_attempts = 1,
@@ -171,38 +173,41 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 
 #' Create test for LMS Opal
 #'
-#' @param content list contains [AssessmentSection] objects
-#' @param identifier string; identifier of the test file; default
-#'   'test_identifier'
-#' @param title string, optional; file title; default 'Test Title'
-#' @param time_limit numeric, optional; controls the amount of time in minutes,
-#' that is given to a candidate for the test; default is 90 min
-#' @param max_attempts numeric, optional; enables the maximum number of
-#'   attempts, that candidate is allowed to pass; default is 1
-#' @param files string vector, optional; paths to files, which will be
-#'   accessible to candidate during the test/exam
-#' @param calculator string, optional; determines to show to candidate
-#'   calculator; possible values: `simple-calculator` or
-#'   `scientific-calculator`, the last one is assigned by default
-#' @param navigation_mode string, optional; determines the general paths that
-#'   the candidate may have during exam; two mode options are possible: `linear`
-#'   - candidate is not allowed to return to the previous questions;
-#'   `nonlinear`- candidate is free to navigate, used by default
-#' @param submission_mode string, optional; determines when the candidate's
-#'   responses are submitted for response processing; two mode options are
-#'   possible: `individual` - submit candidates' responses on an item-by-idem
-#'   basis, used by default; `simultaneous - candidates` - responses are
-#'   submitted all together by the end of the test
-#' @param allow_comment boolean, optional; enables to allow candidate to leave
-#'   comments in each question, `TRUE` by default
-#' @param rebuild_variables boolean, optional; enables to recalculate variables and
-#'   reshuffle the order of choices for each item-attempt; `TRUE` by default
-#' @param show_test_time boolean, optional; determines to show candidate elapsed
-#'   processing time without time limit; default `TRUE`
-#' @param mark_items boolean, optional; determines to allow candidate marking of
-#'   questions, default `TRUE`
-#' @param keep_responses boolean, optional; determines to save candidate's
-#'   answers of the previous attempt, default `FALSE`
+#' @param content A list containing [AssessmentSection] objects.
+#' @param identifier A string indicating the identifier of the test file.
+#' Default is 'test_identifier'.
+#' @param title A string, optional, representing the file title. Default is
+#'   'Test Title'.
+#' @param time_limit A numeric value, optional, controlling the time given to a
+#'   candidate for the test in minutes. Default is 90 minutes.
+#' @param max_attempts A numeric value, optional, indicating the maximum number
+#'   of attempts allowed for the candidate. Default is 1.
+#' @param files A character vector, optional; paths to files that will be
+#' accessible to the candidate during the test/exam.
+#' @param calculator A character, optional; determines whether to show a calculator to the candidate. Possible values:
+#'   - 'simple-calculator'
+#'   - 'scientific-calculator' (assigned by default)
+#' @param navigation_mode A string, optional, determining the general paths that
+#'   the candidate may have during the exam. Two mode options are possible:
+#'   - 'linear': Candidate is not allowed to return to previous questions.
+#'   - 'nonlinear': Candidate is free to navigate; used by default.
+#' @param submission_mode A string, optional, determining when the candidate's
+#'   responses are submitted for response processing. One of two mode options is
+#'   possible:
+#'   - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
+#'   - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
+#' @param allow_comment A boolean, optional, enabling the candidate to leave
+#'   comments in each question. `TRUE` by default.
+#' @param rebuild_variables A boolean, optional, enabling the recalculation of
+#'   variables and reshuffling the order of choices for each item-attempt. `TRUE`
+#'   by default.
+#' @param show_test_time A boolean, optional, determining whether to show
+#'   candidate elapsed processing time without a time limit. Default is `TRUE`.
+#' @param mark_items A boolean, optional, determining whether to allow candidate
+#'   marking of questions. Default is `TRUE`.
+#' @param keep_responses A boolean, optional, determining whether to save the
+#'   candidate's answers from the previous attempt. Default is `FALSE`.
+#' @return An [AssessmentTestOpal] object
 #' @export
 test4opal <- function(content, identifier = "test_identifier",
                       title = "Test Title", time_limit = 90, max_attempts = 1,
