@@ -140,8 +140,8 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   attempts, that candidate is allowed to pass; default is 1
 #' @param navigation_mode string, optional; determines the general paths that the
 #'   candidate may have during exam; two mode options are possible: `linear`
-#'   "linear" - candidate is not allowed to return to the previous questions;
-#'   `nonlinear`- candidate if free to navigate, used by default
+#'   - candidate is not allowed to return to the previous questions;
+#'   `nonlinear`- candidate is free to navigate, used by default
 #' @param submission_mode string, optional; determines when the candidate's responses
 #'   are submitted for response processing; two mode options are possible:
 #'   `individual` - submit candidates' responses on an item-by-idem basis, used
@@ -150,12 +150,12 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
 #'   comments in each question, `TRUE` by default
 #' @param rebuild_variables boolean, optional; enables to recalculate variables and
-#'   reshuffle the order of choices for each item-attempt
+#'   reshuffle the order of choices for each item-attempt; `TRUE` by default
 #' @export
 test <- function(content, identifier = NULL, title = NULL,
+                 time_limit = 90, max_attempts = 1,
                  navigation_mode = "nonlinear", submission_mode = "individual",
-                 time_limit = 90, max_attempts = 1, allow_comment = TRUE,
-                 rebuild_variables = TRUE) {
+                 allow_comment = TRUE, rebuild_variables = TRUE) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
@@ -184,8 +184,8 @@ test <- function(content, identifier = NULL, title = NULL,
 #'   `scientific-calculator`, the last one is assigned by default
 #' @param navigation_mode string, optional; determines the general paths that
 #'   the candidate may have during exam; two mode options are possible: `linear`
-#'   "linear" - candidate is not allowed to return to the previous questions;
-#'   `nonlinear`- candidate if free to navigate, used by default
+#'   - candidate is not allowed to return to the previous questions;
+#'   `nonlinear`- candidate is free to navigate, used by default
 #' @param submission_mode string, optional; determines when the candidate's
 #'   responses are submitted for response processing; two mode options are
 #'   possible: `individual` - submit candidates' responses on an item-by-idem
@@ -193,8 +193,8 @@ test <- function(content, identifier = NULL, title = NULL,
 #'   submitted all together by the end of the test
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
 #'   comments in each question, `TRUE` by default
-#' @param rebuild_variables boolean, optional; enables to recalculate variables
-#'   and reshuffle the order of choices for each item-attempt
+#' @param rebuild_variables boolean, optional; enables to recalculate variables and
+#'   reshuffle the order of choices for each item-attempt; `TRUE` by default
 #' @param show_test_time boolean, optional; determines to show candidate elapsed
 #'   processing time without time limit; default `TRUE`
 #' @param mark_items boolean, optional; determines to allow candidate marking of

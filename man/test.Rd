@@ -8,10 +8,10 @@ test(
   content,
   identifier = NULL,
   title = NULL,
-  navigation_mode = "nonlinear",
-  submission_mode = "individual",
   time_limit = 90,
   max_attempts = 1,
+  navigation_mode = "nonlinear",
+  submission_mode = "individual",
   allow_comment = TRUE,
   rebuild_variables = TRUE
 )
@@ -23,10 +23,18 @@ test(
 
 \item{title}{string, optional; file title}
 
+\item{time_limit}{numeric, optional; controls the amount of time in minutes,
+that is given to a candidate for the test; default is 90 min}
+
+\item{max_attempts}{numeric, optional; enables the maximum number of
+attempts, that candidate is allowed to pass; default is 1}
+
 \item{navigation_mode}{string, optional; determines the general paths that the
 candidate may have during exam; two mode options are possible: \code{linear}
-"linear" - candidate is not allowed to return to the previous questions;
-\code{nonlinear}- candidate if free to navigate, used by default}
+\itemize{
+\item candidate is not allowed to return to the previous questions;
+\code{nonlinear}- candidate is free to navigate, used by default
+}}
 
 \item{submission_mode}{string, optional; determines when the candidate's responses
 are submitted for response processing; two mode options are possible:
@@ -34,17 +42,11 @@ are submitted for response processing; two mode options are possible:
 by default; \code{simultaneous - candidates} - responses are submitted all
 together by the end of the test}
 
-\item{time_limit}{numeric, optional; controls the amount of time in minutes,
-that is given to a candidate for the test; default is 90 min}
-
-\item{max_attempts}{numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass; default is 1}
-
 \item{allow_comment}{boolean, optional; enables to allow candidate to leave
 comments in each question, \code{TRUE} by default}
 
 \item{rebuild_variables}{boolean, optional; enables to recalculate variables and
-reshuffle the order of choices for each item-attempt}
+reshuffle the order of choices for each item-attempt; \code{TRUE} by default}
 }
 \description{
 Create test

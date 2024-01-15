@@ -43,8 +43,10 @@ calculator; possible values: \code{simple-calculator} or
 
 \item{navigation_mode}{string, optional; determines the general paths that
 the candidate may have during exam; two mode options are possible: \code{linear}
-"linear" - candidate is not allowed to return to the previous questions;
-\code{nonlinear}- candidate if free to navigate, used by default}
+\itemize{
+\item candidate is not allowed to return to the previous questions;
+\code{nonlinear}- candidate is free to navigate, used by default
+}}
 
 \item{submission_mode}{string, optional; determines when the candidate's
 responses are submitted for response processing; two mode options are
@@ -55,8 +57,8 @@ submitted all together by the end of the test}
 \item{allow_comment}{boolean, optional; enables to allow candidate to leave
 comments in each question, \code{TRUE} by default}
 
-\item{rebuild_variables}{boolean, optional; enables to recalculate variables
-and reshuffle the order of choices for each item-attempt}
+\item{rebuild_variables}{boolean, optional; enables to recalculate variables and
+reshuffle the order of choices for each item-attempt; \code{TRUE} by default}
 
 \item{show_test_time}{boolean, optional; determines to show candidate elapsed
 processing time without time limit; default \code{TRUE}}
