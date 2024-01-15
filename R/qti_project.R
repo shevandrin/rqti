@@ -1,4 +1,5 @@
 # The function to create RStudio project template.
+#' @importFrom utils download.file
 qti_project <- function(path, ...) {
 
     # ensure path exists
@@ -62,13 +63,13 @@ qti_project <- function(path, ...) {
         "# Create test for LMS OPAL",
         "test_opal <- test4opal(sections, \"test_demo_opal\", time_limit = 90,",
         "                       max_attempts = 1, files = \"demo_file.pdf\",",
-        "                       calculator = \"scientific-calculator\")",
-        "# Step 4. Render Test using QTIJS server\n",
+        "                       calculator = \"scientific-calculator\",",
+        "                       academic_grading = TRUE,",
+        "                       grade_label = \"Note\")",
+        "# Step 4. Render Test using QTIJS server.\n",
         "zip_file <- createQtiTest(test, \"upload\")",
         "render_zip(zip_file)\n",
         "# Step 5. Upload to LMS with a final grade.\n",
-        "test_opal@academic_grading = TRUE",
-        "test_opal@grade_label = \"Note\"",
         "upload2opal(test_opal)"
     )
 
