@@ -75,10 +75,10 @@
 <span>  <span class="va">content</span>,</span>
 <span>  identifier <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  navigation_mode <span class="op">=</span> <span class="st">"nonlinear"</span>,</span>
-<span>  submission_mode <span class="op">=</span> <span class="st">"individual"</span>,</span>
 <span>  time_limit <span class="op">=</span> <span class="fl">90</span>,</span>
 <span>  max_attempts <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  navigation_mode <span class="op">=</span> <span class="st">"nonlinear"</span>,</span>
+<span>  submission_mode <span class="op">=</span> <span class="st">"individual"</span>,</span>
 <span>  allow_comment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  rebuild_variables <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -98,21 +98,6 @@
 <dd><p>string, optional; file title</p></dd>
 
 
-<dt>navigation_mode</dt>
-<dd><p>string, optional; determines the general paths that the
-candidate may have during exam; two mode options are possible: <code>linear</code>
-"linear" - candidate is not allowed to return to the previous questions;
-<code>nonlinear</code>- candidate if free to navigate, used by default</p></dd>
-
-
-<dt>submission_mode</dt>
-<dd><p>string, optional; determines when the candidate's responses
-are submitted for response processing; two mode options are possible:
-<code>individual</code> - submit candidates' responses on an item-by-idem basis, used
-by default; <code>simultaneous - candidates</code> - responses are submitted all
-together by the end of the test</p></dd>
-
-
 <dt>time_limit</dt>
 <dd><p>numeric, optional; controls the amount of time in minutes,
 that is given to a candidate for the test; default is 90 min</p></dd>
@@ -123,6 +108,21 @@ that is given to a candidate for the test; default is 90 min</p></dd>
 attempts, that candidate is allowed to pass; default is 1</p></dd>
 
 
+<dt>navigation_mode</dt>
+<dd><p>string, optional; determines the general paths that the
+candidate may have during exam; two mode options are possible: <code>linear</code></p><ul><li><p>candidate is not allowed to return to the previous questions;
+<code>nonlinear</code>- candidate is free to navigate, used by default</p></li>
+</ul></dd>
+
+
+<dt>submission_mode</dt>
+<dd><p>string, optional; determines when the candidate's responses
+are submitted for response processing; two mode options are possible:
+<code>individual</code> - submit candidates' responses on an item-by-idem basis, used
+by default; <code>simultaneous - candidates</code> - responses are submitted all
+together by the end of the test</p></dd>
+
+
 <dt>allow_comment</dt>
 <dd><p>boolean, optional; enables to allow candidate to leave
 comments in each question, <code>TRUE</code> by default</p></dd>
@@ -130,7 +130,7 @@ comments in each question, <code>TRUE</code> by default</p></dd>
 
 <dt>rebuild_variables</dt>
 <dd><p>boolean, optional; enables to recalculate variables and
-reshuffle the order of choices for each item-attempt</p></dd>
+reshuffle the order of choices for each item-attempt; <code>TRUE</code> by default</p></dd>
 
 </dl></div>
 
