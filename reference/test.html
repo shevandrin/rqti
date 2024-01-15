@@ -87,53 +87,60 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>content</dt>
-<dd><p>list contains <a href="AssessmentSection-class.html">AssessmentSection</a> objects</p></dd>
+<dd><p>A list containing <a href="AssessmentSection-class.html">AssessmentSection</a> objects.</p></dd>
 
 
 <dt>identifier</dt>
-<dd><p>string; identifier of the test file; default
-'test_identifier'</p></dd>
+<dd><p>A string indicating the identifier of the test file. Default is 'test_identifier'.</p></dd>
 
 
 <dt>title</dt>
-<dd><p>string, optional; file title; default 'Test Title'</p></dd>
+<dd><p>A string, optional, representing the file title. Default is
+'Test Title'.</p></dd>
 
 
 <dt>time_limit</dt>
-<dd><p>numeric, optional; controls the amount of time in minutes,
-that is given to a candidate for the test; default is 90 min</p></dd>
+<dd><p>A numeric value, optional, controlling the time given to a
+candidate for the test in minutes. Default is 90 minutes.</p></dd>
 
 
 <dt>max_attempts</dt>
-<dd><p>numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass; default is 1</p></dd>
+<dd><p>A numeric value, optional, indicating the maximum number
+of attempts allowed for the candidate. Default is 1.</p></dd>
 
 
 <dt>navigation_mode</dt>
-<dd><p>string, optional; determines the general paths that
-the candidate may have during exam; two mode options are possible: <code>linear</code></p><ul><li><p>candidate is not allowed to return to the previous questions;
-<code>nonlinear</code>- candidate is free to navigate, used by default</p></li>
+<dd><p>A string, optional, determining the general paths that
+the candidate may have during the exam. Two mode options are possible:</p><ul><li><p>'linear': Candidate is not allowed to return to previous questions.</p></li>
+<li><p>'nonlinear': Candidate is free to navigate; used by default.</p></li>
 </ul></dd>
 
 
 <dt>submission_mode</dt>
-<dd><p>string, optional; determines when the candidate's
-responses are submitted for response processing; two mode options are
-possible: <code>individual</code> - submit candidates' responses on an item-by-idem
-basis, used by default; <code>simultaneous - candidates</code> - responses are
-submitted all together by the end of the test</p></dd>
+<dd><p>A string, optional, determining when the candidate's
+responses are submitted for response processing. One of two mode options is
+possible:</p><ul><li><p>'individual': Submit candidates' responses on an item-by-item basis; used by default.</p></li>
+<li><p>'simultaneous': Candidates' responses are submitted all together by the end of the test.</p></li>
+</ul></dd>
 
 
 <dt>allow_comment</dt>
-<dd><p>boolean, optional; enables to allow candidate to leave
-comments in each question, <code>TRUE</code> by default</p></dd>
+<dd><p>A boolean, optional, enabling the candidate to leave
+comments in each question. <code>TRUE</code> by default.</p></dd>
 
 
 <dt>rebuild_variables</dt>
-<dd><p>boolean, optional; enables to recalculate variables
-and reshuffle the order of choices for each item-attempt; <code>TRUE</code> by default</p></dd>
+<dd><p>A boolean, optional, enabling the recalculation of
+variables and reshuffling the order of choices for each item-attempt. <code>TRUE</code>
+by default.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>An <a href="AssessmentTest-class.html">AssessmentTest</a> object</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
