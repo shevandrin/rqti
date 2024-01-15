@@ -193,10 +193,10 @@ test <- function(content, identifier = NULL, title = NULL,
 #' @param files string vector, optional; paths to files, which will be
 #'   accessible to candidate during the test/exam
 #' @param show_test_time boolean, optional; determines to show candidate elapsed
-#'   processing time without time limit; default `FALSE`
+#'   processing time without time limit; default `TRUE`
 #' @param calculator string, optional; determines to show to candidate
 #'   calculator; possible values: `simple-calculator` or
-#'   `scientific-calculator`, the lase one is assigned by default
+#'   `scientific-calculator`, the last one is assigned by default
 #' @param mark_items boolean, optional; determines to allow candidate marking of
 #'   questions, default `TRUE`
 #' @param keep_responses boolean, optional; determines to save candidate's
@@ -205,8 +205,8 @@ test <- function(content, identifier = NULL, title = NULL,
 test4opal <- function(content, identifier = NULL, title = NULL,
                       navigation_mode = "nonlinear", submission_mode = "individual",
                       time_limit = 90, max_attempts = 1, allow_comment = TRUE,
-                      rebuild_variables = TRUE, files = NULL, show_test_time = FALSE,
-                      calculator = NULL, mark_items  = FALSE,
+                      rebuild_variables = TRUE, files = NULL, show_test_time = TRUE,
+                      calculator = NULL, mark_items  = TRUE,
                       keep_responses = FALSE) {
 
     params <- as.list(environment())

@@ -15,9 +15,9 @@ test4opal(
   allow_comment = TRUE,
   rebuild_variables = TRUE,
   files = NULL,
-  show_test_time = FALSE,
+  show_test_time = TRUE,
   calculator = NULL,
-  mark_items = FALSE,
+  mark_items = TRUE,
   keep_responses = FALSE
 )
 }
@@ -55,11 +55,11 @@ and reshuffle the order of choices for each item-attempt}
 accessible to candidate during the test/exam}
 
 \item{show_test_time}{boolean, optional; determines to show candidate elapsed
-processing time without time limit; default \code{FALSE}}
+processing time without time limit; default \code{TRUE}}
 
 \item{calculator}{string, optional; determines to show to candidate
 calculator; possible values: \code{simple-calculator} or
-\code{scientific-calculator}, the lase one is assigned by default}
+\code{scientific-calculator}, the last one is assigned by default}
 
 \item{mark_items}{boolean, optional; determines to allow candidate marking of
 questions, default \code{TRUE}}
