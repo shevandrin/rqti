@@ -6,8 +6,8 @@
 \usage{
 test4opal(
   content,
-  identifier = NULL,
-  title = NULL,
+  identifier = "test_identifier",
+  title = "Test Title",
   time_limit = 90,
   max_attempts = 1,
   files = NULL,
@@ -24,9 +24,10 @@ test4opal(
 \arguments{
 \item{content}{list contains \link{AssessmentSection} objects}
 
-\item{identifier}{string; identifier if the test file}
+\item{identifier}{string; identifier of the test file; default
+'test_identifier'}
 
-\item{title}{string, optional; file title}
+\item{title}{string, optional; file title; default 'Test Title'}
 
 \item{time_limit}{numeric, optional; controls the amount of time in minutes,
 that is given to a candidate for the test; default is 90 min}

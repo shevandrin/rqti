@@ -132,27 +132,28 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' Create test
 #'
 #' @param content list contains [AssessmentSection] objects
-#' @param identifier string; identifier if the test file
-#' @param title string, optional; file title
+#' @param identifier string; identifier of the test file; default
+#'   'test_identifier'
+#' @param title string, optional; file title; default 'Test Title'
 #' @param time_limit numeric, optional; controls the amount of time in minutes,
-#' that is given to a candidate for the test; default is 90 min
+#'   that is given to a candidate for the test; default is 90 min
 #' @param max_attempts numeric, optional; enables the maximum number of
 #'   attempts, that candidate is allowed to pass; default is 1
-#' @param navigation_mode string, optional; determines the general paths that the
-#'   candidate may have during exam; two mode options are possible: `linear`
+#' @param navigation_mode string, optional; determines the general paths that
+#'   the candidate may have during exam; two mode options are possible: `linear`
 #'   - candidate is not allowed to return to the previous questions;
 #'   `nonlinear`- candidate is free to navigate, used by default
-#' @param submission_mode string, optional; determines when the candidate's responses
-#'   are submitted for response processing; two mode options are possible:
-#'   `individual` - submit candidates' responses on an item-by-idem basis, used
-#'   by default; `simultaneous - candidates` - responses are submitted all
-#'   together by the end of the test
+#' @param submission_mode string, optional; determines when the candidate's
+#'   responses are submitted for response processing; two mode options are
+#'   possible: `individual` - submit candidates' responses on an item-by-idem
+#'   basis, used by default; `simultaneous - candidates` - responses are
+#'   submitted all together by the end of the test
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
 #'   comments in each question, `TRUE` by default
-#' @param rebuild_variables boolean, optional; enables to recalculate variables and
-#'   reshuffle the order of choices for each item-attempt; `TRUE` by default
+#' @param rebuild_variables boolean, optional; enables to recalculate variables
+#'   and reshuffle the order of choices for each item-attempt; `TRUE` by default
 #' @export
-test <- function(content, identifier = NULL, title = NULL,
+test <- function(content, identifier = "test_identifier", title = "Test Title",
                  time_limit = 90, max_attempts = 1,
                  navigation_mode = "nonlinear", submission_mode = "individual",
                  allow_comment = TRUE, rebuild_variables = TRUE) {
@@ -171,8 +172,9 @@ test <- function(content, identifier = NULL, title = NULL,
 #' Create test for LMS Opal
 #'
 #' @param content list contains [AssessmentSection] objects
-#' @param identifier string; identifier if the test file
-#' @param title string, optional; file title
+#' @param identifier string; identifier of the test file; default
+#'   'test_identifier'
+#' @param title string, optional; file title; default 'Test Title'
 #' @param time_limit numeric, optional; controls the amount of time in minutes,
 #' that is given to a candidate for the test; default is 90 min
 #' @param max_attempts numeric, optional; enables the maximum number of
@@ -202,9 +204,9 @@ test <- function(content, identifier = NULL, title = NULL,
 #' @param keep_responses boolean, optional; determines to save candidate's
 #'   answers of the previous attempt, default `FALSE`
 #' @export
-test4opal <- function(content, identifier = NULL, title = NULL,
-                      time_limit = 90, max_attempts = 1, files = NULL,
-                      calculator = "scientific-calculator",
+test4opal <- function(content, identifier = "test_identifier",
+                      title = "Test Title", time_limit = 90, max_attempts = 1,
+                      files = NULL, calculator = "scientific-calculator",
                       navigation_mode = "nonlinear",
                       submission_mode = "individual", allow_comment = TRUE,
                       rebuild_variables = TRUE, show_test_time = TRUE,
