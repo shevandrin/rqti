@@ -498,13 +498,13 @@ exam_subsection <- new("AssessmentSection", identifier = "subsec_id",
 exam_section <- new("AssessmentSection", identifier = "sec_id",
                     title = "section",
                     assessment_item = list(sc1, sc2, sc3, exam_subsection),
-                    max_attempts = 3, time_limits = 30, allow_comment = TRUE)
+                    max_attempts = 3, time_limit = 30, allow_comment = TRUE)
 
 exam <- new("AssessmentTestOpal", identifier = "id_test",
             title = "some title", section = list(exam_section),
             files = c(test_path("file/test_fig1.jpg"),
                       test_path("file/test_fig2.jpg")),
-            max_attempts = 5, time_limits = 100, allow_comment = TRUE,
+            max_attempts = 5, time_limit = 100, allow_comment = TRUE,
             rebuild_variables = TRUE,
             show_test_time = TRUE, calculator = "simple-calculator",
             keep_responses = TRUE
@@ -535,12 +535,12 @@ test_that("Testing method createAssessmentTest for AssessmentTest class", {
     exam_section <- new("AssessmentSection", identifier = "sec_id",
                         title = "section",
                         assessment_item = list(sc1, sc2, sc3, exam_subsection),
-                        max_attempts = 3, time_limits = 30,
+                        max_attempts = 3, time_limit = 30,
                                                         allow_comment = TRUE)
 
     exam <- new("AssessmentTest", identifier = "id_test",
                 title = "some title", section = list(exam_section),
-                max_attempts = 5, time_limits = 100, allow_comment = TRUE,
+                max_attempts = 5, time_limit = 100, allow_comment = TRUE,
                 rebuild_variables = TRUE
     )
 
@@ -629,7 +629,7 @@ test_that("Testing of time_limits in AssessmentTest class", {
                   exam <- new("AssessmentTest",
                                identifier = "id_test",
                                title = "some title",
-                               time_limits = 190,
+                               time_limit = 190,
                                section = list(section))
               }, "Value of time_limits does not seem plausible.")
           })

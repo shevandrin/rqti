@@ -16,8 +16,8 @@
 #' @slot section list; list of [AssessmentSection-class] objects
 #' @slot qti_version string, optional; qti information model version, default
 #'   'v2p1'
-#' @slot time_limits numeric, optional;  controls the amount of time *in
-#'   minutes* a candidate is allowed for this part of the test
+#' @slot time_limit numeric, optional;  controls the amount of time *in
+#'   minutes*, which a candidate is allowed for this part of the test
 #' @slot max_attempts numeric, optional; enables the maximum number of attempts,
 #'   that candidate is allowed to pass
 #' @slot allow_comment boolean, optional; enables to allow candidate to leave

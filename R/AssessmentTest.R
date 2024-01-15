@@ -35,7 +35,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      submission_mode = "character",
                                      section = "list",
                                      qti_version = "character",
-                                     time_limits = "numeric",
+                                     time_limit = "numeric",
                                      max_attempts = "numeric",
                                      allow_comment = "logical",
                                      rebuild_variables = "logical",
@@ -46,7 +46,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                submission_mode = "individual",
                                test_part_identifier = "test_part",
                                qti_version = "v2p1",
-                               time_limits = NA_integer_,
+                               time_limit = NA_integer_,
                                max_attempts = NA_integer_,
                                allow_comment = TRUE,
                                rebuild_variables = NA,
@@ -87,8 +87,8 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     }
 
     # check time limits
-    if (!is.na(.Object@time_limits)) {
-        if (.Object@time_limits > 180 | .Object@time_limits < 0.01) {
+    if (!is.na(.Object@time_limit)) {
+        if (.Object@time_limit > 180 | .Object@time_limit < 0.01) {
             warning("Value of time_limits does not seem plausible.",
                     call. = FALSE)
             }

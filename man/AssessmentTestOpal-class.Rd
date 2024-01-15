@@ -48,8 +48,8 @@ end of the test
 \item{\code{qti_version}}{string, optional; qti information model version, default
 'v2p1'}
 
-\item{\code{time_limits}}{numeric, optional;  controls the amount of time \emph{in
-minutes} a candidate is allowed for this part of the test}
+\item{\code{time_limit}}{numeric, optional;  controls the amount of time \emph{in
+minutes}, which a candidate is allowed for this part of the test}
 
 \item{\code{max_attempts}}{numeric, optional; enables the maximum number of attempts,
 that candidate is allowed to pass}

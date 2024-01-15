@@ -1,7 +1,7 @@
 #' @slot identifier string; section identifier
 #' @slot title string; title of the section
-#' @slot time_limits numeric, optional;  controls the amount of time a candidate
-#'   is allowed for this part of the test
+#' @slot time_limit numeric, optional;  controls the amount of time for a
+#'   candidate is allowed for this part of the test
 #' @slot visible boolean, optional; if TRUE it shows this section in hierarchy
 #'   of test structure; default `TRUE`
 #' @slot assessment_item list; list of [AssessmentSection-class] and/or

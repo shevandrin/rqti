@@ -66,9 +66,9 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
                         "data-downloads" = data_downloads,
                         "data-features" = data_features)
     assesment_test <- tag("assessmentTest", assessment_attrs)
-    time_limits <- c()
-    if (!is.na(object@time_limits)) {
-       time_limits <- tag("timeLimits", list(maxTime = object@time_limits * 60))
+    time_limit <- c()
+    if (!is.na(object@time_limit)) {
+       time_limit <- tag("timeLimits", list(maxTime = object@time_limit * 60))
     }
 
     session_control <- create_item_session_control(object@max_attempts,
@@ -94,7 +94,7 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
 
     tagAppendChildren(assesment_test,
                       createOutcomeDeclaration(object),
-                      time_limits,
+                      time_limit,
                       test_part,
                       out_proc,
                       tags_grades$feedbacks)
@@ -117,9 +117,9 @@ detect_label <- function(label) {
 create_section_test <- function(object, folder) {
     assessment_items <- suppressMessages(Map(buildAssessmentSection,
                                              object@assessment_item, folder))
-    time_limits <- c()
-    if (!is.na(object@time_limits)) {
-       time_limits <- tag("timeLimits", list(maxTime = object@time_limits * 60))
+    time_limit <- c()
+    if (!is.na(object@time_limit)) {
+       time_limit <- tag("timeLimits", list(maxTime = object@time_limit * 60))
     }
 
     shuffle <- c()
@@ -140,7 +140,7 @@ create_section_test <- function(object, folder) {
                                   fixed = "false",
                                   title = object@title,
                                   visible = tolower(object@visible),
-                                  tagList(time_limits,
+                                  tagList(time_limit,
                                           shuffle,
                                           selection,
                                           session_control,

@@ -16,8 +16,8 @@ specification according to QTI 2.1
 
 \item{\code{title}}{string; title of the section}
 
-\item{\code{time_limits}}{numeric, optional;  controls the amount of time a candidate
-is allowed for this part of the test}
+\item{\code{time_limit}}{numeric, optional;  controls the amount of time for a
+candidate is allowed for this part of the test}
 
 \item{\code{visible}}{boolean, optional; if TRUE it shows this section in hierarchy
 of test structure; default \code{TRUE}}

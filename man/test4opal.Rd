@@ -10,7 +10,7 @@ test4opal(
   title = NULL,
   navigation_mode = "nonlinear",
   submission_mode = "individual",
-  time_limits = NULL,
+  time_limit = 90,
   max_attempts = NULL,
   allow_comment = TRUE,
   rebuild_variables = TRUE,
@@ -39,8 +39,8 @@ possible: \code{individual} - submit candidates' responses on an item-by-idem
 basis, used by default; \code{simultaneous - candidates} - responses are
 submitted all together by the end of the test}
 
-\item{time_limits}{numeric, optional; controls the amount of time a candidate
-is given for the test}
+\item{time_limit}{numeric, optional; controls the amount of time in minutes a
+candidate is given for the test; default is 90 min}
 
 \item{max_attempts}{numeric, optional; enables the maximum number of
 attempts, that candidate is allowed to pass}

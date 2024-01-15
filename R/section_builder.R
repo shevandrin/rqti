@@ -86,7 +86,7 @@ section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
     }
     section <- new("AssessmentSection", identifier = id, selection = selection,
                    assessment_item = sub_items, title = title,
-                   time_limits = time_limits, visible = visible,
+                   time_limit = time_limits, visible = visible,
                    shuffle = shuffle, max_attempts = max_attempts,
                    allow_comment = allow_comment)
     return(section)
@@ -182,8 +182,8 @@ test <- function(content, identifier = NULL, title = NULL,
 #'   possible: `individual` - submit candidates' responses on an item-by-idem
 #'   basis, used by default; `simultaneous - candidates` - responses are
 #'   submitted all together by the end of the test
-#' @param time_limits numeric, optional; controls the amount of time a candidate
-#'   is given for the test
+#' @param time_limit numeric, optional; controls the amount of time in minutes a
+#'   candidate is given for the test; default is 90 min
 #' @param max_attempts numeric, optional; enables the maximum number of
 #'   attempts, that candidate is allowed to pass
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
@@ -204,7 +204,7 @@ test <- function(content, identifier = NULL, title = NULL,
 #' @export
 test4opal <- function(content, identifier = NULL, title = NULL,
                       navigation_mode = "nonlinear", submission_mode = "individual",
-                      time_limits = NULL, max_attempts = NULL, allow_comment = TRUE,
+                      time_limit = 90, max_attempts = NULL, allow_comment = TRUE,
                       rebuild_variables = TRUE, files = NULL, show_test_time = FALSE,
                       calculator = NULL, mark_items  = FALSE,
                       keep_responses = FALSE) {
