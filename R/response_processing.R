@@ -248,14 +248,16 @@ make_set_conditions_grade <- function(max_points, label) {
     id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
     grade_levels <- seq(50, 100, 5) * max_points / 100
     grade_levels <- grade_levels[-length(grade_levels)]
-    lower_bounds <- append(list(NULL), as.list(grade_levels))
-    upper_bounds <- append(as.list(grade_levels - 0.01), list(NULL))
+    lower_bounds <- as.list(sprintf("%.2f", grade_levels))
+    lower_bounds <- append(list(NULL), lower_bounds)
+    upper_bounds <- as.list(sprintf("%.2f", grade_levels -0.01))
+    upper_bounds <- append(upper_bounds, list(NULL))
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
                              upper_bounds, id_grade_fb)
     conditions <- tagList(conditions, create_resp_cond_grade_table())
     feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, label)
-    lower_bounds[1] <- 0
-    upper_bounds[length(upper_bounds)] <- max_points
+    lower_bounds[1] <- "0.00"
+    upper_bounds[length(upper_bounds)] <- sprintf("%.2f", max_points)
     feedback_table <- create_feedback_grade_table(grades, label, lower_bounds,
                                                   upper_bounds)
     feedbacks <- tagList(feedbacks, feedback_table)
@@ -280,7 +282,7 @@ create_feedback_grade_table <- function(grades, grade_label, lower_bounds,
     }
     header <- tag("tr", tagList(th(grade_label), th("Min"), th("Max")))
     rows <- Map(make_table_row, grades, lower_bounds, upper_bounds)
-    tbody <- tag("tbody", list(style ="text-align: center;",
+    tbody <- tag("tbody", list(style ="text-align: right;",
                                tagList(header, rows)))
     grade_table <- tag("table", list(border = 1,
                         style = "border-collapse: collapse; min-width: 150px;",
