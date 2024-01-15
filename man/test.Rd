@@ -34,8 +34,8 @@ are submitted for response processing; two mode options are possible:
 by default; \code{simultaneous - candidates} - responses are submitted all
 together by the end of the test}
 
-\item{time_limit}{numeric, optional; controls the amount of time in
-minutes, wich candidate is given for the test; default is 90}
+\item{time_limit}{numeric, optional; controls the amount of time in minutes,
+that is given to a candidate for the test; default is 90 min}
 
 \item{max_attempts}{numeric, optional; enables the maximum number of
 attempts, that candidate is allowed to pass; default is 1}

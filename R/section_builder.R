@@ -134,6 +134,10 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' @param content list contains [AssessmentSection] objects
 #' @param identifier string; identifier if the test file
 #' @param title string, optional; file title
+#' @param time_limit numeric, optional; controls the amount of time in minutes,
+#' that is given to a candidate for the test; default is 90 min
+#' @param max_attempts numeric, optional; enables the maximum number of
+#'   attempts, that candidate is allowed to pass; default is 1
 #' @param navigation_mode string, optional; determines the general paths that the
 #'   candidate may have during exam; two mode options are possible: `linear`
 #'   "linear" - candidate is not allowed to return to the previous questions;
@@ -143,10 +147,6 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   `individual` - submit candidates' responses on an item-by-idem basis, used
 #'   by default; `simultaneous - candidates` - responses are submitted all
 #'   together by the end of the test
-#' @param time_limit numeric, optional; controls the amount of time in
-#' minutes, wich candidate is given for the test; default is 90
-#' @param max_attempts numeric, optional; enables the maximum number of
-#'   attempts, that candidate is allowed to pass; default is 1
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
 #'   comments in each question, `TRUE` by default
 #' @param rebuild_variables boolean, optional; enables to recalculate variables and
@@ -173,6 +173,15 @@ test <- function(content, identifier = NULL, title = NULL,
 #' @param content list contains [AssessmentSection] objects
 #' @param identifier string; identifier if the test file
 #' @param title string, optional; file title
+#' @param time_limit numeric, optional; controls the amount of time in minutes,
+#' that is given to a candidate for the test; default is 90 min
+#' @param max_attempts numeric, optional; enables the maximum number of
+#'   attempts, that candidate is allowed to pass; default is 1
+#' @param files string vector, optional; paths to files, which will be
+#'   accessible to candidate during the test/exam
+#' @param calculator string, optional; determines to show to candidate
+#'   calculator; possible values: `simple-calculator` or
+#'   `scientific-calculator`, the last one is assigned by default
 #' @param navigation_mode string, optional; determines the general paths that
 #'   the candidate may have during exam; two mode options are possible: `linear`
 #'   "linear" - candidate is not allowed to return to the previous questions;
@@ -182,32 +191,24 @@ test <- function(content, identifier = NULL, title = NULL,
 #'   possible: `individual` - submit candidates' responses on an item-by-idem
 #'   basis, used by default; `simultaneous - candidates` - responses are
 #'   submitted all together by the end of the test
-#' @param time_limit numeric, optional; controls the amount of time in minutes a
-#'   candidate is given for the test; default is 90 min
-#' @param max_attempts numeric, optional; enables the maximum number of
-#'   attempts, that candidate is allowed to pass; default is 1
 #' @param allow_comment boolean, optional; enables to allow candidate to leave
 #'   comments in each question, `TRUE` by default
 #' @param rebuild_variables boolean, optional; enables to recalculate variables
 #'   and reshuffle the order of choices for each item-attempt
-#' @param files string vector, optional; paths to files, which will be
-#'   accessible to candidate during the test/exam
 #' @param show_test_time boolean, optional; determines to show candidate elapsed
 #'   processing time without time limit; default `TRUE`
-#' @param calculator string, optional; determines to show to candidate
-#'   calculator; possible values: `simple-calculator` or
-#'   `scientific-calculator`, the last one is assigned by default
 #' @param mark_items boolean, optional; determines to allow candidate marking of
 #'   questions, default `TRUE`
 #' @param keep_responses boolean, optional; determines to save candidate's
 #'   answers of the previous attempt, default `FALSE`
 #' @export
 test4opal <- function(content, identifier = NULL, title = NULL,
-                      navigation_mode = "nonlinear", submission_mode = "individual",
-                      time_limit = 90, max_attempts = 1, allow_comment = TRUE,
-                      rebuild_variables = TRUE, files = NULL, show_test_time = TRUE,
-                      calculator = "scientific-calculator", mark_items  = TRUE,
-                      keep_responses = FALSE) {
+                      time_limit = 90, max_attempts = 1, files = NULL,
+                      calculator = "scientific-calculator",
+                      navigation_mode = "nonlinear",
+                      submission_mode = "individual", allow_comment = TRUE,
+                      rebuild_variables = TRUE, show_test_time = TRUE,
+                      mark_items  = TRUE, keep_responses = FALSE) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)

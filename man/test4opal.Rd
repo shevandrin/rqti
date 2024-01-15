@@ -8,15 +8,15 @@ test4opal(
   content,
   identifier = NULL,
   title = NULL,
-  navigation_mode = "nonlinear",
-  submission_mode = "individual",
   time_limit = 90,
   max_attempts = 1,
+  files = NULL,
+  calculator = "scientific-calculator",
+  navigation_mode = "nonlinear",
+  submission_mode = "individual",
   allow_comment = TRUE,
   rebuild_variables = TRUE,
-  files = NULL,
   show_test_time = TRUE,
-  calculator = "scientific-calculator",
   mark_items = TRUE,
   keep_responses = FALSE
 )
@@ -27,6 +27,19 @@ test4opal(
 \item{identifier}{string; identifier if the test file}
 
 \item{title}{string, optional; file title}
+
+\item{time_limit}{numeric, optional; controls the amount of time in minutes,
+that is given to a candidate for the test; default is 90 min}
+
+\item{max_attempts}{numeric, optional; enables the maximum number of
+attempts, that candidate is allowed to pass; default is 1}
+
+\item{files}{string vector, optional; paths to files, which will be
+accessible to candidate during the test/exam}
+
+\item{calculator}{string, optional; determines to show to candidate
+calculator; possible values: \code{simple-calculator} or
+\code{scientific-calculator}, the last one is assigned by default}
 
 \item{navigation_mode}{string, optional; determines the general paths that
 the candidate may have during exam; two mode options are possible: \code{linear}
@@ -39,27 +52,14 @@ possible: \code{individual} - submit candidates' responses on an item-by-idem
 basis, used by default; \code{simultaneous - candidates} - responses are
 submitted all together by the end of the test}
 
-\item{time_limit}{numeric, optional; controls the amount of time in minutes a
-candidate is given for the test; default is 90 min}
-
-\item{max_attempts}{numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass; default is 1}
-
 \item{allow_comment}{boolean, optional; enables to allow candidate to leave
 comments in each question, \code{TRUE} by default}
 
 \item{rebuild_variables}{boolean, optional; enables to recalculate variables
 and reshuffle the order of choices for each item-attempt}
 
-\item{files}{string vector, optional; paths to files, which will be
-accessible to candidate during the test/exam}
-
 \item{show_test_time}{boolean, optional; determines to show candidate elapsed
 processing time without time limit; default \code{TRUE}}
-
-\item{calculator}{string, optional; determines to show to candidate
-calculator; possible values: \code{simple-calculator} or
-\code{scientific-calculator}, the last one is assigned by default}
 
 \item{mark_items}{boolean, optional; determines to allow candidate marking of
 questions, default \code{TRUE}}
