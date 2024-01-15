@@ -24,7 +24,7 @@
 #' @importFrom httr2 request req_error req_perform resp_body_xml req_headers
 #'   resp_body_json req_method req_body_multipart
 #' @import getPass
-#' @import keyring
+#' @importFrom keyring key_list key_set_with_value has_keyring_support key_delete key_get
 #' @export
 auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     user_id <- NULL
