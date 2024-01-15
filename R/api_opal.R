@@ -28,12 +28,7 @@
 #' @export
 auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     user_id <- NULL
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
-    if (endpoint == "") {
-        message("The enviroment variable QTI_API_ENDPOINT was empty, it was assigned the value \"https://bildungsportal.sachsen.de/opal/\"")
-        Sys.setenv(QTI_API_ENDPOINT="https://bildungsportal.sachsen.de/opal/")
-        endpoint <- Sys.getenv("QTI_API_ENDPOINT")
-    }
+    endpoint <- catch_endpoint(endpoint)
 
     if (has_keyring_support()) {
         keys <- key_list("qtiopal")
@@ -299,11 +294,21 @@ is_test <- function(file) {
 }
 
 is_logged <- function(endpoint = NULL) {
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    endpoint <- catch_endpoint(endpoint)
     url_log <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
     req <- request(url_log) %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     res <- ifelse(response$status_code == 200, TRUE, FALSE)
     return(res)
+}
+
+catch_endpoint <- function(endpoint) {
+    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    if (endpoint == "") {
+        message("The enviroment variable QTI_API_ENDPOINT was empty, it was assigned the value \"https://bildungsportal.sachsen.de/opal/\"")
+        Sys.setenv(QTI_API_ENDPOINT="https://bildungsportal.sachsen.de/opal/")
+        endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    }
+    return(endpoint)
 }
