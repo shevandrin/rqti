@@ -37,7 +37,8 @@ Imports:
     digest,
     knitr,
     getPass,
-    keyring
+    keyring,
+    zip
 Suggests:
     covr,
     dplyr,
