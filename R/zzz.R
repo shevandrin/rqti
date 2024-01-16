@@ -1,10 +1,6 @@
 .onAttach <- function(libname, pkgname){
     if (interactive()) {
         packageStartupMessage("Welcome to qti.")
-        if (Sys.getenv("QTI_AUTOSTART_SERVER") != FALSE) {
-            packageStartupMessage("Starting QTIJS rendering server.")
-            start_server()
-        }
     }
 }
 
