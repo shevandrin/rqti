@@ -213,6 +213,7 @@ create_resource_item <- function(id, href) {
                          file))
 }
 
+#' @importFrom zip zip
 zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
     if (length(files) > 0) {
         download_dir <- file.path(tools::file_path_as_absolute(dir_xml),
@@ -225,7 +226,7 @@ zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
     wd <- getwd()
     setwd(dir_xml)
     zip_name <- paste0(id, ".zip")
-    utils::zip(zip_name, list.files(dir_xml), extras = "-qdgds 10m")
+    zip::zip(zip_name, list.files(dir_xml))
     setwd(wd)
 
     files2copy <- list.files(dir_xml, full.names = TRUE)
