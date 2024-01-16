@@ -17,8 +17,8 @@ qti_project <- function(path, ...) {
     temps_r <- "gap"
     if (dots$templates == "YES")  {
         text_rmd <- c(
-            paste0("exercises = ", print_vector(temps, path, dots['render'])),
-            paste0("exercises_random = ", print_vector(temps_r, path, dots['render']))
+            paste0("exercises -> ", print_vector(temps, path, dots['render'])),
+            paste0("exercises_random -> ", print_vector(temps_r, path, dots['render']))
         )
     } else {
         text_rmd <- c(
