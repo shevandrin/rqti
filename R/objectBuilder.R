@@ -346,7 +346,7 @@ read_table <- function(html, attrs) {
     tbd <- xml2::xml_find_all(tbl, "//tbody")
     tbd <- tbd[length(tbd)]
     tr <- xml2::xml_find_all(tbd, ".//tr/td[1]")
-    rows <- as.character(xml2::xml_contents(tr))
+    rows <- sapply(tr, function(x) paste(as.character(xml2::xml_contents(x)), collapse = " "))
     xml2::xml_remove(tr)
 
     n_cols <- length(xml2::xml_find_all(tbd, "./tr[1]/td"))
