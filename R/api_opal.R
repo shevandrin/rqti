@@ -54,6 +54,9 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
             if (interactive()) {
                 key <- menu(title = "Choose a user:", menu_options)
             } else {
+                message("Error: Multiple user credentials found in the system credential store.")
+                message("Upload halted to prevent unauthorized access.")
+                message("Please review and remove excess credentials before attempting to upload again.")
                 key <- length(menu_options)
             }
             # abort
