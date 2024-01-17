@@ -301,15 +301,26 @@ parse_list <- function(html) {
     return(list(choices = as.character(choices_str), solution = solution))
 }
 
+# from 'question' section it deletes h1, subsection, and change some characters
 clean_question <- function(html) {
     h1 <- xml2::xml_find_first(html, "h1")
     xml2::xml_remove(h1)
-    content <- as.character(xml2::xml_contents(html))
+    content <- unlist(sapply(xml2::xml_children(html), delete_subsections,
+                             USE.NAMES = FALSE))
     content <- sapply(content, change_symbols, USE.NAMES = FALSE)
     content <- Filter(function(x) x != "", content)
     return(content)
 }
 
+# delete subsections inside 'question' section
+delete_subsections <- function(html_node) {
+    if (xml2::xml_name(html_node) == "section") {
+        html_node <- xml2::xml_children(html_node)
+    }
+    return(as.character(html_node))
+}
+
+# change symbols to make html neat
 change_symbols <- function(cont) {
     if (!startsWith(cont, "<pre")) {
        cont <- gsub("<br>", "<br/>", cont)
