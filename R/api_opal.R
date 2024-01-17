@@ -28,7 +28,7 @@
 #' @export
 auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     user_id <- NULL
-    endpoint <- catch_endpoint(endpoint)
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
 
     if (has_keyring_support()) {
         keys <- key_list("qtiopal")
@@ -139,7 +139,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,
                         api_user = NULL, api_password = NULL) {
 
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
 
     file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE)
 
@@ -208,7 +208,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 #' @export
 get_resources <- function(api_user = NULL, api_password = NULL,
                           endpoint = NULL) {
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
         user_id <- auth_opal(api_user, api_password)
@@ -224,7 +224,7 @@ get_resources <- function(api_user = NULL, api_password = NULL,
 
 #'@importFrom purrr keep
 get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
     rlist <- get_resources(endpoint = endpoint)
     if (!is.null(rtype)) {
         rlist <- keep(rlist, ~ .x$resourceableTypeName == rtype)
@@ -246,7 +246,7 @@ get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
 get_resource_url <- function(display_name, endpoint = NULL,
                         api_user = NULL, api_password = NULL) {
 
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
 
     # check auth
     if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
@@ -262,7 +262,7 @@ get_resource_url <- function(display_name, endpoint = NULL,
 
 upload_resource <- function(file, display_name, rtype, access,
                             endpoint = NULL) {
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
     url_upl <- paste0(endpoint, "restapi/repo/entries")
     req <- request(url_upl) %>% req_method("PUT") %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
@@ -275,7 +275,7 @@ upload_resource <- function(file, display_name, rtype, access,
 }
 
 update_resource <- function(file, id, endpoint = NULL) {
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
     url_upd <- paste0(endpoint, "restapi/repo/entries/", id, "/update")
     req <- request(url_upd) %>% req_method("PUT") %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
@@ -294,7 +294,7 @@ is_test <- function(file) {
 }
 
 is_logged <- function(endpoint = NULL) {
-    endpoint <- catch_endpoint(endpoint)
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
     url_log <- paste0(endpoint, "restapi/repo/entries/search?myentries=true")
     req <- request(url_log) %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
@@ -303,8 +303,8 @@ is_logged <- function(endpoint = NULL) {
     return(res)
 }
 
-catch_endpoint <- function(endpoint) {
-    if (is.null(endpoint)) endpoint <- Sys.getenv("QTI_API_ENDPOINT")
+catch_endpoint <- function() {
+    endpoint <- Sys.getenv("QTI_API_ENDPOINT")
     if (endpoint == "") {
         message("The enviroment variable QTI_API_ENDPOINT was empty, it was assigned the value \"https://bildungsportal.sachsen.de/opal/\"")
         Sys.setenv(QTI_API_ENDPOINT="https://bildungsportal.sachsen.de/opal/")
