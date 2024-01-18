@@ -1,6 +1,7 @@
 Binding: qti_project
 Title: QTI Project
 OpenFiles: main.R
+Icon: icon2.png
 
 Parameter: url_endpoint
 Widget: TextInput
