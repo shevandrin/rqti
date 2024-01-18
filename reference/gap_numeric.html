@@ -73,8 +73,8 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gap_numeric</span><span class="op">(</span></span>
 <span>  <span class="va">solution</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  tolerance_type <span class="op">=</span> <span class="st">"exact"</span>,</span>
+<span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  tolerance_type <span class="op">=</span> <span class="st">"absolute"</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  response_identifier <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_lower_bound <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -92,12 +92,12 @@
 
 <dt>tolerance</dt>
 <dd><p>numeric, optional; specifies the value for up and low
-boundaries of tolerance rate for candidate answer</p></dd>
+boundaries of tolerance rate for candidate answer; defautl is 0</p></dd>
 
 
 <dt>tolerance_type</dt>
 <dd><p>string, optional; specifies tolerance mode; possible
-values:"exact", "absolute", "relative"</p></dd>
+values:"exact", "absolute" (by default), "relative"</p></dd>
 
 
 <dt>points</dt>
