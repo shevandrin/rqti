@@ -32,9 +32,9 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 #'
 #' @param solution numeric; contains right answer for this numeric entry
 #' @param tolerance numeric, optional; specifies the value for up and low
-#'   boundaries of tolerance rate for candidate answer
+#'   boundaries of tolerance rate for candidate answer; defautl is 0
 #' @param tolerance_type string, optional; specifies tolerance mode; possible
-#'   values:"exact", "absolute", "relative"
+#'   values:"exact", "absolute" (by default), "relative"
 #' @param points numeric, optional; the number of points for this gap; default 1
 #' @param response_identifier string; an identifier for the answer; by default
 #'   it is generated automatically
@@ -48,15 +48,13 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 #'   text in text input field in content delivery engine
 #' @return string; map yaml
 #' @export
-gap_numeric <- function(solution, tolerance = NULL, tolerance_type = "exact",
+gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
                         points = 1, response_identifier = NULL,
                         include_lower_bound = TRUE, include_upper_bound = TRUE,
                         expected_length = size_gap(solution), placeholder = NULL) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
-    if (!is.null(params$tolerance) & (params$tolerance_type == 'exact')) {
-        params$tolerance_type <- "absolute" }
     result <- clean_yaml_str(params, params$solution, "numeric")
     return(result)
 }

@@ -28,13 +28,13 @@ input field in content delivery engine}
 \item{\code{solution}}{numeric; contains right answer for this numeric entry}
 
 \item{\code{tolerance}}{numeric, optional; specifies the value for up and low
-boundaries of tolerance rate for candidate answer}
+boundaries of tolerance rate for candidate answer; default is 0}
 
 \item{\code{tolerance_type}}{string, optional; specifies tolerance mode; possible
 values:
 \itemize{
-\item "exact" by default
-\item "absolute"
+\item "exact"
+\item "absolute" by default
 \item "relative"
 }}
 

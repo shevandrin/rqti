@@ -43,7 +43,7 @@
   <responseProcessing>
     <responseCondition>
       <responseIf>
-        <equal toleranceMode="exact" tolerance="2 2" includeLowerBound="true" includeUpperBound="true">
+        <equal toleranceMode="absolute" tolerance="2 2" includeLowerBound="true" includeUpperBound="true">
           <variable identifier="RESPONSE_1"/>
           <correct identifier="RESPONSE_1"/>
         </equal>

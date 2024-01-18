@@ -6,8 +6,8 @@
 \usage{
 gap_numeric(
   solution,
-  tolerance = NULL,
-  tolerance_type = "exact",
+  tolerance = 0,
+  tolerance_type = "absolute",
   points = 1,
   response_identifier = NULL,
   include_lower_bound = TRUE,
@@ -20,10 +20,10 @@ gap_numeric(
 \item{solution}{numeric; contains right answer for this numeric entry}
 
 \item{tolerance}{numeric, optional; specifies the value for up and low
-boundaries of tolerance rate for candidate answer}
+boundaries of tolerance rate for candidate answer; defautl is 0}
 
 \item{tolerance_type}{string, optional; specifies tolerance mode; possible
-values:"exact", "absolute", "relative"}
+values:"exact", "absolute" (by default), "relative"}
 
 \item{points}{numeric, optional; the number of points for this gap; default 1}
 
