@@ -274,6 +274,9 @@ upload_resource <- function(file, display_name, rtype, access,
                  access = as.character(access),
                  repoType = rtype)
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    if (response$status_code != 200) {
+        stop(paste("Status Code:", response$status_code))
+    }
     return(response)
 }
 
@@ -284,6 +287,9 @@ update_resource <- function(file, id, endpoint = NULL) {
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
         req_body_multipart(file = curl::form_file(file))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    if (response$status_code != 200) {
+        stop(paste("Status Code:", response$status_code))
+    }
     return(response)
 }
 
