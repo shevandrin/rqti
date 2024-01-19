@@ -99,7 +99,7 @@ setMethod("createQtiTest", signature(object = "character"),
 
               ext <- file_ext(file)
               if (ext != "zip") {
-                  if (ext == "Rmd") file <- rmd2zip(file, path = dir)
+                  if (ext %in% c("Rmd", "md")) file <- rmd2zip(file, path = dir)
                   if (ext == "xml") {
                       section_obj <- section(file, title = "Preview")
                       test_obj <- test4opal(content = section_obj,
