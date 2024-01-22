@@ -16,8 +16,8 @@ upload2opal(
 )
 }
 \arguments{
-\item{test}{required; a length one character vector or \link{AssessmentTest} or
-\link{AssessmentTestOpal} objects}
+\item{test}{required; a length one character vector of \link{AssessmentTest} or
+\link{AssessmentTestOpal} objects, Rmd or md files}
 
 \item{display_name}{optional; a length one character vector to entitle file in
 OPAL; file name without extension by default}

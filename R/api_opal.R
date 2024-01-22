@@ -109,8 +109,8 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 #'QTI-task and uploads it to the OPAL. before calling `upload2opal()`
 #'authentication procedure has to be performed. See [auth_opal]
 #'
-#'@param test required; a length one character vector or [AssessmentTest] or
-#'  [AssessmentTestOpal] objects
+#'@param test required; a length one character vector of [AssessmentTest] or
+#'  [AssessmentTestOpal] objects, Rmd or md files
 #'@param display_name optional; a length one character vector to entitle file in
 #'  OPAL; file name without extension by default
 #'@param access optional; is responsible for publication status, where 1 - only
