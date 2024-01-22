@@ -40,12 +40,9 @@ root_section = suppressMessages(list(section(files1,
 
 test_that("Testing of counting points in the test if all tasks
           have the differ points, by = variants", {
-              file1 <- test_path("file/rmd/test_order.Rmd")
-              # points = 1
-              file2 <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
-              # points = 2.5
-              file3 <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
-              # points = 3
+              # file1 - points = 1
+              # file2 - points = 2.5
+              # file3 - points = 3
 
               file <- c(file1,file2,file3)
 
