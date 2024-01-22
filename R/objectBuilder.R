@@ -75,8 +75,11 @@ create_question_object <- function(file, file_dir = NULL) {
                  "--wrap=none", "+RTS", "-M512M")
     pandoc_convert(file_p, options=options, wd = tdir)
     tdoc <- file.path(tdir, "_temp_pandoc.html")
+    file_content <- readLines(tdoc)
+    modified_content <- c("<body>", file_content, "</body>")
+    write(modified_content, tdoc)
 
-    doc <- xml2::read_html(tdoc, encoding = "utf-8")
+    doc <- xml2::read_xml(tdoc, encoding = "utf-8")
     html_qstn <- xml2::xml_find_first(doc, "//section[@id='question']")
     if (length(html_qstn) == 0) {
         stop("The \'question\' section was not found in Rmd", call. = FALSE)
@@ -291,7 +294,7 @@ parse_list <- function(html) {
     for (choice in choices) {
         content <- xml2::xml_contents(choice)
         content <- paste0(as.character(content), collapse = "")
-        content <- gsub("\r\n", " ", content)
+        content <- change_symbols(content)
         if (grepl("^<em>", content)) {
             content <- gsub("^<em>|</em>$", "", content)
         }
@@ -301,7 +304,8 @@ parse_list <- function(html) {
     return(list(choices = as.character(choices_str), solution = solution))
 }
 
-# from 'question' section it deletes h1, subsection, and change some characters
+# from 'question' section it deletes h1, subsection-tag (leave only children),
+# and change some characters
 clean_question <- function(html) {
     h1 <- xml2::xml_find_first(html, "h1")
     xml2::xml_remove(h1)
@@ -329,6 +333,7 @@ change_symbols <- function(cont) {
        cont <- gsub(">\n<", "><", cont)
        cont <- gsub("\n", " ", cont)
        cont <- gsub("<br/> ", "<br/>", cont)
+       cont <- gsub("   ", "", cont)
     } else {
         cont <- gsub("<code>", "<code><br />", cont)
         cont <- gsub("\\\r\\\n", "<br />", cont)
@@ -473,10 +478,7 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
 parse_feedback <- function(html, image_dir = NULL) {
     sections <- c("feedback", "feedback-", "feedback+")
     classes <- c("ModalFeedback", "WrongFeedback", "CorrectFeedback")
-    html <- xml2::xml_find_first(html, "body")
-    html_txt <- as.character(html)
-    create_fb_object <- function(sec, cls, html, image_dir) {
-        html <- xml2::read_html(html)
+    create_fb_object <- function(sec, cls, html) {
         feedback <- xml2::xml_find_first(html,
                                          paste0("//h1[text()='", sec, "']"))
         feedback <- xml2::xml_parent(feedback)
@@ -487,7 +489,7 @@ parse_feedback <- function(html, image_dir = NULL) {
         }
     }
 
-    result <- Map(create_fb_object, sections, classes, html_txt)
+    result <- Map(create_fb_object, sections, classes, list(html))
     result <- unname(Filter(Negate(is.null), result))
     return(result)
 }

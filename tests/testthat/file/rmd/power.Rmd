@@ -1,6 +1,6 @@
 ---
 type: gap
-knit: qti::render_rmd
+knit: qti::render_qtijs
 ---
 
 # todos
@@ -13,6 +13,7 @@ knit: qti::render_rmd
 
 ```{r, echo=F, warning=F, message=F, include = F}
 librarian::shelf(ggplot2, dplyr, qti)
+library(qti)
 df <- c(15:100, 1015:1100)
 es_d <- seq(0.2, 1.5, 0.1)
 
