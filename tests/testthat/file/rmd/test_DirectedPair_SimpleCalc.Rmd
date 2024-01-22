@@ -1,0 +1,18 @@
+---
+type: match
+identifier: test_DirectedPair_from_table
+knit: qti::render_opal
+calculator: simple-calculator 
+---
+
+# question
+
+Choose the right classes:
+
+|         | Animal |Plant|Bird|
+|---------|--------|-----|----|
+|Sparrow  | 0      |0    |0.5 | 
+|Bear     | 1      |0    |0   | 
+|Pine tree| 0      |1    |0   |
+|Airplane | 0      |0    |0   | 
+|Earth    | 0      |0    |0   |

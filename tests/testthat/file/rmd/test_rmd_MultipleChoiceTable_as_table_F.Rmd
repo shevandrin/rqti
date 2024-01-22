@@ -2,6 +2,7 @@
 type: match
 identifier: test_MultipleChoiceTable
 knit: qti::render_opal
+calculator: scientific-calculator
 ---
 
 # question
