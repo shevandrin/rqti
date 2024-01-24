@@ -509,13 +509,13 @@ exam <- new("AssessmentTestOpal", identifier = "id_test",
             show_test_time = TRUE, calculator = "simple-calculator",
             keep_responses = TRUE
             )
-suppressMessages(createQtiTest(exam, "todelete", "TRUE"))
+suppressMessages(createQtiTest(exam, "test1a9b56cf96", "TRUE"))
 
-sut <- sort(list.files("todelete"))
+sut <- sort(list.files("test1a9b56cf96"))
 expected <- sort(c("downloads", "e1.xml", "e2.xml", "e3.xml", "q1.xml", "q2.xml", "q3.xml",
               "id_test.xml", "id_test.zip", "imsmanifest.xml"))
 expect_equal(sut, expected)
-unlink("todelete", recursive = TRUE)
+unlink("test1a9b56cf96", recursive = TRUE)
 })
 
 test_that("Testing method createAssessmentTest for AssessmentTest class", {
