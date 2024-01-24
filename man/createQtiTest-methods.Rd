@@ -11,7 +11,7 @@
 \alias{createQtiTest,AssessmentTest}
 \alias{createQtiTest,character-method}
 \alias{createQtiTest,character}
-\title{Create XML file for exam test specification}
+\title{Create zip-archive of the qti test specification}
 \usage{
 createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
   FALSE)
@@ -23,8 +23,8 @@ createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
 \S4method{createQtiTest}{character}(object, dir = getwd())
 }
 \arguments{
-\item{object}{an instance of the \link{AssessmentTest} or \link{AssessmentTestOpal} S4
-object}
+\item{object}{an instance of the \link{AssessmentTest}, \link{AssessmentTestOpal} or
+\link{AssessmentItem} S4 object}
 
 \item{dir}{string, optional; a folder to store xml file; working directory by
 default}
@@ -39,7 +39,7 @@ zip, xml and downloads files in case of FALSE value; FALSE by default}
 xml document.
 }
 \description{
-Create XML file for exam test specification
+Create zip-archive of the qti test specification
 }
 \examples{
 \dontrun{

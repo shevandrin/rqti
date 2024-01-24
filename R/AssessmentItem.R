@@ -138,12 +138,12 @@ setGeneric("createQtiTask", function(object, dir = NULL, verification = FALSE) {
     standardGeneric("createQtiTask")
 })
 
-#' Create XML file for exam test specification
+#' Create zip-archive of the qti test specification
 #'
 #' @usage createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
 #'   FALSE)
-#' @param object an instance of the [AssessmentTest] or [AssessmentTestOpal] S4
-#'   object
+#' @param object an instance of the [AssessmentTest], [AssessmentTestOpal] or
+#'   [AssessmentItem] S4 object
 #' @param dir string, optional; a folder to store xml file; working directory by
 #'   default
 #' @param verification boolean, optional; to check validity of xml file, default
