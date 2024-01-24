@@ -13,7 +13,7 @@ test4opal(
   files = NULL,
   calculator = "scientific-calculator",
   academic_grading = FALSE,
-  grade_label = "Grade",
+  grade_label = c(en = "Grade", de = "Note"),
   navigation_mode = "nonlinear",
   submission_mode = "individual",
   allow_comment = TRUE,
@@ -55,7 +55,7 @@ feedback; \code{FALSE} by default.}
 grade in the final feedback; for multilingual use, it can be a named vector
 with two-letter ISO language codes as names (e.g., c(en="Grade",
 de="Note")); during test creation, it takes the value for the language of
-the operating system; "Grade" is default.}
+the operating system; c(en="Grade", de="Note")is default.}
 
 \item{navigation_mode}{A string, optional, determining the general paths that
 the candidate may have during the exam. Two mode options are possible:

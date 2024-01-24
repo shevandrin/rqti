@@ -68,7 +68,7 @@ feedback; \code{FALSE} by default}
 grade in the final feedback; for multilingual use, it can be a named vector
 with two-letter ISO language codes as names (e.g., c(en="Grade",
 de="Note")); during test creation, it takes the value for the language of
-the operating system; "Grade" is default}
+the operating system; c(en="Grade", de="Note")is default}
 
 \item{\code{show_test_time}}{boolean, optional; determines to show candidate elapsed
 processing time without time limit; default 'FALSE'}

@@ -146,7 +146,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   grade in the final feedback; for multilingual use, it can be a named vector
 #'   with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
-#'   the operating system; "Grade" is default
+#'   the operating system; c(en="Grade", de="Note") is default
 #' @param navigation_mode A string, optional, determining the general paths that
 #'   the candidate may have during the exam. Two mode options are possible:
 #'   - 'linear': Candidate is not allowed to return to previous questions.
@@ -165,9 +165,9 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' @export
 test <- function(content, identifier = "test_identifier", title = "Test Title",
                  time_limit = 90, max_attempts = 1, academic_grading = FALSE,
-                 grade_label = "Grade", navigation_mode = "nonlinear",
-                 submission_mode = "individual", allow_comment = TRUE,
-                 rebuild_variables = TRUE) {
+                 grade_label = c(en="Grade", de="Note"),
+                 navigation_mode = "nonlinear", submission_mode = "individual",
+                 allow_comment = TRUE, rebuild_variables = TRUE) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
@@ -203,7 +203,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   grade in the final feedback; for multilingual use, it can be a named vector
 #'   with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
-#'   the operating system; "Grade" is default.
+#'   the operating system; c(en="Grade", de="Note")is default.
 #' @param navigation_mode A string, optional, determining the general paths that
 #'   the candidate may have during the exam. Two mode options are possible:
 #'   - 'linear': Candidate is not allowed to return to previous questions.
@@ -229,7 +229,8 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 test4opal <- function(content, identifier = "test_identifier",
                       title = "Test Title", time_limit = 90, max_attempts = 1,
                       files = NULL, calculator = "scientific-calculator",
-                      academic_grading = FALSE, grade_label = "Grade",
+                      academic_grading = FALSE,
+                      grade_label = c(en="Grade", de="Note"),
                       navigation_mode = "nonlinear",
                       submission_mode = "individual", allow_comment = TRUE,
                       rebuild_variables = TRUE, show_test_time = TRUE,
