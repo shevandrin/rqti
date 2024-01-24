@@ -323,7 +323,6 @@ setMethod("buildAssessmentSection", signature(object = "AssessmentItem"),
 #' @aliases getFiles,AssessmentItem
 setMethod("getFiles", signature(object = "AssessmentItem"),
           function(object) {
-              check_files_existence(object@files)
               return(object@files)
           })
 

@@ -339,17 +339,17 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
     expect_equal(sut_3,"scientific-calculator")
 })
 
-test_that("Testing yaml section of Rmd file in case if file not exist", {
-    path <- test_path("file/rmd/test_DirectedPair_SimpleCalc_pdf.Rmd")
-    root_section = suppressMessages(list(section(path)))
-
-    result <- tryCatch({
-        example_exam <- new("AssessmentTestOpal",
-                        identifier = "id_test_1",
-                        title = "Mock test",
-                        section = root_section)
-    }, error = function(e) e)
-
-    expect_true(inherits(result, "error"))
-    expect_match(result$message, "The following files do not exist: -Not_file.pdf")
-})
+# test_that("Testing yaml section of Rmd file in case if file not exist", {
+#     path <- test_path("file/rmd/test_DirectedPair_SimpleCalc_pdf.Rmd")
+#     root_section = suppressMessages(list(section(path)))
+#
+#     result <- tryCatch({
+#         example_exam <- new("AssessmentTestOpal",
+#                         identifier = "id_test_1",
+#                         title = "Mock test",
+#                         section = root_section)
+#     }, error = function(e) e)
+#
+#     expect_true(inherits(result, "error"))
+#     expect_match(result$message, "The following files do not exist: -Not_file.pdf")
+# })
