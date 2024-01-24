@@ -1,4 +1,4 @@
-name: "QTI: essay (simple)"
+name: "RQTI: essay (simple)"
 description: >
    A simple example of an essay exercise
 create_dir: FALSE

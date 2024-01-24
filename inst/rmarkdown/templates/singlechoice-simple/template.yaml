@@ -1,4 +1,4 @@
-name: "QTI: singlechoice (simple)"
+name: "RQTI: singlechoice (simple)"
 description: >
    A simple example of a single choice exercise.
 create_dir: FALSE

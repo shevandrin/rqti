@@ -1,7 +1,7 @@
-Binding: qti_project
-Title: QTI Project
+Binding: rqti_project
+Title: RQTI Project
 OpenFiles: main.R
-Icon: icon2.png
+Icon: rqti_icon.png
 
 Parameter: url_endpoint
 Widget: TextInput

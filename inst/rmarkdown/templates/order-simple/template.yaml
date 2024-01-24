@@ -1,4 +1,4 @@
-name: "QTI: order (simple)"
+name: "RQTI: order (simple)"
 description: >
    A simple example of an order exercise where you have to find the correct order of several elements
 create_dir: FALSE
