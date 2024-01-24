@@ -78,7 +78,7 @@
 <span>  time_limit <span class="op">=</span> <span class="fl">90</span>,</span>
 <span>  max_attempts <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  academic_grading <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  grade_label <span class="op">=</span> <span class="st">"Grade"</span>,</span>
+<span>  grade_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>en <span class="op">=</span> <span class="st">"Grade"</span>, de <span class="op">=</span> <span class="st">"Note"</span><span class="op">)</span>,</span>
 <span>  navigation_mode <span class="op">=</span> <span class="st">"nonlinear"</span>,</span>
 <span>  submission_mode <span class="op">=</span> <span class="st">"individual"</span>,</span>
 <span>  allow_comment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -122,7 +122,7 @@ feedback; <code>FALSE</code> by default.</p></dd>
 grade in the final feedback; for multilingual use, it can be a named vector
 with two-letter ISO language codes as names (e.g., c(en="Grade",
 de="Note")); during test creation, it takes the value for the language of
-the operating system; "Grade" is default</p></dd>
+the operating system; c(en="Grade", de="Note") is default</p></dd>
 
 
 <dt>navigation_mode</dt>
