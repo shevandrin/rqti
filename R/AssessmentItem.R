@@ -138,6 +138,41 @@ setGeneric("createQtiTask", function(object, dir = NULL, verification = FALSE) {
     standardGeneric("createQtiTask")
 })
 
+#' Create XML file for exam test specification
+#'
+#' @usage createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
+#'   FALSE)
+#' @param object an instance of the [AssessmentTest] or [AssessmentTestOpal] S4
+#'   object
+#' @param dir string, optional; a folder to store xml file; working directory by
+#'   default
+#' @param verification boolean, optional; to check validity of xml file, default
+#'   `FALSE`
+#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
+#'   zip, xml and downloads files in case of FALSE value; FALSE by default
+#' @return xml document.
+#' @examples
+#' \dontrun{
+#' essay <- new("Essay", prompt = "Test task", title = "Essay",
+#'              identifier = "q1")
+#' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
+#'           choices = c("A", "B", "C"), identifier = "q2")
+#' exam_section <- new("AssessmentSection", identifier = "sec_id",
+#'                    title = "section", assessment_item = list(essay, sc))
+#' exam <- new("AssessmentTestOpal", identifier = "id_test",
+#'            title = "some title", section = list(exam_section))
+#' createQtiTest(exam, "exam_folder", "TRUE")
+#' }
+#' @name createQtiTest-methods
+#' @rdname createQtiTest-methods
+#' @aliases createQtiTest
+#' @docType methods
+#' @export
+setGeneric("createQtiTest", function(object, dir = NULL, verification = FALSE,
+                                     zip_only = FALSE) {
+    standardGeneric("createQtiTest")
+})
+
 #' Get points from AssessmentItem object
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
@@ -239,6 +274,16 @@ setGeneric("getCalculator", function(object) {
 setMethod("createQtiTask", signature(object = "AssessmentItem"),
           function(object, dir = NULL, verification = FALSE) {
               create_qti_task(object, dir, verification)
+          })
+
+#' @rdname createQtiTest-methods
+#' @aliases createQtiTest,AssessmentItem
+setMethod("createQtiTest", signature(object = "AssessmentItem"),
+          function(object, dir = ".", verification = FALSE, zip_only) {
+              test_section <- section(object)
+              test_object <- test4opal(test_section,
+                                    identifier = paste0("test_", object@identifier))
+              create_qti_test(test_object, dir, verification, zip_only)
           })
 
 #' @rdname createResponseProcessing-methods

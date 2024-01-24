@@ -98,41 +98,6 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object
 })
 
-#' Create XML file for exam test specification
-#'
-#' @usage createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
-#'   FALSE)
-#' @param object an instance of the [AssessmentTest] or [AssessmentTestOpal] S4
-#'   object
-#' @param dir string, optional; a folder to store xml file; working directory by
-#'   default
-#' @param verification boolean, optional; to check validity of xml file, default
-#'   `FALSE`
-#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
-#'   zip, xml and downloads files in case of FALSE value; FALSE by default
-#' @return xml document.
-#' @examples
-#' \dontrun{
-#' essay <- new("Essay", prompt = "Test task", title = "Essay",
-#'              identifier = "q1")
-#' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
-#'           choices = c("A", "B", "C"), identifier = "q2")
-#' exam_section <- new("AssessmentSection", identifier = "sec_id",
-#'                    title = "section", assessment_item = list(essay, sc))
-#' exam <- new("AssessmentTestOpal", identifier = "id_test",
-#'            title = "some title", section = list(exam_section))
-#' createQtiTest(exam, "exam_folder", "TRUE")
-#' }
-#' @name createQtiTest-methods
-#' @rdname createQtiTest-methods
-#' @aliases createQtiTest
-#' @docType methods
-#' @export
-setGeneric("createQtiTest", function(object, dir = NULL, verification = FALSE,
-                                     zip_only = FALSE) {
-    standardGeneric("createQtiTest")
-})
-
 #' Create an element assessmentTest of a qti-xml document for test
 #'
 #' Generic function for creating assessmentTest element for XML document of
