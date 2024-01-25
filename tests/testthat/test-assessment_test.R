@@ -408,49 +408,9 @@ test_that("Testing method createOutcomeDeclaration() with
           <th>Max</th>
         </tr>
         <tr>
-          <td>5.0</td>
-          <td>0.00</td>
-          <td>2.99</td>
-        </tr>
-        <tr>
-          <td>4.0</td>
-          <td>3.00</td>
-          <td>3.29</td>
-        </tr>
-        <tr>
-          <td>3.7</td>
-          <td>3.30</td>
-          <td>3.59</td>
-        </tr>
-        <tr>
-          <td>3.3</td>
-          <td>3.60</td>
-          <td>3.89</td>
-        </tr>
-        <tr>
-          <td>3.0</td>
-          <td>3.90</td>
-          <td>4.19</td>
-        </tr>
-        <tr>
-          <td>2.7</td>
-          <td>4.20</td>
-          <td>4.49</td>
-        </tr>
-        <tr>
-          <td>2.3</td>
-          <td>4.50</td>
-          <td>4.79</td>
-        </tr>
-        <tr>
-          <td>2.0</td>
-          <td>4.80</td>
-          <td>5.09</td>
-        </tr>
-        <tr>
-          <td>1.7</td>
-          <td>5.10</td>
-          <td>5.39</td>
+          <td>1.0</td>
+          <td>5.70</td>
+          <td>6.00</td>
         </tr>
         <tr>
           <td>1.3</td>
@@ -458,9 +418,49 @@ test_that("Testing method createOutcomeDeclaration() with
           <td>5.69</td>
         </tr>
         <tr>
-          <td>1.0</td>
-          <td>5.70</td>
-          <td>6.00</td>
+          <td>1.7</td>
+          <td>5.10</td>
+          <td>5.39</td>
+        </tr>
+        <tr>
+          <td>2.0</td>
+          <td>4.80</td>
+          <td>5.09</td>
+        </tr>
+        <tr>
+          <td>2.3</td>
+          <td>4.50</td>
+          <td>4.79</td>
+        </tr>
+        <tr>
+          <td>2.7</td>
+          <td>4.20</td>
+          <td>4.49</td>
+        </tr>
+        <tr>
+          <td>3.0</td>
+          <td>3.90</td>
+          <td>4.19</td>
+        </tr>
+        <tr>
+          <td>3.3</td>
+          <td>3.60</td>
+          <td>3.89</td>
+        </tr>
+        <tr>
+          <td>3.7</td>
+          <td>3.30</td>
+          <td>3.59</td>
+        </tr>
+        <tr>
+          <td>4.0</td>
+          <td>3.00</td>
+          <td>3.29</td>
+        </tr>
+        <tr>
+          <td>5.0</td>
+          <td>0.00</td>
+          <td>2.99</td>
         </tr>
       </tbody>
     </table>

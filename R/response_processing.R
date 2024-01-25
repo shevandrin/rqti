@@ -258,8 +258,9 @@ make_set_conditions_grade <- function(max_points, label) {
     feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, label)
     lower_bounds[1] <- "0.00"
     upper_bounds[length(upper_bounds)] <- sprintf("%.2f", max_points)
-    feedback_table <- create_feedback_grade_table(grades, label, lower_bounds,
-                                                  upper_bounds)
+    feedback_table <- create_feedback_grade_table(rev(grades), label,
+                                                  rev(lower_bounds),
+                                                  rev(upper_bounds))
     feedbacks <- tagList(feedbacks, feedback_table)
 
     return(list(conditions = conditions, feedbacks = feedbacks))
