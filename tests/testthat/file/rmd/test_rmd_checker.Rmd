@@ -1,0 +1,18 @@
+---
+type: cloze
+identifier: test_entry_example
+---
+
+```{r setup, echo=FALSE, warning=FALSE}
+
+```
+# question
+**Diese Aufgabe dient zum Testen verschiedener Möglichkeiten zum Erstellen von Lücken**
+
+neue numerische Lücke, die mit der Funktion gebaut würde `r gap_numeric(solution = 8, placeholder = "die richtige Antwort ist 8", tolerance_type = "relative", tolerance = 10, include_lower_bound = FALSE)`
+
+
+eine texte Lücke **für opal**, die mit der Funktion gebaut würde `r gap_text(solution = c("answer000", "answer111", "answer222"), points = 3, placeholder = "opal allows some tolerance rate", case_sensitive = FALSE, tolerance = 2)`
+
+# feedback
+general feedback
