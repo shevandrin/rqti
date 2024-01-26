@@ -80,7 +80,7 @@ Collate:
     'extract_results.R'
     'helpers.R'
     'knit_functions.R'
-    'objectBuilder.R'
+    'object_builder.R'
     'qti_task.R'
     'qti_test.R'
     'response_processing.R'

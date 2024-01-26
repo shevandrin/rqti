@@ -51,6 +51,7 @@ create_question_object <- function(file, file_dir = NULL) {
     tdir <- tempdir()
 
     md_path <- file.path(tdir, "_temp_md.md")
+    knitr::opts_chunk$set(fig.cap="")
     knitr::opts_knit$set(base.dir = tdir)
 
     file_p <- knit(input = file, output = md_path, quiet = TRUE)
@@ -67,14 +68,8 @@ create_question_object <- function(file, file_dir = NULL) {
         writeLines(rmd_mdf, con = file_p)
     }
 
-    options <- c("-o", "_temp_pandoc.html", "-f", "markdown", "-t", "html5",
-                 "--mathjax",
-                 "--embed-resources",
-                 "--section-divs",
-                 "--no-highlight",
-                 "--wrap=none", "+RTS", "-M512M")
-    pandoc_convert(file_p, options=options, wd = tdir)
-    tdoc <- file.path(tdir, "_temp_pandoc.html")
+    tdoc <- pandoc_html_convert(file_p, "_temp_pandoc.html", tdir)
+
     file_content <- readLines(tdoc)
     modified_content <- c("<body>", file_content, "</body>")
     write(modified_content, tdoc)
@@ -351,7 +346,8 @@ read_table <- function(html, attrs) {
     tbd <- xml2::xml_find_all(tbl, "//tbody")
     tbd <- tbd[length(tbd)]
     tr <- xml2::xml_find_all(tbd, ".//tr/td[1]")
-    rows <- sapply(tr, function(x) paste(as.character(xml2::xml_contents(x)), collapse = " "))
+    rows <- sapply(tr, function(x) paste(as.character(xml2::xml_contents(x)),
+                                         collapse = " "))
     xml2::xml_remove(tr)
 
     n_cols <- length(xml2::xml_find_all(tbd, "./tr[1]/td"))
@@ -386,7 +382,7 @@ read_table <- function(html, attrs) {
     cells <- as.numeric(xml2::xml_text(cells))
     table <- matrix(cells, nrow = length(rows), ncol = n_cols, byrow = TRUE)
     xml2::xml_remove(tbl)
-    return(list(rows = rows, rows_ids= rows_ids,
+    return(list(rows = rows, rows_ids = rows_ids,
                 cols = cols, cols_ids = cols_ids,
                 table = table))
 }
@@ -409,8 +405,8 @@ make_abbr_ids <- function(items) {
         count_words <- lengths(strsplit(x, " "))
         if (count_words > 1) {
             pos <- regexpr(" ", x)[1][1]
-            x <- paste0(substr(x, 1, pos-1), "_",
-                       abbreviate(substr(x, pos+1, nchar(x)), minlength = 4,
+            x <- paste0(substr(x, 1, pos - 1), "_",
+                       abbreviate(substr(x, pos + 1, nchar(x)), minlength = 4,
                                   use.classes = FALSE))
         }
         return(x)
@@ -513,4 +509,15 @@ rmd_detect_type <- function(file) {
     } else {
         return("gap")
     }
+}
+
+pandoc_html_convert <- function(input_file, output_file_name, dir_name) {
+    options <- c("-o", output_file_name, "-f", "markdown", "-t", "html5",
+                 "--mathjax",
+                 "--embed-resources",
+                 "--section-divs",
+                 "--no-highlight",
+                 "--wrap=none", "+RTS", "-M512M")
+    pandoc_convert(input_file, options = options, wd = dir_name)
+    return(file.path(dir_name, output_file_name))
 }
