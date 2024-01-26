@@ -43,6 +43,12 @@ with two-letter ISO language codes as names (e.g., c(en="Grade",
 de="Note")); during test creation, it takes the value for the language of
 the operating system; c(en="Grade", de="Note") is default}
 
+\item{table_label}{A string, optional; a concise message to display as the
+column title of the grading table in the final feedback; for multilingual use,
+it can be a named vector with two-letter ISO language codes as names
+(e.g., c(en="Grade", de="Note")); during test creation, it takes the value
+for the language of the operating system; c(en="Grade", de="Note")is default.}
+
 \item{navigation_mode}{A string, optional, determining the general paths that
 the candidate may have during the exam. Two mode options are possible:
 \itemize{
@@ -71,13 +77,3 @@ An \link{AssessmentTest} object
 \description{
 Create test
 }
-\section{Slots}{
-
-\describe{
-\item{\code{table_label}}{A string, optional; a concise message to display as the
-column title of the grading table in the final feedback; for multilingual use,
-it can be a named vector with two-letter ISO language codes as names
-(e.g., c(en="Grade", de="Note")); during test creation, it takes the value
-for the language of the operating system; c(en="Grade", de="Note")is default.}
-}}
-

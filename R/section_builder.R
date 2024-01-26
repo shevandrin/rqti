@@ -147,7 +147,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
 #'   the operating system; c(en="Grade", de="Note") is default
-#' @slot table_label A string, optional; a concise message to display as the
+#' @param table_label A string, optional; a concise message to display as the
 #' column title of the grading table in the final feedback; for multilingual use,
 #' it can be a named vector with two-letter ISO language codes as names
 #' (e.g., c(en="Grade", de="Note")); during test creation, it takes the value
@@ -210,7 +210,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
 #'   the operating system; c(en="Grade", de="Note")is default.
-#' @slot table_label A string, optional; a concise message to display as the
+#' @param table_label A string, optional; a concise message to display as the
 #' column title of the grading table in the final feedback; for multilingual use,
 #' it can be a named vector with two-letter ISO language codes as names
 #' (e.g., c(en="Grade", de="Note")); during test creation, it takes the value
