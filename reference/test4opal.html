@@ -143,6 +143,14 @@ de="Note")); during test creation, it takes the value for the language of
 the operating system; c(en="Grade", de="Note")is default.</p></dd>
 
 
+<dt>table_label</dt>
+<dd><p>A string, optional; a concise message to display as the
+column title of the grading table in the final feedback; for multilingual use,
+it can be a named vector with two-letter ISO language codes as names
+(e.g., c(en="Grade", de="Note")); during test creation, it takes the value
+for the language of the operating system; c(en="Grade", de="Note")is default.</p></dd>
+
+
 <dt>navigation_mode</dt>
 <dd><p>A string, optional, determining the general paths that
 the candidate may have during the exam. Two mode options are possible:</p><ul><li><p>'linear': Candidate is not allowed to return to previous questions.</p></li>
@@ -190,19 +198,6 @@ candidate's answers from the previous attempt. Default is <code>FALSE</code>.</p
 
 <p>An <a href="AssessmentTestOpal-class.html">AssessmentTestOpal</a> object</p>
     </div>
-    <div class="section level2">
-    <h2 id="slots">Slots<a class="anchor" aria-label="anchor" href="#slots"></a></h2>
-    
-
-<dl><dt><code>table_label</code></dt>
-<dd><p>A string, optional; a concise message to display as the
-column title of the grading table in the final feedback; for multilingual use,
-it can be a named vector with two-letter ISO language codes as names
-(e.g., c(en="Grade", de="Note")); during test creation, it takes the value
-for the language of the operating system; c(en="Grade", de="Note")is default.</p></dd>
-
-
-</dl></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
