@@ -242,7 +242,7 @@ create_resp_cond_grade_feedback <- function(lower_bound, upper_bound,
 }
 
 # this function creates set of outcomesConditions according to german grade system
-make_set_conditions_grade <- function(max_points, label) {
+make_set_conditions_grade <- function(max_points, grade_label, table_label) {
     grades <- c("5.0", "4.0", "3.7", "3.3", "3.0", "2.7", "2.3", "2.0", "1.7",
                "1.3", "1.0")
     id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
@@ -255,10 +255,10 @@ make_set_conditions_grade <- function(max_points, label) {
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
                              upper_bounds, id_grade_fb)
     conditions <- tagList(conditions, create_resp_cond_grade_table())
-    feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, label)
+    feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, grade_label)
     lower_bounds[1] <- "0.00"
     upper_bounds[length(upper_bounds)] <- sprintf("%.2f", max_points)
-    feedback_table <- create_feedback_grade_table(rev(grades), label,
+    feedback_table <- create_feedback_grade_table(rev(grades), table_label,
                                                   rev(lower_bounds),
                                                   rev(upper_bounds))
     feedbacks <- tagList(feedbacks, feedback_table)
@@ -276,12 +276,12 @@ create_feedback_grade <- function(id, grade, label) {
 }
 
 # this function creates feedback tag with grading table
-create_feedback_grade_table <- function(grades, grade_label, lower_bounds,
+create_feedback_grade_table <- function(grades, table_label, lower_bounds,
                                         upper_bounds) {
     make_table_row <- function(grade, min, max) {
         tr(tagList(td(grade), td(min), td(max)))
     }
-    header <- tag("tr", tagList(th(grade_label), th("Min"), th("Max")))
+    header <- tag("tr", tagList(th(table_label), th("Min"), th("Max")))
     rows <- Map(make_table_row, grades, lower_bounds, upper_bounds)
     tbody <- tag("tbody", list(style ="text-align: right;",
                                tagList(header, rows)))
