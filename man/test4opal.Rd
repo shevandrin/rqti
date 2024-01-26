@@ -14,6 +14,7 @@ test4opal(
   calculator = "scientific-calculator",
   academic_grading = FALSE,
   grade_label = c(en = "Grade", de = "Note"),
+  table_label = c(en = "Grade", de = "Note"),
   navigation_mode = "nonlinear",
   submission_mode = "individual",
   allow_comment = TRUE,
@@ -94,3 +95,13 @@ An \link{AssessmentTestOpal} object
 \description{
 Create test for LMS Opal
 }
+\section{Slots}{
+
+\describe{
+\item{\code{table_label}}{A string, optional; a concise message to display as the
+column title of the grading table in the final feedback; for multilingual use,
+it can be a named vector with two-letter ISO language codes as names
+(e.g., c(en="Grade", de="Note")); during test creation, it takes the value
+for the language of the operating system; c(en="Grade", de="Note")is default.}
+}}
+

@@ -147,6 +147,11 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
 #'   the operating system; c(en="Grade", de="Note") is default
+#' @slot table_label A string, optional; a concise message to display as the
+#' column title of the grading table in the final feedback; for multilingual use,
+#' it can be a named vector with two-letter ISO language codes as names
+#' (e.g., c(en="Grade", de="Note")); during test creation, it takes the value
+#' for the language of the operating system; c(en="Grade", de="Note")is default.
 #' @param navigation_mode A string, optional, determining the general paths that
 #'   the candidate may have during the exam. Two mode options are possible:
 #'   - 'linear': Candidate is not allowed to return to previous questions.
@@ -166,6 +171,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 test <- function(content, identifier = "test_identifier", title = "Test Title",
                  time_limit = 90, max_attempts = 1, academic_grading = FALSE,
                  grade_label = c(en="Grade", de="Note"),
+                 table_label = c(en="Grade", de="Note"),
                  navigation_mode = "nonlinear", submission_mode = "individual",
                  allow_comment = TRUE, rebuild_variables = TRUE) {
 
@@ -204,6 +210,11 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
 #'   the operating system; c(en="Grade", de="Note")is default.
+#' @slot table_label A string, optional; a concise message to display as the
+#' column title of the grading table in the final feedback; for multilingual use,
+#' it can be a named vector with two-letter ISO language codes as names
+#' (e.g., c(en="Grade", de="Note")); during test creation, it takes the value
+#' for the language of the operating system; c(en="Grade", de="Note")is default.
 #' @param navigation_mode A string, optional, determining the general paths that
 #'   the candidate may have during the exam. Two mode options are possible:
 #'   - 'linear': Candidate is not allowed to return to previous questions.
@@ -231,6 +242,7 @@ test4opal <- function(content, identifier = "test_identifier",
                       files = NULL, calculator = "scientific-calculator",
                       academic_grading = FALSE,
                       grade_label = c(en="Grade", de="Note"),
+                      table_label = c(en="Grade", de="Note"),
                       navigation_mode = "nonlinear",
                       submission_mode = "individual", allow_comment = TRUE,
                       rebuild_variables = TRUE, show_test_time = TRUE,
