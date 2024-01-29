@@ -83,3 +83,35 @@ has_duplicates <- !any(duplicated(id))
 # Assert that there are no duplicates, True
 expect_true(has_duplicates, "Duplicate identifiers found in AssessmentSections")
 })
+
+test_that("Testing createQtiTest method behavior when the Rmd file
+          is not exist", {
+              path <- test_path("file/rmd/NoFile.Rmd")
+
+              error_message <- tryCatch(
+                  createQtiTest(path),
+                  error = function(e) {
+                      conditionMessage(e)
+                  }
+              )
+
+              expect_equal("The file does not exist", error_message)
+})
+
+test_that("Testing createQtiTest method", {
+              path_1 <- test_path("file/rmd/test_mc_no_point.Rmd")
+              path_2 <- test_path("file/md/test_sc_example2.md")
+              path_3 <- test_path("file/test_create_qti_task_MultipleChoice.xml")
+
+              sut_1 <- createQtiTest(path_1)
+              sut_2 <- createQtiTest(path_2)
+              sut_3 <- createQtiTest(path_3)
+
+              expect_no_error(sut_1)
+              expect_no_error(sut_2)
+              expect_no_error(sut_3)
+
+              unlink("Preview.zip", expand = TRUE )
+              unlink("sample 2.zip", expand = TRUE )
+              unlink("test 2.zip", expand = TRUE )
+})
