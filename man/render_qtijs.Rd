@@ -2,12 +2,13 @@
 % Please edit documentation in R/knit_functions.R
 \name{render_qtijs}
 \alias{render_qtijs}
-\title{Render an RMD file as qti xml with QTIJS}
+\title{Render an RMD/xml file or qti-object as qti xml with QTIJS}
 \usage{
 render_qtijs(input, ...)
 }
 \arguments{
-\item{input}{(the path to the input Rmd document)}
+\item{input}{(the path to the input Rmd/md/xml document or \link{AssessmentItem},
+\link{AssessmentTest}, \link{AssessmentTestOpal}, \link{AssessmentSection} object)}
 
 \item{...}{required for passing arguments when knitting}
 }

@@ -1,4 +1,4 @@
-#' Render an RMD file as qti xml with QTIJS
+#' Render an RMD/xml file or qti-object as qti xml with QTIJS
 #'
 #' Generates the qti xml file via rmd2xml. The xml is copied into the QTIJS
 #' folder of the package which transforms the xml into HTML. Finally, the HTML
@@ -12,7 +12,8 @@
 #' displayed when rendering. Since the function is supposed to be called via the
 #' Knit-Button in RStudio, it defaults to the RStudio viewer pane.
 #'
-#' @param input (the path to the input Rmd document)
+#' @param input (the path to the input Rmd/md/xml document or [AssessmentItem],
+#' [AssessmentTest], [AssessmentTestOpal], [AssessmentSection] object)
 #' @param ... required for passing arguments when knitting
 #'
 #' @examples
@@ -35,8 +36,9 @@ render_qtijs <- function(input, ...) {
       }
     }
     message("Open browser at: ", url, " for preview")
-    suppressMessages(rmd2xml(input, paste0(qtijs_path(), "/index.xml")))
-    rmd2xml(input)
+    # suppressMessages(rmd2xml(input, paste0(qtijs_path(), "/index.xml")))
+    # rmd2xml(input)
+    prepareQTIJSFiles(input, qtijs_path())
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }

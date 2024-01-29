@@ -268,6 +268,19 @@ setGeneric("getCalculator", function(object) {
     standardGeneric("getCalculator")
 })
 
+#' Prepare files to render them with QTIJS
+#'
+#' @param object an instance of [AssessmentItem], [AssessmentTest],
+#'   [AssessmentTestOpal], [AssessmentSection], or string path to xml, rmd or md
+#'   files
+#' @param dir QTIJS path
+#' @name prepareQTIJSFiles-methods
+#' @rdname prepareQTIJSFiles-methods
+#' @aliases prepareQTIJSFiles
+#' @docType methods
+setGeneric("prepareQTIJSFiles", function(object, dir = NULL) {
+    standardGeneric("prepareQTIJSFiles")
+})
 
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
@@ -376,4 +389,11 @@ setMethod("getFiles", signature(object = "AssessmentItem"),
 setMethod("getCalculator", signature(object = "AssessmentItem"),
           function(object) {
               return(object@calculator)
+          })
+
+#' @rdname prepareQTIJSFiles-methods
+#' @aliases prepareQTIJSFiles,AssessmentItem
+setMethod("prepareQTIJSFiles", signature(object = "AssessmentItem"),
+          function(object, dir = "") {
+              createQtiTask(object, file.path(dir, "index.xml"))
           })

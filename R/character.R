@@ -138,3 +138,18 @@ setMethod("getCalculator", signature(object = "character"),
           function(object) {
               return(character(0))
           })
+
+#' @rdname prepareQTIJSFiles-methods
+#' @aliases prepareQTIJSFiles,AssessmentItem
+setMethod("prepareQTIJSFiles", signature(object = "character"),
+          function(object, dir) {
+              if (!file.exists(object)) {
+                  stop("The file does not exist", call. = FALSE)
+              }
+              out_path <- file.path(dir, "/index.xml")
+              ext <- file_ext(object)
+              if (ext %in% c("Rmd", "md")) rmd2xml(object, out_path)
+              if (ext == "xml") file.copy(object, out_path)
+              if (ext == "zip") unzip(object, exdir = dir)
+              return(NULL)
+          })

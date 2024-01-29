@@ -133,3 +133,12 @@ setMethod("getCalculator", signature(object = "AssessmentSection"),
               result <- unlist(sapply(object@assessment_item, getCalculator))
               return(result)
           })
+
+#' @rdname prepareQTIJSFiles-methods
+#' @aliases prepareQTIJSFiles,AssessmentSection
+setMethod("prepareQTIJSFiles", signature(object = "AssessmentSection"),
+          function(object, dir) {
+              tst <- test(object)
+              prepareQTIJSFiles(tst, dir)
+              return(NULL)
+          })

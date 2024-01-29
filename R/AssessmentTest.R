@@ -181,3 +181,13 @@ setMethod("createZip", signature(object = "AssessmentTest"),
               if (is.null(file_name)) file_name <- object@identifier
               zip_wrapper(file_name, input, output, NULL, zip_only)
           })
+
+#' @rdname prepareQTIJSFiles-methods
+#' @aliases prepareQTIJSFiles,AssessmentTest
+setMethod("prepareQTIJSFiles", signature(object = "AssessmentTest"),
+          function(object, dir) {
+              zip_file <- createQtiTest(object, dir, TRUE)
+              unzip(zip_file, exdir = dir)
+              unlink(zip_file)
+              return(NULL)
+          })
