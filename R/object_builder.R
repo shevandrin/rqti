@@ -52,6 +52,7 @@ create_question_object <- function(file, file_dir = NULL) {
 
     md_path <- file.path(tdir, "_temp_md.md")
     knitr::opts_chunk$set(fig.cap="")
+    knitr::opts_chunk$set(error=FALSE)
     knitr::opts_knit$set(base.dir = tdir)
 
     file_p <- knit(input = file, output = md_path, quiet = TRUE)
