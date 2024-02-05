@@ -222,11 +222,11 @@ create_resp_cond_grade_feedback <- function(lower_bound, upper_bound,
     t_variable <- variable("SCORE")
     t_gte <- NULL
     t_lt <- NULL
-    if (!is.null(lower_bound)) {
+    if (lower_bound != "0.00") {
         t_baseValue <- baseValue(list(baseType = "float", lower_bound))
         t_gte <- gte(list(t_variable, t_baseValue))
     }
-    if (!is.null(upper_bound)) {
+    if (upper_bound != "max") {
         t_baseValue <- baseValue(list(baseType = "float", upper_bound))
         t_lt <- lt(list(t_variable, t_baseValue))
     }
@@ -248,21 +248,17 @@ make_set_conditions_grade <- function(max_points, grade_label, table_label) {
     id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
     grade_levels <- seq(50, 100, 5) * max_points / 100
     grade_levels <- grade_levels[-length(grade_levels)]
-    lower_bounds <- as.list(sprintf("%.2f", grade_levels))
-    lower_bounds <- append(list(NULL), lower_bounds)
-    upper_bounds <- as.list(sprintf("%.2f", grade_levels -0.01))
-    upper_bounds <- append(upper_bounds, list(NULL))
+    lower_bounds <- c("0.00", sprintf("%.2f", grade_levels))
+    upper_bounds <- c(sprintf("%.2f", grade_levels -0.01), "max")
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
                              upper_bounds, id_grade_fb)
     conditions <- tagList(conditions, create_resp_cond_grade_table())
     feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, grade_label)
-    lower_bounds[1] <- "0.00"
     upper_bounds[length(upper_bounds)] <- sprintf("%.2f", max_points)
-    feedback_table <- create_feedback_grade_table(rev(grades), table_label,
-                                                  rev(lower_bounds),
-                                                  rev(upper_bounds))
+    df = data.frame(grades = rev(grades), min = rev(lower_bounds),
+                    max = rev(upper_bounds))
+    feedback_table <- create_feedback_grade_table(df, table_label)
     feedbacks <- tagList(feedbacks, feedback_table)
-
     return(list(conditions = conditions, feedbacks = feedbacks))
 }
 
@@ -275,23 +271,15 @@ create_feedback_grade <- function(id, grade, label) {
                              tag("p", message)))
 }
 
-# this function creates feedback tag with grading table
-create_feedback_grade_table <- function(grades, table_label, lower_bounds,
-                                        upper_bounds) {
-    make_table_row <- function(grade, min, max) {
-        tr(tagList(td(grade), td(min), td(max)))
-    }
-    header <- tag("tr", tagList(th(table_label), th("Min"), th("Max")))
-    rows <- Map(make_table_row, grades, lower_bounds, upper_bounds)
-    tbody <- tag("tbody", list(style ="text-align: right;",
-                               tagList(header, rows)))
-    grade_table <- tag("table", list(border = 1,
-                        style = "border-collapse: collapse; min-width: 150px;",
-                                     tbody))
+create_feedback_grade_table <- function(df, table_label) {
+    col_nms <- c(table_label, "Min", "Max")
+    cont <- knitr::kable(df, format = "html", col.names = col_nms, digits = 2,
+                         table.attr = "border=\"1\" width=\"45%\"", align = "r")
+    grade_table <- htmltools::HTML(cont)
     tag("testFeedback", list(identifier = "feedback_grade_table",
-                             outcomeIdentifier = "FEEDBACKTABLE",
-                             showHide = "show", access = "atEnd",
-                             grade_table))
+                            outcomeIdentifier = "FEEDBACKTABLE",
+                            showHide = "show", access = "atEnd",
+                            grade_table))
 }
 
 # this function makes condition to show grading table in feedback

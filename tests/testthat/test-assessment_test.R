@@ -400,67 +400,69 @@ test_that("Testing method createOutcomeDeclaration() with
 			<p>Grade 1.0</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_table\" outcomeIdentifier=\"FEEDBACKTABLE\" showHide=\"show\" access=\"atEnd\">
-    <table border=\"1\" style=\"border-collapse: collapse; min-width: 150px;\">
-      <tbody style=\"text-align: right;\">
+    <table border=\"1\" width=\"45%\">
+      <thead>
         <tr>
-          <th>Grade</th>
-          <th>Min</th>
-          <th>Max</th>
+          <th style=\"text-align:right;\"> Grade </th>
+          <th style=\"text-align:right;\"> Min </th>
+          <th style=\"text-align:right;\"> Max </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td  style=\"text-align:right;\"> 1.0 </td>
+          <td  style=\"text-align:right;\"> 5.70 </td>
+          <td  style=\"text-align:right;\"> 6.00 </td>
         </tr>
         <tr>
-          <td>1.0</td>
-          <td>5.70</td>
-          <td>6.00</td>
+          <td  style=\"text-align:right;\"> 1.3 </td>
+          <td  style=\"text-align:right;\"> 5.40 </td>
+          <td  style=\"text-align:right;\"> 5.69 </td>
         </tr>
         <tr>
-          <td>1.3</td>
-          <td>5.40</td>
-          <td>5.69</td>
+          <td  style=\"text-align:right;\"> 1.7 </td>
+          <td  style=\"text-align:right;\"> 5.10 </td>
+          <td  style=\"text-align:right;\"> 5.39 </td>
         </tr>
         <tr>
-          <td>1.7</td>
-          <td>5.10</td>
-          <td>5.39</td>
+          <td  style=\"text-align:right;\"> 2.0 </td>
+          <td  style=\"text-align:right;\"> 4.80 </td>
+          <td  style=\"text-align:right;\"> 5.09 </td>
         </tr>
         <tr>
-          <td>2.0</td>
-          <td>4.80</td>
-          <td>5.09</td>
+          <td  style=\"text-align:right;\"> 2.3 </td>
+          <td  style=\"text-align:right;\"> 4.50 </td>
+          <td  style=\"text-align:right;\"> 4.79 </td>
         </tr>
         <tr>
-          <td>2.3</td>
-          <td>4.50</td>
-          <td>4.79</td>
+          <td  style=\"text-align:right;\"> 2.7 </td>
+          <td  style=\"text-align:right;\"> 4.20 </td>
+          <td  style=\"text-align:right;\"> 4.49 </td>
         </tr>
         <tr>
-          <td>2.7</td>
-          <td>4.20</td>
-          <td>4.49</td>
+          <td  style=\"text-align:right;\"> 3.0 </td>
+          <td  style=\"text-align:right;\"> 3.90 </td>
+          <td  style=\"text-align:right;\"> 4.19 </td>
         </tr>
         <tr>
-          <td>3.0</td>
-          <td>3.90</td>
-          <td>4.19</td>
+          <td  style=\"text-align:right;\"> 3.3 </td>
+          <td  style=\"text-align:right;\"> 3.60 </td>
+          <td  style=\"text-align:right;\"> 3.89 </td>
         </tr>
         <tr>
-          <td>3.3</td>
-          <td>3.60</td>
-          <td>3.89</td>
+          <td  style=\"text-align:right;\"> 3.7 </td>
+          <td  style=\"text-align:right;\"> 3.30 </td>
+          <td  style=\"text-align:right;\"> 3.59 </td>
         </tr>
         <tr>
-          <td>3.7</td>
-          <td>3.30</td>
-          <td>3.59</td>
+          <td  style=\"text-align:right;\"> 4.0 </td>
+          <td  style=\"text-align:right;\"> 3.00 </td>
+          <td  style=\"text-align:right;\"> 3.29 </td>
         </tr>
         <tr>
-          <td>4.0</td>
-          <td>3.00</td>
-          <td>3.29</td>
-        </tr>
-        <tr>
-          <td>5.0</td>
-          <td>0.00</td>
-          <td>2.99</td>
+          <td  style=\"text-align:right;\"> 5.0 </td>
+          <td  style=\"text-align:right;\"> 0.00 </td>
+          <td  style=\"text-align:right;\"> 2.99 </td>
         </tr>
       </tbody>
     </table>
