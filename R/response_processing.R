@@ -271,9 +271,10 @@ create_feedback_grade <- function(id, grade, label) {
                              tag("p", message)))
 }
 
+#' @importFrom knitr kable
 create_feedback_grade_table <- function(df, table_label) {
     col_nms <- c(table_label, "Min", "Max")
-    cont <- knitr::kable(df, format = "html", col.names = col_nms, digits = 2,
+    cont <- kable(df, format = "html", col.names = col_nms, digits = 2,
                          table.attr = "border=\"1\" width=\"45%\"", align = "r")
     grade_table <- htmltools::HTML(cont)
     tag("testFeedback", list(identifier = "feedback_grade_table",
