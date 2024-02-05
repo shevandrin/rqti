@@ -38,15 +38,6 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
 
-    fix_img <- function(itm) {
-        if (is.character(itm)) {
-            gsub('(<img[^>]*[^/])>', "\\1/>",itm)
-        } else {
-            itm
-        }
-    }
-    .Object@content <- lapply(.Object@content, fix_img)
-
     validObject(.Object)
     .Object
 })
