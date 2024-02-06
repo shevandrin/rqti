@@ -173,59 +173,6 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
 
 test_that("Testing AssessmentTestOpal class: create tasks with upload
           files xml", {
-    mc <- new("MultipleChoice",
-               identifier = "test_create_qti_task_MultipleChoice",
-               prompt = "What does 3/4 + 1/4 = ?",
-               title = "MultipleChoice",
-               choices = c("1", "4/8", "8/4", "4/4"),
-               choice_identifiers = c("a1", "a2", "a3", "a4"),
-               points = c(1, 0, 0, 1)
-    )
-    TextGapOpal <- suppressMessages(new("Entry",
-                       identifier = "test_create_qti_task_TextGapOpal",
-                       points = 3,
-                       title = "TextGapOpal",
-                       content = list('<p>The speed of light is',
-                                      new("TextGapOpal",
-                                          response_identifier = "RESPONSE_1",
-                                          points = 1,
-                                          solution = c("more", "MORE", "More"),
-                                          tolerance = 2),
-                                      'than the speed of sound</p>'))
-    )
-    DirectedPair <- new("DirectedPair",
-                        content = list("<p>\"Directed pairs\" task</p>"),
-                        identifier = "test_create_qti_task_DirectedPair",
-                        title = "Directed pairs",
-                        rows = c("12*4 =", "100/50 =", "25*2 ="),
-                        rows_identifiers = c("a", "b", "c"),
-                        cols = c("48", "2", "50"),
-                        cols_identifiers = c("k", "l", "m"),
-                        answers_identifiers = c("a k", "b l", 'c m'),
-                        points = 5
-    )
-    order <- new("Order",
-                 identifier = "test_create_qti_task_Order",
-                 title = "Order",
-                 prompt = "Choose the correct order",
-                 choices = c("Data collection", "Data cleansing",
-                             "Data marking", "Verification and visualization"),
-                 choices_identifiers = c("1", "2", "3", "4"),
-                 points = 1
-    )
-
-    exam_section <- new("AssessmentSection",
-                        identifier = "sec_id",
-                        title = "section",
-                        assessment_item = list(mc, order, DirectedPair,
-                                               TextGapOpal)
-    )
-    exam <- new("AssessmentTestOpal",
-                identifier = "id_test",
-                title = "Mock test",
-                section = list(exam_section))
-    suppressWarnings(suppressMessages(createQtiTest(exam, "exam_folder",
-                                                    "TRUE")))
 
     # Reading of tasks from xml files
     path1 <- test_path("file/test_create_qti_task_MultipleChoice.xml")
@@ -244,23 +191,24 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload
                 title = "Mock test",
                 section = list(example_exam_section))
     suppressWarnings(suppressMessages(createQtiTest(example_exam,
-                                                    "exam_folder3", FALSE)))
+                                                    "test_exam_folder", FALSE)))
 
     # get list content zip files and compare them
-    zip_expected <- list.files(path = "exam_folder", pattern = ".zip",
-                              full.names = TRUE)
-    zip_sut <- list.files(path = "exam_folder3", pattern = ".zip",
+    zip_sut <- list.files(path = "test_exam_folder", pattern = ".zip",
                               full.names = TRUE)
 
-    list_expected <- utils::unzip(zip_expected, list = TRUE)
     list_sut <- utils::unzip(zip_sut, list = TRUE)
+    list_expected <- c("id_test.xml", "imsmanifest.xml",
+                       "test_create_qti_task_MultipleChoice.xml",
+                       "test_create_qti_task_TextGapOpal.xml",
+                       "test_create_qti_task_DirectedPair.xml",
+                       "test_create_qti_task_Order.xml")
 
-    ls <- list_expected$Name %in% list_sut$Name
+    ls <- list_expected %in% list_sut$Name
 
     expect_equal(all(ls), TRUE)
 
-    unlink(file.path(getwd(),"exam_folder"), recursive = TRUE)
-    unlink(file.path(getwd(),"exam_folder3"), recursive = TRUE)
+    unlink(file.path(getwd(),"test_exam_folder"), recursive = TRUE)
 })
 
 test_that("Testing buildAssessmentSection() that returns a warning
