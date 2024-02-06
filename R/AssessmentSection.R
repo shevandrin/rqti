@@ -108,7 +108,8 @@ setMethod("getPoints", signature(object = "AssessmentSection"),
 #' @aliases getIdentifier,AssessmentSection
 setMethod("getIdentifier", signature(object = "AssessmentSection"),
           function(object) {
-              return(object@identifier)
+              ids <- sapply(object@assessment_item, getIdentifier)
+              return(c(object@identifier, ids))
           })
 
 #' @rdname getObject-methods
