@@ -303,7 +303,7 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
 
     # Reading of tasks from Rmd files and create of unique identifiers
     path1 <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
-    path1obj <- Map(create_question_object, rep(path1, 4))
+    suppressMessages(path1obj <- Map(create_question_object, rep(path1, 4)))
     path1obj[[1]]@identifier <- "v1"
     path1obj[[2]]@identifier <- "v2"
     path1obj[[3]]@identifier <- "v3"
@@ -311,19 +311,19 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
 
     path2 <- test_path("file/rmd/test_DirectedPair_SimpleCalc.Rmd")
     # path 2 - The item contains the parameter: calculator: simple-calculator
-    path2obj <- Map(create_question_object, rep(path2, 3))
+    suppressMessages(path2obj <- Map(create_question_object, rep(path2, 3)))
     path2obj[[1]]@identifier <- "v11"
     path2obj[[2]]@identifier <- "v22"
     path2obj[[3]]@identifier <- "v33"
 
     path3 <- test_path("file/rmd/test_rmd_MultipleChoiceTable_as_table_F.Rmd")
     # path 3 - The item contains the parameter: calculator:scientific-calculator
-    path3obj <- Map(create_question_object, rep(path3, 2))
+    suppressMessages(path3obj <- Map(create_question_object, rep(path3, 2)))
     path3obj[[1]]@identifier <- "v111"
     path3obj[[2]]@identifier <- "v222"
 
     path4 <- test_path("file/rmd/test_OneInRowTable_rowid_colid_example.Rmd")
-    path4obj <- Map(create_question_object, rep(path4, 2))
+    suppressMessages(path4obj <- Map(create_question_object, rep(path4, 2)))
     path4obj[[1]]@identifier <- "v1111"
     path4obj[[2]]@identifier <- "v2222"
 
