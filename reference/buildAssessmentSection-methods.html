@@ -71,19 +71,19 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span>, verify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for AssessmentItem</span></span>
-<span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, <span class="va">folder</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for AssessmentSection</span></span>
-<span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span>, verify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for AssessmentItemRef</span></span>
 <span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for character</span></span>
-<span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span>, verify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -95,6 +95,11 @@
 
 <dt>folder</dt>
 <dd><p>string; a folder to store xml file</p></dd>
+
+
+<dt>verify</dt>
+<dd><p>boolean, optional; check validity of xml file, default
+<code>FALSE</code></p></dd>
 
 </dl></div>
 
