@@ -44,6 +44,7 @@ test_that("Testing of counting points in the test if all tasks
               # file2 - points = 2.5
               # file3 - points = 3
 
+
               file <- c(file1,file2,file3)
 
               num_variants <- 3
@@ -69,16 +70,9 @@ test_that("Testing of counting points in the test that had
 
 test_that("Testing unique identifiers in AssessmentSection and
           AssessmentItem",{
-              extract_id <- function(item) {
-                  id <- getIdentifier(item)
-                  if (class(item) == "AssessmentSection") {
-                      id <- c(id, unlist(lapply(item@assessment_item,
-                                                extract_id)))
-                  }
-                  return(id)
-                  }
-id <- unlist(lapply(root_section, extract_id))
-has_duplicates <- !any(duplicated(id))
+
+        id <- unlist(lapply(root_section, getIdentifier))
+        has_duplicates <- !any(duplicated(id))
 
 # Assert that there are no duplicates, True
 expect_true(has_duplicates, "Duplicate identifiers found in AssessmentSections")
