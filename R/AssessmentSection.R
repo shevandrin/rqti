@@ -76,9 +76,8 @@ setMethod("getAssessmentItems", signature(object = "AssessmentSection"),
 #' @rdname buildAssessmentSection-methods
 #' @aliases buildAssessmentSection,AssessmentSection
 setMethod("buildAssessmentSection", signature(object = "AssessmentSection"),
-          function(object, folder
-                   ) {
-              create_section_test(object, folder)
+          function(object, folder, verify) {
+              create_section_test(object, folder, verify)
           })
 
 #' @rdname getPoints-methods

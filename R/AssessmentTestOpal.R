@@ -64,7 +64,7 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTestOpal
 setMethod("createAssessmentTest", signature(object = "AssessmentTestOpal"),
-          function(object, folder) {
+          function(object, folder, verify) {
               data_downloads <- NULL
               if (length(object@files) > 0) {
                   file_names <- basename(object@files)
@@ -92,7 +92,7 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTestOpal"),
                                          sep = ";")
               }
 
-              create_assessment_test(object, folder, data_downloads,
+              create_assessment_test(object, folder, verify, data_downloads,
                                      data_features)
           })
 

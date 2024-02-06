@@ -39,7 +39,7 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
     tdir <- tempfile()
     dir.create(tdir)
 
-    content <- createAssessmentTest(object, tdir)
+    content <- createAssessmentTest(object, tdir, verification)
     doc_test <- xml2::read_xml(as.character(content))
 
     path_test <- paste0(tdir, "/", object@identifier, ".xml")
@@ -55,8 +55,9 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
 }
 
 # creates xml root and children of test file
-create_assessment_test <- function(object, folder, data_downloads = NULL,
-                                  data_features = NULL) {
+create_assessment_test <- function(object, folder, verify = FALSE,
+                                   data_downloads = NULL,
+                                   data_features = NULL) {
     assessment_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
                     "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
       "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imsqti_v2p1 ",
@@ -74,7 +75,7 @@ create_assessment_test <- function(object, folder, data_downloads = NULL,
     session_control <- create_item_session_control(object@max_attempts,
                                                    object@allow_comment,
                                                    object@rebuild_variables)
-    sections <- Map(create_section_test, object@section, folder)
+    sections <- Map(create_section_test, object@section, folder, verify)
     test_part <- tag("testPart", list(identifier = object@test_part_identifier,
                                       navigationMode = object@navigation_mode,
                                       submissionMode = object@submission_mode,
@@ -117,9 +118,10 @@ detect_label <- function(label) {
     return(unname(result))
 }
 # creates tag assessmentSection in test file
-create_section_test <- function(object, folder) {
+create_section_test <- function(object, folder, verify) {
     assessment_items <- suppressMessages(Map(buildAssessmentSection,
-                                             object@assessment_item, folder))
+                                             object@assessment_item, folder,
+                                             verify))
     time_limit <- c()
     if (!is.na(object@time_limit)) {
        time_limit <- tag("timeLimits", list(maxTime = object@time_limit * 60))

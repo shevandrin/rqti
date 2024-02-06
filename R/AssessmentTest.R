@@ -109,10 +109,12 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #'   [AssessmentTestOpal]
 #' @param folder string, optional; a folder to store xml file; working directory
 #'   by default
+#' @param verify boolean, optional; to check validity of xml file, default
+#'   `FALSE`
 #' @docType methods
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest
-setGeneric("createAssessmentTest", function(object, folder) {
+setGeneric("createAssessmentTest", function(object, folder, verify = FALSE) {
     standardGeneric("createAssessmentTest")
 })
 
@@ -139,8 +141,8 @@ setGeneric("createZip", function(object, input, output, file_name, zip_only) {
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTest
 setMethod("createAssessmentTest", signature(object = "AssessmentTest"),
-          function(object, folder) {
-              create_assessment_test(object, folder)
+          function(object, folder, verify) {
+              create_assessment_test(object, folder, verify)
           })
 
 #' @rdname createQtiTest-methods

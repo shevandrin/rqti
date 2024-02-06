@@ -14,21 +14,24 @@
 \alias{buildAssessementSection,character}
 \title{Build tags for AssessmentSection in assessmentTest}
 \usage{
-buildAssessmentSection(object, folder = NULL)
+buildAssessmentSection(object, folder = NULL, verify = FALSE)
 
-\S4method{buildAssessmentSection}{AssessmentItem}(object, folder = NULL)
+\S4method{buildAssessmentSection}{AssessmentItem}(object, folder)
 
-\S4method{buildAssessmentSection}{AssessmentSection}(object, folder = NULL)
+\S4method{buildAssessmentSection}{AssessmentSection}(object, folder = NULL, verify = FALSE)
 
 \S4method{buildAssessmentSection}{AssessmentItemRef}(object)
 
-\S4method{buildAssessmentSection}{character}(object, folder = NULL)
+\S4method{buildAssessmentSection}{character}(object, folder = NULL, verify = FALSE)
 }
 \arguments{
 \item{object}{an instance of the S4 object (\link{AssessmentSection},
 \link{AssessmentItemRef} and all types of \link{AssessmentItem})}
 
 \item{folder}{string; a folder to store xml file}
+
+\item{verify}{boolean, optional; check validity of xml file, default
+\code{FALSE}}
 }
 \description{
 Generic function for tags that contains assessementSection in assessnetTest

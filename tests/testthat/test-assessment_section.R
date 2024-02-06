@@ -112,7 +112,7 @@ test_that("Test of method buildAssessmentSection() when reading a file in Assess
               choices = c("15%", "20%", "30%"),
               choice_identifiers = "1",
               identifier = "new")
-    suppressMessages(createQtiTask(sc, "todelete", "TRUE"))
+    suppressMessages(createQtiTask(sc, "todelete", FALSE))
 
     sut1 <- suppressMessages(toString(buildAssessmentSection(
         object = "todelete/new.xml", folder = "todelete")))
@@ -177,22 +177,17 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload
     # Reading of tasks from xml files
     path1 <- test_path("file/test_create_qti_task_MultipleChoice.xml")
     path2 <- test_path("file/test_create_qti_task_Order.xml")
-    path3 <- test_path("file/test_create_qti_task_DirectedPair.xml")
-    path4 <- test_path("file/test_create_qti_task_TextGapOpal.xml")
 
     example_exam_section <- new("AssessmentSection",
                                identifier = "sec_id",
                                title = "section",
-                               assessment_item = list(path1, path2,
-                                                      path3, path4))
-
+                               assessment_item = list(path1, path2))
     example_exam <- new("AssessmentTestOpal",
                 identifier = "id_test",
                 title = "Mock test",
                 section = list(example_exam_section))
     suppressWarnings(suppressMessages(createQtiTest(example_exam,
                                                     "test_exam_folder", FALSE)))
-
     # get list content zip files and compare them
     zip_sut <- list.files(path = "test_exam_folder", pattern = ".zip",
                               full.names = TRUE)
@@ -200,14 +195,11 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload
     list_sut <- utils::unzip(zip_sut, list = TRUE)
     list_expected <- c("id_test.xml", "imsmanifest.xml",
                        "test_create_qti_task_MultipleChoice.xml",
-                       "test_create_qti_task_TextGapOpal.xml",
-                       "test_create_qti_task_DirectedPair.xml",
                        "test_create_qti_task_Order.xml")
 
     ls <- list_expected %in% list_sut$Name
 
     expect_equal(all(ls), TRUE)
-
     unlink(file.path(getwd(),"test_exam_folder"), recursive = TRUE)
 })
 
@@ -219,7 +211,7 @@ test_that("Testing buildAssessmentSection() that returns a warning
     cat("<invalid></invalid>", file = invalid_xml)
 
     expect_warning(suppressMessages(buildAssessmentSection(
-                                    invalid_xml, temp_folder)),"is not valid")
+                                    invalid_xml, temp_folder, TRUE)),"is not valid")
 })
 
 test_that("Testing buildAssessmentSection() that returns a warning

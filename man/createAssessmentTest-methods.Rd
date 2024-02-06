@@ -9,11 +9,11 @@
 \alias{createAssessmentTest,AssessmentTestOpal}
 \title{Create an element assessmentTest of a qti-xml document for test}
 \usage{
-createAssessmentTest(object, folder)
+createAssessmentTest(object, folder, verify = FALSE)
 
-\S4method{createAssessmentTest}{AssessmentTest}(object, folder)
+\S4method{createAssessmentTest}{AssessmentTest}(object, folder, verify = FALSE)
 
-\S4method{createAssessmentTest}{AssessmentTestOpal}(object, folder)
+\S4method{createAssessmentTest}{AssessmentTestOpal}(object, folder, verify = FALSE)
 }
 \arguments{
 \item{object}{an instance of the S4 object \link{AssessmentTest} or
@@ -21,6 +21,9 @@ createAssessmentTest(object, folder)
 
 \item{folder}{string, optional; a folder to store xml file; working directory
 by default}
+
+\item{verify}{boolean, optional; to check validity of xml file, default
+\code{FALSE}}
 }
 \description{
 Generic function for creating assessmentTest element for XML document of
