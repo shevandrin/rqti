@@ -614,7 +614,7 @@ test_that("Testing of AssessmentTest class that contains non-unique identifiers
                                   identifier = "id_test",
                                   title = "some title",
                                   section = list(section1, section2))
-    }, "Identifiers of test sections contain non-unique values: sec_id, sec_id")
+    }, "Identifiers of test sections contain non-unique values: sec_id, theSame, sec_id, theSame")
 })
 test_that("Testing of time_limits in AssessmentTest class", {
               mc1 <- new("MultipleChoice",
