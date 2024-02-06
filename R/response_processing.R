@@ -272,10 +272,11 @@ create_feedback_grade <- function(id, grade, label) {
 }
 
 #' @importFrom knitr kable
+#' @importFrom kableExtra kable_styling
 create_feedback_grade_table <- function(df, table_label) {
     col_nms <- c(table_label, "Min", "Max")
-    cont <- kable(df, format = "html", col.names = col_nms, digits = 2,
-                         table.attr = "border=\"1\" width=\"45%\"", align = "r")
+    cont <- kable(df, format = "html", col.names = col_nms, digits = 2)
+    cont <- kable_styling(cont, position = "left", full_width = F)
     grade_table <- htmltools::HTML(cont)
     tag("testFeedback", list(identifier = "feedback_grade_table",
                             outcomeIdentifier = "FEEDBACKTABLE",
