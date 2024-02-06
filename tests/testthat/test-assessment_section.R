@@ -301,21 +301,43 @@ expect_true(!is.na(sc@identifier) && nchar(sc@identifier) > 0)
 
 test_that("Testing of type of calculators in yaml section of Rmd file", {
 
-    # Reading of tasks from Rmd files
+    # Reading of tasks from Rmd files and create of unique identifiers
     path1 <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
-    path2 <- test_path("file/rmd/test_DirectedPair_SimpleCalc.Rmd")
-    # path 2 - The item contains the parametr: calculator: simple-calculator
-    path3 <- test_path("file/rmd/test_rmd_MultipleChoiceTable_as_table_F.Rmd")
-    # path 3 - The item contains the parametr: calculator:scientific-calculator
-    path4 <- test_path("file/rmd/test_OneInRowTable_rowid_colid_example.Rmd")
+    path1obj <- Map(create_question_object, rep(path1, 4))
+    path1obj[[1]]@identifier <- "v1"
+    path1obj[[2]]@identifier <- "v2"
+    path1obj[[3]]@identifier <- "v3"
+    path1obj[[4]]@identifier <- "v4"
 
-    root_section_1 = suppressMessages(list(section(path1),
-                                           section(c(path2,path4)),
-                                           section(path1)))
-    root_section_2 = suppressMessages(list(section(c(path1,path3)),
-                                           section(c(path2,path4)),
-                                           section(path1)))
-    root_section_3 = suppressMessages(list(section(c(path2,path3))))
+    path2 <- test_path("file/rmd/test_DirectedPair_SimpleCalc.Rmd")
+    # path 2 - The item contains the parameter: calculator: simple-calculator
+    path2obj <- Map(create_question_object, rep(path2, 3))
+    path2obj[[1]]@identifier <- "v11"
+    path2obj[[2]]@identifier <- "v22"
+    path2obj[[3]]@identifier <- "v33"
+
+    path3 <- test_path("file/rmd/test_rmd_MultipleChoiceTable_as_table_F.Rmd")
+    # path 3 - The item contains the parameter: calculator:scientific-calculator
+    path3obj <- Map(create_question_object, rep(path3, 2))
+    path3obj[[1]]@identifier <- "v111"
+    path3obj[[2]]@identifier <- "v222"
+
+    path4 <- test_path("file/rmd/test_OneInRowTable_rowid_colid_example.Rmd")
+    path4obj <- Map(create_question_object, rep(path4, 2))
+    path4obj[[1]]@identifier <- "v1111"
+    path4obj[[2]]@identifier <- "v2222"
+
+    root_section_1 = suppressMessages(list(section(path1obj[[1]]),
+                                           section(c(path2obj[[1]],
+                                                     path4obj[[1]])),
+                                           section(path1obj[[2]])))
+    root_section_2 = suppressMessages(list(section(c(path1obj[[3]],
+                                                     path3obj[[1]])),
+                                           section(c(path2obj[[2]],
+                                                     path4obj[[2]])),
+                                           section(path1obj[[4]])))
+    root_section_3 = suppressMessages(list(section(c(path2obj[[3]],
+                                                     path3obj[[2]]))))
 
     example_exam_1 <- new("AssessmentTestOpal",
                           identifier = "id_test_1",
