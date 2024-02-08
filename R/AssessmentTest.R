@@ -22,7 +22,6 @@
 #'                     title = "section", assessment_item = list(task1, task2))
 #' exam <- new("AssessmentTestOpal", identifier = "id_test",
 #'             title = "some title", section = list(exam_section))
-#' @importFrom ids adjective_animal
 #' @name AssessmentTest-class
 #' @rdname AssessmentTest-class
 #' @aliases AssessmentTest
@@ -42,7 +41,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      academic_grading = "logical",
                                      grade_label = "character",
                                      table_label = "character"),
-         prototype = prototype(identifier = paste0("test_", ids::adjective_animal()),
+         prototype = prototype(identifier = generate_id(type = "test"),
                                navigation_mode = "nonlinear",
                                submission_mode = "individual",
                                test_part_identifier = "test_part",

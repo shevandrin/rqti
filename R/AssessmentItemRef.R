@@ -2,7 +2,6 @@
 #'
 #' Element assessmentItemRef for xml test description according to QTI 2.1
 #'
-#' @importFrom ids adjective_animal
 #'
 #' @slot identifier question identifier within a test
 #' @slot href path to xml file with assessementItem (task)
@@ -12,7 +11,7 @@
 #' @include AssessmentSection.R
 setClass("AssessmentItemRef", slots = c(identifier = "character",
                                         href = "character"),
-         prototype = prototype(identifier = ids::adjective_animal())
+         prototype = prototype(identifier = generate_id())
          )
 AssessmentItemRef <- function(identifier = character(0), href = character(0)) {
     new("AssessmentItemRef", identifier = identifier, href = href)

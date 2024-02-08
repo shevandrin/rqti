@@ -16,7 +16,6 @@
 #' @name AssessmentSection-class
 #' @rdname AssessmentSection-class
 #' @aliases AssessmentSection
-#' @importFrom ids adjective_animal
 setClass("AssessmentSection", slots = c(identifier = "character",
                                      title = "character",
                                      time_limit = "numeric",
@@ -26,7 +25,7 @@ setClass("AssessmentSection", slots = c(identifier = "character",
                                      selection = "numeric",
                                      max_attempts = "numeric",
                                      allow_comment = "logical"),
-         prototype = prototype(identifier = ids::adjective_animal(),
+         prototype = prototype(identifier = generate_id(type = "section"),
                                visible = TRUE,
                                time_limit = NA_integer_,
                                shuffle = FALSE,

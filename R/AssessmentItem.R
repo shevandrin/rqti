@@ -3,14 +3,13 @@
 #' Abstract class `AssessmentItem` is responsible for creating a root element
 #' 'assessmentItem' in xml task description according to QTI 2.1. This class is
 #' never to be generated, only derived classes meaningful.
-#' @importFrom ids adjective_animal
 #' @template AISlotsTemplate
 #' @section Warning: This class is not useful in itself, but some classes derive
 #'   from it.
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @aliases AssessmentItem
-#' @include ModalFeedback.R
+#' @include ModalFeedback.R rqti.R
 setClass("AssessmentItem", slots = c(identifier = "character",
                                      content = "list", prompt = "character",
                                      points = "numeric",
@@ -21,7 +20,7 @@ setClass("AssessmentItem", slots = c(identifier = "character",
                                      calculator = "character"),
          prototype = prototype(prompt = "",
                                points = 1,
-                               identifier = ids::adjective_animal(),
+                               identifier = generate_id(),
                                qti_version = "v2p1"
                                ))
 
@@ -33,8 +32,8 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     if (is.na(.Object@prompt)) .Object@prompt <- ""
 
     if (length(.Object@identifier) == 0) {
-        .Object@identifier <- ids::adjective_animal()}
-    if (is.na(.Object@identifier)) .Object@identifier <- ids::adjective_animal()
+        .Object@identifier <- generate_id()}
+    if (is.na(.Object@identifier)) .Object@identifier <- generate_id()
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
 

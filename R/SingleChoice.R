@@ -2,22 +2,26 @@
 #'
 #' Abstract class `SingleChoice` is responsible for creating single choice
 #' assessment task according to QTI 2.1.
+#' @examples
+#' sc <- new("SingleChoice",
+#'           identifier = "sc_example",
+#'           content = list("<p>Pick up the right option</p>"),
+#'           choices = c("option 1", "option 2", "option 3", "option 4"),
+#'           choice_identifiers = c("opt1", "opt2", "opt3", "opt4"),
+#'           solution = 2,
+#            orientation = "vertical",
+#'           title = "Single Choice Task",
+#'           prompt = "Plain text, can be used instead of content",
+#'           shuffle = FALSE,
+#'           points = 2,
+#'           feedback = list(new("WrongFeedback", content = list("Wrong answer"))),
+#'           qti_version = "v2p1")
 #' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
 #' @template SCSlotsTemplate
 #' @template PointsSlotTemplate
 #' @template NoteTasksTemplate
-#' @examples
-#' sc <- new("SingleChoice",
-#'           content = list("<p>Pick up the right option</p>"),
-#'           choices = c("option 1", "option 2", "option 3", "option 4"),
-#            orientation = "vertical",
-#'           title = "single_choice_task",
-#'           shuffle = FALSE,
-#'           points = 2,
-#'           identifier = "sc_example")
-#'
 #' @name SingleChoice-class
 #' @rdname SingleChoice-class
 #' @aliases SingleChoice

@@ -21,7 +21,6 @@ RoxygenNote: 7.2.3
 Imports: 
     htmltools,
     xml2,
-    ids,
     yaml,
     rmarkdown,
     servr,
@@ -53,6 +52,7 @@ Config/testthat/parallel: false
 URL: https://github.com/shevandrin/qti, https://shevandrin.github.io/qti/
 BugReports: https://github.com/shevandrin/qti/issues
 Collate: 
+    'rqti.R'
     'ModalFeedback.R'
     'AssessmentItem.R'
     'AssessmentSection.R'
