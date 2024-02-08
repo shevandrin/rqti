@@ -1,6 +1,6 @@
 # The function to create RStudio project template.
 #' @importFrom utils download.file
-qti_project <- function(path, ...) {
+rqti_project <- function(path, ...) {
 
     # ensure path exists
     dir.create(path, recursive = TRUE, showWarnings = FALSE)
@@ -42,13 +42,13 @@ qti_project <- function(path, ...) {
 
     # create default main R file
     header <- c(
-        "# The qti package provides a powerful toolset for creating exercises",
+        "# The rqti package provides a powerful toolset for creating exercises",
         "# and exams according to the QTI standard directly from R.",
         "# This script serves as a basic introduction to the qti package,",
         "# demonstrating workflow.",
         "#",
         "# Step 1. Prepare set of Rmd files with individual exercises.",
-        "# To create Rmd choose one of the Rstudio file templates starting with QTI: .",
+        "# To create Rmd choose one of the Rstudio file templates starting with RQTI: .",
         "# or edit the templates that have been copied to your working directory.\n"
     )
 
