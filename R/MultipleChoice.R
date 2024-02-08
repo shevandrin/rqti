@@ -1,28 +1,31 @@
 #' Class "MultipleChoice"
 #'
-#' Abstract class `MuiltipleChoice` is responsible for creating multiple choice
+#' Class `MultipleChoice` is responsible for creating multiple choice
 #' assessment task according to QTI 2.1.
-#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
-#' @template MCSlotsTemplate
-#' @template NoteTasksTemplate
 #' @examples
-#' mc <- new("MultipleChoice",
+#' sc <- new("MultipleChoice",
+#'           identifier = "id_task_1234",
+#'           title = "Multiple Choice Task",
 #'           content = list("<p>Pick up the right options</p>"),
+#'           prompt = "Plain text, can be used instead of content",
+#'           points = c(1, -1, 1, -1),
+#'           feedback = list(new("WrongFeedback", content = list("Wrong answer")),
+#'           qti_version = "v2p1"),
+#'           calculator = "scientific-calculator",
+#'           files = "text_book.pdf",
+#'           qti_version = "v2p1",
 #'           choices = c("option 1", "option 2", "option 3", "option 4"),
-#            orientation = "vertical",
-#'           title = "single_choice_task",
-#'           shuffle = FALSE,
-#'           points = c(0.5, 0,5, 0, 0),
-#'           identifier = "mc_example")
+#'           choice_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"),
+#'           shuffle = TRUE,
+#'           orientation = "vertical")
 #' @name MultipleChoice-class
 #' @rdname MultipleChoice-class
 #' @aliases MultipleChoice
 #' @include AssessmentItem.R Choice.R
 #' @exportClass MultipleChoice
 #' @import methods
-#' @importFrom stats setNames
 setClass("MultipleChoice", contains = "Choice")
 
 #' @rdname createItemBody-methods

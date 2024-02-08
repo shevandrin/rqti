@@ -5,11 +5,8 @@
 #' answer in each row is possible
 #' \if{html}{\out{<div style="text-align:center">}\figure{oneInRow.png}{options:
 #' style="width:250px;max-width:35\%;"}\out{</div>}}
-#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
-#' @template PointsSlotTemplate
-#' @template NoteTasksTemplate
 #' @examples
 #' mt <- new("OneInRowTable", content = list("<p>\"One in row\" table task</p>",
 #'                                                 "<i>table description</i>"),

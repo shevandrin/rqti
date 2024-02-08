@@ -2,7 +2,6 @@
 #'
 #' Abstract class `Gap` is never to be generated, only derived classes
 #' [TextGap-class], [NumericGap] and [InlineChoice] are meaningful.
-#' @inheritSection AssessmentItem-class Warning
 #' @name Gap-class
 #' @rdname Gap-class
 #' @aliases Gap

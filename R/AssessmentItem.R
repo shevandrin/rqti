@@ -1,30 +1,28 @@
 #' Class AssessmentItem
 #'
 #' Abstract class `AssessmentItem` is responsible for creating a root element
-#' 'assessmentItem' in xml task description according to QTI 2.1. This class is
-#' never to be generated, only derived classes meaningful.
+#' 'assessmentItem' in XML task description according to QTI 2.1. This class is
+#' not meant to be instantiated directly; instead, it serves as a base for
+#' derived classes.
 #' @template AISlotsTemplate
-#' @section Warning: This class is not useful in itself, but some classes derive
-#'   from it.
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @aliases AssessmentItem
 #' @include ModalFeedback.R rqti.R
 setClass("AssessmentItem", slots = c(identifier = "character",
-                                     content = "list", prompt = "character",
-                                     points = "numeric",
                                      title = "character",
-                                     qti_version = "character",
+                                     content = "list",
+                                     prompt = "character",
+                                     points = "numeric",
                                      feedback = "list",
                                      files = "character",
-                                     calculator = "character"),
-         prototype = prototype(prompt = "",
+                                     calculator = "character",
+                                     qti_version = "character"),
+         prototype = prototype(identifier = generate_id(),
+                               prompt = "",
                                points = 1,
-                               identifier = generate_id(),
-                               qti_version = "v2p1"
-                               ))
+                               qti_version = "v2p1"))
 
-# constructor
 setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     .Object <- callNextMethod()
 

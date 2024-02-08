@@ -5,11 +5,9 @@
 #' answers in each row and column are possible
 #' \if{html}{\out{<div style="text-align:center">}\figure{multipleTable.png}{options:
 #' style="width:250px;max-width:35\%;"}\out{</div>}}
-#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
 #' @template MCTSlotsTemplate
-#' @template NoteTasksTemplate
 #' @examples
 #' mt <- new("MultipleChoiceTable", content = list("<p>Match table task</p>",
 #'                                                 "<i>table description</i>"),

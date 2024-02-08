@@ -6,30 +6,30 @@
 \alias{Choice}
 \title{Class "Choice"}
 \description{
-Abstract class \code{Choice} is never to be generated, only derived classes
-\linkS4class{SingleChoice} and \linkS4class{MultipleChoice} are meaningful.
+Abstract class \code{Choice} is not meant to be instantiated directly; instead, it
+serves as a base for derived classes \linkS4class{SingleChoice} and
+\linkS4class{MultipleChoice}.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{choices}}{string vector; defines a set of answers options in question}
+\item{\code{choices}}{A character vector defining a set of answer options in the
+question.}
 
-\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default \code{TRUE}}
+\item{\code{choice_identifiers}}{A character vector, optional, containing a set of
+identifiers for answers. By default, identifiers are generated
+automatically according to the template "ChoiceD", where D is a letter
+representing the alphabetical order of the answer in the list.}
 
-\item{\code{choice_identifiers}}{string vector, optional; a set of identifiers for
-answers; by default identifiers are generated automatically}
+\item{\code{shuffle}}{A boolean value indicating whether to randomize the order in
+which the choices are initially presented to the candidate. Default is
+\code{TRUE}.}
 
-\item{\code{orientation}}{string, optional; is responsible to place answers in
-vertical or horizontal mode; possible values:
+\item{\code{orientation}}{A character, determining whether to place answers in
+vertical or horizontal mode. Possible values:
 \itemize{
-\item "vertical" - default
+\item "vertical" - Default.
 \item "horizontal"
 }}
 }}
-
-\section{Warning}{
- This class is not useful in itself, but some classes derive
-from it.
-}
 

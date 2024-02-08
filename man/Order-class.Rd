@@ -6,31 +6,64 @@
 \alias{Order}
 \title{Class "Order"}
 \description{
-Abstract class \code{Order} is responsible for creating assessment task according
+Class \code{Order} is responsible for creating assessment task according
 to QTI 2.1., where candidate has to place answers in a specific order
 }
 \section{Slots}{
 
 \describe{
-\item{\code{content}}{list; list of strings with formatting to form the text of the
-question}
+\item{\code{identifier}}{A character representing the unique identifier of the
+assessment task. By default, it is generated as 'id_task_dddd', where dddd
+represents random digits.}
 
-\item{\code{identifier}}{string; identifier of assessment task}
+\item{\code{title}}{A character representing the title of the XML file associated
+with the task. By default, it takes the value of the identifier.}
 
-\item{\code{title}}{string; a title of xml file}
+\item{\code{content}}{A list of character content to form the text of the question,
+which can include HTML tags. For tasks of the \link{Entry} type, it must also
+contain at least one instance of Gap objects, such as \linkS4class{TextGap},
+\link{NumericGap}, or \link{InlineChoice}.}
 
-\item{\code{prompt}}{string, optional; simple question text, consisting of one
-paragraph, can supplement or replace content}
+\item{\code{prompt}}{An optional character representing a simple question text,
+consisting of one paragraph. This can supplement or replace content in the
+task. Default is "".}
 
-\item{\code{qti_version}}{string; QTI information model version; default 'v2p1}
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+the entire task. Default is 1, but pay attention:
+\itemize{
+\item For tasks of the \link{Entry} type, it is
+calculated as the sum of the gap points by default.
+\item For tasks of the \link{MatchTable} type, it can also be calculated as the sum
+of points for individual answers, when provided.
+\item For tasks of the \link{MultipleChoice} type, points is numeric vector and
+required. Each number in this vector determines the number of points that
+will be awarded to a candidate if they select the corresponding answer. The
+order of the scores must match the order of the \code{choices}. It is possible
+to assign negative values to incorrect answers. All answers with a
+positive score are considered correct.
+}}
 
-\item{\code{feedback}}{list of \linkS4class{ModalFeedback}, \link{CorrectFeedback}, or
-\linkS4class{WrongFeedback}; feedback messages for candidate}
+\item{\code{feedback}}{A list containing feedback messages for candidates. Each
+element of the list should be an instance of either \link{ModalFeedback},
+\link{CorrectFeedback}, or \link{WrongFeedback} class.}
 
-\item{\code{choices}}{string vector; contains the answers; the order of answers in
+\item{\code{calculator}}{A character, optional, determining whether to show a
+calculator to the candidate. Possible values:
+\itemize{
+\item "simple-calculator"
+\item "scientific-calculator"
+}}
+
+\item{\code{files}}{A character vector, optional, containing paths to files that will
+be accessible to the candidate during the test/exam.}
+
+\item{\code{qti_version}}{A character representing the QTI (Question and Test
+Interoperability) information model version. Default is 'v2p1'.}
+
+\item{\code{choices}}{A character vector; contains the answers; the order of answers in
 the vector is a right response for the task}
 
-\item{\code{choices_identifiers}}{string vector, optional; a set of identifiers for
+\item{\code{choices_identifiers}}{A character vector, optional; a set of identifiers for
 answers; by default identifiers are generated automatically}
 
 \item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
@@ -39,14 +72,8 @@ which the choices are initially presented to the candidate; default \code{TRUE}}
 \item{\code{points_per_answer}}{boolean, optional; in case of \code{TRUE} each selected
 answer will be scored individually, in case of \code{FALSE} only answer wich is
 fully correct will be scored with maximum score; \code{TRUE} by default}
-
-\item{\code{points}}{numeric, optional; the number of points for the entire task;
-default 1}
 }}
 
-\note{
-use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
-}
 \examples{
 ord <- new("Order", content = list("<p>put in a right order</p>"),
            choices = c("first", "second", "third"),

@@ -5,11 +5,8 @@
 #' answer in each colum is possible
 #' \if{html}{\out{<div style="text-align:center">}\figure{oneInCol.png}{options:
 #' style="width:250px;max-width:35\%;"}\out{</div>}}
-#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
-#' @template PointsSlotTemplate
-#' @template NoteTasksTemplate
 #' @examples
 #' mt <- new("OneInColTable", content = list("<p>\"One in col\" table task</p>",
 #'                                                 "<i>table description</i>"),

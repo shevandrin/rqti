@@ -52,8 +52,3 @@ default \code{TRUE}}
 defalut \code{TRUE}}
 }}
 
-\section{Warning}{
- This class is not useful in itself, but some classes derive
-from it.
-}
-

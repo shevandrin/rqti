@@ -1,6 +1,6 @@
-#' @slot choices string vector; contains the answers; the order of answers in
+#' @slot choices A character vector; contains the answers; the order of answers in
 #'   the vector is a right response for the task
-#' @slot choices_identifiers string vector, optional; a set of identifiers for
+#' @slot choices_identifiers A character vector, optional; a set of identifiers for
 #'   answers; by default identifiers are generated automatically
 #' @slot shuffle boolean, optional; is responsible to randomize the order in
 #'   which the choices are initially presented to the candidate; default `TRUE`

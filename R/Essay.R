@@ -1,23 +1,31 @@
 #' Class "Essay"
 #'
-#' Abstract class `Essay` is responsible for creating essay type of assessment
+#' Class `Essay` is responsible for creating essay type of assessment
 #' task according to QTI 2.1.
-#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template EssaySlotsTemplate
-#' @template PointsSlotTemplate
-#' @template NoteTasksTemplate
+#' @note If 'ModalFeedback' is given, default values for slots related to the
+#'   text input field are calculated automatically.
 #' @examples
-#' es <- new("Essay", content = list("<p>Develop some idea and write it down in
+#' es <- new("Essay",
+#'           identifier = "id_task_1234",
+#'           title = "Essay Task",
+#'           content = list("<p>Develop some idea and write it down in
 #'                                   the text field</p>"),
-#'           title = "essay_example",
-#'           words_max = 100,
-#'           points = 3)
+#'           prompt = "Write your answer in text field",
+#'           points = 1,
+#'           feedback = list(),
+#'           calculator = "scientific-calculator",
+#'           files = "text_book.pdf",
+#'           expected_length = 100,
+#'           expected_lines = 5,
+#'           words_max = 200,
+#'           words_min = 10,
+#'           data_allow_paste = FALSE)
 #' @name Essay-class
 #' @rdname Essay-class
 #' @aliases Essay
 #' @include AssessmentItem.R
-#' @importFrom utils menu
 #' @export
 setClass("Essay", contains = "AssessmentItem",
          slots = c(expected_length = "numeric",
@@ -39,7 +47,8 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 
     # warning for data_allow_paste
     if (length(.Object@data_allow_paste) > 0) {
-        warning("The data_allow_paste property only works on LMS Opal.")
+        warning("The data_allow_paste property only works on LMS Opal.",
+                call. = FALSE)
     }
 
     if (length(.Object@feedback) == 1) {

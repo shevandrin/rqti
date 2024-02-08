@@ -9,8 +9,3 @@
 Abstract class \code{Gap} is never to be generated, only derived classes
 \linkS4class{TextGap}, \link{NumericGap} and \link{InlineChoice} are meaningful.
 }
-\section{Warning}{
- This class is not useful in itself, but some classes derive
-from it.
-}
-

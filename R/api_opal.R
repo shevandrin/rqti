@@ -134,7 +134,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 #'   password again, they will be extracted from the system credential store
 #'
 #'@return list with key and url
-#'@importFrom utils browseURL
+#'@importFrom utils browseURL menu
 #'@importFrom tools file_ext
 #'@importFrom curl form_file
 #'@export

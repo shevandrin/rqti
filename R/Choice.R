@@ -1,20 +1,21 @@
 #' Class "Choice"
 #'
-#' Abstract class `Choice` is never to be generated, only derived classes
-#' [SingleChoice-class] and [MultipleChoice-class] are meaningful.
+#' Abstract class `Choice` is not meant to be instantiated directly; instead, it
+#' serves as a base for derived classes [SingleChoice-class] and
+#' [MultipleChoice-class].
 #' @template ChoiceSlotsTemplate
-#' @inheritSection AssessmentItem-class Warning
 #' @name Choice-class
 #' @rdname Choice-class
 #' @aliases Choice
 #' @include AssessmentItem.R
 setClass("Choice", contains = "AssessmentItem",
-         slots = c(choices = "character", shuffle = "logical",
+         slots = c(choices = "character",
                    choice_identifiers = "character",
+                   shuffle = "logical",
                    orientation = "character"),
          prototype = prototype(shuffle = TRUE,
-                               orientation = "vertical",
-                               choice_identifiers = NA_character_))
+                               choice_identifiers = NA_character_,
+                               orientation = "vertical"))
 
 # constructor
 setMethod("initialize", "Choice", function(.Object, ...) {

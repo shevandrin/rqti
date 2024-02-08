@@ -6,15 +6,12 @@
 #' \if{html}{\out{<div style="text-align:center">}\figure{directedPair.png}{options:
 #' style="width:150px;max-width:25\%;"}\out{</div>}}
 #' \if{latex}{\figure{directedPair.png}{options: width=5cm}}
-#' @template ContentSlotTemplate
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
-#' @template PointsSlotTemplate
 #' @slot orientation string, optional; is responsible to place answers in
 #' vertical or horizontal mode; possible values:
 #'   * "vertical" - default
 #'   * "horizontal"
-#' @template NoteTasksTemplate
 #' @examples
 #' dp <- new("DirectedPair", content = list("<p>\"Directed pairs\" task</p>"),
 #'           rows = c("row1", "row2", "row3"),

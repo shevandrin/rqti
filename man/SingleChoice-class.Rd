@@ -6,60 +6,100 @@
 \alias{SingleChoice}
 \title{Class "SingleChoice"}
 \description{
-Abstract class \code{SingleChoice} is responsible for creating single choice
-assessment task according to QTI 2.1.
+Class \code{SingleChoice} is responsible for creating single-choice assessment
+tasks according to the QTI 2.1 standard.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{content}}{list; list of strings with formatting to form the text of the
-question}
+\item{\code{identifier}}{A character representing the unique identifier of the
+assessment task. By default, it is generated as 'id_task_dddd', where dddd
+represents random digits.}
 
-\item{\code{identifier}}{string; identifier of assessment task}
+\item{\code{title}}{A character representing the title of the XML file associated
+with the task. By default, it takes the value of the identifier.}
 
-\item{\code{title}}{string; a title of xml file}
+\item{\code{content}}{A list of character content to form the text of the question,
+which can include HTML tags. For tasks of the \link{Entry} type, it must also
+contain at least one instance of Gap objects, such as \linkS4class{TextGap},
+\link{NumericGap}, or \link{InlineChoice}.}
 
-\item{\code{prompt}}{string, optional; simple question text, consisting of one
-paragraph, can supplement or replace content}
+\item{\code{prompt}}{An optional character representing a simple question text,
+consisting of one paragraph. This can supplement or replace content in the
+task. Default is "".}
 
-\item{\code{qti_version}}{string; QTI information model version; default 'v2p1}
-
-\item{\code{feedback}}{list of \linkS4class{ModalFeedback}, \link{CorrectFeedback}, or
-\linkS4class{WrongFeedback}; feedback messages for candidate}
-
-\item{\code{choices}}{string vector; defines a set of answers options in question}
-
-\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default \code{TRUE}}
-
-\item{\code{choice_identifiers}}{string vector, optional; a set of identifiers for
-answers; by default identifiers are generated automatically}
-
-\item{\code{orientation}}{string, optional; is responsible to place answers in
-vertical or horizontal mode; possible values:
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+the entire task. Default is 1, but pay attention:
 \itemize{
-\item "vertical" - default
+\item For tasks of the \link{Entry} type, it is
+calculated as the sum of the gap points by default.
+\item For tasks of the \link{MatchTable} type, it can also be calculated as the sum
+of points for individual answers, when provided.
+\item For tasks of the \link{MultipleChoice} type, points is numeric vector and
+required. Each number in this vector determines the number of points that
+will be awarded to a candidate if they select the corresponding answer. The
+order of the scores must match the order of the \code{choices}. It is possible
+to assign negative values to incorrect answers. All answers with a
+positive score are considered correct.
+}}
+
+\item{\code{feedback}}{A list containing feedback messages for candidates. Each
+element of the list should be an instance of either \link{ModalFeedback},
+\link{CorrectFeedback}, or \link{WrongFeedback} class.}
+
+\item{\code{calculator}}{A character, optional, determining whether to show a
+calculator to the candidate. Possible values:
+\itemize{
+\item "simple-calculator"
+\item "scientific-calculator"
+}}
+
+\item{\code{files}}{A character vector, optional, containing paths to files that will
+be accessible to the candidate during the test/exam.}
+
+\item{\code{qti_version}}{A character representing the QTI (Question and Test
+Interoperability) information model version. Default is 'v2p1'.}
+
+\item{\code{choices}}{A character vector defining a set of answer options in the
+question.}
+
+\item{\code{choice_identifiers}}{A character vector, optional, containing a set of
+identifiers for answers. By default, identifiers are generated
+automatically according to the template "ChoiceD", where D is a letter
+representing the alphabetical order of the answer in the list.}
+
+\item{\code{shuffle}}{A boolean value indicating whether to randomize the order in
+which the choices are initially presented to the candidate. Default is
+\code{TRUE}.}
+
+\item{\code{orientation}}{A character, determining whether to place answers in
+vertical or horizontal mode. Possible values:
+\itemize{
+\item "vertical" - Default.
 \item "horizontal"
 }}
 
 \item{\code{solution}}{numeric, optional; the number of right answer in choices slot,
 by default the first item in choices slot is considered as right answer;
 default \code{1}}
-
-\item{\code{points}}{numeric, optional; the number of points for the entire task;
-default 1}
 }}
 
-\note{
-use \code{\link[=create_qti_task]{create_qti_task()}} to create an xml file of a task specification
-}
 \examples{
 sc <- new("SingleChoice",
+          identifier = "id_task_1234",
+          title = "Single Choice Task",
           content = list("<p>Pick up the right option</p>"),
-          choices = c("option 1", "option 2", "option 3", "option 4"),
-          title = "single_choice_task",
-          shuffle = FALSE,
+          prompt = "Plain text, can be used instead of content",
           points = 2,
-          identifier = "sc_example")
+          feedback = list(new("WrongFeedback", content = list("Wrong answer")),
+          qti_version = "v2p1"),
+          calculator = "scientific-calculator",
+          files = "text_book.pdf",
+          qti_version = "v2p1",
+          choices = c("option 1", "option 2", "option 3", "option 4"),
+          choice_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"),
+          shuffle = TRUE,
+          orientation = "vertical",
+          solution = 2)
 
 }

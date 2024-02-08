@@ -3,10 +3,7 @@
 #' Abstract class `Entry` is responsible for creating assessment task according
 #' to QTI 2.1., where question includes one or more instances of text input
 #' fields (with numeric or text answers) or dropdown lists.
-#' @template ContentEntrySlotTemplate
 #' @template AISlotsTemplate
-#' @template PointsSlotTemplate
-#' @template NoteTasksTemplate
 #' @examples
 #' entry_gaps <- new("Entry", content = list("<p>In mathematics, the common
 #' logarithm is the logarithm with base", new("NumericGap",

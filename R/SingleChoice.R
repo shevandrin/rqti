@@ -1,27 +1,29 @@
 #' Class "SingleChoice"
 #'
-#' Abstract class `SingleChoice` is responsible for creating single choice
-#' assessment task according to QTI 2.1.
+#' Class `SingleChoice` is responsible for creating single-choice assessment
+#' tasks according to the QTI 2.1 standard.
+#'
 #' @examples
 #' sc <- new("SingleChoice",
-#'           identifier = "sc_example",
-#'           content = list("<p>Pick up the right option</p>"),
-#'           choices = c("option 1", "option 2", "option 3", "option 4"),
-#'           choice_identifiers = c("opt1", "opt2", "opt3", "opt4"),
-#'           solution = 2,
-#            orientation = "vertical",
+#'           identifier = "id_task_1234",
 #'           title = "Single Choice Task",
+#'           content = list("<p>Pick up the right option</p>"),
 #'           prompt = "Plain text, can be used instead of content",
-#'           shuffle = FALSE,
 #'           points = 2,
-#'           feedback = list(new("WrongFeedback", content = list("Wrong answer"))),
-#'           qti_version = "v2p1")
-#' @template ContentSlotTemplate
+#'           feedback = list(new("WrongFeedback", content = list("Wrong answer")),
+#'           qti_version = "v2p1"),
+#'           calculator = "scientific-calculator",
+#'           files = "text_book.pdf",
+#'           qti_version = "v2p1",
+#'           choices = c("option 1", "option 2", "option 3", "option 4"),
+#'           choice_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"),
+#'           shuffle = TRUE,
+#'           orientation = "vertical",
+#'           solution = 2)
+#'
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
 #' @template SCSlotsTemplate
-#' @template PointsSlotTemplate
-#' @template NoteTasksTemplate
 #' @name SingleChoice-class
 #' @rdname SingleChoice-class
 #' @aliases SingleChoice

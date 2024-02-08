@@ -8,7 +8,6 @@
 #'   default `TRUE`
 #' @slot shuffle_cols boolean, optional; shuffle possible answers in columns;
 #'   defalut `TRUE`
-#' @inheritSection AssessmentItem-class Warning
 #' @name MatchTaable-classs
 #' @rdname MatchTable-class
 #' @aliases MatchTable

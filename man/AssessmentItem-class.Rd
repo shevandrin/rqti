@@ -7,27 +7,59 @@
 \title{Class AssessmentItem}
 \description{
 Abstract class \code{AssessmentItem} is responsible for creating a root element
-'assessmentItem' in xml task description according to QTI 2.1. This class is
-never to be generated, only derived classes meaningful.
+'assessmentItem' in XML task description according to QTI 2.1. This class is
+not meant to be instantiated directly; instead, it serves as a base for
+derived classes.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{identifier}}{string; identifier of assessment task}
+\item{\code{identifier}}{A character representing the unique identifier of the
+assessment task. By default, it is generated as 'id_task_dddd', where dddd
+represents random digits.}
 
-\item{\code{title}}{string; a title of xml file}
+\item{\code{title}}{A character representing the title of the XML file associated
+with the task. By default, it takes the value of the identifier.}
 
-\item{\code{prompt}}{string, optional; simple question text, consisting of one
-paragraph, can supplement or replace content}
+\item{\code{content}}{A list of character content to form the text of the question,
+which can include HTML tags. For tasks of the \link{Entry} type, it must also
+contain at least one instance of Gap objects, such as \linkS4class{TextGap},
+\link{NumericGap}, or \link{InlineChoice}.}
 
-\item{\code{qti_version}}{string; QTI information model version; default 'v2p1}
+\item{\code{prompt}}{An optional character representing a simple question text,
+consisting of one paragraph. This can supplement or replace content in the
+task. Default is "".}
 
-\item{\code{feedback}}{list of \linkS4class{ModalFeedback}, \link{CorrectFeedback}, or
-\linkS4class{WrongFeedback}; feedback messages for candidate}
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+the entire task. Default is 1, but pay attention:
+\itemize{
+\item For tasks of the \link{Entry} type, it is
+calculated as the sum of the gap points by default.
+\item For tasks of the \link{MatchTable} type, it can also be calculated as the sum
+of points for individual answers, when provided.
+\item For tasks of the \link{MultipleChoice} type, points is numeric vector and
+required. Each number in this vector determines the number of points that
+will be awarded to a candidate if they select the corresponding answer. The
+order of the scores must match the order of the \code{choices}. It is possible
+to assign negative values to incorrect answers. All answers with a
+positive score are considered correct.
 }}
 
-\section{Warning}{
- This class is not useful in itself, but some classes derive
-from it.
-}
+\item{\code{feedback}}{A list containing feedback messages for candidates. Each
+element of the list should be an instance of either \link{ModalFeedback},
+\link{CorrectFeedback}, or \link{WrongFeedback} class.}
+
+\item{\code{calculator}}{A character, optional, determining whether to show a
+calculator to the candidate. Possible values:
+\itemize{
+\item "simple-calculator"
+\item "scientific-calculator"
+}}
+
+\item{\code{files}}{A character vector, optional, containing paths to files that will
+be accessible to the candidate during the test/exam.}
+
+\item{\code{qti_version}}{A character representing the QTI (Question and Test
+Interoperability) information model version. Default is 'v2p1'.}
+}}
 
