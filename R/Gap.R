@@ -1,11 +1,15 @@
 #' Class "Gap"
 #'
-#' Abstract class `Gap` is never to be generated, only derived classes
-#' [TextGap-class], [NumericGap] and [InlineChoice] are meaningful.
+#' Abstract class `Gap` is not meant to be instantiated directly; instead, it
+#' serves as a base for derived classes such as [NumericGap], [TextGap],
+#' [TextGapOpal] and [InlineChoice].
+#' @template GapSlotsTemplate
+#' @seealso [NumericGap], [TextGap], [TextGapOpal] and [InlineChoice].
 #' @name Gap-class
 #' @rdname Gap-class
 #' @aliases Gap
-setClass("Gap", slots = c(response_identifier = "character", points = "numeric",
+setClass("Gap", slots = c(response_identifier = "character",
+                          points = "numeric",
                           placeholder = "character",
                           expected_length = "numeric"),
          prototype = prototype(points = 1))

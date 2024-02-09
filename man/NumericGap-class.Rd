@@ -4,50 +4,61 @@
 \name{NumericGap-class}
 \alias{NumericGap-class}
 \alias{NumericGap}
-\title{Class NumericGap}
+\title{Class "NumericGap"}
 \description{
-Abstract class \code{NumericGap} is responsible for creating instances of input
-fields with numeric type of answer in question Entry type assessment task
-according to QTI 2.1.
+Class \code{NumericGap} is responsible for creating instances of input fields with
+numeric type of answers in question \link{Entry} type assessment tasks according
+to the QTI 2.1 standard.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{response_identifier}}{string; an identifier for thy answer; by default it
-is generated automatically}
+\item{\code{response_identifier}}{A character value representing an identifier for
+the answer. By default, it is generated as 'id_gap_dddd', where dddd
+represents random digits.}
 
-\item{\code{points}}{numeric, optional; the number of points for this gap;
-default \code{1}}
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+this gap. Default is \code{1}.}
 
-\item{\code{placeholder}}{string, optional; is responsible to place some helpful text
-in text input field in content delivery engine}
+\item{\code{placeholder}}{A character value, optional, responsible for placing
+helpful text in the text input field in the content delivery engine.}
 
-\item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
-input field in content delivery engine}
+\item{\code{expected_length}}{A numeric value, optional, responsible for setting the
+size of the text input field in the content delivery engine.}
 
-\item{\code{solution}}{numeric; contains right answer for this numeric entry}
+\item{\code{solution}}{A numeric value containing the correct answer for this numeric
+entry.}
 
-\item{\code{tolerance}}{numeric, optional; specifies the value for up and low
-boundaries of tolerance rate for candidate answer; default is 0}
+\item{\code{tolerance}}{A numeric value, optional, specifying the value for the upper
+and lower boundaries of the tolerance rate for candidate answers. Default
+is 0.}
 
-\item{\code{tolerance_type}}{string, optional; specifies tolerance mode; possible
-values:
+\item{\code{tolerance_type}}{A character value, optional, specifying the tolerance
+mode. Possible values:
 \itemize{
 \item "exact"
-\item "absolute" by default
+\item "absolute" - Default.
 \item "relative"
 }}
 
-\item{\code{include_lower_bound}}{boolean, optional; specifies whether or not the
-lower bound is included in tolerance rate}
+\item{\code{include_lower_bound}}{A boolean value, optional, specifying whether the
+lower bound is included in the tolerance rate. Default is \code{TRUE}.}
 
-\item{\code{include_upper_bound}}{boolean, optional; specifies whether or not the
-upper bound is included in tolerance rate}
+\item{\code{include_upper_bound}}{A boolean value, optional, specifying whether the
+upper bound is included in the tolerance rate. Default is \code{TRUE}.}
 }}
 
 \examples{
 ng <- new("NumericGap",
-          response_identifier = "gap_1",
+          response_identifier = "id_gap_1234",
+          points = 1,
+          placeholder = "use this format xx.xxx",
           solution = 5,
-          placeholder = "use this format xx.xxx" )
+          tolerance = 1,
+          tolerance_type = "relative",
+          include_lower_bound = TRUE,
+          include_upper_bound = TRUE)
+}
+\seealso{
+\link{Entry}, \link{TextGap}, \link{TextGapOpal} and \link{InlineChoice}.
 }

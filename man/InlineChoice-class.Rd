@@ -4,42 +4,50 @@
 \name{InlineChoice-class}
 \alias{InlineChoice-class}
 \alias{InlineChoice}
-\title{Class InlineChoice}
+\title{Class "InlineChoice"}
 \description{
-Abstract class \code{InlineChoice} is responsible for creating instances of
-dropdown lists as answer options in question Entry type assessment task
-according to QTI 2.1.
+Class \code{InlineChoice} is responsible for creating instances of dropdown lists
+as answer options in \link{Entry} type assessment tasks according to the QTI 2.1
+standard.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{response_identifier}}{string; an identifier for thy answer; by default it
-is generated automatically}
+\item{\code{response_identifier}}{A character value representing an identifier for
+the answer. By default, it is generated as 'id_gap_dddd', where dddd
+represents random digits.}
 
-\item{\code{points}}{numeric, optional; the number of points for this gap;
-default \code{1}}
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+this gap. Default is \code{1}.}
 
-\item{\code{placeholder}}{string, optional; is responsible to place some helpful text
-in text input field in content delivery engine}
+\item{\code{placeholder}}{A character value, optional, responsible for placing
+helpful text in the text input field in the content delivery engine.}
 
-\item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
-input field in content delivery engine}
+\item{\code{expected_length}}{A numeric value, optional, responsible for setting the
+size of the text input field in the content delivery engine.}
 
-\item{\code{choices}}{string vector; contains the answers which are shown in the drop
-down list}
+\item{\code{choices}}{A character vector containing the answers shown in the dropdown
+list.}
 
-\item{\code{solution_index}}{numeric, optional; the index of the right answer in options
-vector; default \code{1}}
+\item{\code{solution_index}}{A numeric value, optional, representing the index of the
+correct answer in the options vector. Default is \code{1}.}
 
-\item{\code{choices_identifiers}}{string vector, optional; a set of identifiers for
-answers; by default identifiers are generated automatically}
+\item{\code{choices_identifiers}}{A character vector, optional, containing a set of
+identifiers for answers.  By default, identifiers are generated
+automatically according to the template "OptionD", where D is a letter
+representing the alphabetical order of the answer in the list.}
 
-\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default \code{TRUE}}
+\item{\code{shuffle}}{A boolean value, optional, determining whether to randomize the
+order in which the choices are initially presented to the candidate.
+Default is \code{TRUE}.}
 }}
 
 \examples{
 ng <- new("InlineChoice",
+          response_identifier = "id_gap_1234",
+          points = 1,
           choices =  c("answer1", "answer2", "answer3"),
-          response_identifier = "dropdown_gap_example")
+          solution_index = 1,
+          choices_identifiers = c("OptionA", "OptionB", "OptionC"),
+          shuffle = TRUE)
 }

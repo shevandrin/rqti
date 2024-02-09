@@ -1,21 +1,27 @@
-#' Class TextGap
+#' Class "TextGap"
 #'
-#' Abstract class `TextGap` is responsible for creating instances of input
-#' fields with text type of answer in question Entry type assessment task
-#' according to QTI 2.1.
+#' Class `TextGap` is responsible for creating instances of input
+#' fields with text type of answers in question [Entry] type assessment tasks
+#' according to the QTI 2.1 standard.
 #' @template GapSlotsTemplate
 #' @template TextGapSlotsTemplate
+#' @seealso [Entry], [NumericGap], [TextGapOpal] and [InlineChoice].
 #' @examples
 #' tg <- new("TextGap",
+#'           response_identifier = "id_gap_1234",
+#'           points = 2,
+#'           placeholder = "do not put special characters",
+#'           expected_length = 20,
 #'           solution = c("answer", "answerr", "aanswer"),
-#'           placeholder = "do not put special characters" )
+#'           case_sensitive = FALSE)
 #' @name TextGap-class
 #' @rdname TextGap-class
 #' @aliases TextGap
 #' @include Gap.R
 #' @importFrom htmltools tag p span tagList tagAppendChildren
 setClass("TextGap", contains = "Gap",
-         slots = c(solution = "character", case_sensitive = "logical"),
+         slots = c(solution = "character",
+                   case_sensitive = "logical"),
          prototype = prototype(case_sensitive = FALSE))
 
 setMethod("initialize", "TextGap", function(.Object,...){

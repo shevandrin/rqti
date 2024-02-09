@@ -1,12 +1,14 @@
-#' @slot solution numeric; contains right answer for this numeric entry
-#' @slot tolerance numeric, optional; specifies the value for up and low
-#'   boundaries of tolerance rate for candidate answer; default is 0
-#' @slot tolerance_type string, optional; specifies tolerance mode; possible
-#'   values:
+#' @slot solution A numeric value containing the correct answer for this numeric
+#'   entry.
+#' @slot tolerance A numeric value, optional, specifying the value for the upper
+#'   and lower boundaries of the tolerance rate for candidate answers. Default
+#'   is 0.
+#' @slot tolerance_type A character value, optional, specifying the tolerance
+#'   mode. Possible values:
 #'   * "exact"
-#'   * "absolute" by default
+#'   * "absolute" - Default.
 #'   * "relative"
-#' @slot include_lower_bound boolean, optional; specifies whether or not the
-#' lower bound is included in tolerance rate
-#' @slot include_upper_bound boolean, optional; specifies whether or not the
-#' upper bound is included in tolerance rate
+#' @slot include_lower_bound A boolean value, optional, specifying whether the
+#'   lower bound is included in the tolerance rate. Default is `TRUE`.
+#' @slot include_upper_bound A boolean value, optional, specifying whether the
+#'   upper bound is included in the tolerance rate. Default is `TRUE`.

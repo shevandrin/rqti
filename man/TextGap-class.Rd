@@ -4,36 +4,44 @@
 \name{TextGap-class}
 \alias{TextGap-class}
 \alias{TextGap}
-\title{Class TextGap}
+\title{Class "TextGap"}
 \description{
-Abstract class \code{TextGap} is responsible for creating instances of input
-fields with text type of answer in question Entry type assessment task
-according to QTI 2.1.
+Class \code{TextGap} is responsible for creating instances of input
+fields with text type of answers in question \link{Entry} type assessment tasks
+according to the QTI 2.1 standard.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{response_identifier}}{string; an identifier for thy answer; by default it
-is generated automatically}
+\item{\code{response_identifier}}{A character value representing an identifier for
+the answer. By default, it is generated as 'id_gap_dddd', where dddd
+represents random digits.}
 
-\item{\code{points}}{numeric, optional; the number of points for this gap;
-default \code{1}}
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+this gap. Default is \code{1}.}
 
-\item{\code{placeholder}}{string, optional; is responsible to place some helpful text
-in text input field in content delivery engine}
+\item{\code{placeholder}}{A character value, optional, responsible for placing
+helpful text in the text input field in the content delivery engine.}
 
-\item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
-input field in content delivery engine}
+\item{\code{expected_length}}{A numeric value, optional, responsible for setting the
+size of the text input field in the content delivery engine.}
 
-\item{\code{solution}}{string; contains a vector of values that are
-considered as correct answers}
+\item{\code{solution}}{A character vector containing the values considered as correct
+answers.}
 
-\item{\code{case_sensitive}}{logical; determines whether the evaluation of the
-correct answer is case sensitive; default \code{FALSE}}
+\item{\code{case_sensitive}}{A boolean value, determining whether the evaluation of
+the correct answer is case sensitive. Default is \code{FALSE}.}
 }}
 
 \examples{
 tg <- new("TextGap",
+          response_identifier = "id_gap_1234",
+          points = 2,
+          placeholder = "do not put special characters",
+          expected_length = 20,
           solution = c("answer", "answerr", "aanswer"),
-          placeholder = "do not put special characters" )
+          case_sensitive = FALSE)
+}
+\seealso{
+\link{Entry}, \link{NumericGap}, \link{TextGapOpal} and \link{InlineChoice}.
 }

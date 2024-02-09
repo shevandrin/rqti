@@ -4,40 +4,49 @@
 \name{TextGapOpal-class}
 \alias{TextGapOpal-class}
 \alias{TextGapOpal}
-\title{Class TextGapOpal}
+\title{Class "TextGapOpal"}
 \description{
-Abstract class \code{TextGapOpal} is responsible for creating instances of input
-fields with text type of answer in question Entry type assessment task
-according to QTI 2.1. for LMS Opal
+Class \code{TextGapOpal} is responsible for creating instances of input fields
+with text type of answers in question \link{Entry} type assessment tasks according
+to the QTI 2.1 standard for LMS Opal.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{response_identifier}}{string; an identifier for thy answer; by default it
-is generated automatically}
+\item{\code{response_identifier}}{A character value representing an identifier for
+the answer. By default, it is generated as 'id_gap_dddd', where dddd
+represents random digits.}
 
-\item{\code{points}}{numeric, optional; the number of points for this gap;
-default \code{1}}
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+this gap. Default is \code{1}.}
 
-\item{\code{placeholder}}{string, optional; is responsible to place some helpful text
-in text input field in content delivery engine}
+\item{\code{placeholder}}{A character value, optional, responsible for placing
+helpful text in the text input field in the content delivery engine.}
 
-\item{\code{expected_length}}{numeric, optional; is responsible to set a size of text
-input field in content delivery engine}
+\item{\code{expected_length}}{A numeric value, optional, responsible for setting the
+size of the text input field in the content delivery engine.}
 
-\item{\code{solution}}{string; contains a vector of values that are
-considered as correct answers}
+\item{\code{solution}}{A character vector containing the values considered as correct
+answers.}
 
-\item{\code{case_sensitive}}{logical; determines whether the evaluation of the
-correct answer is case sensitive; default \code{FALSE}}
+\item{\code{case_sensitive}}{A boolean value, determining whether the evaluation of
+the correct answer is case sensitive. Default is \code{FALSE}.}
 
-\item{\code{tolerance}}{numeric; defines how many characters will be taken into
-account to tolerate spelling mistake in evaluation of candidate answer}
+\item{\code{tolerance}}{A numeric value defining how many characters will be taken
+into account to tolerate spelling mistakes in the evaluation of candidate
+answers. Default is \code{0}.}
 }}
 
 \examples{
 tgo <- new("TextGapOpal",
-          solution = c("answer","answerr", "aanswer"),
+          response_identifier = "id_gap_1234",
+          points = 2,
           placeholder = "do not put special characters",
+          expected_length = 20,
+          solution = "answer",
+          case_sensitive = FALSE,
           tolerance = 1)
+}
+\seealso{
+\link{Entry}, \link{NumericGap}, \link{TextGap} and \link{InlineChoice}.
 }
