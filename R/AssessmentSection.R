@@ -1,18 +1,27 @@
-#' Class AssessmentSection
+#' Class "AssessmentSection"
 #'
-#' Class `AssessmentSection` is responsible for forming a section in test xml
-#' specification according to QTI 2.1
+#' Class `AssessmentSection` is responsible for forming a section in the test
+#' XML specification according to QTI 2.1.
 #' @template ASSlotsTemplate
+#' @seealso [section()], [test()], [test4opal()], [AssessmentTest],
+#'   [AssessmentTestOpal].
 #' @examples
-#' sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
+#' sc1 <- new("SingleChoice", prompt = "Example task 1", title = "SC1",
 #'              identifier = "q1", choices = c("a", "b", "c"))
-#' sc2 <- new("SingleChoice", prompt = "Test task", title = "SC",
+#' sc2 <- new("SingleChoice", prompt = "Example task 2", title = "SC2",
 #'              identifier = "q2", choices = c("A", "B", "C"))
-#' sc3 <- new("SingleChoice", prompt = "Test task", title = "SC",
+#' sc3 <- new("SingleChoice", prompt = "Example task 3", title = "SC3",
 #'              identifier = "q3", choices = c("aa", "bb", "cc"))
-#' exam_section <- new("AssessmentSection", identifier = "sec_id",
-#'                    title = "section", assessment_item = list(sc1, sc2, sc3),
-#'                    selection = 2)
+#' exam_section <- new("AssessmentSection",
+#'                     identifier = "sec_id",
+#'                     title = "Section",
+#'                     time_limit = 20,
+#'                     visible = FALSE,
+#'                     assessment_item = list(sc1, sc2, sc3),
+#'                     shuffle = FALSE,
+#'                     selection = 1,
+#'                     max_attempts = 1,
+#'                     allow_comment = FALSE)
 #' @name AssessmentSection-class
 #' @rdname AssessmentSection-class
 #' @aliases AssessmentSection

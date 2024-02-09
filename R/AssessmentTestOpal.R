@@ -1,7 +1,7 @@
 #' Class "AssessmentTestOpal"
 #'
-#' Abstract class `AssessmentTestOpal` is responsible for creating xml exam file
-#' according to QTI 2.1. for LMS Opal
+#' Class `AssessmentTestOpal` is responsible for creating XML exam files
+#' according to the QTI 2.1 standard for LMS Opal.
 #' \if{html}{\out{<div style="text-align:center">}\figure{assessmentTest.png}
 #' \out{</div>}}
 #' @details
@@ -9,8 +9,8 @@
 #'  questions/tasks and/or one or more sub sections.
 #' @template ATSlotsTemplate
 #' @template ATOSlotsTemplate
-#' @seealso [AssessmentSection]
-#' @note use [create_qti_test()] to create an xml file for test specification
+#' @seealso [AssessmentSection], [AssessmentTest], [test()], [test4opal()],
+#'   [section()].
 #' @examples
 #' \dontrun{
 #' This example creates test 'exam' with one section 'exam_section' which
@@ -22,8 +22,20 @@
 #'              choices = c("A", "B", "C"), identifier = "q2")
 #' exam_section <- new("AssessmentSection", identifier = "sec_id",
 #'                     title = "section", assessment_item = list(task1, task2))
-#' exam <- new("AssessmentTestOpal", identifier = "id_test",
-#'             title = "some title", section = list(exam_section))
+#' exam <- new("AssessmentTestOpal",
+#'             identifier = "id_test_1234",
+#'             title = "Example of Exam",
+#'             navigation_mode = "linear",
+#'             submission_mode = "individual",
+#'             section = list(exam_section),
+#'             time_limit = 90,
+#'             max_attempts = 1,
+#'             academic_grading = TRUE,
+#'             grade_label = "Preliminary grade",
+#'             show_test_time = TRUE,
+#'             calculator = "scientific-calculator",
+#'             mark_items = TRUE,
+#'             files = "text_book.pdf")
 #' @name AssessmentTestOpal-class
 #' @rdname AssessmentTestOpal-class
 #' @aliases AssessmentTestOpal

@@ -4,77 +4,84 @@
 \name{AssessmentTest-class}
 \alias{AssessmentTest-class}
 \alias{AssessmentTest}
-\title{Class AssessmentTest}
+\title{Class "AssessmentTest"}
 \description{
-Abstract class \code{AssessmentTest} is responsible for creating xml exam file
-according to QTI 2.1.
+Class \code{AssessmentTest} is responsible for creating XML exam files according
+to the QTI 2.1 standard.
 \if{html}{\out{<div style="text-align:center">}\figure{assessmentTest.png}
 \out{</div>}}
 }
 \details{
-Test consists of one or more sections. Each section can have one or more
-questions/tasks and/or one or more sub sections.
+Test consists of one or more sections. Each section can have one or
+more questions/tasks and/or one or more sub sections.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{identifier}}{string; identifier of the xml test file}
+\item{\code{identifier}}{A character representing the unique identifier of the
+assessment test. By default, it is generated as 'id_test_dddd', where dddd
+represents random digits.}
 
-\item{\code{title}}{string; file title}
+\item{\code{title}}{A character representing the title of the test. By default, it
+takes the value of the identifier.}
 
-\item{\code{points}}{numeric; maximum number of points for the exam/test}
+\item{\code{points}}{Do not use directly; the maximum number of points for the
+exam/test. It is calculated automatically as a sum of points of included
+tasks.}
 
-\item{\code{test_part_identifier}}{string; identifier of the test part}
+\item{\code{test_part_identifier}}{A character representing the identifier of the
+test part.}
 
-\item{\code{navigation_mode}}{string, optional; determines the general paths that the
-candidate may have during exam; two mode options are possible:
+\item{\code{navigation_mode}}{A character value, optional, determining the general
+paths that the candidate may have during the exam. Possible values:
 \itemize{
-\item "linear" - candidate is not allowed to return to the previous questions
-\item "nonlinear" - candidate if free to navigate, used by \strong{default}
+\item "linear" - candidate is not allowed to return to the previous questions.
+\item "nonlinear" - candidate is free to navigate. This is used by default.
 }}
 
-\item{\code{submission_mode}}{string, optional; determines when the candidate's
-responses are submitted for response processing; two mode options are
-possible:
+\item{\code{submission_mode}}{A character value, optional, determining when the
+candidate's responses are submitted for response processing. Possible
+values:
 \itemize{
-\item "individual" - submit candidates' responses on an item-by-idem
-basis, used by \strong{default}
-\item "simultaneous - candidates' responses are submitted all together by the
-end of the test
+\item "individual" - submit candidates' responses on an item-by-item basis. This is
+used by default.
+\item "simultaneous" - candidates' responses are submitted all together by the end of
+the test.
 }}
 
-\item{\code{section}}{list; list of \linkS4class{AssessmentSection} objects}
+\item{\code{section}}{A list containing one or more \link{AssessmentSection} objects.}
 
-\item{\code{qti_version}}{string, optional; qti information model version, default
-'v2p1'}
+\item{\code{qti_version}}{A character value, optional, representing the QTI
+information model version. Default is 'v2p1'.}
 
-\item{\code{time_limit}}{numeric, optional;  controls the amount of time \emph{in
-minutes}, which a candidate is allowed for this part of the test}
+\item{\code{time_limit}}{A numeric value, optional, controlling the amount of time in
+minutes which a candidate is allowed for this part of the test.}
 
-\item{\code{max_attempts}}{numeric, optional; enables the maximum number of attempts,
-that candidate is allowed to pass}
+\item{\code{max_attempts}}{A numeric value, optional, enabling the maximum number of
+attempts that a candidate is allowed to pass.}
 
-\item{\code{allow_comment}}{boolean, optional; enables to allow candidate to leave
-comments in each question}
+\item{\code{allow_comment}}{A boolean value, optional, enabling to allow candidates
+to leave comments in each question.}
 
-\item{\code{rebuild_variables}}{boolean, optional; enables to recalculate variables
-and reshuffle the order of choices for each item-attempt}
+\item{\code{rebuild_variables}}{A boolean value, optional, enabling to recalculate
+variables and reshuffle the order of choices for each item-attempt.}
 
-\item{\code{academic_grading}}{boolean, optional; enables to show to candidate at the
-end of the testing a grade according to 5-point academic grade system as a
-feedback; \code{FALSE} by default}
+\item{\code{academic_grading}}{A boolean value, optional, enabling to show to
+candidates at the end of the testing a grade according to a 5-point
+academic grade system as feedback. Default is \code{FALSE}.}
 
-\item{\code{grade_label}}{character, optional; a short message that shows with a
-grade in the final feedback; for multilingual use, it can be a named vector
-with two-letter ISO language codes as names (e.g., c(en="Grade",
-de="Note")); during test creation, it takes the value for the language of
-the operating system; c(en="Grade", de="Note")is default}
+\item{\code{grade_label}}{A character value, optional, representing a short message
+to display with a grade in the final feedback. For multilingual usage, it
+hat to be a named vector with two-letter ISO language codes as names (e.g.,
+c(en="Grade", de="Note")); during test creation, it takes the value for the
+language of the operating system. Default is c(en="Grade", de="Note").}
 
-\item{\code{table_label}}{character, optional; a concise message to display as the
-column title of the grading table in the final feedback; for multilingual use,
-it can be a named vector with two-letter ISO language codes as names
-(e.g., c(en="Grade", de="Note")); during test creation, it takes the value
-for the language of the operating system; c(en="Grade", de="Note")is default}
+\item{\code{table_label}}{A character value, optional, representing a concise message
+to display as the column title of the grading table in the final feedback.
+For multilingual usage, it hat to be a named vector with two-letter ISO
+language codes as names (e.g., c(en="Grade", de="Note")); during test
+creation, it takes the value for the language of the operating system.
+Default is c(en="Grade", de="Note").}
 }}
 
 \examples{
@@ -88,9 +95,18 @@ task2 <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
              choices = c("A", "B", "C"), identifier = "q2")
 exam_section <- new("AssessmentSection", identifier = "sec_id",
                     title = "section", assessment_item = list(task1, task2))
-exam <- new("AssessmentTestOpal", identifier = "id_test",
-            title = "some title", section = list(exam_section))
+exam <- new("AssessmentTest",
+            identifier = "id_test_1234",
+            title = "Example of Exam",
+            navigation_mode = "linear",
+            submission_mode = "individual",
+            section = list(exam_section),
+            time_limit = 90,
+            max_attempts = 1,
+            academic_grading = TRUE,
+            grade_label = "Preliminary grade")
 }
 \seealso{
-\link{AssessmentSection}
+\link{AssessmentSection}, \link{AssessmentTestOpal}, \code{\link[=test]{test()}}, \code{\link[=test4opal]{test4opal()}},
+\code{\link[=section]{section()}}.
 }

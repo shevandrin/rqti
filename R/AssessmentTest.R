@@ -1,14 +1,14 @@
-#' Class AssessmentTest
+#' Class "AssessmentTest"
 #'
-#' Abstract class `AssessmentTest` is responsible for creating xml exam file
-#' according to QTI 2.1.
+#' Class `AssessmentTest` is responsible for creating XML exam files according
+#' to the QTI 2.1 standard.
 #' \if{html}{\out{<div style="text-align:center">}\figure{assessmentTest.png}
 #' \out{</div>}}
-#' @details
-#' Test consists of one or more sections. Each section can have one or more
-#'  questions/tasks and/or one or more sub sections.
+#' @details Test consists of one or more sections. Each section can have one or
+#' more questions/tasks and/or one or more sub sections.
 #' @template ATSlotsTemplate
-#' @seealso [AssessmentSection]
+#' @seealso [AssessmentSection], [AssessmentTestOpal], [test()], [test4opal()],
+#'   [section()].
 #' @examples
 #' \dontrun{
 #' This example creates test 'exam' with one section 'exam_section' which
@@ -20,8 +20,16 @@
 #'              choices = c("A", "B", "C"), identifier = "q2")
 #' exam_section <- new("AssessmentSection", identifier = "sec_id",
 #'                     title = "section", assessment_item = list(task1, task2))
-#' exam <- new("AssessmentTestOpal", identifier = "id_test",
-#'             title = "some title", section = list(exam_section))
+#' exam <- new("AssessmentTest",
+#'             identifier = "id_test_1234",
+#'             title = "Example of Exam",
+#'             navigation_mode = "linear",
+#'             submission_mode = "individual",
+#'             section = list(exam_section),
+#'             time_limit = 90,
+#'             max_attempts = 1,
+#'             academic_grading = TRUE,
+#'             grade_label = "Preliminary grade")
 #' @name AssessmentTest-class
 #' @rdname AssessmentTest-class
 #' @aliases AssessmentTest

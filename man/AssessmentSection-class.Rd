@@ -4,51 +4,66 @@
 \name{AssessmentSection-class}
 \alias{AssessmentSection-class}
 \alias{AssessmentSection}
-\title{Class AssessmentSection}
+\title{Class "AssessmentSection"}
 \description{
-Class \code{AssessmentSection} is responsible for forming a section in test xml
-specification according to QTI 2.1
+Class \code{AssessmentSection} is responsible for forming a section in the test
+XML specification according to QTI 2.1.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{identifier}}{string; section identifier}
+\item{\code{identifier}}{A character representing the unique identifier of the
+assessment section. By default, it is generated as 'id_section_dddd', where
+dddd represents random digits.}
 
-\item{\code{title}}{string; title of the section}
+\item{\code{title}}{A character representing the title of the section in the test. By
+default, it takes the value of the identifier.}
 
-\item{\code{time_limit}}{numeric, optional;  controls the amount of time for a
-candidate is allowed for this part of the test}
+\item{\code{time_limit}}{A numeric value, optional, controlling the amount of time
+\emph{in munutes} a candidate is allowed for this part of the test.}
 
-\item{\code{visible}}{boolean, optional; if TRUE it shows this section in hierarchy
-of test structure; default \code{TRUE}}
+\item{\code{visible}}{A boolean value, optional. If TRUE, it shows this section in
+the hierarchy of the test structure. Default is \code{TRUE}.}
 
-\item{\code{assessment_item}}{list; list of \linkS4class{AssessmentSection} and/or
-Assessemt item objects: \link{SingleChoice}, \link{MultipleChoice}, \link{Essay}, \link{Entry},
-\link{Order}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable},
-\link{DirectedPair}}
+\item{\code{assessment_item}}{A list containing \link{AssessmentSection} and/or Assessment
+item objects, such as \link{SingleChoice}, \link{MultipleChoice}, \link{Essay}, \link{Entry},
+\link{Order}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable}, and
+\link{DirectedPair}.}
 
-\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
-which the assessment items and subsections are initially presented to the
-candidate; default \code{FALSE}}
+\item{\code{shuffle}}{A boolean value, optional, responsible for randomizing the
+order in which the assessment items and subsections are initially presented
+to the candidate. Default is \code{FALSE}.}
 
-\item{\code{selection}}{numeric, optional; defines how many children of the section
-are delivered in test}
+\item{\code{selection}}{A numeric value, optional, defining how many children of the
+section are delivered in the test.}
 
-\item{\code{max_attempts}}{numeric. optional; enables the maximum number of attempts,
-that candidate is allowed to pass in this section}
+\item{\code{max_attempts}}{A numeric value, optional, enabling the maximum number of
+attempts a candidate is allowed to pass in this section.}
 
-\item{\code{allow_comment}}{boolean, optional; enables to allow candidate to leave
-comments in each question of the section}
+\item{\code{allow_comment}}{A boolean value, optional, enabling to allow the
+candidate to leave comments in each question of the section. Defautl is
+\code{TRUE}.}
 }}
 
 \examples{
-sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
+sc1 <- new("SingleChoice", prompt = "Example task 1", title = "SC1",
              identifier = "q1", choices = c("a", "b", "c"))
-sc2 <- new("SingleChoice", prompt = "Test task", title = "SC",
+sc2 <- new("SingleChoice", prompt = "Example task 2", title = "SC2",
              identifier = "q2", choices = c("A", "B", "C"))
-sc3 <- new("SingleChoice", prompt = "Test task", title = "SC",
+sc3 <- new("SingleChoice", prompt = "Example task 3", title = "SC3",
              identifier = "q3", choices = c("aa", "bb", "cc"))
-exam_section <- new("AssessmentSection", identifier = "sec_id",
-                   title = "section", assessment_item = list(sc1, sc2, sc3),
-                   selection = 2)
+exam_section <- new("AssessmentSection",
+                    identifier = "sec_id",
+                    title = "Section",
+                    time_limit = 20,
+                    visible = FALSE,
+                    assessment_item = list(sc1, sc2, sc3),
+                    shuffle = FALSE,
+                    selection = 1,
+                    max_attempts = 1,
+                    allow_comment = FALSE)
+}
+\seealso{
+\code{\link[=section]{section()}}, \code{\link[=test]{test()}}, \code{\link[=test4opal]{test4opal()}}, \link{AssessmentTest},
+\link{AssessmentTestOpal}.
 }

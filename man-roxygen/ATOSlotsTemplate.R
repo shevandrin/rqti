@@ -1,13 +1,14 @@
-#' @slot show_test_time boolean, optional; determines to show candidate elapsed
-#'   processing time without time limit; default 'FALSE'
-#' @slot calculator string, optional; determines to show to candidate calculator;
-#'   possible values:
+#' @slot show_test_time A boolean value, optional, determining whether to show
+#'   the candidate elapsed processing time without time limit. Default is
+#'   `FALSE`.
+#' @slot calculator A character value, optional, determining whether to show a
+#'   calculator to the candidate. Possible values:
 #'   * "simple-calculator"
-#'   * "scientific-calculator"
-#'   * "" - by default
-#' @slot mark_items boolean, optional; determines to allow candidate marking of
-#'   questions, default 'TRUE'
-#' @slot keep_responses boolean, optional; determines to save candidate's
-#'   answers of the previous attempt
-#' @slot files string vector, optional; paths to files, which will be accessible
-#'   to candidate during the test/exam
+#'   * "scientific-calculator".
+#' @slot mark_items A boolean value, optional, determining whether to allow
+#'   candidate marking of questions. Default is `TRUE`.
+#' @slot keep_responses A boolean value, optional, determining whether to save
+#'   candidate's answers from the previous attempt. Default is `FALSE`.
+#' @slot files A character vector, optional, containing paths to files that will
+#'   be accessible to the candidate during the test/exam.
+

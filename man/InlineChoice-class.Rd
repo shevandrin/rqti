@@ -43,7 +43,7 @@ Default is \code{TRUE}.}
 }}
 
 \examples{
-ng <- new("InlineChoice",
+dd <- new("InlineChoice",
           response_identifier = "id_gap_1234",
           points = 1,
           choices =  c("answer1", "answer2", "answer3"),
