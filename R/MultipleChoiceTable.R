@@ -1,24 +1,28 @@
 #' Class "MultipleChoiceTable"
 #'
-#' Abstract class `MultipleChoiceTable` is responsible for creating assessment
-#' task according to QTI 2.1. with table of answer options, where many right
-#' answers in each row and column are possible
+#' Class `MultipleChoiceTable` is responsible for creating assessment tasks
+#' according to the QTI 2.1 standard with a table of answer options, where many
+#' correct answers in each row and column are possible.
 #' \if{html}{\out{<div style="text-align:center">}\figure{multipleTable.png}{options:
 #' style="width:250px;max-width:35\%;"}\out{</div>}}
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
-#' @template MCTSlotsTemplate
+#' @slot mapping Do not use directly; values are initialized automatically.
+#'   This slot contains a named numeric vector of points, where names correspond
+#'   to all possible combinations of row and column identifiers.
 #' @examples
-#' mt <- new("MultipleChoiceTable", content = list("<p>Match table task</p>",
-#'                                                 "<i>table description</i>"),
+#' mt <- new("MultipleChoiceTable",
+#'           identifier = "id_task_1234",
+#'           title = "Multiple choice table",
+#'           content = list("<p>Match table task</p>",
+#'                          "<i>table description</i>"),
+#'           points = 5,
 #'           rows = c("row1", "row2", "row3"),
 #'           rows_identifiers = c("a", "b", "c"),
 #'           cols = c("alfa", "beta", "gamma"),
 #'           cols_identifiers = c("a", "b", "c"),
 #'           answers_identifiers = c("a a", "b b", "b c"),
-#'           points = 5,
-#'           title = "multiple_choice_table",
-#'           identifier = "mc_table_example")
+#'           shuffle = TRUE)
 #' @name MultipleChoiceTable-class
 #' @rdname MultipleChoiceTable-class
 #' @aliases MultipleChoiceTable

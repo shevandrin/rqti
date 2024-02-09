@@ -6,9 +6,9 @@
 \alias{DirectedPair}
 \title{Class "DirectedPair"}
 \description{
-Abstract class \code{DirectedPair} is responsible for creating assessment task
-according to QTI 2.1., where a candidate has to make binary associations
-between answer options
+Class \code{DirectedPair} is responsible for creating assessment tasks according
+to the QTI 2.1 standard, where a candidate has to make binary associations
+between answer options.
 \if{html}{\out{<div style="text-align:center">}\figure{directedPair.png}{options:
 style="width:150px;max-width:25\%;"}\out{</div>}}
 \if{latex}{\figure{directedPair.png}{options: width=5cm}}
@@ -64,54 +64,58 @@ be accessible to the candidate during the test/exam.}
 \item{\code{qti_version}}{A character representing the QTI (Question and Test
 Interoperability) information model version. Default is 'v2p1'.}
 
-\item{\code{rows}}{string vector; sets answer options as row names in table or the
-firsts elements in couples in directed pairs}
+\item{\code{rows}}{A character vector specifying answer options as row names in the
+table or the first elements in couples in \link{DirectedPair}.}
 
-\item{\code{rows_identifiers}}{string vector; sets identifiers for answer options
-defined in rows of table or identifiers of the firsts elements in couples
-in directed pairs}
+\item{\code{rows_identifiers}}{A character vector, optional, specifying identifiers
+for answer options defined in rows of the table or identifiers of the first
+elements in couples in \link{DirectedPair}.}
 
-\item{\code{cols}}{string vector; sets answer options as cols headers in table or the
-seconds elements in couples in directed pairs}
+\item{\code{cols}}{A character vector specifying answer options as column headers in
+the table or the second elements in couples in \link{DirectedPair}.}
 
-\item{\code{cols_identifiers}}{string vector; sets identifiers for answer options
-defined in cols of table or identifiers of the seconds elements in couples
-in directed pairs}
+\item{\code{cols_identifiers}}{A character vector, optional, specifying identifiers
+for answer options defined in columns of the table or identifiers of the
+second elements in couples in \link{DirectedPair}.}
 
-\item{\code{answers_identifiers}}{string vector; sets couples of identifiers that
-combine the right answers}
+\item{\code{answers_identifiers}}{A character vector specifying couples of
+identifiers that combine the correct answers.}
 
-\item{\code{answers_scores}}{numeric vector, optional; each number in this vector
-determines the number of points that will be awarded to a candidate if he
-selects the corresponding answer; if nothing assign as answers_scores, the
-individual values for right answers calculates from task points and number
-of right options}
+\item{\code{answers_scores}}{A numeric vector, optional, where each number determines
+the number of points awarded to a candidate if they select the
+corresponding answer. If not assigned, the individual values for correct
+answers are calculated from the task points and the number of correct
+options.}
 
-\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default \code{TRUE}}
+\item{\code{shuffle}}{A boolean value, optional, determining whether to randomize the
+order in which the choices are initially presented to the candidate.
+Default is \code{TRUE}.}
 
-\item{\code{shuffle_rows}}{boolean, optional; to randomize the order of the choices
-only in rows; default \code{TRUE}}
+\item{\code{shuffle_rows}}{A boolean value, optional, determining whether to
+randomize the order of the choices only in rows. Default is \code{TRUE}.}
 
-\item{\code{shuffle_cols}}{boolean, optional; to randomize the order of the choices
-only in columns; default \code{TRUE}}
+\item{\code{shuffle_cols}}{A boolean value, optional, determining whether to
+randomize the order of the choices only in columns. Default is \code{TRUE}.}
 
-\item{\code{orientation}}{string, optional; is responsible to place answers in
-vertical or horizontal mode; possible values:
+\item{\code{orientation}}{A character, optional, determining whether to place answers
+in vertical or horizontal mode. Possible values:
 \itemize{
-\item "vertical" - default
+\item "vertical" - Default.
 \item "horizontal"
 }}
 }}
 
 \examples{
-dp <- new("DirectedPair", content = list("<p>\"Directed pairs\" task</p>"),
+dp <- new("DirectedPair",
+          identifier = "id_task_1234",
+          title = "Directed pair",
+          content = list("<p>\"Directed pairs\" task</p>"),
+          points = 5,
           rows = c("row1", "row2", "row3"),
           rows_identifiers = c("a", "b", "c"),
           cols = c("alfa", "beta", "gamma"),
           cols_identifiers = c("k", "l", "m"),
           answers_identifiers = c("a k", "b l", 'c m'),
-          points = 5,
-          title = "directed_pair",
-          identifier = "directed_pair_example")
+          shuffle = TRUE,
+          orientation = "vertical")
 }

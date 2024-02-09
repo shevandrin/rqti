@@ -1,3 +1,4 @@
-#' @slot solution numeric, optional; the number of right answer in choices slot,
-#'   by default the first item in choices slot is considered as right answer;
-#'   default `1`
+#' @slot solution A numeric value, optional. Represents the index of the correct
+#'   answer in the `choices` slot. By default, the first item in the `choices`
+#'   slot is considered the correct answer. Default is `1`.
+

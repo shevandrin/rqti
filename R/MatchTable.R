@@ -1,13 +1,12 @@
 #' Class "MatchTable"
 #'
-#' Abstract class `MatchTable` is never to be generated, only derived classes
-#' OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are
-#' meaningful.
+#' Abstract class `MatchTable` is not meant to be instantiated directly;
+#' instead, it serves as a base for derived classes such as [OneInRowTable],
+#' [OneInColTable], [MultipleChoiceTable], and [DirectedPair].
+#' @template AISlotsTemplate
 #' @template MTSlotsTemplate
-#' @slot shuffle_rows boolean, optional; shuffle possible answers in rows,
-#'   default `TRUE`
-#' @slot shuffle_cols boolean, optional; shuffle possible answers in columns;
-#'   defalut `TRUE`
+#' @seealso [OneInRowTable], [OneInColTable], [MultipleChoiceTable],
+#'   [DirectedPair]
 #' @name MatchTaable-classs
 #' @rdname MatchTable-class
 #' @aliases MatchTable

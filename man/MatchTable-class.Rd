@@ -6,49 +6,96 @@
 \alias{MatchTable}
 \title{Class "MatchTable"}
 \description{
-Abstract class \code{MatchTable} is never to be generated, only derived classes
-OneInRowTable, OneInColTable, MultipleChoiceTable and DirectedPair are
-meaningful.
+Abstract class \code{MatchTable} is not meant to be instantiated directly;
+instead, it serves as a base for derived classes such as \link{OneInRowTable},
+\link{OneInColTable}, \link{MultipleChoiceTable}, and \link{DirectedPair}.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{rows}}{string vector; sets answer options as row names in table or the
-firsts elements in couples in directed pairs}
+\item{\code{identifier}}{A character representing the unique identifier of the
+assessment task. By default, it is generated as 'id_task_dddd', where dddd
+represents random digits.}
 
-\item{\code{rows_identifiers}}{string vector; sets identifiers for answer options
-defined in rows of table or identifiers of the firsts elements in couples
-in directed pairs}
+\item{\code{title}}{A character representing the title of the XML file associated
+with the task. By default, it takes the value of the identifier.}
 
-\item{\code{cols}}{string vector; sets answer options as cols headers in table or the
-seconds elements in couples in directed pairs}
+\item{\code{content}}{A list of character content to form the text of the question,
+which can include HTML tags. For tasks of the \link{Entry} type, it must also
+contain at least one instance of Gap objects, such as \linkS4class{TextGap},
+\link{NumericGap}, or \link{InlineChoice}.}
 
-\item{\code{cols_identifiers}}{string vector; sets identifiers for answer options
-defined in cols of table or identifiers of the seconds elements in couples
-in directed pairs}
+\item{\code{prompt}}{An optional character representing a simple question text,
+consisting of one paragraph. This can supplement or replace content in the
+task. Default is "".}
 
-\item{\code{answers_identifiers}}{string vector; sets couples of identifiers that
-combine the right answers}
-
-\item{\code{answers_scores}}{numeric vector, optional; each number in this vector
-determines the number of points that will be awarded to a candidate if he
-selects the corresponding answer; if nothing assign as answers_scores, the
-individual values for right answers calculates from task points and number
-of right options}
-
-\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default \code{TRUE}}
-
-\item{\code{shuffle_rows}}{boolean, optional; to randomize the order of the choices
-only in rows; default \code{TRUE}}
-
-\item{\code{shuffle_cols}}{boolean, optional; to randomize the order of the choices
-only in columns; default \code{TRUE}}
-
-\item{\code{shuffle_rows}}{boolean, optional; shuffle possible answers in rows,
-default \code{TRUE}}
-
-\item{\code{shuffle_cols}}{boolean, optional; shuffle possible answers in columns;
-defalut \code{TRUE}}
+\item{\code{points}}{A numeric value, optional, representing the number of points for
+the entire task. Default is 1, but pay attention:
+\itemize{
+\item For tasks of the \link{Entry} type, it is
+calculated as the sum of the gap points by default.
+\item For tasks of the \link{MatchTable} type, it can also be calculated as the sum
+of points for individual answers, when provided.
+\item For tasks of the \link{MultipleChoice} type, points is numeric vector and
+required. Each number in this vector determines the number of points that
+will be awarded to a candidate if they select the corresponding answer. The
+order of the scores must match the order of the \code{choices}. It is possible
+to assign negative values to incorrect answers. All answers with a
+positive score are considered correct.
 }}
 
+\item{\code{feedback}}{A list containing feedback messages for candidates. Each
+element of the list should be an instance of either \link{ModalFeedback},
+\link{CorrectFeedback}, or \link{WrongFeedback} class.}
+
+\item{\code{calculator}}{A character, optional, determining whether to show a
+calculator to the candidate. Possible values:
+\itemize{
+\item "simple-calculator"
+\item "scientific-calculator"
+}}
+
+\item{\code{files}}{A character vector, optional, containing paths to files that will
+be accessible to the candidate during the test/exam.}
+
+\item{\code{qti_version}}{A character representing the QTI (Question and Test
+Interoperability) information model version. Default is 'v2p1'.}
+
+\item{\code{rows}}{A character vector specifying answer options as row names in the
+table or the first elements in couples in \link{DirectedPair}.}
+
+\item{\code{rows_identifiers}}{A character vector, optional, specifying identifiers
+for answer options defined in rows of the table or identifiers of the first
+elements in couples in \link{DirectedPair}.}
+
+\item{\code{cols}}{A character vector specifying answer options as column headers in
+the table or the second elements in couples in \link{DirectedPair}.}
+
+\item{\code{cols_identifiers}}{A character vector, optional, specifying identifiers
+for answer options defined in columns of the table or identifiers of the
+second elements in couples in \link{DirectedPair}.}
+
+\item{\code{answers_identifiers}}{A character vector specifying couples of
+identifiers that combine the correct answers.}
+
+\item{\code{answers_scores}}{A numeric vector, optional, where each number determines
+the number of points awarded to a candidate if they select the
+corresponding answer. If not assigned, the individual values for correct
+answers are calculated from the task points and the number of correct
+options.}
+
+\item{\code{shuffle}}{A boolean value, optional, determining whether to randomize the
+order in which the choices are initially presented to the candidate.
+Default is \code{TRUE}.}
+
+\item{\code{shuffle_rows}}{A boolean value, optional, determining whether to
+randomize the order of the choices only in rows. Default is \code{TRUE}.}
+
+\item{\code{shuffle_cols}}{A boolean value, optional, determining whether to
+randomize the order of the choices only in columns. Default is \code{TRUE}.}
+}}
+
+\seealso{
+\link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable},
+\link{DirectedPair}
+}

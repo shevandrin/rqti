@@ -60,23 +60,34 @@ be accessible to the candidate during the test/exam.}
 \item{\code{qti_version}}{A character representing the QTI (Question and Test
 Interoperability) information model version. Default is 'v2p1'.}
 
-\item{\code{choices}}{A character vector; contains the answers; the order of answers in
-the vector is a right response for the task}
+\item{\code{choices}}{A character vector containing the answers. The order of answers
+in the vector represents the correct response for the task.}
 
-\item{\code{choices_identifiers}}{A character vector, optional; a set of identifiers for
-answers; by default identifiers are generated automatically}
+\item{\code{choices_identifiers}}{A character vector, optional, containing a set of
+identifiers for answers. By default, identifiers are generated
+automatically. By default, identifiers are generated automatically
+according to the template "ChoiceL", where L is a letter representing the
+alphabetical order of the answer in the list.}
 
-\item{\code{shuffle}}{boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default \code{TRUE}}
+\item{\code{shuffle}}{A boolean value indicating whether to randomize the order in which
+the choices are initially presented to the candidate. Default is TRUE.}
 
-\item{\code{points_per_answer}}{boolean, optional; in case of \code{TRUE} each selected
-answer will be scored individually, in case of \code{FALSE} only answer wich is
-fully correct will be scored with maximum score; \code{TRUE} by default}
+\item{\code{points_per_answer}}{A boolean value indicating the scoring method.
+If \code{TRUE}, each selected answer will be scored individually.
+If \code{FALSE}, only fully correct answers will be scored with the maximum score.
+Default is \code{TRUE}.}
 }}
 
 \examples{
-ord <- new("Order", content = list("<p>put in a right order</p>"),
-           choices = c("first", "second", "third"),
+ord <- new("Order",
+           identifier = "id_task_1234",
            title = "order",
-           identifier = "order_example")
+           content = list("<p>Put these items in a right order</p>"),
+           prompt = "",
+           points = 2,
+           feedback = list(),
+           choices = c("first", "second", "third"),
+           choices_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC"),
+           shuffle = TRUE,
+           points_per_answer = TRUE)
 }

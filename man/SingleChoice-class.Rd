@@ -79,9 +79,9 @@ vertical or horizontal mode. Possible values:
 \item "horizontal"
 }}
 
-\item{\code{solution}}{numeric, optional; the number of right answer in choices slot,
-by default the first item in choices slot is considered as right answer;
-default \code{1}}
+\item{\code{solution}}{A numeric value, optional. Represents the index of the correct
+answer in the \code{choices} slot. By default, the first item in the \code{choices}
+slot is considered the correct answer. Default is \code{1}.}
 }}
 
 \examples{

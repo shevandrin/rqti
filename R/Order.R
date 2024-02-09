@@ -5,10 +5,17 @@
 #' @template AISlotsTemplate
 #' @template OrderSlotsTemplate
 #' @examples
-#' ord <- new("Order", content = list("<p>put in a right order</p>"),
-#'            choices = c("first", "second", "third"),
+#' ord <- new("Order",
+#'            identifier = "id_task_1234",
 #'            title = "order",
-#'            identifier = "order_example")
+#'            content = list("<p>Put these items in a right order</p>"),
+#'            prompt = "",
+#'            points = 2,
+#'            feedback = list(),
+#'            choices = c("first", "second", "third"),
+#'            choices_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC"),
+#'            shuffle = TRUE,
+#'            points_per_answer = TRUE)
 #' @name Order-class
 #' @rdname Order-class
 #' @aliases Order

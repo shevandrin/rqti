@@ -1,27 +1,30 @@
 #' Class "DirectedPair"
 #'
-#' Abstract class `DirectedPair` is responsible for creating assessment task
-#' according to QTI 2.1., where a candidate has to make binary associations
-#' between answer options
+#' Class `DirectedPair` is responsible for creating assessment tasks according
+#' to the QTI 2.1 standard, where a candidate has to make binary associations
+#' between answer options.
 #' \if{html}{\out{<div style="text-align:center">}\figure{directedPair.png}{options:
 #' style="width:150px;max-width:25\%;"}\out{</div>}}
 #' \if{latex}{\figure{directedPair.png}{options: width=5cm}}
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
-#' @slot orientation string, optional; is responsible to place answers in
-#' vertical or horizontal mode; possible values:
-#'   * "vertical" - default
+#' @slot orientation A character, optional, determining whether to place answers
+#'   in vertical or horizontal mode. Possible values:
+#'   * "vertical" - Default.
 #'   * "horizontal"
 #' @examples
-#' dp <- new("DirectedPair", content = list("<p>\"Directed pairs\" task</p>"),
+#' dp <- new("DirectedPair",
+#'           identifier = "id_task_1234",
+#'           title = "Directed pair",
+#'           content = list("<p>\"Directed pairs\" task</p>"),
+#'           points = 5,
 #'           rows = c("row1", "row2", "row3"),
 #'           rows_identifiers = c("a", "b", "c"),
 #'           cols = c("alfa", "beta", "gamma"),
 #'           cols_identifiers = c("k", "l", "m"),
 #'           answers_identifiers = c("a k", "b l", 'c m'),
-#'           points = 5,
-#'           title = "directed_pair",
-#'           identifier = "directed_pair_example")
+#'           shuffle = TRUE,
+#'           orientation = "vertical")
 #' @name DirectedPair-class
 #' @rdname DirectedPair-class
 #' @aliases DirectedPair
