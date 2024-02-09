@@ -1,25 +1,29 @@
-#' Class TextGapOpal
+#' Class "TextGapOpal"
 #'
-#' Abstract class `TextGapOpal` is responsible for creating instances of input
-#' fields with text type of answer in question Entry type assessment task
-#' according to QTI 2.1. for LMS Opal
+#' Class `TextGapOpal` is responsible for creating instances of input fields
+#' with text type of answers in question [Entry] type assessment tasks according
+#' to the QTI 2.1 standard for LMS Opal.
 #' @template GapSlotsTemplate
 #' @template TextGapSlotsTemplate
-#' @template TextGapOpalSlotsTemplate
+#' @slot tolerance A numeric value defining how many characters will be taken
+#'   into account to tolerate spelling mistakes in the evaluation of candidate
+#'   answers. Default is `0`.
+#' @seealso [Entry], [NumericGap], [TextGap] and [InlineChoice].
 #' @examples
 #' tgo <- new("TextGapOpal",
-#'           solution = c("answer","answerr", "aanswer"),
+#'           response_identifier = "id_gap_1234",
+#'           points = 2,
 #'           placeholder = "do not put special characters",
+#'           expected_length = 20,
+#'           solution = "answer",
+#'           case_sensitive = FALSE,
 #'           tolerance = 1)
 #' @name TextGapOpal-class
 #' @rdname TextGapOpal-class
 #' @aliases TextGapOpal
 #' @include Gap.R TextGap.R
-#' @importFrom htmltools tag p span tagList tagAppendChildren
-setClass("TextGapOpal", contains = "TextGap",
-         slots = c(tolerance = "numeric"),
-         prototype = prototype(tolerance = 0,
-                               case_sensitive = FALSE))
+setClass("TextGapOpal", contains = "TextGap", slots = c(tolerance = "numeric"),
+         prototype = prototype(tolerance = 0))
 
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGapOpal
