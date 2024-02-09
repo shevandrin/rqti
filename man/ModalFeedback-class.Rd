@@ -4,27 +4,34 @@
 \name{ModalFeedback-class}
 \alias{ModalFeedback-class}
 \alias{ModalFeedback}
-\title{Class ModalFeedback}
+\title{Class "ModalFeedback"}
 \description{
-Abstract class \code{ModalFeedback} is responsible for delivering feedback
+Class \code{ModalFeedback} is responsible for delivering feedback
 messages to the candidate, regardless of whether the answer was correct or
-incorrect
+incorrect.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{outcome_identifier}}{string; identifier if outcome declaration variable
-that relates to feedback}
+\item{\code{outcome_identifier}}{A character representing the unique identifier of
+the outcome declaration variable that relates to feedback. Default is
+"FEEDBACKMODAL".}
 
-\item{\code{show}}{boolean, optional; is responsible to show (\code{TRUE} value) or hide
-(\code{FALSE}); default \code{TRUE}}
+\item{\code{show}}{A boolean value, optional, determining whether to show (\code{TRUE}) or
+hide (\code{FALSE}) the modal feedback. Default is \code{TRUE}.}
 
-\item{\code{identifier}}{string; identifier of model feedback item; default 'modal
-feedback'}
+\item{\code{title}}{A character value, optional, representing the title of the modal
+feedback window.}
 
-\item{\code{title}}{string, optional; title of model feedback item}
+\item{\code{content}}{A list of character content to form the text of the modal
+feedback, which can include HTML tags.}
 
-\item{\code{content}}{list; list of strings with formatting to form the text of the
-question}
+\item{\code{identifier}}{A character value representing the identifier of the modal
+feedback item. Default is "modal_feedback".}
 }}
 
+\examples{
+fb <- new("ModalFeedback",
+          title = "Possible solution",
+          content = list("<b>Some explanation</b>"))
+}

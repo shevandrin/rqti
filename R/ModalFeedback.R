@@ -1,9 +1,15 @@
-#' Class ModalFeedback
+#' Class "ModalFeedback"
 #'
-#' Abstract class `ModalFeedback` is responsible for delivering feedback
+#' Class `ModalFeedback` is responsible for delivering feedback
 #' messages to the candidate, regardless of whether the answer was correct or
-#' incorrect
+#' incorrect.
 #' @template ModalFeedbackSlotsTemplate
+#' @slot identifier A character value representing the identifier of the modal
+#'   feedback item. Default is "modal_feedback".
+#' @examples
+#' fb <- new("ModalFeedback",
+#'           title = "Possible solution",
+#'           content = list("<b>Some explanation</b>"))
 #' @name ModalFeedback-class
 #' @rdname ModalFeedback-class
 #' @aliases ModalFeedback

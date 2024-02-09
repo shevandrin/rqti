@@ -1,8 +1,14 @@
-#' Class WrongFeedback
+#' Class "WrongFeedback"
 #'
-#' Abstract class `WrongFeedback` is responsible to deliver feedback messages
-#' to candidate in case of incorrect answer on the whole exercise
+#' Class `WrongFeedback` is responsible for delivering feedback messages
+#' to the candidate in case of an incorrect answer on the entire exercise.
 #' @template ModalFeedbackSlotsTemplate
+#' @slot identifier A character value representing the identifier of the modal
+#'   feedback item. Default is "incorrect".
+#' @examples
+#' wfb <- new("WrongFeedback",
+#'           title = "Wrong answer",
+#'           content = list("<b>Some demonstration</b>"))
 #' @name WrongFeedback-class
 #' @rdname WrongFeedback-class
 #' @aliases WrongFeedback

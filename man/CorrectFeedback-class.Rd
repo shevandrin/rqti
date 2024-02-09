@@ -4,26 +4,31 @@
 \name{CorrectFeedback-class}
 \alias{CorrectFeedback-class}
 \alias{CorrectFeedback}
-\title{Class CorrectFeedback}
+\title{Class "CorrectFeedback"}
 \description{
-Abstract class \code{CorrectFeedback} is responsible to deliver feedback messages
-to candidate in case of correct answer on the whole exercise
+Class \code{CorrectFeedback} is responsible for delivering feedback messages to
+the candidate in case of a correct answer on the entire exercise.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{outcome_identifier}}{string; identifier if outcome declaration variable
-that relates to feedback}
+\item{\code{outcome_identifier}}{A character representing the unique identifier of
+the outcome declaration variable that relates to feedback. Default is
+"FEEDBACKMODAL".}
 
-\item{\code{show}}{boolean, optional; is responsible to show (\code{TRUE} value) or hide
-(\code{FALSE}); default \code{TRUE}}
+\item{\code{show}}{A boolean value, optional, determining whether to show (\code{TRUE}) or
+hide (\code{FALSE}) the modal feedback. Default is \code{TRUE}.}
 
-\item{\code{identifier}}{string; identifier of model feedback item; default 'modal
-feedback'}
+\item{\code{title}}{A character value, optional, representing the title of the modal
+feedback window.}
 
-\item{\code{title}}{string, optional; title of model feedback item}
+\item{\code{content}}{A list of character content to form the text of the modal
+feedback, which can include HTML tags.}
 
-\item{\code{content}}{list; list of strings with formatting to form the text of the
-question}
+\item{\code{identifier}}{A character value representing the identifier of the modal
+feedback item. Default is "correct".
+cfb <- new("CorrectFeedback",
+title = "Right answer",
+content = list("\if{html}{\out{<b>}}Some demonstration\if{html}{\out{</b>}}"))}
 }}
 

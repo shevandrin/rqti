@@ -1,8 +1,13 @@
-#' Class CorrectFeedback
+#' Class "CorrectFeedback"
 #'
-#' Abstract class `CorrectFeedback` is responsible to deliver feedback messages
-#' to candidate in case of correct answer on the whole exercise
+#' Class `CorrectFeedback` is responsible for delivering feedback messages to
+#' the candidate in case of a correct answer on the entire exercise.
 #' @template ModalFeedbackSlotsTemplate
+#' @slot identifier A character value representing the identifier of the modal
+#'   feedback item. Default is "correct".
+#' cfb <- new("CorrectFeedback",
+#'           title = "Right answer",
+#'           content = list("<b>Some demonstration</b>"))
 #' @name CorrectFeedback-class
 #' @rdname CorrectFeedback-class
 #' @aliases CorrectFeedback
