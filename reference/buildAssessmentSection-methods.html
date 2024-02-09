@@ -61,7 +61,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Build tags for AssessmentSection in assessmentTest</h1>
-      <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/R/AssessmentItem.R" class="external-link"><code>R/AssessmentItem.R</code></a>, <a href="https://github.com/shevandrin/qti/blob/HEAD/R/AssessmentSection.R" class="external-link"><code>R/AssessmentSection.R</code></a>, <a href="https://github.com/shevandrin/qti/blob/HEAD/R/AssessmentItemRef.R" class="external-link"><code>R/AssessmentItemRef.R</code></a>, and 1 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/shevandrin/qti/blob/HEAD/R/AssessmentItem.R" class="external-link"><code>R/AssessmentItem.R</code></a>, <a href="https://github.com/shevandrin/qti/blob/HEAD/R/AssessmentSection.R" class="external-link"><code>R/AssessmentSection.R</code></a>, <a href="https://github.com/shevandrin/qti/blob/HEAD/R/character.R" class="external-link"><code>R/character.R</code></a></small>
       <div class="d-none name"><code>buildAssessmentSection-methods.Rd</code></div>
     </div>
 
@@ -79,9 +79,6 @@
 <span><span class="co"># S4 method for AssessmentSection</span></span>
 <span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span>, verify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S4 method for AssessmentItemRef</span></span>
-<span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># S4 method for character</span></span>
 <span><span class="fu">buildAssessmentSection</span><span class="op">(</span><span class="va">object</span>, folder <span class="op">=</span> <span class="cn">NULL</span>, verify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -89,8 +86,8 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
-<dd><p>an instance of the S4 object (<a href="AssessmentSection-class.html">AssessmentSection</a>,
-<a href="AssessmentItemRef-class.html">AssessmentItemRef</a> and all types of <a href="AssessmentItem-class.html">AssessmentItem</a>)</p></dd>
+<dd><p>an instance of the S4 object (<a href="AssessmentSection-class.html">AssessmentSection</a> and all types
+of <a href="AssessmentItem-class.html">AssessmentItem</a>)</p></dd>
 
 
 <dt>folder</dt>
@@ -98,8 +95,7 @@
 
 
 <dt>verify</dt>
-<dd><p>boolean, optional; check validity of xml file, default
-<code>FALSE</code></p></dd>
+<dd><p>boolean, optional; check validity of xml file, default <code>FALSE</code></p></dd>
 
 </dl></div>
 
