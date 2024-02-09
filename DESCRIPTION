@@ -56,7 +56,6 @@ Collate:
     'ModalFeedback.R'
     'AssessmentItem.R'
     'AssessmentSection.R'
-    'AssessmentItemRef.R'
     'AssessmentTest.R'
     'AssessmentTestOpal.R'
     'Choice.R'

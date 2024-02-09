@@ -219,11 +219,10 @@ setGeneric("getAssessmentItems", function(object) {
 #'
 #' Generic function for tags that contains assessementSection in assessnetTest
 #'
-#' @param object an instance of the S4 object ([AssessmentSection],
-#' [AssessmentItemRef] and all types of [AssessmentItem])
+#' @param object an instance of the S4 object ([AssessmentSection] and all types
+#'   of [AssessmentItem])
 #' @param folder string; a folder to store xml file
-#' @param verify boolean, optional; check validity of xml file, default
-#' `FALSE`
+#' @param verify boolean, optional; check validity of xml file, default `FALSE`
 #' @docType methods
 #' @rdname buildAssessmentSection-methods
 setGeneric("buildAssessmentSection", function(object, folder = NULL,
