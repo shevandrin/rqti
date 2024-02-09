@@ -96,7 +96,7 @@ Each step includes certain `qti` functions, the most useful of them are
 shown in the following diagram:
 
 <figure>
-<img src="vignettes/workflow1.png" style="width:60.0%"
+<img src="vignettes/images/workflow1.png" style="width:60.0%"
 alt="Basic workflow to create exercises and tests with qti" />
 <figcaption aria-hidden="true">Basic workflow to create exercises and
 tests with qti</figcaption>

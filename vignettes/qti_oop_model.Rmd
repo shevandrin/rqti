@@ -39,7 +39,7 @@ This section is still under construction and only relevant if you want to create
 First, check out the overview of our classes:
 
 <div class="zoomable-image">
-  <img src="s4model.png" alt="Class diagram S4" />
+  <img src="images/s4model.png" alt="Class diagram S4" />
 </div>
 
 `qti` class model consists of classes that represent types of tasks (`?SingleChoice`, `?MultipleChoice`, `?Essay`, `?Entry`, `?Order`, `?DirectedPair`, `?MultipleChoiceTable`, `?OneInRowTable`, `?OneInColTable`), elements of interactive content of tasks (`?ModalFeedback`, `?CorrectFeedback`, `?WrongFeedback`, `?TextGap`, `?NumericGap`, `?InlineChoice`, `?TextGapOpal`), tests and their sections (`?AssessmentSection`, `?AssessmentTest`, `?AssessmentTestOpal`).

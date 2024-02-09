@@ -109,7 +109,7 @@ There 3 ways to form identifiers of rows and columns:
 - a column with a predefined header 'rowid' with values for row identifiers.
 - a row with a predefined 'colid' header with values for columns identifies.
 
-![Preview of markdown table with data for identifiers](screenshot_table3.png)
+![Preview of markdown table with data for identifiers](images/screenshot_table3.png)
 
 ## Some advice on table exercises 
 

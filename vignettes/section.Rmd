@@ -103,7 +103,7 @@ To customize your sections and tests, check out the references: `?section` and `
 
 By default the `section` function creates different variants of an exercise by drawing different seeds and creating subsections with these seeds. There is also a different approach to introduce randomness. Check out the following figure:
 
-![Two approaches for structuring exercise variants](sections_scheme1.png){width=80%}
+![Two approaches for structuring exercise variants](images/sections_scheme1.png){width=80%}
 
 On the left-hand side four different subsections with the same exercise files (but different variants of them) were created. A single participant, starting at the root section, will be randomly assigned to only one subsection. He or she will then be presented all exercises from this subsection. This is the default and most instructors will be happy with this setup for their exams. Basically, this is a common experimental design. All participants in one subsection see the same exercises, which is also useful for psychometric analysis. The disadvantage is that if two students know they are in the same subsection, they could help each other.
 
