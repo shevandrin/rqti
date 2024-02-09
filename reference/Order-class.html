@@ -140,34 +140,45 @@ Interoperability) information model version. Default is 'v2p1'.</p></dd>
 
 
 <dt><code>choices</code></dt>
-<dd><p>A character vector; contains the answers; the order of answers in
-the vector is a right response for the task</p></dd>
+<dd><p>A character vector containing the answers. The order of answers
+in the vector represents the correct response for the task.</p></dd>
 
 
 <dt><code>choices_identifiers</code></dt>
-<dd><p>A character vector, optional; a set of identifiers for
-answers; by default identifiers are generated automatically</p></dd>
+<dd><p>A character vector, optional, containing a set of
+identifiers for answers. By default, identifiers are generated
+automatically. By default, identifiers are generated automatically
+according to the template "ChoiceL", where L is a letter representing the
+alphabetical order of the answer in the list.</p></dd>
 
 
 <dt><code>shuffle</code></dt>
-<dd><p>boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default <code>TRUE</code></p></dd>
+<dd><p>A boolean value indicating whether to randomize the order in which
+the choices are initially presented to the candidate. Default is TRUE.</p></dd>
 
 
 <dt><code>points_per_answer</code></dt>
-<dd><p>boolean, optional; in case of <code>TRUE</code> each selected
-answer will be scored individually, in case of <code>FALSE</code> only answer wich is
-fully correct will be scored with maximum score; <code>TRUE</code> by default</p></dd>
+<dd><p>A boolean value indicating the scoring method.
+If <code>TRUE</code>, each selected answer will be scored individually.
+If <code>FALSE</code>, only fully correct answers will be scored with the maximum score.
+Default is <code>TRUE</code>.</p></dd>
 
 
 </dl></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ord</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"Order"</span>, content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"&lt;p&gt;put in a right order&lt;/p&gt;"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>           choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"second"</span>, <span class="st">"third"</span><span class="op">)</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ord</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"Order"</span>,</span></span>
+<span class="r-in"><span>           identifier <span class="op">=</span> <span class="st">"id_task_1234"</span>,</span></span>
 <span class="r-in"><span>           title <span class="op">=</span> <span class="st">"order"</span>,</span></span>
-<span class="r-in"><span>           identifier <span class="op">=</span> <span class="st">"order_example"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>           content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"&lt;p&gt;Put these items in a right order&lt;/p&gt;"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>           prompt <span class="op">=</span> <span class="st">""</span>,</span></span>
+<span class="r-in"><span>           points <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>           feedback <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>           choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"second"</span>, <span class="st">"third"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>           choices_identifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ChoiceA"</span>, <span class="st">"ChoiceB"</span>, <span class="st">"ChoiceC"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>           shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>           points_per_answer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
