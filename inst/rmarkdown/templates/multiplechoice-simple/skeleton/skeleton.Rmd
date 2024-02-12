@@ -1,11 +1,11 @@
 ---
 type: mpc
-knit: qti::render_qtijs
+knit: rqti::render_qtijs
 ---
 
 # question
 
-Which exercise types are supported by the R package qti?
+Which exercise types are supported by the R package rqti?
 
 - *dropdown list*
 - *gaps*

@@ -1,6 +1,6 @@
 ---
 type: multiplechoice
-knit: qti::render_qtijs
+knit: rqti::render_qtijs
 identifier: TOPIC2_Q001
 title: A meaningful title that can be displayed in the LMS
 shuffle: false
@@ -10,7 +10,7 @@ points: 2
 
 # question
 
-Which exercise types are supported by the R package qti?
+Which exercise types are supported by the R package rqti?
 
 - *match pair (pair several elements)*
 - *match tables (single choice or multiple choice tables)*

@@ -1,4 +1,4 @@
-url: https://shevandrin.github.io/qti/
+url: https://shevandrin.github.io/rqti/
 template:
   bootstrap: 5
 articles:
@@ -22,6 +22,6 @@ articles:
   contents:
   - api_opal
 - title: Workflow at the S4-classes level
-  navbar: S4 qti classes
+  navbar: S4 rqti classes
   contents:
   - qti_oop_model

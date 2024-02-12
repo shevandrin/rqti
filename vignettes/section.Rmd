@@ -17,16 +17,16 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo=FALSE}
-library(qti)
+library(rqti)
 ```
 
 Creating single exercises is not particularly useful as one usually wants to combine different exercises into a test. A test in the QTI standard typically consists of one or more sections. Each Section can contain a combination of exercises or other subsections, providing great flexibility in test structure. Sections can be customized with respect to various parameters, such as time limit and shuffling.
 
-The `qti` package makes it very simple to mix different sources of exercise files:
+The `rqti` package makes it very simple to mix different sources of exercise files:
 
-- **Rmd (md) files**: You can use Rmarkdown files that are consistent with the `qti` package (the `exams` package will not work)
+- **Rmd (md) files**: You can use Rmarkdown files that are consistent with the `rqti` package (the `exams` package will not work)
 - **QTI XML files**: These files should be valid regarding the QTI standard. To use your Rmd-files from the `exams` package you can convert them to xml first.
-- **Objects of S4 `qti` classes**: You can also use objects from the `qti` package directly. See [QTI OOP model](qti_oop_model.html).
+- **Objects of S4 `rqti` classes**: You can also use objects from the `rqti` package directly. See [QTI OOP model](qti_oop_model.html).
 
 ##  Using the `section` and `test` functions
 
@@ -35,7 +35,7 @@ Although it is possible to feed a test with exercises directly, we suggest to al
 We designed a simple wrapper for sections. Here we load some files from our package and use the function `section` to create the section. Note that we request 10 different variants of all exercises.
 
 ```{r section1, eval=T}
-path <- fs::path_package("exercises", package = "qti")
+path <- fs::path_package("exercises", package = "rqti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 root_section <- section(content = files, n_variants = 10)
 ```
@@ -43,7 +43,7 @@ root_section <- section(content = files, n_variants = 10)
 Now we can make a test out of this and upload it to Opal. Again there are helpers for that: `test` and `test4opal`. `test` is more general and is always consistent with the QTI model, whereas `test4opal` can use additional Opal-specific parameters that are not necessarily consistent with QTI.
 
 ```{r section1upload, eval = F}
-test <- qti:::test(root_section, "test1")
+test <- rqti:::test(root_section, "test1")
 # createQtiTest is a method of the OOP test class
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test1.zip", open_in_browser = F)
@@ -69,7 +69,7 @@ root_section = list(section(files, n_variants = 10),
 Note that we use a list here. Now we can again make a test out of this and upload it to Opal:
 
 ```{r section2upload, eval = F}
-test <- qti:::test4opal(root_section, "test2")
+test <- rqti:::test4opal(root_section, "test2")
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test2.zip", open_in_browser = F)
 ```
@@ -81,13 +81,13 @@ In Opal this will create the following structure:
 
 As you can see, we still have our variable section with different variants (you see two of them in the images). But now, we also have a fixed section that is the same for all tests.
 
-Note that the function `section` returns an `AssessmentSection` qti-object:
+Note that the function `section` returns an `AssessmentSection` rqti-object:
 
 ```{r class}
 lapply(root_section, class)
 ```
 
-Indeed, the whole qti-package is based on S4 OOP, so exercises, sections and tests are all objects. If you have no experience with OOP, this might feel a little bit unfamiliar, but to use it, you do not need to know all details. Just use the helper functions and you should be fine.
+Indeed, the whole rqti-package is based on S4 OOP, so exercises, sections and tests are all objects. If you have no experience with OOP, this might feel a little bit unfamiliar, but to use it, you do not need to know all details. Just use the helper functions and you should be fine.
 
 To customize your sections and tests, check out the references: `?section` and `?test` or `?test4opal`.
 

@@ -1,6 +1,6 @@
 ---
 type: table
-knit: qti::render_qtijs
+knit: rqti::render_qtijs
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 rows_shuffle: false
@@ -12,7 +12,7 @@ abbr_id: true
 
 Specify any kind of table with the table entries representing the number of points for the response. The table has to be the last element of the question section!
 
-The `qti` package is clever enough to transform your table into the appropriate QTI object (single choice or multiple choice). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
+The `rqti` package is clever enough to transform your table into the appropriate QTI object (single choice or multiple choice). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
 
 Use visual editing mode in RStudio to quickly change your table.
 

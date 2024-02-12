@@ -639,7 +639,7 @@ test_that("Testing read_table() function: delete the name of cols and rows
     expect_equal(sut, expected)
 })
 
-test_that("Checking rmd_checker() behavior when 'library(qti)'
+test_that("Checking rmd_checker() behavior when 'library(rqti)'
           is not called in the Rmd file", {
     path <- test_path("file/rmd/test_rmd_checker.Rmd")
 
@@ -650,5 +650,5 @@ test_that("Checking rmd_checker() behavior when 'library(qti)'
         }
     )
 
-    expect_equal("Helper functions are found. Call 'library(qti)' inside Rmd file.", error_message)
+    expect_equal("Helper functions are found. Call 'library(rqti)' inside Rmd file.", error_message)
 })

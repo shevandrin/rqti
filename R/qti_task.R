@@ -242,7 +242,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
 
 # verifies xml according to xsd scheme
 verify_qti <- function(doc) {
-    file <- file.path(system.file(package = "qti"), "imsqti_v2p1.xsd")
+    file <- file.path(system.file(package = "rqti"), "imsqti_v2p1.xsd")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(doc, schema)
     ifelse(validation[1], return(validation[1]), return(validation))

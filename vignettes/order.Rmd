@@ -16,17 +16,17 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo=FALSE}
-library(qti)
+library(rqti)
 ```
 
 ## Minimum version
 
-In this type of exercise, the candidate has to bring a list of items in the correct order. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: order (simple)` and `QTI: order (complex)`.
+In this type of exercise, the candidate has to bring a list of items in the correct order. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI:`. Here we look at the templates `QTI: order (simple)` and `QTI: order (complex)`.
 
 The minimum you need to provide is the `type: order` in the yaml-section and a list with at least two elements in a section called **\#question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/order-simple/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/order-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Knitting via the Knit-Button to qtijs, this exercise renders as:
@@ -47,7 +47,7 @@ optional, but usually it is a good idea to give some explanation for students.
 If you want to have more fine-grained control, consider the Rmd template `QTI: order (complex)`, wich uses more yaml attributes.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which on Opal renders as:

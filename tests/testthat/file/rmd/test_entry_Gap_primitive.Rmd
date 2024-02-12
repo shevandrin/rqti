@@ -4,7 +4,7 @@ identifier: test_entry_example
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE}
-library(qti)
+library(rqti)
 ```
 # question
 **Diese Aufgabe dient zum Testen verschiedener Möglichkeiten zum Erstellen von Lücken**

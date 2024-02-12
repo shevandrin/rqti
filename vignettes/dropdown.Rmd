@@ -16,17 +16,17 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo=FALSE}
-library(qti)
+library(rqti)
 ```
 
 ## Minimum version
 
-In this type of exercise, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as gaps because this is essentialy what dropwdowns are. Several dropdowns can be combined in a single exercise, but a combination with numeric and text gaps is not possible. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: dropdown (simple)` and `QTI: dropdown (complex)`.
+In this type of exercise, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as gaps because this is essentialy what dropwdowns are. Several dropdowns can be combined in a single exercise, but a combination with numeric and text gaps is not possible. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI:`. Here we look at the templates `QTI: dropdown (simple)` and `QTI: dropdown (complex)`.
 
 The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Knitting via the Knit-Button to qtijs, this exercise renders as:
@@ -52,7 +52,7 @@ optional, but usually it is a good idea to give some explanation for students. I
 If you want to have more fine-grained control, consider the RMD template `QTI: dropdown (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which renders as:

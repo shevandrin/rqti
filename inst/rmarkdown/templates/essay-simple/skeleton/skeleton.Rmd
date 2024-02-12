@@ -1,12 +1,12 @@
 ---
 type: essay # type of exercise
-knit: qti::render_qtijs # if you do not want our preview renderer, remove this
+knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
 ---
 
 # question
 
-What are the advantages and disadvantages of the `qti` package as compared to the `exams` package?
+What are the advantages and disadvantages of the `rqti` package as compared to the `exams` package?
 
 # feedback
 
-The qti package can only export to the QTI format, which makes it less general than the `exams` package. But the qti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.
+The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.

@@ -1,6 +1,6 @@
 ---
 type: match
-knit: qti::render_opal
+knit: rqti::render_opal
 ---
 
 # question

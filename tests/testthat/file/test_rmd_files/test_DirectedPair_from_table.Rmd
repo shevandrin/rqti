@@ -1,7 +1,7 @@
 ---
 type: match
 identifier: test_DirectedPair_from_table
-knit: qti::render_opal
+knit: rqti::render_opal
 files: 
 - test_fig2.jpg
 - test_fig1.jpg

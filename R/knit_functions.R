@@ -1,11 +1,11 @@
-#' Render an RMD/xml file or qti-object as qti xml with QTIJS
+#' Render an RMD/xml file or rqti-object as qti xml with QTIJS
 #'
 #' Generates the qti xml file via rmd2xml. The xml is copied into the QTIJS
 #' folder of the package which transforms the xml into HTML. Finally, the HTML
 #' is displayed and the user can have a preview of the exercise or exam.
 #'
 #' Requires a running QTIJS server, which can be started with start_server().
-#' When loading the package qti, a server is started automatically.
+#' When loading the package rqti, a server is started automatically.
 #'
 #' The preview is automatically loaded into the RStudio viewer. Alternatively
 #' you  can just open the browser in the corresponding local server which is
@@ -19,7 +19,7 @@
 #' @examples
 #' # Customize knit function in the Rmd file using the following YAML setting
 #' # after the word knit:
-#' \dontrun{qti::knit_qti}
+#' \dontrun{rqti::knit_qti}
 #'
 #' @export
 render_qtijs <- function(input, ...) {
@@ -106,7 +106,7 @@ start_server <- function() {
 
 #' shortcut for the correct QTIJS path
 qtijs_path <- function() {
-    fs::path_package("qti", "QTIJS")
+    fs::path_package("rqti", "QTIJS")
 }
 
 #' Prepare QTIJS renderer

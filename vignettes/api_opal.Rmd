@@ -1,9 +1,9 @@
 ---
-title: "Working with API OPAL from qti" 
+title: "Working with API OPAL from rqti" 
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Working with API OPAL from qti}
+    %\VignetteIndexEntry{Working with API OPAL from rqti}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -16,12 +16,12 @@ knitr::opts_chunk$set(
 )
 ```
 ```{r setup, echo=FALSE}
-library(qti)
+library(rqti)
 ```
 
 ## Introduction
 
-The `qti` package facilitates seamless content uploads to the OPAL learning management system through its `upload2opal` function, leveraging the OPAL API.
+The `rqti` package facilitates seamless content uploads to the OPAL learning management system through its `upload2opal` function, leveraging the OPAL API.
 
 1. **Upload from a Zip Archive:**
    If you possess a pre-existing zip archive containing a QTI-compliant test, it can be effortlessly uploaded to OPAL.
@@ -38,14 +38,14 @@ To leverage the functionality of the OPAL API, it is essential for OPAL users to
 
 If you currently lack a password-based login, kindly submit a request for one through your IT department. For users affiliated with **TU Chemnitz**, you can expedite this process by sending an email to e-learning@tu-chemnitz.de. In your email, explicitly state your need for a password-based login to facilitate API usage, and include your username for reference.
 
-To store the username and password, `qti` uses the keyring system credential storage. The first time authentication is attempted, it asks for a username and a password and saves them in a key with service name "qtiopal". Once the key is created, it is automatically used in further sessions. It is not recommended to create additional keys so that the workflow runs smoothly.
+To store the username and password, `rqti` uses the keyring system credential storage. The first time authentication is attempted, it asks for a username and a password and saves them in a key with service name "qtiopal". Once the key is created, it is automatically used in further sessions. It is not recommended to create additional keys so that the workflow runs smoothly.
 
 Some universities only allow to use the OPAL API in the network of the university. Before calling `upload2opal()` set up a VPN client accordingly. 
 For TU Chemnitz [see the instructions here](https://www.tu-chemnitz.de/urz/network/access/vpn.html)
 
 ## Uploading test/exercise to OPAL
 
-You can either set the `knit: qti::render_opal` parameter in the yaml-section of your Rmd file or just call `upload2opal()` with the file as the first parameter:
+You can either set the `knit: rqti::render_opal` parameter in the yaml-section of your Rmd file or just call `upload2opal()` with the file as the first parameter:
 
 ```{r results="plaintext", comment="", eval=FALSE}
 file <- "my_zip_file.zip" # or "exercise.Rmd" or "exercise.xml"
@@ -64,7 +64,7 @@ If this is successful you can expect the following outcomes:
 - $display_name: The title of the resource as it appears in the browser on OPAL.
 - $url: A permanent link to access this resource on OPAL.
 
-`upload2opal()` always checks the uniqueness of the `display_name` in your personal repository of resources on OPAL. If a resource with the same name is found, `qti` will overwrite it by default. This is useful for incrementally improving and previewing/testing the exercise. It avoids cluttering your OPAL repo with dozens of versions of the same exercise. If there are several resources with the same name, `upload2opal` will ask you what to do.
+`upload2opal()` always checks the uniqueness of the `display_name` in your personal repository of resources on OPAL. If a resource with the same name is found, `rqti` will overwrite it by default. This is useful for incrementally improving and previewing/testing the exercise. It avoids cluttering your OPAL repo with dozens of versions of the same exercise. If there are several resources with the same name, `upload2opal` will ask you what to do.
 
 By default `upload2opal()` uses the file name as the `display_name`. But you can define your own as the second parameter:
 

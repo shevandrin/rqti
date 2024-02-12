@@ -6,7 +6,7 @@ rqti_project <- function(path, ...) {
     dir.create(path, recursive = TRUE, showWarnings = FALSE)
     # collect inputs
     dots <- list(...)
-    sys_path <- system.file(package="qti")
+    sys_path <- system.file(package="rqti")
     # copy supplement file
     file_url <- "https://raw.githubusercontent.com/johannes-titz/formelsammlung/main/main.pdf"
     download.file(file_url, file.path(path, "demo_file.pdf") , mode = "wb",
@@ -29,7 +29,7 @@ rqti_project <- function(path, ...) {
     }
     launch_qtijs <- NULL
     print(dots$start_server)
-    if (dots$start_server) launch_qtijs <- "qti::start_server()"
+    if (dots$start_server) launch_qtijs <- "rqti::start_server()"
     # create Rprofile
     text <- c(paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
               launch_qtijs)
@@ -44,7 +44,7 @@ rqti_project <- function(path, ...) {
     header <- c(
         "# The rqti package provides a powerful toolset for creating exercises",
         "# and exams according to the QTI standard directly from R.",
-        "# This script serves as a basic introduction to the qti package,",
+        "# This script serves as a basic introduction to the rqti package,",
         "# demonstrating workflow.",
         "#",
         "# Step 1. Prepare set of Rmd files with individual exercises.",
@@ -88,7 +88,7 @@ rqti_project <- function(path, ...) {
 copy_template <- function(name, path, render) {
     temp <- paste0("rmarkdown/templates/", name,
                    "-simple/skeleton/skeleton.Rmd")
-    sys_path <- system.file(package="qti")
+    sys_path <- system.file(package="rqti")
     temp_path <- file.path(sys_path, temp)
     dir.create(file.path(path, name))
     target_file <- file.path(name, paste0(name, ".Rmd"))
@@ -101,7 +101,7 @@ copy_template <- function(name, path, render) {
 #' @importFrom stringr str_replace
 replace_knit_method <- function(file_path) {
     content <- readLines(file_path, warn = FALSE)
-    content <- stringr::str_replace(content, "knit: .*", "knit: qti::render_opal")
+    content <- stringr::str_replace(content, "knit: .*", "knit: rqti::render_opal")
     writeLines(content, file_path)
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/knit_functions.R
 \name{render_qtijs}
 \alias{render_qtijs}
-\title{Render an RMD/xml file or qti-object as qti xml with QTIJS}
+\title{Render an RMD/xml file or rqti-object as qti xml with QTIJS}
 \usage{
 render_qtijs(input, ...)
 }
@@ -19,7 +19,7 @@ is displayed and the user can have a preview of the exercise or exam.
 }
 \details{
 Requires a running QTIJS server, which can be started with start_server().
-When loading the package qti, a server is started automatically.
+When loading the package rqti, a server is started automatically.
 
 The preview is automatically loaded into the RStudio viewer. Alternatively
 you  can just open the browser in the corresponding local server which is
@@ -29,6 +29,6 @@ Knit-Button in RStudio, it defaults to the RStudio viewer pane.
 \examples{
 # Customize knit function in the Rmd file using the following YAML setting
 # after the word knit:
-\dontrun{qti::knit_qti}
+\dontrun{rqti::knit_qti}
 
 }

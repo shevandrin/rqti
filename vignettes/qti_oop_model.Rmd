@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r, echo=FALSE}
-library(qti)
+library(rqti)
 ```
 
 <style>
@@ -34,7 +34,7 @@ library(qti)
 </style>
 
 
-This section is still under construction and only relevant if you want to create exercises without relying on Rmd files. Under the hood, qti uses S4 OOP. This means that you can create all exercise types as objects, which gives you more flexibility and is much faster. If you are happy with Rmd, there is nothing wrong using it. If you want to go to the next level, consider creating exercise objects directly.
+This section is still under construction and only relevant if you want to create exercises without relying on Rmd files. Under the hood, rqti uses S4 OOP. This means that you can create all exercise types as objects, which gives you more flexibility and is much faster. If you are happy with Rmd, there is nothing wrong using it. If you want to go to the next level, consider creating exercise objects directly.
 
 First, check out the overview of our classes:
 
@@ -42,7 +42,7 @@ First, check out the overview of our classes:
   <img src="images/s4model.svg" alt="Class diagram S4" />
 </div>
 
-`qti` class model consists of classes that represent types of tasks (`?SingleChoice`, `?MultipleChoice`, `?Essay`, `?Entry`, `?Order`, `?DirectedPair`, `?MultipleChoiceTable`, `?OneInRowTable`, `?OneInColTable`), elements of interactive content of tasks (`?ModalFeedback`, `?CorrectFeedback`, `?WrongFeedback`, `?TextGap`, `?NumericGap`, `?InlineChoice`, `?TextGapOpal`), tests and their sections (`?AssessmentSection`, `?AssessmentTest`, `?AssessmentTestOpal`).
+`rqti` class model consists of classes that represent types of tasks (`?SingleChoice`, `?MultipleChoice`, `?Essay`, `?Entry`, `?Order`, `?DirectedPair`, `?MultipleChoiceTable`, `?OneInRowTable`, `?OneInColTable`), elements of interactive content of tasks (`?ModalFeedback`, `?CorrectFeedback`, `?WrongFeedback`, `?TextGap`, `?NumericGap`, `?InlineChoice`, `?TextGapOpal`), tests and their sections (`?AssessmentSection`, `?AssessmentTest`, `?AssessmentTestOpal`).
 
 ## How to create task objects
 
@@ -53,7 +53,7 @@ There are two ways to create task objects:
 
 ## Examples of creating task objects
 ```{r, echo=T, eval=F}
-library(qti)
+library(rqti)
 # simple examples
 sc0 <- new("SingleChoice",
            identifier = "sc0",

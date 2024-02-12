@@ -1,7 +1,7 @@
 ---
 type: match
 identifier: test_OneInColTable
-knit: qti::render_opal
+knit: rqti::render_opal
 as_table: T
 ---
 

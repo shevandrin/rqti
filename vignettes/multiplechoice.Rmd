@@ -16,26 +16,26 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo=FALSE}
-library(qti)
+library(rqti)
 ```
 
 ## Minimum version
 
-A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: multiplechoice (simple)` and `QTI: multiplechoice (complex)`.
+A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI:`. Here we look at the templates `QTI: multiplechoice (simple)` and `QTI: multiplechoice (complex)`.
 
 The minimum you need to provide is the `type: mpc` (or the equivalent `type: multiplechoice` or `type: mchoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("exercises", "mpc1.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("exercises", "mpc1.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students.
 
-Further note that the `knit` parameter is set to the custom qti knit function, which will handle the preview. Clicking the Knit button in RStudio produces the following in the viewer pane (or browser of your choice):
+Further note that the `knit` parameter is set to the custom rqti knit function, which will handle the preview. Clicking the Knit button in RStudio produces the following in the viewer pane (or browser of your choice):
 
 ![](images/mpc1.png)
 
-You can also use the opal (set it up before, see: [API Opal](api_opal.html)) render function (`knit: qti::render_opal`), which should produce the following:
+You can also use the opal (set it up before, see: [API Opal](api_opal.html)) render function (`knit: rqti::render_opal`), which should produce the following:
 
 ![](images/multiplechoice-simple.jpg)
 
@@ -46,7 +46,7 @@ Multiple choice exercises are essentially the same as single choice exercises, e
 If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template `QTI:multiple-choice (complex)`. In addition you can also set feedback for correct and incorrect responses.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-complex/skeleton/", "skeleton.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-complex/skeleton/", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which renders in Opal as:

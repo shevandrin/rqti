@@ -1,6 +1,6 @@
 ---
 type: sc
-knit: qti::render_qtijs
+knit: rqti::render_qtijs
 identifier: TOPIC1_Q001
 title: A meaningful title that can be displayed in the LMS
 shuffle: false
@@ -11,7 +11,7 @@ points: 0.5
 
 # question
 
-Which version of the QTI standard is used by the R package qti?
+Which version of the QTI standard is used by the R package rqti?
 
 - 1.2
 - 2.1

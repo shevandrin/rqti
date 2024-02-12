@@ -1,10 +1,10 @@
 ---
 type: gap
-knit: qti::render_qtijs
+knit: rqti::render_qtijs
 ---
 
 ```{r, preparation}
-library(qti)
+library(rqti)
 ```
 
 ```{r, data}

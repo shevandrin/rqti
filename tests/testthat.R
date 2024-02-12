@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(qti)
+library(rqti)
 
-test_check("qti")
+test_check("rqti")

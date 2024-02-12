@@ -16,17 +16,17 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo=FALSE}
-library(qti)
+library(rqti)
 ```
 
 ## Minimum version
 
-In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The qti templates start with `QTI:`. Here we look at the templates `QTI: directedpair (simple)` and `QTI: directedpair (complex)`.
+In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI:`. Here we look at the templates `QTI: directedpair (simple)` and `QTI: directedpair (complex)`.
 
 The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Knitting via the Knit-Button to qtijs, this exercise renders as:
@@ -40,8 +40,8 @@ An alternative is to provide a table exercise with the matching elements, see [T
 Note that in the used example, a feedback section was also provided. The feedback is
 optional, but usually it is a good idea to give some explanation for students.
 
-Note that the `knit` parameter is set to the custom qti knit function,
-which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: qti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
+Note that the `knit` parameter is set to the custom rqti knit function,
+which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
 
 ![](images/directedpair-simple.jpg)
 
@@ -50,7 +50,7 @@ which will handle the preview. Clicking the Knit button in RStudio renders the f
 If you want to have more fine-grained control, consider the RMD template `QTI: directedpair (complex)`, wich uses more yaml attributes.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "qti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which renders as:
@@ -93,7 +93,7 @@ as the sum of 'answers_scores', and the attribute 'points', if set, will be igno
 
 ### abbr_id
 
-If `abbr_id` is omitted, then 'qti' generates identifiers as `right_1`, `right_2`, ...`right_N` and `left_1`, `left_2`...`left_N`. This does not contain any semantics, so it can be more useful to abbreviate the identifiers, which `abbr_id` does. Depending on the length of items, the abbreivations are more or less useful, but in any case more useful than non-semantic identifiers.
+If `abbr_id` is omitted, then 'rqti' generates identifiers as `right_1`, `right_2`, ...`right_N` and `left_1`, `left_2`...`left_N`. This does not contain any semantics, so it can be more useful to abbreviate the identifiers, which `abbr_id` does. Depending on the length of items, the abbreivations are more or less useful, but in any case more useful than non-semantic identifiers.
 
 ## Feedback
 

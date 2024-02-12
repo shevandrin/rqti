@@ -1,25 +1,25 @@
 ---
 type: gap # type of exercise
-knit: qti::render_qtijs # if you do not want our preview renderer, remove this
+knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 ---
 
 ```{r echo=F}
-library(qti)
+library(rqti)
 ```
 
 # question
 
 ## numeric gaps
 
-The qti package has <<114>> tests. The test coverage of the package is `r gap_numeric(90, tolerance = 5, tolerance_type = "relative", points = 2, response_identifier = "tstCov", expected_length = 10, placeholder = "digits only")`%.
+The rqti package has <<114>> tests. The test coverage of the package is `r gap_numeric(90, tolerance = 5, tolerance_type = "relative", points = 2, response_identifier = "tstCov", expected_length = 10, placeholder = "digits only")`%.
 
 In the last gap, the tolerance was set to 5 and the correct solution to 90. This means that the interval from 85 to 95 is a correct response (90+-5). The parameter `tolerance_type` determines how the tolerance is calculated. Setting it to `relative`, would make the interval go from 0.855 to 0.945 (90+-5%). The `response_identifier` is useful for later data anlysis to uniquely identify all gaps of a single exercise. The paramter `expected_length` is somewhat unpredictable in different browsers. You will need to experiment a little bit and maybe create some wrappers around the gap functions.
 
 ## text gaps
 
-The qti package can access the API of the learning management system <<OPAL>> (by BPS). BPS stands for `r gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"), tolerance = 4, case_sensitive = FALSE, placeholder = "text without special characters", expected_length = 25)`. OPAL allows a new attribute for text gaps (`tolerance`), which takes into account spelling mistakes. Only use it with the OPAL LMS as it is probably not supported on other LMS. Further note that using this attribute will make the xml files invalid regarding the QTI standard.
+The rqti package can access the API of the learning management system <<OPAL>> (by BPS). BPS stands for `r gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"), tolerance = 4, case_sensitive = FALSE, placeholder = "text without special characters", expected_length = 25)`. OPAL allows a new attribute for text gaps (`tolerance`), which takes into account spelling mistakes. Only use it with the OPAL LMS as it is probably not supported on other LMS. Further note that using this attribute will make the xml files invalid regarding the QTI standard.
 
 # feedback
 

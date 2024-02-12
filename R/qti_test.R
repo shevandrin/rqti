@@ -106,7 +106,7 @@ create_assessment_test <- function(object, folder, verify = FALSE,
 # return label according to language in locales
 #' @importFrom utils read.csv
 detect_label <- function(label) {
-    sys_path <- system.file(package="qti")
+    sys_path <- system.file(package="rqti")
     if (length(label) == 1) return(label)
     locale <- Sys.getlocale("LC_COLLATE")
     lang_pos <- regexpr("^([^_]+)", locale)

@@ -1,10 +1,10 @@
 ---
-knit: qti::render_qtijs
+knit: rqti::render_qtijs
 type: gap
 ---
 
 ```{r echo=F}
-library(qti)
+library(rqti)
 n1 <- round(runif(1, 10, 1e3))
 n2 <- round(n1*(1+runif(1, 0, 0.3)))
 n1

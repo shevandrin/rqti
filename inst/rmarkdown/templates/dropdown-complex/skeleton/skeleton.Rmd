@@ -1,20 +1,20 @@
 ---
 type: dd # type of exercise
-knit: qti::render_qtijs # if you do not want our preview renderer, remove this
+knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 ---
 
 ```{r echo=F}
-library(qti)
+library(rqti)
 ```
 
 # question
 
-The philosophy of the qti package is <<do one thing and do it well|one for all>>.
+The philosophy of the rqti package is <<do one thing and do it well|one for all>>.
 
-Under the hood, the qti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2, response_identifier = "OOP_task")`.
+Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2, response_identifier = "OOP_task")`.
 
 # feedback
 
-The package `qti` is specialized for producing xml qti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.
+The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.

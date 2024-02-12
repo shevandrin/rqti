@@ -1,4 +1,4 @@
-d <- suppressMessages(qti::extract_results("file/test_result.zip"))
+d <- suppressMessages(rqti::extract_results("file/test_result.zip"))
 
 # general analysis
 

@@ -495,9 +495,9 @@ rmd_checker <- function(file) {
     content <- readLines(file)
     helpers <- c("gap_text\\(", "gap_numeric\\(", "dropdown\\(", "mdlist\\(")
     has_helpers <- any(grepl(paste(helpers, collapse = "|"), content))
-    has_qti <- any(grepl(".\\(.*qti.*\\)$", content))
+    has_qti <- any(grepl(".\\(.*rqti.*\\)$", content))
     if (all(has_helpers, !has_qti)) {
-        stop("Helper functions are found. Call \'library(qti)\' inside Rmd file.")
+        stop("Helper functions are found. Call \'library(rqti)\' inside Rmd file.")
     }
 }
 
