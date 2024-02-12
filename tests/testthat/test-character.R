@@ -23,5 +23,5 @@ test_that("Testing createQtiTest() method for the object of character
         expect_equal(sut_1,expected_path_1)
         expect_equal(sut_2,expected_path_2)
         unlink("Preview.zip",recursive = TRUE)
-        unlink("test_test_OneInRowTable_example.zip",recursive = TRUE)
+        unlink("test_OneInRowTable_example.zip",recursive = TRUE)
 })
