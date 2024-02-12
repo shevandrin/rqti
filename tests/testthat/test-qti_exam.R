@@ -124,5 +124,5 @@ test_that("Testing createQtiTest method for AssessmentItem object", {
     expected <- file.path("exam_folder", "test_2.zip")
     expect_equal(sut, expected)
 
-    unlink("exam_folder", recursive = FALSE)
+    unlink("exam_folder", recursive = TRUE)
 })
