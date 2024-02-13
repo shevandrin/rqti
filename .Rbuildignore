@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^code_notes$
+^vignettes$
 ^LICENSE\.md$
 README.Rmd
 s4_example.R
