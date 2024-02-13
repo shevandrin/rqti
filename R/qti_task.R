@@ -5,7 +5,6 @@
 #'
 #' @param object an instance of the S4 object
 #' @importFrom htmltools tag p tagList tagAppendChildren
-#' @importFrom purrr imap
 #' @returns A list() with a shiny.tag class
 #'
 create_assessment_item <- function(object) {

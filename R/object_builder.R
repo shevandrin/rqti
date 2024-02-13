@@ -38,7 +38,6 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 
 
 #' @importFrom stringr str_split_1
-#' @import yaml
 #' @importFrom rmarkdown pandoc_convert yaml_front_matter
 #' @importFrom knitr knit opts_knit
 create_question_object <- function(file, file_dir = NULL) {
@@ -138,6 +137,7 @@ create_entry_slots <- function(html, attrs) {
     return(attrs)
 }
 
+#' @importFrom yaml yaml.load
 create_gap_object <- function(entry, id) {
     gap_str <- xml2::xml_text(entry)
     gap_str <- sub("\r\n", " ", gap_str)

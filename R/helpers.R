@@ -84,6 +84,7 @@ dropdown <- function(choices, solution_index = 1, points = 1, shuffle = TRUE,
     return(result)
 }
 
+#' @importFrom yaml as.yaml
 clean_yaml_str <- function(params, solution, type){
     solution <- paste(solution, collapse = ",")
     if (type == "InlineChoice") {
