@@ -6,7 +6,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
+  # fig.path = "man/figures/README-",
   out.width = "100%"
 )
 ```
@@ -77,7 +77,7 @@ The basic workflow with the `rqti` package can be described as follows:
 
 Each step includes certain `rqti` functions, the most useful of them are shown in the following diagram:
 
-![Basic workflow to create exercises and tests with rqti](vignettes/images/workflow.png){width=60%}
+![Basic workflow to create exercises and tests with rqti](../vignettes/images/workflow.png){width=75%}
 
 The best way to learn the workflow is to create a simple exercise, such as "Single Choice", as presented [in this article.](articles/singlechoice.html)
 
@@ -94,7 +94,7 @@ Each exercise type is described in a separate article:
 
 ## Feedback and bug reports
 
-Feel free to [let us know](mailto://shevandrin@gmail.com) which features your are missing or directly [open an issue on GitHub.](https://github.com/shevandrin/rqti/issues) 
+Feel free to [let us know](mailto://shevandrin@gmail.com) which features your are missing or directly [open an issue on GitHub.](https://github.com/shevandrin/rqti/issues)
 
 <!-- Why do we need another package for creating exams when there is already the `exams`-package? The philosophy of `exams` is **one for all**, whereas `rqti` follows the Unix-philosophy: **do one thing and do it well**. tldr: -->
 

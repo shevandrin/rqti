@@ -24,8 +24,8 @@ or to the learning management system Opal.
 
 ## Installation
 
-The `rqti` package is still in development. The only way to install it at
-the moment is from GitHub:
+The `rqti` package is still in development. The only way to install it
+at the moment is from GitHub:
 
 ``` r
 #install.pacakges("librarian") # install librarian if you do not have it yet
@@ -44,7 +44,13 @@ in .Renviron).
 
 ## Quick start
 
-Using RStudio, create a new Rmarkdown file, select **from Template** and
+Using RStudio, go to create a New Project, select **“QTI Project”** as
+the project type in the New Project Wizard window and and configure some
+settings. Choose ‘YES’ for ‘Create Templates’ to get Rmarkdown templates
+for all types of tasks in the working directory.
+
+In addition, it is possible to add a new one from the templates. To do
+this, go to create a new Rmarkdown file, select **from Template** and
 choose one of the templates starting with **QTI: …**. The *simple* ones
 include the minimum, the *complex* ones have more parameters. Click the
 Knit-Button and you should see a rendered exercise in the Viewer pane.
@@ -96,7 +102,7 @@ Each step includes certain `rqti` functions, the most useful of them are
 shown in the following diagram:
 
 <figure>
-<img src="vignettes/images/workflow.png" style="width:60.0%" 
+<img src="../vignettes/images/workflow.png" style="width:75.0%"
 alt="Basic workflow to create exercises and tests with rqti" />
 <figcaption aria-hidden="true">Basic workflow to create exercises and
 tests with rqti</figcaption>
