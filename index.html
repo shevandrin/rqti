@@ -85,7 +85,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="rqti">rqti<a class="anchor" aria-label="anchor" href="#rqti"></a>
 </h1></div>
-<p>Note: this is work in progress, a stable release can be expected in Q4 2023.</p>
+<p>Note: this is work in progress, a stable release can be expected in Q1 2024.</p>
 <p>The goal of <code>rqti</code> is to provide a clean and independent R library for creating exercises and exams according to the <a href="https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html" class="external-link">QTI</a> standard directly from R. You can render the exercises locally (qtijs) or to the learning management system Opal.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -103,8 +103,8 @@
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<p>Using RStudio, go to create a New Project, select <strong>“QTI Project”</strong> as the project type in the New Project Wizard window and and configure some settings. Choose ‘YES’ for ‘Create Templates’ to get Rmarkdown templates for all types of tasks in the working directory.</p>
-<p>In addition, it is possible to add a new one from the templates. To do this, go to create a new Rmarkdown file, select <strong>from Template</strong> and choose one of the templates starting with <strong>QTI: …</strong>. The <em>simple</em> ones include the minimum, the <em>complex</em> ones have more parameters. Click the Knit-Button and you should see a rendered exercise in the Viewer pane. The templates are self-explanatory, but more details about the exercise types can be found in the other articles:</p>
+<p>Using RStudio, go to create a New Project, select <strong>“RQTI Project”</strong> as the project type in the New Project Wizard window and and configure some settings. Choose ‘YES’ for ‘Create Templates’ to get Rmarkdown templates for all types of tasks in the working directory. After creation, work in “main.R”, where the essential commands for creating a test are presented.</p>
+<p>In addition, it is possible to add a new one from the templates. To do this, go to create a new Rmarkdown file, select <strong>from Template</strong> and choose one of the templates starting with <strong>RQTI: …</strong>. The <em>simple</em> ones include the minimum, the <em>complex</em> ones have more parameters. Click the Knit-Button and you should see a rendered exercise in the Viewer pane. The templates are self-explanatory, but more details about the exercise types can be found in the other articles:</p>
 <ul>
 <li><a href="articles/singlechoice.html">Single choice</a></li>
 <li><a href="articles/multiplechoice.html">Multiple choice</a></li>
@@ -125,8 +125,8 @@
 <ol style="list-style-type: decimal">
 <li>Create exercise files.
 <ol style="list-style-type: decimal">
-<li>Create an Rmd document. You can start from scratch (specify <code>type</code> in the yaml section) or use Rmd templates starting with the prefix <code>QTI</code>.</li>
-<li>Write a section titled <code># question</code> and create your interactions (gaps, choices, etc.). Use rqti helper functions where needed.</li>
+<li>Create an Rmd document. You can start from scratch (specify <code>type</code> in the yaml section) or use Rmd templates starting with the prefix <code>RQTI</code>.</li>
+<li>Write a section titled <code># question</code> and create your interactions (gaps, choices, etc.). Use <code>rqti</code> helper functions where needed.</li>
 <li>Set additional attributes in the yaml section. All types are explained in detail in the <strong>Articles</strong> menu on this website (top).</li>
 <li>Choose a previewer: Either qtijs (<code>knit: rqti::render_qtijs</code>), which will render your exercise locally or the learning management system Opal (<code>knit: rqti::render_opal</code>). Note that using Opal requires you to set it up first: <a href="articles/api_opal.html">Opal API</a>.</li>
 <li>Check if your task looks as desired. Modify until your are satisfied.</li>
@@ -134,7 +134,7 @@
 </li>
 <li>Create sections and tests based on your exercise files.</li>
 <li>Write test (xml) to disk according to QTI standard and upload test file to your learning management system.</li>
-<li>Download results data from your learning management system and read it in with the rqti package for statistical analysis.</li>
+<li>Download results data from your learning management system and read them with the <code>rqti</code> package for statistical analysis.</li>
 </ol>
 <p>Each step includes certain <code>rqti</code> functions, the most useful of them are shown in the following diagram:</p>
 <figure><img src="articles/images/workflow.png" style="width:75.0%" alt="Basic workflow to create exercises and tests with rqti"><figcaption aria-hidden="true">

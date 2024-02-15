@@ -105,11 +105,12 @@ of students because guessing is more difficult than with forced choice
 answers. Focus on gap exercises and you will be rewarded with better
 properties of your tests.</p>
 <p>In our package it is possible to combine gaps with text and numeric
-answers in a single exercise. A template is available in RStudio when
-you click on <code>New file -&gt; R Markdown -&gt; From Template</code>.
-The rqti templates start with <code>QTI:</code>. Here we look at the
-templates <code>QTI: gap (simple)</code> and
-<code>QTI: gap (complex)</code>.</p>
+answers in a single exercise. A template is available in RStudio Project
+Template or can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
+at the templates <code>RQTI: gap (simple)</code> and
+<code>RQTI: gap (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: gap</code> (or the
 equivalent <code>type: cloze</code>) in the yaml-section and some text,
 where at least one gap is used, in a section called
@@ -191,8 +192,8 @@ details and summary html tags).</p>
 <h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h3>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>QTI: gap (complex)</code>, wich uses more yaml attributes
-and more complex calls of the helper functions.</p>
+template <code>RQTI: gap (complex)</code>, which uses more yaml
+attributes and more complex calls of the helper functions.</p>
 <pre><code>---
 type: gap # type of exercise
 knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
