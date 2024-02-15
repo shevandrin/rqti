@@ -69,7 +69,7 @@ Has to be `gap` or `cloze`.
 
 ### identifier
 
-This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
+This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
 specify a meaningful identifier. In all other cases, the file name should be
 fine.
 

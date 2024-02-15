@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-In this type of exercise, the candidate has to bring a list of items in the correct order. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI:`. Here we look at the templates `QTI: order (simple)` and `QTI: order (complex)`.
+In this type of exercise, the candidate has to bring a list of items in the correct order.A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`.  The `rqti` templates start with `RQTI:`. Here we look at the templates `RQTI: order (simple)` and `RQTI: order (complex)`.
 
 The minimum you need to provide is the `type: order` in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -44,7 +44,7 @@ optional, but usually it is a good idea to give some explanation for students.
 
 ## More control
 
-If you want to have more fine-grained control, consider the Rmd template `QTI: order (complex)`, wich uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template `RQTI: order (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -62,7 +62,7 @@ Has to be `order`.
 
 ### identifier
 
-This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
+This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
 specify a meaningful identifier. In all other cases, the file name should be
 fine.
 

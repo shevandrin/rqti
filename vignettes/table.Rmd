@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-In this type of exercise, the candidate must match rows and columns of a table. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI:`. Here we look at the templates `QTI: table (simple)` and `QTI: table (complex)`.
+In this type of exercise, the candidate must match rows and columns of a table. A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `RQTI:`. Here we look at the templates `RQTI: table (simple)` and `RQTI: table (complex)`.
 
 The minimum you need to provide is the `type: table` in the yaml-section and a table in a section called **\#question**:
 
@@ -48,7 +48,7 @@ optional, but usually it is a good idea to give some explanation for students.
 
 ## More control
 
-If you want to have more fine-grained control, consider the Rmd template `QTI: table (complex)`, wich uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template `RQTI: table (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/table-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -105,7 +105,7 @@ There 3 ways to form identifiers of rows and columns:
 
 1. By default `rqti` uses `row_1`...`row_N`, `col_1`...`col_N`.
 2. Using `abbr_id: true` in the yaml section of the Rmd file, `rqti` takes the first word of a row or column element and combines it with the abbreviation of the remaining text of the element. Example: for the element "Mean Value Theorem for Integrals" `rqti` makes the identifier "Mean_VTfI".
-3. For mor control, you will probably want to assign your own values as identifiers.  In this case, in the markdown table or csv file you need to put:
+3. For more control, you will probably want to assign your own values as identifiers.  In this case, in the markdown table or csv file you need to put:
 - a column with a predefined header 'rowid' with values for row identifiers.
 - a row with a predefined 'colid' header with values for columns identifies.
 

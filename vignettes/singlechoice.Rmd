@@ -20,7 +20,7 @@ library(rqti)
 
 ## Minimum version
 
-The simplest exercise type in the rqti package is single choice. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI`. Here we look at the templates `QTI: singlechoice (simple)` and `QTI: singlechoice (complex)`.
+The simplest exercise type in the rqti package is single choice.A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `RQTI`. Here we look at the templates `RQTI: singlechoice (simple)` and `RQTI: singlechoice (complex)`.
 
 The minimum you need to provide is the `type: sc` (or the equivalent `type: singlechoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
@@ -31,7 +31,7 @@ cat(readLines(path_sc1), sep = '\n')
 
 Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students.
 
-Further note that the `knit` parameter is set to a custom rqti function, which will handle the preview. This is not necessarily required, but simplifies the workflow substantially. If you leave it out, the default preview is just an html file. If you add our knit function, you will get a more realistic preview.
+Further note that the `knit` parameter is set to a custom `rqti` function, which will handle the preview. This is not necessarily required, but simplifies the workflow substantially. If you leave it out, the default preview is just an html file. If you add our knit function, you will get a more realistic preview.
 
 To see what the final result might look like in a learning management system you can just click the `Knit` button in RStudio. This will produce a rqti xml file and render it in the viewer pane via QTIJS (you can also just fire up the displayed server url in the browser).
 
@@ -92,7 +92,7 @@ Renders as:
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `QTI: singlechoice-complex`, wich uses many yaml attributes. In addition you can also set feedback for correct and incorrect responses.
+If you want to have more fine-grained control, consider the RMD template `RQTI: singlechoice-complex`, which uses many yaml attributes. In addition you can also set feedback for correct and incorrect responses.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -112,7 +112,7 @@ Has to be `singlechoice` or `sc` (a shortcut for singlechoice) or `schoice` (com
 
 ### identifier
 
-This is the id of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
+This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
