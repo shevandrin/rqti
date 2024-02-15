@@ -102,7 +102,7 @@ Each step includes certain `rqti` functions, the most useful of them are
 shown in the following diagram:
 
 <figure>
-<img src="../vignettes/images/workflow.png" style="width:75.0%"
+<img src="images/workflow.png" style="width:75.0%"
 alt="Basic workflow to create exercises and tests with rqti" />
 <figcaption aria-hidden="true">Basic workflow to create exercises and
 tests with rqti</figcaption>
