@@ -17,8 +17,8 @@ rqti_project <- function(path, ...) {
     temps_r <- "gap"
     if (dots$templates == "YES")  {
         text_rmd <- c(
-            paste0("exercises -> ", print_vector(temps, path, dots['render'])),
-            paste0("exercises_random -> ", print_vector(temps_r, path, dots['render']))
+            paste0("exercises <- ", print_vector(temps, path, dots['render'])),
+            paste0("exercises_random <- ", print_vector(temps_r, path, dots['render']))
         )
     } else {
         text_rmd <- c(
@@ -28,11 +28,11 @@ rqti_project <- function(path, ...) {
 
     }
     launch_qtijs <- NULL
-    print(dots$start_server)
     if (dots$start_server) launch_qtijs <- "rqti::start_server()"
     # create Rprofile
-    text <- c(paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
-              launch_qtijs)
+    text <- c("library(rqti)",
+            paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
+            launch_qtijs)
     contents <- paste(
         paste(text, collapse = "\n"),
         sep = "\n"
