@@ -43,7 +43,7 @@ root_section <- section(content = files, n_variants = 10)
 Now we can make a test out of this and upload it to Opal. Again there are helpers for that: `test` and `test4opal`. `test` is more general and is always consistent with the QTI model, whereas `test4opal` can use additional Opal-specific parameters that are not necessarily consistent with QTI.
 
 ```{r section1upload, eval = F}
-test <- rqti:::test(root_section, "test1")
+test <- rqti::test(root_section, "test1")
 # createQtiTest is a method of the OOP test class
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test1.zip", open_in_browser = F)

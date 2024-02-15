@@ -23,7 +23,7 @@ library(rqti)
 
 In this type of exercise, the candidate is asked to fill in one or several gaps. In our opinion, this is the best way to test the ability of students because guessing is more difficult than with forced choice answers. Focus on gap exercises and you will be rewarded with better properties of your tests.
 
-In our package it is possible to combine gaps with text and numeric answers in a single exercise. A template is available in RStudio when you click on `New file -> R Markdown -> From Template`. The rqti templates start with `QTI:`. Here we look at the templates `QTI: gap (simple)` and `QTI: gap (complex)`.
+In our package it is possible to combine gaps with text and numeric answers in a single exercise. A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `RQTI:`. Here we look at the templates `RQTI: gap (simple)` and `RQTI: gap (complex)`.
 
 The minimum you need to provide is the `type: gap` (or the equivalent `type: cloze`) in the yaml-section and some text, where at least one gap is used, in a section called  **\#question**:
 
@@ -51,7 +51,7 @@ optional, but usually it is a good idea to give some explanation for students. I
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `QTI: gap (complex)`, wich uses more yaml attributes and more complex calls of the helper functions.
+If you want to have more fine-grained control, consider the RMD template `RQTI: gap (complex)`, which uses more yaml attributes and more complex calls of the helper functions.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/gap-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

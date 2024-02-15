@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 # rqti
 
-Note: this is work in progress, a stable release can be expected in Q4 2023.
+Note: this is work in progress, a stable release can be expected in Q1 2024.
 
 The goal of `rqti` is to provide a clean and independent R library for creating exercises and exams according to the [QTI](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html)
  standard directly from R. You can render the exercises locally (qtijs) or to the learning management system Opal.
@@ -44,9 +44,9 @@ Note that this will start a qtijs server, which will be used for previewing exer
 
 ## Quick start
 
-Using RStudio, go to create a New Project, select **"QTI Project"** as the project type in the New Project Wizard window and and configure some settings. Choose 'YES' for 'Create Templates' to get Rmarkdown templates for all types of tasks in the working directory.
+Using RStudio, go to create a New Project, select **"RQTI Project"** as the project type in the New Project Wizard window and and configure some settings. Choose 'YES' for 'Create Templates' to get Rmarkdown templates for all types of tasks in the working directory. After creation, work in "main.R", where the essential commands for creating a test are presented.
 
-In addition, it is possible to add a new one from the templates. To do this, go to create a new Rmarkdown file, select **from Template** and choose one of the templates starting with **QTI: ...**. The *simple* ones include the minimum, the *complex* ones have more parameters. Click the Knit-Button and you should see a rendered exercise in the Viewer pane. The templates are self-explanatory, but more details about the exercise types can be found in the other articles:
+In addition, it is possible to add a new one from the templates. To do this, go to create a new Rmarkdown file, select **from Template** and choose one of the templates starting with **RQTI: ...**. The *simple* ones include the minimum, the *complex* ones have more parameters. Click the Knit-Button and you should see a rendered exercise in the Viewer pane. The templates are self-explanatory, but more details about the exercise types can be found in the other articles:
 
 - [Single choice](articles/singlechoice.html)
 - [Multiple choice](articles/multiplechoice.html)
@@ -66,14 +66,14 @@ If you are using the learning management system Opal, please check out [Opal API
 The basic workflow with the `rqti` package can be described as follows:
 
 1. Create exercise files.
-    1. Create an Rmd document. You can start from scratch (specify `type` in the yaml section) or use Rmd templates starting with the prefix `QTI`.
-    1. Write a section titled `# question` and create your interactions (gaps, choices, etc.). Use rqti helper functions where needed.
+    1. Create an Rmd document. You can start from scratch (specify `type` in the yaml section) or use Rmd templates starting with the prefix `RQTI`.
+    1. Write a section titled `# question` and create your interactions (gaps, choices, etc.). Use `rqti` helper functions where needed.
     1. Set additional attributes in the yaml section. All types are explained in detail in the **Articles** menu on this website (top).
     1. Choose a previewer: Either qtijs (`knit: rqti::render_qtijs`), which will render your exercise locally or the learning management system Opal (`knit: rqti::render_opal`). Note that using Opal requires you to set it up first: [Opal API](articles/api_opal.html).
     1. Check if your task looks as desired. Modify until your are satisfied.
 1. Create sections and tests based on your exercise files.
 1. Write test (xml) to disk according to QTI standard and upload test file to your learning management system.
-1. Download results data from your learning management system and read it in with the rqti package for statistical analysis.
+1. Download results data from your learning management system and read them with the `rqti` package for statistical analysis.
 
 Each step includes certain `rqti` functions, the most useful of them are shown in the following diagram:
 

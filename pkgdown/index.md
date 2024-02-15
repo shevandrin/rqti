@@ -13,8 +13,8 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 # rqti
 
-Note: this is work in progress, a stable release can be expected in Q4
-2023.
+Note: this is work in progress, a stable release can be expected in Q1
+2024.
 
 The goal of `rqti` is to provide a clean and independent R library for
 creating exercises and exams according to the
@@ -44,14 +44,16 @@ in .Renviron).
 
 ## Quick start
 
-Using RStudio, go to create a New Project, select **“QTI Project”** as
+Using RStudio, go to create a New Project, select **“RQTI Project”** as
 the project type in the New Project Wizard window and and configure some
 settings. Choose ‘YES’ for ‘Create Templates’ to get Rmarkdown templates
-for all types of tasks in the working directory.
+for all types of tasks in the working directory. After creation, work in
+“main.R”, where the essential commands for creating a test are
+presented.
 
 In addition, it is possible to add a new one from the templates. To do
 this, go to create a new Rmarkdown file, select **from Template** and
-choose one of the templates starting with **QTI: …**. The *simple* ones
+choose one of the templates starting with **RQTI: …**. The *simple* ones
 include the minimum, the *complex* ones have more parameters. Click the
 Knit-Button and you should see a rendered exercise in the Viewer pane.
 The templates are self-explanatory, but more details about the exercise
@@ -79,9 +81,9 @@ The basic workflow with the `rqti` package can be described as follows:
 1.  Create exercise files.
     1.  Create an Rmd document. You can start from scratch (specify
         `type` in the yaml section) or use Rmd templates starting with
-        the prefix `QTI`.
+        the prefix `RQTI`.
     2.  Write a section titled `# question` and create your interactions
-        (gaps, choices, etc.). Use rqti helper functions where needed.
+        (gaps, choices, etc.). Use `rqti` helper functions where needed.
     3.  Set additional attributes in the yaml section. All types are
         explained in detail in the **Articles** menu on this website
         (top).
@@ -96,7 +98,7 @@ The basic workflow with the `rqti` package can be described as follows:
 3.  Write test (xml) to disk according to QTI standard and upload test
     file to your learning management system.
 4.  Download results data from your learning management system and read
-    it in with the rqti package for statistical analysis.
+    them with the `rqti` package for statistical analysis.
 
 Each step includes certain `rqti` functions, the most useful of them are
 shown in the following diagram:
