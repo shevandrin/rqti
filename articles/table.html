@@ -100,11 +100,12 @@
 <h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h3>
 <p>In this type of exercise, the candidate must match rows and columns
-of a table. A template is available in RStudio when you click on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. The rqti
-templates start with <code>QTI:</code>. Here we look at the templates
-<code>QTI: table (simple)</code> and
-<code>QTI: table (complex)</code>.</p>
+of a table. A template is available in RStudio Project Template or can
+be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
+at the templates <code>RQTI: table (simple)</code> and
+<code>RQTI: table (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: table</code> in
 the yaml-section and a table in a section called
 <strong>#question</strong>:</p>
@@ -165,7 +166,7 @@ explanation for students.</p>
 <h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h3>
 <p>If you want to have more fine-grained control, consider the Rmd
-template <code>QTI: table (complex)</code>, wich uses more yaml
+template <code>RQTI: table (complex)</code>, which uses more yaml
 attributes.</p>
 <pre><code>---
 type: table
@@ -280,9 +281,9 @@ file, <code>rqti</code> takes the first word of a row or column element
 and combines it with the abbreviation of the remaining text of the
 element. Example: for the element “Mean Value Theorem for Integrals”
 <code>rqti</code> makes the identifier “Mean_VTfI”.</li>
-<li>For mor control, you will probably want to assign your own values as
-identifiers. In this case, in the markdown table or csv file you need to
-put:</li>
+<li>For more control, you will probably want to assign your own values
+as identifiers. In this case, in the markdown table or csv file you need
+to put:</li>
 </ol>
 <ul>
 <li>a column with a predefined header ‘rowid’ with values for row

@@ -100,11 +100,12 @@
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
 <p>In this type of exercise, the candidate has to bring a list of items
-in the correct order. A template is available in RStudio when you click
-on <code>New file -&gt; R Markdown -&gt; From Template</code>. The rqti
-templates start with <code>QTI:</code>. Here we look at the templates
-<code>QTI: order (simple)</code> and
-<code>QTI: order (complex)</code>.</p>
+in the correct order.A template is available in RStudio Project Template
+or can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
+at the templates <code>RQTI: order (simple)</code> and
+<code>RQTI: order (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: order</code> in
 the yaml-section and a list with at least two elements in a section
 called <strong>#question</strong>:</p>
@@ -141,7 +142,7 @@ explanation for students.</p>
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
 <p>If you want to have more fine-grained control, consider the Rmd
-template <code>QTI: order (complex)</code>, wich uses more yaml
+template <code>RQTI: order (complex)</code>, which uses more yaml
 attributes.</p>
 <pre><code>---
 type: order
@@ -189,7 +190,7 @@ Try again. (Only displayed if the solution is not correct.)
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the id of the exercise, useful for later data analysis of
+<p>This is the ID of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>

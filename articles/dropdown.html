@@ -101,13 +101,14 @@
 </h2>
 <p>In this type of exercise, the candidate has to select an element form
 a dropdown-list. Note that our package implements dropdowns as gaps
-because this is essentialy what dropwdowns are. Several dropdowns can be
+because this is essential what dropwdowns are. Several dropdowns can be
 combined in a single exercise, but a combination with numeric and text
-gaps is not possible. A template is available in RStudio when you click
-on <code>New file -&gt; R Markdown -&gt; From Template</code>. The rqti
-templates start with <code>QTI:</code>. Here we look at the templates
-<code>QTI: dropdown (simple)</code> and
-<code>QTI: dropdown (complex)</code>.</p>
+gaps is not possible.A template is available in RStudio Project Template
+or can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
+at the templates <code>RQTI: dropdown (simple)</code> and
+<code>RQTI: dropdown (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: dropdown</code>
 (or the equivalent <code>type: dd</code>) in the yaml-section and some
 text, where at least one gap is formed as a dropdown-element, in a
@@ -160,7 +161,7 @@ experience (use details and summary html tags).</p>
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>QTI: dropdown (complex)</code>, which uses more yaml
+template <code>RQTI: dropdown (complex)</code>, which uses more yaml
 attributes.</p>
 <pre><code>---
 type: dd # type of exercise
@@ -196,7 +197,7 @@ The package `rqti` is specialized for producing xml rqti files so "do one thing 
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the id of the exercise, useful for later data analysis of
+<p>This is the ID of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>

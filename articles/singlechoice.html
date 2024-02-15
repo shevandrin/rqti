@@ -98,12 +98,12 @@
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>The simplest exercise type in the rqti package is single choice. A
-template is available in RStudio when you click on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. The rqti
-templates start with <code>QTI</code>. Here we look at the templates
-<code>QTI: singlechoice (simple)</code> and
-<code>QTI: singlechoice (complex)</code>.</p>
+<p>The simplest exercise type in the rqti package is single choice.A
+template is available in RStudio Project Template or can be added by
+clicking on <code>New file -&gt; R Markdown -&gt; From Template</code>.
+The <code>rqti</code> templates start with <code>RQTI</code>. Here we
+look at the templates <code>RQTI: singlechoice (simple)</code> and
+<code>RQTI: singlechoice (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: sc</code> (or the
 equivalent <code>type: singlechoice</code>) in the yaml-section and a
 list with at least two elements in a section called <strong>#
@@ -129,10 +129,10 @@ The used qti version is 2.1.</code></pre>
 is optional, but usually it is a good idea to give some explanation for
 students.</p>
 <p>Further note that the <code>knit</code> parameter is set to a custom
-rqti function, which will handle the preview. This is not necessarily
-required, but simplifies the workflow substantially. If you leave it
-out, the default preview is just an html file. If you add our knit
-function, you will get a more realistic preview.</p>
+<code>rqti</code> function, which will handle the preview. This is not
+necessarily required, but simplifies the workflow substantially. If you
+leave it out, the default preview is just an html file. If you add our
+knit function, you will get a more realistic preview.</p>
 <p>To see what the final result might look like in a learning management
 system you can just click the <code>Knit</code> button in RStudio. This
 will produce a rqti xml file and render it in the viewer pane via QTIJS
@@ -227,7 +227,7 @@ list:</p>
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>QTI: singlechoice-complex</code>, wich uses many yaml
+template <code>RQTI: singlechoice-complex</code>, which uses many yaml
 attributes. In addition you can also set feedback for correct and
 incorrect responses.</p>
 <pre><code>---
@@ -275,7 +275,7 @@ for singlechoice) or <code>schoice</code> (compatible with
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the id of the exercise, useful for later data analysis of
+<p>This is the ID of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on, it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>

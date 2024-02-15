@@ -100,11 +100,12 @@
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
 <p>In this type of exercise, the candidate is given two sets of items,
-which need to be matched. A template is available in RStudio when you
-click on <code>New file -&gt; R Markdown -&gt; From Template</code>. The
-rqti templates start with <code>QTI:</code>. Here we look at the
-templates <code>QTI: directedpair (simple)</code> and
-<code>QTI: directedpair (complex)</code>.</p>
+which need to be matched. A template is available in RStudio Project
+Template or can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
+at the templates <code>RQTI: directedpair (simple)</code> and
+<code>RQTI: directedpair (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: pair</code> (or
 the equivalent <code>type: dp</code>) in the yaml-section and a list
 with at least two elements in a section called
@@ -150,7 +151,7 @@ producing:</p>
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>QTI: directedpair (complex)</code>, wich uses more yaml
+template <code>RQTI: directedpair (complex)</code>, wich uses more yaml
 attributes.</p>
 <pre><code>---
 type: dp
@@ -204,7 +205,7 @@ Try again. (Only displayed if the solution is not correct.)
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the id of the exercise, useful for later data analysis of
+<p>This is the ID of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
@@ -246,13 +247,14 @@ attribute ‘points’, if set, will be ignored.</p>
 <div class="section level3">
 <h3 id="abbr_id">abbr_id<a class="anchor" aria-label="anchor" href="#abbr_id"></a>
 </h3>
-<p>If <code>abbr_id</code> is omitted, then ‘rqti’ generates identifiers
-as <code>right_1</code>, <code>right_2</code>, …<code>right_N</code> and
-<code>left_1</code>, <code>left_2</code>…<code>left_N</code>. This does
-not contain any semantics, so it can be more useful to abbreviate the
-identifiers, which <code>abbr_id</code> does. Depending on the length of
-items, the abbreivations are more or less useful, but in any case more
-useful than non-semantic identifiers.</p>
+<p>If <code>abbr_id</code> is omitted, then <code>rqti</code> generates
+identifiers as <code>right_1</code>, <code>right_2</code>,
+…<code>right_N</code> and <code>left_1</code>,
+<code>left_2</code>…<code>left_N</code>. This does not contain any
+semantics, so it can be more useful to abbreviate the identifiers, which
+<code>abbr_id</code> does. Depending on the length of items, the
+abbreviations are more or less useful, but in any case more useful than
+non-semantic identifiers.</p>
 </div>
 </div>
 <div class="section level2">
