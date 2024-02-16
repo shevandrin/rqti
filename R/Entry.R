@@ -93,9 +93,7 @@ setMethod("createResponseProcessing", signature(object = "Entry"),
 #' @rdname createText-methods
 #'
 #' @export
-setGeneric("createText", function(object) {
-    standardGeneric("createText")
-})
+setGeneric("createText", function(object) standardGeneric("createText"))
 
 create_item_body_text_entry <- function(object) {
     create_item_body_entry(object)

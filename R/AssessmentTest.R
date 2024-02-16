@@ -121,9 +121,9 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #' @docType methods
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest
-setGeneric("createAssessmentTest", function(object, folder, verify = FALSE) {
-    standardGeneric("createAssessmentTest")
-})
+setGeneric("createAssessmentTest",
+           function(object, folder,
+                    verify = FALSE) standardGeneric("createAssessmentTest"))
 
 #' Create an Zip archive of QTI test
 #'

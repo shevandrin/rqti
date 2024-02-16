@@ -32,13 +32,11 @@ setMethod("initialize", "ModalFeedback", function(.Object, ...) {
     .Object
 })
 
-setGeneric("createModalFeedback", function(object) {
-    standardGeneric("createModalFeedback")
-})
+setGeneric("createModalFeedback",
+           function(object) standardGeneric("createModalFeedback"))
 
-setGeneric("createResponseCondition", function(object) {
-    standardGeneric("createResponseCondition")
-})
+setGeneric("createResponseCondition",
+           function(object) standardGeneric("createResponseCondition"))
 
 setMethod("createModalFeedback", signature(object = "ModalFeedback"),
           function(object) {

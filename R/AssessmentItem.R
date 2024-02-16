@@ -49,9 +49,7 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 #'   [MultipleChoiceTable], [DirectedPair])
 #' @docType methods
 #' @rdname createItemBody-methods
-setGeneric("createItemBody", function(object) {
-    standardGeneric("createItemBody")
-})
+setGeneric("createItemBody", function(object) standardGeneric("createItemBody"))
 
 #' Create an element responseDeclaration of a qti-xml document
 #'
@@ -64,9 +62,8 @@ setGeneric("createItemBody", function(object) {
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseDeclaration-methods
-setGeneric("createResponseDeclaration", function(object) {
-    standardGeneric("createResponseDeclaration")
-})
+setGeneric("createResponseDeclaration",
+           function(object) standardGeneric("createResponseDeclaration"))
 
 #' Create an element outcomeDeclaration of a qti-xml document
 #'
@@ -79,9 +76,8 @@ setGeneric("createResponseDeclaration", function(object) {
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createOutcomeDeclaration-methods
-setGeneric("createOutcomeDeclaration", function(object) {
-    standardGeneric("createOutcomeDeclaration")
-})
+setGeneric("createOutcomeDeclaration",
+           function(object) standardGeneric("createOutcomeDeclaration"))
 
 #' Create an element responseProcessing of a qti-xml document
 #'
@@ -94,9 +90,8 @@ setGeneric("createOutcomeDeclaration", function(object) {
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseProcessing-methods
-setGeneric("createResponseProcessing", function(object) {
-    standardGeneric("createResponseProcessing")
-})
+setGeneric("createResponseProcessing",
+           function(object) standardGeneric("createResponseProcessing"))
 
 #' Create XML file for question specification
 #'
@@ -122,9 +117,9 @@ setGeneric("createResponseProcessing", function(object) {
 #' @aliases createQtiTask
 #' @docType methods
 #' @export
-setGeneric("createQtiTask", function(object, dir = NULL, verification = FALSE) {
-    standardGeneric("createQtiTask")
-})
+setGeneric("createQtiTask",
+           function(object, dir = NULL,
+                    verification = FALSE) standardGeneric("createQtiTask"))
 
 #' Create zip-archive of the qti test specification
 #'
@@ -156,10 +151,9 @@ setGeneric("createQtiTask", function(object, dir = NULL, verification = FALSE) {
 #' @aliases createQtiTest
 #' @docType methods
 #' @export
-setGeneric("createQtiTest", function(object, dir = NULL, verification = FALSE,
-                                     zip_only = FALSE) {
-    standardGeneric("createQtiTest")
-})
+setGeneric("createQtiTest",
+           function(object, dir = NULL, verification = FALSE,
+                    zip_only = FALSE) standardGeneric("createQtiTest"))
 
 #' Get points from AssessmentItem object
 #'
@@ -171,9 +165,7 @@ setGeneric("createQtiTest", function(object, dir = NULL, verification = FALSE,
 #' @rdname getPoints-methods
 #' @aliases getPoints
 #' @docType methods
-setGeneric("getPoints", function(object) {
-    standardGeneric("getPoints")
-})
+setGeneric("getPoints", function(object) standardGeneric("getPoints"))
 
 #' Get identifier
 #'
@@ -185,9 +177,7 @@ setGeneric("getPoints", function(object) {
 #' @rdname getIdentifier-methods
 #' @aliases getIdentifier
 #' @docType methods
-setGeneric("getIdentifier", function(object) {
-    standardGeneric("getIdentifier")
-})
+setGeneric("getIdentifier", function(object) standardGeneric("getIdentifier"))
 
 #' Get object
 #'
@@ -199,9 +189,7 @@ setGeneric("getIdentifier", function(object) {
 #' @rdname getObject-methods
 #' @aliases getObject
 #' @docType methods
-setGeneric("getObject", function(object) {
-    standardGeneric("getObject")
-})
+setGeneric("getObject", function(object) standardGeneric("getObject"))
 
 #' Get list of AssessmentItems for AssessmentSection
 #'
@@ -211,9 +199,8 @@ setGeneric("getObject", function(object) {
 #' [AssessmentItem])
 #' @docType methods
 #' @rdname getAssessmentItems-methods
-setGeneric("getAssessmentItems", function(object) {
-    standardGeneric("getAssessmentItems")
-})
+setGeneric("getAssessmentItems",
+           function(object) standardGeneric("getAssessmentItems"))
 
 #' Build tags for AssessmentSection in assessmentTest
 #'
@@ -225,10 +212,9 @@ setGeneric("getAssessmentItems", function(object) {
 #' @param verify boolean, optional; check validity of xml file, default `FALSE`
 #' @docType methods
 #' @rdname buildAssessmentSection-methods
-setGeneric("buildAssessmentSection", function(object, folder = NULL,
-                                              verify = FALSE) {
-    standardGeneric("buildAssessmentSection")
-})
+setGeneric("buildAssessmentSection",
+           function(object, folder = NULL,
+                    verify = FALSE) standardGeneric("buildAssessmentSection"))
 
 #' Get file paths for attachment of test
 #'
@@ -240,9 +226,7 @@ setGeneric("buildAssessmentSection", function(object, folder = NULL,
 #' @rdname getFiles-methods
 #' @aliases getFiles
 #' @docType methods
-setGeneric("getFiles", function(object) {
-    standardGeneric("getFiles")
-})
+setGeneric("getFiles", function(object) standardGeneric("getFiles"))
 
 #' Get value of the slot 'calculator'
 #'
@@ -254,9 +238,7 @@ setGeneric("getFiles", function(object) {
 #' @rdname getCalculator-methods
 #' @aliases getCalculator
 #' @docType methods
-setGeneric("getCalculator", function(object) {
-    standardGeneric("getCalculator")
-})
+setGeneric("getCalculator", function(object) standardGeneric("getCalculator"))
 
 #' Prepare files to render them with QTIJS
 #'
@@ -268,9 +250,8 @@ setGeneric("getCalculator", function(object) {
 #' @rdname prepareQTIJSFiles-methods
 #' @aliases prepareQTIJSFiles
 #' @docType methods
-setGeneric("prepareQTIJSFiles", function(object, dir = NULL) {
-    standardGeneric("prepareQTIJSFiles")
-})
+setGeneric("prepareQTIJSFiles",
+           function(object, dir = NULL) standardGeneric("prepareQTIJSFiles"))
 
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem

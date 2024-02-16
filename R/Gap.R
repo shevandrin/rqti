@@ -38,9 +38,7 @@ setMethod("initialize", "Gap", function(.Object, ...) {
 #'   InlineChoice, character)
 #' @docType methods
 #' @rdname getResponse-methods
-setGeneric("getResponse", function(object) {
-    standardGeneric("getResponse")
-})
+setGeneric("getResponse", function(object) standardGeneric("getResponse"))
 
 #' @rdname createText-methods
 #' @aliases createText,Gap
