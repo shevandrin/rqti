@@ -1,30 +1,37 @@
-#' Create a section as a part of test content
+#' Create a section as part of a test content
 #'
-#' @param content string; vector of Rmd, md, xml files, task- or section-objects
-#' @param n_variants integer; number of variants to create from Rmd files
-#' @param seed_number integer vector, optional; seed numbers to reproduce the
-#'   result of calculations
-#' @param id string, optional; identifier of the assessment section
-#' @param by "variants" or "files"; the type of the test structure; "variants"
-#'   by default
-#' @param selection numeric, optional; defines how many children of the section
-#'   are delivered in test; default is `NULL`, it gives "no selection" on class
-#'   level
-#' @param title string, optional; title of the section
-#' @param time_limits integer, optional; controls the amount of time a candidate
-#'   is allowed for this part of the test
-#' @param visible boolean, optional; if TRUE it shows this section in hierarchy
-#'   of test structure; default `TRUE`
-#' @param shuffle boolean, optional; is responsible to randomize the order in
-#'   which the assessment items and subsections are initially presented to the
-#'   candidate; default `FALSE`
-#' @param max_attempts numeric, optional; enables the maximum number of
-#'   attempts, that candidate is allowed to pass in this section
-#' @param allow_comment boolean, optional; enables to allow candidate to leave
-#'   comments in each question of the section; `TRUE` by default
-#' @return object of [AssessmentSection]-class
+#' Create an AssessmentSection `rqti`-object as part of a test content
+#' @param content A character vector of Rmd, md, xml files, task- or
+#'   section-objects.
+#' @param n_variants An integer value indicating the number of task variants to
+#'   create from Rmd files. Default is `1`.
+#' @param seed_number An integer vector, optional, specifying seed numbers to
+#'   reproduce the result of calculations.
+#' @param id A character value, optional, serving as the identifier of the
+#'   assessment section.
+#' @param by A character with two possible values: "variants" or "files",
+#'   indicating the type of the test structure. Default is "variants".
+#' @param selection An integer value, optional, defining how many children of
+#'   the section are delivered in the test. Default is `NULL`, meaning "no
+#'   selection".
+#' @param title A character value, optional, representing the title of the
+#'   section. If not provided, it defaults to `identifier`.
+#' @param time_limits An integer value, optional, controlling the amount of time
+#'   a candidate is allowed for this part of the test.
+#' @param visible A boolean value, optional, indicating whether the title of
+#'   this section is shown in the hierarchy of the test structure. Default is
+#'   `TRUE`.
+#' @param shuffle A boolean value, optional, responsible for randomizing the
+#'   order in which the assessment items and subsections are initially presented
+#'   to the candidate. Default is `FALSE`.
+#' @param max_attempts An integer value, optional, enabling the maximum number
+#'   of attempts allowed for a candidate to pass this section.
+#' @param allow_comment A boolean value, optional, enabling candidates to leave
+#'   comments on each question of the section. Default is `TRUE`.
+#' @return An object of class [AssessmentSection].
+#' @seealso [test()], [test4opal()]
 #' @export
-section <- function(content, n_variants = 1, seed_number = NULL, id = NULL,
+section <- function(content, n_variants = 1L, seed_number = NULL, id = NULL,
                     by = "variants", selection = NULL, title = character(0),
                     time_limits = NA_integer_, visible = TRUE,
                     shuffle = FALSE, max_attempts = NA_integer_,
@@ -129,47 +136,54 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
                            assessment_item = asmt_items, selection = 1)
     return(exam_subsection)
 }
-#' Create test
+
+#' Create a test
+#'
+#' Create an AssessmentTest `rqti`-object.
 #'
 #' @param content A list containing [AssessmentSection] objects.
-#' @param identifier A string indicating the identifier of the test file. Default is 'test_identifier'.
-#' @param title A string, optional, representing the file title. Default is
-#'   'Test Title'.
-#' @param time_limit A numeric value, optional, controlling the time given to a
+#' @param identifier A character value indicating the identifier of the test
+#'   file. Default is 'test_identifier'.
+#' @param title A character value, optional, representing the file title.
+#'   Default is 'Test Title'.
+#' @param time_limit An integer value, optional, controlling the time given to a
 #'   candidate for the test in minutes. Default is 90 minutes.
-#' @param max_attempts A numeric value, optional, indicating the maximum number
+#' @param max_attempts An integer value, optional, indicating the maximum number
 #'   of attempts allowed for the candidate. Default is 1.
-#' @param academic_grading A boolean, optional; enables to show to candidate at the
-#'   end of the testing a grade according to 5-point academic grade system as a
-#'   feedback; `FALSE` by default.
-#' @param grade_label A string, optional; a short message that shows with a
-#'   grade in the final feedback; for multilingual use, it can be a named vector
-#'   with two-letter ISO language codes as names (e.g., c(en="Grade",
+#' @param academic_grading A boolean, optional; enables showing a grade to the
+#'   candidate at the end of the testing according to the 5-point academic grade
+#'   system as feedback. Default is `FALSE.`
+#' @param grade_label A character value, optional; a short message that shows
+#'   with a grade in the final feedback; for multilingual use, it can be a named
+#'   vector with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
-#'   the operating system; c(en="Grade", de="Note") is default
-#' @param table_label A string, optional; a concise message to display as the
-#' column title of the grading table in the final feedback; for multilingual use,
-#' it can be a named vector with two-letter ISO language codes as names
-#' (e.g., c(en="Grade", de="Note")); during test creation, it takes the value
-#' for the language of the operating system; c(en="Grade", de="Note")is default.
-#' @param navigation_mode A string, optional, determining the general paths that
-#'   the candidate may have during the exam. Two mode options are possible:
-#'   - 'linear': Candidate is not allowed to return to previous questions.
-#'   - 'nonlinear': Candidate is free to navigate; used by default.
-#' @param submission_mode A string, optional, determining when the candidate's
-#'   responses are submitted for response processing. One of two mode options is
+#'   the operating system; c(en="Grade", de="Note")is default.
+#' @param table_label A character value, optional; a concise message to display
+#'   as the column title of the grading table in the final feedback; for
+#'   multilingual use, it can be a named vector with two-letter ISO language
+#'   codes as names (e.g., c(en="Grade", de="Note")); during test creation, it
+#'   takes the value for the language of the operating system; c(en="Grade",
+#'   de="Note")is default.
+#' @param navigation_mode A character value, optional, determining the general
+#'   paths that the candidate may have during the exam. Two mode options are
 #'   possible:
-#'   - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
-#'   - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
+#'     - 'linear': Candidate is not allowed to return to previous questions.
+#'     - 'nonlinear': Candidate is free to navigate; used by default.
+#' @param submission_mode A character value, optional, determining when the
+#'   candidate's responses are submitted for response processing. One of two
+#'   mode options is possible:
+#'     - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
+#'     - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
 #' @param allow_comment A boolean, optional, enabling the candidate to leave
-#'   comments in each question. `TRUE` by default.
+#'   comments in each question. Default is `TRUE.`
 #' @param rebuild_variables A boolean, optional, enabling the recalculation of
-#'   variables and reshuffling the order of choices for each item-attempt. `TRUE`
-#'   by default.
-#' @return An [AssessmentTest] object
-#' @export
+#'   variables and reshuffling the order of choices for each item-attempt.
+#'   Default is `TRUE.`
+#' @return An [AssessmentTest] object.
+#' @seealso [test4opal()], [section()], [AssessmentTest], [AssessmentSection]
+#'@export
 test <- function(content, identifier = "test_identifier", title = "Test Title",
-                 time_limit = 90, max_attempts = 1, academic_grading = FALSE,
+                 time_limit = 90L, max_attempts = 1L, academic_grading = FALSE,
                  grade_label = c(en="Grade", de="Note"),
                  table_label = c(en="Grade", de="Note"),
                  navigation_mode = "nonlinear", submission_mode = "individual",
@@ -186,56 +200,62 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
     return(object)
 }
 
-#' Create test for LMS Opal
+#' Create a test for LMS OPAL
+#'
+#' Create an AssessmentTestOpal `rqti`-object.
 #'
 #' @param content A list containing [AssessmentSection] objects.
-#' @param identifier A string indicating the identifier of the test file.
-#' Default is 'test_identifier'.
-#' @param title A string, optional, representing the file title. Default is
-#'   'Test Title'.
-#' @param time_limit A numeric value, optional, controlling the time given to a
+#' @param identifier A character value indicating the identifier of the test
+#'   file. Default is 'test_identifier'.
+#' @param title A character value, optional, representing the file title.
+#'   Default is 'Test Title'.
+#' @param time_limit An integer value, optional, controlling the time given to a
 #'   candidate for the test in minutes. Default is 90 minutes.
-#' @param max_attempts A numeric value, optional, indicating the maximum number
+#' @param max_attempts An integer value, optional, indicating the maximum number
 #'   of attempts allowed for the candidate. Default is 1.
 #' @param files A character vector, optional; paths to files that will be
-#' accessible to the candidate during the test/exam.
-#' @param calculator A character, optional; determines whether to show a calculator to the candidate. Possible values:
+#'   accessible to the candidate during the test/exam.
+#' @param calculator A character, optional; determines whether to show a
+#'   calculator to the candidate. Possible values:
 #'   - 'simple-calculator'
 #'   - 'scientific-calculator' (assigned by default).
-#' @param academic_grading A boolean, optional; enables to show to candidate at the
-#'   end of the testing a grade according to 5-point academic grade system as a
-#'   feedback; `FALSE` by default.
-#' @param grade_label A string, optional; a short message that shows with a
-#'   grade in the final feedback; for multilingual use, it can be a named vector
-#'   with two-letter ISO language codes as names (e.g., c(en="Grade",
+#' @param academic_grading A boolean, optional; enables to show to candidate at
+#'   the end of the testing a grade according to 5-point academic grade system
+#'   as a feedback; Default is `FALSE`.
+#' @param grade_label A character value, optional; a short message that shows
+#'   with a grade in the final feedback; for multilingual use, it can be a named
+#'   vector with two-letter ISO language codes as names (e.g., c(en="Grade",
 #'   de="Note")); during test creation, it takes the value for the language of
 #'   the operating system; c(en="Grade", de="Note")is default.
-#' @param table_label A string, optional; a concise message to display as the
-#' column title of the grading table in the final feedback; for multilingual use,
-#' it can be a named vector with two-letter ISO language codes as names
-#' (e.g., c(en="Grade", de="Note")); during test creation, it takes the value
-#' for the language of the operating system; c(en="Grade", de="Note")is default.
-#' @param navigation_mode A string, optional, determining the general paths that
-#'   the candidate may have during the exam. Two mode options are possible:
-#'   - 'linear': Candidate is not allowed to return to previous questions.
-#'   - 'nonlinear': Candidate is free to navigate; used by default.
-#' @param submission_mode A string, optional, determining when the candidate's
-#'   responses are submitted for response processing. One of two mode options is
+#' @param table_label A character value, optional; a concise message to display
+#'   as the column title of the grading table in the final feedback; for
+#'   multilingual use, it can be a named vector with two-letter ISO language
+#'   codes as names (e.g., c(en="Grade", de="Note")); during test creation, it
+#'   takes the value for the language of the operating system; c(en="Grade",
+#'   de="Note")is default.
+#' @param navigation_mode A character value, optional, determining the general
+#'   paths that the candidate may have during the exam. Two mode options are
 #'   possible:
-#'   - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
-#'   - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
+#'     - 'linear': Candidate is not allowed to return to previous questions.
+#'     - 'nonlinear': Candidate is free to navigate; used by default.
+#' @param submission_mode A character value, optional, determining when the
+#'   candidate's responses are submitted for response processing. One of two
+#'   mode options is possible:
+#'     - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
+#'     - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
 #' @param allow_comment A boolean, optional, enabling the candidate to leave
-#'   comments in each question. `TRUE` by default.
+#'   comments in each question. Default is `TRUE.`
 #' @param rebuild_variables A boolean, optional, enabling the recalculation of
-#'   variables and reshuffling the order of choices for each item-attempt. `TRUE`
-#'   by default.
+#'   variables and reshuffling the order of choices for each item-attempt.
+#'   Default is `TRUE`.
 #' @param show_test_time A boolean, optional, determining whether to show
 #'   candidate elapsed processing time without a time limit. Default is `TRUE`.
 #' @param mark_items A boolean, optional, determining whether to allow candidate
 #'   marking of questions. Default is `TRUE`.
 #' @param keep_responses A boolean, optional, determining whether to save the
 #'   candidate's answers from the previous attempt. Default is `FALSE`.
-#' @return An [AssessmentTestOpal] object
+#' @return An [AssessmentTestOpal] object #' @seealso [test()], [section()],
+#'   [AssessmentTestOpal], [AssessmentSection]
 #' @export
 test4opal <- function(content, identifier = "test_identifier",
                       title = "Test Title", time_limit = 90, max_attempts = 1,

@@ -2,14 +2,14 @@
 % Please edit documentation in R/section_builder.R
 \name{test}
 \alias{test}
-\title{Create test}
+\title{Create a test}
 \usage{
 test(
   content,
   identifier = "test_identifier",
   title = "Test Title",
-  time_limit = 90,
-  max_attempts = 1,
+  time_limit = 90L,
+  max_attempts = 1L,
   academic_grading = FALSE,
   grade_label = c(en = "Grade", de = "Note"),
   table_label = c(en = "Grade", de = "Note"),
@@ -22,58 +22,60 @@ test(
 \arguments{
 \item{content}{A list containing \link{AssessmentSection} objects.}
 
-\item{identifier}{A string indicating the identifier of the test file. Default is 'test_identifier'.}
+\item{identifier}{A character value indicating the identifier of the test
+file. Default is 'test_identifier'.}
 
-\item{title}{A string, optional, representing the file title. Default is
-'Test Title'.}
+\item{title}{A character value, optional, representing the file title.
+Default is 'Test Title'.}
 
-\item{time_limit}{A numeric value, optional, controlling the time given to a
+\item{time_limit}{An integer value, optional, controlling the time given to a
 candidate for the test in minutes. Default is 90 minutes.}
 
-\item{max_attempts}{A numeric value, optional, indicating the maximum number
+\item{max_attempts}{An integer value, optional, indicating the maximum number
 of attempts allowed for the candidate. Default is 1.}
 
-\item{academic_grading}{A boolean, optional; enables to show to candidate at the
-end of the testing a grade according to 5-point academic grade system as a
-feedback; \code{FALSE} by default.}
+\item{academic_grading}{A boolean, optional; enables showing a grade to the
+candidate at the end of the testing according to the 5-point academic grade
+system as feedback. Default is \code{FALSE.}}
 
-\item{grade_label}{A string, optional; a short message that shows with a
-grade in the final feedback; for multilingual use, it can be a named vector
-with two-letter ISO language codes as names (e.g., c(en="Grade",
+\item{grade_label}{A character value, optional; a short message that shows
+with a grade in the final feedback; for multilingual use, it can be a named
+vector with two-letter ISO language codes as names (e.g., c(en="Grade",
 de="Note")); during test creation, it takes the value for the language of
-the operating system; c(en="Grade", de="Note") is default}
+the operating system; c(en="Grade", de="Note")is default.}
 
-\item{table_label}{A string, optional; a concise message to display as the
-column title of the grading table in the final feedback; for multilingual use,
-it can be a named vector with two-letter ISO language codes as names
-(e.g., c(en="Grade", de="Note")); during test creation, it takes the value
-for the language of the operating system; c(en="Grade", de="Note")is default.}
+\item{table_label}{A character value, optional; a concise message to display
+as the column title of the grading table in the final feedback; for
+multilingual use, it can be a named vector with two-letter ISO language
+codes as names (e.g., c(en="Grade", de="Note")); during test creation, it
+takes the value for the language of the operating system; c(en="Grade",
+de="Note")is default.}
 
-\item{navigation_mode}{A string, optional, determining the general paths that
-the candidate may have during the exam. Two mode options are possible:
-\itemize{
-\item 'linear': Candidate is not allowed to return to previous questions.
-\item 'nonlinear': Candidate is free to navigate; used by default.
-}}
-
-\item{submission_mode}{A string, optional, determining when the candidate's
-responses are submitted for response processing. One of two mode options is
+\item{navigation_mode}{A character value, optional, determining the general
+paths that the candidate may have during the exam. Two mode options are
 possible:
-\itemize{
-\item 'individual': Submit candidates' responses on an item-by-item basis; used by default.
-\item 'simultaneous': Candidates' responses are submitted all together by the end of the test.
-}}
+- 'linear': Candidate is not allowed to return to previous questions.
+- 'nonlinear': Candidate is free to navigate; used by default.}
+
+\item{submission_mode}{A character value, optional, determining when the
+candidate's responses are submitted for response processing. One of two
+mode options is possible:
+- 'individual': Submit candidates' responses on an item-by-item basis; used by default.
+- 'simultaneous': Candidates' responses are submitted all together by the end of the test.}
 
 \item{allow_comment}{A boolean, optional, enabling the candidate to leave
-comments in each question. \code{TRUE} by default.}
+comments in each question. Default is \code{TRUE.}}
 
 \item{rebuild_variables}{A boolean, optional, enabling the recalculation of
-variables and reshuffling the order of choices for each item-attempt. \code{TRUE}
-by default.}
+variables and reshuffling the order of choices for each item-attempt.
+Default is \code{TRUE.}}
 }
 \value{
-An \link{AssessmentTest} object
+An \link{AssessmentTest} object.
 }
 \description{
-Create test
+Create an AssessmentTest \code{rqti}-object.
+}
+\seealso{
+\code{\link[=test4opal]{test4opal()}}, \code{\link[=section]{section()}}, \link{AssessmentTest}, \link{AssessmentSection}
 }

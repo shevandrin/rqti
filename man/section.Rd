@@ -2,11 +2,11 @@
 % Please edit documentation in R/section_builder.R
 \name{section}
 \alias{section}
-\title{Create a section as a part of test content}
+\title{Create a section as part of a test content}
 \usage{
 section(
   content,
-  n_variants = 1,
+  n_variants = 1L,
   seed_number = NULL,
   id = NULL,
   by = "variants",
@@ -20,43 +20,51 @@ section(
 )
 }
 \arguments{
-\item{content}{string; vector of Rmd, md, xml files, task- or section-objects}
+\item{content}{A character vector of Rmd, md, xml files, task- or
+section-objects.}
 
-\item{n_variants}{integer; number of variants to create from Rmd files}
+\item{n_variants}{An integer value indicating the number of task variants to
+create from Rmd files. Default is \code{1}.}
 
-\item{seed_number}{integer vector, optional; seed numbers to reproduce the
-result of calculations}
+\item{seed_number}{An integer vector, optional, specifying seed numbers to
+reproduce the result of calculations.}
 
-\item{id}{string, optional; identifier of the assessment section}
+\item{id}{A character value, optional, serving as the identifier of the
+assessment section.}
 
-\item{by}{"variants" or "files"; the type of the test structure; "variants"
-by default}
+\item{by}{A character with two possible values: "variants" or "files",
+indicating the type of the test structure. Default is "variants".}
 
-\item{selection}{numeric, optional; defines how many children of the section
-are delivered in test; default is \code{NULL}, it gives "no selection" on class
-level}
+\item{selection}{An integer value, optional, defining how many children of
+the section are delivered in the test. Default is \code{NULL}, meaning "no
+selection".}
 
-\item{title}{string, optional; title of the section}
+\item{title}{A character value, optional, representing the title of the
+section. If not provided, it defaults to \code{identifier}.}
 
-\item{time_limits}{integer, optional; controls the amount of time a candidate
-is allowed for this part of the test}
+\item{time_limits}{An integer value, optional, controlling the amount of time
+a candidate is allowed for this part of the test.}
 
-\item{visible}{boolean, optional; if TRUE it shows this section in hierarchy
-of test structure; default \code{TRUE}}
+\item{visible}{A boolean value, optional, indicating whether the title of
+this section is shown in the hierarchy of the test structure. Default is
+\code{TRUE}.}
 
-\item{shuffle}{boolean, optional; is responsible to randomize the order in
-which the assessment items and subsections are initially presented to the
-candidate; default \code{FALSE}}
+\item{shuffle}{A boolean value, optional, responsible for randomizing the
+order in which the assessment items and subsections are initially presented
+to the candidate. Default is \code{FALSE}.}
 
-\item{max_attempts}{numeric, optional; enables the maximum number of
-attempts, that candidate is allowed to pass in this section}
+\item{max_attempts}{An integer value, optional, enabling the maximum number
+of attempts allowed for a candidate to pass this section.}
 
-\item{allow_comment}{boolean, optional; enables to allow candidate to leave
-comments in each question of the section; \code{TRUE} by default}
+\item{allow_comment}{A boolean value, optional, enabling candidates to leave
+comments on each question of the section. Default is \code{TRUE}.}
 }
 \value{
-object of \link{AssessmentSection}-class
+An object of class \link{AssessmentSection}.
 }
 \description{
-Create a section as a part of test content
+Create an AssessmentSection \code{rqti}-object as part of a test content
+}
+\seealso{
+\code{\link[=test]{test()}}, \code{\link[=test4opal]{test4opal()}}
 }
