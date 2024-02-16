@@ -78,7 +78,7 @@ gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
 #' @param response_identifier A character string, optional; an identifier for
 #'   the answer.
 #' @return A character string mapped as yaml.
-#' @seealso [gat_text()], [gap_numeric()], [mdlist()]
+#' @seealso [gap_text()], [gap_numeric()], [mdlist()]
 #' @export
 dropdown <- function(choices, solution_index = 1, points = 1, shuffle = TRUE,
                      response_identifier = NULL) {
@@ -122,7 +122,7 @@ clean_yaml_str <- function(params, solution, type){
 #' @param gaps numeric or string vector, optional; provides primitive
 #'  gap description if there is a need to build a list of gaps.
 #' @return markdown list
-#' @seealso [gat_text()], [gap_numeric()], [dropdown()]
+#' @seealso [gap_text()], [gap_numeric()], [dropdown()]
 #' @examples
 #' #list for multiple choice task
 #' mdlist(c("A", "B", "C"), c(2, 3))

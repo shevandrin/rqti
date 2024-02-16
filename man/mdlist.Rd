@@ -37,5 +37,5 @@ mdlist(c("A", "B", "C"), c(2, 3), c(1, 2, 3))
 #- *C* <gap>3</gap>
 }
 \seealso{
-\code{\link[=gat_text]{gat_text()}}, \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=dropdown]{dropdown()}}
+\code{\link[=gap_text]{gap_text()}}, \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=dropdown]{dropdown()}}
 }

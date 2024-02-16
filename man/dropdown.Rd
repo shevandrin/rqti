@@ -36,5 +36,5 @@ A character string mapped as yaml.
 Create YAML string for InlineChoice object (dropdown list)
 }
 \seealso{
-\code{\link[=gat_text]{gat_text()}}, \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=mdlist]{mdlist()}}
+\code{\link[=gap_text]{gap_text()}}, \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=mdlist]{mdlist()}}
 }
