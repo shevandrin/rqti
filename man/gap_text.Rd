@@ -15,30 +15,33 @@ gap_text(
 )
 }
 \arguments{
-\item{solution}{string vector; contains a vector of values that
-are considered as correct answers}
+\item{solution}{A character vector containing values considered as correct
+answers.}
 
-\item{tolerance}{numeric, optional; defines how many characters will be
-taken into account to tolerate spelling mistake in evaluation of candidate
-answer}
+\item{tolerance}{An integer value, optional; defines the number of characters
+to tolerate spelling mistakes in evaluating candidate answers.}
 
-\item{case_sensitive}{logical, optional; determines whether the evaluation of
-the correct answer is case sensitive; default \code{FALSE}}
+\item{case_sensitive}{A boolean, optional; determines whether the evaluation
+of the correct answer is case sensitive. Default is \code{FALSE}.}
 
-\item{points}{numeric, optional; the number of points for this gap; default 1}
+\item{points}{A numeric value, optional; the number of points for this gap.
+Default is 1.}
 
-\item{response_identifier}{string; an identifier for the answer; by default
-it is generated automatically}
+\item{response_identifier}{A character string (optional) representing an
+identifier for the answer.}
 
-\item{expected_length}{numeric, optional; is responsible to set a size of
-text input field in content delivery engine}
+\item{expected_length}{An integer value, optional; sets the size of the text
+input field in the content delivery engine.}
 
-\item{placeholder}{string, optional; is responsible to place some helpful
-text in text input field in content delivery engine}
+\item{placeholder}{A character string, optional; places helpful text in the
+text input field in the content delivery engine.}
 }
 \value{
-string; map yaml
+A character string mapped as yaml.
 }
 \description{
 Create YAML string for TextGap object
+}
+\seealso{
+\code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=dropdown]{dropdown()}}, \code{\link[=mdlist]{mdlist()}}
 }

@@ -1,20 +1,21 @@
 #' Create YAML string for TextGap object
 #'
-#' @param solution string vector; contains a vector of values that
-#'   are considered as correct answers
-#' @param tolerance numeric, optional; defines how many characters will be
-#'   taken into account to tolerate spelling mistake in evaluation of candidate
-#'   answer
-#' @param case_sensitive logical, optional; determines whether the evaluation of
-#'   the correct answer is case sensitive; default `FALSE`
-#' @param points numeric, optional; the number of points for this gap; default 1
-#' @param response_identifier string; an identifier for the answer; by default
-#'   it is generated automatically
-#' @param expected_length numeric, optional; is responsible to set a size of
-#'   text input field in content delivery engine
-#' @param placeholder string, optional; is responsible to place some helpful
-#'   text in text input field in content delivery engine
-#' @return string; map yaml
+#' @param solution A character vector containing values considered as correct
+#'   answers.
+#' @param tolerance An integer value, optional; defines the number of characters
+#'   to tolerate spelling mistakes in evaluating candidate answers.
+#' @param case_sensitive A boolean, optional; determines whether the evaluation
+#'   of the correct answer is case sensitive. Default is `FALSE`.
+#' @param points A numeric value, optional; the number of points for this gap.
+#'   Default is 1.
+#' @param response_identifier A character string (optional) representing an
+#'   identifier for the answer.
+#' @param expected_length An integer value, optional; sets the size of the text
+#'   input field in the content delivery engine.
+#' @param placeholder A character string, optional; places helpful text in the
+#'   text input field in the content delivery engine.
+#' @return A character string mapped as yaml.
+#' @seealso [gap_numeric()], [dropdown()], [mdlist()]
 #' @export
 gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
                      points = 1, response_identifier = NULL,
@@ -30,28 +31,32 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 
 #' Create YAML string for NumericGap object
 #'
-#' @param solution numeric; contains right answer for this numeric entry
-#' @param tolerance numeric, optional; specifies the value for up and low
-#'   boundaries of tolerance rate for candidate answer; defautl is 0
-#' @param tolerance_type string, optional; specifies tolerance mode; possible
-#'   values:"exact", "absolute" (by default), "relative"
-#' @param points numeric, optional; the number of points for this gap; default 1
-#' @param response_identifier string; an identifier for the answer; by default
-#'   it is generated automatically
-#' @param include_lower_bound boolean, optional; specifies whether or not the
-#'   lower bound is included in tolerance rate
-#' @param include_upper_bound boolean, optional; specifies whether or not the
-#'   upper bound is included in tolerance rate
-#' @param expected_length numeric, optional; is responsible to set a size of
-#'   text input field in content delivery engine
-#' @param placeholder string, optional; is responsible to place some helpful
-#'   text in text input field in content delivery engine
-#' @return string; map yaml
+#' @param solution A numeric value; contains right answer for this numeric
+#'   entry.
+#' @param tolerance A numeric value, optional; specifies the value for up and
+#'   low boundaries of tolerance rate for candidate answer. Default is 0.
+#' @param tolerance_type A character string, optional; specifies tolerance mode;
+#'   possible values:"exact", "absolute" (by default), "relative".
+#' @param points A numeric value, optional; the number of points for this gap.
+#'   Default is 1.
+#' @param response_identifier A character string, optional; an identifier for
+#'   the answer.
+#' @param include_lower_bound A boolean, optional; specifies whether or not the
+#'   lower bound is included in tolerance rate.
+#' @param include_upper_bound A boolean, optional; specifies whether or not the
+#'   upper bound is included in tolerance rate.
+#' @param expected_length An integer value, optional; is responsible to set a
+#'   size of text input field in content delivery engine.
+#' @param placeholder A character string, optional; is responsible to place some
+#'   helpful text in text input field in content delivery engine.
+#' @return A character string mapped as yaml.
+#' @seealso [gap_text()], [dropdown()], [mdlist()]
 #' @export
 gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
                         points = 1, response_identifier = NULL,
                         include_lower_bound = TRUE, include_upper_bound = TRUE,
-                        expected_length = size_gap(solution), placeholder = NULL) {
+                        expected_length = size_gap(solution),
+                        placeholder = NULL) {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
@@ -61,17 +66,19 @@ gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
 
 #' Create YAML string for InlineChoice object (dropdown list)
 #'
-#' @param choices numeric or character vector; contains values of possible
-#'   answers. If you use a named vector, the names will be used as identifiers
-#' @param solution_index integer, optional; the number of right answer in the
-#'   `choices` vector, default `1`
-#' @param points numeric, optional; the number of points for this gap; default
-#'   `1`
-#' @param shuffle boolean, optional; is responsible to randomize the order in
-#'   which the choices are initially presented to the candidate; default `TRUE`
-#' @param response_identifier string; an identifier for the answer; by default
-#'   it is generated automatically
-#' @return string; map yaml
+#' @param choices A numeric or character vector; contains values of possible
+#'   answers. If you use a named vector, the names will be used as identifiers.
+#' @param solution_index An integer value, optional; the number of right answer
+#'   in the `choices` vector. Default is `1`.
+#' @param points A numeric value, optional; the number of points for this gap.
+#'   Default is `1`.
+#' @param shuffle A boolean, optional; is responsible to randomize the order in
+#'   which the choices are initially presented to the candidate. Default is
+#'   `TRUE`.
+#' @param response_identifier A character string, optional; an identifier for
+#'   the answer.
+#' @return A character string mapped as yaml.
+#' @seealso [gat_text()], [gap_numeric()], [mdlist()]
 #' @export
 dropdown <- function(choices, solution_index = 1, points = 1, shuffle = TRUE,
                      response_identifier = NULL) {
@@ -108,12 +115,27 @@ clean_yaml_str <- function(params, solution, type){
 
 #' Create markdown list for answer options
 #'
-#' @param vect string or numeric vector of answer options for single/multiple
-#'   choice task
-#' @param solutions numeric, optional; indexes of right answer options in `vect`
+#' @param vect A string or numeric vector of answer options for single/multiple
+#'   choice task.
+#' @param solutions An integer value, optional; indexes of right answer options
+#'   in `vect`.
 #' @param gaps numeric or string vector, optional; provides primitive
-#'   description to build gaps in content of Entry task
+#'  gap description if there is a need to build a list of gaps.
 #' @return markdown list
+#' @seealso [gat_text()], [gap_numeric()], [dropdown()]
+#' @examples
+#' #list for multiple choice task
+#' mdlist(c("A", "B", "C"), c(2, 3))
+#' # it returns:
+#' #- A
+#' #- *B*
+#' #- *C*
+#' #list of gaps
+#' mdlist(c("A", "B", "C"), c(2, 3), c(1, 2, 3))
+#' # it returns:
+#' #- A <gap>1</gap>
+#' #- *B* <gap>2</gap>
+#' #- *C* <gap>3</gap>
 #' @export
 mdlist <- function(vect, solutions = NULL, gaps = NULL) {
 

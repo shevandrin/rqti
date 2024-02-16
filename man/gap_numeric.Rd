@@ -17,34 +17,39 @@ gap_numeric(
 )
 }
 \arguments{
-\item{solution}{numeric; contains right answer for this numeric entry}
+\item{solution}{A numeric value; contains right answer for this numeric
+entry.}
 
-\item{tolerance}{numeric, optional; specifies the value for up and low
-boundaries of tolerance rate for candidate answer; defautl is 0}
+\item{tolerance}{A numeric value, optional; specifies the value for up and
+low boundaries of tolerance rate for candidate answer. Default is 0.}
 
-\item{tolerance_type}{string, optional; specifies tolerance mode; possible
-values:"exact", "absolute" (by default), "relative"}
+\item{tolerance_type}{A character string, optional; specifies tolerance mode;
+possible values:"exact", "absolute" (by default), "relative".}
 
-\item{points}{numeric, optional; the number of points for this gap; default 1}
+\item{points}{A numeric value, optional; the number of points for this gap.
+Default is 1.}
 
-\item{response_identifier}{string; an identifier for the answer; by default
-it is generated automatically}
+\item{response_identifier}{A character string, optional; an identifier for
+the answer.}
 
-\item{include_lower_bound}{boolean, optional; specifies whether or not the
-lower bound is included in tolerance rate}
+\item{include_lower_bound}{A boolean, optional; specifies whether or not the
+lower bound is included in tolerance rate.}
 
-\item{include_upper_bound}{boolean, optional; specifies whether or not the
-upper bound is included in tolerance rate}
+\item{include_upper_bound}{A boolean, optional; specifies whether or not the
+upper bound is included in tolerance rate.}
 
-\item{expected_length}{numeric, optional; is responsible to set a size of
-text input field in content delivery engine}
+\item{expected_length}{An integer value, optional; is responsible to set a
+size of text input field in content delivery engine.}
 
-\item{placeholder}{string, optional; is responsible to place some helpful
-text in text input field in content delivery engine}
+\item{placeholder}{A character string, optional; is responsible to place some
+helpful text in text input field in content delivery engine.}
 }
 \value{
-string; map yaml
+A character string mapped as yaml.
 }
 \description{
 Create YAML string for NumericGap object
+}
+\seealso{
+\code{\link[=gap_text]{gap_text()}}, \code{\link[=dropdown]{dropdown()}}, \code{\link[=mdlist]{mdlist()}}
 }

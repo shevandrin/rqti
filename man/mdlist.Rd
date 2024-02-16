@@ -7,17 +7,35 @@
 mdlist(vect, solutions = NULL, gaps = NULL)
 }
 \arguments{
-\item{vect}{string or numeric vector of answer options for single/multiple
-choice task}
+\item{vect}{A string or numeric vector of answer options for single/multiple
+choice task.}
 
-\item{solutions}{numeric, optional; indexes of right answer options in \code{vect}}
+\item{solutions}{An integer value, optional; indexes of right answer options
+in \code{vect}.}
 
 \item{gaps}{numeric or string vector, optional; provides primitive
-description to build gaps in content of Entry task}
+gap description if there is a need to build a list of gaps.}
 }
 \value{
 markdown list
 }
 \description{
 Create markdown list for answer options
+}
+\examples{
+#list for multiple choice task
+mdlist(c("A", "B", "C"), c(2, 3))
+# it returns:
+#- A
+#- *B*
+#- *C*
+#list of gaps
+mdlist(c("A", "B", "C"), c(2, 3), c(1, 2, 3))
+# it returns:
+#- A <gap>1</gap>
+#- *B* <gap>2</gap>
+#- *C* <gap>3</gap>
+}
+\seealso{
+\code{\link[=gat_text]{gat_text()}}, \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=dropdown]{dropdown()}}
 }

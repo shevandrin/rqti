@@ -13,24 +13,28 @@ dropdown(
 )
 }
 \arguments{
-\item{choices}{numeric or character vector; contains values of possible
-answers. If you use a named vector, the names will be used as identifiers}
+\item{choices}{A numeric or character vector; contains values of possible
+answers. If you use a named vector, the names will be used as identifiers.}
 
-\item{solution_index}{integer, optional; the number of right answer in the
-\code{choices} vector, default \code{1}}
+\item{solution_index}{An integer value, optional; the number of right answer
+in the \code{choices} vector. Default is \code{1}.}
 
-\item{points}{numeric, optional; the number of points for this gap; default
-\code{1}}
+\item{points}{A numeric value, optional; the number of points for this gap.
+Default is \code{1}.}
 
-\item{shuffle}{boolean, optional; is responsible to randomize the order in
-which the choices are initially presented to the candidate; default \code{TRUE}}
+\item{shuffle}{A boolean, optional; is responsible to randomize the order in
+which the choices are initially presented to the candidate. Default is
+\code{TRUE}.}
 
-\item{response_identifier}{string; an identifier for the answer; by default
-it is generated automatically}
+\item{response_identifier}{A character string, optional; an identifier for
+the answer.}
 }
 \value{
-string; map yaml
+A character string mapped as yaml.
 }
 \description{
 Create YAML string for InlineChoice object (dropdown list)
+}
+\seealso{
+\code{\link[=gat_text]{gat_text()}}, \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=mdlist]{mdlist()}}
 }
