@@ -214,9 +214,9 @@ create_prompt <- function(object) {
 #' @importFrom textutils HTMLdecode
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     content <- as.character(create_assessment_item(object))
-    # to handle html entities apply decoder
-    content <- HTMLdecode(content)
-    doc <- xml2::read_xml(content)
+    # to handle reading of the xml with html entities
+    dtype <- "<!DOCTYPE assessmentItem>"
+    doc <- suppressWarnings(xml2::read_xml(paste0(dtype, content)))
     if (verification) {
         ver <- verify_qti(doc)
         if (!ver) {
