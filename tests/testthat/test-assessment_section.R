@@ -192,12 +192,12 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload
     zip_sut <- list.files(path = "test_exam_folder", pattern = ".zip",
                               full.names = TRUE)
 
-    list_sut <- utils::unzip(zip_sut, list = TRUE)
+    list_sut <- zip::zip_list(zip_sut)$filename
     list_expected <- c("id_test.xml", "imsmanifest.xml",
                        "test_create_qti_task_MultipleChoice.xml",
                        "test_create_qti_task_Order.xml")
 
-    ls <- list_expected %in% list_sut$Name
+    ls <- list_expected %in% list_sut
 
     expect_equal(all(ls), TRUE)
     unlink(file.path(getwd(),"test_exam_folder"), recursive = TRUE)

@@ -196,7 +196,7 @@ setMethod("createZip", signature(object = "AssessmentTest"),
 setMethod("prepareQTIJSFiles", signature(object = "AssessmentTest"),
           function(object, dir) {
               zip_file <- createQtiTest(object, dir, TRUE)
-              unzip(zip_file, exdir = dir)
+              zip::unzip(zip_file, exdir = dir)
               unlink(zip_file)
               return(NULL)
           })

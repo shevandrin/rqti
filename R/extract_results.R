@@ -9,7 +9,7 @@
 #'   default
 #' @import xml2
 #' @import lubridate
-#' @importFrom utils unzip
+#' @importFrom zip zip_list
 #' @return data frame.
 #' @note 1.With optioin level = "excercises" data frame consists of columns:
 #'  * 'file' - name of the xml file with test results (to identify
@@ -50,7 +50,7 @@ extract_results <- function(file, level = "exercises", hide_filename = TRUE) {
 
     exts <- tools::file_ext(file)
     if (all(exts == "zip") & (length(exts) == 1)) {
-        list_content <- unzip(file, list=TRUE)$Name
+        list_content <- zip::zip_list(file)$filename
         exts_zip <- tools::file_ext(list_content)
         if (any(exts_zip == "zip") | any(exts_zip == "xml")) {
             tdir <- extract_xml(file)
@@ -71,7 +71,6 @@ extract_results <- function(file, level = "exercises", hide_filename = TRUE) {
 
 build_dataset <- function(tdir, level, names = NULL, hide_filename) {
     xml_files <- list.files(tdir)
-
     res_files <- list.files(path = tdir, pattern = "assessmentResult")
     test_files <- list.files(path = tdir, pattern = "assessmentTest")
     manifest_files <- list.files(path = tdir, pattern = "manifest")
@@ -121,7 +120,7 @@ make_name_unique <- function(file, possible_name) {
 extract_xml <- function(file) {
     zdir <- tempfile()
     dir.create(zdir)
-    files <- utils::unzip(file.path(file), exdir = zdir)
+    zip::unzip(file.path(file), exdir = zdir)
 
     tdir <- tempfile()
     dir.create(tdir)
@@ -515,8 +514,12 @@ is_answer_given <- function(node) {
 
 # extracts all xml file in temp folder
 get_all_xml <- function(file, indir, exdir) {
-    files <- utils::unzip(file.path(indir, file), exdir = exdir)
+    zip_file <- file.path(indir, file)
+    zip::unzip(zip_file, exdir = exdir)
+    content <- zip::zip_list(zip_file)$filename
+    files <- file.path(exdir, content)
     files <- files[grep(".xml", files)]
+
     for (fl in files) {
         if (length(files) > 1) {
             make_name_unique(fl, basename(fl))

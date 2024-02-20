@@ -147,6 +147,6 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
               ext <- file_ext(object)
               if (ext %in% c("Rmd", "md")) rmd2xml(object, out_path)
               if (ext == "xml") file.copy(object, out_path)
-              if (ext == "zip") unzip(object, exdir = dir)
+              if (ext == "zip") zip::unzip(object, exdir = dir)
               return(NULL)
           })

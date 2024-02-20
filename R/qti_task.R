@@ -211,7 +211,6 @@ create_prompt <- function(object) {
 #' @name create_qti_task
 #' @rdname create_qti_task
 #' @aliases create_qti_task
-#' @importFrom textutils HTMLdecode
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     content <- as.character(create_assessment_item(object))
     # to handle reading of the xml with html entities

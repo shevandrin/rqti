@@ -71,7 +71,7 @@ render_xml <- function(input) {
 #' @export
 render_zip <- function(input) {
     url <- prepare_renderer()
-    unzip(input, exdir = qtijs_path())
+    zip::unzip(input, exdir = qtijs_path())
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }

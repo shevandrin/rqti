@@ -38,7 +38,6 @@ Imports:
     getPass,
     keyring,
     zip,
-    textutils,
     kableExtra
 Suggests:
     covr,
