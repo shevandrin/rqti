@@ -2,7 +2,7 @@
 % Please edit documentation in R/api_opal.R
 \name{get_resources}
 \alias{get_resources}
-\title{Get list of all user's resources on LMS OPAL}
+\title{Get records of all user's resources on LMS OPAL}
 \usage{
 get_resources(api_user = NULL, api_password = NULL, endpoint = NULL)
 }
@@ -16,6 +16,9 @@ variable \code{QTI_API_ENDPOINT}. To set a global environment variable, you need
 to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
 these command into .Renviron.}
 }
+\value{
+dataframe
+}
 \description{
-Get list of all user's resources on LMS OPAL
+Get records of all user's resources on LMS OPAL
 }

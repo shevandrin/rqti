@@ -84,7 +84,7 @@ Or show all resources via:
 get_resources()
 ```
 
-This will return a list with all resources, again nested in a list.
+This will return a dataframe with all resources.
  
 If you want to have more fine-grained control for uploading, check out the documentation `?upload2opal`
 
