@@ -20,26 +20,25 @@ knitr::opts_chunk$set(
 
 # rqti
 
-Note: this is work in progress, a stable release can be expected in Q4 2023.
+Note: This project is currently in progress, and we anticipate a stable release in Q1 2024.
 
-The goal of `rqti` is to provide a clean and independent R library for creating exercises and exams according to the [QTI v2.1](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html)
- standard directly from R. You can render the exercises locally (qtijs) or to the learning management system OPAL. Our target audience is instructors who teach research methods and statistics and want to take full advantage of the power of R, while conforming with the QTI standard. Instructors who use OPAL will benefit most because OPAL offers a good API and our package takes advantage of that.
+The objective of `rqti` is to establish a robust and stand-alone R library tailored for crafting exercises and exams in adherence to the [QTI v2.1](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html) standard directly from R. Users have the flexibility to render the exercises either locally (using qtijs) or integrate them seamlessly into the OPAL learning management system. Our primary audience comprises instructors specializing in research methods and statistics who seek to harness the full capabilities of R while aligning with the QTI standard. In particular, instructors utilizing OPAL will find our package especially advantageous, as it capitalizes on OPAL's robust API.
 
 ## Documentation
 
-The documentation (including installation instructions, quick start, example usage, functionality documentation) is available at https://shevandrin.github.io/rqti/
+Comprehensive documentation, encompassing installation instructions, a quick start guide, example usage, and detailed functionality documentation, can be accessed at the following link: https://shevandrin.github.io/rqti/
 
 ## Testing
 
-We aim for a high test coverage with automated tests (see folder tests).
+Our commitment to robustness is reflected in our pursuit of high test coverage through automated tests, located in the "tests" folder.
 
-## Support and bug reports
+## Support and Bug Reports
 
-Feel free to [let us know via e-mail](mailto://shevandrin@gmail.com) which features your are missing or directly [open an issue on GitHub](https://github.com/shevandrin/rqti/issues). Support will be available until the funding of the project ends (September 2024). After that we will maintain a stable, usable version, whereas support/new features will be provided as time allows.
+Should you find any missing features or encounter issues, please do not hesitate to inform us via email or open an issue on GitHub. We will offer support until the project's funding concludes in September 2024. Following that, we will maintain a stable, usable version, with support for new features provided as time permits.
 
 ## Contribute
 
-If you would like to contribute to this package, clone the repo, add your feature and make a pull request. Please conform with the tidyverse style and the general package guidelines at https://r-pkgs.org.
+To contribute to this package, clone the repository, implement your feature, and submit a pull request. Kindly adhere to the tidyverse style and the general package guidelines outlined at https://r-pkgs.org. Your contributions are greatly appreciated.
 
 <!-- Why do we need another package for creating exams when there is already the `exams`-package? The philosophy of `exams` is **one for all**, whereas `rqti` follows the Unix-philosophy: **do one thing and do it well**. tldr: -->
 
