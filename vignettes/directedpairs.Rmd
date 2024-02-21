@@ -27,12 +27,13 @@ In this type of exercise, the candidate is given two sets of items, which need t
 The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+path <- fs::path_package("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "rqti")
+cat(readLines(path), sep = '\n')
 ```
 
 Knitting via the Knit-Button to qtijs, this exercise renders as:
 
-![](images/directedpair-simple_qtijs.jpg){width=100%}
+![](images/xml/directedpair-simple.jpg){width=100%}
 
 The pairs are specified by a markdown list in which the matching elements are separated by `|`. This list has to be the last element of the question section!
 
@@ -53,7 +54,7 @@ If you want to have more fine-grained control, consider the RMD template `RQTI: 
 cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-In OPAL this renders as:
+In OPAL this renders as (the viewport is a bit too small to capture the entire exercise):
 
 ![](images/directedpair-complex.jpg){width=100%}
 
