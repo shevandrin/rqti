@@ -100,12 +100,12 @@
 <h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h3>
 <p>In this type of exercise, the candidate must match rows and columns
-of a table. A template is available in RStudio Project Template or can
-be added by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. The
-<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
-at the templates <code>RQTI: table (simple)</code> and
-<code>RQTI: table (complex)</code>.</p>
+of a table. A template is automatically created when you initiate an
+rqti project through RStudio. Alternatively, it can be added by clicking
+on <code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates start with <code>rqti:</code>. Here we look
+at the templates <code>rqti: table (simple)</code> and
+<code>rqti: table (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: table</code> in
 the yaml-section and a table in a section called
 <strong>#question</strong>:</p>
@@ -120,7 +120,7 @@ Specify any kind of table with the table entries representing the number of poin
 
 The `rqti` package is clever enough to transform your table into the appropriate QTI object (single choice, multiple choice, directed pair). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
 
-Use visual editing mode in RStudio to quickly change your table.
+Hint: Use visual editing mode in RStudio to quickly change your table.
 
 |      |27|36 |25| 6 |
 |------|--|---|--|---|
@@ -135,12 +135,12 @@ Use visual editing mode in RStudio to quickly change your table.
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.</code></pre>
 <p>Clicking the Knit-Button will produce:</p>
 <div class="figure">
-<img src="images/table1.png" alt=""><p class="caption">Preview of table exercise rendered by QTIJS</p>
+<img src="images/xml/table-simple.jpg" style="width:100.0%" alt=""><p class="caption">Preview of table exercise rendered by QTIJS</p>
 </div>
 <p>Alternatively, change the knit parameter to
 <code>knit: rqti::render_opal</code> (see <a href="api_opal.html">API
 Opal</a>) to upload to opal directly, producing:</p>
-<p><img src="images/table-simple.jpg"></p>
+<p><img src="images/table-simple.jpg" style="width:100.0%"></p>
 <p>The table entries in the Rmd-file contain the number of points for
 the response. Any number above 0 is considered correct. You can also use
 negative numbers, which will reduce the points reached, but never below
@@ -198,10 +198,12 @@ Use visual editing mode in RStudio to quickly change your table.
 # feedback
 
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.</code></pre>
-<p>Which renders as:</p>
+<p>Which, in Opal, renders as:</p>
 <div class="figure">
-<img src="images/table-complex.jpg" alt=""><p class="caption">Preview of table exercise in LMS OPAL</p>
+<img src="images/table-complex.jpg" style="width:100.0%" alt=""><p class="caption">Preview of complex table exercise in LMS OPAL</p>
 </div>
+<p>You can see that rows and columns are now fixed and there is a more
+meaningful title.</p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -246,7 +248,7 @@ elements (setting shuffle to <code>false</code>).</p>
 <h4 id="abbr_id">abbr_id<a class="anchor" aria-label="anchor" href="#abbr_id"></a>
 </h4>
 <p>Defines the use of an abbreviation as a way to generate row and
-column identifiers. See more about rows and colums identifiers <a href="#ids">here</a>.</p>
+column identifiers. Explained in more detail in the section <a href="#ids">Managing identifiers</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
@@ -271,7 +273,8 @@ reach all points)</li>
 analysis of results. If you are doing extensive data analysis later on,
 it makes sense to specify meaningful identifiers, or at least make them
 more recognizable.</p>
-<p>There 3 ways to form identifiers of rows and columns:</p>
+<p>There are currently two ways to form identifiers of rows and
+columns:</p>
 <ol style="list-style-type: decimal">
 <li>By default <code>rqti</code> uses
 <code>row_1</code>…<code>row_N</code>,
@@ -281,20 +284,21 @@ file, <code>rqti</code> takes the first word of a row or column element
 and combines it with the abbreviation of the remaining text of the
 element. Example: for the element “Mean Value Theorem for Integrals”
 <code>rqti</code> makes the identifier “Mean_VTfI”.</li>
-<li>For more control, you will probably want to assign your own values
-as identifiers. In this case, in the markdown table or csv file you need
-to put:</li>
 </ol>
-<ul>
-<li>a column with a predefined header ‘rowid’ with values for row
-identifiers.</li>
-<li>a row with a predefined ‘colid’ header with values for columns
-identifies.</li>
-</ul>
-<div class="figure">
-<img src="images/screenshot_table3.png" alt=""><p class="caption">Preview of markdown table with data for
-identifiers</p>
-</div>
+<p>We experimented with different solutions and settled on these simple
+versions. If you need more control of the identifiers, please open an
+issue on github: <a href="https://github.com/shevandrin/rqti/issues" class="external-link uri">https://github.com/shevandrin/rqti/issues</a> and we will
+reconsider the options.</p>
+<!-- 3. For more control, you might want to assign your own values as identifiers. -->
+<!-- ```{markdown} -->
+<!-- | ROWID       | row     | 27 | 36  | 25 | 6 | -->
+<!-- |-------------|---------|----|-----|----|---| -->
+<!-- | fournine    | 4\*9 =  | 0  | 0.5 | 0  | 0 | -->
+<!-- | threenine   | 3\*9 =  | 1  | 0   | 0  | 0 | -->
+<!-- | fivefive    | 5\*5 =  | 0  | 0   | 1  | 0 | -->
+<!-- | thwothree   | 2\*3 =  | 0  | 0   | 0  | 1 | -->
+<!-- | twelvethree | 12\*3 = | 0  | 1   | 0  | 0 | -->
+<!-- ``` -->
 </div>
 <div class="section level3">
 <h3 id="some-advice-on-table-exercises">Some advice on table exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-table-exercises"></a>
