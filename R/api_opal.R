@@ -158,17 +158,16 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 
     # get resources with given display_name
     rtype <- ifelse(is_test(file), "FileResource.TEST", "FileResource.QUESTION")
-    rlist <- get_resources_by_name(display_name, endpoint, rtype)
+    rdf <- get_resources_by_name(display_name, endpoint, rtype)
 
-    if (length(rlist) > 0 && overwrite) {
+    if (nrow(rdf) > 0 && overwrite) {
 
-        if (length(rlist) == 1) {
-            resp <- update_resource(file, rlist[[1]]$key, endpoint)
+        if (nrow(rdf) == 1) {
+            resp <- update_resource(file, rdf$key, endpoint)
         } else {
             message("Found files with the same display name: ",
-                length(rlist))
-            menu_options <- c(sapply(rlist, function(x) x$key),
-                            "Add new as a duplicate", "Abort")
+                nrow(rdf))
+            menu_options <- c(rdf$key, "Add new as a duplicate", "Abort")
             if (interactive()) {
                 key <- menu(title = "Choose a key:", menu_options)
             } else {
@@ -200,7 +199,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
     return(res)
 }
 
-#' Get list of all user's resources on LMS OPAL
+#' Get records of all user's resources on LMS OPAL
 #'
 #' @param endpoint endpoint of LMS Opal; by default it is got from environment
 #'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
@@ -208,6 +207,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 #'   these command into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
+#' @return dataframe
 #' @export
 get_resources <- function(api_user = NULL, api_password = NULL,
                           endpoint = NULL) {
@@ -222,17 +222,18 @@ get_resources <- function(api_user = NULL, api_password = NULL,
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     rlist <- resp_body_json(response)
-    return(rlist)
+    rdf <- do.call(rbind.data.frame, rlist)
+    return(rdf)
 }
 
-#'@importFrom purrr keep
+
 get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
     if (is.null(endpoint)) endpoint <- catch_endpoint()
-    rlist <- get_resources(endpoint = endpoint)
+    df <- get_resources(endpoint = endpoint)
     if (!is.null(rtype)) {
-        rlist <- keep(rlist, ~ .x$resourceableTypeName == rtype)
+        rlist <- subset(df, df$resourceableTypeName == rtype)
     }
-    rlist <- keep(rlist, ~ .x$displayname == display_name)
+    rlist <- subset(df, df$displayname == display_name)
     return(rlist)
 }
 
@@ -245,6 +246,7 @@ get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
 #'   these command into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
+#' @return A string value of URL
 #' @export
 get_resource_url <- function(display_name, endpoint = NULL,
                         api_user = NULL, api_password = NULL) {
@@ -256,9 +258,8 @@ get_resource_url <- function(display_name, endpoint = NULL,
         user_id <- auth_opal(api_user, api_password)
         if (is.null(user_id)) return(NULL)
     }
-    rlist <- get_resources_by_name(display_name, endpoint)
-    keys <- unlist(lapply(rlist, function(item) item$key))
-    url <- sapply(keys,
+    rdf <- get_resources_by_name(display_name, endpoint)
+    url <- sapply(rdf$key,
                 function(item) paste0(endpoint, "auth/RepositoryEntry/", item))
     return(url)
 }
