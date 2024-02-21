@@ -104,13 +104,13 @@
 the OPAL learning management system through its <code>upload2opal</code>
 function, leveraging the OPAL API.</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Upload from a Zip Archive:</strong> If you possess a
+<li><p><strong>Upload a Zip Archive:</strong> If you possess a
 pre-existing zip archive containing a QTI-compliant test, it can be
 effortlessly uploaded to OPAL.</p></li>
-<li><p><strong>Upload from an Rmd File:</strong> For Rmd exercise files,
-the <code>upload2opal</code> function wraps them into a zip archive
-before initiating the upload process to OPAL.</p></li>
-<li><p><strong>Upload from an XML File:</strong> Should you have a
+<li><p><strong>Upload an Rmd File:</strong> For an Rmd exercise file,
+the <code>upload2opal</code> function wraps it into a zip archive before
+initiating the upload process to OPAL.</p></li>
+<li><p><strong>Upload an XML File:</strong> Should you have a
 QTI-compliant exercise file in XML format, the <code>upload2opal</code>
 function wraps it into a zip archive prior to uploading it to
 OPAL.</p></li>
@@ -128,17 +128,22 @@ for one through your IT department. For users affiliated with <strong>TU
 Chemnitz</strong>, you can expedite this process by sending an email to
 <a href="mailto:e-learning@tu-chemnitz.de" class="email">e-learning@tu-chemnitz.de</a>. In your email, explicitly
 state your need for a password-based login to facilitate API usage, and
-include your username for reference.</p>
+include your username for reference. You should also state the purpose
+of API usage. Please be aware that students typically do not possess
+author rights by default and are required to request such privileges
+before utilizing the API. To facilitate this process, it is advisable to
+reach out to your IT and/or OPAL provider for assistance.</p>
 <p>To store the username and password, <code>rqti</code> uses the
 keyring system credential storage. The first time authentication is
 attempted, it asks for a username and a password and saves them in a key
 with service name “qtiopal”. Once the key is created, it is
 automatically used in further sessions. It is not recommended to create
-additional keys so that the workflow runs smoothly.</p>
+additional keys unless you have a more complex setup (e.g. using
+multiple learning management systems).</p>
 <p>Some universities only allow to use the OPAL API in the network of
 the university. Before calling <code><a href="../reference/upload2opal.html">upload2opal()</a></code> set up a VPN
 client accordingly. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link">see the
-instructions here</a></p>
+instructions here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="uploading-testexercise-to-opal">Uploading test/exercise to OPAL<a class="anchor" aria-label="anchor" href="#uploading-testexercise-to-opal"></a>
@@ -217,8 +222,11 @@ für Sächsische Hochschulen</strong>, so our package sets the endpoint
 for <code>upload2opal</code> to <em><a href="https://bildungsportal.sachsen.de/opal/" class="external-link uri">https://bildungsportal.sachsen.de/opal/</a></em>. If you use
 a different OPAL instance, you can either pass this to
 <code>endpoint</code> of <code>upload2opal</code> or just set it as an
-environment variable in the .Renviron file:
-QTI_API_ENDPOINT=“yoururl”.</p>
+environment variable in the .Renviron file: QTI_API_ENDPOINT=“yoururl”.
+When initiating an <code>rqti</code> project in RStudio through <em>New
+Project</em>, you have the option to configure the API endpoint at that
+stage. This configuration is also just written to the .RProfile
+file.</p>
 </div>
 <div class="section level2">
 <h2 id="error-handling">Error Handling<a class="anchor" aria-label="anchor" href="#error-handling"></a>
@@ -232,7 +240,11 @@ OPAL provider, whether the API can be used and what configuration you
 need.</p>
 <p><strong>401</strong> Unauthorized</p>
 <p>Your QTI_API_USER and/or QTI_API_PASSWORD are wrong or your
-credentials are not sufficient to work with API.</p>
+credentials are not sufficient to work with the API. Please be aware
+that students typically do not possess author rights by default and are
+required to request such privileges before utilizing the API. To
+facilitate this process, it is advisable to reach out to your IT and/or
+OPAL provider for assistance.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

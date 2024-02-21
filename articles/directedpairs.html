@@ -100,12 +100,13 @@
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
 <p>In this type of exercise, the candidate is given two sets of items,
-which need to be matched. A template is available in RStudio Project
-Template or can be added by clicking on
+which need to be matched. A template is automatically created when you
+initiate an rqti project through RStudio. Alternatively, it can be added
+by clicking on
 <code>New file -&gt; R Markdown -&gt; From Template</code>. The
-<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
-at the templates <code>RQTI: directedpair (simple)</code> and
-<code>RQTI: directedpair (complex)</code>.</p>
+<code>rqti</code> templates start with
+<code>rqti</code>:<code>. Here we look at the templates</code>rqti:
+directedpair (simple)<code>and</code>qrti: directedpair (complex)`.</p>
 <p>The minimum you need to provide is the <code>type: pair</code> (or
 the equivalent <code>type: dp</code>) in the yaml-section and a list
 with at least two elements in a section called
@@ -119,7 +120,7 @@ knit: rqti::render_qtijs
 
 In this task the candidate has to match elements from two sets.
 
-As a source of data just provide a markdown list with right pairs of items, separated by `|`.
+As a source of data just provide a markdown list with the correct pairs of items, separated by `|`.
 
 Match the following `QTI` functions with their purpose:
 
@@ -131,12 +132,12 @@ Match the following `QTI` functions with their purpose:
 
 Provide your feedback here.</code></pre>
 <p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
-<p><img src="images/dp.png"></p>
+<p><img src="images/xml/directedpair-simple.jpg" style="width:100.0%"></p>
 <p>The pairs are specified by a markdown list in which the matching
 elements are separated by <code>|</code>. This list has to be the last
 element of the question section!</p>
 <p>An alternative is to provide a table exercise with the matching
-elements, see <a href="table.html">Tables</a></p>
+elements, see <a href="table.html">Tables</a>.</p>
 <p>Note that in the used example, a feedback section was also provided.
 The feedback is optional, but usually it is a good idea to give some
 explanation for students.</p>
@@ -145,7 +146,7 @@ knit function, which will handle the preview. Clicking the Knit button
 in RStudio renders the file in the viewer pane. Alternatively, change
 the knit parameter to <code>knit: rqti::render_opal</code> (see <a href="api_opal.html">API Opal</a>) to upload to opal directly,
 producing:</p>
-<p><img src="images/directedpair-simple.jpg"></p>
+<p><img src="images/directedpair-simple.jpg" style="width:100.0%"></p>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
@@ -189,10 +190,9 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 --&gt;</code></pre>
-<p>Which renders as:</p>
-<div class="figure">
-<img src="images/directedpair-complex.jpg" alt=""><p class="caption">Preview of directed pair exercise in LMS OP</p>
-</div>
+<p>In OPAL this renders as (the viewport is a bit too small to capture
+the entire exercise):</p>
+<p><img src="images/directedpair-complex.jpg" style="width:100.0%"></p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -233,28 +233,21 @@ of elements (setting shuffle to <code>false</code>).</p>
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
 <p>How many points are given for the whole exercise. Default is 1.</p>
-</div>
-<div class="section level3">
-<h3 id="answers_scores">answers_scores<a class="anchor" aria-label="anchor" href="#answers_scores"></a>
-</h3>
-<p>In the case when it is important to have different values of points
-for different pairs, it is necessary to list these points in the same
-order that the pairs are defined in the list:
-<code>answers_scores: 2, 2, 1</code>. In this case, the total number of
-points will be calculated as the sum of ‘answers_scores’, and the
-attribute ‘points’, if set, will be ignored.</p>
+<!-- ### answers_scores -->
+<!-- If it is important to have different values of points for different pairs, it is necessary to list these points in the same order that the pairs are defined in the list: `answers_scores: 2, 2, 1`. In this case, the total number of points will be calculated as the sum of 'answers_scores', and the attribute 'points', if set, will be ignored. -->
 </div>
 <div class="section level3">
 <h3 id="abbr_id">abbr_id<a class="anchor" aria-label="anchor" href="#abbr_id"></a>
 </h3>
-<p>If <code>abbr_id</code> is omitted, then <code>rqti</code> generates
-identifiers as <code>right_1</code>, <code>right_2</code>,
-…<code>right_N</code> and <code>left_1</code>,
-<code>left_2</code>…<code>left_N</code>. This does not contain any
-semantics, so it can be more useful to abbreviate the identifiers, which
-<code>abbr_id</code> does. Depending on the length of items, the
-abbreviations are more or less useful, but in any case more useful than
-non-semantic identifiers.</p>
+<p>If <code>abbr_id</code> is not specified, <code>rqti</code> generates
+the identifiers <code>right_1</code>, <code>right_2</code>, …
+<code>right_N</code> and <code>left_1</code>, <code>left_2</code>, …
+<code>left_N</code>. However, these lack inherent semantics. To enhance
+clarity, some users might want to use the <code>abbr_id</code>
+parameter, which introduces abbreviated identifiers. The utility of
+these abbreviations varies based on item length, but they consistently
+offer more meaningful identifiers compared to non-semantic
+alternatives.</p>
 </div>
 </div>
 <div class="section level2">
@@ -286,7 +279,12 @@ pairs with care.</p>
 tables serve the same purpose. The difference is that in match tables
 either the row or column can be used more than once. For directed pairs,
 matching a pair makes both elements unavailable for further matching.
-This is unique, so there are use cases for directed pairs.</p>
+This is unique, so there are use cases for directed pairs. But it is
+important to note that match tables can also represent a direct pair,
+meaning both directed pairs and match tables can serve as interfaces to
+the same concept. However, match tables are generally more flexible and
+are often the preferred choice (refer to <a href="table.html">Tables</a>
+for more details).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
