@@ -6,6 +6,7 @@ vignette: >
     %\VignetteIndexEntry{Directed Pairs Exercises}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
+css: style.css
 ---
 
 ```{r, include = FALSE}
@@ -21,7 +22,7 @@ library(rqti)
 
 ## Minimum version
 
-In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `RQTI:`. Here we look at the templates `RQTI: directedpair (simple)` and `RQTI: directedpair (complex)`.
+In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`:`. Here we look at the templates `rqti: directedpair (simple)` and `qrti: directedpair (complex)`.
 
 The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -31,19 +32,18 @@ cat(readLines(fs::path_package("rmarkdown/templates/directedpair-simple/skeleton
 
 Knitting via the Knit-Button to qtijs, this exercise renders as:
 
-![](images/dp.png)
+![](images/directedpair-simple_qtijs.jpg){width=100%}
 
 The pairs are specified by a markdown list in which the matching elements are separated by `|`. This list has to be the last element of the question section!
 
-An alternative is to provide a table exercise with the matching elements, see [Tables](table.html)
+An alternative is to provide a table exercise with the matching elements, see [Tables](table.html).
 
-Note that in the used example, a feedback section was also provided. The feedback is
-optional, but usually it is a good idea to give some explanation for students.
+Note that in the used example, a feedback section was also provided. The feedback is optional, but usually it is a good idea to give some explanation for students.
 
 Note that the `knit` parameter is set to the custom rqti knit function,
 which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
 
-![](images/directedpair-simple.jpg)
+![](images/directedpair-simple.jpg){width=100%}
 
 ## More control
 
@@ -53,9 +53,9 @@ If you want to have more fine-grained control, consider the RMD template `RQTI: 
 cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which renders as:
+In OPAL this renders as:
 
-![Preview of directed pair exercise in LMS OP](images/directedpair-complex.jpg)
+![](images/directedpair-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -86,13 +86,13 @@ If `true` (the default), randomizes the order of the elements. Only in rare occa
 
 How many points are given for the whole exercise. Default is 1.
 
-### answers_scores
+<!-- ### answers_scores -->
 
-In the case when it is important to have different values of points for different pairs, it is necessary to list these points in the same order that the pairs are defined in the list: `answers_scores: 2, 2, 1`. In this case, the total number of points will be calculated as the sum of 'answers_scores', and the attribute 'points', if set, will be ignored.
+<!-- If it is important to have different values of points for different pairs, it is necessary to list these points in the same order that the pairs are defined in the list: `answers_scores: 2, 2, 1`. In this case, the total number of points will be calculated as the sum of 'answers_scores', and the attribute 'points', if set, will be ignored. -->
 
 ### abbr_id
 
-If `abbr_id` is omitted, then `rqti` generates identifiers as `right_1`, `right_2`, ...`right_N` and `left_1`, `left_2`...`left_N`. This does not contain any semantics, so it can be more useful to abbreviate the identifiers, which `abbr_id` does. Depending on the length of items, the abbreviations are more or less useful, but in any case more useful than non-semantic identifiers.
+If `abbr_id` is not specified, `rqti` generates the identifiers `right_1`, `right_2`, ... `right_N` and `left_1`, `left_2`, ... `left_N`. However, these lack inherent semantics. To enhance clarity, some users might want to use the `abbr_id` parameter, which introduces abbreviated identifiers. The utility of these abbreviations varies based on item length, but they consistently offer more meaningful identifiers compared to non-semantic alternatives.
 
 ## Feedback
 
@@ -106,4 +106,4 @@ Feedback can be provided with the section
 
 Directed pairs are forced choice exercises, so they have similar problems as single choice and multiple choice exercises (guessing increases variance). A specific problem of directed pairs is that answers are not independent. Making a mistake will lead to additional mistakes because two elements are blocked by one match. Use directed pairs with care.
 
-One might think that directed pairs are superfluous because match tables serve the same purpose. The difference is that in match tables either the row or column can be used more than once. For directed pairs, matching a pair makes both elements unavailable for further matching. This is unique, so there are use cases for directed pairs.
+One might think that directed pairs are superfluous because match tables serve the same purpose. The difference is that in match tables either the row or column can be used more than once. For directed pairs, matching a pair makes both elements unavailable for further matching. This is unique, so there are use cases for directed pairs. But it is important to note that match tables can also represent a direct pair, meaning both directed pairs and match tables can serve as interfaces to the same concept. However, match tables are generally more flexible and are often the preferred choice (refer to [Tables](table.html) for more details).
