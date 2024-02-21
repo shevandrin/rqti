@@ -23,25 +23,25 @@ library(rqti)
 
 The `rqti` package facilitates seamless content uploads to the OPAL learning management system through its `upload2opal` function, leveraging the OPAL API.
 
-1. **Upload from a Zip Archive:**
+1. **Upload a Zip Archive:**
    If you possess a pre-existing zip archive containing a QTI-compliant test, it can be effortlessly uploaded to OPAL.
 
-2. **Upload from an Rmd File:**
-   For Rmd exercise files, the `upload2opal` function wraps them into a zip archive before initiating the upload process to OPAL.
+2. **Upload an Rmd File:**
+   For an Rmd exercise file, the `upload2opal` function wraps it into a zip archive before initiating the upload process to OPAL.
 
-3. **Upload from an XML File:**
+3. **Upload an XML File:**
    Should you have a QTI-compliant exercise file in XML format, the `upload2opal` function wraps it into a zip archive prior to uploading it to OPAL.
    
 ## Prerequisites
 
 To leverage the functionality of the OPAL API, it is essential for OPAL users to possess the requisite permissions. Access to the system necessitates logging in with a username and password. Please note that utilizing the API through Shibboleth authorization is not supported.
 
-If you currently lack a password-based login, kindly submit a request for one through your IT department. For users affiliated with **TU Chemnitz**, you can expedite this process by sending an email to e-learning@tu-chemnitz.de. In your email, explicitly state your need for a password-based login to facilitate API usage, and include your username for reference.
+If you currently lack a password-based login, kindly submit a request for one through your IT department. For users affiliated with **TU Chemnitz**, you can expedite this process by sending an email to e-learning@tu-chemnitz.de. In your email, explicitly state your need for a password-based login to facilitate API usage, and include your username for reference. You should also state the purpose of API usage. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
 
-To store the username and password, `rqti` uses the keyring system credential storage. The first time authentication is attempted, it asks for a username and a password and saves them in a key with service name "qtiopal". Once the key is created, it is automatically used in further sessions. It is not recommended to create additional keys so that the workflow runs smoothly.
+To store the username and password, `rqti` uses the keyring system credential storage. The first time authentication is attempted, it asks for a username and a password and saves them in a key with service name "qtiopal". Once the key is created, it is automatically used in further sessions. It is not recommended to create additional keys unless you have a more complex setup (e.g. using multiple learning management systems).
 
 Some universities only allow to use the OPAL API in the network of the university. Before calling `upload2opal()` set up a VPN client accordingly. 
-For TU Chemnitz [see the instructions here](https://www.tu-chemnitz.de/urz/network/access/vpn.html)
+For TU Chemnitz [see the instructions here](https://www.tu-chemnitz.de/urz/network/access/vpn.html).
 
 ## Uploading test/exercise to OPAL
 
@@ -103,7 +103,7 @@ uplod2opal(..., access = ?)
 
 ## Endpoint
 
-We are using the OPAL instance **E-Learning-Informationsportal für Sächsische Hochschulen**, so our package sets the endpoint for `upload2opal` to *https://bildungsportal.sachsen.de/opal/*. If you use a different OPAL instance, you can either pass this to `endpoint` of `upload2opal` or just set it as an environment variable in the .Renviron file: QTI_API_ENDPOINT="yoururl".
+We are using the OPAL instance **E-Learning-Informationsportal für Sächsische Hochschulen**, so our package sets the endpoint for `upload2opal` to *https://bildungsportal.sachsen.de/opal/*. If you use a different OPAL instance, you can either pass this to `endpoint` of `upload2opal` or just set it as an environment variable in the .Renviron file: QTI_API_ENDPOINT="yoururl". When initiating an `rqti` project in RStudio through *New Project*, you have the option to configure the API endpoint at that stage. This configuration is also just written to the .RProfile file.
 
 ## Error Handling
 
@@ -114,4 +114,4 @@ If you already run a VPN client, please check with your IT and/or OPAL provider,
 
 **401** Unauthorized
 
-Your QTI_API_USER and/or QTI_API_PASSWORD are wrong or your credentials are not sufficient to work with API.
+Your QTI_API_USER and/or QTI_API_PASSWORD are wrong or your credentials are not sufficient to work with the API. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
