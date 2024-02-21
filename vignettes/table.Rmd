@@ -77,11 +77,11 @@ Title of the exercise. Can be displayed to students depending on the learning ma
 
 If `true` (the default), randomizes the order of rows and columns. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to `false`).
 
-### rows_shuffle
+### shuffle_rows
 
 Only shuffle the rows. Default is `true`.
 
-### cols_shuffle
+### shuffle_cols
 
 Only shuffle the columns. Default is `true`.
 
