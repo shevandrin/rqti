@@ -41,7 +41,7 @@ You can also use the opal (set it up before, see: [API Opal](api_opal.html)) ren
 
 ![](images/multiplechoice-simple.jpg){width=100%}
 
-Multiple choice exercises are essentially the same as single choice exercises, except that none or several choices can be correct. The correct choices are specified by surrounding them with asterisks (markdown for italic). If you need to use italic in your choices, surround the whole question with the `<i> </i>` tag, instead. Note that the default points are $0.5n$, where $n$ is the number of choices. Here we have 4 choices, so 2 points can be reached. For a correct choice 0.5 points are gained, for an incorrect 0.5 are deducted. The minimum number of points is 0 in any case. 
+Multiple choice exercises are essentially the same as single choice exercises, except that none or several choices can be correct. The correct choices are specified by surrounding them with asterisks (markdown for italic). If you need to use italic in your choices, surround the whole question with the `<em> </em>` tag, instead. Note that the default points are $0.5n$, where $n$ is the number of choices. Here we have 4 choices, so 2 points can be reached. For a correct choice 0.5 points are gained, for an incorrect 0.5 are deducted. The minimum number of points is 0 in any case. 
 
 Among various grading options, we find this to be the most intuitive, especially when considering the element of guessing. Given our inclination against forced-choice exercises, we do not see significant value in introducing different grading alternatives. Rather, we recommend directing attention towards better exercise types like gaps for a more effective assessment approach. See also the section [Some advice on multiple choice exercises].
 

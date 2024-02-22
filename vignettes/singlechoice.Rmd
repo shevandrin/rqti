@@ -80,7 +80,7 @@ Choose the correct one:
 - D
 ```
 
-Once again, this is much easier to read than providing the solution somewhere else (e.g. in the yaml section). Furthermore, producing a preview as html directly shows you which element is correct.^[If you want to use italics in your choice, you can also wrap the correct solution in italic tags `<i> Some test with *some italics*</i>`]
+Once again, this is much easier to read than providing the solution somewhere else (e.g. in the yaml section). Furthermore, producing a preview as html directly shows you which element is correct.^[If you want to use italics in your choice, you can also wrap the correct solution in emphasize tags `<em> a choice with *some italics*</em>`]
 
 An important note: Do not forget to put a blank line before your question and the answer list, otherwise the list will not be a proper list:
 

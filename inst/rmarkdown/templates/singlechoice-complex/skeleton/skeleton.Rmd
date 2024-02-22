@@ -14,7 +14,7 @@ Which version of the QTI standard is used by the R package rqti?
 
 - 1.2
 - *2.1* <!--Mark correct solution with asterisks-->
-- 2.2
+- some text italic
 - 3.0
 
 # feedback+
