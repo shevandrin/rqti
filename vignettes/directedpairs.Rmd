@@ -48,7 +48,7 @@ which will handle the preview. Clicking the Knit button in RStudio renders the f
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `RQTI: directedpair (complex)`, wich uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template `rqti: directedpair (complex)`, wich uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

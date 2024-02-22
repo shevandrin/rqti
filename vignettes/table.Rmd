@@ -48,7 +48,7 @@ optional, but usually it is a good idea to give some explanation for students.
 
 ## More control
 
-If you want to have more fine-grained control, consider the Rmd template `RQTI: table (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template `rqti: table (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/table-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
