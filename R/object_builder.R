@@ -278,21 +278,17 @@ parse_list <- function(html) {
     question_list <- xml2::xml_find_all(html, "//ul")
     question_list <- question_list[length(question_list)]
     choices  <- xml2::xml_find_all(question_list, ".//li")
-    em <- xml2::xml_text(xml2::xml_find_all(question_list, ".//em"))
-    is_em <- sapply(choices, function(item) {
-                                    item <- unlist(xml_find_first(item, ".//em"))
-                                    !is.null(item)
-    })
-    solution <- which(is_em)
     # build a list with possible answers, that keeps formatting of the content
     # (mathml)
     choices_str <- c()
-    for (choice in choices) {
-        content <- xml2::xml_contents(choice)
+    solution <- c()
+    for (i in seq(length(choices))) {
+        content <- xml2::xml_contents(choices[i])
         content <- paste0(as.character(content), collapse = "")
         content <- change_symbols(content)
-        if (grepl("^<em>", content)) {
+        if (grepl("^<em>.*</em>$", content)) {
             content <- gsub("^<em>|</em>$", "", content)
+            solution = c(solution, i)
         }
         choices_str <- c(choices_str, content)
     }
