@@ -31,7 +31,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/table-simple/skeleton", "ske
 
 Clicking the Knit-Button will produce:
 
-![Preview of table exercise rendered by QTIJS](images/xml/table-simple.jpg){width=100%}
+![Preview of table exercise rendered by QTIJS](images/xml/table-simple.jpg){width=100% border=2px}
 
 Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
 
