@@ -31,7 +31,21 @@ The `rqti` package facilitates seamless content uploads to the OPAL learning man
 
 3. **Upload an XML File:**
    Should you have a QTI-compliant exercise file in XML format, the `upload2opal` function wraps it into a zip archive prior to uploading it to OPAL.
-   
+
+If you are working on individual exercises, you can just use `knit: rqti::render_opal` in the yaml-section to automatically render to opal.
+
+There are several opal-specific yaml attributes, which are explicitly explained in the articles (top right). Two additional ones you might want to use are:
+
+#### calculator
+
+If a calculator is required for this task, you need to assign the 'calculator' attribute the type 'simple' or 'scientific'. This only works on OPAL.
+
+#### files
+
+If additional files are required to complete this task, you need to assign the 'files' attribute a single file path or a list of paths to these files. This only works on OPAL.
+
+Note that these attributes are mainly useful if you work on a single exercise. For collections of exercises (tests) it is better to set these attributes when creating the test intead of in the RMD-file.
+
 ## Prerequisites
 
 To leverage the functionality of the OPAL API, it is essential for OPAL users to possess the requisite permissions. Access to the system necessitates logging in with a username and password. Please note that utilizing the API through Shibboleth authorization is not supported.
