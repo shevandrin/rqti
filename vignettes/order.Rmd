@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-In this type of exercise, the candidate has to bring a list of items in the correct order.A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`.  The `rqti` templates start with `RQTI:`. Here we look at the templates `RQTI: order (simple)` and `RQTI: order (complex)`.
+In this type of exercise, the candidate has to bring a list of items in the correct order. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:` Here we look at the templates `rqti: order (simple)` and `rqti`: order (complex).
 
 The minimum you need to provide is the `type: order` in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -31,11 +31,11 @@ cat(readLines(fs::path_package("rmarkdown/templates/order-simple/skeleton", "ske
 
 Knitting via the Knit-Button to qtijs, this exercise renders as:
 
-![](images/order.png)
+![](images/xml/order-simple.jpg){width=100%}
 
 Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](api_opal.html)) to upload to Opal directly, producing:
 
-![](images/order-simple.jpg)
+![](images/order-simple.jpg){width=100%}
 
 The order of the items in the Rmd-list is considered to be the correct one.
 
@@ -52,7 +52,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "sk
 
 Which on Opal renders as:
 
-![](images/order-complex.jpg)
+![](images/order-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -72,11 +72,11 @@ Title of the exercise. Can be displayed to students depending on the learning ma
 
 ### points
 
-How many points are given for the whole exercise. Default is $0.25*n$, where $n$ is the length of the list.
+How many points are given for the whole exercise. Default is $0.25n$, where $n$ is the length of the list.
 
 ### points_per_answer
 
-Defines the scoring method. If `TRUE` each selected answer will be scored individually (according to absolute position of the element in the list), if `FALSE` the whole task will be scored and a single mistake leads to 0 points. Default is `TRUE`.
+Defines the scoring method. If `true` each selected answer will be scored individually (according to absolute position of the element in the list), if `false` the whole task will be scored and a single mistake leads to 0 points. Default is `true`.
 
 ## Feedback
 
@@ -97,4 +97,4 @@ cat(order_list)
 
 ## Some advice on order exercises 
 
-Usually, order exercises are focusing on an aspect of knowledge that is not particularly important. Knowing steps of procedures by heart is often not useful. Even professionals will have a checklist or a cheatsheet for these cases. Furthermore, grading of order exercises can be complicated because the absolute position of an item is less important than the relative position.
+Typically, order exercises tend to emphasize memorization of procedural steps, a facet of knowledge that may not always be critically important. In practice, even professionals often rely on checklists or cheatsheets for such scenarios. Additionally, grading order exercises can be intricate since the absolute position of an item is often less crucial than its relative placement within a sequence. We advise to use order exercises with caution.
