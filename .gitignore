@@ -17,3 +17,6 @@ gistats.txt
 upload
 vignettes/section_cache/
 vignettes/images/xml/*.xml
+engine.bin
+vignettes/*.zip
+vignettes/*.xml
