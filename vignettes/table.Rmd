@@ -77,15 +77,15 @@ Title of the exercise. Can be displayed to students depending on the learning ma
 
 ### shuffle
 
-If `true` (the default), randomizes the order of rows and columns. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to `false`).
+If `true` (the default), randomizes the order of rows and columns. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to `false`). Overwrites `shuffle_rows` and `shuffle_cols`.
 
 ### shuffle_rows
 
-Only shuffle the rows. Default is `true`.
+Only shuffle the rows. Default is `true`. Overwritten by `shuffle`.
 
 ### shuffle_cols
 
-Only shuffle the columns. Default is `true`.
+Only shuffle the columns. Default is `true`. Overwritten by `shuffle`.
 
 ### abbr_id
 
