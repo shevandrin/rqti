@@ -19,3 +19,5 @@ s4_example.R
 ^vignettes/section_cache$
 ^upload$
 ^pageres\.R$
+^qtitutorial\.Rmd$
+^engine\.bin$
