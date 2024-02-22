@@ -1,4 +1,4 @@
-name: "RQTI: singlechoice (complex)"
+name: "rqti: singlechoice (complex)"
 description: >
    A more complex example of a single choice exercise
 create_dir: FALSE
