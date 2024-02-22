@@ -25,7 +25,7 @@ In this type of exercise, the candidate has to select an element form a dropdown
 
 A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`:. Here we look at the templates `rqti: dropdown (simple)` and `rqti: dropdown (complex)`.
 
-The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**:
+The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**.Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -42,7 +42,7 @@ Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](
 There are 2 ways to specify a dropdown-element in Rmd content:
 
 - Put the right answer inside `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`). Example: `<<element1|element2|element3>>`
-- use the helper function [`dropdown`](#helper-function-dropdown)
+- use the helper function `?dropdown` (also see section [`helper dropdown`](#helper-function-dropdown))
 
 By default, 1 point can be reached for each dropdown (specify `points` to your needs). The total number of points for completing a task is defined as the sum of points of all dropdowns.
 
