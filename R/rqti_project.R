@@ -48,7 +48,7 @@ rqti_project <- function(path, ...) {
         "# demonstrating workflow.",
         "#",
         "# Step 1. Prepare set of Rmd files with individual exercises.",
-        "# To create Rmd choose one of the Rstudio file templates starting with RQTI: .",
+        "# To create Rmd choose one of the Rstudio file templates starting with rqti: .",
         "# or edit the templates that have been copied to your working directory.\n"
     )
 
