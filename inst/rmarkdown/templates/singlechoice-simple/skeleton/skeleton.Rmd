@@ -8,8 +8,8 @@ knit: rqti::render_qtijs
 An alpha error of 5% means that:
 
 - There is a 5% probability that you will mistakenly reject the null hypothesis, when it is actually correct. <!-- First option is treated as the correct one by default. -->
-- There is a 5% probability that the null hypothesis is correct.
-- There is a 5% probability that you will mistakenly reject the alternative hypothesis, when it is correct.
+- <i> There *is* a 5% probability that the null hypothesis is correct.</i>
+- There is a 5% probability that you will mistakenly reject the alternative hypothesis, *when* it is correct.
 - The test power is 95%.
 
 # feedback

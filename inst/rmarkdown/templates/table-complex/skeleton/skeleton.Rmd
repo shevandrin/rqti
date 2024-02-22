@@ -3,8 +3,8 @@ type: table
 knit: rqti::render_qtijs
 identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
-rows_shuffle: false
-cols_shuffle: true
+shuffle_cols: false
+shuffle_rows: true
 abbr_id: true
 ---
 

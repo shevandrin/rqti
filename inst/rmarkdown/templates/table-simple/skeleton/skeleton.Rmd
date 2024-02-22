@@ -9,7 +9,7 @@ Specify any kind of table with the table entries representing the number of poin
 
 The `rqti` package is clever enough to transform your table into the appropriate QTI object (single choice, multiple choice, directed pair). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
 
-Use visual editing mode in RStudio to quickly change your table.
+Hint: Use visual editing mode in RStudio to quickly change your table.
 
 |      |27|36 |25| 6 |
 |------|--|---|--|---|

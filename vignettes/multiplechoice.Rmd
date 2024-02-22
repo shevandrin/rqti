@@ -21,29 +21,33 @@ library(rqti)
 
 ## Minimum version
 
-A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`.  The `rqti` templates start with `RQTI:`. Here we look at the templates `RQTI: multiplechoice (simple)` and `RQTI: multiplechoice (complex)`.
+This is just a normal multiple choice exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:`. Here we look at the templates `rqti`: multiplechoice (simple)` and `rqti: multiplechoice (complex)`.
 
 The minimum you need to provide is the `type: mpc` (or the equivalent `type: multiplechoice` or `type: mchoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("exercises", "mpc1.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-simple/skeleton",
+                               "skeleton.Rmd",
+                               package = "rqti")), sep = '\n')
 ```
 
 Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students.
 
 Further note that the `knit` parameter is set to the custom `rqti` knit function, which will handle the preview. Clicking the Knit button in RStudio produces the following in the viewer pane (or browser of your choice):
 
-![](images/mpc1.png)
+![](images/xml/multiplechoice-simple.jpg){width=100%}
 
 You can also use the opal (set it up before, see: [API Opal](api_opal.html)) render function (`knit: rqti::render_opal`), which should produce the following:
 
-![](images/multiplechoice-simple.jpg)
+![](images/multiplechoice-simple.jpg){width=100%}
 
-Multiple choice exercises are essentially the same as single choice exercises, except that none or several choices can be correct. The correct choices are specified by surrounding them with asterisks (markdown for italic). If you need to use italic in your choices, surround the whole question with the `<i> </i>` tag, instead. Note that the default points are $0.5n$, where $n$ is the number of choices. Here we have 4 choices, so 2 points can be reached. For a correct choice 0.5 points are gained, for an incorrect 0.5 are deducted. The minimum number of points is 0 in any case.
+Multiple choice exercises are essentially the same as single choice exercises, except that none or several choices can be correct. The correct choices are specified by surrounding them with asterisks (markdown for italic). If you need to use italic in your choices, surround the whole question with the `<i> </i>` tag, instead. Note that the default points are $0.5n$, where $n$ is the number of choices. Here we have 4 choices, so 2 points can be reached. For a correct choice 0.5 points are gained, for an incorrect 0.5 are deducted. The minimum number of points is 0 in any case. 
+
+Among various grading options, we find this to be the most intuitive, especially when considering the element of guessing. Given our inclination against forced-choice exercises, we do not see significant value in introducing different grading alternatives. Rather, we recommend directing attention towards better exercise types like gaps for a more effective assessment approach. See also the section [Some advice on multiple choice exercises].
 
 ## More control
 
-If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template `RQTI:multiple-choice (complex)`. In addition you can also set feedback for correct and incorrect responses.
+If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template `rqti`:multiple-choice (complex)`.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-complex/skeleton/", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -51,7 +55,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-complex/skele
 
 Which renders in Opal as:
 
-![](images/multiplechoice-complex.jpg)
+![](images/multiplechoice-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -82,7 +86,7 @@ Should the items be displayed in `vertical` or `horizontal` mode? Default is `ve
 
 ### points
 
-How many points are given for the whole exercise. Default is the number of choices times 0.5. The points $p$ are divided by the number of choices $c$ and then distributed over all choices. A correct choice will get the student +$p/c$, an incorrect choice -$p/c$. If there is no such procedure, a student could always select all answers and get the maximum number of points. See also the section [Some advice on multiple choice exercises].
+How many points are given for the whole exercise. Default is the number of choices times 0.5. The points $p$ are divided by the number of choices $c$ and then distributed over all choices. A correct choice will get the student +$p/c$, an incorrect choice -$p/c$. Witout such a procedure, a student could always select all answers and get the maximum number of points. See also the section [Some advice on multiple choice exercises].
 
 ## Feedback
 

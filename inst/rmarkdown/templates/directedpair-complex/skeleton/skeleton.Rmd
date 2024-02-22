@@ -13,7 +13,7 @@ In this task the candidate has to match elements from two sets.
 
 As a source of data just provide a markdown list with the correct pairs, separated by `|`.
 
-Match the following `QTI` functions with their purpose:
+Match the following `rqti` functions with their purpose:
 
 * rmd2zip | from Rmd-file create zip-file with exercise
 * rmd2xml | from Rmd-file create xml-file with exercise

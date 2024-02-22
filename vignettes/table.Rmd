@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-In this type of exercise, the candidate must match rows and columns of a table. A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `RQTI:`. Here we look at the templates `RQTI: table (simple)` and `RQTI: table (complex)`.
+In this type of exercise, the candidate must match rows and columns of a table. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:`. Here we look at the templates `rqti: table (simple)` and `rqti: table (complex)`.
 
 The minimum you need to provide is the `type: table` in the yaml-section and a table in a section called **\#question**:
 
@@ -31,11 +31,11 @@ cat(readLines(fs::path_package("rmarkdown/templates/table-simple/skeleton", "ske
 
 Clicking the Knit-Button will produce:
 
-![Preview of table exercise rendered by QTIJS](images/table1.png)
+![Preview of table exercise rendered by QTIJS](images/xml/table-simple.jpg){width=100% border=2px}
 
 Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
 
-![](images/table-simple.jpg)
+![](images/table-simple.jpg){width=100%}
 
 The table entries in the Rmd-file contain the number of points for the response. Any number above 0 is considered correct. You can also use negative numbers, which will reduce the points reached, but never below 0. The number of correct responses per row and column can be specified as needed. This usually has an effect on the presentation of the table. For instance, there are special tables where only one row per column is correct and where only one column per row is correct. The `rqti` package takes care of this automatically, so you do not need to do anything. In this regard it is important to know that if you create a table that is actually a directed pair, it will be transformed into a directed pair exercise. If you do not want this, use `as_table = true` in the yaml-section.
 
@@ -54,9 +54,11 @@ If you want to have more fine-grained control, consider the Rmd template `RQTI: 
 cat(readLines(fs::path_package("rmarkdown/templates/table-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which renders as:
+Which, in Opal, renders as:
 
-![Preview of table exercise in LMS OPAL](images/table-complex.jpg)
+![Preview of complex table exercise in LMS OPAL](images/table-complex.jpg){width=100%}
+
+You can see that rows and columns are now fixed and there is a more meaningful title.
 
 # yaml attributes
 
@@ -75,19 +77,19 @@ Title of the exercise. Can be displayed to students depending on the learning ma
 
 ### shuffle
 
-If `true` (the default), randomizes the order of rows and columns. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to `false`).
+If `true` (the default), randomizes the order of rows and columns. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to `false`). Overwrites `shuffle_rows` and `shuffle_cols`.
 
-### rows_shuffle
+### shuffle_rows
 
-Only shuffle the rows. Default is `true`.
+Only shuffle the rows. Default is `true`. Overwritten by `shuffle`.
 
-### cols_shuffle
+### shuffle_cols
 
-Only shuffle the columns. Default is `true`.
+Only shuffle the columns. Default is `true`. Overwritten by `shuffle`.
 
 ### abbr_id
 
-Defines the use of an abbreviation as a way to generate row and column identifiers. See more about rows and colums identifiers [here](#ids).
+Defines the use of an abbreviation as a way to generate row and column identifiers. Explained in more detail in the section [Managing identifiers](#ids).
 
 ## Feedback
 
@@ -101,15 +103,25 @@ Feedback can be provided with the section
 
 The identifiers of rows and columns are useful for later data analysis of results. If you are doing extensive data analysis later on, it makes sense to specify meaningful identifiers, or at least make them more recognizable.
 
-There 3 ways to form identifiers of rows and columns:
+There are currently two ways to form identifiers of rows and columns:
 
 1. By default `rqti` uses `row_1`...`row_N`, `col_1`...`col_N`.
 2. Using `abbr_id: true` in the yaml section of the Rmd file, `rqti` takes the first word of a row or column element and combines it with the abbreviation of the remaining text of the element. Example: for the element "Mean Value Theorem for Integrals" `rqti` makes the identifier "Mean_VTfI".
-3. For more control, you will probably want to assign your own values as identifiers.  In this case, in the markdown table or csv file you need to put:
-- a column with a predefined header 'rowid' with values for row identifiers.
-- a row with a predefined 'colid' header with values for columns identifies.
 
-![Preview of markdown table with data for identifiers](images/screenshot_table3.png)
+We experimented with different solutions and settled on these simple versions. If you need more control of the identifiers, please open an issue on github: <https://github.com/shevandrin/rqti/issues> and we will reconsider the options.
+
+<!-- 3. For more control, you might want to assign your own values as identifiers. -->
+
+<!-- ```{markdown} -->
+<!-- | ROWID       | row     | 27 | 36  | 25 | 6 | -->
+<!-- |-------------|---------|----|-----|----|---| -->
+<!-- | fournine    | 4\*9 =  | 0  | 0.5 | 0  | 0 | -->
+<!-- | threenine   | 3\*9 =  | 1  | 0   | 0  | 0 | -->
+<!-- | fivefive    | 5\*5 =  | 0  | 0   | 1  | 0 | -->
+<!-- | thwothree   | 2\*3 =  | 0  | 0   | 0  | 1 | -->
+<!-- | twelvethree | 12\*3 = | 0  | 1   | 0  | 0 | -->
+<!-- ``` -->
+
 
 ## Some advice on table exercises 
 

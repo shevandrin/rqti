@@ -13,19 +13,25 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 # rqti
 
-Note: this is work in progress, a stable release can be expected in Q1
-2024.
+Note: This project is currently in progress, and we anticipate a stable
+release in Q1 2024.
 
-The goal of `rqti` is to provide a clean and independent R library for
-creating exercises and exams according to the
-[QTI](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html)
-standard directly from R. You can render the exercises locally (qtijs)
-or to the learning management system Opal.
+The objective of `rqti` is to establish a robust and stand-alone R
+library tailored for crafting exercises and exams in adherence to the
+[QTI
+v2.1](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html)
+standard directly from R. Users have the flexibility to render the
+exercises either locally (using qtijs) or integrate them seamlessly into
+the OPAL learning management system. Our primary audience comprises
+instructors specializing in research methods and statistics who seek to
+harness the full capabilities of R while aligning with the QTI standard.
+In particular, instructors utilizing OPAL will find our package
+especially advantageous, as it capitalizes on OPAL’s robust API.
 
 ## Installation
 
-The `rqti` package is still in development. The only way to install it
-at the moment is from GitHub:
+The `rqti` package is currently in active development, and as of now,
+the exclusive installation method is through GitHub:
 
 ``` r
 #install.pacakges("librarian") # install librarian if you do not have it yet
@@ -36,28 +42,29 @@ librarian::shelf(shevandrin/rqti)
 <!-- ```{r eval=FALSE} -->
 <!-- install.packages("rqti") -->
 <!-- ``` -->
-
-Note that this will start a qtijs server, which will be used for
-previewing exercises. If you do not need this, turn it off with the
-environment variable: QTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or
-in .Renviron).
+<!-- Note that this will start a qtijs server, which will be used for previewing exercises. If you do not need this, turn it off with the environment variable: QTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or in .Renviron). -->
 
 ## Quick start
 
-Using RStudio, go to create a New Project, select **“RQTI Project”** as
-the project type in the New Project Wizard window and and configure some
-settings. Choose ‘YES’ for ‘Create Templates’ to get Rmarkdown templates
-for all types of tasks in the working directory. After creation, work in
-“main.R”, where the essential commands for creating a test are
-presented.
+In RStudio, navigate to *File* -\> *New Project* and choose **rqti
+Project** as the project type. Customize the settings as needed; select
+‘YES’ for ‘Create Templates’ to generate Rmarkdown templates for various
+task types. Once the project is created, open one of the templates
+(e.g., `gap/gap.Rmd`) and click *Knit*. You should see a preview in the
+RStudio viewer (or a new browser window if you are not using RStudio).
+Experiment with other templates to explore supported features.
 
-In addition, it is possible to add a new one from the templates. To do
-this, go to create a new Rmarkdown file, select **from Template** and
-choose one of the templates starting with **RQTI: …**. The *simple* ones
-include the minimum, the *complex* ones have more parameters. Click the
-Knit-Button and you should see a rendered exercise in the Viewer pane.
-The templates are self-explanatory, but more details about the exercise
-types can be found in the other articles:
+To comprehend how to create sections and tests, refer to the *main.R*
+file in the working directory. More information on this topic can be
+found here: [Sections and Tests](articles/section.html).
+
+To incorporate additional templates, create a new RMarkdown file. Choose
+*From Template* and select one that starts with *rqti: …*. The simple
+templates include minimal parameters, while the complex ones demonstrate
+how to use additional settings. Click the *Knit* button, and you should
+observe a rendered exercise in the viewer pane. While the templates are
+generally self-explanatory, refer to other articles for in-depth details
+about specific exercise types:
 
 - [Single choice](articles/singlechoice.html)
 - [Multiple choice](articles/multiplechoice.html)
@@ -68,40 +75,41 @@ types can be found in the other articles:
 - [Directed pairs](articles/directedpairs.html)
 - [Tables](articles/table.html)
 
-To combine different exercises into a test, read: [Sections and
+To integrate various exercises into a test, refer to: [Sections and
 Tests](articles/section.html)
 
-If you are using the learning management system Opal, please check out
-[Opal API](articles/api_opal.html)
+For users of the learning management system Opal, explore the [Opal
+API](articles/api_opal.html).
 
 ## General workflow
 
-The basic workflow with the `rqti` package can be described as follows:
+The fundamental workflow with the `rqti` package involves the following
+steps:
 
 1.  Create exercise files.
-    1.  Create an Rmd document. You can start from scratch (specify
-        `type` in the yaml section) or use Rmd templates starting with
-        the prefix `RQTI`.
-    2.  Write a section titled `# question` and create your interactions
-        (gaps, choices, etc.). Use `rqti` helper functions where needed.
-    3.  Set additional attributes in the yaml section. All types are
-        explained in detail in the **Articles** menu on this website
-        (top).
+    1.  Start by generating an Rmd document. You can either initiate
+        from scratch (specify `type` in the yaml section) or leverage
+        Rmd templates beginning with the prefix `rqti`.
+    2.  Develop a section titled `# question` and construct your
+        interactions (gaps, choices, etc.). Utilize `rqti` helper
+        functions where applicable.
+    3.  Specify additional attributes in the yaml section. Detailed
+        explanations for all types are available in the **Articles**
+        menu on this website (top).
     4.  Choose a previewer: Either qtijs (`knit: rqti::render_qtijs`),
-        which will render your exercise locally or the learning
-        management system Opal (`knit: rqti::render_opal`). Note that
-        using Opal requires you to set it up first: [Opal
-        API](articles/api_opal.html).
-    5.  Check if your task looks as desired. Modify until your are
-        satisfied.
+        for local rendering, or the learning management system Opal
+        (`knit: rqti::render_opal`). Note that Opal usage requires prior
+        setup: [Opal API](articles/api_opal.html).
+    5.  Verify if your task appears as desired. Make adjustments until
+        you are satisfied.
 2.  Create sections and tests based on your exercise files.
-3.  Write test (xml) to disk according to QTI standard and upload test
-    file to your learning management system.
-4.  Download results data from your learning management system and read
-    them with the `rqti` package for statistical analysis.
+3.  Write the test (xml) to disk according to the QTI standard and
+    upload the test file to your learning management system.
+4.  Download results data from your learning management system and
+    analyze them with the `rqti` package for statistical insights.
 
-Each step includes certain `rqti` functions, the most useful of them are
-shown in the following diagram:
+Each step involves specific `rqti` functions, with the most useful ones
+illustrated in the following diagram:
 
 <figure>
 <img src="vignettes/images/workflow.png" style="width:75.0%"
@@ -110,11 +118,12 @@ alt="Basic workflow to create exercises and tests with rqti" />
 tests with rqti</figcaption>
 </figure>
 
-The best way to learn the workflow is to create a simple exercise, such
-as “Single Choice”, as presented [in this
+The most effective way to grasp the workflow is to create a simple
+exercise, such as “Single Choice,” as demonstrated [in this
 article.](articles/singlechoice.html)
 
-Each exercise type is described in a separate article:
+Individual articles provide detailed descriptions for each exercise
+type:
 
 - [Single choice](articles/singlechoice.html)
 - [Multiple choice](articles/multiplechoice.html)
@@ -125,11 +134,14 @@ Each exercise type is described in a separate article:
 - [Directed pairs](articles/directedpairs.html)
 - [Tables](articles/table.html)
 
-## Feedback and bug reports
+## Support and Bug Reports
 
-Feel free to [let us know](mailto://shevandrin@gmail.com) which features
-your are missing or directly [open an issue on
-GitHub.](https://github.com/shevandrin/rqti/issues)
+Should you find any missing features or encounter issues, please do not
+hesitate to inform us via [email](mailto://shevandrin@gmail.com) or
+[open an issue on GitHub](https://github.com/shevandrin/rqti/issues). We
+will offer support until the project’s funding concludes in September
+2024. Following that, we will maintain a stable, usable version, with
+support for new features provided as time permits.
 
 <!-- Why do we need another package for creating exams when there is already the `exams`-package? The philosophy of `exams` is **one for all**, whereas `rqti` follows the Unix-philosophy: **do one thing and do it well**. tldr: -->
 <!-- - `rqti` has more (QTI) features (e.g. exercise type) than `exams` -->

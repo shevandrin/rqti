@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-This is just a typical essay exercise. A template is available in RStudio Project Template or can be added by clicking on `New file -> R Markdown -> From Template`.  The rqti templates start with `RQTI:`. Here we look at the templates `RQTI: essay (simple)` and `RQTI: essay (complex)`.
+This is just a typical essay exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`: Here we look at the templates `rqti: essay (simple)` and `rqti: essay (complex)`.
 
 The minimum you need to provide is the `type: essay` in the yaml-section and some text as a task description in a section called **\#question**:
 
@@ -31,25 +31,25 @@ cat(readLines(fs::path_package("rmarkdown/templates/essay-simple/skeleton", "ske
 
 Knitting via the Knit-Button to qtijs, this exercise renders as:
 
-![](images/essay.png)
+![](images/xml/essay-simple.jpg){width=100%}
 
 Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](api_opal.html)) to upload to Opal directly, producing:
 
-![](images/essay-simple.jpg)
+![](images/essay-simple.jpg){width=100%}
 
-Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay exercises can serve as a good basis for grading student's answers.
+Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay exercises can serve as a good basis for grading student's answers. In addition the length of the feedback section is taken into account in constructing the text field and the maximum number of words. If no feedback is provided, sensible defaults are used.
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `RQTI: essay (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template `rqti`: essay (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which on Opal renders as:
+Which, in Opal, renders as:
 
-![](images/essay-complex.jpg)
+![](images/essay-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -97,6 +97,8 @@ Feedback can be provided with the section
 
 The feedback plays an important role in essay exercises because the expected length and maximum words are calculated from the feedback section, if one is given. Providing useful feedback also defines explicit criteria for grading, so do not skip it for essay exercises, unless you have good reasons to.
 
+Further note that it does not make sense to give conditional feedback as essay exercises have to be graded manually.
+
 ## Some advice on essay exercises
 
-Essay exercises can be one of the best exercises if the instructor asks a good question. Unfortunately, many instructors are not very creative and unspecific when they come up with essay questions. This often leads to vague criteria for grading. To avoid this, always write an ideal solution in the feedback section. Your students and colleagues will thank you.
+Essay exercises can prove immensly diagnostic, provided the instructor poses thought-provoking questions. Regrettably, a considerable number of instructors lack creativity and specificity when formulating essay prompts, resulting in ambiguous grading criteria. To counteract this issue, it is advisable to consistently provide an exemplary solution in the feedback section. This approach not only enriches the learning experience for your students but also garners appreciation from colleagues responsible for grading.

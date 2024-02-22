@@ -1,9 +1,11 @@
 ---
 type: order
 knit: rqti::render_qtijs
-identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+identifier: order001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
-points_per_answer: false # defines the scoring method, `false` means the completely correct order must be restored by the candidate in order to get points
+# defines the scoring method, `false` means the correct order must be restored 
+# completely by the candidate in order to get points
+points_per_answer: false 
 points: 2
 ---
 
@@ -18,7 +20,7 @@ What is the structure of an exam in QTI terms, starting from the top (the exam) 
 
 # feedback
 
-For oder exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.
+For order exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.
 
 <!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
 
