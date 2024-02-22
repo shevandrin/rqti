@@ -106,7 +106,7 @@ The identifiers of rows and columns are useful for later data analysis of result
 There are currently two ways to form identifiers of rows and columns:
 
 1. By default `rqti` uses `row_1`...`row_N`, `col_1`...`col_N`.
-2. Using `abbr_id: true` in the yaml section of the Rmd file, `rqti` takes the first word of a row or column element and combines it with the abbreviation of the remaining text of the element. Example: for the element "Mean Value Theorem for Integrals" `rqti` makes the identifier "Mean_VTfI".
+2. Using `abbr_id: true` in the yaml section of the Rmd file, `rqti` takes the first word of a row or column element and combines it with the abbreviation of the remaining text of the element. Example: for the element "Mean Value Theorem for Integrals" `rqti` makes the identifier "Mean_VTfI". If the row/column starts with digits, "col"/"row" is added as prefix as identifiers are not allowed to start with a number. All special characters are removed.
 
 We experimented with different solutions and settled on these simple versions. If you need more control of the identifiers, please open an issue on github: <https://github.com/shevandrin/rqti/issues> and we will reconsider the options.
 
