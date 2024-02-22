@@ -66,7 +66,7 @@ We now have 10 variants of the test, two of which look like this in Opal:
 ![](images/Atest1.jpg){width=100%}
 ![](images/Btest1.jpg){width=100%}
 
-After the root section you can see the section exam_8833 (image 1) and exam_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: `r url2`
+After the root section you can see the section exam_8833 (image 1) and exam_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/43470389249
 
 To summarize so far: You can just pass your exercise files to the `content` parameter in `section` and define how many variants you would like to create of each file.
 
@@ -91,7 +91,7 @@ In Opal this will create the following structure:
 ![](images/Atest2.jpg){width=100%}
 ![](images/Btest2.jpg){width=100%}
 
-As you can see, we still have our variable section with different variants (you see two of them in the images). But now, we also have a fixed section that is the same for all tests. Try it out yourself: `r url2`
+As you can see, we still have our variable section with different variants (you see two of them in the images). But now, we also have a fixed section that is the same for all tests. Try it out yourself: https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/43477368832
 
 Note that the function `section` returns an `AssessmentSection` rqti-object:
 
