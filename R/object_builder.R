@@ -390,6 +390,12 @@ define_ids <- function(vect, abbr, type) {
     } else {
         ids <- make_ids(length(vect), type)
     }
+    # add prefix when it starst wiht digit
+    ids <- sapply(ids, function(x) ifelse(grepl("^\\d", x), paste0(type, x), x),
+           USE.NAMES = FALSE)
+    # eliminate special character
+    ids <- sapply(ids, function(x) gsub("[^[:alnum:]_]", "", x),
+                  USE.NAMES = FALSE)
     return(ids)
 }
 
