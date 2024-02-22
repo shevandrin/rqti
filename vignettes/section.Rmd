@@ -24,7 +24,7 @@ Creating single exercises is not particularly useful as one usually wants to com
 
 The `rqti` package makes it very simple to mix different sources of exercise files:
 
-- **Rmd (md) files**: You can use Rmarkdown files that are consistent with the `rqti` package (the `exams` package will not work)
+- **Rmd (md) files**: You can use Rmarkdown files that are consistent with the `rqti` package (the `exams` package will not work but see below)
 - **QTI XML files**: These files should be valid regarding the QTI standard. To use your Rmd-files from the `exams` package you can convert them to xml first.
 - **Objects of S4 `rqti` classes**: You can also use objects from the `rqti` package directly. See [QTI OOP model](qti_oop_model.html).
 
@@ -34,7 +34,12 @@ Although it is possible to feed a test with exercises directly, we suggest to al
 
 We designed a simple wrapper for sections. Here we load some files from our package and use the function `section` to create the section. Note that we request 10 different variants of all exercises.
 
-```{r section1, eval=T}
+```{r ghost, include=FALSE}
+path <- fs::path_package("exercises", package = "rqti")
+files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
+```
+
+```{r section1, eval=F}
 path <- fs::path_package("exercises", package = "rqti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 root_section <- section(content = files, n_variants = 10)
@@ -49,12 +54,19 @@ createQtiTest(test, zip_only = T)
 repo <- upload2opal("test1.zip", open_in_browser = F)
 ```
 
-We now have 10 variants of the test, two of which look like this:
+```{r url, include=FALSE}
+url <- get_resource_url("test1")
+url2 <- get_resource_url("test2")
+```
 
-![](images/Atest1.jpg)
-![](images/Btest1.jpg)
+Note that you could also call `upload2opal(test)` directly. We just wanted to demonstrate how to write out a test locally before uploading it somewhere.
 
-After the root section you can see the section exam_8833 (image 1) and exam_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/42069852163.
+We now have 10 variants of the test, two of which look like this in Opal:
+
+![](images/Atest1.jpg){width=100%}
+![](images/Btest1.jpg){width=100%}
+
+After the root section you can see the section exam_8833 (image 1) and exam_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: `r url2`
 
 To summarize so far: You can just pass your exercise files to the `content` parameter in `section` and define how many variants you would like to create of each file.
 
@@ -62,11 +74,11 @@ Of course, creating several variants only makes sense for random exercises. Sing
 
 ```{r section2, eval=T}
 non_random_exercises <- paste0(path, "/", c("sc1.Rmd", "mpc1.Rmd"))
-root_section = list(section(files, n_variants = 10), 
-                    section(non_random_exercises))
+root_section <- list(section(files, n_variants = 10), 
+                     section(non_random_exercises))
 ```
 
-Note that we use a list here. Now we can again make a test out of this and upload it to Opal:
+Note that we use a list here for the root section. This is important as the `test` functions expect a list to be more flexible with different inputs (e.g. objects instead of files). Now we can again make a test out of this and upload it to Opal:
 
 ```{r section2upload, eval = F}
 test <- rqti:::test4opal(root_section, "test2")
@@ -76,10 +88,10 @@ repo <- upload2opal("test2.zip", open_in_browser = F)
 
 In Opal this will create the following structure:
 
-![](images/Atest2.jpg)
-![](images/Btest2.jpg)
+![](images/Atest2.jpg){width=100%}
+![](images/Btest2.jpg){width=100%}
 
-As you can see, we still have our variable section with different variants (you see two of them in the images). But now, we also have a fixed section that is the same for all tests.
+As you can see, we still have our variable section with different variants (you see two of them in the images). But now, we also have a fixed section that is the same for all tests. Try it out yourself: `r url2`
 
 Note that the function `section` returns an `AssessmentSection` rqti-object:
 
@@ -87,7 +99,7 @@ Note that the function `section` returns an `AssessmentSection` rqti-object:
 lapply(root_section, class)
 ```
 
-Indeed, the whole rqti-package is based on S4 OOP, so exercises, sections and tests are all objects. If you have no experience with OOP, this might feel a little bit unfamiliar, but to use it, you do not need to know all details. Just use the helper functions and you should be fine.
+The entire rqti-package relies on S4 Object-Oriented Programming (OOP), where exercises, sections, and tests are treated as distinct objects. If you are not accustomed to OOP, it might seem unfamiliar at first, but you do not need to delve into all the technical details to use it effectively. Simply utilize the provided helper functions, and you should navigate through with ease.
 
 To customize your sections and tests, check out the references: `?section` and `?test` or `?test4opal`.
 
@@ -104,15 +116,17 @@ To customize your sections and tests, check out the references: `?section` and `
 By default the `section` function creates different variants of an exercise by drawing different seeds and creating subsections with these seeds. There is also a different approach to introduce randomness. Check out the following figure:
 
 ![Two approaches for structuring exercise variants](images/sections_scheme.svg){width=80%}
+On the left-hand side, four distinct subsections were generated, each housing the same exercise files but with **different variants**. A participant, starting at the root section, is randomly assigned to one of these subsections, encountering all exercises within that specific subsection. This setup, a common experimental design, is generally satisfactory for most instructors conducting exams. It ensures that all participants within a subsection encounter the same set of exercises, facilitating psychometric analysis. However, a drawback is the potential for collaboration between participants within the same subsection.
 
-On the left-hand side four different subsections with the same exercise files (but different variants of them) were created. A single participant, starting at the root section, will be randomly assigned to only one subsection. He or she will then be presented all exercises from this subsection. This is the default and most instructors will be happy with this setup for their exams. Basically, this is a common experimental design. All participants in one subsection see the same exercises, which is also useful for psychometric analysis. The disadvantage is that if two students know they are in the same subsection, they could help each other.
+On the right-hand side, an alternative strategy was implemented. Each exercise **file** now has its dedicated subsection, encompassing its diverse variants. Participants navigate through each section, being assigned only one variant per section. The noteworthy distinction from the initial approach lies in the plethora of potential paths available in the test. Given the presence of 3 variants for each of the 4 files, a total of $3^4 = 81$ paths emerges. While this configuration may complicate psychometric analysis and introduce challenges in maintaining exercise difficulty equilibrium, it provides a notable advantage in thwarting cheating, as the paths of two students are likely to differ.
 
-On the right-hand side for each exercise file a subsection was created, containing the different variants of the exercise. Each participant goes through each section, but will only be assigned a single variant from the section. The obvious difference to the first approach is that there are many paths through such a test. Indeed, with 3 variants and 4 files, there are $3^4 = 81$ paths. This is not particularly useful for psychometric analysis and could lead to other problems. For instance, if you did not carefully construct your exercises, they might differ substantially in difficulty between different variants. With 81 possible paths, there might be some that are particularly difficult and others that are fairly easy. You will have no way to know, which is which because each path will only have few participants. The advantage of this setup is that cheating becomes more difficult because the paths of two students will likely differ. Still, we advise to only use this approach if you know what you are doing, especially for exams.
+However, exercising caution is imperative when adopting this approach, particularly in an exam setting. Interestingly, this setup finds greater utility when exchanging specific exercises among instructors. For instance, generating 20 variants of an exercise and bundling them into a test allows for easy import as a subtest in other instructors' exams. Notably, such flexibility would not be feasible with the structure on the left-hand side.
 
-
-1. For "by variant" (left scheme on the picture) use `by = \"variants\"`
-1. For "by files" (right scheme) use `by = \"files\"`
+To choose between these two versions you can use the parameter `by` in the sense of `section` by `variants` or `section` by `files`.^[We are still searching for a semantically more meaningful description. If you have an idea, drop an issue on github: https://github.com/shevandrin/rqti/issues]
 
 ```{r illustr, eval=FALSE}
 root_section = section(content = files, n_variants = 3, by = "files")
 ```
+
+1. For "by variants" (left scheme on the picture) use `by = "variants"`
+1. For "by files" (right scheme) use `by = "files"`
