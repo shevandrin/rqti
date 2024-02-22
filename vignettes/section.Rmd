@@ -54,7 +54,7 @@ createQtiTest(test, zip_only = T)
 repo <- upload2opal("test1.zip", open_in_browser = F)
 ```
 
-```{r url, include=FALSE}
+```{r url, include=FALSE, eval=F}
 url <- get_resource_url("test1")
 url2 <- get_resource_url("test2")
 ```
