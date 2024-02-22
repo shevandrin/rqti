@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Dropdown Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-02-21</h4>
+            <h4 data-toc-skip class="date">2024-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/HEAD/vignettes/dropdown.Rmd" class="external-link"><code>vignettes/dropdown.Rmd</code></a></small>
       <div class="d-none name"><code>dropdown.Rmd</code></div>
@@ -100,19 +100,23 @@
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
 <p>In this type of exercise, the candidate has to select an element form
-a dropdown-list. Note that our package implements dropdowns as gaps
-because this is essential what dropwdowns are. Several dropdowns can be
-combined in a single exercise, but a combination with numeric and text
-gaps is not possible.A template is available in RStudio Project Template
-or can be added by clicking on
+a dropdown-list. Note that our package implements dropdowns as
+<em>entry</em>-objects because this is essential what dropwdowns are.
+Several dropdowns can be combined in a single exercise, but a
+combination with numeric and text entries (gaps) is not possible; mainly
+due to LMS limitations.</p>
+<p>A template is automatically created when you initiate an rqti project
+through RStudio. Alternatively, it can be added by clicking on
 <code>New file -&gt; R Markdown -&gt; From Template</code>. The
-<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
-at the templates <code>RQTI: dropdown (simple)</code> and
-<code>RQTI: dropdown (complex)</code>.</p>
+<code>rqti</code> templates start with <code>rqti</code>:. Here we look
+at the templates <code>rqti: dropdown (simple)</code> and
+<code>rqti: dropdown (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: dropdown</code>
 (or the equivalent <code>type: dd</code>) in the yaml-section and some
 text, where at least one gap is formed as a dropdown-element, in a
-section called <strong>#question</strong>:</p>
+section called <strong>#question</strong>.Furthermore, when employing
+helper functions from the rqti package, it is essential to ensure its
+prior loading.</p>
 <pre><code>---
 type: dropdown
 knit: rqti::render_qtijs
@@ -132,11 +136,11 @@ Under the hood, the rqti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no OOP"
 
 The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
 <p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
-<p><img src="images/dropdown.png"></p>
+<p><img src="images/xml/dropdown-simple.jpg" style="width:100.0%"></p>
 <p>Alternatively, change the knit parameter to
 <code>knit: render_opal</code> (see <a href="api_opal.html">API
 Opal</a>) to upload to Opal directly, producing:</p>
-<p><img src="images/dropdown-simple.jpg"></p>
+<p><img src="images/dropdown-simple.jpg" style="width:100.0%"></p>
 <p>There are 2 ways to specify a dropdown-element in Rmd content:</p>
 <ul>
 <li>Put the right answer inside <code>&lt;&lt;</code> …
@@ -144,8 +148,7 @@ Opal</a>) to upload to Opal directly, producing:</p>
 <code>&lt;/gap&gt;</code>). Example:
 <code>&lt;&lt;element1|element2|element3&gt;&gt;</code>
 </li>
-<li>use the helper function <a href="#helper-function-dropdown"><code>dropdown</code></a>
-</li>
+<li>use the helper function <code><a href="../reference/dropdown.html">?dropdown</a></code> (also see section <a href="#helper-function-dropdown"><code>helper dropdown</code></a>)</li>
 </ul>
 <p>By default, 1 point can be reached for each dropdown (specify
 <code>points</code> to your needs). The total number of points for
@@ -155,18 +158,20 @@ feedback is optional, but usually it is a good idea to give some
 explanation for students. In dropdown exercises the feedback refers to
 the whole task, not to a specific dropdown. Group your feedback into
 appropriate sections, which can be opened/closed for better user
-experience (use details and summary html tags).</p>
+experience (e.g. use <code>&lt;details&gt;</code> and
+<code>&lt;summary&gt;</code> html tags).</p>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>RQTI: dropdown (complex)</code>, which uses more yaml
-attributes.</p>
+template <code>rqti: dropdown (complex)</code>, which uses more yaml
+attributes and a more complex use of the helper function
+<code>dropdown</code>.</p>
 <pre><code>---
 type: dd # type of exercise
 knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
-identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+identifier: dd001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 ---
 
@@ -184,7 +189,7 @@ Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = 
 
 The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
 <p>Which renders as:</p>
-<p><img src="images/dropdown-complex.jpg"></p>
+<p><img src="images/dropdown-complex.jpg" style="width:100.0%"></p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -278,12 +283,10 @@ meaningful identifier.</p>
 <div class="section level2">
 <h2 id="some-advice-on-dropdown-exercises">Some advice on dropdown exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-dropdown-exercises"></a>
 </h2>
-<p>Dropdown exercises seem to be similar to numeric and text gaps, but
-they are forced choice items, so are actually equivalent to single
-choice exercises. The advantage is that they can be placed in between
-other text and several of them can be used in a single exercise. Still,
-they suffer from the same problems as <a href="singlechoice.html">single
-choice exercises</a>.</p>
+<p>Dropdown exercises are forced choice items, so are equivalent to
+single choice exercises. The advantage is that they can be placed in
+between other text and several of them can be used in a single exercise.
+Still, they suffer from the same problems as <a href="singlechoice.html">single choice exercises</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Essay Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-02-21</h4>
+            <h4 data-toc-skip class="date">2024-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/HEAD/vignettes/essay.Rmd" class="external-link"><code>vignettes/essay.Rmd</code></a></small>
       <div class="d-none name"><code>essay.Rmd</code></div>
@@ -99,12 +99,13 @@
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>This is just a typical essay exercise. A template is available in
-RStudio Project Template or can be added by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. The rqti
-templates start with <code>RQTI:</code>. Here we look at the templates
-<code>RQTI: essay (simple)</code> and
-<code>RQTI: essay (complex)</code>.</p>
+<p>This is just a typical essay exercise. A template is automatically
+created when you initiate an rqti project through RStudio.
+Alternatively, it can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates start with <code>rqti</code>: Here we look
+at the templates <code>rqti: essay (simple)</code> and
+<code>rqti: essay (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: essay</code> in
 the yaml-section and some text as a task description in a section called
 <strong>#question</strong>:</p>
@@ -119,30 +120,33 @@ What are the advantages and disadvantages of the `rqti` package as compared to t
 
 # feedback
 
-The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.</code></pre>
+The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.</code></pre>
 <p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
-<p><img src="images/essay.png"></p>
+<p><img src="images/xml/essay-simple.jpg" style="width:100.0%"></p>
 <p>Alternatively, change the knit parameter to
 <code>knit: render_opal</code> (see <a href="api_opal.html">API
 Opal</a>) to upload to Opal directly, producing:</p>
-<p><img src="images/essay-simple.jpg"></p>
+<p><img src="images/essay-simple.jpg" style="width:100.0%"></p>
 <p>Note that in this example, a feedback section was also provided.
 Since an open question requires manual review, only general feedback
 without conditions should be provided. The feedback is optional, but
 usually it is a good idea to give some explanation for students.
 Furthermore, a feedback section for essay exercises can serve as a good
-basis for grading student’s answers.</p>
+basis for grading student’s answers. In addition the length of the
+feedback section is taken into account in constructing the text field
+and the maximum number of words. If no feedback is provided, sensible
+defaults are used.</p>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>RQTI: essay (complex)</code>, which uses more yaml
+template <code>rqti</code>: essay (complex)`, which uses more yaml
 attributes.</p>
 <pre><code>---
 type: essay # type of exercise
 knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
-identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
+identifier: essay001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
 expected_length: 30 # defines the width of the text input field
 expected_lines: 3 # defines the number of lines of the text input field
@@ -158,9 +162,9 @@ What are the advantages and disadvantages of the `rqti` package as compared to t
 
 # feedback
 
-The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files and has a very solid core architecture based on S4 OOP and many tests.</code></pre>
-<p>Which on Opal renders as:</p>
-<p><img src="images/essay-complex.jpg"></p>
+The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.</code></pre>
+<p>Which, in Opal, renders as:</p>
+<p><img src="images/essay-complex.jpg" style="width:100.0%"></p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -232,16 +236,20 @@ expected length and maximum words are calculated from the feedback
 section, if one is given. Providing useful feedback also defines
 explicit criteria for grading, so do not skip it for essay exercises,
 unless you have good reasons to.</p>
+<p>Further note that it does not make sense to give conditional feedback
+as essay exercises have to be graded manually.</p>
 </div>
 <div class="section level2">
 <h2 id="some-advice-on-essay-exercises">Some advice on essay exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-exercises"></a>
 </h2>
-<p>Essay exercises can be one of the best exercises if the instructor
-asks a good question. Unfortunately, many instructors are not very
-creative and unspecific when they come up with essay questions. This
-often leads to vague criteria for grading. To avoid this, always write
-an ideal solution in the feedback section. Your students and colleagues
-will thank you.</p>
+<p>Essay exercises can prove immensly diagnostic, provided the
+instructor poses thought-provoking questions. Regrettably, a
+considerable number of instructors lack creativity and specificity when
+formulating essay prompts, resulting in ambiguous grading criteria. To
+counteract this issue, it is advisable to consistently provide an
+exemplary solution in the feedback section. This approach not only
+enriches the learning experience for your students but also garners
+appreciation from colleagues responsible for grading.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

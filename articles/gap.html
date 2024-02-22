@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Gap Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-02-21</h4>
+            <h4 data-toc-skip class="date">2024-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/HEAD/vignettes/gap.Rmd" class="external-link"><code>vignettes/gap.Rmd</code></a></small>
       <div class="d-none name"><code>gap.Rmd</code></div>
@@ -99,22 +99,25 @@
 <div class="section level3">
 <h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h3>
-<p>In this type of exercise, the candidate is asked to fill in one or
-several gaps. In our opinion, this is the best way to test the ability
-of students because guessing is more difficult than with forced choice
-answers. Focus on gap exercises and you will be rewarded with better
-properties of your tests.</p>
-<p>In our package it is possible to combine gaps with text and numeric
-answers in a single exercise. A template is available in RStudio Project
-Template or can be added by clicking on
+<p>In this particular exercise format, candidates are tasked with
+filling in one or multiple gaps. We contend that this method stands out
+as the most effective means of assessing students’ abilities since
+guessing becomes more challenging compared to forced-choice answers.
+Focusing on gap exercises will often yield improved test properties.</p>
+<p>Within our package, it is feasible to integrate gaps with both
+textual and numeric responses within a single exercise. This versatility
+enhances the range of assessment possibilities for instructors.</p>
+<p>A template is automatically created when you initiate an rqti project
+through RStudio. Alternatively, it can be added by clicking on
 <code>New file -&gt; R Markdown -&gt; From Template</code>. The
-<code>rqti</code> templates start with <code>RQTI:</code>. Here we look
+<code>rqti</code> templates start with <code>rqti</code>: Here we look
 at the templates <code>RQTI: gap (simple)</code> and
 <code>RQTI: gap (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: gap</code> (or the
 equivalent <code>type: cloze</code>) in the yaml-section and some text,
 where at least one gap is used, in a section called
-<strong>#question</strong>:</p>
+<strong>#question</strong>. Furthermore, when employing helper functions
+from the rqti package, it is essential to ensure its prior loading.</p>
 <pre><code>---
 type: gap
 knit: rqti::render_qtijs
@@ -141,11 +144,89 @@ You conducted an IQ test for 10 persons and found the following values:
 
 What is the mean value of these IQ values? `r gap_numeric(mean(iq))`
 
+See `?gap_numeric` for more options (e.g. tolerance).
+
+## text gaps
+
+The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A. Binet"))` in the early &lt;&lt;20th&gt;&gt; century with the intention of identifying students who might need extra assistance.
+
+See `?gap_text` for more options (e.g. tolerance).
+
+# feedback
+
+1. IQ Tests are standardized to have a mean of 100.
+1. The correct mean value for `r iq` is `r mean_iq`.
+1. The original IQ test was developed by Alfred Binet.
+1. It was in the 20th century.</code></pre>
+<p>Clicking on the Knit-button will produce the following in the viewer
+pane:</p>
+<p><img src="images/xml/gap-simple.jpg" style="width:100.0%"></p>
+<p>Alternatively, change the knit parameter to
+<code>knit: render_opal</code> (see <a href="api_opal.html">API
+Opal</a>) to upload to Opal directly, producing:</p>
+<p><img src="images/gap-simple.jpg" style="width:100.0%"></p>
+<p>As you can see, there are two ways to create a gap in Rmd
+content:</p>
+<ul>
+<li>Put the correct answer between <code>&lt;&lt;</code> …
+<code>&gt;&gt;</code> (or the equivalent <code>&lt;gap&gt;</code> …
+<code>&lt;/gap&gt;</code>). Example: <code>&lt;&lt;3.14&gt;&gt;</code>
+or <code>&lt;&lt;sometext&gt;&gt;</code>
+</li>
+<li>use the helper functions <code><a href="../reference/gap_numeric.html">?gap_numeric</a></code> and
+<code><a href="../reference/gap_text.html">?gap_text</a></code> (also see details below, <a href="#gaptext">gap
+text</a>, <a href="#gapnumeric">gap numeric</a>)</li>
+</ul>
+<p>By default, 1 point can be reached for each gap (specify
+<code>points</code> to your needs). The total number of points for
+completing a task is defined as the sum of points of all gaps.</p>
+<p>Note that in this example, a feedback section was also provided. The
+feedback is optional, but usually it is a good idea to give some
+explanation for students. In gap exercises the feedback refers to the
+whole task, not to a specific gap. Group your feedback into appropriate
+sections, which can be opened/closed for better user experience (use
+<code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> html
+tags).</p>
+</div>
+<div class="section level3">
+<h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
+</h3>
+<p>If you want to have more fine-grained control, consider the RMD
+template <code>rqti: gap (complex)</code>, which uses more yaml
+attributes and more complex calls of the helper functions.</p>
+<pre><code>---
+type: gap # type of exercise
+knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
+identifier: gap001 # think twice about this id for later data analysis!
+title: A meaningful title that can be displayed in the LMS
+---
+
+```{r, preparation}
+library(rqti)
+```
+
+```{r, data}
+iq &lt;- round(rnorm(10, 100, 15))
+mean_iq &lt;- mean(iq)
+```
+
+# question
+
+## numeric gaps
+
+IQ Tests are standardized to have a mean value of &lt;&lt;100&gt;&gt;.
+
+You conducted an IQ test for 10 persons and found the following values: 
+
+`r iq`
+
+What is the mean value of these IQ values? `r gap_numeric(mean(iq))`
+
 The same question, but now with a tolerance of +-5: `r gap_numeric(mean(iq), tolerance = 5)`
 
-The same question, but now with a relative tolerance of +-5%: `r gap_numeric(mean(iq), tolerance = 5, tolerance_type = "absolute")`
+The parameter `tolerance_type` determines how the tolerance is calculated.
 
-In the last gap, the tolerance was set to 5, meaning that the solution+-5 is treated as correct. The parameter `tolerance_type` determines how the tolerance is calculated. Setting it to `relative`, would make the interval go from solution+-5% of the solution.
+The same question, but now with a relative tolerance of +-5%: `r gap_numeric(mean(iq), tolerance = 5, tolerance_type = "relative")`
 
 ## text gaps
 
@@ -159,67 +240,7 @@ Please be advised that OPAL has introduced a new attribute for text gaps—`tole
 1. The correct mean value for `r iq` is `r mean_iq`.
 1. The original IQ test was developed by Alfred Binet.
 1. WAIS: W stands for Wechsler
-1. It is the Stanford-Binet Intelligence Scales.</code></pre>
-<p>Clicking on the Knit-button will produce the following in the viewer
-pane:</p>
-<p><img src="images/gaps1.png"></p>
-<p>Alternatively, change the knit parameter to
-<code>knit: render_opal</code> (see <a href="api_opal.html">API
-Opal</a>) to upload to opal directly, producing:</p>
-<p><img src="images/gap-simple.jpg"></p>
-<p>As you can see, there are two ways to create a gap in Rmd
-content:</p>
-<ul>
-<li>Put the right answer inside <code>&lt;&lt;</code> …
-<code>&gt;&gt;</code> (or the equivalent <code>&lt;gap&gt;</code> …
-<code>&lt;/gap&gt;</code>). Example: <code>&lt;&lt;3.14&gt;&gt;</code>
-or <code>&lt;&lt;sometext&gt;&gt;</code>
-</li>
-<li>use the helper functions <code><a href="../reference/gap_numeric.html">?gap_numeric</a></code> and
-<code><a href="../reference/gap_text.html">?gap_text</a></code> (see details below)</li>
-</ul>
-<p>By default, 1 point can be reached for each gap (specify
-<code>points</code> to your needs). The total number of points for
-completing a task is defined as the sum of points of all gaps.</p>
-<p>Note that in this example, a feedback section was also provided. The
-feedback is optional, but usually it is a good idea to give some
-explanation for students. In gap exercises the feedback refers to the
-whole task, not to a specific gap. Group your feedback into appropriate
-sections, which can be opened/closed for better user experience (use
-details and summary html tags).</p>
-</div>
-<div class="section level3">
-<h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
-</h3>
-<p>If you want to have more fine-grained control, consider the RMD
-template <code>RQTI: gap (complex)</code>, which uses more yaml
-attributes and more complex calls of the helper functions.</p>
-<pre><code>---
-type: gap # type of exercise
-knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
-identifier: TOPIC1_Q001 # think twice about this id for later data analysis!
-title: A meaningful title that can be displayed in the LMS
----
-
-```{r echo=F}
-library(rqti)
-```
-
-# question
-
-## numeric gaps
-
-The rqti package has &lt;&lt;114&gt;&gt; tests. The test coverage of the package is `r gap_numeric(90, tolerance = 5, tolerance_type = "relative", points = 2, response_identifier = "tstCov", expected_length = 10, placeholder = "digits only")`%.
-
-In the last gap, the tolerance was set to 5 and the correct solution to 90. This means that the interval from 85 to 95 is a correct response (90+-5). The parameter `tolerance_type` determines how the tolerance is calculated. Setting it to `relative`, would make the interval go from 0.855 to 0.945 (90+-5%). The `response_identifier` is useful for later data anlysis to uniquely identify all gaps of a single exercise. The paramter `expected_length` is somewhat unpredictable in different browsers. You will need to experiment a little bit and maybe create some wrappers around the gap functions.
-
-## text gaps
-
-The rqti package can access the API of the learning management system &lt;&lt;OPAL&gt;&gt; (by BPS). BPS stands for `r gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"), tolerance = 4, case_sensitive = FALSE, placeholder = "text without special characters", expected_length = 25)`. OPAL allows a new attribute for text gaps (`tolerance`), which takes into account spelling mistakes. Only use it with the OPAL LMS as it is probably not supported on other LMS. Further note that using this attribute will make the xml files invalid regarding the QTI standard.
-
-# feedback
-
-For numeric gaps, the LMS will usually display the correct value inline, but you might still want to provide some detailed explanations here.
+1. It is the Stanford-Binet Intelligence Scales.
 
 &lt;!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from the next line:
 
@@ -233,7 +254,7 @@ Try again. (Only displayed if the solution is not correct.)
 --&gt;</code></pre>
 <p>In Opal this renders as:</p>
 <div class="figure">
-<img src="images/gap-complex.jpg" alt=""><p class="caption">Preview of gap exercise in LMS OPAL</p>
+<img src="images/gap-complex.jpg" style="width:100.0%" alt=""><p class="caption">Preview of gap exercise in LMS OPAL</p>
 </div>
 </div>
 <div class="section level2">
@@ -286,7 +307,7 @@ type:</p>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">expected_length =</span> <span class="dv">10</span>, <span class="at">placeholder =</span> <span class="st">"put mean value here"</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(gap1)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="fl">1.4</span>], tolerance<span class="sc">:</span> <span class="fl">10.0</span>, tolerance_type<span class="sc">:</span> relative, points<span class="sc">:</span> <span class="fl">5.0</span>, response_identifier<span class="sc">:</span> mean_value, include_lower_bound<span class="sc">:</span> yes, include_upper_bound<span class="sc">:</span> yes, expected_length<span class="sc">:</span> <span class="fl">10.0</span>, placeholder<span class="sc">:</span> put mean value here, type<span class="sc">:</span> numeric}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
-<p>As you can see, we also use yaml in the end, but for most users it is
+<p>As you can see, we just use yaml in the end, but for most users it is
 more convenient to have a specific R function instead.</p>
 <p>Argument list of <code>gap_numeric</code>:</p>
 <div class="section level4">
@@ -328,22 +349,23 @@ identifier.</p>
 <div class="section level4">
 <h4 id="include_lower_bound">include_lower_bound<a class="anchor" aria-label="anchor" href="#include_lower_bound"></a>
 </h4>
-<p>Specifies whether or not the lower bound is included in the tolerance
-interval</p>
+<p>Specifies whether the lower bound is included in the tolerance
+interval.</p>
 </div>
 <div class="section level4">
 <h4 id="inclue_upper_bound">inclue_upper_bound<a class="anchor" aria-label="anchor" href="#inclue_upper_bound"></a>
 </h4>
-<p>Specifies whether or not the upper bound is included in the tolerance
-interval</p>
+<p>Specifies whether the upper bound is included in the tolerance
+interval.</p>
 </div>
 <div class="section level4">
 <h4 id="expected_length">expected_length<a class="anchor" aria-label="anchor" href="#expected_length"></a>
 </h4>
-<p>Sets a size of text input field in content delivery engine. This
-value is not assigned directly, but calculated according to the number
-of symbols of the solution value. The browsers display it
-inconsistently, but we tried to create sensible defaults.</p>
+<p>Specifies the size of the text input field in the content delivery
+engine. This value is not directly assigned, it is calculated based on
+the number of symbols in the solution value. Browsers display the input
+field length inconsistently, but we have endeavored to establish
+sensible defaults.</p>
 </div>
 <div class="section level4">
 <h4 id="placeholder">placeholder<a class="anchor" aria-label="anchor" href="#placeholder"></a>
@@ -358,9 +380,12 @@ for hints (e.g. <em>numbers only</em>).</p>
 <p>This helper function is designed to generate a formatted string
 describing a gap in Rmd content, where the answer is a
 string/character:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gap2 <span class="ot">&lt;-</span> <span class="fu">gap_text</span>(<span class="fu">gap_text</span>(<span class="fu">c</span>(<span class="st">"Bildungsportal Sachsen"</span>, <span class="st">"Bildungs Portal Sachsen"</span>), <span class="at">tolerance =</span> <span class="dv">4</span>, <span class="at">case_sensitive =</span> <span class="cn">FALSE</span>, <span class="at">placeholder =</span> <span class="st">"text without special characters"</span>, <span class="at">expected_length =</span> <span class="dv">25</span>))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(gap2)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [Bildungsportal Sachsen,Bildungs Portal Sachsen], tolerance<span class="sc">:</span>,   <span class="fl">4.0</span>, case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">25.0</span>, placeholder<span class="sc">:</span> text without,   special characters, type<span class="sc">:</span> text_opal}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span>], case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">205.0</span>, type<span class="sc">:</span> text}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gap2 <span class="ot">&lt;-</span> <span class="fu">gap_text</span>(<span class="fu">gap_text</span>(<span class="fu">c</span>(<span class="st">"Bildungsportal Sachsen"</span>, <span class="st">"Bildungs Portal Sachsen"</span>),</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">tolerance =</span> <span class="dv">4</span>, <span class="at">case_sensitive =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">placeholder =</span> <span class="st">"text without special characters"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">expected_length =</span> <span class="dv">25</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(gap2)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [Bildungsportal Sachsen,Bildungs Portal Sachsen], tolerance<span class="sc">:</span>,   <span class="fl">4.0</span>, case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">25.0</span>, placeholder<span class="sc">:</span> text without,   special characters, type<span class="sc">:</span> text_opal}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span>], case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">205.0</span>, type<span class="sc">:</span> text}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
 <p>Argument list of <code>gap_text</code>:</p>
 <div class="section level4">
 <h4 id="solution-1">solution<a class="anchor" aria-label="anchor" href="#solution-1"></a>
@@ -396,10 +421,11 @@ identifier.</p>
 <div class="section level4">
 <h4 id="expected_length-1">expected_length<a class="anchor" aria-label="anchor" href="#expected_length-1"></a>
 </h4>
-<p>Sets a size of text input field in content delivery engine. This
-value is not assigned directly, but calculated according to the number
-of symbols of the solution value. The browsers display it
-inconsistently, but we tried to create sensible defaults.</p>
+<p>Specifies the size of the text input field in the content delivery
+engine. This value is not directly assigned, it is calculated based on
+the number of symbols in the solution value. Browsers display the input
+field length inconsistently, but we have endeavored to establish
+sensible defaults.</p>
 </div>
 <div class="section level4">
 <h4 id="placeholder-1">placeholder<a class="anchor" aria-label="anchor" href="#placeholder-1"></a>
@@ -411,18 +437,20 @@ for hints (e.g. <em>numbers only</em>).</p>
 <div class="section level3">
 <h3 id="some-advice-on-gap-exercises">Some advice on gap exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-gap-exercises"></a>
 </h3>
-<p>You cannot do much wrong with gap exercises. They are perfect because
-they reduce guessing and often have reasonably high difficulty. Numeric
-exercises usually involve calculations that often cannot be guessed at
-all. Text gaps are more difficult to create, but you can provide several
-alternative solutions and with Opal you can even take into account
-spelling mistakes. Obviously, you can also make bad gap exercises, so be
-mindful.</p>
-<p>Another hint: If you want to combine single choice questions with
-gaps in one exercise, simply use a numeric gap for the single choice
-questions and provide the solutions in the question. For instance, ____
-(0 = not significant, 1 = significant). This way, you can use gaps for
-all questions. They are very flexible.</p>
+<p>Gap exercises are generally foolproof, offering an ideal format by
+minimizing guessing and often presenting a reasonably high level of
+difficulty. Numeric exercises, involving calculations that are typically
+not guessable, are especially effective. While crafting text gaps may be
+more intricate, the option to offer multiple alternative solutions and
+leverage Opal to accommodate spelling errors enhances their versatility.
+Nevertheless, it is important to note that, like any exercise, gap
+exercises can be poorly designed, so be mindful in their creation.</p>
+<p>Here is another tip: To seamlessly integrate single-choice questions
+with gaps in a single exercise, employ a numeric gap for the
+single-choice questions and include the solutions within the question.
+For example, fill in the blank: ____ (0 = not significant, 1 =
+significant). This approach allows you to use gaps for all questions,
+showcasing their remarkable flexibility.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

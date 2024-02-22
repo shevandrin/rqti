@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Table Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-02-21</h4>
+            <h4 data-toc-skip class="date">2024-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/HEAD/vignettes/table.Rmd" class="external-link"><code>vignettes/table.Rmd</code></a></small>
       <div class="d-none name"><code>table.Rmd</code></div>
@@ -135,7 +135,7 @@ Hint: Use visual editing mode in RStudio to quickly change your table.
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.</code></pre>
 <p>Clicking the Knit-Button will produce:</p>
 <div class="figure">
-<img src="images/xml/table-simple.jpg" style="width:100.0%" alt=""><p class="caption">Preview of table exercise rendered by QTIJS</p>
+<img src="images/xml/table-simple.jpg" style="width:100.0%" border="2px" alt=""><p class="caption">Preview of table exercise rendered by QTIJS</p>
 </div>
 <p>Alternatively, change the knit parameter to
 <code>knit: rqti::render_opal</code> (see <a href="api_opal.html">API
@@ -232,17 +232,20 @@ learning management system settings. Default is the file name.</p>
 </h4>
 <p>If <code>true</code> (the default), randomizes the order of rows and
 columns. Only in rare occasions it makes sense to have a strict order of
-elements (setting shuffle to <code>false</code>).</p>
+elements (setting shuffle to <code>false</code>). Overwrites
+<code>shuffle_rows</code> and <code>shuffle_cols</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="shuffle_rows">shuffle_rows<a class="anchor" aria-label="anchor" href="#shuffle_rows"></a>
 </h4>
-<p>Only shuffle the rows. Default is <code>true</code>.</p>
+<p>Only shuffle the rows. Default is <code>true</code>. Overwritten by
+<code>shuffle</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="shuffle_cols">shuffle_cols<a class="anchor" aria-label="anchor" href="#shuffle_cols"></a>
 </h4>
-<p>Only shuffle the columns. Default is <code>true</code>.</p>
+<p>Only shuffle the columns. Default is <code>true</code>. Overwritten
+by <code>shuffle</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="abbr_id">abbr_id<a class="anchor" aria-label="anchor" href="#abbr_id"></a>

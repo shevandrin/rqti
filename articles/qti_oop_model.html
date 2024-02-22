@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>QTI OOP Model</h1>
             
-            <h4 data-toc-skip class="date">2024-02-21</h4>
+            <h4 data-toc-skip class="date">2024-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/HEAD/vignettes/qti_oop_model.Rmd" class="external-link"><code>vignettes/qti_oop_model.Rmd</code></a></small>
       <div class="d-none name"><code>qti_oop_model.Rmd</code></div>
@@ -114,23 +114,44 @@ want to create exercises without relying on Rmd files. Under the hood,
 rqti uses S4 OOP. This means that you can create all exercise types as
 objects, which gives you more flexibility and is much faster. If you are
 happy with Rmd, there is nothing wrong using it. If you want to go to
-the next level, consider creating exercise objects directly.</p>
+the next level, consider creating exercise objects directly. In the
+future we want to add simple constructor functions instead of relying on
+the <code>new</code> function, so that the OOP system is more
+accessible. Currently, the focus is still on the RMD interface.</p>
 <p>First, check out the overview of our classes:</p>
 <div class="zoomable-image">
 <p><img src="images/s4model.svg" alt="Class diagram S4"></p>
 </div>
-<p><code>rqti</code> class model consists of classes that represent
-types of tasks (<code><a href="../reference/SingleChoice-class.html">?SingleChoice</a></code>,
-<code><a href="../reference/MultipleChoice-class.html">?MultipleChoice</a></code>, <code><a href="../reference/Essay-class.html">?Essay</a></code>, <code><a href="../reference/Entry-class.html">?Entry</a></code>,
-<code><a href="../reference/Order-class.html">?Order</a></code>, <code><a href="../reference/DirectedPair-class.html">?DirectedPair</a></code>,
-<code><a href="../reference/MultipleChoiceTable-class.html">?MultipleChoiceTable</a></code>, <code><a href="../reference/OneInRowTable-class.html">?OneInRowTable</a></code>,
-<code><a href="../reference/OneInColTable-class.html">?OneInColTable</a></code>), elements of interactive content of tasks
-(<code><a href="../reference/ModalFeedback-class.html">?ModalFeedback</a></code>, <code><a href="../reference/CorrectFeedback-class.html">?CorrectFeedback</a></code>,
-<code><a href="../reference/WrongFeedback-class.html">?WrongFeedback</a></code>, <code><a href="../reference/TextGap-class.html">?TextGap</a></code>,
-<code><a href="../reference/NumericGap-class.html">?NumericGap</a></code>, <code><a href="../reference/InlineChoice-class.html">?InlineChoice</a></code>,
-<code><a href="../reference/TextGapOpal-class.html">?TextGapOpal</a></code>), tests and their sections
-(<code><a href="../reference/AssessmentSection-class.html">?AssessmentSection</a></code>, <code><a href="../reference/AssessmentTest-class.html">?AssessmentTest</a></code>,
-<code><a href="../reference/AssessmentTestOpal-class.html">?AssessmentTestOpal</a></code>).</p>
+<p>The <code>rqti</code> class model consists of classes that represent
+types of tasks:</p>
+<ul>
+<li><code><a href="../reference/SingleChoice-class.html">?SingleChoice</a></code></li>
+<li><code><a href="../reference/MultipleChoice-class.html">?MultipleChoice</a></code></li>
+<li><code><a href="../reference/Essay-class.html">?Essay</a></code></li>
+<li><code><a href="../reference/Entry-class.html">?Entry</a></code></li>
+<li><code><a href="../reference/Order-class.html">?Order</a></code></li>
+<li><code><a href="../reference/DirectedPair-class.html">?DirectedPair</a></code></li>
+<li><code><a href="../reference/MultipleChoiceTable-class.html">?MultipleChoiceTable</a></code></li>
+<li><code><a href="../reference/OneInRowTable-class.html">?OneInRowTable</a></code></li>
+<li><code><a href="../reference/OneInColTable-class.html">?OneInColTable</a></code></li>
+</ul>
+<p>In addition there are classes for the elements of interactive content
+of tasks:</p>
+<ul>
+<li><code><a href="../reference/TextGap-class.html">?TextGap</a></code></li>
+<li><code><a href="../reference/NumericGap-class.html">?NumericGap</a></code></li>
+<li><code><a href="../reference/InlineChoice-class.html">?InlineChoice</a></code></li>
+<li><code><a href="../reference/TextGapOpal-class.html">?TextGapOpal</a></code></li>
+<li><code><a href="../reference/ModalFeedback-class.html">?ModalFeedback</a></code></li>
+<li><code><a href="../reference/CorrectFeedback-class.html">?CorrectFeedback</a></code></li>
+<li><code><a href="../reference/WrongFeedback-class.html">?WrongFeedback</a></code></li>
+</ul>
+<p>Finally, there are classes for tests and their sections:</p>
+<ul>
+<li><code><a href="../reference/AssessmentSection-class.html">?AssessmentSection</a></code></li>
+<li><code><a href="../reference/AssessmentTest-class.html">?AssessmentTest</a></code></li>
+<li><code><a href="../reference/AssessmentTestOpal-class.html">?AssessmentTestOpal</a></code></li>
+</ul>
 <div class="section level2">
 <h2 id="how-to-create-task-objects">How to create task objects<a class="anchor" aria-label="anchor" href="#how-to-create-task-objects"></a>
 </h2>
@@ -138,8 +159,8 @@ types of tasks (<code><a href="../reference/SingleChoice-class.html">?SingleChoi
 <ol style="list-style-type: decimal">
 <li>a call to <code>new</code>
 </li>
-<li>using constructor functions (<strong>will be delivered
-soon</strong>)</li>
+<li>using constructor functions (<strong>will be delivered in the
+future</strong>)</li>
 </ol>
 </div>
 <div class="section level2">
@@ -158,43 +179,44 @@ soon</strong>)</li>
 <span><span class="va">sc1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"SingleChoice"</span>,</span>
 <span>          choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"option 1"</span>, <span class="st">"option 2"</span>, <span class="st">"option 3"</span>, <span class="st">"option 4"</span><span class="op">)</span>,</span>
 <span>          title <span class="op">=</span> <span class="st">"Single Choice Task"</span>,</span>
-<span>          content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Pick up the right option"</span><span class="op">)</span>,</span>
+<span>          content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Select the correct choice."</span><span class="op">)</span>,</span>
 <span>          points <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>          identifier <span class="op">=</span> <span class="st">"sc_v0"</span>,</span>
 <span>          feedback <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">new</span><span class="op">(</span><span class="st">"WrongFeedback"</span>, title <span class="op">=</span> <span class="st">"Error"</span>,</span>
-<span>                                       content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"You made a mistake"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                          <span class="fu">new</span><span class="op">(</span><span class="st">"CorrectFeedback"</span>, title <span class="op">=</span> <span class="st">"Success"</span>,</span>
-<span>                                          content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Well done"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                          <span class="fu">new</span><span class="op">(</span><span class="st">"ModalFeedback"</span>, title <span class="op">=</span> <span class="st">"Common information"</span>,</span>
-<span>                              content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Model answer of some details"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>To see full list of slots call <code><a href="../reference/SingleChoice-class.html">?SingleChoice</a></code></p>
+<span>                           content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"You made a mistake"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                       <span class="fu">new</span><span class="op">(</span><span class="st">"CorrectFeedback"</span>, title <span class="op">=</span> <span class="st">"Success"</span>,</span>
+<span>                           content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Well done"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                       <span class="fu">new</span><span class="op">(</span><span class="st">"ModalFeedback"</span>, title <span class="op">=</span> <span class="st">"Common information"</span>,</span>
+<span>                           content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Model answer of some details"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>To see the full list of slots call <code><a href="../reference/SingleChoice-class.html">?SingleChoice</a></code></p>
 </div>
 <div class="section level2">
-<h2 id="examples-of-creating-section-object">Examples of creating section object<a class="anchor" aria-label="anchor" href="#examples-of-creating-section-object"></a>
+<h2 id="examples-of-creating-section-objects">Examples of creating section objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-section-objects"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># simple example</span></span>
 <span><span class="va">section0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentSection"</span>,</span>
-<span>               identifier <span class="op">=</span> <span class="st">"sect0"</span>,</span>
-<span>               assessment_item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ord0</span><span class="op">)</span><span class="op">)</span></span>
+<span>                identifier <span class="op">=</span> <span class="st">"sect0"</span>,</span>
+<span>                assessment_item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ord0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># note that assessment_item expects a list!</span></span>
 <span><span class="co"># more advance example</span></span>
 <span><span class="va">section1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentSection"</span>,</span>
-<span>               identifier <span class="op">=</span> <span class="st">"sect1"</span>,</span>
-<span>               title <span class="op">=</span> <span class="st">"First Section"</span>,</span>
-<span>               time_limits <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>               visible <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>               assessment_item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sc0</span>, <span class="va">sc1</span><span class="op">)</span>,</span>
-<span>               max_attempts <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>               allow_comment <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>                identifier <span class="op">=</span> <span class="st">"sect1"</span>,</span>
+<span>                title <span class="op">=</span> <span class="st">"First Section"</span>,</span>
+<span>                time_limits <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>                visible <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                assessment_item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sc0</span>, <span class="va">sc1</span><span class="op">)</span>,</span>
+<span>                max_attempts <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                allow_comment <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="examples-of-creating-test-object">Examples of creating test object<a class="anchor" aria-label="anchor" href="#examples-of-creating-test-object"></a>
+<h2 id="examples-of-creating-test-objects">Examples of creating test objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-test-objects"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># simple example with a call to `new`</span></span>
 <span><span class="va">test0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentTest"</span>,</span>
 <span>               identifier <span class="op">=</span> <span class="st">"test"</span>,</span>
-<span>               section<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span><span class="op">)</span></span>
+<span>               section <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># simple example using constructor `test()`</span></span>
 <span><span class="va">test0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test.html">test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span>, <span class="st">"test"</span><span class="op">)</span></span>
 <span><span class="co"># more advance example with a call to `new`</span></span>
@@ -202,7 +224,7 @@ soon</strong>)</li>
 <span>             identifier <span class="op">=</span> <span class="st">"test"</span>,</span>
 <span>             title <span class="op">=</span> <span class="st">"Test"</span>,</span>
 <span>             navigation_mode <span class="op">=</span> <span class="st">"linear"</span>,</span>
-<span>             section<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span>,</span>
+<span>             section <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span>,</span>
 <span>             time_limits <span class="op">=</span> <span class="fl">60</span>,</span>
 <span>             max_attempts <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>             allow_comment <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>

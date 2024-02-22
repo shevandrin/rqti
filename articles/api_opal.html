@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Working with API OPAL from rqti</h1>
             
-            <h4 data-toc-skip class="date">2024-02-21</h4>
+            <h4 data-toc-skip class="date">2024-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/HEAD/vignettes/api_opal.Rmd" class="external-link"><code>vignettes/api_opal.Rmd</code></a></small>
       <div class="d-none name"><code>api_opal.Rmd</code></div>
@@ -115,6 +115,29 @@ QTI-compliant exercise file in XML format, the <code>upload2opal</code>
 function wraps it into a zip archive prior to uploading it to
 OPAL.</p></li>
 </ol>
+<p>If you are working on individual exercises, you can just use
+<code>knit: rqti::render_opal</code> in the yaml-section to
+automatically render to opal.</p>
+<p>There are several opal-specific yaml attributes, which are explicitly
+explained in the articles (top right). Two additional ones you might
+want to use are:</p>
+<div class="section level4">
+<h4 id="calculator">calculator<a class="anchor" aria-label="anchor" href="#calculator"></a>
+</h4>
+<p>If a calculator is required for this task, you need to assign the
+‘calculator’ attribute the type ‘simple’ or ‘scientific’. This only
+works on OPAL.</p>
+</div>
+<div class="section level4">
+<h4 id="files">files<a class="anchor" aria-label="anchor" href="#files"></a>
+</h4>
+<p>If additional files are required to complete this task, you need to
+assign the ‘files’ attribute a single file path or a list of paths to
+these files. This only works on OPAL.</p>
+<p>Note that these attributes are mainly useful if you work on a single
+exercise. For collections of exercises (tests) it is better to set these
+attributes when creating the test intead of in the RMD-file.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
