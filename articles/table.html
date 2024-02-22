@@ -286,7 +286,10 @@ columns:</p>
 file, <code>rqti</code> takes the first word of a row or column element
 and combines it with the abbreviation of the remaining text of the
 element. Example: for the element “Mean Value Theorem for Integrals”
-<code>rqti</code> makes the identifier “Mean_VTfI”.</li>
+<code>rqti</code> makes the identifier “Mean_VTfI”. If the row/column
+starts with digits, “col”/“row” is added as prefix as identifiers are
+not allowed to start with a number. All special characters are
+removed.</li>
 </ol>
 <p>We experimented with different solutions and settled on these simple
 versions. If you need more control of the identifiers, please open an
