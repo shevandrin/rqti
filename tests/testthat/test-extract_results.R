@@ -50,8 +50,8 @@ test_that("Testing function extract_results with zip archive", {
     expected <- expected[order(expected$date),]
     rownames(expected) <- NULL
 
-    expected$score_candidate <- as.character(expected$score_candidate)
-    expected$score_max <- as.character(expected$score_max)
+    expected$score_candidate <- as.double(expected$score_candidate)
+    expected$score_max <- as.double(expected$score_max)
     expected$is_response_correct <- expected$is_response_correct
 
     expect_equal(sut,expected)
@@ -70,8 +70,8 @@ test_that("Testing function extract_results", {
     expected <- expected[order(expected$date),]
     rownames(expected) <- NULL
 
-    expected$score_candidate <- as.character(expected$score_candidate)
-    expected$score_max <- as.character(expected$score_max)
+    expected$score_candidate <- as.double(expected$score_candidate)
+    expected$score_max <- as.double(expected$score_max)
 
     # To delete all symbols
     expected$candidate_response <- gsub("[^a-zA-Z0-9]", "",
@@ -97,8 +97,8 @@ test_that("Testing function extract_results", {
     expected <- expected[order(expected$date),]
     rownames(expected) <- NULL
 
-    expected$score_candidate <- as.character(expected$score_candidate)
-    expected$score_max <- as.character(expected$score_max)
+    expected$score_candidate <- as.double(expected$score_candidate)
+    expected$score_max <- as.double(expected$score_max)
     expected$is_response_correct <- expected$is_response_correct
 
     # To delete all symbols
@@ -122,8 +122,8 @@ test_that("Testing function extract_results with zip archive", {
     expected$candidate_response <- as.character(expected$candidate_response)
     expected$expected_response <- as.character(expected$expected_response)
     expected$is_response_correct <- expected$is_response_correct
-    expected$score_candidate <- as.character(expected$score_candidate)
-    expected$score_max <- as.character(expected$score_max)
+    expected$score_candidate <- as.double(expected$score_candidate)
+    expected$score_max <- as.double(expected$score_max)
 
     rownames(expected) <- NULL
     expect_equal(sut,expected)
