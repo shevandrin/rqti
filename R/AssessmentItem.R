@@ -295,7 +295,7 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
                                            base_type = "identifier"),
                   make_outcome_declaration("FEEDBACKMODAL",
                                            cardinality = "multiple",
-                                           value = "",
+                                           value = NULL,
                                            base_type = "identifier"))
               }
               points <- sum(object@points[object@points > 0])
