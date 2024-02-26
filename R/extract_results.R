@@ -109,6 +109,7 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
 }
 
 make_name_unique <- function(file, possible_name) {
+    possible_name <- iconv(possible_name, from = "CP850", to = "UTF-8")
     dir_path <- dirname(file)
     content <- xml2::read_xml(file)
     root <- xml2::xml_name(xml2::xml_root(content))
@@ -292,8 +293,8 @@ get_result_attr_options <- function(file, hide_filename) {
         id_answer = options,
         expected_response = correct_responses,
         candidate_response = cand_responses,
-        score_candidate = score_values,
-        score_max = maxscore_values,
+        score_candidate = as.numeric(score_values),
+        score_max = as.numeric(maxscore_values),
         is_response_correct = as.integer(as.logical(correctness))
     )
     return(data)
@@ -515,7 +516,7 @@ is_answer_given <- function(node) {
 # extracts all xml file in temp folder
 get_all_xml <- function(file, indir, exdir) {
     zip_file <- file.path(indir, file)
-    zip::unzip(zip_file, exdir = exdir)
+    zip::unzip(zip_file, exdir = exdir, junkpaths = TRUE)
     content <- zip::zip_list(zip_file)$filename
     files <- file.path(exdir, content)
     files <- files[grep(".xml", files)]
