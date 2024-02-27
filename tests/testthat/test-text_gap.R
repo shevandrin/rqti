@@ -326,11 +326,7 @@ test_that("Testing function of create_outcome_declaration_entry
     <value>empty</value>
   </defaultValue>
 </outcomeDeclaration>
-<outcomeDeclaration identifier="FEEDBACKMODAL" cardinality="multiple" baseType="identifier">
-  <defaultValue>
-    <value></value>
-  </defaultValue>
-</outcomeDeclaration>
+<outcomeDeclaration identifier="FEEDBACKMODAL" cardinality="multiple" baseType="identifier"/>
 </additionalTag>'
 
     sut1 <- toString(htmltools::tag(
