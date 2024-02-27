@@ -183,14 +183,15 @@ create_manifest <- function(object) {
         "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
         "http://www.w3.org/1998/Math/MathML ",
         "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
-                      "identifier" = paste0(object@title, "_manifest"))
+                      "identifier" = paste0(object@identifier, "_manifest"))
     manifest <- tag("manifest", manifest_attrs)
-    metadata <- tag("metadata", c())
-    organisations <- tag("organisations", c())
+    metadata <- tag("metadata", tagList(tag("schema", "QTIv2.1 Package"),
+                                        tag("schemaversion", "1.0.0")))
+    organizations <- tag("organizations", c())
 
     file_name <- paste0(object@identifier, ".xml")
     file <-  tag("file", list(href = file_name))
-    items <- unlist(Map(getAssessmentItems, object@section))
+    items <- unlist(Map(getAssessmentItems, object@section, USE.NAMES = FALSE))
     dependencies <- Map(create_dependency, names(items))
     test_resource <- tag("resource", list(identifier = object@identifier,
                                           type = "imsqti_test_xmlv2p1",
@@ -201,7 +202,7 @@ create_manifest <- function(object) {
     item_resources <- Map(create_resource_item, names(items), items)
     resources <- tag("resources", list(test_resource, item_resources))
 
-    tagAppendChildren(manifest, metadata, organisations, resources)
+    tagAppendChildren(manifest, metadata, organizations, resources)
 }
 
 # create tag 'dependency' for minifest file

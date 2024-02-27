@@ -114,7 +114,7 @@ create_outcome_declaration_entry <- function(object) {
                                      base_type = "identifier"),
             make_outcome_declaration("FEEDBACKMODAL",
                                      cardinality = "multiple",
-                                     value = "",
+                                     value = NULL,
                                      base_type = "identifier"))
     }
 
