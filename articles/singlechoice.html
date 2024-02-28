@@ -149,9 +149,9 @@ system you can just click the <code>Knit</code> button in RStudio. This
 will produce an rqti xml file and render it in the viewer pane via QTIJS
 (you can also just fire up the displayed server url in the browser if
 you do not use RStudio).</p>
-<div class="figure">
-<img src="images/xml/singlechoice-simple.jpg" style="width:100.0%" alt=""><p class="caption">Preview of single choice exercise rendered by
-QTIJS</p>
+<div class="float">
+<img src="images/xml/singlechoice-simple.jpg" style="width:100.0%" alt="Preview of single choice exercise rendered by QTIJS"><div class="figcaption">Preview of single choice exercise rendered by
+QTIJS</div>
 </div>
 <p>The corresponding xml file is created in the same folder as the Rmd
 file if you click the Knit-Button.
@@ -209,12 +209,12 @@ file for checking the correct answer.</p>
 <p>Of course you can specify the correct choice if need be. Our
 preferred way of doing this is by putting asterisks around this option.
 For instance:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="an">Choose the correct one:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>B</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>*C* <span class="co">&lt;!-- treated as correct --&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>D</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="an">Choose the correct one:</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="ss">- </span>A</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="ss">- </span>B</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="ss">- </span>*C* <span class="co">&lt;!-- treated as correct --&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="ss">- </span>D</span></code></pre></div>
 <p>Once again, this is much easier to read than providing the solution
 somewhere else (e.g. in the yaml section). Furthermore, producing a
 preview as html directly shows you which element is correct.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;If you want to use italics in your choice, you can also
@@ -223,11 +223,11 @@ wrap the correct solution in emphasize tags
 <p>An important note: Do not forget to put a blank line before your
 question and the answer list, otherwise the list will not be a proper
 list:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>A question text that is not separated by a blank line</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>- A</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>- B</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>- C</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>- D</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>A question text that is not separated by a blank line</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>- A</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>- B</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>- C</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>- D</span></code></pre></div>
 <p>Renders as:</p>
 <blockquote>
 <p>A question text that is not separated by a blank line - A - B - C -
@@ -346,8 +346,8 @@ elements with <code>&lt;details&gt;</code> and
 <p>For more complex exercises the list of answers is often just
 available as a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
 <!-- make a separate vignette for this -->
 <!-- ## A programatic low level approach -->
 <!-- The `rqti` package is very flexible in that you can also use low level functions to create rqti content. Let us say you have a csv table with many single choice exercises. It is quite easy to transform this to a rqti section: -->
