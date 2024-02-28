@@ -62,7 +62,7 @@
   </outcomeDeclaration>
   <itemBody>
     <p>Choose the correct order in the multiplication table</p>
-    <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="7">
+    <matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="10">
       <simpleMatchSet>
         <simpleAssociableChoice identifier="Fahrst_dmdFnD" fixed="false" matchMax="4">Fahrst du mit der Familie nach Deutschland?</simpleAssociableChoice>
         <simpleAssociableChoice identifier="Nimm_dPadS" fixed="false" matchMax="4">Nimm den Pullover aus dem Schrank.</simpleAssociableChoice>

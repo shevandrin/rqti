@@ -81,8 +81,9 @@ create_item_body_match_table <- function(object,  row_associations,
                                          col_associations,
                                          max_associations = NULL,
                                          orientation = NULL) {
-    if (is.null(max_associations)) max_associations <- max(c(row_associations,
-                                               col_associations))
+    if (is.null(max_associations)) {
+        max_associations <- length(object@answers_identifiers)
+    }
     prompt <- create_prompt(object)
     fixed <- ifelse(object@shuffle_rows, "false", "true")
     rows <- Map(make_associable_choice,

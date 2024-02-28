@@ -17,7 +17,7 @@ test_that("Testing CreateItemBody MultipleChoiceTable", {
 # more in multipleChoiceTable
 
     example <- '<itemBody>
-<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="4">
+<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="6">
 <prompt>Match the following characters to the Shakespeare play they appeared in:</prompt>
 <simpleMatchSet>
 <simpleAssociableChoice identifier="C" fixed="false" matchMax="3">Capulet</simpleAssociableChoice>
