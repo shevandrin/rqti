@@ -42,19 +42,22 @@ rqti_project <- function(path, ...) {
 
     # create default main R file
     header <- c(
-        "# The rqti package provides a powerful toolset for creating exercises",
-        "# and exams according to the QTI standard directly from R.",
-        "# This script serves as a basic introduction to the rqti package,",
-        "# demonstrating workflow.",
-        "#",
-        "# Step 1. Prepare set of Rmd files with individual exercises.",
-        "# To create Rmd choose one of the Rstudio file templates starting with rqti: .",
-        "# or edit the templates that have been copied to your working directory.\n"
+        "# The rqti package provides a robust toolset for crafting exercises",
+        "# and exams aligned with the QTI standard directly from R.",
+        "# This script serves as a fundamental introduction to rqti,",
+        "# illustrating a basic workflow.",
+        "",
+        "# Step 1: Prepare Rmd files with individual exercises.",
+        "# To create an Rmd file, select RStudio templates starting with rqti ",
+        "# File -> New File -> R Markdown -> From Template -> rqti: ...",
+        "# Alternatively, modify the templates copied to your working directory",
+        "# when the project was created. They can be found in the Files tab",
+        "# in the bottom right region in RStudio, such as gap or dropdown."
     )
 
     text_other <- c(
         "",
-        "# Step 2. Create sections.\n",
+        "# Step 2. Create sections.",
         "section_fixed <- section(exercises)",
         "section_random <- section(exercises_random, n_variants = 4)",
         "sections <- list(section_random, section_fixed)\n",
@@ -66,12 +69,14 @@ rqti_project <- function(path, ...) {
         "                       max_attempts = 1, files = \"demo_file.pdf\",",
         "                       calculator = \"scientific-calculator\",",
         "                       academic_grading = TRUE,",
-        "                       grade_label = \"Note\")",
-        "# Step 4. Render Test using QTIJS server.\n",
-        "zip_file <- createQtiTest(test, \"upload\")",
+        "                       grade_label = \"Note\")\n",
+        "# Step 4. Render Test using QTIJS server.",
+        "zip_file <- createQtiTest(test, dir = \"upload\")",
         "render_zip(zip_file)\n",
-        "# Step 5. Upload to LMS with a final grade.\n",
-        "upload2opal(test_opal)"
+        "# Step 5. Upload to Opal via API or, alternatively, upload zip manually.",
+        "upload2opal(test_opal)",
+        "\n# For more information, read the documentation:",
+        "# https://shevandrin.github.io/rqti/"
     )
 
     contents <- paste(
@@ -108,7 +113,7 @@ replace_knit_method <- function(file_path) {
 print_vector <- function(vec, path, render) {
     temps_files <- Map(copy_template, vec, path, render)
     print_files <- sapply(temps_files, function(x) paste0('\"', x, '\"'))
-    list_files <- paste(print_files, collapse = ", ")
-    if (length(vec) > 1) list_files <- paste0("c(", list_files, ")")
+    list_files <- paste(print_files, collapse = ",\n  ")
+    if (length(vec) > 1) list_files <- paste0("c(\n  ", list_files, "\n)")
     return(list_files)
 }
