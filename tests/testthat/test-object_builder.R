@@ -529,7 +529,7 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
     suppressMessages(rmd2xml(path, path = test_path()))
     xml_file_sut <- xml2::read_xml(test_path("test_order.xml"))
 
-    xml_file_expected <- xml2::read_xml(test_path("file/test_order_opal.xml"))
+    xml_file_expected <- xml2::read_xml(test_path("file/xml/test_order_opal.xml"))
 
 # Strip namespaces from the XML files
     xml_file_sut <- xml_ns_strip(xml_file_sut)

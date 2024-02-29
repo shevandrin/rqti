@@ -18,7 +18,7 @@ sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
                       "Maximize total profits", "Sell the goods at subsidized cost"))
 
 path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
-path2 <-  test_path("file/test_create_qti_task_Essay.xml")
+path2 <-  test_path("file/xml/Essay.xml")
 path3 <- test_path("file/md/test_sc_example1.md")
 
 test_that("Testing function section() to build permanent AssessmentSection", {

@@ -175,8 +175,8 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload
           files xml", {
 
     # Reading of tasks from xml files
-    path1 <- test_path("file/test_create_qti_task_MultipleChoice.xml")
-    path2 <- test_path("file/test_create_qti_task_Order.xml")
+    path1 <- test_path("file/xml/MultipleChoice.xml")
+    path2 <- test_path("file/xml/Order.xml")
 
     example_exam_section <- new("AssessmentSection",
                                identifier = "sec_id",
@@ -194,8 +194,8 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload
 
     list_sut <- zip::zip_list(zip_sut)$filename
     list_expected <- c("id_test.xml", "imsmanifest.xml",
-                       "test_create_qti_task_MultipleChoice.xml",
-                       "test_create_qti_task_Order.xml")
+                       "MultipleChoice.xml",
+                       "Order.xml")
 
     ls <- list_expected %in% list_sut
 

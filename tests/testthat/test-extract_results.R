@@ -57,7 +57,7 @@ test_that("Testing function extract_results with zip archive", {
     expect_equal(sut,expected)
 })
 test_that("Testing function extract_results", {
-    path1 <- test_path("file/stab_results.xml")
+    path1 <- test_path("file/xml/stab_results.xml")
     sut <- suppressWarnings(suppressMessages(
                                 extract_results(path1, level = "items",
                                                 hide_filename = FALSE)[ ,-1]))

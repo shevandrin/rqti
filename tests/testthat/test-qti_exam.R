@@ -4,9 +4,9 @@ file2 <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
 # points = 2.5
 file3 <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
 # points = 3
-file4 <- test_path("file/test_create_qti_task_NumericGap.xml")
+file4 <- test_path("file/xml/NumericGap.xml")
 # points = 1
-file5 <- test_path("file/test_create_qti_task_TextGapOpal.xml")
+file5 <- test_path("file/xml/TextGapOpal.xml")
 # points = 3
 file6 <- test_path("file/md/test_mc_example.md")
 # points = 3
@@ -95,7 +95,7 @@ test_that("Testing createQtiTest method behavior when the Rmd file
 test_that("Testing createQtiTest method", {
               path_1 <- test_path("file/rmd/test_mc_no_point.Rmd")
               path_2 <- test_path("file/md/test_sc_example2.md")
-              path_3 <- test_path("file/test_create_qti_task_MultipleChoice.xml")
+              path_3 <- test_path("file/xml/MultipleChoice.xml")
 
               sut_1 <- createQtiTest(path_1)
               sut_2 <- createQtiTest(path_2)
@@ -126,3 +126,4 @@ test_that("Testing createQtiTest method for AssessmentItem object", {
 
     unlink("exam_folder", recursive = TRUE)
 })
+

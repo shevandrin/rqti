@@ -637,7 +637,7 @@ test_that("Testing of time_limits in AssessmentTest class", {
           })
 test_that("Testing getPoints() method in case the point of Task
           in XML file is not defined", {
-    path <- test_path("file/test_Essay_without_Maxscore_Minscore.xml")
+    path <- test_path("file/xml/Essay_without_Maxscore_Minscore.xml")
     sut_points <- getPoints(path)
     expect_equal(sut_points, 1)
 })

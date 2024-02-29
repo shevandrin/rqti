@@ -1,6 +1,6 @@
 # Essay
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_Essay.xml")
+    path <- test_path("file/xml/Essay.xml")
     expected <- readLines(path)
 
     essay <- new("Essay", prompt = "Test task",
@@ -15,7 +15,7 @@ test_that("create_qti_task", {
 
 # MultipleChoice
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_MultipleChoice.xml")
+    path <- test_path("file/xml/MultipleChoice.xml")
     expected <- readLines(path)
     mc <- new("MultipleChoice",
                identifier = "mpc", prompt = "What does 3/4 + 1/4 = ?",
@@ -33,7 +33,7 @@ test_that("create_qti_task", {
 
 # SingleChoice
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_SingleChoice.xml")
+    path <- test_path("file/xml/SingleChoice.xml")
     expected <- readLines(path)
     sc <- new("SingleChoice",
                prompt = "What is the percentage of 3/20?",
@@ -50,7 +50,7 @@ test_that("create_qti_task", {
 
 # Order
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_Order.xml")
+    path <- test_path("file/xml/Order.xml")
     expected <- readLines(path)
     order <- new("Order",
                   identifier = "ord",
@@ -71,7 +71,7 @@ test_that("create_qti_task", {
 
 # OneInColTable
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_OneInColTable.xml")
+    path <- test_path("file/xml/OneInColTable.xml")
     expected <- readLines(path)
     oneInColTable <- new("OneInColTable",
                          content = list("<p>\"One in col\" table task</p>",
@@ -95,7 +95,7 @@ test_that("create_qti_task", {
 
 # OneInRowTable
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_OneInRowTable.xml")
+    path <- test_path("file/xml/OneInRowTable.xml")
     expected <- readLines(path)
     OneInRowTable <- new("OneInRowTable",
                          content = list("<p>\"One in row\" table task</p>",
@@ -118,7 +118,7 @@ test_that("create_qti_task", {
 
 # MultipleChoiceTable
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_MultipleChoiceTable.xml")
+    path <- test_path("file/xml/MultipleChoiceTable.xml")
     expected <- readLines(path)
 
     MultipleChoiceTable <- new("MultipleChoiceTable",
@@ -143,7 +143,7 @@ test_that("create_qti_task", {
 
 # DirectedPair
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_DirectedPair.xml")
+    path <- test_path("file/xml/DirectedPair.xml")
     expected <- readLines(path)
     DirectedPair <- new("DirectedPair",
                     content = list("<p>\"Directed pairs\" task</p>"),
@@ -165,7 +165,7 @@ test_that("create_qti_task", {
 
 # TextGapOpal
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_TextGapOpal.xml")
+    path <- test_path("file/xml/TextGapOpal.xml")
     expected <- readLines(path)
 TextGapOpal <- new("Entry",
                    identifier = "tgo",
@@ -188,7 +188,7 @@ TextGapOpal <- new("Entry",
 
 # NumericGap
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_NumericGap.xml")
+    path <- test_path("file/xml/NumericGap.xml")
     expected <- readLines(path)
 NumericGap <- new("Entry",
                   identifier = "new",
@@ -211,7 +211,7 @@ NumericGap <- new("Entry",
 
 # InlineChoice
 test_that("create_qti_task", {
-    path <- test_path("file/test_create_qti_task_InlineChoice.xml")
+    path <- test_path("file/xml/InlineChoice.xml")
     expected <- readLines(path)
 InlineChoice <- new("Entry",
                     identifier = "new",
