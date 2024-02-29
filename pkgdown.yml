@@ -3,6 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   api_opal: api_opal.html
+  compatibility: compatibility.html
   directedpairs: directedpairs.html
   dropdown: dropdown.html
   essay: essay.html
@@ -14,7 +15,7 @@ articles:
   singlechoice: singlechoice.html
   table: table.html
   workflow: workflow.html
-last_built: 2024-02-28T09:49Z
+last_built: 2024-02-29T10:33Z
 urls:
   reference: https://shevandrin.github.io/rqti/reference
   article: https://shevandrin.github.io/rqti/articles
