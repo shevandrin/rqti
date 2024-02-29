@@ -1,6 +1,6 @@
 file1 <- test_path("file/rmd/test_order.Rmd")
 # points = 1
-file2 <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
+file2 <- test_path("file/rmd/test_DirectedPair_with_table.Rmd")
 # points = 2.5
 file3 <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
 # points = 3

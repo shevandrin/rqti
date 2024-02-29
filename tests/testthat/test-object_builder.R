@@ -316,7 +316,7 @@ test_that("Testing create_question_object() for OnInColTable task, where as_tabl
 })
 
 test_that("Testing create_question_object() with conditions: OnInColTable and as_table=F", {
-    path <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
+    path <- test_path("file/rmd/test_DirectedPair_with_table.Rmd")
     sut <- suppressMessages(create_question_object(path))
     expected <- new("DirectedPair",
                     content = list("<p>Choose the right classes:</p>"),

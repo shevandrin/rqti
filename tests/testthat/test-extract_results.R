@@ -23,7 +23,7 @@ dplyr::summarize(n = dplyr::n(),
             r_it = round(mycor(score_candidate, sum_score - score_candidate),
                          2))
 
-d_exp <- read.csv(test_path("file", "statistics.csv"))
+d_exp <- read.csv(test_path("file/csv", "statistics.csv"))
 d_exp <- d_exp %>%
     dplyr::select(Nr., Response_count, Time_taken:Correlation)
 
@@ -44,7 +44,7 @@ test_that("Testing function extract_results with zip archive", {
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
 
-    path2 <- test_path("file/test_result_items.csv")
+    path2 <- test_path("file/csv/test_result_items.csv")
     expected <- read.csv(path2)
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
@@ -64,7 +64,7 @@ test_that("Testing function extract_results", {
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
 
-    path2 <- test_path("file/test_result_stab_items.csv")
+    path2 <- test_path("file/csv/test_result_stab_items.csv")
     expected <- read.csv(path2)
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
@@ -91,7 +91,7 @@ test_that("Testing function extract_results", {
     # To delete all symbols
     sut$candidate_response <- gsub("[^a-zA-Z0-9]", "", sut$candidate_response)
 
-    path2 <- test_path("file/test-extract_result_essay_gap.csv")
+    path2 <- test_path("file/csv/test-extract_result_essay_gap.csv")
     expected <- read.csv(path2)
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
@@ -114,7 +114,7 @@ test_that("Testing function extract_results with zip archive", {
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
 
-    path2 <- test_path("file/test_result_items_all_type_q.csv")
+    path2 <- test_path("file/csv/test_result_items_all_type_q.csv")
     expected <- read.csv(path2)
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
@@ -136,7 +136,7 @@ test_that("Testing function extract_results with zip archive", {
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
 
-    path2 <- test_path("file/test-extract_result_with_gap_answer.csv")
+    path2 <- test_path("file/csv/test-extract_result_with_gap_answer.csv")
     expected <- read.csv(path2)
     expected$date <- as.POSIXct(expected$date, tz = "UTC")
     expected <- expected[order(expected$date),]
@@ -157,7 +157,7 @@ test_that("Testing function extract_results with zip archive", {
     sut <- suppressMessages(extract_results(path1, level = "items",
                                             hide_filename = FALSE)[ ,-2])
 
-    path2 <- test_path("file/test-extract_result_only_gap.csv")
+    path2 <- test_path("file/csv/test-extract_result_only_gap.csv")
 
     # exclude column of the date stamp
     expected <- read.csv(path2, sep = ";", na.string = NA)[ ,-2]

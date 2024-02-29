@@ -242,7 +242,7 @@ expect_true(!is.na(sc@identifier) && nchar(sc@identifier) > 0)
 test_that("Testing of type of calculators in yaml section of Rmd file", {
 
     # Reading of tasks from Rmd files and create of unique identifiers
-    path1 <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
+    path1 <- test_path("file/rmd/test_DirectedPair_with_table.Rmd")
     suppressMessages(path1obj <- Map(create_question_object, rep(path1, 4)))
     path1obj[[1]]@identifier <- "v1"
     path1obj[[2]]@identifier <- "v2"

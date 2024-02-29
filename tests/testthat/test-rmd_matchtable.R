@@ -14,7 +14,7 @@ test_that("test inherit OneInColTable class from Rmd file
 
 test_that("test inherit DirectedPair class from Rmd file
           with out parameter - as table:F", {
-    file_sut <- test_path("file/rmd/test_DirectedPair_from_table.Rmd")
+    file_sut <- test_path("file/rmd/test_DirectedPair_with_table.Rmd")
     sut <- suppressMessages(create_question_object(file_sut))
     expect_true(inherits(sut, "DirectedPair"))
 })
