@@ -38,7 +38,7 @@ test_that("Test values of attributes in extendedTextInteraction for Essay class"
   <itemBody>
   <p>Earlier technological developments brought more benefits and changed the lives of ordinary people more than recent developments ever will.</p>
   <p>To what extent do you agree or disagree?</p>
-  <extendedTextInteraction responseIdentifier="RESPONSE" expectedLength="100" expectedLines="10" maxStrings="50" minStrings="1" data-allowPaste="false">
+  <extendedTextInteraction responseIdentifier="RESPONSE" expectedLength="100" expectedLines="10" maxStrings="50" minStrings="1" class=\"essay-nocopypaste\" data-allowPaste="false">
     <prompt>Write at least 250 words.</prompt>
   </extendedTextInteraction>
   </itemBody>'
