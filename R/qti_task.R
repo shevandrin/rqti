@@ -53,8 +53,12 @@ create_item_body_essay <- function(object) {
                          "expectedLines" = object@expected_lines,
                          "maxStrings" = object@words_max,
                          "minStrings" = object@words_min,
-                         "data-allowPaste" = tolower(object@data_allow_paste),
-                                                    prompt))
+                         prompt))
+    if (isFALSE(object@data_allow_paste)) {
+        ext_text <- htmltools::tagAppendAttributes(ext_text,
+                                                   "class" = "essay-nocopypaste",
+                                                   "data-allowPaste" = "false")
+    }
     tag("itemBody", list(Map(createText, object@content), ext_text))
 }
 
