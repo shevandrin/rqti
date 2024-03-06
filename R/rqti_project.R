@@ -7,10 +7,9 @@ rqti_project <- function(path, ...) {
     # collect inputs
     dots <- list(...)
     sys_path <- system.file(package="rqti")
-    # copy supplement file
-    file_url <- "https://raw.githubusercontent.com/johannes-titz/formelsammlung/main/main.pdf"
-    download.file(file_url, file.path(path, "demo_file.pdf") , mode = "wb",
-                  quiet = TRUE)
+    # copy mock attachment
+    file_path <- system.file("attachment.pdf", package='rqti')
+    file.copy(file_path, path)
     # copy templates
     temps <- c("singlechoice", "multiplechoice", "dropdown", "order", "table",
                "directedpair", "essay")
@@ -66,7 +65,7 @@ rqti_project <- function(path, ...) {
         "             max_attempts = 2)\n",
         "# Create test for LMS OPAL",
         "test_opal <- test4opal(sections, \"test_demo_opal\", time_limit = 90,",
-        "                       max_attempts = 1, files = \"demo_file.pdf\",",
+        "                       max_attempts = 1, files = \"attachment.pdf\",",
         "                       calculator = \"scientific-calculator\",",
         "                       academic_grading = TRUE,",
         "                       grade_label = \"Note\")\n",
