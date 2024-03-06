@@ -47,7 +47,7 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 
     # warning for data_allow_paste
     if (length(.Object@data_allow_paste) > 0) {
-        warning("The data_allow_paste property only works on LMS Opal.",
+        warning("The data_allow_paste property only works on LMS Opal and OpenOlat.",
                 call. = FALSE)
     }
 
