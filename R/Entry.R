@@ -91,8 +91,6 @@ setMethod("createResponseProcessing", signature(object = "Entry"),
 #' @param object an instance of the S4 object (Gap, InlineChoice, character)
 #' @docType methods
 #' @rdname createText-methods
-#'
-#' @export
 setGeneric("createText", function(object) standardGeneric("createText"))
 
 create_item_body_text_entry <- function(object) {
