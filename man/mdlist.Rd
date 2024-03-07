@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{mdlist}
 \alias{mdlist}
-\title{Create markdown list for answer options}
+\title{Create a markdown list for answer options}
 \usage{
 mdlist(vect, solutions = NULL, gaps = NULL)
 }
@@ -17,10 +17,10 @@ in \code{vect}.}
 gap description if there is a need to build a list of gaps.}
 }
 \value{
-markdown list
+A markdown list.
 }
 \description{
-Create markdown list for answer options
+Create a markdown list for answer options
 }
 \examples{
 #list for multiple choice task

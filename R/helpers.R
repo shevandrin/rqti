@@ -122,7 +122,7 @@ clean_yaml_str <- function(params, solution, type){
     return(result)
 }
 
-#' Create markdown list for answer options
+#' Create a markdown list for answer options
 #'
 #' @param vect A string or numeric vector of answer options for single/multiple
 #'   choice task.
@@ -130,7 +130,7 @@ clean_yaml_str <- function(params, solution, type){
 #'   in `vect`.
 #' @param gaps numeric or string vector, optional; provides primitive
 #'  gap description if there is a need to build a list of gaps.
-#' @return markdown list
+#' @return A markdown list.
 #' @seealso [gap_text()], [gap_numeric()], [dropdown()]
 #' @examples
 #' #list for multiple choice task
