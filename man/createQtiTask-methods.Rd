@@ -24,7 +24,7 @@ directory is used by default.}
 Default is \code{FALSE}.}
 }
 \value{
-xml document.
+A path to xml file.
 }
 \description{
 Create XML file for question specification

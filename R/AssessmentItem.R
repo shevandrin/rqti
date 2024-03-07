@@ -103,7 +103,7 @@ setGeneric("createResponseProcessing",
 #'   directory is used by default.
 #' @param verification A boolean value, optional; to check validity of xml file.
 #'   Default is `FALSE`.
-#' @return xml document.
+#' @return A path to xml file.
 #' @examples
 #' \dontrun{
 #' essay <- new("Essay", prompt = "Test task", title = "Essay")
@@ -123,15 +123,16 @@ setGeneric("createQtiTask",
 #'
 #' @usage createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
 #'   FALSE)
-#' @param object an instance of the [AssessmentTest], [AssessmentTestOpal] or
-#'   [AssessmentItem] S4 object
-#' @param dir string, optional; a folder to store xml file; working directory by
-#'   default
-#' @param verification boolean, optional; to check validity of xml file, default
-#'   `FALSE`
-#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
-#'   zip, xml and downloads files in case of FALSE value; FALSE by default
-#' @return xml document.
+#' @param object An instance of the [AssessmentTest], [AssessmentTestOpal] or
+#'   [AssessmentItem] S4 object.
+#' @param dir A character value, optional; a folder to store xml file; working
+#'   directory is used by default.
+#' @param verification A boolean value, optional; to check validity of xml
+#'   files. Default is `FALSE`.
+#' @param zip_only A boolean value, optional; returns only zip file in case of
+#'   `TRUE` or zip, xml and downloads files in case of `FALSE` value. Default is
+#' `FALSE`.
+#' @return  A path to zip and xml files.
 #' @examples
 #' \dontrun{
 #' essay <- new("Essay", prompt = "Test task", title = "Essay",

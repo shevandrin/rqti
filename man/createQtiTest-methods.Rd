@@ -23,20 +23,21 @@ createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
 \S4method{createQtiTest}{character}(object, dir = getwd())
 }
 \arguments{
-\item{object}{an instance of the \link{AssessmentTest}, \link{AssessmentTestOpal} or
-\link{AssessmentItem} S4 object}
+\item{object}{An instance of the \link{AssessmentTest}, \link{AssessmentTestOpal} or
+\link{AssessmentItem} S4 object.}
 
-\item{dir}{string, optional; a folder to store xml file; working directory by
-default}
+\item{dir}{A character value, optional; a folder to store xml file; working
+directory is used by default.}
 
-\item{verification}{boolean, optional; to check validity of xml file, default
-\code{FALSE}}
+\item{verification}{A boolean value, optional; to check validity of xml
+files. Default is \code{FALSE}.}
 
-\item{zip_only}{boolean, optional; returns only zip file in case of TRUE or
-zip, xml and downloads files in case of FALSE value; FALSE by default}
+\item{zip_only}{A boolean value, optional; returns only zip file in case of
+\code{TRUE} or zip, xml and downloads files in case of \code{FALSE} value. Default is
+\code{FALSE}.}
 }
 \value{
-xml document.
+A path to zip and xml files.
 }
 \description{
 Create zip-archive of the qti test specification
