@@ -50,7 +50,7 @@ test_that("create_qti_task", {
 
 # Order
 test_that("create_qti_task", {
-    path <- test_path("file/xml/Order.xml")
+    path <- test_path("file/xml/Order_output_createQtiTask.xml")
     expected <- readLines(path)
     order <- new("Order",
                   identifier = "ord",
@@ -59,7 +59,8 @@ test_that("create_qti_task", {
                   choices = c("Data collection",
                               "Data cleansing", "Data marking",
                               "Verification and visualization"),
-                  choices_identifiers = c("a1", "a2", "a3", "a4"),
+                  choices_identifiers = c("ChoiceA", "ChoiceB",
+                                          "ChoiceC", "ChoiceD"),
                   points = 1,
                  points_per_answer = FALSE)
     suppressMessages(createQtiTask(order))

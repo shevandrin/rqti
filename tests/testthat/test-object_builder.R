@@ -527,9 +527,9 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
           {
     path <- test_path("file/rmd/test_order.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
-    xml_file_sut <- xml2::read_xml(test_path("test_order.xml"))
+    xml_file_sut <- xml2::read_xml(test_path("ord.xml"))
 
-    xml_file_expected <- xml2::read_xml(test_path("file/xml/test_order_opal.xml"))
+    xml_file_expected <- xml2::read_xml(test_path("file/xml/Order.xml"))
 
 # Strip namespaces from the XML files
     xml_file_sut <- xml_ns_strip(xml_file_sut)
@@ -550,7 +550,7 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
 
     expect_equal(sut, expected)
     expect_equal(list_bv_sut, list_bv_expected )
-    unlink(test_path("test_order.xml"))
+    unlink(test_path("ord.xml"))
 })
 test_that("Testing stop message for create_question_object() function
           in case the type of the task is not specified properly )", {

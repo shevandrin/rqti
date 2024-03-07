@@ -25,8 +25,8 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    <p>Choose the correct order</p>
     <orderInteraction responseIdentifier="RESPONSE" shuffle="true">
+      <prompt>Choose the correct order</prompt>
       <simpleChoice identifier="ChoiceA">Data collection</simpleChoice>
       <simpleChoice identifier="ChoiceB">Data cleansing</simpleChoice>
       <simpleChoice identifier="ChoiceC">Data marking</simpleChoice>
@@ -34,6 +34,22 @@
     </orderInteraction>
   </itemBody>
   <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <isNull>
+          <variable identifier="RESPONSE"/>
+        </isNull>
+      </responseIf>
+      <responseElseIf>
+        <match>
+          <variable identifier="RESPONSE"/>
+          <correct identifier="RESPONSE"/>
+        </match>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MAXSCORE"/>
+        </setOutcomeValue>
+      </responseElseIf>
+    </responseCondition>
     <responseCondition>
       <responseIf>
         <gt>
@@ -53,78 +69,6 @@
         </lt>
         <setOutcomeValue identifier="SCORE">
           <variable identifier="MINSCORE"/>
-        </setOutcomeValue>
-      </responseIf>
-    </responseCondition>
-    <responseCondition>
-      <responseIf>
-        <match>
-          <index n="1">
-            <variable identifier="RESPONSE"/>
-          </index>
-          <index n="1">
-            <correct identifier="RESPONSE"/>
-          </index>
-        </match>
-        <setOutcomeValue identifier="SCORE">
-          <sum>
-            <variable identifier="SCORE"/>
-            <baseValue baseType="float">0.25</baseValue>
-          </sum>
-        </setOutcomeValue>
-      </responseIf>
-    </responseCondition>
-    <responseCondition>
-      <responseIf>
-        <match>
-          <index n="2">
-            <variable identifier="RESPONSE"/>
-          </index>
-          <index n="2">
-            <correct identifier="RESPONSE"/>
-          </index>
-        </match>
-        <setOutcomeValue identifier="SCORE">
-          <sum>
-            <variable identifier="SCORE"/>
-            <baseValue baseType="float">0.25</baseValue>
-          </sum>
-        </setOutcomeValue>
-      </responseIf>
-    </responseCondition>
-    <responseCondition>
-      <responseIf>
-        <match>
-          <index n="3">
-            <variable identifier="RESPONSE"/>
-          </index>
-          <index n="3">
-            <correct identifier="RESPONSE"/>
-          </index>
-        </match>
-        <setOutcomeValue identifier="SCORE">
-          <sum>
-            <variable identifier="SCORE"/>
-            <baseValue baseType="float">0.25</baseValue>
-          </sum>
-        </setOutcomeValue>
-      </responseIf>
-    </responseCondition>
-    <responseCondition>
-      <responseIf>
-        <match>
-          <index n="4">
-            <variable identifier="RESPONSE"/>
-          </index>
-          <index n="4">
-            <correct identifier="RESPONSE"/>
-          </index>
-        </match>
-        <setOutcomeValue identifier="SCORE">
-          <sum>
-            <variable identifier="SCORE"/>
-            <baseValue baseType="float">0.25</baseValue>
-          </sum>
         </setOutcomeValue>
       </responseIf>
     </responseCondition>

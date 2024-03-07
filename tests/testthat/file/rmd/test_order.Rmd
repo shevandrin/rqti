@@ -1,15 +1,12 @@
 ---
-identifier: test_order
+identifier: ord
 type: order
 title: Order
 ---
 # question
-Arrange German cities in ascending order of population
 Choose the correct order
 
-- Berlin
-- Hamburg
-- Munich
-- Cologne
-- Düsseldorf
-- Leipzig
+- Data collection
+- Data cleansing
+- Data marking
+- Verification and visualization
