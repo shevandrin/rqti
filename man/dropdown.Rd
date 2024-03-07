@@ -35,6 +35,10 @@ A character string mapped as yaml.
 \description{
 Create YAML string for InlineChoice object (dropdown list)
 }
+\examples{
+dropdown(c("Option A", "Option B"), response_identifier = "task_dd_list")
+
+}
 \seealso{
 \code{\link[=gap_text]{gap_text()}}, \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=mdlist]{mdlist()}}
 }

@@ -79,6 +79,9 @@ gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
 #'   the answer.
 #' @return A character string mapped as yaml.
 #' @seealso [gap_text()], [gap_numeric()], [mdlist()]
+#' @examples
+#' dropdown(c("Option A", "Option B"), response_identifier = "task_dd_list")
+#'
 #' @export
 dropdown <- function(choices, solution_index = 1, points = 1, shuffle = TRUE,
                      response_identifier = NULL) {
