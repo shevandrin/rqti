@@ -2,7 +2,7 @@
 % Please edit documentation in R/api_opal.R
 \name{get_resources}
 \alias{get_resources}
-\title{Get records of all user's resources on LMS OPAL}
+\title{Get records of all current user's resources on LMS OPAL}
 \usage{
 get_resources(api_user = NULL, api_password = NULL, endpoint = NULL)
 }
@@ -17,8 +17,12 @@ to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
 these command into .Renviron.}
 }
 \value{
-dataframe
+A dataframe with attributes of user's resources.
 }
 \description{
-Get records of all user's resources on LMS OPAL
+Get records of all current user's resources on LMS OPAL
+}
+\examples{
+df <- get_resources()
+
 }

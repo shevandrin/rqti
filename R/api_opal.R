@@ -204,7 +204,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
     return(res)
 }
 
-#' Get records of all user's resources on LMS OPAL
+#' Get records of all current user's resources on LMS OPAL
 #'
 #' @param endpoint endpoint of LMS Opal; by default it is got from environment
 #'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
@@ -212,7 +212,10 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 #'   these command into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
-#' @return dataframe
+#' @return A dataframe with attributes of user's resources.
+#' @examples
+#' df <- get_resources()
+#'
 #' @export
 get_resources <- function(api_user = NULL, api_password = NULL,
                           endpoint = NULL) {
