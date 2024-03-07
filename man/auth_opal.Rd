@@ -17,7 +17,7 @@ to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
 these command into .Renviron.}
 }
 \value{
-user id
+A character string with Opal user id
 }
 \description{
 Function \code{auth_opal()} performs the necessary authentication steps in OPAL
@@ -33,3 +33,8 @@ access to the OPAL API, there is no need to specify the username and
 password again, they will be extracted from the system credential store
 }
 
+\examples{
+\dontrun{
+auth_opal()
+}
+}

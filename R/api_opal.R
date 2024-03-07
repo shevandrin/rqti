@@ -18,7 +18,12 @@
 #'   access to the OPAL API, there is no need to specify the username and
 #'   password again, they will be extracted from the system credential store
 #'
-#' @return user id
+#' @return A character string with Opal user id
+#'
+#' @examples
+#' \dontrun{
+#' auth_opal()
+#' }
 #' @name auth_opal
 #' @rdname auth_opal
 #' @importFrom httr2 request req_error req_perform resp_body_xml req_headers
