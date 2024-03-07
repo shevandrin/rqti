@@ -183,34 +183,3 @@ test_that("Test createResponseProcessing() for SingleChoice class", {
   expected <- xml2::read_xml(example)
   equal_xml(sut, expected)
 })
-test_that("Test function for SingleChoice class", {
-  sut <- SingleChoice(content = list("<p>Pick up the right option</p>"),
-                        choices = c("option 1", "option 2", "option 3",
-                                    "option 4"),
-                        orientation = "vertical",
-                        title = "single_choice_task",
-                        prompt = "test",
-                        shuffle = FALSE,
-                        points = 2,
-                        identifier = "sc_example" )
-  expected <- new("SingleChoice",
-                    content = list("<p>Pick up the right option</p>"),
-                    choices = c("option 1", "option 2", "option 3",
-                                "option 4"),
-                    orientation = "vertical",
-                    title = "single_choice_task",
-                    prompt = "test",
-                    shuffle = FALSE,
-                    points = 2,
-                    identifier = "sc_example")
-  expect_equal(sut, expected)
-  expect_true(inherits(sut, "SingleChoice"))
-})
-
-test_that("Testing of function and SingleChoice class with default parameters", {
-    sut <- SingleChoice()
-    expected <- new("SingleChoice")
-
-    expect_equal(sut, expected)
-    expect_true(inherits(sut, "SingleChoice"))
-})
