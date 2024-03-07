@@ -8,22 +8,20 @@
 \alias{createQtiTask,AssessmentItem}
 \title{Create XML file for question specification}
 \usage{
-createQtiTask(object,
-                dir = NULL,
-                verification = FALSE)
+createQtiTask(object, dir = NULL, verification = FALSE)
 
 \S4method{createQtiTask}{AssessmentItem}(object, dir = NULL, verification = FALSE)
 }
 \arguments{
-\item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
+\item{object}{An instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
 \link{Essay}, \link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable},
 \link{MultipleChoiceTable}, \link{DirectedPair}).}
 
-\item{dir}{string, optional; a folder to store xml file; working directory by
-default}
+\item{dir}{A character value, optional; a folder to store xml file; working
+directory is used by default.}
 
-\item{verification}{boolean, optional; to check validity of xml file, default
-\code{FALSE}}
+\item{verification}{A boolean value, optional; to check validity of xml file.
+Default is \code{FALSE}.}
 }
 \value{
 xml document.
@@ -34,6 +32,6 @@ Create XML file for question specification
 \examples{
 \dontrun{
 essay <- new("Essay", prompt = "Test task", title = "Essay")
-createQtiTask(essay, "result", "TRUE")
+createQtiTask(essay, "result", TRUE)
 }
 }

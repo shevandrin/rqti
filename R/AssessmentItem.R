@@ -95,21 +95,19 @@ setGeneric("createResponseProcessing",
 
 #' Create XML file for question specification
 #'
-#' @usage createQtiTask(object,
-#'                 dir = NULL,
-#'                 verification = FALSE)
-#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#' @usage createQtiTask(object, dir = NULL, verification = FALSE)
+#' @param object An instance of the S4 object ([SingleChoice], [MultipleChoice],
 #'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair]).
-#' @param dir string, optional; a folder to store xml file; working directory by
-#'   default
-#' @param verification boolean, optional; to check validity of xml file, default
-#'   `FALSE`
+#' @param dir A character value, optional; a folder to store xml file; working
+#'   directory is used by default.
+#' @param verification A boolean value, optional; to check validity of xml file.
+#'   Default is `FALSE`.
 #' @return xml document.
 #' @examples
 #' \dontrun{
 #' essay <- new("Essay", prompt = "Test task", title = "Essay")
-#' createQtiTask(essay, "result", "TRUE")
+#' createQtiTask(essay, "result", TRUE)
 #' }
 #' @docType methods
 #' @name createQtiTask-methods
