@@ -42,6 +42,10 @@ A character string mapped as yaml.
 \description{
 Create YAML string for TextGap object
 }
+\examples{
+gap_text(c("Solution", "Solutions"), tolerance = 2)
+
+}
 \seealso{
 \code{\link[=gap_numeric]{gap_numeric()}}, \code{\link[=dropdown]{dropdown()}}, \code{\link[=mdlist]{mdlist()}}
 }

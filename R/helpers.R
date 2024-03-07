@@ -15,6 +15,9 @@
 #' @param placeholder A character string, optional; places helpful text in the
 #'   text input field in the content delivery engine.
 #' @return A character string mapped as yaml.
+#' @examples
+#' gap_text(c("Solution", "Solutions"), tolerance = 2)
+#'
 #' @seealso [gap_numeric()], [dropdown()], [mdlist()]
 #' @export
 gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
