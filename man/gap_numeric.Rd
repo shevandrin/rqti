@@ -50,6 +50,10 @@ A character string mapped as yaml.
 \description{
 Create YAML string for NumericGap object
 }
+\examples{
+gap_numeric(5.0, tolerance = 10, tolerance_type = "relative")
+
+}
 \seealso{
 \code{\link[=gap_text]{gap_text()}}, \code{\link[=dropdown]{dropdown()}}, \code{\link[=mdlist]{mdlist()}}
 }

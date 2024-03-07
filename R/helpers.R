@@ -50,6 +50,9 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 #' @param placeholder A character string, optional; is responsible to place some
 #'   helpful text in text input field in content delivery engine.
 #' @return A character string mapped as yaml.
+#' @examples
+#' gap_numeric(5.0, tolerance = 10, tolerance_type = "relative")
+#'
 #' @seealso [gap_text()], [dropdown()], [mdlist()]
 #' @export
 gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
