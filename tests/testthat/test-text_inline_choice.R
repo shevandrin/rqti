@@ -1,5 +1,5 @@
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
     content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
@@ -40,13 +40,13 @@ In the deep bosom of the ocean buried.
 </blockquote>
 </itemBody>'
 
-    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing ResponseDeclaration Inline", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
     content = list(
     "<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
@@ -77,13 +77,13 @@ In the deep bosom of the ocean buried.
 </mapping>
 </responseDeclaration>'
 
-    sut <- xml2::read_xml(toString(createResponseDeclaration(sc)[[1]]))
+    sut <- xml2::read_xml(toString(createResponseDeclaration(entry)[[1]]))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing OutcomeDeclaration Inline", {
-    sc <- suppressMessages(
+    entry <- suppressMessages(
     new("Entry",
     content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
@@ -141,7 +141,7 @@ In the deep bosom of the ocean buried.
 </additionalTag>'
 
     responseDe <- as.character(htmltools::tag(
-        "additionalTag", list(createOutcomeDeclaration(sc))))
+        "additionalTag", list(createOutcomeDeclaration(entry))))
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
@@ -149,7 +149,7 @@ In the deep bosom of the ocean buried.
 
 #options as numeric
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
                     content = list("<p>One hour is",new("InlineChoice",
                               response_identifier = "RESPONSE",
                               solution_index = 3,
@@ -167,14 +167,14 @@ test_that("Testing CreateItemBody Inline", {
 			</inlineChoiceInteraction>
   minutes</p>
 	</itemBody>'
-    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 # with out score
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
                                content = list(
                                    "<p>One hour is",new("InlineChoice",
                                           response_identifier = "RESPONSE",
@@ -192,14 +192,14 @@ test_that("Testing CreateItemBody Inline", {
 			</inlineChoiceInteraction>
   minutes</p>
 	</itemBody>'
-    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 # with out options_identifier
 test_that("Testing CreateItemBody Inline", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
                         content = list("<p>One hour is",new("InlineChoice",
                                            response_identifier = "RESPONSE",
                                            solution_index = 3,
@@ -215,7 +215,7 @@ test_that("Testing CreateItemBody Inline", {
 			</inlineChoiceInteraction>
   minutes</p>
 	</itemBody>'
-    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })

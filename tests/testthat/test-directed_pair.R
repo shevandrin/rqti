@@ -1,5 +1,5 @@
 test_that("Testing CreateItemBody DirectedPair", {
-    sc <- new("DirectedPair",
+    dp <- new("DirectedPair",
               rows = c("Lion", "Flower", "Mushrooms"),
               rows_identifiers = c("ID_1", "ID_2", "ID_3"),
               cols = c("Animal", "Plant", "Fungi"),
@@ -37,8 +37,7 @@ test_that("Testing CreateItemBody DirectedPair", {
 </matchInteraction>
     </itemBody>'
 
-    # print("I think the name of the attributes confused a little")
-    sut <- xml2::read_xml(toString(createItemBody(sc)))
+    sut <- xml2::read_xml(toString(createItemBody(dp)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
@@ -71,14 +70,13 @@ test_that("Testing createResponseDeclaration() method in DirectedPair class
 </mapping>
 </responseDeclaration>'
 
-    # print("There is not option to give individual values to answer - fixed")
     sut <- xml2::read_xml(toString(createResponseDeclaration(dp)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing OutcomeDeclaration DirectedPair", {
-    sc <- new("DirectedPair",
+    dp <- new("DirectedPair",
               rows = c("Lion", "Flower", "Mushrooms"),
               rows_identifiers = c("ID_1", "ID_2", "ID_3"),
               cols = c("Animal", "Plant", "Fungi"),
@@ -110,7 +108,7 @@ test_that("Testing OutcomeDeclaration DirectedPair", {
     </additionalTag>'
 
     responseDe <- as.character(htmltools::tag("additionalTag",
-                                            list(createOutcomeDeclaration(sc))))
+                                            list(createOutcomeDeclaration(dp))))
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)

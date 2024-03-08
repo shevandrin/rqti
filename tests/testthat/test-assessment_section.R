@@ -224,19 +224,18 @@ test_that("Testing buildAssessmentSection() that returns a warning
 
 test_that("Testing values of slot prompt and slot identifier
           in AssessmentItem class", {
-mc <- new("MultipleChoice",
+    mc <- new("MultipleChoice",
            prompt = as.character(NA))
-
-sc <- new("SingleChoice")
+    sc <- new("SingleChoice")
 
 # Check the values of prompt and identifier for MultipleChoice
-expect_equal(mc@prompt, "")
-expect_true(!is.na(mc@identifier) && nchar(mc@identifier) > 0)
+    expect_equal(mc@prompt, "")
+    expect_true(!is.na(mc@identifier) && nchar(mc@identifier) > 0)
 
 # Check the values of prompt and identifier for SingleChoice
-expect_equal(sc@prompt, "")
-expect_equal(sc@title, sc@identifier)
-expect_true(!is.na(sc@identifier) && nchar(sc@identifier) > 0)
+    expect_equal(sc@prompt, "")
+    expect_equal(sc@title, sc@identifier)
+    expect_true(!is.na(sc@identifier) && nchar(sc@identifier) > 0)
 })
 
 test_that("Testing of type of calculators in yaml section of Rmd file", {
@@ -300,18 +299,3 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
     expect_equal(sut_2,"scientific-calculator")
     expect_equal(sut_3,"scientific-calculator")
 })
-
-# test_that("Testing yaml section of Rmd file in case if file not exist", {
-#     path <- test_path("file/rmd/test_DirectedPair_SimpleCalc_pdf.Rmd")
-#     root_section = suppressMessages(list(section(path)))
-#
-#     result <- tryCatch({
-#         example_exam <- new("AssessmentTestOpal",
-#                         identifier = "id_test_1",
-#                         title = "Mock test",
-#                         section = root_section)
-#     }, error = function(e) e)
-#
-#     expect_true(inherits(result, "error"))
-#     expect_match(result$message, "The following files do not exist: -Not_file.pdf")
-# })

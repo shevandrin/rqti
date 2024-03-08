@@ -18,7 +18,7 @@ test_that("XML validation with schema file for Order", {
 })
 
 test_that("XML validation with schema file for Entry", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
     content = list("<p>Identify the missing word in this famous quote from Shakespeare's Richard III.</p>
 <blockquote>
 <p>
@@ -39,7 +39,7 @@ In the deep bosom of the ocean buried.
 </blockquote>"
     ), title = "inline_choice"))
 
-    sut <- xml2::read_xml(toString(create_assessment_item(sc)))
+    sut <- xml2::read_xml(toString(create_assessment_item(entry)))
     file <- system.file("imsqti_v2p1.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
@@ -47,7 +47,7 @@ In the deep bosom of the ocean buried.
 })
 
 test_that("XML validation with schema file for Entry", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
     content = list(
     '<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
@@ -77,7 +77,7 @@ test_that("XML validation with schema file for Entry", {
                                   "meters under the darkness is found.</p>"),
                                   title = "fill the gaps"))
 
-    sut <- xml2::read_xml(toString(create_assessment_item(sc)))
+    sut <- xml2::read_xml(toString(create_assessment_item(entry)))
     file <- system.file("imsqti_v2p1.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
@@ -101,7 +101,7 @@ test_that("XML validation with schema file for SingleChoice", {
 })
 
 test_that("XML validation with schema file for MultipleChoiceTable", {
-    sc <- new("MultipleChoiceTable",
+    mc <- new("MultipleChoiceTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers  = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -113,7 +113,7 @@ test_that("XML validation with schema file for MultipleChoiceTable", {
               title = "MultipleChoiceTable",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
-    sut <- xml2::read_xml(toString(create_assessment_item(sc)))
+    sut <- xml2::read_xml(toString(create_assessment_item(mc)))
     file <- system.file("imsqti_v2p1.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
@@ -121,7 +121,7 @@ test_that("XML validation with schema file for MultipleChoiceTable", {
 })
 
 test_that("XML validation with schema file for MultipleChoice", {
-    sc <- new("MultipleChoice",
+    mc <- new("MultipleChoice",
               content = list(""),
               choices = c("Hydrogen","Helium","Carbon","Oxygen",
                           "Nitrogen","Chlorine"),
@@ -129,7 +129,7 @@ test_that("XML validation with schema file for MultipleChoice", {
               title = "filename_sc",
               prompt = "Which of the following elements are used to form water?")
 
-    sut <- xml2::read_xml(toString(create_assessment_item(sc)))
+    sut <- xml2::read_xml(toString(create_assessment_item(mc)))
     file <- system.file("imsqti_v2p1.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
@@ -152,7 +152,7 @@ test_that("XML validation with schema file Essay", {
 })
 
 test_that("XML validation with schema file for DirectedPair", {
-    sc <- new("DirectedPair",
+    dp <- new("DirectedPair",
               rows = c("Lion", "Flower", "Mushrooms"),
               rows_identifiers = c("ID_1", "ID_2", "ID_3"),
               cols = c("Animal", "Plant", "Fungi"),
@@ -162,7 +162,7 @@ test_that("XML validation with schema file for DirectedPair", {
               title = "directed_pair",
               prompt = "Associated left elements with the right category"
     )
-    sut <- xml2::read_xml(toString(create_assessment_item(sc)))
+    sut <- xml2::read_xml(toString(create_assessment_item(dp)))
     file <- system.file("imsqti_v2p1.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
@@ -170,7 +170,7 @@ test_that("XML validation with schema file for DirectedPair", {
 })
 
 test_that("XML validation with schema file for OneInRowTable", {
-    sc <- new("OneInRowTable",
+    oirt <- new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -181,7 +181,7 @@ test_that("XML validation with schema file for OneInRowTable", {
               title = "one_in_row_table",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
-    sut <- xml2::read_xml(toString(create_assessment_item(sc)))
+    sut <- xml2::read_xml(toString(create_assessment_item(oirt)))
     file <- system.file("imsqti_v2p1.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
@@ -189,7 +189,7 @@ test_that("XML validation with schema file for OneInRowTable", {
 })
 
 test_that("XML validation with schema file for OneInColTable", {
-    sc <- new("OneInColTable",
+    oict <- new("OneInColTable",
               cols = c("Capulet", "Demetrius", "Prospero"),
               cols_identifiers = c("C", "D", "P"),
               rows = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -200,7 +200,7 @@ test_that("XML validation with schema file for OneInColTable", {
               title = "one_in_col_table",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
-    sut <- xml2::read_xml(toString(create_assessment_item(sc)))
+    sut <- xml2::read_xml(toString(create_assessment_item(oict)))
     file <- system.file("imsqti_v2p1.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
