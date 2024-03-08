@@ -138,7 +138,7 @@ stop_server <- function() {
 
 #' Render Rmd directly in Opal via API
 #'
-#' @param inpunet (the path to the input Rmd document)
+#' @param input (the path to the input Rmd document)
 #' @param ... required for passing arguments when knitting
 #' @return A list with the key, display name, and URL of the resource in Opal.
 #' @examples

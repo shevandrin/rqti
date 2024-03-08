@@ -7,9 +7,9 @@
 render_opal(input, ...)
 }
 \arguments{
-\item{...}{required for passing arguments when knitting}
+\item{input}{(the path to the input Rmd document)}
 
-\item{inpunet}{(the path to the input Rmd document)}
+\item{...}{required for passing arguments when knitting}
 }
 \value{
 A list with the key, display name, and URL of the resource in Opal.
