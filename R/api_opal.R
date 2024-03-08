@@ -254,7 +254,10 @@ get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
 #'   these command into .Renviron.
 #' @param api_user username on OPAL
 #' @param api_password password on OPAL
-#' @return A string value of URL
+#' @return A string value of URL.
+#' @examples
+#' url <- get_resource_url("my test")
+#'
 #' @export
 get_resource_url <- function(display_name, endpoint = NULL,
                         api_user = NULL, api_password = NULL) {

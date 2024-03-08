@@ -24,8 +24,12 @@ these command into .Renviron.}
 \item{api_password}{password on OPAL}
 }
 \value{
-A string value of URL
+A string value of URL.
 }
 \description{
 Create a URL using the resource's display name in LMS OPAL
+}
+\examples{
+url <- get_resource_url("my test")
+
 }
