@@ -85,27 +85,28 @@ xml file and creates two kinds of data frames (according to parameter
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>file</dt>
-<dd><p>a string with a path of the xml test result file</p></dd>
+<dd><p>A string with a path of the xml test result file.</p></dd>
 
 
 <dt>level</dt>
-<dd><p>a string with two possible options: exercises and items</p></dd>
+<dd><p>A string with two possible values: exercises and items.</p></dd>
 
 
 <dt>hide_filename</dt>
-<dd><p>a boolean value, TRUE to hide original file names by
-default</p></dd>
+<dd><p>A boolean value, TRUE to hide original file names by
+default.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>data frame.</p>
+<p>A dataframe with attribues of the candidates outcomes and result
+variables.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>1.With optioin level = "excercises" data frame consists of columns:</p><ul><li><p>'file' - name of the xml file with test results (to identify
+    <p>1.With option level = "excercises" data frame consists of columns:</p><ul><li><p>'file' - name of the xml file with test results (to identify
 candidate)</p></li>
 <li><p>'date' - date and time of test</p></li>
 <li><p>'id_question' - question item identifier</p></li>
@@ -135,6 +136,14 @@ otherwise FALSE</p></li>
 <li><p>'title' - the values of attribute 'title' of assessment items</p></li>
 </ul></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">extract_result</span><span class="op">(</span><span class="st">"Archive_with_results.zip"</span>, level <span class="op">=</span> <span class="st">"items"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
