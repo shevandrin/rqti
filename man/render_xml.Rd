@@ -2,7 +2,7 @@
 % Please edit documentation in R/knit_functions.R
 \name{render_xml}
 \alias{render_xml}
-\title{Render a single xml file}
+\title{Render a single xml file with QTIJS}
 \usage{
 render_xml(input)
 }

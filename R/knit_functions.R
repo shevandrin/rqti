@@ -13,13 +13,15 @@
 #' Knit-Button in RStudio, it defaults to the RStudio viewer pane.
 #'
 #' @param input (the path to the input Rmd/md/xml document or [AssessmentItem],
-#' [AssessmentTest], [AssessmentTestOpal], [AssessmentSection] object)
+#'   [AssessmentTest], [AssessmentTestOpal], [AssessmentSection] object)
 #' @param ... required for passing arguments when knitting
+#' @return An URL of the corresponding local server to display the rendering
+#'   result.
 #'
 #' @examples
 #' # Customize knit function in the Rmd file using the following YAML setting
 #' # after the word knit:
-#' \dontrun{rqti::knit_qti}
+#' \dontrun{knit: rqti::render_qtijs}
 #'
 #' @export
 render_qtijs <- function(input, ...) {
@@ -36,16 +38,15 @@ render_qtijs <- function(input, ...) {
       }
     }
     message("Open browser at: ", url, " for preview")
-    # suppressMessages(rmd2xml(input, paste0(qtijs_path(), "/index.xml")))
-    # rmd2xml(input)
     prepareQTIJSFiles(input, qtijs_path())
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
     message("finished rendering")
+    return(url)
 }
 
-#' Render a single xml file
+#' Render a single xml file with QTIJS
 #'
 #' Uses QTIJS to render a single xml file in the RStudio viewer pane with a
 #' local server.
@@ -62,9 +63,10 @@ render_xml <- function(input) {
   }
 }
 
-#' Render a zipped qti archive
+#' Render a zipped qti archive with QTIJS
 #'
-#' Uses QTIJS to render a zipped qti archive in the RStudio viewer pane with a local server.
+#' Uses QTIJS to render a zipped qti archive in the RStudio viewer pane with a
+#' local server.
 #'
 #' @param input input file
 #' @return nothing, has side effects
@@ -136,11 +138,17 @@ stop_server <- function() {
 
 #' Render Rmd directly in Opal via API
 #'
-#' @param input (the path to the input Rmd document)
+#' @param inpunet (the path to the input Rmd document)
 #' @param ... required for passing arguments when knitting
+#' @return A list with the key, display name, and URL of the resource in Opal.
+#' @examples
+#' # Customize knit function in the Rmd file using the following YAML setting
+#' # after the word knit:
+#' \dontrun{knit: rqti::render_opal}
 #' @export
 render_opal <- function(input, ...) {
     knit_test <- rmd2zip(input)
-    upload2opal(knit_test)
+    result <- upload2opal(knit_test)
     unlink(knit_test)
+    return(result)
 }

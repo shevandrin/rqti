@@ -2,7 +2,7 @@
 % Please edit documentation in R/knit_functions.R
 \name{render_zip}
 \alias{render_zip}
-\title{Render a zipped qti archive}
+\title{Render a zipped qti archive with QTIJS}
 \usage{
 render_zip(input)
 }
@@ -13,5 +13,6 @@ render_zip(input)
 nothing, has side effects
 }
 \description{
-Uses QTIJS to render a zipped qti archive in the RStudio viewer pane with a local server.
+Uses QTIJS to render a zipped qti archive in the RStudio viewer pane with a
+local server.
 }

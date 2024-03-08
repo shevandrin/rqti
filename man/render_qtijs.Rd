@@ -12,6 +12,10 @@ render_qtijs(input, ...)
 
 \item{...}{required for passing arguments when knitting}
 }
+\value{
+An URL of the corresponding local server to display the rendering
+result.
+}
 \description{
 Generates the qti xml file via rmd2xml. The xml is copied into the QTIJS
 folder of the package which transforms the xml into HTML. Finally, the HTML
@@ -29,6 +33,6 @@ Knit-Button in RStudio, it defaults to the RStudio viewer pane.
 \examples{
 # Customize knit function in the Rmd file using the following YAML setting
 # after the word knit:
-\dontrun{rqti::knit_qti}
+\dontrun{knit: rqti::render_qtijs}
 
 }

@@ -7,10 +7,18 @@
 render_opal(input, ...)
 }
 \arguments{
-\item{input}{(the path to the input Rmd document)}
-
 \item{...}{required for passing arguments when knitting}
+
+\item{inpunet}{(the path to the input Rmd document)}
+}
+\value{
+A list with the key, display name, and URL of the resource in Opal.
 }
 \description{
 Render Rmd directly in Opal via API
+}
+\examples{
+# Customize knit function in the Rmd file using the following YAML setting
+# after the word knit:
+\dontrun{knit: rqti::render_opal}
 }
