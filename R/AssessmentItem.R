@@ -18,8 +18,7 @@ setClass("AssessmentItem", slots = c(identifier = "character",
                                      files = "character",
                                      calculator = "character",
                                      qti_version = "character"),
-         prototype = prototype(identifier = generate_id(),
-                               prompt = "",
+         prototype = prototype(prompt = "",
                                points = 1,
                                qti_version = "v2p1"))
 
