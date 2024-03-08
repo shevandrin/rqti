@@ -7,15 +7,23 @@
 rmd2xml(file, path = getwd(), verification = FALSE)
 }
 \arguments{
-\item{file}{a file with markdown description of the question.}
+\item{file}{A string of path to file with markdown description of question.}
 
-\item{path}{string, optional; a folder to store xml file, can contain file
-name; working directory by default}
+\item{path}{A string, optional; a folder to store xml file. Default is
+working directory.}
 
-\item{verification}{boolean, optional; to check validity of xml file, default
-\code{FALSE}}
+\item{verification}{A boolean value, optional; enable validation of the xml
+file. Default is \code{FALSE}.}
+}
+\value{
+The path string to the xml file.
 }
 \description{
 Create XML file for question specification from Rmd (md) description
 according to qti 2.1 infromation model
+}
+\examples{
+\dontrun{
+rmd2xml("task.Rmd", "target_folder", TRUE)
+}
 }

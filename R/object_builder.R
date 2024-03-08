@@ -2,11 +2,16 @@
 #'
 #' Create zip file with test, that contains one xml question specification
 #' generated from Rmd (md) description according to qti 2.1 information model
-#' @param file a file with markdown description of question.
-#' @param path string, optional; a folder to store xml file; working directory
-#'   by default
-#' @param verification boolean, optional; to check validity of xml file, default
-#'   `FALSE`
+#' @param file A string of path to file with markdown description of question.
+#' @param path A string, optional; a folder to store xml file. Default is
+#'   working directory.
+#' @param verification A boolean value, optional; enable validation of the xml
+#'   file. Default is `FALSE`.
+#' @returns The path string to the zip file.
+#' @examples
+#' \dontrun{
+#' rmd2zip("task.Rmd", "target_folder", TRUE)
+#' }
 #' @export
 rmd2zip <- function(file, path = getwd(), verification = FALSE) {
     task <- create_question_object(file)
@@ -25,11 +30,16 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 #'
 #' Create XML file for question specification from Rmd (md) description
 #' according to qti 2.1 infromation model
-#' @param file a file with markdown description of the question.
-#' @param path string, optional; a folder to store xml file, can contain file
-#'   name; working directory by default
-#' @param verification boolean, optional; to check validity of xml file, default
-#'   `FALSE`
+#' @param file A string of path to file with markdown description of question.
+#' @param path A string, optional; a folder to store xml file. Default is
+#'   working directory.
+#' @param verification A boolean value, optional; enable validation of the xml
+#'   file. Default is `FALSE`.
+#' @returns The path string to the xml file.
+#' @examples
+#' \dontrun{
+#' rmd2xml("task.Rmd", "target_folder", TRUE)
+#' }
 #' @export
 rmd2xml <- function(file, path = getwd(), verification = FALSE) {
     task <- create_question_object(file)

@@ -7,15 +7,23 @@
 rmd2zip(file, path = getwd(), verification = FALSE)
 }
 \arguments{
-\item{file}{a file with markdown description of question.}
+\item{file}{A string of path to file with markdown description of question.}
 
-\item{path}{string, optional; a folder to store xml file; working directory
-by default}
+\item{path}{A string, optional; a folder to store xml file. Default is
+working directory.}
 
-\item{verification}{boolean, optional; to check validity of xml file, default
-\code{FALSE}}
+\item{verification}{A boolean value, optional; enable validation of the xml
+file. Default is \code{FALSE}.}
+}
+\value{
+The path string to the zip file.
 }
 \description{
 Create zip file with test, that contains one xml question specification
 generated from Rmd (md) description according to qti 2.1 information model
+}
+\examples{
+\dontrun{
+rmd2zip("task.Rmd", "target_folder", TRUE)
+}
 }
