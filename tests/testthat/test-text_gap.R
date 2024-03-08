@@ -1,5 +1,5 @@
 test_that("Testing create_item_body_text ", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
     content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                    new("TextGap",
@@ -49,13 +49,13 @@ test_that("Testing create_item_body_text ", {
   meters under the darkness is found.</p>
 </itemBody>'
 
-    sut <- xml2::read_xml(as.character(createItemBody(sc)))
+    sut <- xml2::read_xml(as.character(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing create Response Declaration Gap ", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
     content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                    new("TextGap",
@@ -100,7 +100,7 @@ test_that("Testing create Response Declaration Gap ", {
 </mapping>
 </responseDeclaration>'
 
-    responseDe <- createResponseDeclaration(sc)[[1]]
+    responseDe <- createResponseDeclaration(entry)[[1]]
     sut <- xml2::read_xml(as.character(responseDe))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
@@ -113,7 +113,7 @@ test_that("Testing create Response Declaration Gap ", {
 </correctResponse>
 </responseDeclaration>'
 
-    responseDe <- createResponseDeclaration(sc)[[2]]
+    responseDe <- createResponseDeclaration(entry)[[2]]
     sut <- xml2::read_xml(as.character(responseDe))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
@@ -127,14 +127,14 @@ test_that("Testing create Response Declaration Gap ", {
 </correctResponse>
 </responseDeclaration>'
 
-    responseDe <- createResponseDeclaration(sc)[[3]]
+    responseDe <- createResponseDeclaration(entry)[[3]]
     sut <- xml2::read_xml(as.character(responseDe))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing create Outcome Declaration Gap ", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
     content = list('<p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>', 'Now is the of our discontent',
                    new("TextGap",
@@ -231,7 +231,7 @@ test_that("Testing create Outcome Declaration Gap ", {
     </additionalTag>'
 
     responseDe <- as.character(htmltools::tag(
-        "additionalTag", list(createOutcomeDeclaration(sc))))
+        "additionalTag", list(createOutcomeDeclaration(entry))))
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
@@ -239,7 +239,7 @@ test_that("Testing create Outcome Declaration Gap ", {
 })
 
 test_that("Testing create_item_body_text ", {
-    sc <- suppressMessages(new("Entry",
+    entry <- suppressMessages(new("Entry",
             content = list('The speed of light is', new("TextGapOpal",
                                     response_identifier = "RESPONSE_1",
                                     points = 1,
@@ -268,7 +268,7 @@ test_that("Testing create_item_body_text ", {
     </responseProcessing>
     </additionalTag>'
     response <- as.character(htmltools::tag(
-        "additionalTag", list(createResponseProcessing(sc))))
+        "additionalTag", list(createResponseProcessing(entry))))
     sut <- xml2::read_xml(response)
     expected <- xml2::read_xml(expected)
     expect_equal(sut, expected)

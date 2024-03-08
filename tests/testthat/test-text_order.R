@@ -1,5 +1,5 @@
 test_that("Testing createItemBody for Order questions", {
-    question <- new("Order",
+    order <- new("Order",
                  content = list(""),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -17,13 +17,13 @@ test_that("Testing createItemBody for Order questions", {
 </orderInteraction>
 </itemBody>'
 
-    sut <- xml2::read_xml(toString(createItemBody(question)))
+    sut <- xml2::read_xml(toString(createItemBody(order)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing ResponseDeclaration for Order questions", {
-    question <- new("Order",
+    order <- new("Order",
                  content = list(""),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -39,13 +39,13 @@ test_that("Testing ResponseDeclaration for Order questions", {
 </correctResponse>
 </responseDeclaration>'
 
-    sut <- xml2::read_xml(toString(createResponseDeclaration(question)))
+    sut <- xml2::read_xml(toString(createResponseDeclaration(order)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 test_that("Testing OutcomeDeclaration for Order questions", {
-    question <- new("Order",
+    order <- new("Order",
                     content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -75,7 +75,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
     </additionalTag>'
 
     responseDe <- paste('<additionalTag>',
-                        toString(createOutcomeDeclaration(question)),
+                        toString(createOutcomeDeclaration(order)),
                         '</additionalTag>')
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
@@ -84,7 +84,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
 
 # Testing Order class without choices_identifiers for Order class
 test_that("Testing Order class", {
-    question <- new("Order",
+    order <- new("Order",
                     content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -99,14 +99,14 @@ test_that("Testing Order class", {
 </correctResponse>
 </responseDeclaration>'
 
-    sut <- xml2::read_xml(toString(createResponseDeclaration(question)))
+    sut <- xml2::read_xml(toString(createResponseDeclaration(order)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
 
 # Testing with modal Feedback
 test_that("Testing createResponseProcessing() for Order class", {
-    question <- new("Order",
+    order <- new("Order",
                     content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -203,7 +203,7 @@ test_that("Testing createResponseProcessing() for Order class", {
 
     responseDe <- paste(
         '<additionalTag>',
-        toString(createResponseProcessing(question)),'</additionalTag>')
+        toString(createResponseProcessing(order)),'</additionalTag>')
     sut <- xml2::read_xml(responseDe)
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
