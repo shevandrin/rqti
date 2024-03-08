@@ -94,6 +94,13 @@ is displayed and the user can have a preview of the exercise or exam.</p>
 
 </dl></div>
     <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>An URL of the corresponding local server to display the rendering
+result.</p>
+    </div>
+    <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Requires a running QTIJS server, which can be started with start_server().
 When loading the package rqti, a server is started automatically.</p>
@@ -107,7 +114,7 @@ Knit-Button in RStudio, it defaults to the RStudio viewer pane.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Customize knit function in the Rmd file using the following YAML setting</span></span></span>
 <span class="r-in"><span><span class="co"># after the word knit:</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu">rqti</span><span class="fu">::</span><span class="va">knit_qti</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="va">knit</span><span class="op">:</span> <span class="fu">rqti</span><span class="fu">::</span><span class="va">render_qtijs</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
