@@ -88,18 +88,18 @@ token value is required to access the OPAL API system.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>api_user</dt>
-<dd><p>username on OPAL</p></dd>
+<dd><p>A character value of the username in the OPAL.</p></dd>
 
 
 <dt>api_password</dt>
-<dd><p>password on OPAL</p></dd>
+<dd><p>A character value of the password in the OPAL.</p></dd>
 
 
 <dt>endpoint</dt>
-<dd><p>endpoint of LMS Opal; by default it is got from environment
-variable <code>QTI_API_ENDPOINT</code>. To set a global environment variable, you need
-to call <code>Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')</code> or you can put
-these command into .Renviron.</p></dd>
+<dd><p>A string of endpoint of LMS Opal; by default it is got from
+environment variable <code>QTI_API_ENDPOINT</code>. To set a global environment
+variable, you need to call <code>Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')</code>
+or you can put these command into .Renviron.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -119,9 +119,7 @@ password again, they will be extracted from the system credential store</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">auth_opal</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu">auth_opal</span><span class="op">(</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
