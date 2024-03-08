@@ -6,6 +6,9 @@
 \usage{
 stop_server()
 }
+\value{
+nothing, has side effects
+}
 \description{
 Stop QTIJS local server
 }

@@ -6,6 +6,9 @@
 \usage{
 start_server()
 }
+\value{
+The URL string for QTIJS server.
+}
 \description{
 This function starts an http server with the QTIJS renderer. The renderer performs the conversion of qti.xml into HTML.
 }

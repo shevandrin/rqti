@@ -85,6 +85,7 @@ render_zip <- function(input) {
 #'
 #' The server has to be started manually by the user, otherwise the Knit Button will not work. The Button starts a new session and invoking a server there does not make much sense.
 #'
+#' @return The URL string for QTIJS server.
 #' @examples
 #' \dontrun{
 #' # Initiated server in qtiViewer folder
@@ -130,6 +131,7 @@ clean_qtijs <- function() {
 }
 
 #' Stop QTIJS local server
+#' @return nothing, has side effects
 #' @export
 stop_server <- function() {
     Sys.setenv(QTI_URL = "")
