@@ -76,6 +76,13 @@ An \link{AssessmentTest} object.
 \description{
 Create an AssessmentTest \code{rqti}-object.
 }
+\examples{
+sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
+es <- new("Essay", prompt = "Question")
+s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+t <- test(s, title = "Example of the Exam", academic_grading = TRUE)
+
+}
 \seealso{
 \code{\link[=test4opal]{test4opal()}}, \code{\link[=section]{section()}}, \link{AssessmentTest}, \link{AssessmentSection}
 }
