@@ -12,16 +12,17 @@ get_resource_url(
 )
 }
 \arguments{
-\item{display_name}{character; target display_name}
+\item{display_name}{A length one character vector to entitle file in OPAL;
+file name without extension by default; optional.}
 
-\item{endpoint}{endpoint of LMS Opal; by default it is got from environment
-variable \code{QTI_API_ENDPOINT}. To set a global environment variable, you need
-to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
-these command into .Renviron.}
+\item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
+environment variable \code{QTI_API_ENDPOINT}. To set a global environment
+variable, you need to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
+or you can put these command into .Renviron.}
 
-\item{api_user}{username on OPAL}
+\item{api_user}{A character value of the username in the OPAL.}
 
-\item{api_password}{password on OPAL}
+\item{api_password}{A character value of the password in the OPAL.}
 }
 \value{
 A string value of URL.
@@ -30,6 +31,5 @@ A string value of URL.
 Create a URL using the resource's display name in LMS OPAL
 }
 \examples{
-url <- get_resource_url("my test")
-
+\dontrun{url <- get_resource_url("my test")}
 }

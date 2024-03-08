@@ -7,14 +7,14 @@
 get_resources(api_user = NULL, api_password = NULL, endpoint = NULL)
 }
 \arguments{
-\item{api_user}{username on OPAL}
+\item{api_user}{A character value of the username in the OPAL.}
 
-\item{api_password}{password on OPAL}
+\item{api_password}{A character value of the password in the OPAL.}
 
-\item{endpoint}{endpoint of LMS Opal; by default it is got from environment
-variable \code{QTI_API_ENDPOINT}. To set a global environment variable, you need
-to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
-these command into .Renviron.}
+\item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
+environment variable \code{QTI_API_ENDPOINT}. To set a global environment
+variable, you need to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
+or you can put these command into .Renviron.}
 }
 \value{
 A dataframe with attributes of user's resources.
@@ -23,6 +23,5 @@ A dataframe with attributes of user's resources.
 Get records of all current user's resources on LMS OPAL
 }
 \examples{
-df <- get_resources()
-
+\dontrun{df <- get_resources()}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/api_opal.R
 \name{upload2opal}
 \alias{upload2opal}
-\title{Upload resource on OPAL}
+\title{Upload a resource on OPAL}
 \usage{
 upload2opal(
   test,
@@ -16,34 +16,35 @@ upload2opal(
 )
 }
 \arguments{
-\item{test}{required; a length one character vector of \link{AssessmentTest},
-\link{AssessmentTestOpal} or \link{AssessmentItem} objects, Rmd or md files}
+\item{test}{A length one character vector of \link{AssessmentTest},
+\link{AssessmentTestOpal} or \link{AssessmentItem} objects, Rmd or md files; required.}
 
-\item{display_name}{optional; a length one character vector to entitle file in
-OPAL; file name without extension by default}
+\item{display_name}{A length one character vector to entitle file in OPAL;
+file name without extension by default; optional.}
 
-\item{access}{optional; is responsible for publication status, where 1 - only
-those responsible for this learning resource; 2 - responsible and other
-authors; 3 - all registered users; 4 - default value, registered users and
-guests}
+\item{access}{An integer value, optional; it is responsible for publication
+status, where 1 - only those responsible for this learning resource; 2 -
+responsible and other authors; 3 - all registered users; 4 - registered
+users and guests. Default is 4.}
 
-\item{overwrite}{logical; if only one file with the specified display name is
-found, it will be overwritten}
+\item{overwrite}{A boolean value; if the value is \code{TRUE}, if only one file
+with the specified display name is found, it will be overwritten. Default is
+\code{TRUE}.}
 
-\item{endpoint}{endpoint of LMS Opal; by default it is got from environment
-variable \code{QTI_API_ENDPOINT}. To set a global environment variable, you need
-to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put
-these command into .Renviron.}
+\item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
+environment variable \code{QTI_API_ENDPOINT}. To set a global environment
+variable, you need to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
+or you can put these command into .Renviron.}
 
-\item{open_in_browser}{logical, optional; the parameter that controls whether
-to open a URL in default browser; TRUE by default}
+\item{open_in_browser}{A boolean value; optional; it controls whether to open
+a URL in default browser. Default is \code{TRUE.}}
 
-\item{api_user}{username on OPAL}
+\item{api_user}{A character value of the username in the OPAL.}
 
-\item{api_password}{password on OPAL}
+\item{api_password}{A character value of the password in the OPAL.}
 }
 \value{
-list with key and url
+A list with the key, display name, and URL of the resource in Opal.
 }
 \description{
 Function \code{upload2opal()} takes full prepared zip archive of QTI-test or
@@ -58,3 +59,6 @@ access to the OPAL API, there is no need to specify the username and
 password again, they will be extracted from the system credential store
 }
 
+\examples{
+\dontrun{upload2opal("task1.Rmd", "task 1", open_in_browser = FALSE)}
+}

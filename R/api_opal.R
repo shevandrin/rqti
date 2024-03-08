@@ -5,12 +5,12 @@
 #' in the system environment and returns the user's identity key in OPAL. The
 #' token value is required to access the OPAL API system.
 #'
-#' @param api_user username on OPAL
-#' @param api_password password on OPAL
-#' @param endpoint endpoint of LMS Opal; by default it is got from environment
-#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
-#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
-#'   these command into .Renviron.
+#' @param api_user A character value of the username in the OPAL.
+#' @param api_password A character value of the password in the OPAL.
+#' @param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'  environment variable `QTI_API_ENDPOINT`. To set a global environment
+#'  variable, you need to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
+#'  or you can put these command into .Renviron.
 #'
 #' @section Authentication: To use OPAL API, you need to provide your
 #'   OPAL-username and password. This package uses system credential store
@@ -21,9 +21,7 @@
 #' @return A character string with Opal user id
 #'
 #' @examples
-#' \dontrun{
-#' auth_opal()
-#' }
+#' \dontrun{auth_opal()}
 #' @name auth_opal
 #' @rdname auth_opal
 #' @importFrom httr2 request req_error req_perform resp_body_xml req_headers
@@ -108,37 +106,40 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     return(user_id)
 }
 
-#'Upload resource on OPAL
+#'Upload a resource on OPAL
 #'
 #'Function `upload2opal()` takes full prepared zip archive of QTI-test or
 #'QTI-task and uploads it to the OPAL. before calling `upload2opal()`
 #'authentication procedure has to be performed. See [auth_opal]
 #'
-#'@param test required; a length one character vector of [AssessmentTest],
-#'  [AssessmentTestOpal] or [AssessmentItem] objects, Rmd or md files
-#'@param display_name optional; a length one character vector to entitle file in
-#'  OPAL; file name without extension by default
-#'@param access optional; is responsible for publication status, where 1 - only
-#'  those responsible for this learning resource; 2 - responsible and other
-#'  authors; 3 - all registered users; 4 - default value, registered users and
-#'  guests
-#'@param overwrite logical; if only one file with the specified display name is
-#'  found, it will be overwritten
-#' @param endpoint endpoint of LMS Opal; by default it is got from environment
-#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
-#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
-#'   these command into .Renviron.
-#'@param open_in_browser logical, optional; the parameter that controls whether
-#'  to open a URL in default browser; TRUE by default
-#'@param api_user username on OPAL
-#'@param api_password password on OPAL
+#'@param test A length one character vector of [AssessmentTest],
+#'  [AssessmentTestOpal] or [AssessmentItem] objects, Rmd or md files; required.
+#'@param display_name A length one character vector to entitle file in OPAL;
+#'  file name without extension by default; optional.
+#'@param access An integer value, optional; it is responsible for publication
+#'  status, where 1 - only those responsible for this learning resource; 2 -
+#'  responsible and other authors; 3 - all registered users; 4 - registered
+#'  users and guests. Default is 4.
+#'@param overwrite A boolean value; if the value is `TRUE`, if only one file
+#'  with the specified display name is found, it will be overwritten. Default is
+#'  `TRUE`.
+#'@param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'  environment variable `QTI_API_ENDPOINT`. To set a global environment
+#'  variable, you need to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
+#'  or you can put these command into .Renviron.
+#'@param open_in_browser A boolean value; optional; it controls whether to open
+#'  a URL in default browser. Default is `TRUE.`
+#'@param api_user A character value of the username in the OPAL.
+#'@param api_password A character value of the password in the OPAL.
 #'@section Authentication: To use OPAL API, you need to provide your
-#'   OPAL-username and password. This package uses system credential store
-#'   'keyring' to store user's name and password. After the first successful
-#'   access to the OPAL API, there is no need to specify the username and
-#'   password again, they will be extracted from the system credential store
+#'  OPAL-username and password. This package uses system credential store
+#'  'keyring' to store user's name and password. After the first successful
+#'  access to the OPAL API, there is no need to specify the username and
+#'  password again, they will be extracted from the system credential store
 #'
-#'@return list with key and url
+#'@return A list with the key, display name, and URL of the resource in Opal.
+#' @examples
+#' \dontrun{upload2opal("task1.Rmd", "task 1", open_in_browser = FALSE)}
 #'@importFrom utils browseURL menu
 #'@importFrom tools file_ext
 #'@importFrom curl form_file
@@ -206,16 +207,15 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 
 #' Get records of all current user's resources on LMS OPAL
 #'
-#' @param endpoint endpoint of LMS Opal; by default it is got from environment
-#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
-#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
-#'   these command into .Renviron.
-#' @param api_user username on OPAL
-#' @param api_password password on OPAL
+#' @param api_user A character value of the username in the OPAL.
+#' @param api_password A character value of the password in the OPAL.
+#' @param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'  environment variable `QTI_API_ENDPOINT`. To set a global environment
+#'  variable, you need to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
+#'  or you can put these command into .Renviron.
 #' @return A dataframe with attributes of user's resources.
 #' @examples
-#' df <- get_resources()
-#'
+#' \dontrun{df <- get_resources()}
 #' @export
 get_resources <- function(api_user = NULL, api_password = NULL,
                           endpoint = NULL) {
@@ -247,17 +247,17 @@ get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
 
 #' Create a URL using the resource's display name in LMS OPAL
 #'
-#' @param display_name character; target display_name
-#' @param endpoint endpoint of LMS Opal; by default it is got from environment
-#'   variable `QTI_API_ENDPOINT`. To set a global environment variable, you need
-#'   to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put
-#'   these command into .Renviron.
-#' @param api_user username on OPAL
-#' @param api_password password on OPAL
+#' @param display_name A length one character vector to entitle file in OPAL;
+#'  file name without extension by default; optional.
+#' @param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'  environment variable `QTI_API_ENDPOINT`. To set a global environment
+#'  variable, you need to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
+#'  or you can put these command into .Renviron.
+#' @param api_user A character value of the username in the OPAL.
+#' @param api_password A character value of the password in the OPAL.
 #' @return A string value of URL.
 #' @examples
-#' url <- get_resource_url("my test")
-#'
+#' \dontrun{url <- get_resource_url("my test")}
 #' @export
 get_resource_url <- function(display_name, endpoint = NULL,
                         api_user = NULL, api_password = NULL) {
