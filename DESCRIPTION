@@ -13,7 +13,7 @@ Authors@R: c(
     person("Brian", "Mottershead", role = "cph", comment = "Author of QTIJS library"),
     person("Stiftung für Innovation in der Hochschullehre", role = "fnd")
     )
-Description: This R package provides learning content creators with generation of XML files for Tests and Tasks according to QTI information model v. 2.1. The sources of data for Test/Task content can be Rmd/md templates or objects of S4-classes, created in R environment. This package generates all basic types of tasks and has full set of attributes for tests customisation.
+Description: Create Tests and Tasks compliant with the Question & Test Interoperability (QTI) information model version 2.1. Input sources are Rmd/md description files or S4-class objects within the R environment. Output formats include standalone zip or xml files. Supports the generation of basic task types and provides a comprehensive set of attributes for customizing tests.
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
