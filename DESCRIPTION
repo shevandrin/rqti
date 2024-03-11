@@ -1,5 +1,5 @@
 Package: rqti
-Title: Create Tests in R According To QTI 2.1 Standard
+Title: Create Tests in R According to QTI 2.1 Standard
 Version: 0.0.0.9000
 Authors@R: c(
     person("Andrey", "Shevandrin", email = "shevanrin@gmail.com", 
