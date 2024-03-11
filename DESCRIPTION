@@ -1,8 +1,8 @@
 Package: rqti
 Title: Create Tests in R According to QTI 2.1 Standard
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(
-    person("Andrey", "Shevandrin", email = "shevanrin@gmail.com", 
+    person("Andrey", "Shevandrin", email = "shevandrin@gmail.com", 
     role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0807-2546")),
     person("Petr", "Bondarenko", email = "bondarenko.volsu@gmail.com", 
     role = c("ctb"), comment = c(ORCID = "0000-0002-5154-9664")),
