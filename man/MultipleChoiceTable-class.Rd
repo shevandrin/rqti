@@ -9,8 +9,6 @@
 Class \code{MultipleChoiceTable} is responsible for creating assessment tasks
 according to the QTI 2.1 standard with a table of answer options, where many
 correct answers in each row and column are possible.
-\if{html}{\out{<div style="text-align:center">}\figure{multipleTable.png}{options:
-style="width:250px;max-width:35\%;"}\out{</div>}}
 }
 \section{Slots}{
 
