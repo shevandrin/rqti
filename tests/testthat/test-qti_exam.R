@@ -8,9 +8,9 @@ file4 <- test_path("file/xml/NumericGap.xml")
 # points = 1
 file5 <- test_path("file/xml/TextGapOpal.xml")
 # points = 3
-file6 <- test_path("file/md/test_mc_example.md")
+file6 <- test_path("file/md/mc_example.md")
 # points = 3
-file7 <- test_path("file/md/test_order_example.md")
+file7 <- test_path("file/md/order_example.md")
 # points = 1
 
 files1 <- c(file1,file2,file3)
@@ -94,7 +94,7 @@ test_that("Testing createQtiTest method behavior when the Rmd file
 
 test_that("Testing createQtiTest method", {
               path_1 <- test_path("file/rmd/test_mc_no_point.Rmd")
-              path_2 <- test_path("file/md/test_sc_example2.md")
+              path_2 <- test_path("file/md/sc_example2.md")
               path_3 <- test_path("file/xml/MultipleChoice.xml")
 
               sut_1 <- createQtiTest(path_1)

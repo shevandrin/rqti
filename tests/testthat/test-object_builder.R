@@ -1,5 +1,5 @@
 test_that("Testing SingleChoice where answer is $nummer", {
-    path <- test_path("file/md/test_sc_example3.md")
+    path <- test_path("file/md/sc_example3.md")
     sut <- create_question_object(path)
 
     content <- "<p>This is a mock question<br/>The speed of the light in kilometers per second is:</p>"
@@ -25,7 +25,7 @@ test_that("Testing SingleChoice where answer is $nummer", {
 })
 
 test_that("Testing create_question_object() for SingleChoice class", {
-    path <- test_path("file/md/test_sc_example1.md")
+    path <- test_path("file/md/sc_example1.md")
     sut <- create_question_object(path)
 
     expected <- new("SingleChoice",
@@ -54,7 +54,7 @@ test_that("Testing create_question_object() for SingleChoice class", {
 })
 
 test_that("Testing create_question_object() for SingleChoice class: solution", {
-    path <- test_path("file/md/test_sc_example2.md")
+    path <- test_path("file/md/sc_example2.md")
     sut <- create_question_object(path)
 
     expected <- new("SingleChoice",
@@ -85,7 +85,7 @@ test_that("Testing create_question_object() for SingleChoice class: solution", {
 
 test_that("Testing create_question_object() for MultipleChoice class:
           solution 1 and 2", {
-    path <- test_path("file/md/test_mc_example.md")
+    path <- test_path("file/md/mc_example.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                     content = list(paste0("<p>When deciding between ",
@@ -114,7 +114,7 @@ test_that("Testing create_question_object() for MultipleChoice class:
 
 test_that("Testing create_question_object() for MultipleChoice class:
           solution 1 and 3", {
-    path <- test_path("file/md/test_mc_example2.md")
+    path <- test_path("file/md/mc_example2.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                     content = list(paste0("<p>Economic systems are ways ",
@@ -153,7 +153,7 @@ test_that("Testing create_question_object() for MultipleChoice class:
 })
 
 test_that("Testing create_question_object() for Essay class", {
-    path <- test_path("file/md/test_essay_example.md")
+    path <- test_path("file/md/essay_example.md")
     sut <- suppressWarnings(create_question_object(path))
     expected <- suppressWarnings(new("Essay",
                     content = list(
@@ -168,7 +168,7 @@ test_that("Testing create_question_object() for Essay class", {
 })
 
 test_that("Testing create_question_object() for Entry class", {
-path <- test_path("file/md/test_entry_example1.md")
+path <- test_path("file/md/entry_example1.md")
 sut <- suppressMessages(create_question_object(path))
 expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 new("TextGap", response_identifier = "response_1",
@@ -183,7 +183,7 @@ expect_equal(sut, expected)
 })
 
 test_that("Testing create_question_object() for Entry with YAML", {
-path <- test_path("file/md/test_entry_example2.md")
+path <- test_path("file/md/entry_example2.md")
 sut <- suppressMessages(create_question_object(path))
 expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 new("TextGap",
@@ -256,13 +256,13 @@ test_that("Testing create_outcome_declaration() for Entry class", {
 })
 
 test_that("Testing create_question_object() for Order task", {
-    path <- test_path("file/md/test_order_example.md")
+    path <- test_path("file/md/order_example.md")
     sut <- create_question_object(path)
     expected <- new("Order",
                     content = list(paste0("<p>Arrange German cities ",
                                           "in ascending order of ",
                                           "population</p>")),
-                    identifier = "test_order_example",
+                    identifier = "order_example",
                     choices = c("Berlin", "Hamburg", "Munich",
                                 "Cologne", "Düsseldorf",  "Leipzig")
                     )
@@ -270,7 +270,7 @@ test_that("Testing create_question_object() for Order task", {
 })
 
 test_that("Testing create_question_object() for Direct Pair task", {
-    path <- test_path("file/md/test_directedPair_example.md")
+    path <- test_path("file/md/directedPair_example.md")
     sut <- create_question_object(path)
     expected <- new("DirectedPair",
                     content = list("<p>Associate the cities with lands.</p>"),
@@ -292,7 +292,7 @@ test_that("Testing create_question_object() for Direct Pair task", {
 })
 
 test_that("Testing create_question_object() for OnInColTable task, where as_table=T", {
-    path <- test_path("file/md/test_OneInColTable_example.md")
+    path <- test_path("file/md/OneInColTable_example.md")
     sut <- create_question_object(path)
     expected <- new("OneInColTable",
                     content = list(paste0("<p>Choose the correct order in ",
@@ -333,7 +333,7 @@ test_that("Testing create_question_object() with conditions: OnInColTable and as
 })
 
 test_that("Testing create_question_object() for OneInRowTable task", {
-    path1 <- test_path("file/md/test_OneInRowTable_example.md")
+    path1 <- test_path("file/md/OneInRowTable_example.md")
     sut1 <- create_question_object(path1)
     path2 <- test_path("file/rmd/test_OneInRowTable_example.Rmd")
     sut2 <- create_question_object(path2)
@@ -357,7 +357,7 @@ test_that("Testing create_question_object() for OneInRowTable task", {
 })
 
 test_that("Testing create_question_object() for  MultipleChoiceTable task", {
-    path <- test_path("file/md/test_MultipleChoiceTable_example.md")
+    path <- test_path("file/md/MultipleChoiceTable_example.md")
     sut <- create_question_object(path)
     expected <- new("MultipleChoiceTable",
                     content = list(paste0("<p>Choose the correct order in ",
