@@ -3,9 +3,6 @@
 #' Class `DirectedPair` is responsible for creating assessment tasks according
 #' to the QTI 2.1 standard, where a candidate has to make binary associations
 #' between answer options.
-#' \if{html}{\out{<div style="text-align:center">}\figure{directedPair.png}{options:
-#' style="width:150px;max-width:25\%;"}\out{</div>}}
-#' \if{latex}{\figure{directedPair.png}{options: width=5cm}}
 #' @template AISlotsTemplate
 #' @template MTSlotsTemplate
 #' @slot orientation A character, optional, determining whether to place answers

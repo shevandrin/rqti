@@ -65,6 +65,20 @@ An object of class \link{AssessmentSection}.
 \description{
 Create an AssessmentSection \code{rqti}-object as part of a test content
 }
+\examples{
+sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
+es <- new("Essay", prompt = "Question")
+# Since ready-made S4 "AssessmentItem" objects are taken, in this example a
+#permanent section consisting of two tasks is created.
+s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+
+# Since Rmd files with randomization of internal variables are taken,
+#in this example 2 variants are created with a different seed number for each.
+\dontrun{
+s <- section(c("file1.Rmd", "file2.Rmd"), n_variants = 2,
+title = "Section with two variants of tasks")
+}
+}
 \seealso{
 \code{\link[=test]{test()}}, \code{\link[=test4opal]{test4opal()}}
 }

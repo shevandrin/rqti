@@ -34,8 +34,7 @@ setClass("AssessmentSection", slots = c(identifier = "character",
                                      selection = "numeric",
                                      max_attempts = "numeric",
                                      allow_comment = "logical"),
-         prototype = prototype(identifier = generate_id(type = "section"),
-                               visible = TRUE,
+         prototype = prototype(visible = TRUE,
                                time_limit = NA_integer_,
                                shuffle = FALSE,
                                selection = NA_integer_,
@@ -45,6 +44,9 @@ setClass("AssessmentSection", slots = c(identifier = "character",
 
 setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     .Object <- callNextMethod()
+
+    if (length(.Object@identifier) == 0) {
+        .Object@identifier <- generate_id(type = "section")}
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
 

@@ -2,8 +2,6 @@
 #'
 #' Class `AssessmentTest` is responsible for creating XML exam files according
 #' to the QTI 2.1 standard.
-#' \if{html}{\out{<div style="text-align:center">}\figure{assessmentTest.png}
-#' \out{</div>}}
 #' @details Test consists of one or more sections. Each section can have one or
 #' more questions/tasks and/or one or more sub sections.
 #' @template ATSlotsTemplate
@@ -49,8 +47,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      academic_grading = "logical",
                                      grade_label = "character",
                                      table_label = "character"),
-         prototype = prototype(identifier = generate_id(type = "test"),
-                               navigation_mode = "nonlinear",
+         prototype = prototype(navigation_mode = "nonlinear",
                                submission_mode = "individual",
                                test_part_identifier = "test_part",
                                qti_version = "v2p1",
@@ -63,23 +60,13 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                table_label = c(en="Grade", de="Note")
          ))
 
-setValidity("AssessmentTest", function(object) {
-    # nav_mode <- c("linear", "nonlinear")
-    # print(object@identifier)
-    # if (!(object@navigation_mode %in% nav_mode)) {
-    #     stop("'navigation_mode' has to be 'linear' or 'nonlinear'",
-    #          call. = FALSE)
-    # }
-
-    # sbms_mode <- c("individual", "simultaneous")
-    # if (!(object@submission_mode %in% sbms_mode)) {
-    #     stop("'submission_mode' has to be 'individual' or 'simultaneolus'",
-    #          call. = FALSE)
-    # }
-})
 
 setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object <- callNextMethod()
+
+    if (length(.Object@identifier) == 0) {
+        .Object@identifier <- generate_id(type = "test")}
+
     # us identifier as a title
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
 

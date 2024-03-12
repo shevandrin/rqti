@@ -3,15 +3,16 @@
 #' The function `extract_results()` takes Opal zip archive "Export results" or
 #' xml file and creates two kinds of data frames (according to parameter
 #' 'level'), see the 'Details' section.
-#' @param file a string with a path of the xml test result file
-#' @param level a string with two possible options: exercises and items
-#' @param hide_filename a boolean value, TRUE to hide original file names by
-#'   default
+#' @param file A string with a path of the xml test result file.
+#' @param level A string with two possible values: exercises and items.
+#' @param hide_filename A boolean value, TRUE to hide original file names by
+#'   default.
 #' @import xml2
 #' @import lubridate
 #' @importFrom zip zip_list
-#' @return data frame.
-#' @note 1.With optioin level = "excercises" data frame consists of columns:
+#' @return A dataframe with attribues of the candidates outcomes and result
+#'   variables.
+#' @note 1.With option level = "excercises" data frame consists of columns:
 #'  * 'file' - name of the xml file with test results (to identify
 #'   candidate)
 #'  * 'date' - date and time of test
@@ -42,6 +43,11 @@
 #' * 'is_response_correct' - TRUE if candidate gave the right response,
 #'   otherwise FALSE
 #' * 'title' - the values of attribute 'title' of assessment items
+#' @examples
+#' \dontrun{
+#' df <- extract_result("Archive_with_results.zip", level = "items")
+#' }
+#'
 #' @import digest
 #' @export
 extract_results <- function(file, level = "exercises", hide_filename = TRUE) {

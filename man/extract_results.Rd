@@ -7,15 +7,16 @@
 extract_results(file, level = "exercises", hide_filename = TRUE)
 }
 \arguments{
-\item{file}{a string with a path of the xml test result file}
+\item{file}{A string with a path of the xml test result file.}
 
-\item{level}{a string with two possible options: exercises and items}
+\item{level}{A string with two possible values: exercises and items.}
 
-\item{hide_filename}{a boolean value, TRUE to hide original file names by
-default}
+\item{hide_filename}{A boolean value, TRUE to hide original file names by
+default.}
 }
 \value{
-data frame.
+A dataframe with attribues of the candidates outcomes and result
+variables.
 }
 \description{
 The function \code{extract_results()} takes Opal zip archive "Export results" or
@@ -23,7 +24,7 @@ xml file and creates two kinds of data frames (according to parameter
 'level'), see the 'Details' section.
 }
 \note{
-1.With optioin level = "excercises" data frame consists of columns:
+1.With option level = "excercises" data frame consists of columns:
 \itemize{
 \item 'file' - name of the xml file with test results (to identify
 candidate)
@@ -58,4 +59,10 @@ question
 otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
 }
+}
+\examples{
+\dontrun{
+df <- extract_result("Archive_with_results.zip", level = "items")
+}
+
 }

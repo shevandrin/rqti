@@ -8,8 +8,8 @@ test4opal(
   content,
   identifier = "test_identifier",
   title = "Test Title",
-  time_limit = 90,
-  max_attempts = 1,
+  time_limit = 90L,
+  max_attempts = 1L,
   files = NULL,
   calculator = "scientific-calculator",
   academic_grading = FALSE,
@@ -95,9 +95,19 @@ marking of questions. Default is \code{TRUE}.}
 candidate's answers from the previous attempt. Default is \code{FALSE}.}
 }
 \value{
-An \link{AssessmentTestOpal} object #' @seealso \code{\link[=test]{test()}}, \code{\link[=section]{section()}},
-\link{AssessmentTestOpal}, \link{AssessmentSection}
+An \link{AssessmentTestOpal} object
 }
 \description{
 Create an AssessmentTestOpal \code{rqti}-object.
+}
+\examples{
+sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
+es <- new("Essay", prompt = "Question")
+s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+t <- test4opal(s, title = "Example of the Exam", academic_grading = TRUE,
+show_test_time = FALSE)
+}
+\seealso{
+\code{\link[=test]{test()}}, \code{\link[=section]{section()}},
+\link{AssessmentTestOpal}, \link{AssessmentSection}
 }

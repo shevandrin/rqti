@@ -8,8 +8,6 @@
 \description{
 Class \code{AssessmentTestOpal} is responsible for creating XML exam files
 according to the QTI 2.1 standard for LMS Opal.
-\if{html}{\out{<div style="text-align:center">}\figure{assessmentTest.png}
-\out{</div>}}
 }
 \details{
 Test consists of one or more sections. Each section can have one or more

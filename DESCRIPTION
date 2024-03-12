@@ -1,8 +1,8 @@
 Package: rqti
-Title: Create Tests in R According To QTI 2.1 Standard
-Version: 0.0.0.9000
+Title: Create Tests in R According to QTI 2.1 Standard
+Version: 0.1.0
 Authors@R: c(
-    person("Andrey", "Shevandrin", email = "shevanrin@gmail.com", 
+    person("Andrey", "Shevandrin", email = "shevandrin@gmail.com", 
     role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0807-2546")),
     person("Petr", "Bondarenko", email = "bondarenko.volsu@gmail.com", 
     role = c("ctb"), comment = c(ORCID = "0000-0002-5154-9664")),
@@ -13,7 +13,7 @@ Authors@R: c(
     person("Brian", "Mottershead", role = "cph", comment = "Author of QTIJS library"),
     person("Stiftung für Innovation in der Hochschullehre", role = "fnd")
     )
-Description: This R package provides learning content creators with generation of XML files for Tests and Tasks according to QTI information model v. 2.1. The sources of data for Test/Task content can be Rmd/md templates or objects of S4-classes, created in R environment. This package generates all basic types of tasks and has full set of attributes for tests customisation.
+Description: Create Tests and Tasks compliant with the Question & Test Interoperability (QTI) information model version 2.1. Input sources are Rmd/md description files or S4-class objects within the R environment. Output formats include standalone zip or xml files. Supports the generation of basic task types and provides a comprehensive set of attributes for customizing tests.
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

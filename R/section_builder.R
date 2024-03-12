@@ -29,6 +29,19 @@
 #' @param allow_comment A boolean value, optional, enabling candidates to leave
 #'   comments on each question of the section. Default is `TRUE`.
 #' @return An object of class [AssessmentSection].
+#' @examples
+#' sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
+#' es <- new("Essay", prompt = "Question")
+#' # Since ready-made S4 "AssessmentItem" objects are taken, in this example a
+#' #permanent section consisting of two tasks is created.
+#' s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+#'
+#' # Since Rmd files with randomization of internal variables are taken,
+#' #in this example 2 variants are created with a different seed number for each.
+#' \dontrun{
+#' s <- section(c("file1.Rmd", "file2.Rmd"), n_variants = 2,
+#' title = "Section with two variants of tasks")
+#' }
 #' @seealso [test()], [test4opal()]
 #' @export
 section <- function(content, n_variants = 1L, seed_number = NULL, id = NULL,
@@ -181,6 +194,12 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   Default is `TRUE.`
 #' @return An [AssessmentTest] object.
 #' @seealso [test4opal()], [section()], [AssessmentTest], [AssessmentSection]
+#' @examples
+#' sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
+#' es <- new("Essay", prompt = "Question")
+#' s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+#' t <- test(s, title = "Example of the Exam", academic_grading = TRUE)
+#'
 #'@export
 test <- function(content, identifier = "test_identifier", title = "Test Title",
                  time_limit = 90L, max_attempts = 1L, academic_grading = FALSE,
@@ -254,11 +273,18 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   marking of questions. Default is `TRUE`.
 #' @param keep_responses A boolean, optional, determining whether to save the
 #'   candidate's answers from the previous attempt. Default is `FALSE`.
-#' @return An [AssessmentTestOpal] object #' @seealso [test()], [section()],
+#' @return An [AssessmentTestOpal] object
+#' @seealso [test()], [section()],
 #'   [AssessmentTestOpal], [AssessmentSection]
+#' @examples
+#' sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
+#' es <- new("Essay", prompt = "Question")
+#' s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+#' t <- test4opal(s, title = "Example of the Exam", academic_grading = TRUE,
+#' show_test_time = FALSE)
 #' @export
 test4opal <- function(content, identifier = "test_identifier",
-                      title = "Test Title", time_limit = 90, max_attempts = 1,
+                      title = "Test Title", time_limit = 90L, max_attempts = 1L,
                       files = NULL, calculator = "scientific-calculator",
                       academic_grading = FALSE,
                       grade_label = c(en="Grade", de="Note"),
