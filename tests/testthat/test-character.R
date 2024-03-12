@@ -12,7 +12,7 @@ test_that("Testing createQtiTest() method for the object of character
           in case if the file exist", {
 
         path_1 <- test_path("file/xml/Order.xml")
-        path_2 <- test_path("file/rmd/test_OneInRowTable_example.Rmd")
+        path_2 <- test_path("file/rmd/OneInRowTable_example.Rmd")
 
         sut_1 <- createQtiTest(path_1)
         sut_2 <- createQtiTest(path_2)

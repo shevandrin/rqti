@@ -1,8 +1,8 @@
-file1 <- test_path("file/rmd/test_order.Rmd")
+file1 <- test_path("file/rmd/order.Rmd")
 # points = 1
-file2 <- test_path("file/rmd/test_DirectedPair_with_table.Rmd")
+file2 <- test_path("file/rmd/DirectedPair_with_table.Rmd")
 # points = 2.5
-file3 <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
+file3 <- test_path("file/rmd/Gap_InlineChoice.Rmd")
 # points = 3
 file4 <- test_path("file/xml/NumericGap.xml")
 # points = 1
@@ -93,7 +93,7 @@ test_that("Testing createQtiTest method behavior when the Rmd file
 })
 
 test_that("Testing createQtiTest method", {
-              path_1 <- test_path("file/rmd/test_mc_no_point.Rmd")
+              path_1 <- test_path("file/rmd/mc_no_point.Rmd")
               path_2 <- test_path("file/md/sc_example2.md")
               path_3 <- test_path("file/xml/MultipleChoice.xml")
 

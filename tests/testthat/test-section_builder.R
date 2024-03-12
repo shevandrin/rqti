@@ -17,7 +17,7 @@ sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
           choices = c("Employ more and more people", "Maximize total production",
                       "Maximize total profits", "Sell the goods at subsidized cost"))
 
-path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
+path1 <- test_path("file/rmd/mc_no_point.Rmd")
 path2 <-  test_path("file/xml/Essay.xml")
 path3 <- test_path("file/md/sc_example1.md")
 
@@ -99,7 +99,7 @@ test_that("Testing function section() in the case  the items
 })
 
 test_that("Testing function section() to build variable AssessmentSection for by = \'files\' ", {
-    path1 <- test_path("file/rmd/test_mc_no_point.Rmd")
+    path1 <- test_path("file/rmd/mc_no_point.Rmd")
     path3 <- test_path("file/md/sc_example1.md")
     num_variants = 3
     file <- c(path1, path3)

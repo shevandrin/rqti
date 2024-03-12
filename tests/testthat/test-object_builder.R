@@ -314,7 +314,7 @@ test_that("Testing create_question_object() for OnInColTable task, where as_tabl
 })
 
 test_that("Testing create_question_object() with conditions: OnInColTable and as_table=F", {
-    path <- test_path("file/rmd/test_DirectedPair_with_table.Rmd")
+    path <- test_path("file/rmd/DirectedPair_with_table.Rmd")
     sut <- suppressMessages(create_question_object(path))
     expected <- new("DirectedPair",
                     content = list("<p>Choose the right classes:</p>"),
@@ -335,7 +335,7 @@ test_that("Testing create_question_object() with conditions: OnInColTable and as
 test_that("Testing create_question_object() for OneInRowTable task", {
     path1 <- test_path("file/md/OneInRowTable_example.md")
     sut1 <- create_question_object(path1)
-    path2 <- test_path("file/rmd/test_OneInRowTable_example.Rmd")
+    path2 <- test_path("file/rmd/OneInRowTable_example.Rmd")
     sut2 <- create_question_object(path2)
     expected <- new("OneInRowTable",
                     content = list(paste0("<p>Choose the correct order in ",
@@ -377,7 +377,7 @@ test_that("Testing create_question_object() for  MultipleChoiceTable task", {
 
 test_that("Testing create_question_object() for TextGap
           (yaml and primitive) tasks", {
-    path <- test_path("file/rmd/test_entry_Gap_primitive.Rmd")
+    path <- test_path("file/rmd/Gap_primitive.Rmd")
     sut <- suppressMessages(create_question_object(path))
 
     content <- paste0("<p><strong>Diese Aufgabe dient zum Testen ",
@@ -445,7 +445,7 @@ test_that("Testing create_question_object() for TextGap
 # Rmd file without type of attribute for InlineChoice
 test_that("Testing create_question_object() for InlineChoice
           (yaml and primitive) tasks", {
-    path <- test_path("file/rmd/test_entry_Gap_InlineChoice.Rmd")
+    path <- test_path("file/rmd/Gap_InlineChoice.Rmd")
     sut <- suppressMessages(create_question_object(path))
     expected <- suppressMessages(new("Entry",
                     identifier = "test_entry_example",
@@ -493,7 +493,7 @@ test_that("Testing of incorrect Rmd file (without parameter: type)
 
 test_that("Testing create_question_object() for MultipleChoice class
           without points", {
-    path <- test_path("file/rmd/test_mc_no_point.Rmd")
+    path <- test_path("file/rmd/mc_no_point.Rmd")
     sut <- create_question_object(path)
     expected <- new("MultipleChoice",
                     content = list(paste0("<p>When deciding between ",
@@ -523,7 +523,7 @@ test_that("Testing create_question_object() for MultipleChoice class
 
 test_that("Testing the Order task, points are awarded for each correct answer.",
           {
-    path <- test_path("file/rmd/test_order.Rmd")
+    path <- test_path("file/rmd/order.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
     xml_file_sut <- xml2::read_xml(test_path("ord.xml"))
 
@@ -553,7 +553,7 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
 test_that("Testing stop message for create_question_object() function
           in case the type of the task is not specified properly )", {
     error_message <- NULL
-    path <- test_path("file/rmd/test_wrong_file.Rmd")
+    path <- test_path("file/rmd/wrong_file.Rmd")
     tryCatch(
         {
             create_question_object(path)
@@ -570,7 +570,7 @@ test_that("Testing stop message for create_question_object() function
           in case more than 1 option marked as the correct answer
           in SingleChoice object)", {
               error_message <- NULL
-              path <- test_path("file/rmd/test_SC_wrong_marked.Rmd")
+              path <- test_path("file/rmd/SC_wrong_marked.Rmd")
               tryCatch(
                   {
                       create_question_object(path)
@@ -585,7 +585,7 @@ test_that("Testing stop message for create_question_object() function
 
 test_that("Testing read_table() function: delete the name of cols and rows
           for MultipleChoiceTable", {
-    path <- test_path("file/rmd/test_MultipleChoiceTable_rowid_colid_example.Rmd")
+    path <- test_path("file/rmd/MultipleChoiceTable_rowid_colid_example.Rmd")
     sut <- create_question_object(path)
 
     expected <- new("MultipleChoiceTable",
@@ -603,7 +603,7 @@ test_that("Testing read_table() function: delete the name of cols and rows
 
 test_that("Testing read_table() function: delete the name of cols and rows
           for OneInRowTable", {
-    path <- test_path("file/rmd/test_OneInRowTable_rowid_colid_example.Rmd")
+    path <- test_path("file/rmd/OneInRowTable_rowid_colid_example.Rmd")
     sut <- create_question_object(path)
 
     expected <- new("OneInRowTable",
@@ -621,7 +621,7 @@ test_that("Testing read_table() function: delete the name of cols and rows
 
 test_that("Testing read_table() function: delete the name of cols and rows
           for OneInColTable", {
-    path <- test_path("file/rmd/test_OneInColTable_rowid_colid_example.Rmd")
+    path <- test_path("file/rmd/OneInColTable_rowid_colid_example.Rmd")
     sut <- create_question_object(path)
 
     expected <- new("OneInColTable",
@@ -639,7 +639,7 @@ test_that("Testing read_table() function: delete the name of cols and rows
 
 test_that("Checking rmd_checker() behavior when 'library(rqti)'
           is not called in the Rmd file", {
-    path <- test_path("file/rmd/test_rmd_checker.Rmd")
+    path <- test_path("file/rmd/checker.Rmd")
 
     error_message <- tryCatch(
         rmd_checker(path),
