@@ -42,7 +42,6 @@ Suggests:
     covr,
     dplyr,
     testthat (>= 3.0.0),
-    textclean,
     XML,
     readr
 Config/testthat/edition: 3

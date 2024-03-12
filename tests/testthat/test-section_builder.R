@@ -1,16 +1,16 @@
 mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
           content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
-          choices = c("scarcity vs. resources",
-                      "wages vs. prices",
-                      "wants vs. needs",
-                      "consumers vs. producers"),
+          choices = c("scarcity vs resources",
+                      "wages vs prices",
+                      "wants vs needs",
+                      "consumers vs producers"),
           points = c(0.5, 0.5, 0, 0))
 mc2 <- new("MultipleChoice", identifier = "Test 2 duplication", title = "Economics",
           content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
-          choices = c("scarcity vs. resources",
-                      "wages vs. prices",
-                      "wants vs. needs",
-                      "consumers vs. producers"),
+          choices = c("scarcity vs resources",
+                      "wages vs prices",
+                      "wants vs needs",
+                      "consumers vs producers"),
           points = c(1.5, 0.5, 0, 0))
 sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
           content = list("<p>This is a mock question.<br/>In economics it is generally believed that the main objective of a Public Sector Financial Company like Bank is to:</p>"),
@@ -23,23 +23,19 @@ path3 <- test_path("file/md/test_sc_example1.md")
 
 test_that("Testing function section() to build permanent AssessmentSection", {
     sut <- section(c(path1, path2), id = "permanent_section")
-    # to clean invisible symbols
-    sut@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@choices)
+
     # rid of the name from @assessment_item
     names(sut@assessment_item) <- NULL
     expected <- new("AssessmentSection", identifier = "permanent_section",
                     assessment_item = list(mc, path2),
                     selection = 0)
-
     expect_equal(sut, expected)
 })
 
 test_that("Testing function section() to build variable nested AssessmentSection", {
 
     sut <- section(c(path1, path3), 2, id = "variable_section")
-    # to clean invisible symbols
-    sut@assessment_item[[1]]@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@assessment_item[[1]]@choices)
-    sut@assessment_item[[2]]@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[2]]@assessment_item[[1]]@choices)
+
     # rid of the name from @assessment_item
     names(sut@assessment_item) <- NULL
 
@@ -71,7 +67,6 @@ test_that("Testing function section() to build variable nested AssessmentSection
     expected <- new("AssessmentSection", identifier = "variable_section",
                     selection = 1,
                     assessment_item = list(variant1, variant2))
-
     expect_equal(sut, expected)
 })
 
@@ -110,11 +105,6 @@ test_that("Testing function section() to build variable AssessmentSection for by
     file <- c(path1, path3)
     sut <- section(file, num_variants, id = "variable_section", by = "files")
 
-    # to clean invisible symbols
-    sut@assessment_item[[1]]@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@assessment_item[[1]]@choices)
-    sut@assessment_item[[2]]@assessment_item[[1]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[2]]@assessment_item[[1]]@choices)
-    sut@assessment_item[[1]]@assessment_item[[2]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@assessment_item[[2]]@choices)
-    sut@assessment_item[[1]]@assessment_item[[3]]@choices <- textclean::replace_non_ascii(sut@assessment_item[[1]]@assessment_item[[3]]@choices)
     # rid of the name from @assessment_item
     names(sut@assessment_item) <- NULL
     # create list of expected items

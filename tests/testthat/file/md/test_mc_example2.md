@@ -17,8 +17,8 @@ When deciding between renovating a water treatment plant or
 building a new community pool, what is the government
 most likely to consider?
 
-* *scarcity vs. resources*
-* wants vs. needs
-* *wages vs. prices*
-* consumers vs. producers
+* *scarcity vs resources*
+* wants vs needs
+* *wages vs prices*
+* consumers vs producers
 

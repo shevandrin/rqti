@@ -94,13 +94,13 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                           "what is the government most likely ",
                                           "to consider?</p>")),
                     points = c(1, 2, 0, 0),
-                    identifier = "test 2",
+                    identifier = "test2",
                     qti_version = "v2p1",
                     title = "Economics",
-                    choices = c("scarcity vs. resources",
-                                "wages vs. prices",
-                                "wants vs. needs",
-                                "consumers vs. producers"),
+                    choices = c("scarcity vs resources",
+                                "wages vs prices",
+                                "wants vs needs",
+                                "consumers vs producers"),
                     shuffle = TRUE,
                     prompt = "",
                     choice_identifiers = c("ChoiceA",
@@ -109,7 +109,6 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                            "ChoiceD"),
                     orientation = "vertical"
     )
-    sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
 })
 
@@ -138,10 +137,10 @@ test_that("Testing create_question_object() for MultipleChoice class:
                     identifier = "test 2",
                     qti_version = "v2p1",
                     title = "Economics",
-                    choices = c("scarcity vs. resources",
-                                "wants vs. needs",
-                                "wages vs. prices",
-                                "consumers vs. producers"),
+                    choices = c("scarcity vs resources",
+                                "wants vs needs",
+                                "wages vs prices",
+                                "consumers vs producers"),
                     shuffle = TRUE,
                     prompt = "",
                     choice_identifiers = c("ChoiceA",
@@ -150,7 +149,6 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                            "ChoiceD"),
                     orientation = "vertical"
     )
-    sut@choices <- textclean::replace_non_ascii(sut@choices)
     expect_equal(sut, expected)
 })
 
