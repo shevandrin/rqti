@@ -47,25 +47,26 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      academic_grading = "logical",
                                      grade_label = "character",
                                      table_label = "character"),
-         prototype = prototype(navigation_mode = "nonlinear",
-                               submission_mode = "individual",
-                               test_part_identifier = "test_part",
-                               qti_version = "v2p1",
-                               time_limit = NA_integer_,
-                               max_attempts = NA_integer_,
-                               allow_comment = TRUE,
-                               rebuild_variables = NA,
-                               academic_grading = FALSE,
-                               grade_label = c(en="Grade", de="Note"),
-                               table_label = c(en="Grade", de="Note")
-         ))
+    prototype = prototype(navigation_mode = "nonlinear",
+                          submission_mode = "individual",
+                          test_part_identifier = "test_part",
+                          qti_version = "v2p1",
+                          time_limit = NA_integer_,
+                          max_attempts = NA_integer_,
+                          allow_comment = TRUE,
+                          rebuild_variables = NA,
+                          academic_grading = FALSE,
+                          grade_label = c(en="Grade", de="Note"),
+                          table_label = c(en="Grade", de="Note"))
+)
 
 
 setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object <- callNextMethod()
 
     if (length(.Object@identifier) == 0) {
-        .Object@identifier <- generate_id(type = "test")}
+        .Object@identifier <- generate_id(type = "test")
+    }
 
     # us identifier as a title
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
@@ -87,7 +88,7 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
         if (.Object@time_limit > 180 | .Object@time_limit < 0.01) {
             warning("Value of time_limits does not seem plausible.",
                     call. = FALSE)
-            }
+        }
     }
 
     validObject(.Object)
@@ -155,13 +156,15 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentTest"),
               feedback_grade_table <- NULL
               if (object@academic_grading) {
                   feedback_grade <- make_outcome_declaration("FEEDBACKMODAL",
-                                                       "multiple",
-                                                       "identifier",
-                                                       value = NULL,
-                                                       view = "testConstructor")
-                  feedback_grade_table <- make_outcome_declaration(
-                      "FEEDBACKTABLE", "multiple", "identifier",
-                      value = NULL, view = "testConstructor")
+                                                             "multiple",
+                                                             "identifier",
+                                                             value = NULL,
+                                                             view = "testConstructor")
+                  feedback_grade_table <- make_outcome_declaration("FEEDBACKTABLE",
+                                                                   "multiple",
+                                                                   "identifier",
+                                                                   value = NULL,
+                                                                   view = "testConstructor")
               }
               tagList(make_outcome_declaration("SCORE", value = 0),
                       feedback_grade, feedback_grade_table,
