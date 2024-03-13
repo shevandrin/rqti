@@ -49,9 +49,6 @@ setClass("AssessmentTestOpal", contains = "AssessmentTest",
                                calculator = NA_character_,
                                mark_items = TRUE,
                                keep_responses = FALSE))
-# TODO verification procedure for calculator values: they must be from factor:scientific-calculator/simple-calculator
-# TODO verification of files slot
-# TODO there is a conflict between keep_responses and rebuild_variables, if the second one is true - the first one will be ignored
 
 setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -62,10 +59,10 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
     found_calc <- c(sapply(.Object@section, getCalculator, USE.NAMES = FALSE))
     if (any(c("simple", "simple-calculator") %in% found_calc)) {
         .Object@calculator = "simple-calculator"
-        }
+    }
     if (any(c("scientific", "scientific-calculator") %in% found_calc)) {
         .Object@calculator = "scientific-calculator"
-        }
+    }
 
     validObject(.Object)
     .Object
