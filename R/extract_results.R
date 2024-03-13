@@ -97,9 +97,12 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
     for (f in res_files) {
         xml_path <- file.path(tdir, f)
         switch(level,
-               exercises = {df0 <- get_result_attr_answers(xml_path,
-                                                           hide_filename)},
-               items = {df0 <- get_result_attr_options(xml_path, hide_filename)}
+            exercises = {
+                df0 <- get_result_attr_answers(xml_path, hide_filename)
+            },
+            items = {
+                df0 <- get_result_attr_options(xml_path, hide_filename)
+            }
         )
         name <- ifelse(is.null(names), f, names[which(res_files == f)])
         if (!is.null(db)) {
@@ -174,8 +177,7 @@ get_result_attr_answers<- function(file, hide_filename) {
     return(data)
 }
 
-# rebuild xml nodeset to leave only results after tutor evaluation if it
-# took place
+# rebuild xml nodeset to leave only results after tutor evaluation if it took place
 #' @importFrom utils head
 unique_result_set <- function(doc) {
     items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
@@ -212,8 +214,7 @@ check_scored <- function(node) {
 }
 # take itemResult and return duration or NA
 get_duration <- function(node) {
-    dur_node <- xml2::xml_find_all(node,
-                            ".//d1:responseVariable[@identifier='duration']")
+    dur_node <- xml2::xml_find_all(node, ".//d1:responseVariable[@identifier='duration']")
     duration <- ifelse (length(dur_node) == 0, NA, xml2::xml_text(dur_node))
     return(duration)
 }
@@ -279,16 +280,7 @@ get_result_attr_options <- function(file, hide_filename) {
         maxscore_values <- append(maxscore_values, res$maxscore_value)
         correctness <- append(correctness, res$correctness)
     }
-    # print(file_name)
-    # print(identifier)
-    # print(base_types)
-    # print(cardinalities)
-    # print(qti_type)
-    # print(options)
-    # print(correct_responses)
-    # print(cand_responses)
-    # print(score_values)
-    # print(maxscore_values)
+
     data <- data.frame(
         file = rep(file_name, length(identifier)),
         date = rep(test_dt, length(identifier)),
@@ -308,8 +300,7 @@ get_result_attr_options <- function(file, hide_filename) {
 
 # takes information from responseVariable tags
 get_info <- function(node){
-    first_tag <- xml2::xml_find_first(node,
-                            ".//d1:responseVariable[@identifier!='duration']")
+    first_tag <- xml2::xml_find_first(node, ".//d1:responseVariable[@identifier!='duration']")
     b_type <- xml2::xml_attr(first_tag, "baseType")
     if (b_type == "identifier") info <- get_info_identifier(node, first_tag)
     if (b_type == "directedPair") info <- get_info_directedPair(node, first_tag)
@@ -353,14 +344,12 @@ get_info_identifier <- function(node, options_node) {
     result <- corr * cand
     true_cand <- sum(result)
 
-    score <- xml2::xml_find_all(node,
-                                ".//d1:outcomeVariable[@identifier='SCORE']")
+    score <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='SCORE']")
 
     score_value <- ifelse(result, as.numeric(get_value(score)) / true_cand, "0")
 
 
-    maxscore <- xml2::xml_find_all(node,
-                                ".//d1:outcomeVariable[@identifier='MAXSCORE']")
+    maxscore <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='MAXSCORE']")
     maxscore_value <- ifelse(result,
                              as.numeric(get_value(maxscore)) / true_counts, "0")
 
@@ -397,14 +386,12 @@ get_info_directedPair <- function(node, options_node) {
     result <- corr * cand
     true_cand <- sum(result)
 
-    score <- xml2::xml_find_all(node,
-                                ".//d1:outcomeVariable[@identifier='SCORE']")
+    score <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='SCORE']")
     score_value <- ifelse(result,
                           (as.numeric(get_value(score)) )/ true_cand, "0")
     if (length(score) == 0) score_value <- rep("0", length(options))
 
-    maxscore <- xml2::xml_find_all(node,
-                                ".//d1:outcomeVariable[@identifier='MAXSCORE']")
+    maxscore <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='MAXSCORE']")
     maxscore_value <- ifelse(corr,
                              as.numeric(get_value(maxscore)) / true_counts, "0")
     if (length(maxscore) == 0) maxscore_value <- rep("0", length(options))
@@ -420,11 +407,9 @@ get_info_directedPair <- function(node, options_node) {
     return(res)
 }
 
-# takes information from tag with float or string as base type of response
-# variable
+# takes information from tag with float or string as base type of response variable
 get_info_float <- function(node) {
-    options_nodes <- xml2::xml_find_all(node,
-                        ".//d1:responseVariable[@identifier!='duration']")
+    options_nodes <- xml2::xml_find_all(node, ".//d1:responseVariable[@identifier!='duration']")
     options <- character(0)
     corr <- character(0)
     cand <- character(0)
@@ -454,8 +439,7 @@ get_info_float <- function(node) {
                              "\')]")
         score <- xml2::xml_find_all(node, expression)
         if (length(score) == 0) {
-            score <- xml2::xml_find_all(node,
-                                ".//d1:outcomeVariable[@identifier='SCORE']")
+            score <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='SCORE']")
         }
         score_value <- get_value(score)
         if (length(score) == 0) score_value <- "0"
@@ -469,8 +453,7 @@ get_info_float <- function(node) {
                              "\')]")
         maxscore <- xml2::xml_find_all(node, expression)
         if (length(maxscore) == 0) {
-            maxscore <- xml2::xml_find_all(node,
-                                ".//d1:outcomeVariable[@identifier='MAXSCORE']")
+            maxscore <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='MAXSCORE']")
         }
         maxscore_value <- get_value(maxscore)
         if (length(maxscore) == 0) maxscore_value <- 0
