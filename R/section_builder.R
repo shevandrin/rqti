@@ -98,8 +98,8 @@ section <- function(content, n_variants = 1L, seed_number = NULL, id = NULL,
     if (is.null(id)) {
         if (length(content) == 1) {
             id <- ifelse (typeof(content) == "character",
-                paste0(tools::file_path_sans_ext(basename(content)), "_section"),
-                content@identifier)
+                          paste0(tools::file_path_sans_ext(basename(content)), "_section"),
+                          content@identifier)
         } else {
             id <- paste0("variable_section_", sample.int(100, 1))
         }
@@ -133,7 +133,7 @@ make_exam_subsection <- function(object, seed_number) {
     }
 
     asmt_items <- mapply(make_variant, object, rep(seed_number, length(object)),
-                           USE.NAMES = FALSE)
+                         USE.NAMES = FALSE)
     exam_subsection <- new("AssessmentSection", identifier = id,
                            assessment_item = asmt_items)
     return(exam_subsection)
@@ -211,7 +211,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     params["section"] <- ifelse (length(unlist(params["content"])) == 1,
-                            list(params["content"]), as.list(params["content"]))
+                                 list(params["content"]), as.list(params["content"]))
     params["content"] = NULL
     # define test class
     params["Class"] <- "AssessmentTest"
@@ -297,7 +297,7 @@ test4opal <- function(content, identifier = "test_identifier",
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     params["section"] <- ifelse (length(unlist(params["content"])) == 1,
-                                list(params["content"]), as.list(params["content"]))
+                                 list(params["content"]), as.list(params["content"]))
     params["content"] = NULL
     # define test class
     params["Class"] <- "AssessmentTestOpal"
