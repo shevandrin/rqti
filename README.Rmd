@@ -20,8 +20,6 @@ knitr::opts_chunk$set(
 
 # rqti
 
-Note: This project is currently in progress, and we anticipate a stable release in Q1 2024.
-
 The objective of `rqti` is to establish a robust and stand-alone R library tailored for crafting exercises and exams in adherence to the [QTI v2.1](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html) standard directly from R. Users have the flexibility to render the exercises either locally (using qtijs) or integrate them seamlessly into the OPAL learning management system. Our primary audience comprises instructors specializing in research methods and statistics who seek to harness the full capabilities of R while aligning with the QTI standard. In particular, instructors utilizing OPAL will find our package especially advantageous, as it capitalizes on OPAL's robust API.
 
 ## Documentation

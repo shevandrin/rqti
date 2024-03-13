@@ -13,9 +13,6 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 # rqti
 
-Note: This project is currently in progress, and we anticipate a stable
-release in Q1 2024.
-
 The objective of `rqti` is to establish a robust and stand-alone R
 library tailored for crafting exercises and exams in adherence to the
 [QTI
