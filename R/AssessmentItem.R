@@ -28,8 +28,8 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     if (length(.Object@prompt) == 0) .Object@prompt <- ""
     if (is.na(.Object@prompt)) .Object@prompt <- ""
 
-    if (length(.Object@identifier) == 0) {
-        .Object@identifier <- generate_id()}
+    if (length(.Object@identifier) == 0) .Object@identifier <- generate_id()
+
     if (is.na(.Object@identifier)) .Object@identifier <- generate_id()
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
@@ -264,22 +264,22 @@ setMethod("createQtiTest", signature(object = "AssessmentItem"),
           function(object, dir = ".", verification = FALSE, zip_only) {
               test_section <- section(object)
               test_object <- test4opal(test_section,
-                                identifier = paste0("test_", object@identifier))
+                                       identifier = paste0("test_",
+                                                           object@identifier))
               create_qti_test(test_object, dir, verification, zip_only)
           })
 
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,AssessmentItem
 setMethod("createResponseProcessing", signature(object = "AssessmentItem"),
-          function(object) {
-              create_default_resp_processing(object)
-})
+    function(object) create_default_resp_processing(object)
+)
 
 #' @rdname createResponseDeclaration-methods
 #' @aliases createResponseDeclaration,AssessmentItem
 setMethod("createResponseDeclaration", signature(object = "AssessmentItem"),
-          function(object) {
-})
+    function(object) {}
+)
 
 #' @rdname createOutcomeDeclaration-methods
 #' @aliases createOutcomeDeclaration,AssessmentItem
@@ -287,14 +287,13 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
           function(object) {
               feedbacks <- NULL
               if (length(object@feedback) > 0) {
-              feedbacks <- tagList(
-                  make_outcome_declaration("FEEDBACKBASIC",
-                                           value = "empty",
-                                           base_type = "identifier"),
-                  make_outcome_declaration("FEEDBACKMODAL",
-                                           cardinality = "multiple",
-                                           value = NULL,
-                                           base_type = "identifier"))
+                  feedbacks <- tagList(make_outcome_declaration("FEEDBACKBASIC",
+                                                                value = "empty",
+                                                                base_type = "identifier"),
+                                       make_outcome_declaration("FEEDBACKMODAL",
+                                                                cardinality = "multiple",
+                                                                value = NULL,
+                                                                base_type = "identifier"))
               }
               points <- sum(object@points[object@points > 0])
               tagList(make_outcome_declaration("SCORE", value = 0),
