@@ -19,15 +19,15 @@ setClass("ModalFeedback", slots = list(outcome_identifier = "character",
                                        identifier = "character",
                                        title = "character",
                                        content = "list"),
-                          prototype = list(show = TRUE,
-                                           outcome_identifier = "FEEDBACKMODAL",
-                                           identifier = "modal_feedback"))
+         prototype = list(show = TRUE,
+                          outcome_identifier = "FEEDBACKMODAL",
+                          identifier = "modal_feedback"))
 
 setMethod("initialize", "ModalFeedback", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@show) == 0) .Object@show <- TRUE
     if (length(.Object@outcome_identifier) == 0)
-        .Object@outcome_identifier = "FEEDBACKMODAL"
+        .Object@outcome_identifier <- "FEEDBACKMODAL"
     validObject(.Object)
     .Object
 })
@@ -40,14 +40,14 @@ setGeneric("createResponseCondition",
 
 setMethod("createModalFeedback", signature(object = "ModalFeedback"),
           function(object) {
-            content <- list(Map(createText, object@content))
-            showHide <- ifelse(object@show, "show", "hide")
-            tag("modalFeedback",
-                list(identifier = object@identifier,
-                     outcomeIdentifier = object@outcome_identifier,
-                     showHide = showHide,
-                     title = object@title,
-                     content))
+              content <- list(Map(createText, object@content))
+              show_hide <- ifelse(object@show, "show", "hide")
+              tag("modalFeedback",
+                  list(identifier = object@identifier,
+                       outcomeIdentifier = object@outcome_identifier,
+                       showHide = show_hide,
+                       title = object@title,
+                       content))
           })
 
 setMethod("createResponseCondition", signature(object = "ModalFeedback"),
