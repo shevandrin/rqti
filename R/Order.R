@@ -28,7 +28,6 @@ setClass("Order", contains = "AssessmentItem",
                      points_per_answer = "logical"),
          prototype = list(shuffle = TRUE, points_per_answer = TRUE))
 
-# constructor
 setMethod("initialize", "Order", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@choices_identifiers)==0) {
@@ -63,22 +62,23 @@ setMethod("createResponseProcessing", signature(object = "Order"),
           })
 
 create_response_declaration_order <- function(object) {
-        child <- create_correct_response(object@choices_identifiers)
-        tag("responseDeclaration", list(identifier = "RESPONSE",
-                                        cardinality = "ordered",
-                                        baseType = "identifier",
-                                        child))
+    child <- create_correct_response(object@choices_identifiers)
+    tag("responseDeclaration", list(identifier = "RESPONSE",
+                                    cardinality = "ordered",
+                                    baseType = "identifier",
+                                    child))
 }
 
 setMethod("createResponseCondition", signature(object = "Order"),
-          function(object) {
-              if (object@points_per_answer) {
-                answ_points <- object@points / length(object@choices)
-                indexes <- seq(length(object@choices))
-                resp_cond <- Map(create_condition_points, answ_points, indexes)
-                return(resp_cond)
-              }
-})
+    function(object) {
+        if (object@points_per_answer) {
+            answ_points <- object@points / length(object@choices)
+            indexes <- seq(length(object@choices))
+            resp_cond <- Map(create_condition_points, answ_points, indexes)
+            return(resp_cond)
+        }
+    }
+)
 
 create_condition_points <- function(answ_points, index) {
     var_tag <- tag("variable", list(identifier = "RESPONSE"))

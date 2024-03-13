@@ -30,7 +30,6 @@
 setClass("MultipleChoiceTable", contains = "MatchTable",
          slots = list(mapping = "numeric"))
 
-# constructor
 setMethod("initialize", "MultipleChoiceTable", function(.Object, ...) {
     .Object <- callNextMethod()
     number_wrong_options <- length(.Object@rows) * length(.Object@cols) -

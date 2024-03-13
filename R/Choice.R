@@ -17,7 +17,6 @@ setClass("Choice", contains = "AssessmentItem",
                                choice_identifiers = NA_character_,
                                orientation = "vertical"))
 
-# constructor
 setMethod("initialize", "Choice", function(.Object, ...) {
     .Object <- callNextMethod()
     ids <- .Object@choice_identifiers
