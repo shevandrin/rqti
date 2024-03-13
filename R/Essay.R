@@ -41,8 +41,8 @@ setMethod("initialize", "Essay", function(.Object, ...) {
     not_general_fb <- c("CorrectFeedback", "WrongFeedback")
     log_fb <- sapply(.Object@feedback, function(x) class(x) %in% not_general_fb)
     if (any(log_fb)) {
-       stop("Only general feedback is possible for this type of task",
-            call. = FALSE)
+        stop("Only general feedback is possible for this type of task",
+             call. = FALSE)
     }
 
     # warning for data_allow_paste
@@ -57,14 +57,15 @@ setMethod("initialize", "Essay", function(.Object, ...) {
         # set default max count of words
         if (length(.Object@words_max) == 0) .Object@words_max <- nwords * 2
         # set default size as expected length parameter
-        n_characters <- 6*nwords
+        n_characters <- 6 * nwords
         if (length(.Object@expected_length) == 0) {
             if (n_characters < 150) {
-            .Object@expected_length <- n_characters
-            .Object@expected_lines <- 1 }
-            if (n_characters > 150) {
+                .Object@expected_length <- n_characters
+                .Object@expected_lines <- 1
+            } else {
                 .Object@expected_length <- 150
-                .Object@expected_lines <- round(n_characters/150)+2}
+                .Object@expected_lines <- round(n_characters / 150) + 2
+            }
         }
     }
 
@@ -92,4 +93,3 @@ setMethod("createResponseDeclaration", signature(object = "Essay"),
 setMethod("createResponseProcessing", signature(object = "Essay"),
           function(object) {
           })
-
