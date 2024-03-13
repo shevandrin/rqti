@@ -3,18 +3,18 @@ Title: Create Tests in R According to QTI 2.1 Standard
 Version: 0.1.0
 Authors@R: c(
     person("Andrey", "Shevandrin", email = "shevandrin@gmail.com", 
-    role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0807-2546")),
+    role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-0807-2546")),
     person("Petr", "Bondarenko", email = "bondarenko.volsu@gmail.com", 
     role = c("ctb"), comment = c(ORCID = "0000-0002-5154-9664")),
     person("Ivonne", "Ojeda", email = "yulieth9109@gmail.com",
     role = "ctb"),
     person("Johannes", "Titz", email = "johannes@titz.science",
-    comment = c(ORCID = "0000-0002-1102-5719"), role = "aut"),
+    comment = c(ORCID = "0000-0002-1102-5719"), role = c("aut", "cph")),
     person("Brian", "Mottershead", role = "cph", comment = "Author of QTIJS library"),
     person("Stiftung für Innovation in der Hochschullehre", role = "fnd")
     )
-Description: Create Tests and Tasks compliant with the Question & Test Interoperability (QTI) information model version 2.1. Input sources are Rmd/md description files or S4-class objects within the R environment. Output formats include standalone zip or xml files. Supports the generation of basic task types and provides a comprehensive set of attributes for customizing tests.
-License: GPL (>= 3) + file LICENSE
+Description: Create tests and tasks compliant with the Question & Test Interoperability (QTI) information model version 2.1. Input sources are Rmd/md description files or S4-class objects within the R environment. Output formats include standalone zip or xml files. Supports the generation of basic task types (single and multiple choice, order, pair association, matching tables, filling gaps and essay) and provides a comprehensive set of attributes for customizing tests.
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
