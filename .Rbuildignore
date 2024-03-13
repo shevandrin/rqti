@@ -21,3 +21,4 @@ s4_example.R
 ^pageres\.R$
 ^qtitutorial\.Rmd$
 ^engine\.bin$
+^cran-comments\.md$
