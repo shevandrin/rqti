@@ -12,20 +12,21 @@
 #' @aliases MatchTable
 #' @include AssessmentItem.R
 setClass("MatchTable", contains = "AssessmentItem",
-         slot = list(rows = "character",
-                     rows_identifiers = "character",
-                     cols = "character",
-                     cols_identifiers = "character",
-                     answers_identifiers = "character",
-                     answers_scores = "numeric",
-                     shuffle = "logical",
-                     shuffle_rows = "logical",
-                     shuffle_cols = "logical"),
-         prototype = list(shuffle = TRUE, points = NA_real_,
-         shuffle_rows = TRUE, shuffle_cols = TRUE))
+    slot = list(rows = "character",
+                rows_identifiers = "character",
+                cols = "character",
+                cols_identifiers = "character",
+                answers_identifiers = "character",
+                answers_scores = "numeric",
+                shuffle = "logical",
+                shuffle_rows = "logical",
+                shuffle_cols = "logical"),
+    prototype = list(shuffle = TRUE,
+                     points = NA_real_,
+                     shuffle_rows = TRUE,
+                     shuffle_cols = TRUE)
+)
 
-
-#TODO conflict between points slot and sum(answers_scores)
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     answ_count <- length(.Object@answers_identifiers)
