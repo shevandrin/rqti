@@ -20,18 +20,16 @@ rqti_project <- function(path, ...) {
             paste0("exercises_random <- ", print_vector(temps_r, path, dots['render']))
         )
     } else {
-        text_rmd <- c(
-           "exercises = c(\"muster_ex1.Rmd\", \"muster_ex2.Rmd\")",
-           "exercises_random = \"muster_ex_r.Rmd\""
-        )
+        text_rmd <- c("exercises = c(\"muster_ex1.Rmd\", \"muster_ex2.Rmd\")",
+                      "exercises_random = \"muster_ex_r.Rmd\"")
 
     }
     launch_qtijs <- NULL
     if (dots$start_server) launch_qtijs <- "rqti::start_server()"
     # create Rprofile
     text <- c("library(rqti)",
-            paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
-            launch_qtijs)
+              paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
+              launch_qtijs)
     contents <- paste(
         paste(text, collapse = "\n"),
         sep = "\n"

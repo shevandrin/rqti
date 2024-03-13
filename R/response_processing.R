@@ -167,8 +167,9 @@ make_default_feedback_cond <- function(answers = list(NULL)) {
 create_response_processing_gap_basic <- function(object) {
     not_tag <- not(isNull(variable(object@response_identifier)))
     map_tag <- mapResponse(object@response_identifier)
-    outcome_tag <- setOutcomeValue(list(
-        identifier = paste0("SCORE_", object@response_identifier), map_tag))
+    outcome_tag <- setOutcomeValue(list(identifier = paste0("SCORE_",
+                                                            object@response_identifier),
+                                        map_tag))
     response_if <- responseIf(list(not_tag, outcome_tag))
     return(responseCondition(response_if))
 }
@@ -178,11 +179,12 @@ create_response_processing_text_entry_opal <- function(object) {
     url_scheme <- "http://bps-system.de/xsd/imsqti_ext_maptolresponse"
     not_tag <- not(isNull(variable(object@response_identifier)))
     map_tag <- mapTolResponse(list(xmlns = url_scheme,
-                            identifier = object@response_identifier,
-                            tolerance = object@tolerance,
-                            toleranceMode = "absolute"))
-    outcome_tag <- setOutcomeValue(list(
-        identifier = paste0("SCORE_",object@response_identifier), map_tag))
+                                   identifier = object@response_identifier,
+                                   tolerance = object@tolerance,
+                                   toleranceMode = "absolute"))
+    outcome_tag <- setOutcomeValue(list(identifier = paste0("SCORE_",
+                                                            object@response_identifier),
+                                        map_tag))
     return(responseCondition(responseIf(list(not_tag, outcome_tag))))
 }
 
@@ -191,15 +193,14 @@ create_response_processing_num_entry <- function(object) {
     child <- tagList(variable(object@response_identifier),
                      correct(object@response_identifier))
     equal_tag <- equal(list(toleranceMode = object@tolerance_type,
-                                   tolerance = tolerance_str,
-                                   includeLowerBound =
-                                       tolower(object@include_lower_bound),
-                                   includeUpperBound =
-                                       tolower(object@include_upper_bound),
-                                   child))
+                            tolerance = tolerance_str,
+                            includeLowerBound = tolower(object@include_lower_bound),
+                            includeUpperBound =tolower(object@include_upper_bound),
+                            child))
     var_outcome <- variable(paste0("MAXSCORE_", object@response_identifier))
     outcome_tag <- setOutcomeValue(list(identifier = paste0("SCORE_",
-                                    object@response_identifier), var_outcome))
+                                                            object@response_identifier),
+                                        var_outcome))
     return(responseCondition(responseIf(list(equal_tag, outcome_tag))))
 }
 
@@ -211,8 +212,8 @@ create_resp_cond_set_feedback <- function(object) {
 
     tag_mt_var <- variable("FEEDBACKBASIC")
     tag_and <- and(match(list(base_value, tag_mt_var)))
-    set_out_value <- setOutcomeValue(list(
-        identifier = object@outcome_identifier, multiple_tag))
+    set_out_value <- setOutcomeValue(list(identifier = object@outcome_identifier,
+                                          multiple_tag))
     return(responseCondition(responseIf(list(tag_and, set_out_value))))
 }
 
@@ -244,14 +245,14 @@ create_resp_cond_grade_feedback <- function(lower_bound, upper_bound,
 # this function creates set of outcomesConditions according to german grade system
 make_set_conditions_grade <- function(max_points, grade_label, table_label) {
     grades <- c("5.0", "4.0", "3.7", "3.3", "3.0", "2.7", "2.3", "2.0", "1.7",
-               "1.3", "1.0")
+                "1.3", "1.0")
     id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
     grade_levels <- seq(50, 100, 5) * max_points / 100
     grade_levels <- grade_levels[-length(grade_levels)]
     lower_bounds <- c("0.00", sprintf("%.2f", grade_levels))
     upper_bounds <- c(sprintf("%.2f", grade_levels -0.01), "max")
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
-                             upper_bounds, id_grade_fb)
+                      upper_bounds, id_grade_fb)
     conditions <- tagList(conditions, create_resp_cond_grade_table())
     feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, grade_label)
     upper_bounds[length(upper_bounds)] <- sprintf("%.2f", max_points)
@@ -279,9 +280,9 @@ create_feedback_grade_table <- function(df, table_label) {
     cont <- kable_styling(cont, position = "left", full_width = F)
     grade_table <- htmltools::HTML(cont)
     tag("testFeedback", list(identifier = "feedback_grade_table",
-                            outcomeIdentifier = "FEEDBACKTABLE",
-                            showHide = "show", access = "atEnd",
-                            grade_table))
+                             outcomeIdentifier = "FEEDBACKTABLE",
+                             showHide = "show", access = "atEnd",
+                             grade_table))
 }
 
 # this function makes condition to show grading table in feedback
