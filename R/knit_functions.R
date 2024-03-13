@@ -30,12 +30,12 @@ render_qtijs <- function(input, ...) {
     # is tricky to set up
     url <- Sys.getenv("QTI_URL")
     if (url == "") {
-      # Knit Button runs in separate session
-      if (!interactive()) {
-          stop("Server for QTIJS not running. You can start it manually with start_server()")
-      } else {
-          url <- prepare_renderer()
-      }
+        # Knit Button runs in separate session
+        if (!interactive()) {
+            stop("Server for QTIJS not running. You can start it manually with start_server()")
+        } else {
+            url <- prepare_renderer()
+        }
     }
     message("Open browser at: ", url, " for preview")
     prepareQTIJSFiles(input, qtijs_path())
@@ -55,12 +55,12 @@ render_qtijs <- function(input, ...) {
 #' @return nothing, has side effects
 #' @export
 render_xml <- function(input) {
-  url <- prepare_renderer()
-  # use index.xml for a single file
-  file.copy(input, paste0(qtijs_path(), "/index.xml"))
-  if (Sys.getenv("RSTUDIO") == "1") {
+    url <- prepare_renderer()
+    # use index.xml for a single file
+    file.copy(input, paste0(qtijs_path(), "/index.xml"))
+    if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
-  }
+    }
 }
 
 #' Render a zipped qti archive with QTIJS
@@ -116,18 +116,18 @@ qtijs_path <- function() {
 #'
 #' Starts server for QTIJS, returns path of QTIJS and the url of the server.
 prepare_renderer <- function() {
-  path <- qtijs_path()
-  # start a server if none are there or there is no server url
-  if (Sys.getenv("QTI_URL") == "") {
-      start_server()
-  }
-  # clean up
-  clean_qtijs()
-  Sys.getenv("QTI_URL")
+    path <- qtijs_path()
+    # start a server if none are there or there is no server url
+    if (Sys.getenv("QTI_URL") == "") {
+        start_server()
+    }
+    # clean up
+    clean_qtijs()
+    Sys.getenv("QTI_URL")
 }
 
 clean_qtijs <- function() {
-  unlink(paste(qtijs_path(), "*.xml", sep = "/"))
+    unlink(paste(qtijs_path(), "*.xml", sep = "/"))
 }
 
 #' Stop QTIJS local server

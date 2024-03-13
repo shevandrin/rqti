@@ -113,9 +113,8 @@ create_question_object <- function(file, file_dir = NULL) {
     feedback <- list(parse_feedback(doc, file_dir))
     slots <- c(slots, feedback = feedback)
     if (is.null(slots$content)) {
-        slots$content <- as.list(paste(clean_question(html_qstn),
-                                       collapse = ""))
-        }
+        slots$content <- as.list(paste(clean_question(html_qstn), collapse = ""))
+    }
     slots[["type"]] <- NULL
 
     object <- do.call(new, slots)
@@ -173,7 +172,7 @@ create_gap_object <- function(entry, id) {
         attrs[["placeholder"]] <- as.character(attrs[["placeholder"]])
         if (!("response_identifier" %in% names(attrs)))  {
             attrs["response_identifier"] <- id
-            }
+        }
         attrs <- c(Class = object_class, attrs)
         object <- do.call(new, attrs)
     }
@@ -269,8 +268,7 @@ create_dp_slots <- function(html, attrs) {
     pairs_ids <- paste(rows_ids, cols_ids)
 
     if (!is.null(attrs$answers_scores)) {
-        attrs$answers_scores <- as.numeric(strsplit(as.character(
-            attrs$answers_scores), ",")[[1]])
+        attrs$answers_scores <- as.numeric(strsplit(as.character(attrs$answers_scores), ",")[[1]])
     }
 
     attrs$abbr_id <- NULL
@@ -288,8 +286,7 @@ parse_list <- function(html) {
     question_list <- xml2::xml_find_all(html, "//ul")
     question_list <- question_list[length(question_list)]
     choices  <- xml2::xml_find_all(question_list, ".//li")
-    # build a list with possible answers, that keeps formatting of the content
-    # (mathml)
+    # build a list with possible answers, that keeps formatting of the content (mathml)
     choices_str <- c()
     solution <- c()
     for (i in seq(length(choices))) {
@@ -329,13 +326,13 @@ delete_subsections <- function(html_node) {
 # change symbols to make html neat
 change_symbols <- function(cont) {
     if (!startsWith(cont, "<pre")) {
-       cont <- gsub("<br>", "<br/>", cont)
-       cont <- gsub("\r", "", cont)
-       cont <- gsub("^\\n|\\n$", "", cont)
-       cont <- gsub(">\n<", "><", cont)
-       cont <- gsub("\n", " ", cont)
-       cont <- gsub("<br/> ", "<br/>", cont)
-       cont <- gsub("   ", "", cont)
+        cont <- gsub("<br>", "<br/>", cont)
+        cont <- gsub("\r", "", cont)
+        cont <- gsub("^\\n|\\n$", "", cont)
+        cont <- gsub(">\n<", "><", cont)
+        cont <- gsub("\n", " ", cont)
+        cont <- gsub("<br/> ", "<br/>", cont)
+        cont <- gsub("   ", "", cont)
     } else {
         cont <- gsub("<code>", "<code><br />", cont)
         cont <- gsub("\\\r\\\n", "<br />", cont)
@@ -402,7 +399,7 @@ define_ids <- function(vect, abbr, type) {
     }
     # add prefix when it starst wiht digit
     ids <- sapply(ids, function(x) ifelse(grepl("^\\d", x), paste0(type, x), x),
-           USE.NAMES = FALSE)
+                  USE.NAMES = FALSE)
     # eliminate special character
     ids <- sapply(ids, function(x) gsub("[^[:alnum:]_]", "", x),
                   USE.NAMES = FALSE)
@@ -419,8 +416,8 @@ make_abbr_ids <- function(items) {
         if (count_words > 1) {
             pos <- regexpr(" ", x)[1][1]
             x <- paste0(substr(x, 1, pos - 1), "_",
-                       abbreviate(substr(x, pos + 1, nchar(x)), minlength = 4,
-                                  use.classes = FALSE))
+                        abbreviate(substr(x, pos + 1, nchar(x)), minlength = 4,
+                                   use.classes = FALSE))
         }
         return(x)
     }
@@ -456,10 +453,10 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
             if (as_table) {
                 cls <- "OneInRowTable"
             } else {
-                 cls <- "DirectedPair"
-                 message(paste("The task is converted into \'Directed pair\'",
-                               "type. To keep table put \'as_table: TRUE\'",
-                               "in yaml section of the Rmd file"))
+                cls <- "DirectedPair"
+                message(paste("The task is converted into \'Directed pair\'",
+                              "type. To keep table put \'as_table: TRUE\'",
+                              "in yaml section of the Rmd file"))
             }
 
         } else {
