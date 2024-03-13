@@ -26,27 +26,28 @@
 #' @rdname AssessmentSection-class
 #' @aliases AssessmentSection
 setClass("AssessmentSection", slots = c(identifier = "character",
-                                     title = "character",
-                                     time_limit = "numeric",
-                                     visible = "logical",
-                                     assessment_item = "list",
-                                     shuffle = "logical",
-                                     selection = "numeric",
-                                     max_attempts = "numeric",
-                                     allow_comment = "logical"),
-         prototype = prototype(visible = TRUE,
-                               time_limit = NA_integer_,
-                               shuffle = FALSE,
-                               selection = NA_integer_,
-                               max_attempts = NA_integer_,
-                               allow_comment = TRUE
-         ))
+                                        title = "character",
+                                        time_limit = "numeric",
+                                        visible = "logical",
+                                        assessment_item = "list",
+                                        shuffle = "logical",
+                                        selection = "numeric",
+                                        max_attempts = "numeric",
+                                        allow_comment = "logical"),
+    prototype = prototype(visible = TRUE,
+                          time_limit = NA_integer_,
+                          shuffle = FALSE,
+                          selection = NA_integer_,
+                          max_attempts = NA_integer_,
+                          allow_comment = TRUE)
+)
 
 setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     .Object <- callNextMethod()
 
     if (length(.Object@identifier) == 0) {
-        .Object@identifier <- generate_id(type = "section")}
+        .Object@identifier <- generate_id(type = "section")
+    }
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
 
@@ -55,16 +56,18 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     if (length(ids) != length(unique(ids))) {
         ids <- paste(ids, collapse = ", ")
         stop("Items of section id:", .Object@identifier,
-                " contain non-unique values: ", ids, call. = FALSE)
+             " contain non-unique values: ", ids, call. = FALSE)
     }
 
     # check selection value
     if (!is.na(.Object@selection)) {
         if (.Object@selection > length(.Object@assessment_item)) {
             warning(paste0("value of selection (", .Object@selection,
-            ") must be less than number of items in assessment_item slot (",
-            length(.Object@assessment_item), "). Selection is assigned to ",
-            length(.Object@assessment_item) - 1))
+                           ") must be less than number of items in ",
+                           "assessment_item slot (",
+                           length(.Object@assessment_item),
+                           "). Selection is assigned to ",
+                           length(.Object@assessment_item) - 1))
             .Object@selection <- length(.Object@assessment_item) - 1
         }
     }
