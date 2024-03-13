@@ -25,9 +25,9 @@ setClass("InlineChoice", contains = "Gap",
                    shuffle = "logical"),
          prototype = list(shuffle = TRUE, solution_index = 1),
          validity = function(object) {
-          if (!any(is.character(object@choices), is.numeric(object@choices))){
-                stop("slot \'choices\' must be of type \'character'\ or \'numeric\'")
-           }
+             if (!any(is.character(object@choices), is.numeric(object@choices))) {
+                 stop("slot \'choices\' must be of type \'character'\ or \'numeric\'")
+             }
          })
 
 setMethod("initialize", "InlineChoice", function(.Object, ...) {
