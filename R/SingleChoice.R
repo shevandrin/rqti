@@ -50,7 +50,7 @@ setMethod("createResponseDeclaration", signature(object = "SingleChoice"),
 #' @aliases createResponseProcessing,SingleChoice
 setMethod("createResponseProcessing", signature(object = "SingleChoice"),
           function(object) {
-                create_default_resp_processing_sc(object)
+              create_default_resp_processing_sc(object)
           })
 
 # actual functions

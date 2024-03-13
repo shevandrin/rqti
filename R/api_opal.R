@@ -89,7 +89,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     if (response$status_code == 403) {
         message("Authentification failed. You may need to run a VPN client")
         user_id <-  NULL
-        }
+    }
     if (response$status_code == 401) {
         message("401 Unauthorized")
         cat("Would you like to change username and password?")
@@ -172,22 +172,22 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
             resp <- update_resource(file, rdf$key, endpoint)
         } else {
             message("Found files with the same display name: ",
-                nrow(rdf))
+                    nrow(rdf))
             menu_options <- c(rdf$key, "Add new as a duplicate", "Abort")
             if (interactive()) {
                 key <- menu(title = "Choose a key:", menu_options)
             } else {
                 key <- length(menu_options) - 1
             }
-                # abort uploading
+            # abort uploading
             if (key %in% c(length(menu_options), 0)) return(NULL)
-                # update the resource
+            # update the resource
             if (key %in% seq(length(menu_options) - 2)) {
                 resp <- update_resource(file, menu_options[key], endpoint)
-                }
+            }
         }
     }
-        # create new resource
+    # create new resource
     if (!exists("resp")) {
         resp <- upload_resource(file, display_name, rtype, access, endpoint)
     }
@@ -197,10 +197,9 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 
     url_res <- paste0(endpoint, "auth/", "RepositoryEntry/", key)
     if ((open_in_browser) && (!is.null(key))) {
-            browseURL(url_res)
-        }
-    res <- list(key = key, display_name = displayname,
-                    url = url_res)
+        browseURL(url_res)
+    }
+    res <- list(key = key, display_name = displayname, url = url_res)
     print(resp$status_code)
     return(res)
 }
@@ -260,7 +259,7 @@ get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
 #' \dontrun{url <- get_resource_url("my test")}
 #' @export
 get_resource_url <- function(display_name, endpoint = NULL,
-                        api_user = NULL, api_password = NULL) {
+                             api_user = NULL, api_password = NULL) {
 
     if (is.null(endpoint)) endpoint <- catch_endpoint()
 
@@ -271,7 +270,7 @@ get_resource_url <- function(display_name, endpoint = NULL,
     }
     rdf <- get_resources_by_name(display_name, endpoint)
     url <- sapply(rdf$key,
-                function(item) paste0(endpoint, "auth/RepositoryEntry/", item))
+                  function(item) paste0(endpoint, "auth/RepositoryEntry/", item))
     return(url)
 }
 
@@ -282,9 +281,9 @@ upload_resource <- function(file, display_name, rtype, access,
     req <- request(url_upl) %>% req_method("PUT") %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
         req_body_multipart(file = curl::form_file(file),
-                 displayname = display_name,
-                 access = as.character(access),
-                 repoType = rtype)
+                           displayname = display_name,
+                           access = as.character(access),
+                           repoType = rtype)
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     if (response$status_code != 200) {
         stop(paste("Status Code:", response$status_code))
