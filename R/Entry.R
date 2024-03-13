@@ -106,20 +106,19 @@ create_response_declaration_entry <- function(object) {
 create_outcome_declaration_entry <- function(object) {
     feedbacks_declaration <- NULL
     if (length(object@feedback) > 0) {
-        feedbacks_declaration <- tagList(
-            make_outcome_declaration("FEEDBACKBASIC",
-                                     value = "empty",
-                                     base_type = "identifier"),
-            make_outcome_declaration("FEEDBACKMODAL",
-                                     cardinality = "multiple",
-                                     value = NULL,
-                                     base_type = "identifier"))
+        feedbacks_declaration <- tagList(make_outcome_declaration("FEEDBACKBASIC",
+                                                                  value = "empty",
+                                                                  base_type = "identifier"),
+                                         make_outcome_declaration("FEEDBACKMODAL",
+                                                                  cardinality = "multiple",
+                                                                  value = NULL,
+                                                                  base_type = "identifier"))
     }
 
     stand_declaration <- tagList(make_outcome_declaration("SCORE", value = 0),
                                  make_outcome_declaration("MAXSCORE",
-                                                         value = object@points),
-                                make_outcome_declaration("MINSCORE", value = 0))
+                                                          value = object@points),
+                                 make_outcome_declaration("MINSCORE", value = 0))
     answers <- Map(getResponse, object@content)
     answers[sapply(answers, is.null)] <- NULL
 
