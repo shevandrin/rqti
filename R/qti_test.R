@@ -59,17 +59,17 @@ create_assessment_test <- function(object, folder, verify = FALSE,
                                    data_downloads = NULL,
                                    data_features = NULL) {
     assessment_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
-                    "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-      "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imsqti_v2p1 ",
-                    "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"),
-                        "identifier" = object@identifier,
-                        "title" = paste(object@title),
-                        "data-downloads" = data_downloads,
-                        "data-features" = data_features)
+                          "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
+                          "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imsqti_v2p1 ",
+                                                        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"),
+                          "identifier" = object@identifier,
+                          "title" = paste(object@title),
+                          "data-downloads" = data_downloads,
+                          "data-features" = data_features)
     assesment_test <- tag("assessmentTest", assessment_attrs)
     time_limit <- c()
     if (!is.na(object@time_limit)) {
-       time_limit <- tag("timeLimits", list(maxTime = object@time_limit * 60))
+        time_limit <- tag("timeLimits", list(maxTime = object@time_limit * 60))
     }
 
     session_control <- create_item_session_control(object@max_attempts,
@@ -124,7 +124,7 @@ create_section_test <- function(object, folder, verify) {
                                              verify))
     time_limit <- c()
     if (!is.na(object@time_limit)) {
-       time_limit <- tag("timeLimits", list(maxTime = object@time_limit * 60))
+        time_limit <- tag("timeLimits", list(maxTime = object@time_limit * 60))
     }
 
     shuffle <- c()
@@ -172,18 +172,18 @@ create_item_session_control <- function(attempts, comments, rebuild) {
 # creates manifest file wiht root tag "manifest"
 create_manifest <- function(object) {
     manifest_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
-                      "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-        "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imscp_v1p1",
-        " http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd ",
-        "http://www.imsglobal.org/xsd/imsqti_v2p1 ",
-        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd ",
-        "http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 ",
-        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd ",
-        "http://ltsc.ieee.org/xsd/LOM ",
-        "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
-        "http://www.w3.org/1998/Math/MathML ",
-        "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
-                      "identifier" = paste0(object@identifier, "_manifest"))
+                        "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
+                        "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imscp_v1p1",
+                                                      " http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd ",
+                                                      "http://www.imsglobal.org/xsd/imsqti_v2p1 ",
+                                                      "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd ",
+                                                      "http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 ",
+                                                      "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd ",
+                                                      "http://ltsc.ieee.org/xsd/LOM ",
+                                                      "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
+                                                      "http://www.w3.org/1998/Math/MathML ",
+                                                      "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
+                        "identifier" = paste0(object@identifier, "_manifest"))
     manifest <- tag("manifest", manifest_attrs)
     metadata <- tag("metadata", tagList(tag("schema", "QTIv2.1 Package"),
                                         tag("schemaversion", "1.0.0")))
