@@ -25,9 +25,3 @@ xml document.
 \description{
 Create XML file for question specification
 }
-\examples{
-\dontrun{
-essay <- new("Essay", prompt = "Test task", title = "Essay")
-create_qti_task(essay, "result", "TRUE")
-}
-}
