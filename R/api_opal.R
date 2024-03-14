@@ -67,7 +67,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
             # assign a user
             if (key %in% seq(length(menu_options) - 1)) {
                 api_user <- menu_options[key]
-                print(api_user)
+                message("logging in as ", api_user)
                 api_password <- key_get("qtiopal", api_user)
             }
         }
@@ -200,7 +200,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
         browseURL(url_res)
     }
     res <- list(key = key, display_name = displayname, url = url_res)
-    print(resp$status_code)
+    message(resp$status_code)
     return(res)
 }
 

@@ -154,8 +154,8 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
 
     if (!is.null(gaps)) {
         if (length(vect) != length(gaps)) {
-            print("*Error*: Number of Gaps must be equal to number of list
-                  items")
+            stop("Number of Gaps must be equal to number of list items",
+                 call. = FALSE)
         }
         gaps <- paste0(" <gap>", gaps, "</gap>")
     }
