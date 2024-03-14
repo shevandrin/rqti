@@ -10,18 +10,6 @@
 #' @param zip_only boolean, optional; returns only zip file in case of TRUE or
 #'   zip, xml and downloads files in case of FALSE value
 #' @return xml document.
-#' @examples
-#' \dontrun{
-#' essay <- new("Essay", prompt = "Test task", title = "Essay",
-#'              identifier = "q1")
-#' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
-#'           choices = c("A", "B", "C"), identifier = "q2")
-#' exam_section <- new("AssessmentSection", identifier = "sec_id",
-#'                    title = "section", assessment_item = list(essay, sc))
-#' exam <- new("AssessmentTestOpal", identifier = "id_test",
-#'            title = "some title", section = list(exam_section))
-#' create_qti_test(exam, "exam_folder/exam.zip", TRUE)
-#' }
 create_qti_test <- function(object, path = ".", verification = FALSE,
                             zip_only = FALSE) {
     ext <- tools::file_ext(path)

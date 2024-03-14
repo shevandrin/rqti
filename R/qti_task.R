@@ -207,11 +207,6 @@ create_prompt <- function(object) {
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
 #' @return xml document.
-#' @examples
-#' \dontrun{
-#' essay <- new("Essay", prompt = "Test task", title = "Essay")
-#' create_qti_task(essay, "result", "TRUE")
-#' }
 #' @name create_qti_task
 #' @rdname create_qti_task
 #' @aliases create_qti_task
