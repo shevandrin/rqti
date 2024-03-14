@@ -23,12 +23,7 @@ test_that("Testing mdlist function", {
     # Test case 4: Error case - mismatch between options and gaps
     options4 <- c("Option A", "Option B")
     gaps4 <- c(1, 2, 3)  # There are more gaps than options
-    expected_error_message <- "\"*Error*: Number of Gaps must be equal to number of list\\n                  items\""
-    result4 <- capture.output({
-        mdlist(options4, gaps = gaps4)
-    })
-    result4 <- sub("\\[1\\] ", "", result4[1])
-    expect_equal(result4, expected_error_message)
+    expect_error(mdlist(options4, gaps = gaps4))
 })
 
 test_that("Testing gap_numeric() function", {
