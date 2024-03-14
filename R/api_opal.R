@@ -92,8 +92,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     }
     if (response$status_code == 401) {
         message("401 Unauthorized")
-        cat("Would you like to change username and password?")
-        choice <- readline("Press \'y\' to change data or any key to exit: ")
+        choice <- readline("Press \'y\' to change username/password or any key to exit: ")
         # Check the user's choice
         if (tolower(choice) == "y") {
             if (has_keyring_support()) {
