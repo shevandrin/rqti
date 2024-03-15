@@ -215,7 +215,29 @@ be accessible to the candidate during the test/exam.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># This example creates test 'exam' with one section 'exam_section' which</span></span></span>
+<span class="r-in"><span><span class="co"># consists of two questions/tasks: essay and single choice types</span></span></span>
+<span class="r-in"><span><span class="va">task1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"Essay"</span>, prompt <span class="op">=</span> <span class="st">"Test task"</span>, title <span class="op">=</span> <span class="st">"Essay"</span>,</span></span>
+<span class="r-in"><span>             identifier <span class="op">=</span> <span class="st">"q1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">task2</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"SingleChoice"</span>, prompt <span class="op">=</span> <span class="st">"Test task"</span>, title <span class="op">=</span> <span class="st">"SingleChoice"</span>,</span></span>
+<span class="r-in"><span>             choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, identifier <span class="op">=</span> <span class="st">"q2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">exam_section</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentSection"</span>, identifier <span class="op">=</span> <span class="st">"sec_id"</span>,</span></span>
+<span class="r-in"><span>                    title <span class="op">=</span> <span class="st">"section"</span>, assessment_item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">task1</span>, <span class="va">task2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">exam</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentTestOpal"</span>,</span></span>
+<span class="r-in"><span>            identifier <span class="op">=</span> <span class="st">"id_test_1234"</span>,</span></span>
+<span class="r-in"><span>            title <span class="op">=</span> <span class="st">"Example of Exam"</span>,</span></span>
+<span class="r-in"><span>            navigation_mode <span class="op">=</span> <span class="st">"linear"</span>,</span></span>
+<span class="r-in"><span>            submission_mode <span class="op">=</span> <span class="st">"individual"</span>,</span></span>
+<span class="r-in"><span>            section <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">exam_section</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            time_limit <span class="op">=</span> <span class="fl">90</span>,</span></span>
+<span class="r-in"><span>            max_attempts <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>            academic_grading <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>            grade_label <span class="op">=</span> <span class="st">"Preliminary grade"</span>,</span></span>
+<span class="r-in"><span>            show_test_time <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>            calculator <span class="op">=</span> <span class="st">"scientific-calculator"</span>,</span></span>
+<span class="r-in"><span>            mark_items <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>            files <span class="op">=</span> <span class="st">"text_book.pdf"</span><span class="op">)</span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
