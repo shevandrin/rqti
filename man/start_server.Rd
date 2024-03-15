@@ -20,7 +20,7 @@ The server has to be started manually by the user, otherwise the Knit Button wil
 # Initiated server in qtiViewer folder
 start_server()
 # Initiated server in a specific folder provided by the user. This folder
- contains the QTI renderer
+# contains the QTI renderer
 start_server("/pathToTheQtiRenderer/")
 }
 }

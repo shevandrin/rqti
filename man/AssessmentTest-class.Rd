@@ -83,10 +83,8 @@ Default is c(en="Grade", de="Note").}
 }}
 
 \examples{
-\dontrun{
-This example creates test 'exam' with one section 'exam_section' which
-consists of two questions/tasks: essay and single choice types
-}
+# This example creates test 'exam' with one section 'exam_section' which
+# consists of two questions/tasks: essay and single choice types
 task1 <- new("Essay", prompt = "Test task", title = "Essay",
              identifier = "q1")
 task2 <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
