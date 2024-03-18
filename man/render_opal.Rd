@@ -17,8 +17,13 @@ A list with the key, display name, and URL of the resource in Opal.
 \description{
 Render Rmd directly in Opal via API
 }
+\details{
+Customize knit function in the Rmd file using the following YAML setting
+after the word knit \code{knit: rqti::render_opal}.
+}
 \examples{
-# Customize knit function in the Rmd file using the following YAML setting
-# after the word knit:
-\dontrun{knit: rqti::render_opal}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+file <- system.file("exercises/sc1.Rmd", package='rqti')
+render_opal(file)
+\dontshow{\}) # examplesIf}
 }

@@ -12,16 +12,18 @@
 #' displayed when rendering. Since the function is supposed to be called via the
 #' Knit-Button in RStudio, it defaults to the RStudio viewer pane.
 #'
+#' Customize knit function in the Rmd file using the following YAML
+#' setting after the word knit `knit: rqti::render_qtijs`.
+#'
 #' @param input (the path to the input Rmd/md/xml document or [AssessmentItem],
 #'   [AssessmentTest], [AssessmentTestOpal], [AssessmentSection] object)
 #' @param ... required for passing arguments when knitting
 #' @return An URL of the corresponding local server to display the rendering
 #'   result.
 #'
-#' @examples
-#' # Customize knit function in the Rmd file using the following YAML setting
-#' # after the word knit:
-#' \dontrun{knit: rqti::render_qtijs}
+#' @examplesIf interactive()
+#' file <- system.file("exercises/sc1.Rmd", package='rqti')
+#' render_qtijs(file)
 #'
 #' @export
 render_qtijs <- function(input, ...) {
@@ -140,13 +142,16 @@ stop_server <- function() {
 
 #' Render Rmd directly in Opal via API
 #'
+#' @details
+#' Customize knit function in the Rmd file using the following YAML setting
+#' after the word knit `knit: rqti::render_opal`.
+#'
 #' @param input (the path to the input Rmd document)
 #' @param ... required for passing arguments when knitting
 #' @return A list with the key, display name, and URL of the resource in Opal.
-#' @examples
-#' # Customize knit function in the Rmd file using the following YAML setting
-#' # after the word knit:
-#' \dontrun{knit: rqti::render_opal}
+#' @examplesIf interactive()
+#' file <- system.file("exercises/sc1.Rmd", package='rqti')
+#' render_opal(file)
 #' @export
 render_opal <- function(input, ...) {
     knit_test <- rmd2zip(input)

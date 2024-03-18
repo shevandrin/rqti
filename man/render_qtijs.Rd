@@ -29,10 +29,13 @@ The preview is automatically loaded into the RStudio viewer. Alternatively
 you  can just open the browser in the corresponding local server which is
 displayed when rendering. Since the function is supposed to be called via the
 Knit-Button in RStudio, it defaults to the RStudio viewer pane.
+
+Customize knit function in the Rmd file using the following YAML
+setting after the word knit \code{knit: rqti::render_qtijs}.
 }
 \examples{
-# Customize knit function in the Rmd file using the following YAML setting
-# after the word knit:
-\dontrun{knit: rqti::render_qtijs}
-
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+file <- system.file("exercises/sc1.Rmd", package='rqti')
+render_qtijs(file)
+\dontshow{\}) # examplesIf}
 }
