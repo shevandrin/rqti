@@ -30,8 +30,8 @@ A path to xml file.
 Create XML file for question specification
 }
 \examples{
-\dontrun{
 essay <- new("Essay", prompt = "Test task", title = "Essay")
-createQtiTask(essay, "result", TRUE)
-}
+\dontrun{
+# creates folder with zip (side effect)
+createQtiTask(essay, "result", TRUE)}
 }

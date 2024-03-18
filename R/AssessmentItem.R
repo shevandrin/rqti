@@ -104,11 +104,10 @@ setGeneric("createResponseProcessing",
 #'   Default is `FALSE`.
 #' @return A path to xml file.
 #' @examples
-#' \dontrun{
 #' essay <- new("Essay", prompt = "Test task", title = "Essay")
-#' createQtiTask(essay, "result", TRUE)
-#' }
-#' @docType methods
+#' \dontrun{
+#' # creates folder with zip (side effect)
+#' createQtiTask(essay, "result", TRUE)}
 #' @name createQtiTask-methods
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask
@@ -133,7 +132,6 @@ setGeneric("createQtiTask",
 #' `FALSE`.
 #' @return  A path to zip and xml files.
 #' @examples
-#' \dontrun{
 #' essay <- new("Essay", prompt = "Test task", title = "Essay",
 #'              identifier = "q1")
 #' sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
@@ -142,6 +140,8 @@ setGeneric("createQtiTask",
 #'                    title = "section", assessment_item = list(essay, sc))
 #' exam <- new("AssessmentTestOpal", identifier = "id_test",
 #'            title = "some title", section = list(exam_section))
+#' \dontrun{
+#' # creates folder with zip (side effect)
 #' createQtiTest(exam, "exam_folder", "TRUE")
 #' }
 #' @name createQtiTest-methods

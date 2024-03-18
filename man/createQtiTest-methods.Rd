@@ -43,7 +43,6 @@ A path to zip and xml files.
 Create zip-archive of the qti test specification
 }
 \examples{
-\dontrun{
 essay <- new("Essay", prompt = "Test task", title = "Essay",
              identifier = "q1")
 sc <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
@@ -52,6 +51,8 @@ exam_section <- new("AssessmentSection", identifier = "sec_id",
                    title = "section", assessment_item = list(essay, sc))
 exam <- new("AssessmentTestOpal", identifier = "id_test",
            title = "some title", section = list(exam_section))
+\dontrun{
+# creates folder with zip (side effect)
 createQtiTest(exam, "exam_folder", "TRUE")
 }
 }
