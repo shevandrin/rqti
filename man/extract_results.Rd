@@ -61,8 +61,7 @@ otherwise FALSE
 }
 }
 \examples{
-\dontrun{
-df <- extract_result("Archive_with_results.zip", level = "items")
-}
+file <- system.file("test_results.zip", package='rqti')
+df <- extract_results(file, level = "items")
 
 }
