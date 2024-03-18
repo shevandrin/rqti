@@ -23,5 +23,7 @@ A dataframe with attributes of user's resources.
 Get records of all current user's resources on LMS OPAL
 }
 \examples{
-\dontrun{df <- get_resources()}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+df <- get_resources()
+\dontshow{\}) # examplesIf}
 }

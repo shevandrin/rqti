@@ -60,5 +60,8 @@ password again, they will be extracted from the system credential store
 }
 
 \examples{
-\dontrun{upload2opal("task1.Rmd", "task 1", open_in_browser = FALSE)}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+file <- system.file("exercises/sc1.Rmd", package='rqti')
+upload2opal(file, "task 1", open_in_browser = FALSE)
+\dontshow{\}) # examplesIf}
 }

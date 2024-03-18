@@ -31,5 +31,7 @@ A string value of URL.
 Create a URL using the resource's display name in LMS OPAL
 }
 \examples{
-\dontrun{url <- get_resource_url("my test")}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+url <- get_resource_url("my test")
+\dontshow{\}) # examplesIf}
 }

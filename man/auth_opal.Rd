@@ -34,5 +34,7 @@ password again, they will be extracted from the system credential store
 }
 
 \examples{
-\dontrun{auth_opal()}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+auth_opal()
+\dontshow{\}) # examplesIf}
 }

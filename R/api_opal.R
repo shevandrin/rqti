@@ -20,8 +20,8 @@
 #'
 #' @return A character string with Opal user id
 #'
-#' @examples
-#' \dontrun{auth_opal()}
+#' @examplesIf interactive()
+#' auth_opal()
 #' @name auth_opal
 #' @rdname auth_opal
 #' @importFrom httr2 request req_error req_perform resp_body_xml req_headers
@@ -137,8 +137,9 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 #'  password again, they will be extracted from the system credential store
 #'
 #'@return A list with the key, display name, and URL of the resource in Opal.
-#' @examples
-#' \dontrun{upload2opal("task1.Rmd", "task 1", open_in_browser = FALSE)}
+#' @examplesIf interactive()
+#' file <- system.file("exercises/sc1.Rmd", package='rqti')
+#' upload2opal(file, "task 1", open_in_browser = FALSE)
 #'@importFrom utils browseURL menu
 #'@importFrom tools file_ext
 #'@importFrom curl form_file
@@ -212,8 +213,8 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
 #'  variable, you need to call `Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
 #'  or you can put these command into .Renviron.
 #' @return A dataframe with attributes of user's resources.
-#' @examples
-#' \dontrun{df <- get_resources()}
+#' @examplesIf interactive()
+#' df <- get_resources()
 #' @export
 get_resources <- function(api_user = NULL, api_password = NULL,
                           endpoint = NULL) {
@@ -254,8 +255,8 @@ get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
 #' @param api_user A character value of the username in the OPAL.
 #' @param api_password A character value of the password in the OPAL.
 #' @return A string value of URL.
-#' @examples
-#' \dontrun{url <- get_resource_url("my test")}
+#' @examplesIf interactive()
+#' url <- get_resource_url("my test")
 #' @export
 get_resource_url <- function(display_name, endpoint = NULL,
                              api_user = NULL, api_password = NULL) {
