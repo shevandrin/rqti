@@ -5,7 +5,7 @@
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
 #' @examples
-#' sc <- new("MultipleChoice",
+#' mc <- new("MultipleChoice",
 #'           identifier = "id_task_1234",
 #'           title = "Multiple Choice Task",
 #'           content = list("<p>Pick up the right options</p>"),
