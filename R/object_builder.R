@@ -10,6 +10,7 @@
 #' @returns The path string to the zip file.
 #' @examples
 #' \dontrun{
+#' # creates folder with zip (side effect)
 #' rmd2zip("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export
@@ -38,6 +39,7 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 #' @returns The path string to the xml file.
 #' @examples
 #' \dontrun{
+#' # creates folder with xml (side effect)
 #' rmd2xml("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export

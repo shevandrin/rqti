@@ -24,6 +24,7 @@ generated from Rmd (md) description according to qti 2.1 information model
 }
 \examples{
 \dontrun{
+# creates folder with zip (side effect)
 rmd2zip("task.Rmd", "target_folder", TRUE)
 }
 }

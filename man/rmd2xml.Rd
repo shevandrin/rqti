@@ -24,6 +24,7 @@ according to qti 2.1 infromation model
 }
 \examples{
 \dontrun{
+# creates folder with xml (side effect)
 rmd2xml("task.Rmd", "target_folder", TRUE)
 }
 }
