@@ -15,7 +15,7 @@ equal_xml <- function(sut, expected) {
         length(result$countDiffs) == 0) {
     return(expect_equal(0, 0))
   } else {
-    print("XML structures are differs")
+    message("XML structures are differs")
     return(expect_equal(sut, expected))
   }
 }
