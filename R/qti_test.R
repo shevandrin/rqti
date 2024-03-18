@@ -217,12 +217,8 @@ zip_wrapper <- function(id, dir_xml, output, files, zip_only = FALSE) {
     }
 
     # make and copy final zip in folder exams
-    wd <- getwd()
-    on.exit(setwd(wd))
-    setwd(dir_xml)
     zip_name <- paste0(id, ".zip")
-    zip::zip(zip_name, list.files(dir_xml))
-    setwd(wd)
+    zip::zipr(zip_name, list.files(dir_xml), root = dir_xml)
 
     files2copy <- list.files(dir_xml, full.names = TRUE)
     if (zip_only) files2copy <- file.path(dir_xml, zip_name)
