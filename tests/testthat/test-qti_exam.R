@@ -106,8 +106,8 @@ test_that("Testing createQtiTest method", {
               expect_no_error(sut_3)
 
               unlink("Preview.zip", expand = TRUE )
-              unlink("sample 2.zip", expand = TRUE )
-              unlink("test 2.zip", expand = TRUE )
+              unlink("sample_2.zip", expand = TRUE )
+              unlink("test_2.zip", expand = TRUE )
 })
 
 test_that("Testing createQtiTest method for AssessmentItem object", {
