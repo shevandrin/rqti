@@ -1,20 +1,14 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## Release 0.1.1 summary
 
-* Eliminated the redundant "in R" in the title and description.
+### Bug fixes
 
-* Changed examples in man/AssessmentTest-class.Rd, man/AssessmentTestOpal-class.Rd,
-man/start_server.Rd to make them executable.
+* Added the missing qti.js for rendering Rmd-files with tasks.
 
-* Eliminated examples for unexported functions (create_qti_task.Rd, create_qti_test.Rd).
+* Added processing of the pandoc --embed-resources parameter for pandoc versions < 2.19.
 
-* Eliminated \dontrun, where it was possible. In case of side effects such as creating a folder/files or starting a server, \dontrun is used.
+### New features
 
-* To deliver information to the console print()/cat() are changed to messages.
-
-* Eliminated the calling of setwd().
-
-The URL for the API was not added to the description because there is no permanent endpoint, each university using LMS Opal has its own.
+* Identifiers of AssessmentItem, AssessmentSection and AssessmentTest objects are checked for compliance with QTI requirements.
 
 ## R CMD check results
 
