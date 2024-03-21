@@ -1,11 +1,11 @@
-mc <- new("MultipleChoice", identifier = "test 2", title = "Economics",
+mc <- new("MultipleChoice", identifier = "test_2", title = "Economics",
           content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
           choices = c("scarcity vs resources",
                       "wages vs prices",
                       "wants vs needs",
                       "consumers vs producers"),
           points = c(0.5, 0.5, 0, 0))
-mc2 <- new("MultipleChoice", identifier = "Test 2 duplication", title = "Economics",
+mc2 <- new("MultipleChoice", identifier = "Test_2_duplication", title = "Economics",
           content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
           choices = c("scarcity vs resources",
                       "wages vs prices",

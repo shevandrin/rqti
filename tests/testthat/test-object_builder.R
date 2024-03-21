@@ -64,7 +64,7 @@ test_that("Testing create_question_object() for SingleChoice class: solution", {
                                           " in a world where ",
                                           "resources are limited?</p>")),
                     points = 2,
-                    identifier = "sample 2",
+                    identifier = "sample_2",
                     qti_version = "v2p1",
                     title = "Economics 2",
                     choices = c("scarcity",
@@ -134,7 +134,7 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                           "government most likely to ",
                                           "consider?</p>")),
                     points = c(2.5, 0, 2.5, 0),
-                    identifier = "test 2",
+                    identifier = "test_2",
                     qti_version = "v2p1",
                     title = "Economics",
                     choices = c("scarcity vs resources",
@@ -159,7 +159,7 @@ test_that("Testing create_question_object() for Essay class", {
                     content = list(
                 "<p>Defining Good Students Means More Than Just Grades.</p>"),
                    points = 10,
-                   identifier = "test 2",
+                   identifier = "test_2",
                    qti_version = "v2p1",
                    title = "Definition Essay",
                    data_allow_paste = FALSE
@@ -175,7 +175,7 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                     solution = "ein"),
                 " Handy?</p>"),
                 points = 5,
-                identifier = "test 2",
+                identifier = "test_2",
                 qti_version = "v2p1",
                 title = "Germany"
                 ))
@@ -195,7 +195,7 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                     response_identifier = "response_2"),
                 "</p>"),
                 points = 5,
-                identifier = "test 2",
+                identifier = "test_2",
                 qti_version = "v2p1",
                 title = "Germany"
                 ))
@@ -210,7 +210,7 @@ test_that("Testing create_outcome_declaration() for Entry class", {
                                      solution = "ein"),
                                      " Handy?</p>"),
                     points = 1,
-                    identifier = "test 2",
+                    identifier = "test_2",
                     title = "Germany"
     ))
 
@@ -501,7 +501,7 @@ test_that("Testing create_question_object() for MultipleChoice class
                                           "or building a new community pool, ",
                                           "what is the government most likely ",
                                           "to consider?</p>")),
-                    identifier = "test 2",
+                    identifier = "test_2",
                     points = c(0.5, 0.5, 0, 0),
                     qti_version = "v2p1",
                     title = "Economics",

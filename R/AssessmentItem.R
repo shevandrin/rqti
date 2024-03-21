@@ -29,8 +29,8 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     if (is.na(.Object@prompt)) .Object@prompt <- ""
 
     if (length(.Object@identifier) == 0) .Object@identifier <- generate_id()
-
     if (is.na(.Object@identifier)) .Object@identifier <- generate_id()
+    check_identifier(.Object@identifier)
 
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier
 
