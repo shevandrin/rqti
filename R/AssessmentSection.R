@@ -58,6 +58,7 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
         stop("Items of section id:", .Object@identifier,
              " contain non-unique values: ", ids, call. = FALSE)
     }
+    check_identifier(.Object@identifier)
 
     # check selection value
     if (!is.na(.Object@selection)) {
