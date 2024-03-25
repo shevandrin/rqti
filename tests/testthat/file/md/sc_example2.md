@@ -1,5 +1,5 @@
 ---
-identifier: sample 2
+identifier: sample_2
 type: sc
 title: Economics 2
 points: 2

@@ -1,5 +1,5 @@
 ---
-identifier: test 2
+identifier: test_2
 type: essay
 title: Definition Essay
 points: 10

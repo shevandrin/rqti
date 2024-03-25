@@ -1,5 +1,5 @@
 ---
-identifier: test 2
+identifier: test_2
 type: gap
 title: Germany
 points: 5

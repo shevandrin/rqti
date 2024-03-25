@@ -65,6 +65,7 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     if (length(.Object@identifier) == 0) {
         .Object@identifier <- generate_id(type = "test")
     }
+    check_identifier(.Object@identifier)
 
     # us identifier as a title
     if (length(.Object@title) == 0) .Object@title <- .Object@identifier

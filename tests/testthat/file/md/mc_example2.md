@@ -1,5 +1,5 @@
 ---
-identifier: test 2
+identifier: test_2
 type: mc
 title: Economics
 points: 5

@@ -106,13 +106,13 @@ test_that("Testing createQtiTest method", {
               expect_no_error(sut_3)
 
               unlink("Preview.zip", expand = TRUE )
-              unlink("sample 2.zip", expand = TRUE )
-              unlink("test 2.zip", expand = TRUE )
+              unlink("sample_2.zip", expand = TRUE )
+              unlink("test_2.zip", expand = TRUE )
 })
 
 test_that("Testing createQtiTest method for AssessmentItem object", {
     mc <- new("MultipleChoice",
-              identifier = "2", prompt = "What does 3/4 + 1/4 = ?",
+              identifier = "t2", prompt = "What does 3/4 + 1/4 = ?",
               title = "MultipleChoice",
               choices = c("1", "4/8", "8/4", "4/4"),
               choice_identifiers = c("a1", "a2", "a3", "a4"),
@@ -121,7 +121,7 @@ test_that("Testing createQtiTest method for AssessmentItem object", {
 
     sut <- createQtiTest(mc, "exam_folder")
 
-    expected <- file.path("exam_folder", "test_2.zip")
+    expected <- file.path("exam_folder", "test_t2.zip")
     expect_equal(sut, expected)
 
     unlink("exam_folder", recursive = TRUE)
