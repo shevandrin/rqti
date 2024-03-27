@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE assessmentItem>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="mpc" title="MultipleChoice" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="identifier">
+    <correctResponse>
+      <value>a1</value>
+      <value>a4</value>
+    </correctResponse>
+    <mapping lowerBound="0" upperBound="2" defaultValue="0">
+      <mapEntry mapKey="a1" mappedValue="1"/>
+      <mapEntry mapKey="a2" mappedValue="-1"/>
+      <mapEntry mapKey="a3" mappedValue="-1"/>
+      <mapEntry mapKey="a4" mappedValue="1"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>2</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="0" orientation="vertical">
+      <prompt>Choose the signs of more(&gt;) and less(&lt;) &amp; ' from list:</prompt>
+      <simpleChoice identifier="a1">&gt;</simpleChoice>
+      <simpleChoice identifier="a2">=</simpleChoice>
+      <simpleChoice identifier="a3">&gt;=</simpleChoice>
+      <simpleChoice identifier="a4">&lt;</simpleChoice>
+    </choiceInteraction>
+  </itemBody>
+  <responseProcessing>
+    <responseCondition>
+      <responseIf>
+        <not>
+          <isNull>
+            <variable identifier="RESPONSE"/>
+          </isNull>
+        </not>
+        <setOutcomeValue identifier="SCORE">
+          <sum>
+            <variable identifier="SCORE"/>
+            <mapResponse identifier="RESPONSE"/>
+          </sum>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <gt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MAXSCORE"/>
+        </gt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MAXSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <lt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MINSCORE"/>
+        </lt>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MINSCORE"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+  </responseProcessing>
+</assessmentItem>
