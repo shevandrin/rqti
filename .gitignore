@@ -20,3 +20,4 @@ vignettes/images/xml/*.xml
 engine.bin
 vignettes/*.zip
 vignettes/*.xml
+inst/QTIJS/index.xml
