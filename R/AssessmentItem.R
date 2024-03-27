@@ -363,5 +363,6 @@ setMethod("getCalculator", signature(object = "AssessmentItem"),
 #' @aliases prepareQTIJSFiles,AssessmentItem
 setMethod("prepareQTIJSFiles", signature(object = "AssessmentItem"),
           function(object, dir = "") {
-              createQtiTask(object, file.path(dir, "index.xml"))
+              suppressMessages(createQtiTask(object,
+                                             file.path(dir, "index.xml")))
           })
