@@ -1,5 +1,18 @@
 # rqti (development version)
 
+## Bug fixes
+
+* Add doctype description for handling mathml entities.
+
+## New features
+
+* Added constructor functions for task classes: singleChoice(), multipleChoice(),
+essay(), order(), entry(), directedPair(), oneInColTable(), oneInRowTable(),
+myltipleChoiceTable().
+
+* Added constructor functions for content of Entry class: numericGap(), textGap(),
+textGapOpal(), inlineChoice().
+
 # rqti 0.1.1
 
 ## Bug fixes
