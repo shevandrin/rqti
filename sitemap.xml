@@ -133,6 +133,9 @@
     <loc>https://shevandrin.github.io/rqti/reference/buildAssessmentSection-methods.html</loc>
   </url>
   <url>
+    <loc>https://shevandrin.github.io/rqti/reference/correctFeedback.html</loc>
+  </url>
+  <url>
     <loc>https://shevandrin.github.io/rqti/reference/createAssessmentTest-methods.html</loc>
   </url>
   <url>
@@ -226,6 +229,9 @@
     <loc>https://shevandrin.github.io/rqti/reference/mdlist.html</loc>
   </url>
   <url>
+    <loc>https://shevandrin.github.io/rqti/reference/modalFeedback.html</loc>
+  </url>
+  <url>
     <loc>https://shevandrin.github.io/rqti/reference/multipleChoice.html</loc>
   </url>
   <url>
@@ -299,5 +305,8 @@
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/wrongFeedback.html</loc>
   </url>
 </urlset>
