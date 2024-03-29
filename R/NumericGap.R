@@ -54,6 +54,59 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
     .Object
 })
 
+#'Create object [NumericGap]
+#'
+#'@param solution A numeric value containing the correct answer for this numeric
+#'  entry.
+#'@param response_identifier A character value representing an identifier for
+#'  the answer. By default, it is generated as 'id_gap_dddd', where dddd
+#'  represents random digits.
+#'@param points A numeric value, optional, representing the number of points for
+#'  this gap. Default is 1
+#'@param placeholder A character value, optional, responsible for placing
+#'  helpful text in the text input field in the content delivery engine.
+#'@param expected_length A numeric value, optional, responsible for setting the
+#'  size of the text input field in the content delivery engine.
+#'@param tolerance A numeric value, optional, specifying the value for the upper
+#'  and lower boundaries of the tolerance rate for candidate answers. Default is
+#'  0.
+#'@param tolerance_type A character value, optional, specifying the tolerance
+#'  mode. Possible values:
+#'  * "exact"
+#'  * "absolute" - Default.
+#'  * "relative"
+#'@param include_lower_bound A boolean value, optional, specifying whether the
+#'  lower bound is included in the tolerance rate. Default is `TRUE`.
+#'@param include_upper_bound A boolean value, optional, specifying whether the
+#'  upper bound is included in the tolerance rate. Default is `TRUE`.
+#'@return An object of class [NumericGap]
+#'@seealso [entry()][textGap()][textGapOpal()]
+#' @examples
+#'ng_min <- numericGap(5.1)
+#'
+#'ng <- numericGap(solution = 5.1,
+#'                 response_identifier  = "id_gap_1234",
+#'                 points = 2,
+#'                 placeholder = "put your answer here",
+#'                 expected_length = 4,
+#'                 tolerance = 5,
+#'                 tolerance_type = "relative")
+#'@export
+numericGap <- function(solution,
+                    response_identifier = character(0),
+                    points = 1,
+                    placeholder = character(0),
+                    expected_length = numeric(0),
+                    tolerance = 0,
+                    tolerance_type = "absolute",
+                    include_lower_bound = TRUE,
+                    include_upper_bound = TRUE){
+    params <- as.list(environment())
+    params$Class <- "NumericGap"
+    obj <- do.call("new", params)
+    return(obj)
+}
+
 #' @rdname getResponse-methods
 #' @aliases getResponse,NumericGap
 setMethod("getResponse", "NumericGap", function(object) {

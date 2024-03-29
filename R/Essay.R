@@ -73,6 +73,77 @@ setMethod("initialize", "Essay", function(.Object, ...) {
     .Object
 })
 
+#'Create object [Essay]
+#'
+#'@param identifier A character representing the unique identifier of the
+#'  assessment task. By default, it is generated as 'id_task_dddd', where dddd
+#'  represents random digits.
+#'@param title A character representing the title of the XML file associated
+#'  with the task. By default, it takes the value of the identifier.
+#'@param content A list of character content to form the text of the question,
+#'  which can include HTML tags.
+#'@param prompt An optional character representing a simple question text,
+#'  consisting of one paragraph. This can supplement or replace content in the
+#'  task. Default is "".
+#'@param points A numeric value, optional, representing the number of points for
+#'  the entire task. Default is 1.
+#'@param feedback A list containing feedback message-object [ModalFeedback] for
+#'  candidates.
+#'@param expected_length A numeric, optional. Responsible for setting the size
+#'  of the text input field in the content delivery engine.
+#'@param expected_lines A numeric, optional. Responsible for setting the number
+#'  of rows of the text input field in the content delivery engine.
+#'@param words_max A numeric, optional. Responsible for setting the maximum
+#'  number of words that a candidate can write in the text input field.
+#'@param words_min A numeric, optional. Responsible for setting the minimum
+#'  number of words that a candidate should write in the text input field.
+#'@param data_allow_paste A boolean, optional. Determines whether it is possible
+#'  for a candidate to copy text into the text input field. Default is FALSE.
+#'@param calculator A character, optional, determining whether to show a
+#'  calculator to the candidate. Possible values:
+#'   * "simple-calculator"
+#'   * "scientific-calculator".
+#'@param files A character vector, optional, containing paths to files that will
+#'  be accessible to the candidate during the test/exam.
+#'@return An object of class [Essay]
+#' @examples
+#'es_min <- essay(content = list("<h2>Open question</h2>", "Write your answer here"))
+#'
+#'es <- essay(identifier = "id_task_1234",
+#'            title = "Essay Task",
+#'                    content = list("<h2>Open question</h2>",
+#'                                   "Write your answer here"),
+#'                    prompt = "Plain text, can be used instead of content",
+#'                    points = 2,
+#'                    expected_length = 100,
+#'                    expected_lines = 5,
+#'                    words_max = 100,
+#'                    words_min = 1,
+#'                    data_allow_paste = TRUE,
+#'                    feedback = list(new("ModalFeedback",
+#'                                    content = list("Model answer"))),
+#'                    calculator = "scientific-calculator",
+#'                    files = "text_book.pdf")
+#'@export
+essay <- function(identifier = character(0),
+                  title = character(0),
+                  content = list(),
+                  prompt = "",
+                  points = 1,
+                  feedback = list(),
+                  expected_length = numeric(0),
+                  expected_lines = numeric(0),
+                  words_max = numeric(0),
+                  words_min = numeric(0),
+                  data_allow_paste = FALSE,
+                  calculator = character(0),
+                  files = character(0)) {
+    params <- as.list(environment())
+    params$Class <- "Essay"
+    obj <- do.call("new", params)
+    return(obj)
+}
+
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,Essay
 setMethod("createItemBody",  "Essay", function(object) {

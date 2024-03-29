@@ -35,6 +35,45 @@ setMethod("initialize", "TextGap", function(.Object,...){
     .Object
 })
 
+#'Create object [TextGap]
+#'
+#'@param solution A character vector containing the values considered as correct
+#'  answers.
+#'@param response_identifier A character value representing an identifier for
+#'  the answer. By default, it is generated as 'id_gap_dddd', where dddd
+#'  represents random digits.
+#'@param points A numeric value, optional, representing the number of points for
+#'  this gap. Default is 1
+#'@param placeholder A character value, optional, responsible for placing
+#'  helpful text in the text input field in the content delivery engine.
+#'@param expected_length A numeric value, optional, responsible for setting the
+#'  size of the text input field in the content delivery engine.
+#'@param case_sensitive A boolean value, determining whether the evaluation of
+#'  the correct answer is case sensitive. Default is `FALSE`.
+#'@return An object of class [TextGap]
+#'@seealso [entry()][numericGap()][textGapOpal()]
+#' @examples
+#'tg_min <- textGap("answer")
+#'
+#'tg <- textGap(solution = "answer",
+#'              response_identifier  = "id_gap_1234",
+#'              points = 2,
+#'              placeholder = "put your answer here",
+#'              expected_length = 20,
+#'              case_sensitive = TRUE)
+#'@export
+textGap <- function(solution,
+                    response_identifier = character(0),
+                    points = 1,
+                    placeholder = character(0),
+                    expected_length = numeric(0),
+                    case_sensitive = FALSE){
+    params <- as.list(environment())
+    params$Class <- "TextGap"
+    obj <- do.call("new", params)
+    return(obj)
+}
+
 #' @rdname getResponse-methods
 #' @aliases getResponse,TextGap
 setMethod("getResponse", "TextGap", function(object) {
