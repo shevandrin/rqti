@@ -169,7 +169,16 @@
     <loc>https://shevandrin.github.io/rqti/reference/create_qti_test.html</loc>
   </url>
   <url>
+    <loc>https://shevandrin.github.io/rqti/reference/directedPair.html</loc>
+  </url>
+  <url>
     <loc>https://shevandrin.github.io/rqti/reference/dropdown.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/entry.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/essay.html</loc>
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/extract_results.html</loc>
@@ -211,7 +220,28 @@
     <loc>https://shevandrin.github.io/rqti/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://shevandrin.github.io/rqti/reference/inlineChoice.html</loc>
+  </url>
+  <url>
     <loc>https://shevandrin.github.io/rqti/reference/mdlist.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/multipleChoice.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/multipleChoiceTable.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/numericGap.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/oneInColTable.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/oneInRowTable.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/order_rqti.html</loc>
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/pipe.html</loc>
@@ -247,6 +277,9 @@
     <loc>https://shevandrin.github.io/rqti/reference/section.html</loc>
   </url>
   <url>
+    <loc>https://shevandrin.github.io/rqti/reference/singleChoice.html</loc>
+  </url>
+  <url>
     <loc>https://shevandrin.github.io/rqti/reference/start_server.html</loc>
   </url>
   <url>
@@ -257,6 +290,12 @@
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/test4opal.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/textGap.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/textGapOpal.html</loc>
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc>
