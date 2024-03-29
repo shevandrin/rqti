@@ -24,6 +24,27 @@ setMethod("initialize", "WrongFeedback", function(.Object, ...) {
     .Object
 })
 
+#' Create object [WrongFeedback]
+#'
+#' @param content A list of character content to form the text of the feedback,
+#'   which can include HTML tags.
+#' @param title A character value, optional, representing the title of the
+#'   feedback window.
+#' @param show A boolean value, optional, determining whether to show (`TRUE`)
+#'   or hide (`FALSE`) the feedback. Default is `TRUE`.
+#' @return An object of class [WrongFeedback]
+#' @examples
+#' wfb <- wrongFeedback(content = list("Some comments"), title = "Feedback")
+#' @export
+wrongFeedback <- function(content = list(),
+                          title = character(0),
+                          show = TRUE) {
+    params <- as.list(environment())
+    params$Class <- "WrongFeedback"
+    obj <- do.call("new", params)
+    return(obj)
+}
+
 setMethod("createResponseCondition", signature(object = "WrongFeedback"),
           function(object) {
               create_resp_cond_set_feedback(object)
