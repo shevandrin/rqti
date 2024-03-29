@@ -13,6 +13,9 @@ myltipleChoiceTable().
 * Added constructor functions for content of Entry class: numericGap(), textGap(),
 textGapOpal(), inlineChoice().
 
+* Added constructor function for the feedback objects: modalFeedback(),
+correctFeedback(), wrongFeedback().
+
 # rqti 0.1.1
 
 ## Bug fixes
