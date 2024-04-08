@@ -37,7 +37,8 @@ Imports:
     getPass,
     keyring,
     zip,
-    kableExtra
+    kableExtra,
+    textutils
 Suggests:
     covr,
     dplyr,
