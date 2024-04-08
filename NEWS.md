@@ -2,12 +2,12 @@
 
 ## Bug fixes
 
-* Add doctype description for handling mathml entities.
+* Handle some problems with html and mathml entities.
 
 ## New features
 
 * Added constructor functions for task classes: singleChoice(), multipleChoice(),
-essay(), order(), entry(), directedPair(), oneInColTable(), oneInRowTable(),
+essay(), order_rqti(), entry(), directedPair(), oneInColTable(), oneInRowTable(),
 myltipleChoiceTable().
 
 * Added constructor functions for content of Entry class: numericGap(), textGap(),
