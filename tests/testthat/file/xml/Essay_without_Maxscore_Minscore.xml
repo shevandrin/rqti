@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE assessmentItem PUBLIC "-//W3C//DTD MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml3/mathml3.dtd">
 <assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="new" title="Essay" adaptive="false" timeDependent="false">
   <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string"/>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
