@@ -210,12 +210,18 @@ create_prompt <- function(object) {
 #' @name create_qti_task
 #' @rdname create_qti_task
 #' @aliases create_qti_task
+#' @importFrom textutils HTMLdecode
 create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     content <- as.character(create_assessment_item(object))
     # to handle reading of the xml with html entities
     # dtype <- "<!DOCTYPE assessmentItem PUBLIC \"-//W3C//DTD MathML 2.0//EN\" \"http://www.w3.org/Math/DTD/mathml3/mathml3.dtd\">"
-    dtype <- "";
-    doc <- suppressWarnings(xml2::read_xml(paste0(dtype, content)))
+    dtype <- "<!DOCTYPE assessmentItem>"
+    doc <- try(suppressWarnings(xml2::read_xml(paste0(dtype, content))),
+               silent = TRUE)
+    if (inherits(doc, "try-error")) {
+        content <- textutils::HTMLdecode(content)
+        doc <- suppressWarnings(xml2::read_xml(paste0(dtype, content)))
+    }
     if (verification) {
         ver <- verify_qti(doc)
         if (!ver) {
