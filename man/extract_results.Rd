@@ -24,7 +24,7 @@ xml file and creates two kinds of data frames (according to parameter
 'level'), see the 'Details' section.
 }
 \note{
-1.With option level = "excercises" data frame consists of columns:
+1.With option level = "exercises" data frame consists of columns:
 \itemize{
 \item 'file' - name of the xml file with test results (to identify
 candidate)

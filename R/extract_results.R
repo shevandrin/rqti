@@ -12,7 +12,7 @@
 #' @importFrom zip zip_list
 #' @return A dataframe with attribues of the candidates outcomes and result
 #'   variables.
-#' @note 1.With option level = "excercises" data frame consists of columns:
+#' @note 1.With option level = "exercises" data frame consists of columns:
 #'  * 'file' - name of the xml file with test results (to identify
 #'   candidate)
 #'  * 'date' - date and time of test
