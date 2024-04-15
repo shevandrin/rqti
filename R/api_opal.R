@@ -112,7 +112,8 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 #'authentication procedure has to be performed. See [auth_opal]
 #'
 #'@param test A length one character vector of [AssessmentTest],
-#'  [AssessmentTestOpal] or [AssessmentItem] objects, Rmd or md files; required.
+#'  [AssessmentTestOpal] or [AssessmentItem] objects, Rmd/md or XML files;
+#'  required.
 #'@param display_name A length one character vector to entitle file in OPAL;
 #'  file name without extension by default; optional.
 #'@param access An integer value, optional; it is responsible for publication
@@ -137,8 +138,8 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
 #'  password again, they will be extracted from the system credential store
 #'
 #'@return A list with the key, display name, and URL of the resource in Opal.
-#' @examplesIf interactive()
-#' file <- system.file("exercises/sc1.Rmd", package='rqti')
+#'@examplesIf interactive()
+#'file <- system.file("exercises/sc1.Rmd", package='rqti')
 #' upload2opal(file, "task 1", open_in_browser = FALSE)
 #'@importFrom utils browseURL menu
 #'@importFrom tools file_ext
