@@ -13,7 +13,7 @@ create_assessment_item <- function(object) {
     assesment_item <- tagAppendChildren(assesment_item,
                                         createResponseDeclaration(object),
                                         createOutcomeDeclaration(object),
-                                        replace_html_entities(createItemBody(object)),
+                                        createItemBody(object),
                                         createResponseProcessing(object),
                                         Map(createModalFeedback, object@feedback))
 }
