@@ -1,5 +1,5 @@
 test_that("Testing createItemBody for Order questions", {
-    order <- new("Order",
+    order <- new("Ordering",
                  content = list(""),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -23,7 +23,7 @@ test_that("Testing createItemBody for Order questions", {
 })
 
 test_that("Testing ResponseDeclaration for Order questions", {
-    order <- new("Order",
+    order <- new("Ordering",
                  content = list(""),
                  title = "Grand Prix of Bahrain",
                  prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -45,7 +45,7 @@ test_that("Testing ResponseDeclaration for Order questions", {
 })
 
 test_that("Testing OutcomeDeclaration for Order questions", {
-    order <- new("Order",
+    order <- new("Ordering",
                     content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -84,7 +84,7 @@ test_that("Testing OutcomeDeclaration for Order questions", {
 
 # Testing Order class without choices_identifiers for Order class
 test_that("Testing Order class", {
-    order <- new("Order",
+    order <- new("Ordering",
                     content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",
@@ -106,7 +106,7 @@ test_that("Testing Order class", {
 
 # Testing with modal Feedback
 test_that("Testing createResponseProcessing() for Order class", {
-    order <- new("Order",
+    order <- new("Ordering",
                     content = list(""),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",

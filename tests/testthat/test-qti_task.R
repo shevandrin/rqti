@@ -70,7 +70,7 @@ test_that("Testing MultipleChoice Choice task in case of the entity contains
 test_that("Testing xml file of Order task", {
     path <- test_path("file/xml/Order_output_createQtiTask.xml")
     expected <- readLines(path)
-    order <- new("Order",
+    order <- new("Ordering",
                  identifier = "ord",
                  title = "Order",
                  prompt = "Choose the correct order",
@@ -92,7 +92,7 @@ test_that("Testing Order task in case of the entity contains
           the math signs - less, more", {
     path <- test_path("file/xml/Order_sign_more_less.xml")
     expected <- readLines(path)
-    order <- new("Order",
+    order <- new("Ordering",
                  identifier = "ord",
                  title = "Order",
                  prompt = "Choose the correct order",

@@ -1,5 +1,5 @@
 test_that("XML validation with schema file for Order", {
-    sut <- new("Order",
+    sut <- new("Ordering",
                     content = list("<p>a</p>"),
                     title = "Grand Prix of Bahrain",
                     prompt = "The following F1 drivers finished on the podium in the first ever Grand Prix of Bahrain. Can you rearrange them into the correct finishing order?",

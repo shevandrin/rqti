@@ -200,7 +200,7 @@ create_prompt <- function(object) {
 #'                 dir = NULL,
 #'                 verification = FALSE)
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair]).
 #' @param dir string, optional; a folder to store xml file; working directory by
 #'   default

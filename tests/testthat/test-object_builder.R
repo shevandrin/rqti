@@ -258,7 +258,7 @@ test_that("Testing create_outcome_declaration() for Entry class", {
 test_that("Testing create_question_object() for Order task", {
     path <- test_path("file/md/order_example.md")
     sut <- create_question_object(path)
-    expected <- new("Order",
+    expected <- new("Ordering",
                     content = list(paste0("<p>Arrange German cities ",
                                           "in ascending order of ",
                                           "population</p>")),

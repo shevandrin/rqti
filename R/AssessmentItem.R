@@ -44,7 +44,7 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 #' specification the question following the QTI schema v2.1
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair])
 #' @docType methods
 #' @rdname createItemBody-methods
@@ -56,7 +56,7 @@ setGeneric("createItemBody", function(object) standardGeneric("createItemBody"))
 #' specification the question following the QTI schema v2.1
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @docType methods
@@ -70,7 +70,7 @@ setGeneric("createResponseDeclaration",
 #' specification the question following the QTI schema v2.1
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @docType methods
@@ -84,7 +84,7 @@ setGeneric("createOutcomeDeclaration",
 #' specification the question following the QTI schema v2.1
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @docType methods
@@ -96,7 +96,7 @@ setGeneric("createResponseProcessing",
 #'
 #' @usage createQtiTask(object, dir = NULL, verification = FALSE)
 #' @param object An instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair]).
 #' @param dir A character value, optional; a folder to store xml file; working
 #'   directory is used by default.
@@ -156,7 +156,7 @@ setGeneric("createQtiTest",
 #' Get points from AssessmentItem object
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @name getPoints-methods
@@ -168,7 +168,7 @@ setGeneric("getPoints", function(object) standardGeneric("getPoints"))
 #' Get identifier
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @name getIdentifier-methods
@@ -180,7 +180,7 @@ setGeneric("getIdentifier", function(object) standardGeneric("getIdentifier"))
 #' Get object
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @name getObject-methods
@@ -217,7 +217,7 @@ setGeneric("buildAssessmentSection",
 #' Get file paths for attachment of test
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @name getFiles-methods
@@ -229,7 +229,7 @@ setGeneric("getFiles", function(object) standardGeneric("getFiles"))
 #' Get value of the slot 'calculator'
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
-#'   [Essay], [Entry], [Order], [OneInRowTable], [OneInColTable],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
 #'   [InlineChoice])
 #' @name getCalculator-methods

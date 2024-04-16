@@ -20,7 +20,7 @@ test_that("Testing method createOutcomeDeclaration()
                choice_identifiers = c("1", "2", "3", "4"),
                points = c(1, 0, 0, 1)
     )
-    order1 <- new("Order",
+    order1 <- new("Ordering",
                   identifier = "q4",
                   title = "Order",
                   prompt = "Choose the correct order",
@@ -86,7 +86,7 @@ test_that("Testing method createOutcomeDeclaration() with
                           choice_identifiers = c("1", "2", "3", "4"),
                           points = c(1, 0, 0, 1)
                )
-               order1 <- new("Order",
+               order1 <- new("Ordering",
                              identifier = "q4",
                              title = "Order",
                              prompt = "Choose the correct order",

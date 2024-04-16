@@ -19,9 +19,9 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
                choice_identifiers = c("1", "2", "3", "4"),
                points = c(1, 0, 0, 1)
     )
-    order1 <- new("Order",
+    order1 <- new("Ordering",
                   identifier = "q4",
-                  title = "Order",
+                  title = "Ordering",
                   prompt = "Choose the correct order",
                   choices = c("Data collection", "Data cleansing",
                               "Data marking", "Verification and visualization"),
@@ -65,7 +65,7 @@ test_that("Testing method buildAssessmentSection() for AssessmentSection class",
                choice_identifiers = c("1", "2", "3", "4"),
                points = c(1, 0, 0, 1)
     )
-    order1 <- new("Order",
+    order1 <- new("Ordering",
                   identifier = "q4",
                   title = "Order",
                   prompt = "Choose the correct order",
@@ -147,7 +147,7 @@ test_that("Testing method getAssessmentItems() for AssessmentSection class", {
                choice_identifiers = c("1", "2", "3", "4"),
                points = c(1, 0, 0, 1)
     )
-    order1 <- new("Order",
+    order1 <- new("Ordering",
                   identifier = "q4",
                   title = "Order",
                   prompt = "Choose the correct order",

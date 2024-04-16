@@ -251,7 +251,7 @@ create_essay_slots <- function(attrs) {
 create_order_slots <- function(html, attrs) {
     choices_options <- parse_list(html)
     choices <- choices_options$choices
-    attrs <- c(Class = "Order", choices = list(choices), attrs)
+    attrs <- c(Class = "Ordering", choices = list(choices), attrs)
     return(attrs)
 }
 

@@ -69,7 +69,7 @@ Collate:
     'NumericGap.R'
     'OneInColTable.R'
     'OneInRowTable.R'
-    'Order.R'
+    'Ordering.R'
     'SingleChoice.R'
     'TextGap.R'
     'TextGapOpal.R'

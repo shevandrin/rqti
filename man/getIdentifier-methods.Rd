@@ -27,7 +27,7 @@ getIdentifier(object)
 }
 \arguments{
 \item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
-\link{Essay}, \link{Entry}, \link{Order}, \link{OneInRowTable}, \link{OneInColTable},
+\link{Essay}, \link{Entry}, \link{Ordering}, \link{OneInRowTable}, \link{OneInColTable},
 \link{MultipleChoiceTable}, \link{DirectedPair}, \link{TextGap}, \link{NumericGap},
 \link{InlineChoice})}
 }

@@ -1,11 +1,11 @@
-#' Class "Order"
+#' Class "Ordering"
 #'
-#' Class `Order` is responsible for creating assessment task according
+#' Class `Ordering` is responsible for creating assessment task according
 #' to QTI 2.1., where candidate has to place answers in a specific order
 #' @template AISlotsTemplate
 #' @template OrderSlotsTemplate
 #' @examples
-#' ord <- new("Order",
+#' ord <- new("Ordering",
 #'            identifier = "id_task_1234",
 #'            title = "order",
 #'            content = list("<p>Put these items in a right order</p>"),
@@ -16,19 +16,19 @@
 #'            choices_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC"),
 #'            shuffle = TRUE,
 #'            points_per_answer = TRUE)
-#' @name Order-class
-#' @rdname Order-class
-#' @aliases Order
-#' @exportClass Order
+#' @name Ordering-class
+#' @rdname Ordering-class
+#' @aliases Ordering
+#' @exportClass Ordering
 #' @include AssessmentItem.R
-setClass("Order", contains = "AssessmentItem",
+setClass("Ordering", contains = "AssessmentItem",
          slot = list(choices = "character",
                      choices_identifiers = "character",
                      shuffle = "logical",
                      points_per_answer = "logical"),
          prototype = list(shuffle = TRUE, points_per_answer = TRUE))
 
-setMethod("initialize", "Order", function(.Object, ...) {
+setMethod("initialize", "Ordering", function(.Object, ...) {
     .Object <- callNextMethod()
     if (length(.Object@choices_identifiers)==0) {
         .Object@choices_identifiers <- paste0("Choice",
@@ -38,7 +38,7 @@ setMethod("initialize", "Order", function(.Object, ...) {
     .Object
 })
 
-#' Create object [Order]
+#' Create object [Ordering]
 #'
 #' @param identifier A character representing the unique identifier of the
 #'   assessment task. By default, it is generated as 'id_task_dddd', where dddd
@@ -74,12 +74,12 @@ setMethod("initialize", "Order", function(.Object, ...) {
 #'   * "scientific-calculator".
 #' @param files A character vector, optional, containing paths to files that
 #'   will be accessible to the candidate during the test/exam.
-#' @return An object of class [Order]
+#' @return An object of class [Ordering]
 #' @examples
-#' ord_min <- order_rqti(prompt = "Set the right order:",
+#' ord_min <- ordering(prompt = "Set the right order:",
 #'                        choices = c("Step1", "Step2", "Step3"))
 #'
-#' ord <- order_rqti(identifier = "id_task_1234",
+#' ord <- ordering(identifier = "id_task_1234",
 #'              title = "Order Task",
 #'              choices = c("Step1", "Step2", "Step3"),
 #'              choices_identifiers = c("a", "b", "c"),
@@ -94,7 +94,7 @@ setMethod("initialize", "Order", function(.Object, ...) {
 #'              files = "text_book.pdf")
 #'
 #' @export
-order_rqti <- function(identifier = character(0),
+ordering <- function(identifier = character(0),
                   title = character(0),
                   choices,
                   choices_identifiers = character(0),
@@ -107,28 +107,28 @@ order_rqti <- function(identifier = character(0),
                   calculator = character(0),
                   files = character(0)) {
     params <- as.list(environment())
-    params$Class <- "Order"
+    params$Class <- "Ordering"
     obj <- do.call("new", params)
     return(obj)
 }
 
 #' @rdname createItemBody-methods
-#' @aliases createItemBody,Order
-setMethod("createItemBody", signature(object = "Order"),
+#' @aliases createItemBody,Ordering
+setMethod("createItemBody", signature(object = "Ordering"),
           function(object) {
               create_item_body_order(object)
           })
 
 #' @rdname createResponseDeclaration-methods
-#' @aliases createResponseDeclaration,Order
-setMethod("createResponseDeclaration", signature(object = "Order"),
+#' @aliases createResponseDeclaration,Ordering
+setMethod("createResponseDeclaration", signature(object = "Ordering"),
           function(object) {
               create_response_declaration_order(object)
           })
 
 #' @rdname createResponseProcessing-methods
-#' @aliases createResponseProcessing,Order
-setMethod("createResponseProcessing", signature(object = "Order"),
+#' @aliases createResponseProcessing,Ordering
+setMethod("createResponseProcessing", signature(object = "Ordering"),
           function(object) {
               points_cond <- createResponseCondition(object)
               rp <- create_default_resp_processing_order(object)
@@ -143,7 +143,7 @@ create_response_declaration_order <- function(object) {
                                     child))
 }
 
-setMethod("createResponseCondition", signature(object = "Order"),
+setMethod("createResponseCondition", signature(object = "Ordering"),
     function(object) {
         if (object@points_per_answer) {
             answ_points <- object@points / length(object@choices)
