@@ -27,7 +27,7 @@ the hierarchy of the test structure. Default is \code{TRUE}.}
 
 \item{\code{assessment_item}}{A list containing \link{AssessmentSection} and/or Assessment
 item objects, such as \link{SingleChoice}, \link{MultipleChoice}, \link{Essay}, \link{Entry},
-\link{Order}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable}, and
+\link{Ordering}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable}, and
 \link{DirectedPair}.}
 
 \item{\code{shuffle}}{A boolean value, optional, responsible for randomizing the

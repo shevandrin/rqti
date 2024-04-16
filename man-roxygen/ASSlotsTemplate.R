@@ -9,7 +9,7 @@
 #'   the hierarchy of the test structure. Default is `TRUE`.
 #' @slot assessment_item A list containing [AssessmentSection] and/or Assessment
 #'   item objects, such as [SingleChoice], [MultipleChoice], [Essay], [Entry],
-#'   [Order], [OneInRowTable], [OneInColTable], [MultipleChoiceTable], and
+#'   [Ordering], [OneInRowTable], [OneInColTable], [MultipleChoiceTable], and
 #'   [DirectedPair].
 #' @slot shuffle A boolean value, optional, responsible for randomizing the
 #'   order in which the assessment items and subsections are initially presented
