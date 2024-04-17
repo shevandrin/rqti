@@ -92,10 +92,10 @@ setClass("SingleChoice", contains = "Choice",
 #'                    solution = 2)
 #'
 #' @export
-singleChoice <- function(identifier = character(0),
-                         title = character(0),
+singleChoice <- function(identifier = generate_id(),
+                         title = identifier,
                          choices,
-                         choice_identifiers = character(0),
+                         choice_identifiers = paste0("Choice", LETTERS[seq(choices)]),
                          solution = 1,
                          content = list(),
                          prompt = "",
@@ -103,8 +103,8 @@ singleChoice <- function(identifier = character(0),
                          feedback = list(),
                          orientation = "vertical",
                          shuffle = TRUE,
-                         calculator = character(0),
-                         files = character(0)) {
+                         calculator = NA_character_,
+                         files = NA_character_) {
     params <- as.list(environment())
     params$Class <- "SingleChoice"
     obj <- do.call("new", params)

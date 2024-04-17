@@ -5,10 +5,10 @@
 \title{Create object \link{SingleChoice}}
 \usage{
 singleChoice(
-  identifier = character(0),
-  title = character(0),
+  identifier = generate_id(),
+  title = identifier,
   choices,
-  choice_identifiers = character(0),
+  choice_identifiers = paste0("Choice", LETTERS[seq(choices)]),
   solution = 1,
   content = list(),
   prompt = "",
@@ -16,8 +16,8 @@ singleChoice(
   feedback = list(),
   orientation = "vertical",
   shuffle = TRUE,
-  calculator = character(0),
-  files = character(0)
+  calculator = NA_character_,
+  files = NA_character_
 )
 }
 \arguments{
