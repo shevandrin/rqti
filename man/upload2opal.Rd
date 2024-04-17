@@ -11,6 +11,7 @@ upload2opal(
   overwrite = TRUE,
   endpoint = NULL,
   open_in_browser = TRUE,
+  as_survey = FALSE,
   api_user = NULL,
   api_password = NULL
 )
@@ -39,6 +40,9 @@ or you can put these command into .Renviron.}
 
 \item{open_in_browser}{A boolean value; optional; it controls whether to open
 a URL in default browser. Default is \code{TRUE.}}
+
+\item{as_survey}{A boolean value; optional; it controls resource type (test
+r survey). Default is \code{FALSE}.}
 
 \item{api_user}{A character value of the username in the OPAL.}
 
