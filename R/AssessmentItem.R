@@ -8,7 +8,7 @@
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @aliases AssessmentItem
-#' @include ModalFeedback.R rqti.R
+#' @include ModalFeedback.R rqti.R QtiMetadata.R
 setClass("AssessmentItem", slots = c(identifier = "character",
                                      title = "character",
                                      content = "list",
@@ -17,10 +17,9 @@ setClass("AssessmentItem", slots = c(identifier = "character",
                                      feedback = "list",
                                      files = "character",
                                      calculator = "character",
-                                     qti_version = "character"),
+                                     metadata = "QtiMetadata"),
          prototype = prototype(prompt = "",
-                               points = 1,
-                               qti_version = "v2p1"))
+                               points = 1))
 
 setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     .Object <- callNextMethod()

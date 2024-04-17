@@ -6,7 +6,6 @@ test_that("Testing SingleChoice where answer is $nummer", {
     expected <- new("SingleChoice",
                     content = list(content),
                     identifier = "eco",
-                    qti_version = "v2p1",
                     title = "Physic",
                     choices = c("<span class=\"math inline\">\\(299\\)</span>",
                                 "<span class=\"math inline\">\\(300\\)</span>",
@@ -36,7 +35,6 @@ test_that("Testing create_question_object() for SingleChoice class", {
                                            "Financial Company ",
                                            "like Bank is to:</p>")),
                     identifier = "eco",
-                    qti_version = "v2p1",
                     title = "Economics and Physic",
                     choices = c("Employ more and more people",
                                 "Maximize total production",
@@ -65,7 +63,6 @@ test_that("Testing create_question_object() for SingleChoice class: solution", {
                                           "resources are limited?</p>")),
                     points = 2,
                     identifier = "sample_2",
-                    qti_version = "v2p1",
                     title = "Economics 2",
                     choices = c("scarcity",
                                "decision-making modeling",
@@ -95,7 +92,6 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                           "to consider?</p>")),
                     points = c(1, 2, 0, 0),
                     identifier = "test2",
-                    qti_version = "v2p1",
                     title = "Economics",
                     choices = c("scarcity vs resources",
                                 "wages vs prices",
@@ -135,7 +131,6 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                           "consider?</p>")),
                     points = c(2.5, 0, 2.5, 0),
                     identifier = "test_2",
-                    qti_version = "v2p1",
                     title = "Economics",
                     choices = c("scarcity vs resources",
                                 "wants vs needs",
@@ -160,7 +155,6 @@ test_that("Testing create_question_object() for Essay class", {
                 "<p>Defining Good Students Means More Than Just Grades.</p>"),
                    points = 10,
                    identifier = "test_2",
-                   qti_version = "v2p1",
                    title = "Definition Essay",
                    data_allow_paste = FALSE
                    ))
@@ -176,7 +170,6 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 " Handy?</p>"),
                 points = 5,
                 identifier = "test_2",
-                qti_version = "v2p1",
                 title = "Germany"
                 ))
 expect_equal(sut, expected)
@@ -196,7 +189,6 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 "</p>"),
                 points = 5,
                 identifier = "test_2",
-                qti_version = "v2p1",
                 title = "Germany"
                 ))
 expect_equal(sut, expected)
@@ -503,7 +495,6 @@ test_that("Testing create_question_object() for MultipleChoice class
                                           "to consider?</p>")),
                     identifier = "test_2",
                     points = c(0.5, 0.5, 0, 0),
-                    qti_version = "v2p1",
                     title = "Economics",
                     choices = c("scarcity vs. resources",
                                 "wages vs. prices",

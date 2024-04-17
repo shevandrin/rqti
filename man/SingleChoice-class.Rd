@@ -57,8 +57,8 @@ calculator to the candidate. Possible values:
 \item{\code{files}}{A character vector, optional, containing paths to files that will
 be accessible to the candidate during the test/exam.}
 
-\item{\code{qti_version}}{A character representing the QTI (Question and Test
-Interoperability) information model version. Default is 'v2p1'.}
+\item{\code{metadata}}{An object of class \link{QtiMetadata} that holds metadata information
+about the task.}
 
 \item{\code{choices}}{A character vector defining a set of answer options in the
 question.}
@@ -91,11 +91,9 @@ sc <- new("SingleChoice",
           content = list("<p>Pick up the right option</p>"),
           prompt = "Plain text, can be used instead of content",
           points = 2,
-          feedback = list(new("WrongFeedback", content = list("Wrong answer")),
-          qti_version = "v2p1"),
+          feedback = list(new("WrongFeedback", content = list("Wrong answer"))),
           calculator = "scientific-calculator",
           files = "text_book.pdf",
-          qti_version = "v2p1",
           choices = c("option 1", "option 2", "option 3", "option 4"),
           choice_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"),
           shuffle = TRUE,

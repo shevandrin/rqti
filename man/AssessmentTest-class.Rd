@@ -49,9 +49,6 @@ the test.
 
 \item{\code{section}}{A list containing one or more \link{AssessmentSection} objects.}
 
-\item{\code{qti_version}}{A character value, optional, representing the QTI
-information model version. Default is 'v2p1'.}
-
 \item{\code{time_limit}}{A numeric value, optional, controlling the amount of time in
 minutes which a candidate is allowed for this part of the test.}
 
@@ -80,6 +77,9 @@ For multilingual usage, it hat to be a named vector with two-letter ISO
 language codes as names (e.g., c(en="Grade", de="Note")); during test
 creation, it takes the value for the language of the operating system.
 Default is c(en="Grade", de="Note").}
+
+\item{\code{metadata}}{An object of class \link{QtiMetadata} that holds metadata information
+about the test.}
 }}
 
 \examples{

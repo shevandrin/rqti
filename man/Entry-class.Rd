@@ -58,8 +58,8 @@ calculator to the candidate. Possible values:
 \item{\code{files}}{A character vector, optional, containing paths to files that will
 be accessible to the candidate during the test/exam.}
 
-\item{\code{qti_version}}{A character representing the QTI (Question and Test
-Interoperability) information model version. Default is 'v2p1'.}
+\item{\code{metadata}}{An object of class \link{QtiMetadata} that holds metadata information
+about the task.}
 }}
 
 \examples{
