@@ -6,14 +6,14 @@
 \alias{QtiMetadata}
 \title{Class QtiMetadata}
 \description{
-This class stores metadata information such as author name, description,
-rights, version, format, creation date, and modified date for QTI-compliant
-tasks or tests.
+This class stores metadata information such as contributors, description,
+rights, version and format for QTI-compliant tasks or tests.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{author}}{A character string representing the name of the author.}
+\item{\code{contributor}}{A list of objects \link{QtiContributor}-type that holds metadata
+information about the authors.}
 
 \item{\code{description}}{A character string providing a textual description of the
 content of this learning object.}
@@ -26,11 +26,5 @@ learning object.}
 
 \item{\code{format}}{A character string representing the QTI (Question and Test
 Interoperability) information model version. Default is 'IMS QTI 2.1'.}
-
-\item{\code{created_date}}{A character string representing the creation date of the
-learning object. Default is the current system date.}
-
-\item{\code{modified_date}}{A character string representing the date of the last
-modification of the learning object. Default is the current system date.}
 }}
 

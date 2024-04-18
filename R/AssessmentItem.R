@@ -365,3 +365,10 @@ setMethod("prepareQTIJSFiles", signature(object = "AssessmentItem"),
               suppressMessages(createQtiTask(object,
                                              file.path(dir, "index.xml")))
           })
+
+#' @rdname createMetadata-methods
+#' @aliases createMetadata,AssessmentItem
+setMethod("createMetadata", signature(object = "AssessmentItem"),
+          function(object) {
+              create_metadata(object)
+          })

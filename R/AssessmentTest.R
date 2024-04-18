@@ -188,3 +188,12 @@ setMethod("prepareQTIJSFiles", signature(object = "AssessmentTest"),
               unlink(zip_file)
               return(NULL)
           })
+
+#' @include AssessmentTest.R
+#' @rdname createMetadata-methods
+#' @aliases createMetadata,AssessmentTest
+setMethod("createMetadata", signature(object = "AssessmentTest"),
+          function(object) {
+              create_metadata(object)
+          })
+
