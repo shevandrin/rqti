@@ -115,6 +115,9 @@
     <loc>https://shevandrin.github.io/rqti/reference/Ordering-class.html</loc>
   </url>
   <url>
+    <loc>https://shevandrin.github.io/rqti/reference/QtiContributor-class.html</loc>
+  </url>
+  <url>
     <loc>https://shevandrin.github.io/rqti/reference/QtiMetadata-class.html</loc>
   </url>
   <url>
@@ -143,6 +146,9 @@
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/createItemBody-methods.html</loc>
+  </url>
+  <url>
+    <loc>https://shevandrin.github.io/rqti/reference/createMetadata-methods.html</loc>
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/createOutcomeDeclaration-methods.html</loc>
