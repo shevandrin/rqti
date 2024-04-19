@@ -55,8 +55,13 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 create_question_object <- function(file, file_dir = NULL) {
     rmd_checker(file)
     attrs <- yaml_front_matter(file)
+    # form value for slot metadata
+    mtdata <- attrs$metadata
+    contrs <- lapply(mtdata$contributor, function(x) {do.call(qti_contributor, x)})
+    mtdata$contributor <- contrs
+    mtdata <- do.call(qti_metadata, mtdata)
     # ignore parameters that are not related to object creation
-    attrs <- attrs[! names(attrs) %in% c("knit")]
+    attrs <- attrs[! names(attrs) %in% c("knit", "metadata")]
 
     file_name <- tools::file_path_sans_ext(basename(file))
     tdir <- tempdir()
@@ -113,7 +118,7 @@ create_question_object <- function(file, file_dir = NULL) {
 
     if (is.null(slots$identifier)) slots$identifier <- file_name
     feedback <- list(parse_feedback(doc, file_dir))
-    slots <- c(slots, feedback = feedback)
+    slots <- c(slots, feedback = feedback, metadata = mtdata)
     if (is.null(slots$content)) {
         slots$content <- as.list(paste(clean_question(html_qstn), collapse = ""))
     }

@@ -107,7 +107,8 @@ setClass("QtiMetadata", slots = c(contributor = "list",
                                   format = "character"),
          prototype = prototype(rights = Sys.getenv("QTI_RIGHTS"),
                                version = "0.0.9",
-                               format = "IMS QTI 2.1"),
+                               format = "IMS QTI 2.1",
+                               description = NA_character_),
          validity = check_metadata)
 
 #' Constructor function for class QtiMetadata
