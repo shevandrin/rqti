@@ -32,6 +32,20 @@ setClass("QtiContributor", slots = c(contributor = "character",
                                contribution_date = Sys.Date()),
          validity = check_contributor)
 
+#' Constructor function for class QtiContributor
+#'
+#' Creates object of [QtiContributor]-class
+#' @param contributor A character string representing the name of the author.
+#' @param role A character string kind of contribution. Possible values: author,
+#'   publisher, unknown, initiator, terminator, validator, editor, graphical
+#'   designer, technical implementer, content provider, technical validator,
+#'   educational validator, script writer, instructional designer, subject
+#'   matter expert. Default is "author".
+#' @param contribution_date A character string representing date of the
+#'   contribution. Default is the current system date.
+#' @examples
+#' creator= qti_contributor("Max Mustermann", "technical validator")
+#' @export
 qti_contributor <- function(contributor, role = "author",
                             contribution_date = Sys.Date()) {
     params <- as.list(environment())
@@ -74,6 +88,37 @@ setClass("QtiMetadata", slots = c(contributor = "list",
          prototype = prototype(version = "0.0.9",
                                format = "IMS QTI 2.1"),
          validity = check_metadata)
+
+#' Constructor function for class QtiMetadata
+#'
+#' Creates object of [QtiMetadata]-class
+#' @param contributor A list of objects [QtiContributor]-type that holds metadata
+#'   information about the authors.
+#' @param description A character string providing a textual description of the
+#'   content of this learning object.
+#' @param rights A character string describing the intellectual property rights
+#'   and conditions of use for this learning object.
+#' @param version A character string representing the edition/version of this
+#'   learning object.
+#' @param format A character string representing the QTI (Question and Test
+#'   Interoperability) information model version. Default is 'IMS QTI 2.1'.
+#' @examples
+#' creator= qti_metadata(qti_contributor("Max Mustermann"),
+#'                       description = "Task description",
+#'                       rights = "This file is Copyright (C) 2024 Max
+#'                       Mustermann, all rights reserved.",
+#'                       version = "1.0")
+#' @export
+qti_metadata<- function(contributor, description = NA_character_,
+                        rights = NA_character_, version = "0.0.9",
+                        format = "IMS QTI 2.1") {
+    if (!is(contributor, "list")) contributor <- list(contributor)
+    params <- as.list(environment())
+    params$Class <- "QtiMetadata"
+    obj <- do.call("new", params)
+    return(obj)
+}
+
 
 #' Create an element of metadata
 #'
