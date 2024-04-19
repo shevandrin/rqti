@@ -4,7 +4,11 @@
 \alias{qti_contributor}
 \title{Constructor function for class QtiContributor}
 \usage{
-qti_contributor(contributor, role = "author", contribution_date = Sys.Date())
+qti_contributor(
+  contributor = Sys.getenv("QTI_AUTHOR"),
+  role = "author",
+  contribution_date = Sys.Date()
+)
 }
 \arguments{
 \item{contributor}{A character string representing the name of the author.}

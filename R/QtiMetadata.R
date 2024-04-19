@@ -1,19 +1,26 @@
 check_contributor <- function(object) {
+    errors <- list()
     roles <- c("author", "publisher", "unknown", "initiator", "terminator",
                "validator", "editor", "graphial designer",
                "technical implementer", "content provider",
                "technical validator", "educational validator", "script writer",
                "instructional designer", "subject matter expert")
     if (!object@role %in% roles ) {
-        msg <- paste0("The Role of the contributer has to have one of these values: ",
-                     paste(roles, collapse = ", "), ".")
+        errors <- c(errors, paste0("The Role of the contributer has to have one
+                                   of these values: ",
+                     paste(roles, collapse = ", "), "."))
     }
+    if (is.null(object@contributor) || object@contributor == "") {
+        errors <- c(errors, "Please assign a value to 'contributor'.")
+    }
+    if (length(errors) == 0) TRUE else unlist(errors)
 }
 
 #' Class QtiContributor
 #'
 #' This class stores metadata information about contributors.
 #' @slot contributor A character string representing the name of the author.
+#' By default it takes value from environment variable 'QTI_AUTHOR'.
 #' @slot role A character string kind of contribution. Possible values: author,
 #'   publisher, unknown, initiator, terminator, validator, editor, graphical
 #'   designer, technical implementer, content provider, technical validator,
@@ -28,9 +35,20 @@ check_contributor <- function(object) {
 setClass("QtiContributor", slots = c(contributor = "character",
                                      role = "character",
                                      contribution_date = "Date"),
-         prototype = prototype(role = "author",
+         prototype = prototype(contributor = Sys.getenv("QTI_AUTHOR"),
+                               role = "author",
                                contribution_date = Sys.Date()),
          validity = check_contributor)
+
+setMethod("initialize", "QtiContributor", function(.Object, ...) {
+    .Object <- callNextMethod()
+
+
+
+    validObject(.Object)
+    .Object
+})
+
 
 #' Constructor function for class QtiContributor
 #'
@@ -46,7 +64,8 @@ setClass("QtiContributor", slots = c(contributor = "character",
 #' @examples
 #' creator= qti_contributor("Max Mustermann", "technical validator")
 #' @export
-qti_contributor <- function(contributor, role = "author",
+qti_contributor <- function(contributor = Sys.getenv("QTI_AUTHOR"),
+                            role = "author",
                             contribution_date = Sys.Date()) {
     params <- as.list(environment())
     params$Class <- "QtiContributor"
@@ -71,7 +90,8 @@ check_metadata <- function(object) {
 #' @slot description A character string providing a textual description of the
 #'   content of this learning object.
 #' @slot rights A character string describing the intellectual property rights
-#'   and conditions of use for this learning object.
+#'   and conditions of use for this learning object. By default it takes value
+#'   from environment variable 'QTI_RIGHTS'.
 #' @slot version A character string representing the edition/version of this
 #'   learning object.
 #' @slot format A character string representing the QTI (Question and Test
@@ -85,19 +105,21 @@ setClass("QtiMetadata", slots = c(contributor = "list",
                                   rights = "character",
                                   version = "character",
                                   format = "character"),
-         prototype = prototype(version = "0.0.9",
+         prototype = prototype(rights = Sys.getenv("QTI_RIGHTS"),
+                               version = "0.0.9",
                                format = "IMS QTI 2.1"),
          validity = check_metadata)
 
 #' Constructor function for class QtiMetadata
 #'
 #' Creates object of [QtiMetadata]-class
-#' @param contributor A list of objects [QtiContributor]-type that holds metadata
-#'   information about the authors.
+#' @param contributor A list of objects [QtiContributor]-type that holds
+#'   metadata information about the authors.
 #' @param description A character string providing a textual description of the
 #'   content of this learning object.
 #' @param rights A character string describing the intellectual property rights
-#'   and conditions of use for this learning object.
+#'   and conditions of use for this learning object. By default it takes value
+#'   from environment variable 'QTI_RIGHTS'.
 #' @param version A character string representing the edition/version of this
 #'   learning object.
 #' @param format A character string representing the QTI (Question and Test
@@ -110,7 +132,7 @@ setClass("QtiMetadata", slots = c(contributor = "list",
 #'                       version = "1.0")
 #' @export
 qti_metadata<- function(contributor, description = NA_character_,
-                        rights = NA_character_, version = "0.0.9",
+                        rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9",
                         format = "IMS QTI 2.1") {
     if (!is(contributor, "list")) contributor <- list(contributor)
     params <- as.list(environment())

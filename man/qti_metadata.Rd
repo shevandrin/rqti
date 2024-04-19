@@ -7,20 +7,21 @@
 qti_metadata(
   contributor,
   description = NA_character_,
-  rights = NA_character_,
+  rights = Sys.getenv("QTI_RIGHTS"),
   version = "0.0.9",
   format = "IMS QTI 2.1"
 )
 }
 \arguments{
-\item{contributor}{A list of objects \link{QtiContributor}-type that holds metadata
-information about the authors.}
+\item{contributor}{A list of objects \link{QtiContributor}-type that holds
+metadata information about the authors.}
 
 \item{description}{A character string providing a textual description of the
 content of this learning object.}
 
 \item{rights}{A character string describing the intellectual property rights
-and conditions of use for this learning object.}
+and conditions of use for this learning object. By default it takes value
+from environment variable 'QTI_RIGHTS'.}
 
 \item{version}{A character string representing the edition/version of this
 learning object.}
