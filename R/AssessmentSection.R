@@ -161,6 +161,7 @@ setMethod("prepareQTIJSFiles", signature(object = "AssessmentSection"),
 #' @aliases getContributors,AssessmentSection
 setMethod("getContributors", signature(object = "AssessmentSection"),
           function(object) {
-              return(NULL)
+              result <- unlist(sapply(object@assessment_item, getContributors))
+              return(result)
           })
 

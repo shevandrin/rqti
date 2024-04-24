@@ -18,7 +18,7 @@ test(
   allow_comment = TRUE,
   rebuild_variables = TRUE,
   contributor = list(),
-  description = NA_character_,
+  description = "",
   rights = Sys.getenv("QTI_RIGHTS"),
   version = "0.0.9"
 )

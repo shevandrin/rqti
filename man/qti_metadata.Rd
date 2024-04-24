@@ -6,7 +6,7 @@
 \usage{
 qti_metadata(
   contributor = list(),
-  description = NA_character_,
+  description = "",
   rights = Sys.getenv("QTI_RIGHTS"),
   version = "0.0.9"
 )

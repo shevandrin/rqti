@@ -23,7 +23,7 @@ test4opal(
   mark_items = TRUE,
   keep_responses = FALSE,
   contributor = list(),
-  description = NA_character_,
+  description = "",
   rights = Sys.getenv("QTI_RIGHTS"),
   version = "0.0.9"
 )

@@ -219,7 +219,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
                  table_label = c(en="Grade", de="Note"),
                  navigation_mode = "nonlinear", submission_mode = "individual",
                  allow_comment = TRUE, rebuild_variables = TRUE,
-                 contributor = list(), description = NA_character_,
+                 contributor = list(), description = "",
                  rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
 
     params <- as.list(environment())
@@ -234,7 +234,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 
     params["Class"] <- "AssessmentTest"
     object <- do.call(new, params)
-    add_test_metadata(object, mt_list)
+    object <- add_test_metadata(object, mt_list)
     return(object)
 }
 
@@ -323,7 +323,7 @@ test4opal <- function(content, identifier = "test_identifier",
                       submission_mode = "individual", allow_comment = TRUE,
                       rebuild_variables = TRUE, show_test_time = TRUE,
                       mark_items  = TRUE, keep_responses = FALSE,
-                      contributor = list(), description = NA_character_,
+                      contributor = list(), description = "",
                       rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
 
     params <- as.list(environment())
@@ -338,16 +338,28 @@ test4opal <- function(content, identifier = "test_identifier",
 
     params["Class"] <- "AssessmentTestOpal"
     object <- do.call(new, params)
-    add_test_metadata(object, mt_list)
+    object <- add_test_metadata(object, mt_list)
     return(object)
 }
 
 add_test_metadata <- function(object, params) {
-    if (length(params$contributor) == 0) {
-        contr <- list(qti_contributor())
-    }
-    mtdata <- new("QtiMetadata", contributor = contr,
+    mtdata <- new("QtiMetadata", contributor = list(qti_contributor()),
                   description = params$description,
                   rights = params$rights, version = params$version)
+
+    if (length(params$contributor) != 0) {
+        mtdata@contributor <- params$contributor
+    } else {
+        contr <- unlist(lapply(object@section, getContributors))
+        if (length(contr) != 0) {
+            msg <- paste(sapply(contr, function(x) x@contributor),
+                         collapse = ", ")
+            msg <- paste0("Authors are found in exercises and added as",
+                          " contributors: ", msg, ".")
+            message(msg)
+            mtdata@contributor = contr
+        }
+    }
     object@metadata <- mtdata
+    return(object)
 }
