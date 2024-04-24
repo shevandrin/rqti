@@ -250,6 +250,25 @@ setGeneric("getCalculator", function(object) standardGeneric("getCalculator"))
 setGeneric("prepareQTIJSFiles",
            function(object, dir = NULL) standardGeneric("prepareQTIJSFiles"))
 
+#' Get list of contributors values
+#'
+#' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
+#'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], [DirectedPair], [TextGap], [NumericGap],
+#'   [InlineChoice])
+#' @name getContributors-methods
+#' @rdname getContributors-methods
+#' @aliases getContributors
+#' @docType methods
+setGeneric("getContributors", function(object) standardGeneric("getContributors"))
+
+#' @rdname getContributors-methods
+#' @aliases getContributors,AssessmentItem
+setMethod("getContributors", signature(object = "AssessmentItem"),
+          function(object) {
+              return(object@metadata@contributor)
+          })
+
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
 setMethod("createQtiTask", signature(object = "AssessmentItem"),

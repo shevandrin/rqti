@@ -156,3 +156,11 @@ setMethod("prepareQTIJSFiles", signature(object = "AssessmentSection"),
               prepareQTIJSFiles(tst, dir)
               return(NULL)
           })
+
+#' @rdname getContributors-methods
+#' @aliases getContributors,AssessmentSection
+setMethod("getContributors", signature(object = "AssessmentSection"),
+          function(object) {
+              return(NULL)
+          })
+
