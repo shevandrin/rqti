@@ -58,6 +58,7 @@ create_question_object <- function(file, file_dir = NULL) {
     # form value for slot metadata
     mtdata <- attrs$metadata
     contrs <- lapply(mtdata$contributor, function(x) {do.call(qti_contributor, x)})
+    if (length(contrs) == 0) contrs <- qti_contributor()
     mtdata$contributor <- contrs
     mtdata <- do.call(qti_metadata, mtdata)
     # ignore parameters that are not related to object creation

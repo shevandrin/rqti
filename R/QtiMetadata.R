@@ -42,9 +42,6 @@ setClass("QtiContributor", slots = c(contributor = "character",
 
 setMethod("initialize", "QtiContributor", function(.Object, ...) {
     .Object <- callNextMethod()
-
-
-
     validObject(.Object)
     .Object
 })
@@ -102,7 +99,8 @@ setClass("QtiMetadata", slots = c(contributor = "list",
                                   description = "character",
                                   rights = "character",
                                   version = "character"),
-         prototype = prototype(rights = Sys.getenv("QTI_RIGHTS"),
+         prototype = prototype(contributor = list(qti_contributor()),
+                               rights = Sys.getenv("QTI_RIGHTS"),
                                version = "0.0.9",
                                description = ""),
          validity = check_metadata)
@@ -151,7 +149,9 @@ setMethod("createMetadata", signature(object = "QtiContributor"),
               role_src <- tag("source", list("LOMv1.0"))
               role_value <- tag("value", list(object@role))
               role <- tag("role", list(role_src, role_value))
-              ent <- tag("entity", list(object@contributor))
+              vcard <- paste0("BEGIN:VCARD\r\nFN:", object@contributor,
+                              "\r\nEND:VCARD\r\n")
+              ent <- tag("entity", list(vcard))
               dt <- tag("date",
                         list(tag("dateTime",
                                  as.character(object@contribution_date))))

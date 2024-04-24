@@ -150,3 +150,10 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
               if (ext == "zip") zip::unzip(object, exdir = dir)
               return(NULL)
           })
+
+#' @rdname getContributors-methods
+#' @aliases getContributors,character
+setMethod("getContributors", signature(object = "character"),
+          function(object) {
+              return(NULL)
+          })
