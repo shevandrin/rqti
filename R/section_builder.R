@@ -193,6 +193,17 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' @param rebuild_variables A boolean, optional, enabling the recalculation of
 #'   variables and reshuffling the order of choices for each item-attempt.
 #'   Default is `TRUE.`
+#' @param contributor A list of objects [QtiContributor]-type that holds
+#'   metadata information about the authors.
+#' @param description A character string providing a textual description of the
+#'   content of this learning object.
+#' @param rights A character string describing the intellectual property rights
+#'   and conditions of use for this learning object. By default it takes value
+#'   from environment variable 'QTI_RIGHTS'.
+#' @param version A character string representing the edition/version of this
+#'   learning object.
+#' @param format A character string representing the QTI (Question and Test
+#'   Interoperability) information model version. Default is 'IMS QTI 2.1'.
 #' @return An [AssessmentTest] object.
 #' @seealso [test4opal()], [section()], [AssessmentTest], [AssessmentSection]
 #' @examples
@@ -207,16 +218,23 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
                  grade_label = c(en="Grade", de="Note"),
                  table_label = c(en="Grade", de="Note"),
                  navigation_mode = "nonlinear", submission_mode = "individual",
-                 allow_comment = TRUE, rebuild_variables = TRUE) {
+                 allow_comment = TRUE, rebuild_variables = TRUE,
+                 contributor = list(), description = NA_character_,
+                 rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     params["section"] <- ifelse (length(unlist(params["content"])) == 1,
                                  list(params["content"]), as.list(params["content"]))
     params["content"] = NULL
-    # define test class
+    mt_list <- params[names(params) %in% c("contributor", "description",
+                                            "rights", "version")]
+    params <- params[! names(params) %in% c("contributor", "description",
+                                            "rights", "version")]
+
     params["Class"] <- "AssessmentTest"
     object <- do.call(new, params)
+    add_test_metadata(object, mt_list)
     return(object)
 }
 
@@ -274,6 +292,17 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   marking of questions. Default is `TRUE`.
 #' @param keep_responses A boolean, optional, determining whether to save the
 #'   candidate's answers from the previous attempt. Default is `FALSE`.
+#' @param contributor A list of objects [QtiContributor]-type that holds
+#'   metadata information about the authors.
+#' @param description A character string providing a textual description of the
+#'   content of this learning object.
+#' @param rights A character string describing the intellectual property rights
+#'   and conditions of use for this learning object. By default it takes value
+#'   from environment variable 'QTI_RIGHTS'.
+#' @param version A character string representing the edition/version of this
+#'   learning object.
+#' @param format A character string representing the QTI (Question and Test
+#'   Interoperability) information model version. Default is 'IMS QTI 2.1'.
 #' @return An [AssessmentTestOpal] object
 #' @seealso [test()], [section()],
 #'   [AssessmentTestOpal], [AssessmentSection]
@@ -293,14 +322,32 @@ test4opal <- function(content, identifier = "test_identifier",
                       navigation_mode = "nonlinear",
                       submission_mode = "individual", allow_comment = TRUE,
                       rebuild_variables = TRUE, show_test_time = TRUE,
-                      mark_items  = TRUE, keep_responses = FALSE) {
+                      mark_items  = TRUE, keep_responses = FALSE,
+                      contributor = list(), description = NA_character_,
+                      rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     params["section"] <- ifelse (length(unlist(params["content"])) == 1,
                                  list(params["content"]), as.list(params["content"]))
     params["content"] = NULL
-    # define test class
+    mt_list <- params[names(params) %in% c("contributor", "description",
+                                           "rights", "version")]
+    params <- params[! names(params) %in% c("contributor", "description",
+                                            "rights", "version")]
+
     params["Class"] <- "AssessmentTestOpal"
     object <- do.call(new, params)
+    add_test_metadata(object, mt_list)
+    return(object)
+}
+
+add_test_metadata <- function(object, params) {
+    if (length(params$contributor) == 0) {
+        contr <- list(qti_contributor())
+    }
+    mtdata <- new("QtiMetadata", contributor = contr,
+                  description = params$description,
+                  rights = params$rights, version = params$version)
+    object@metadata <- mtdata
 }

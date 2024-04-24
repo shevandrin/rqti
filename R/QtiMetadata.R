@@ -84,7 +84,7 @@ check_metadata <- function(object) {
 #' Class QtiMetadata
 #'
 #' This class stores metadata information such as contributors, description,
-#' rights, version and format for QTI-compliant tasks or tests.
+#' rights and version for QTI-compliant tasks or tests.
 #' @slot contributor A list of objects [QtiContributor]-type that holds metadata
 #'   information about the authors.
 #' @slot description A character string providing a textual description of the
@@ -94,8 +94,6 @@ check_metadata <- function(object) {
 #'   from environment variable 'QTI_RIGHTS'.
 #' @slot version A character string representing the edition/version of this
 #'   learning object.
-#' @slot format A character string representing the QTI (Question and Test
-#'   Interoperability) information model version. Default is 'IMS QTI 2.1'.
 #' @name QtiMetadata-class
 #' @rdname QtiMetadata-class
 #' @aliases QtiMetadata
@@ -103,11 +101,9 @@ check_metadata <- function(object) {
 setClass("QtiMetadata", slots = c(contributor = "list",
                                   description = "character",
                                   rights = "character",
-                                  version = "character",
-                                  format = "character"),
+                                  version = "character"),
          prototype = prototype(rights = Sys.getenv("QTI_RIGHTS"),
                                version = "0.0.9",
-                               format = "IMS QTI 2.1",
                                description = NA_character_),
          validity = check_metadata)
 
@@ -123,8 +119,6 @@ setClass("QtiMetadata", slots = c(contributor = "list",
 #'   from environment variable 'QTI_RIGHTS'.
 #' @param version A character string representing the edition/version of this
 #'   learning object.
-#' @param format A character string representing the QTI (Question and Test
-#'   Interoperability) information model version. Default is 'IMS QTI 2.1'.
 #' @examples
 #' creator= qti_metadata(qti_contributor("Max Mustermann"),
 #'                       description = "Task description",
@@ -132,9 +126,8 @@ setClass("QtiMetadata", slots = c(contributor = "list",
 #'                       Mustermann, all rights reserved.",
 #'                       version = "1.0")
 #' @export
-qti_metadata<- function(contributor, description = NA_character_,
-                        rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9",
-                        format = "IMS QTI 2.1") {
+qti_metadata<- function(contributor = list(), description = NA_character_,
+                        rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
     if (!is(contributor, "list")) contributor <- list(contributor)
     params <- as.list(environment())
     params$Class <- "QtiMetadata"
@@ -155,7 +148,9 @@ setGeneric("createMetadata",
 #' @aliases createMetadata,QtiContributor
 setMethod("createMetadata", signature(object = "QtiContributor"),
           function(object) {
-              role <- tag("role", list(object@role))
+              role_src <- tag("source", list("LOMv1.0"))
+              role_value <- tag("value", list(object@role))
+              role <- tag("role", list(role_src, role_value))
               ent <- tag("entity", list(object@contributor))
               dt <- tag("date",
                         list(tag("dateTime",
@@ -175,7 +170,7 @@ create_metadata <- function(object) {
     contrib <- lapply(mt_obj@contributor, createMetadata)
     lifeccl <- tag("lifeCycle", list(ver, contrib))
     # section Technical
-    techn <- tag("technical", list(tag("format", list(mt_obj@format))))
+    techn <- tag("technical", list(tag("format", list("IMS QTI 2.1"))))
     # section Rights
     rights <- tag("rights", list(tag("description", list(mt_obj@rights))))
 

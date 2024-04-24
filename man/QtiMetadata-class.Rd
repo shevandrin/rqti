@@ -7,7 +7,7 @@
 \title{Class QtiMetadata}
 \description{
 This class stores metadata information such as contributors, description,
-rights, version and format for QTI-compliant tasks or tests.
+rights and version for QTI-compliant tasks or tests.
 }
 \section{Slots}{
 
@@ -24,8 +24,5 @@ from environment variable 'QTI_RIGHTS'.}
 
 \item{\code{version}}{A character string representing the edition/version of this
 learning object.}
-
-\item{\code{format}}{A character string representing the QTI (Question and Test
-Interoperability) information model version. Default is 'IMS QTI 2.1'.}
 }}
 

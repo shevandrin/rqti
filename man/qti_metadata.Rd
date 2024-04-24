@@ -5,11 +5,10 @@
 \title{Constructor function for class QtiMetadata}
 \usage{
 qti_metadata(
-  contributor,
+  contributor = list(),
   description = NA_character_,
   rights = Sys.getenv("QTI_RIGHTS"),
-  version = "0.0.9",
-  format = "IMS QTI 2.1"
+  version = "0.0.9"
 )
 }
 \arguments{
@@ -25,9 +24,6 @@ from environment variable 'QTI_RIGHTS'.}
 
 \item{version}{A character string representing the edition/version of this
 learning object.}
-
-\item{format}{A character string representing the QTI (Question and Test
-Interoperability) information model version. Default is 'IMS QTI 2.1'.}
 }
 \description{
 Creates object of \link{QtiMetadata}-class

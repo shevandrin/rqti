@@ -21,7 +21,11 @@ test4opal(
   rebuild_variables = TRUE,
   show_test_time = TRUE,
   mark_items = TRUE,
-  keep_responses = FALSE
+  keep_responses = FALSE,
+  contributor = list(),
+  description = NA_character_,
+  rights = Sys.getenv("QTI_RIGHTS"),
+  version = "0.0.9"
 )
 }
 \arguments{
@@ -93,6 +97,22 @@ marking of questions. Default is \code{TRUE}.}
 
 \item{keep_responses}{A boolean, optional, determining whether to save the
 candidate's answers from the previous attempt. Default is \code{FALSE}.}
+
+\item{contributor}{A list of objects \link{QtiContributor}-type that holds
+metadata information about the authors.}
+
+\item{description}{A character string providing a textual description of the
+content of this learning object.}
+
+\item{rights}{A character string describing the intellectual property rights
+and conditions of use for this learning object. By default it takes value
+from environment variable 'QTI_RIGHTS'.}
+
+\item{version}{A character string representing the edition/version of this
+learning object.}
+
+\item{format}{A character string representing the QTI (Question and Test
+Interoperability) information model version. Default is 'IMS QTI 2.1'.}
 }
 \value{
 An \link{AssessmentTestOpal} object
