@@ -162,7 +162,8 @@ create_metadata <- function(object) {
     mt_obj <- object@metadata
     # section General
     idf <- tag("identifier", list(tag("entry", list(object@identifier))))
-    descr <- tag("description", list(tag("string", list(mt_obj@description))))
+    descr_txt = paste0(mt_obj@description, "\n", mt_obj@rights)
+    descr <- tag("description", list(tag("string", list(descr_txt))))
     ttl <- tag("title", list(tag("string", list(object@title))))
     general <- tag("general", list(idf, ttl, descr))
     # section Life Cycle
