@@ -42,7 +42,7 @@ librarian::shelf(shevandrin/rqti)
 <!-- ```{r eval=FALSE} -->
 <!-- install.packages("rqti") -->
 <!-- ``` -->
-<!-- Note that this will start a qtijs server, which will be used for previewing exercises. If you do not need this, turn it off with the environment variable: QTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or in .Renviron). -->
+<!-- Note that this will start a qtijs server, which will be used for previewing exercises. If you do not need this, turn it off with the environment variable: RQTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or in .Renviron). -->
 
 ## Quick start
 

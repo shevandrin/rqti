@@ -117,7 +117,7 @@ uplod2opal(..., access = ?)
 
 ## Endpoint
 
-We are using the OPAL instance **E-Learning-Informationsportal für Sächsische Hochschulen**, so our package sets the endpoint for `upload2opal` to *https://bildungsportal.sachsen.de/opal/*. If you use a different OPAL instance, you can either pass this to `endpoint` of `upload2opal` or just set it as an environment variable in the .Renviron file: QTI_API_ENDPOINT="yoururl". When initiating an `rqti` project in RStudio through *New Project*, you have the option to configure the API endpoint at that stage. This configuration is also just written to the .RProfile file.
+We are using the OPAL instance **E-Learning-Informationsportal für Sächsische Hochschulen**, so our package sets the endpoint for `upload2opal` to *https://bildungsportal.sachsen.de/opal/*. If you use a different OPAL instance, you can either pass this to `endpoint` of `upload2opal` or just set it as an environment variable in the .Renviron file: RQTI_API_ENDPOINT="yoururl". When initiating an `rqti` project in RStudio through *New Project*, you have the option to configure the API endpoint at that stage. This configuration is also just written to the .RProfile file.
 
 ## Error Handling
 
@@ -128,4 +128,4 @@ If you already run a VPN client, please check with your IT and/or OPAL provider,
 
 **401** Unauthorized
 
-Your QTI_API_USER and/or QTI_API_PASSWORD are wrong or your credentials are not sufficient to work with the API. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
+Your RQTI_API_USER and/or RQTI_API_PASSWORD are wrong or your credentials are not sufficient to work with the API. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
