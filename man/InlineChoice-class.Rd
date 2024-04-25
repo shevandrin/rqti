@@ -51,3 +51,6 @@ dd <- new("InlineChoice",
           choices_identifiers = c("OptionA", "OptionB", "OptionC"),
           shuffle = TRUE)
 }
+\seealso{
+\link{Entry}, \link{NumericGap}, \link{TextGap}, \link{TextGapOpal}
+}

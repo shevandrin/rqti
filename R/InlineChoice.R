@@ -14,6 +14,7 @@
 #'           solution_index = 1,
 #'           choices_identifiers = c("OptionA", "OptionB", "OptionC"),
 #'           shuffle = TRUE)
+#' @seealso [Entry], [NumericGap], [TextGap], [TextGapOpal]
 #' @name InlineChoice-class
 #' @rdname InlineChoice-class
 #' @aliases InlineChoice
