@@ -86,9 +86,6 @@ from environment variable 'QTI_RIGHTS'.}
 
 \item{version}{A character string representing the edition/version of this
 learning object.}
-
-\item{format}{A character string representing the QTI (Question and Test
-Interoperability) information model version. Default is 'IMS QTI 2.1'.}
 }
 \value{
 An \link{AssessmentTest} object.

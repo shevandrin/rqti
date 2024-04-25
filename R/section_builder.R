@@ -202,8 +202,6 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   from environment variable 'QTI_RIGHTS'.
 #' @param version A character string representing the edition/version of this
 #'   learning object.
-#' @param format A character string representing the QTI (Question and Test
-#'   Interoperability) information model version. Default is 'IMS QTI 2.1'.
 #' @return An [AssessmentTest] object.
 #' @seealso [test4opal()], [section()], [AssessmentTest], [AssessmentSection]
 #' @examples
@@ -301,8 +299,6 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   from environment variable 'QTI_RIGHTS'.
 #' @param version A character string representing the edition/version of this
 #'   learning object.
-#' @param format A character string representing the QTI (Question and Test
-#'   Interoperability) information model version. Default is 'IMS QTI 2.1'.
 #' @return An [AssessmentTestOpal] object
 #' @seealso [test()], [section()],
 #'   [AssessmentTestOpal], [AssessmentSection]
