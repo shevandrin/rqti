@@ -4,7 +4,7 @@
 #' QTI 2.1 standard. These tasks include one or more instances of text input
 #' fields (with numeric or text answers) or dropdown lists.
 #' @template AISlotsTemplate
-#' @seealso [NumericGap], [TextGap], [InlineChoice]
+#' @seealso [NumericGap], [TextGap], [TextGapOpal], [InlineChoice]
 #' @examples
 #' entry_gaps <- new("Entry", content = list("<p>In mathematics, the common
 #' logarithm is the logarithm with base", new("NumericGap",
@@ -65,7 +65,7 @@ setMethod("initialize", "Entry", function(.Object, ...) {
 #'@param content A list of character content to form the text of the question,
 #'  which can include HTML tags. For tasks of the Entry type, it must also
 #'  contain at least one instance of Gap objects, such as `TextGap`,
-#'  `NumericGap`, or `InlineChoice`.
+#'  `TextGapOpal`, `NumericGap`, or `InlineChoice`.
 #'@param prompt An optional character representing a simple question text,
 #'  consisting of one paragraph. This can supplement or replace content in the
 #'  task. Default is "".

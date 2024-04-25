@@ -22,7 +22,7 @@ with the task. By default, it takes the value of the identifier.}
 \item{\code{content}}{A list of character content to form the text of the question,
 which can include HTML tags. For tasks of the \link{Entry} type, it must also
 contain at least one instance of Gap objects, such as \linkS4class{TextGap},
-\link{NumericGap}, or \link{InlineChoice}.}
+\link{TextGapOpal}, \link{NumericGap}, or \link{InlineChoice}.}
 
 \item{\code{prompt}}{An optional character representing a simple question text,
 consisting of one paragraph. This can supplement or replace content in the

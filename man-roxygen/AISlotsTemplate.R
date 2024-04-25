@@ -6,7 +6,7 @@
 #' @slot content A list of character content to form the text of the question,
 #'   which can include HTML tags. For tasks of the [Entry] type, it must also
 #'   contain at least one instance of Gap objects, such as [TextGap-class],
-#'   [NumericGap], or [InlineChoice].
+#'   [TextGapOpal], [NumericGap], or [InlineChoice].
 #' @slot prompt An optional character representing a simple question text,
 #'   consisting of one paragraph. This can supplement or replace content in the
 #'   task. Default is "".
