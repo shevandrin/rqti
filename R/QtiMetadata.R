@@ -10,9 +10,6 @@ check_contributor <- function(object) {
                                    of these values: ",
                      paste(roles, collapse = ", "), "."))
     }
-    if (is.null(object@contributor) || object@contributor == "") {
-        errors <- c(errors, "Please assign a value to 'contributor'.")
-    }
     if (length(errors) == 0) TRUE else unlist(errors)
 }
 
