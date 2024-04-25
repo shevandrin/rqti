@@ -57,14 +57,14 @@ test_that("Testing of counting points in the test if all tasks
                                      seed_number = seed_number,
                                      by = by))
 
-              test <- test(sut_section, "test1")
+              test <- suppressMessages(test(sut_section, "test1"))
               expect_equal(test@points, 6.5)
 })
 
 test_that("Testing of counting points in the test that had
           the complex hierarchical structure", {
 
-              test <- test(root_section, "test1")
+              test <- suppressMessages(test(root_section, "test1"))
               expect_equal(test@points, 22)
 })
 
@@ -119,7 +119,7 @@ test_that("Testing createQtiTest method for AssessmentItem object", {
               points = c(1, 0, 0, 1)
     )
 
-    sut <- createQtiTest(mc, "exam_folder")
+    sut <- suppressMessages(createQtiTest(mc, "exam_folder"))
 
     expected <- file.path("exam_folder", "test_t2.zip")
     expect_equal(sut, expected)
