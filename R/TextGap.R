@@ -64,10 +64,10 @@ setMethod("initialize", "TextGap", function(.Object,...){
 #' @rdname textGap_doc
 #'@export
 textGap <- function(solution,
-                    response_identifier = character(0),
+                    response_identifier = generate_id(type = "gap"),
                     points = 1,
-                    placeholder = character(0),
-                    expected_length = numeric(0),
+                    placeholder = NA_character_,
+                    expected_length = NA_integer_,
                     case_sensitive = FALSE){
     params <- as.list(environment())
     params$Class <- "TextGap"

@@ -5,19 +5,19 @@
 \title{Create object \link{Essay}}
 \usage{
 essay(
-  identifier = character(0),
-  title = character(0),
+  identifier = generate_id(),
+  title = identifier,
   content = list(),
   prompt = "",
   points = 1,
   feedback = list(),
-  expected_length = numeric(0),
-  expected_lines = numeric(0),
-  words_max = numeric(0),
-  words_min = numeric(0),
+  expected_length = NA_integer_,
+  expected_lines = NA_integer_,
+  words_max = NA_integer_,
+  words_min = NA_integer_,
   data_allow_paste = FALSE,
-  calculator = character(0),
-  files = character(0)
+  calculator = NA_character_,
+  files = NA_character_
 )
 }
 \arguments{

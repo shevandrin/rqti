@@ -5,14 +5,14 @@
 \title{Create object \link{Entry}}
 \usage{
 entry(
-  identifier = character(0),
-  title = character(0),
+  identifier = generate_id(),
+  title = identifier,
   content = list(),
   prompt = "",
   points = 1,
   feedback = list(),
-  calculator = character(0),
-  files = character(0)
+  calculator = NA_character_,
+  files = NA_character_
 )
 }
 \arguments{

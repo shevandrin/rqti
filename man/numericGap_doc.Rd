@@ -7,10 +7,10 @@
 \usage{
 numericGap(
   solution,
-  response_identifier = character(0),
+  response_identifier = generate_id(type = "gap"),
   points = 1,
-  placeholder = character(0),
-  expected_length = numeric(0),
+  placeholder = NA_character_,
+  expected_length = NA_integer_,
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
@@ -19,10 +19,10 @@ numericGap(
 
 gapNumeric(
   solution,
-  response_identifier = character(0),
+  response_identifier = generate_id(type = "gap"),
   points = 1,
-  placeholder = character(0),
-  expected_length = numeric(0),
+  placeholder = NA_character_,
+  expected_length = NA_integer_,
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,

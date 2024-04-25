@@ -82,12 +82,12 @@ setMethod("initialize", "InlineChoice", function(.Object, ...) {
 #'@export
 inlineChoice <- function(choices,
                          solution_index = 1,
-                         response_identifier = character(0),
-                         choices_identifiers = character(0),
+                         response_identifier = generate_id(type = "gap"),
+                         choices_identifiers = paste0("Choice", LETTERS[seq(choices)]),
                          points = 1,
                          shuffle = TRUE,
-                         placeholder = character(0),
-                         expected_length = numeric(0)){
+                         placeholder = NA_character_,
+                         expected_length = NA_integer_){
     params <- as.list(environment())
     params$Class <- "InlineChoice"
     obj <- do.call("new", params)

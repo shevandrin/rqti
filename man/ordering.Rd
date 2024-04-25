@@ -5,18 +5,18 @@
 \title{Create object \link{Ordering}}
 \usage{
 ordering(
-  identifier = character(0),
-  title = character(0),
+  identifier = generate_id(),
+  title = identifier,
   choices,
-  choices_identifiers = character(0),
+  choices_identifiers = paste0("Choice", LETTERS[seq(choices)]),
   content = list(),
   prompt = "",
   points = 1,
   points_per_answer = TRUE,
   shuffle = TRUE,
   feedback = list(),
-  calculator = character(0),
-  files = character(0)
+  calculator = NA_character_,
+  files = NA_character_
 )
 }
 \arguments{

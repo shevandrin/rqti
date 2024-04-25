@@ -85,18 +85,18 @@ setClass("MultipleChoice", contains = "Choice")
 #'                    orientation = "vertical")
 #'
 #' @export
-multipleChoice <- function(identifier = character(0),
-                         title = character(0),
+multipleChoice <- function(identifier = generate_id(),
+                         title = identifier,
                          choices,
-                         choice_identifiers = character(0),
+                         choice_identifiers = paste0("Choice", LETTERS[seq(choices)]),
                          content = list(),
                          prompt = "",
                          points = 1,
                          feedback = list(),
                          orientation = "vertical",
                          shuffle = TRUE,
-                         calculator = character(0),
-                         files = character(0)) {
+                         calculator = NA_character_,
+                         files = NA_character_) {
     params <- as.list(environment())
     params$Class <- "MultipleChoice"
     obj <- do.call("new", params)

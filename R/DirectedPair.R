@@ -103,8 +103,8 @@ setClass("DirectedPair", contains = "MatchTable",
 #'                    shuffle_cols = TRUE,
 #'                    orientation = "horizontal")
 #'@export
-directedPair <- function(identifier = character(0),
-                         title = character(0),
+directedPair <- function(identifier = generate_id(),
+                         title = identifier,
                          content = list(),
                          prompt = "",
                          points = 1,
@@ -113,14 +113,14 @@ directedPair <- function(identifier = character(0),
                          cols,
                          cols_identifiers,
                          answers_identifiers,
-                         answers_scores = numeric(0),
+                         answers_scores = NA_real_,
                          shuffle = TRUE,
                          shuffle_rows = TRUE,
                          shuffle_cols = TRUE,
                          feedback = list(),
                          orientation = "vertical",
-                         calculator = character(0),
-                         files = character(0)) {
+                         calculator = NA_character_,
+                         files = NA_character_) {
     params <- as.list(environment())
     params$Class <- "DirectedPair"
     obj <- do.call("new", params)

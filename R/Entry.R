@@ -96,14 +96,14 @@ setMethod("initialize", "Entry", function(.Object, ...) {
 #'                    calculator = "scientific-calculator",
 #'                    files = "text_book.pdf")
 #'@export
-entry <- function(identifier = character(0),
-                  title = character(0),
+entry <- function(identifier = generate_id(),
+                  title = identifier,
                   content = list(),
                   prompt = "",
                   points = 1,
                   feedback = list(),
-                  calculator = character(0),
-                  files = character(0)) {
+                  calculator = NA_character_,
+                  files = NA_character_) {
     params <- as.list(environment())
     params$Class <- "Entry"
     obj <- do.call("new", params)

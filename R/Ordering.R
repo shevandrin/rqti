@@ -94,18 +94,18 @@ setMethod("initialize", "Ordering", function(.Object, ...) {
 #'              files = "text_book.pdf")
 #'
 #' @export
-ordering <- function(identifier = character(0),
-                  title = character(0),
+ordering <- function(identifier = generate_id(),
+                  title = identifier,
                   choices,
-                  choices_identifiers = character(0),
+                  choices_identifiers = paste0("Choice", LETTERS[seq(choices)]),
                   content = list(),
                   prompt = "",
                   points = 1,
                   points_per_answer = TRUE,
                   shuffle = TRUE,
                   feedback = list(),
-                  calculator = character(0),
-                  files = character(0)) {
+                  calculator = NA_character_,
+                  files = NA_character_) {
     params <- as.list(environment())
     params$Class <- "Ordering"
     obj <- do.call("new", params)

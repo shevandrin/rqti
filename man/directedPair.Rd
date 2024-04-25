@@ -5,8 +5,8 @@
 \title{Create object \link{DirectedPair}}
 \usage{
 directedPair(
-  identifier = character(0),
-  title = character(0),
+  identifier = generate_id(),
+  title = identifier,
   content = list(),
   prompt = "",
   points = 1,
@@ -15,14 +15,14 @@ directedPair(
   cols,
   cols_identifiers,
   answers_identifiers,
-  answers_scores = numeric(0),
+  answers_scores = NA_real_,
   shuffle = TRUE,
   shuffle_rows = TRUE,
   shuffle_cols = TRUE,
   feedback = list(),
   orientation = "vertical",
-  calculator = character(0),
-  files = character(0)
+  calculator = NA_character_,
+  files = NA_character_
 )
 }
 \arguments{
