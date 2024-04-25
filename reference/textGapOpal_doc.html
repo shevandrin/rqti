@@ -78,20 +78,20 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">textGapOpal</span><span class="op">(</span></span>
 <span>  <span class="va">solution</span>,</span>
-<span>  response_identifier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  response_identifier <span class="op">=</span> <span class="fu">generate_id</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"gap"</span><span class="op">)</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  placeholder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
-<span>  expected_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  placeholder <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  expected_length <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
 <span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tolerance <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">gapTextOpal</span><span class="op">(</span></span>
 <span>  <span class="va">solution</span>,</span>
-<span>  response_identifier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  response_identifier <span class="op">=</span> <span class="fu">generate_id</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"gap"</span><span class="op">)</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  placeholder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
-<span>  expected_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  placeholder <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  expected_length <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
 <span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  tolerance <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -152,7 +152,6 @@ answers. Default is 0.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tgo_min</span> <span class="op">&lt;-</span> <span class="fu">textGapOpal</span><span class="op">(</span><span class="st">"answer"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> There is no response_identifier in Gap-object. A random  value is assigned: id_gap_0970</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">tgo</span> <span class="op">&lt;-</span> <span class="fu">textGapOpal</span><span class="op">(</span>solution <span class="op">=</span> <span class="st">"answer"</span>,</span></span>
 <span class="r-in"><span>             response_identifier  <span class="op">=</span> <span class="st">"id_gap_1234"</span>,</span></span>
