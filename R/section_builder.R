@@ -199,7 +199,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   content of this learning object.
 #' @param rights A character string describing the intellectual property rights
 #'   and conditions of use for this learning object. By default it takes value
-#'   from environment variable 'QTI_RIGHTS'.
+#'   from environment variable 'RQTI_RIGHTS'.
 #' @param version A character string representing the edition/version of this
 #'   learning object.
 #' @return An [AssessmentTest] object.
@@ -218,7 +218,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
                  navigation_mode = "nonlinear", submission_mode = "individual",
                  allow_comment = TRUE, rebuild_variables = TRUE,
                  contributor = list(), description = "",
-                 rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
+                 rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
@@ -296,7 +296,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   content of this learning object.
 #' @param rights A character string describing the intellectual property rights
 #'   and conditions of use for this learning object. By default it takes value
-#'   from environment variable 'QTI_RIGHTS'.
+#'   from environment variable 'RQTI_RIGHTS'.
 #' @param version A character string representing the edition/version of this
 #'   learning object.
 #' @return An [AssessmentTestOpal] object
@@ -320,7 +320,7 @@ test4opal <- function(content, identifier = "test_identifier",
                       rebuild_variables = TRUE, show_test_time = TRUE,
                       mark_items  = TRUE, keep_responses = FALSE,
                       contributor = list(), description = "",
-                      rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
+                      rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)

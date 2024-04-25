@@ -30,7 +30,7 @@ render_qtijs <- function(input, ...) {
     clean_qtijs()
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
-    url <- Sys.getenv("QTI_URL")
+    url <- Sys.getenv("RQTI_URL")
     if (url == "") {
         # Knit Button runs in separate session
         if (!interactive()) {
@@ -105,7 +105,7 @@ start_server <- function() {
     server_info <- servr::httw(dir = path, verbose = F, browser = F)
     message("To stop the server, run stop_server(). If you restart the R session, the server is restarted, too. Call start_server() to manually (re)start the server.\nServing the directory ", path, " at ", server_info$url)
     # only way to get the url when using Knit Button
-    Sys.setenv("QTI_URL" = server_info$url)
+    Sys.setenv("RQTI_URL" = server_info$url)
     return(server_info$url)
 }
 
@@ -120,12 +120,12 @@ qtijs_path <- function() {
 prepare_renderer <- function() {
     path <- qtijs_path()
     # start a server if none are there or there is no server url
-    if (Sys.getenv("QTI_URL") == "") {
+    if (Sys.getenv("RQTI_URL") == "") {
         start_server()
     }
     # clean up
     clean_qtijs()
-    Sys.getenv("QTI_URL")
+    Sys.getenv("RQTI_URL")
 }
 
 clean_qtijs <- function() {
@@ -136,7 +136,7 @@ clean_qtijs <- function() {
 #' @return nothing, has side effects
 #' @export
 stop_server <- function() {
-    Sys.setenv(QTI_URL = "")
+    Sys.setenv(RQTI_URL = "")
     servr::daemon_stop()
 }
 

@@ -16,8 +16,8 @@ get_resource_url(
 file name without extension by default; optional.}
 
 \item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
-environment variable \code{QTI_API_ENDPOINT}. To set a global environment
-variable, you need to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
+environment variable \code{RQTI_API_ENDPOINT}. To set a global environment
+variable, you need to call \code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
 or you can put these command into .Renviron.}
 
 \item{api_user}{A character value of the username in the OPAL.}

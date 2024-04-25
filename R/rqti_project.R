@@ -28,7 +28,7 @@ rqti_project <- function(path, ...) {
     if (dots$start_server) launch_qtijs <- "rqti::start_server()"
     # create Rprofile
     text <- c("library(rqti)",
-              paste0("Sys.setenv(QTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
+              paste0("Sys.setenv(RQTI_API_ENDPOINT=\"", dots$url_endpoint, "\")"),
               launch_qtijs)
     contents <- paste(
         paste(text, collapse = "\n"),

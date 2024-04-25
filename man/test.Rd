@@ -19,7 +19,7 @@ test(
   rebuild_variables = TRUE,
   contributor = list(),
   description = "",
-  rights = Sys.getenv("QTI_RIGHTS"),
+  rights = Sys.getenv("RQTI_RIGHTS"),
   version = "0.0.9"
 )
 }
@@ -82,7 +82,7 @@ content of this learning object.}
 
 \item{rights}{A character string describing the intellectual property rights
 and conditions of use for this learning object. By default it takes value
-from environment variable 'QTI_RIGHTS'.}
+from environment variable 'RQTI_RIGHTS'.}
 
 \item{version}{A character string representing the edition/version of this
 learning object.}

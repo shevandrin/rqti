@@ -5,7 +5,7 @@
 \title{Constructor function for class QtiContributor}
 \usage{
 qti_contributor(
-  contributor = Sys.getenv("QTI_AUTHOR"),
+  contributor = Sys.getenv("RQTI_AUTHOR"),
   role = "author",
   contribution_date = Sys.Date()
 )

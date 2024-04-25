@@ -34,8 +34,8 @@ with the specified display name is found, it will be overwritten. Default is
 \code{TRUE}.}
 
 \item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
-environment variable \code{QTI_API_ENDPOINT}. To set a global environment
-variable, you need to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
+environment variable \code{RQTI_API_ENDPOINT}. To set a global environment
+variable, you need to call \code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
 or you can put these command into .Renviron.}
 
 \item{open_in_browser}{A boolean value; optional; it controls whether to open

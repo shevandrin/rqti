@@ -12,8 +12,8 @@ auth_opal(api_user = NULL, api_password = NULL, endpoint = NULL)
 \item{api_password}{A character value of the password in the OPAL.}
 
 \item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
-environment variable \code{QTI_API_ENDPOINT}. To set a global environment
-variable, you need to call \code{Sys.setenv(QTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
+environment variable \code{RQTI_API_ENDPOINT}. To set a global environment
+variable, you need to call \code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
 or you can put these command into .Renviron.}
 }
 \value{

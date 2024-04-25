@@ -17,7 +17,7 @@ check_contributor <- function(object) {
 #'
 #' This class stores metadata information about contributors.
 #' @slot contributor A character string representing the name of the author.
-#' By default it takes value from environment variable 'QTI_AUTHOR'.
+#' By default it takes value from environment variable 'RQTI_AUTHOR'.
 #' @slot role A character string kind of contribution. Possible values: author,
 #'   publisher, unknown, initiator, terminator, validator, editor, graphical
 #'   designer, technical implementer, content provider, technical validator,
@@ -32,7 +32,7 @@ check_contributor <- function(object) {
 setClass("QtiContributor", slots = c(contributor = "character",
                                      role = "character",
                                      contribution_date = "Date"),
-         prototype = prototype(contributor = Sys.getenv("QTI_AUTHOR"),
+         prototype = prototype(contributor = Sys.getenv("RQTI_AUTHOR"),
                                role = "author",
                                contribution_date = Sys.Date()),
          validity = check_contributor)
@@ -58,7 +58,7 @@ setMethod("initialize", "QtiContributor", function(.Object, ...) {
 #' @examples
 #' creator= qti_contributor("Max Mustermann", "technical validator")
 #' @export
-qti_contributor <- function(contributor = Sys.getenv("QTI_AUTHOR"),
+qti_contributor <- function(contributor = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
                             contribution_date = Sys.Date()) {
     params <- as.list(environment())
@@ -85,7 +85,7 @@ check_metadata <- function(object) {
 #'   content of this learning object.
 #' @slot rights A character string describing the intellectual property rights
 #'   and conditions of use for this learning object. By default it takes value
-#'   from environment variable 'QTI_RIGHTS'.
+#'   from environment variable 'RQTI_RIGHTS'.
 #' @slot version A character string representing the edition/version of this
 #'   learning object.
 #' @name QtiMetadata-class
@@ -97,7 +97,7 @@ setClass("QtiMetadata", slots = c(contributor = "list",
                                   rights = "character",
                                   version = "character"),
          prototype = prototype(contributor = list(qti_contributor()),
-                               rights = Sys.getenv("QTI_RIGHTS"),
+                               rights = Sys.getenv("RQTI_RIGHTS"),
                                version = "0.0.9",
                                description = ""),
          validity = check_metadata)
@@ -111,7 +111,7 @@ setClass("QtiMetadata", slots = c(contributor = "list",
 #'   content of this learning object.
 #' @param rights A character string describing the intellectual property rights
 #'   and conditions of use for this learning object. By default it takes value
-#'   from environment variable 'QTI_RIGHTS'.
+#'   from environment variable 'RQTI_RIGHTS'.
 #' @param version A character string representing the edition/version of this
 #'   learning object.
 #' @examples
@@ -122,7 +122,7 @@ setClass("QtiMetadata", slots = c(contributor = "list",
 #'                       version = "1.0")
 #' @export
 qti_metadata<- function(contributor = list(), description = "",
-                        rights = Sys.getenv("QTI_RIGHTS"), version = "0.0.9") {
+                        rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
     if (!is(contributor, "list")) contributor <- list(contributor)
     params <- as.list(environment())
     params$Class <- "QtiMetadata"
