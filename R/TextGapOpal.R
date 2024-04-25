@@ -55,6 +55,7 @@ setClass("TextGapOpal", contains = "TextGap", slots = c(tolerance = "numeric"),
 #'              expected_length = 20,
 #'              case_sensitive = TRUE,
 #'              tolerance = 2)
+#' @rdname textGapOpal_doc
 #'@export
 textGapOpal <- function(solution,
                     response_identifier = character(0),
@@ -68,6 +69,10 @@ textGapOpal <- function(solution,
     obj <- do.call("new", params)
     return(obj)
 }
+
+#' @rdname textGapOpal_doc
+#' @export
+gapTextOpal <- textGapOpal
 
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGapOpal

@@ -61,6 +61,7 @@ setMethod("initialize", "TextGap", function(.Object,...){
 #'              placeholder = "put your answer here",
 #'              expected_length = 20,
 #'              case_sensitive = TRUE)
+#' @rdname textGap_doc
 #'@export
 textGap <- function(solution,
                     response_identifier = character(0),
@@ -73,6 +74,10 @@ textGap <- function(solution,
     obj <- do.call("new", params)
     return(obj)
 }
+
+#' @rdname textGap_doc
+#' @export
+gapText <- textGap
 
 #' @rdname getResponse-methods
 #' @aliases getResponse,TextGap

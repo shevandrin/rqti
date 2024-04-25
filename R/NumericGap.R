@@ -91,6 +91,7 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'                 expected_length = 4,
 #'                 tolerance = 5,
 #'                 tolerance_type = "relative")
+#' @rdname numericGap_doc
 #'@export
 numericGap <- function(solution,
                     response_identifier = character(0),
@@ -106,6 +107,10 @@ numericGap <- function(solution,
     obj <- do.call("new", params)
     return(obj)
 }
+
+#' @rdname numericGap_doc
+#' @export
+gapNumeric <- numericGap
 
 #' @rdname getResponse-methods
 #' @aliases getResponse,NumericGap

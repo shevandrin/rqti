@@ -2,9 +2,22 @@
 % Please edit documentation in R/NumericGap.R
 \name{numericGap}
 \alias{numericGap}
+\alias{gapNumeric}
 \title{Create object \link{NumericGap}}
 \usage{
 numericGap(
+  solution,
+  response_identifier = character(0),
+  points = 1,
+  placeholder = character(0),
+  expected_length = numeric(0),
+  tolerance = 0,
+  tolerance_type = "absolute",
+  include_lower_bound = TRUE,
+  include_upper_bound = TRUE
+)
+
+gapNumeric(
   solution,
   response_identifier = character(0),
   points = 1,
