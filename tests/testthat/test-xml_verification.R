@@ -11,7 +11,7 @@ test_that("XML validation with schema file for Order", {
                     points_per_answer = FALSE)
 
     sut <- xml2::read_xml(toString(create_assessment_item(sut)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -40,7 +40,7 @@ In the deep bosom of the ocean buried.
     ), title = "inline_choice"))
 
     sut <- xml2::read_xml(toString(create_assessment_item(entry)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -78,7 +78,7 @@ test_that("XML validation with schema file for Entry", {
                                   title = "fill the gaps"))
 
     sut <- xml2::read_xml(toString(create_assessment_item(entry)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -94,7 +94,7 @@ test_that("XML validation with schema file for SingleChoice", {
               prompt = "What does it say?",
               shuffle = FALSE)
     sut <- xml2::read_xml(toString(create_assessment_item(sc)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -114,7 +114,7 @@ test_that("XML validation with schema file for MultipleChoiceTable", {
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
     sut <- xml2::read_xml(toString(create_assessment_item(mc)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -130,7 +130,7 @@ test_that("XML validation with schema file for MultipleChoice", {
               prompt = "Which of the following elements are used to form water?")
 
     sut <- xml2::read_xml(toString(create_assessment_item(mc)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -145,7 +145,7 @@ test_that("XML validation with schema file Essay", {
                  words_max = 50,
                  words_min = 1)
     sut <- xml2::read_xml(toString(create_assessment_item(essay)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -163,7 +163,7 @@ test_that("XML validation with schema file for DirectedPair", {
               prompt = "Associated left elements with the right category"
     )
     sut <- xml2::read_xml(toString(create_assessment_item(dp)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -182,7 +182,7 @@ test_that("XML validation with schema file for OneInRowTable", {
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
     sut <- xml2::read_xml(toString(create_assessment_item(oirt)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
@@ -201,7 +201,7 @@ test_that("XML validation with schema file for OneInColTable", {
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
     )
     sut <- xml2::read_xml(toString(create_assessment_item(oict)))
-    file <- system.file("imsqti_v2p1.xsd", package = "rqti")
+    file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(sut, schema)
     expect_equal(validation[1], TRUE)
