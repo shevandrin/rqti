@@ -249,7 +249,7 @@ für Sächsische Hochschulen</strong>, so our package sets the endpoint
 for <code>upload2opal</code> to <em><a href="https://bildungsportal.sachsen.de/opal/" class="external-link uri">https://bildungsportal.sachsen.de/opal/</a></em>. If you use
 a different OPAL instance, you can either pass this to
 <code>endpoint</code> of <code>upload2opal</code> or just set it as an
-environment variable in the .Renviron file: QTI_API_ENDPOINT=“yoururl”.
+environment variable in the .Renviron file: RQTI_API_ENDPOINT=“yoururl”.
 When initiating an <code>rqti</code> project in RStudio through <em>New
 Project</em>, you have the option to configure the API endpoint at that
 stage. This configuration is also just written to the .RProfile
@@ -266,7 +266,7 @@ here</a></p>
 OPAL provider, whether the API can be used and what configuration you
 need.</p>
 <p><strong>401</strong> Unauthorized</p>
-<p>Your QTI_API_USER and/or QTI_API_PASSWORD are wrong or your
+<p>Your RQTI_API_USER and/or RQTI_API_PASSWORD are wrong or your
 credentials are not sufficient to work with the API. Please be aware
 that students typically do not possess author rights by default and are
 required to request such privileges before utilizing the API. To
