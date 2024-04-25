@@ -250,7 +250,7 @@
     <loc>https://shevandrin.github.io/rqti/reference/multipleChoiceTable.html</loc>
   </url>
   <url>
-    <loc>https://shevandrin.github.io/rqti/reference/numericGap.html</loc>
+    <loc>https://shevandrin.github.io/rqti/reference/numericGap_doc.html</loc>
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/oneInColTable.html</loc>
@@ -316,10 +316,10 @@
     <loc>https://shevandrin.github.io/rqti/reference/test4opal.html</loc>
   </url>
   <url>
-    <loc>https://shevandrin.github.io/rqti/reference/textGap.html</loc>
+    <loc>https://shevandrin.github.io/rqti/reference/textGapOpal_doc.html</loc>
   </url>
   <url>
-    <loc>https://shevandrin.github.io/rqti/reference/textGapOpal.html</loc>
+    <loc>https://shevandrin.github.io/rqti/reference/textGap_doc.html</loc>
   </url>
   <url>
     <loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc>
