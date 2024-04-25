@@ -173,8 +173,8 @@ test_that("Testing a warning message for getPoints method", {
 
 test_that("Testing test4opal() and test() function in section_builder.R ", {
     sut <- section(c(path1, path2))
-    result_1 <- test4opal(sut)
-    result_2 <- test(sut)
+    result_1 <- suppressMessages(test4opal(sut))
+    result_2 <- suppressMessages(test(sut))
 
     expect_s4_class(result_1, "AssessmentTestOpal")
     expect_s4_class(result_2, "AssessmentTest")
