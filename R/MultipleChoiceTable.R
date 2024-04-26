@@ -99,7 +99,7 @@ setClass("MultipleChoiceTable", contains = "MatchTable",
 #'                    shuffle_cols = TRUE)
 #'@export
 multipleChoiceTable <- function(identifier = generate_id(),
-                          title = identifiers,
+                          title = identifier,
                           content = list(),
                           prompt = "",
                           points = 1,

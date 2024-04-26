@@ -24,22 +24,25 @@ setClass("MatchTable", contains = "AssessmentItem",
     prototype = list(shuffle = TRUE,
                      points = NA_real_,
                      shuffle_rows = TRUE,
-                     shuffle_cols = TRUE)
+                     shuffle_cols = TRUE,
+                     answers_scores = NA_real_)
 )
 
 setMethod("initialize", "MatchTable", function(.Object, ...) {
     .Object <- callNextMethod()
     answ_count <- length(.Object@answers_identifiers)
+    has_answers_scores = !all(is.na(.Object@answers_scores))
 
-    if (is.na(.Object@points) && length(.Object@answers_scores) == 0) {
+    if (is.na(.Object@points) && !has_answers_scores) {
         .Object@answers_scores  <- rep(0.5, answ_count)
+        has_answers_scores <- TRUE
     }
 
-    if (is.na(.Object@points) && length(.Object@answers_scores) != 0) {
+    if (is.na(.Object@points) && has_answers_scores) {
         .Object@points <- sum(.Object@answers_scores)
     }
 
-    if (!is.na(.Object@points) && length(.Object@answers_scores) == 0) {
+    if (!is.na(.Object@points) && !has_answers_scores) {
         score <- .Object@points / answ_count
         .Object@answers_scores  <- rep(score, answ_count)
     }
@@ -48,6 +51,11 @@ setMethod("initialize", "MatchTable", function(.Object, ...) {
     nscr <- length(.Object@answers_scores)
     if (nids != nscr) {
         stop("Error: \'answers_identifiers\' and \'answers_scores\' must have the same number of items.")
+    }
+
+    if (.Object@points != sum(.Object@answers_scores)) {
+        message("Total points for the task have been recalculated as the sum of individual answers.")
+        .Object@points <- sum(.Object@answers_scores)
     }
 
     validObject(.Object)

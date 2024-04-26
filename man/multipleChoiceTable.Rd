@@ -6,7 +6,7 @@
 \usage{
 multipleChoiceTable(
   identifier = generate_id(),
-  title = identifiers,
+  title = identifier,
   content = list(),
   prompt = "",
   points = 1,

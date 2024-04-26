@@ -6,7 +6,7 @@
 \usage{
 oneInRowTable(
   identifier = generate_id(),
-  title = identfier,
+  title = identifier,
   content = list(),
   prompt = "",
   points = 1,

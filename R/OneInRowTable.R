@@ -94,7 +94,7 @@ setClass("OneInRowTable", contains = "MatchTable")
 #'                    shuffle_cols = TRUE)
 #'@export
 oneInRowTable <- function(identifier = generate_id(),
-                          title = identfier,
+                          title = identifier,
                           content = list(),
                           prompt = "",
                           points = 1,

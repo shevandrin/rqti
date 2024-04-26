@@ -78,7 +78,7 @@ test_that("Testing create_response_declaration_MultipleChoiceTable",{
 })
 
 test_that("Testing outcomeDeclaration MultipleChoiceTable",{
-    mct <- new("MultipleChoiceTable",
+    mct <- suppressMessages(new("MultipleChoiceTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers  = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -89,7 +89,7 @@ test_that("Testing outcomeDeclaration MultipleChoiceTable",{
               points = 4,
               title = "MultipleChoiceTable",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
-    )
+    ))
 
     example <- '<additionalTag><outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
 <defaultValue>
@@ -98,7 +98,7 @@ test_that("Testing outcomeDeclaration MultipleChoiceTable",{
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
 <defaultValue>
-<value>4</value>
+<value>4.5</value>
 </defaultValue>
 </outcomeDeclaration>
 <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
