@@ -18,4 +18,5 @@ getPass, It is used to hide the password of the user(api_opal.R)., high
 keyring, It is provided a way to securely store and retrieve sensitive authentication data., high
 zip, 	It is used for manipulate ZIP archives., high
 kableExtra, grading table formatting., low
+textutils, To decode HTML entities., high
 
