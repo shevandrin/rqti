@@ -13,28 +13,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+```
+## Imported and suggested packages
 
-|package|usage|priority|
-|-------|-----|--------|
-|htmltools|it is used to work with HTML content|high|
-|xml2| It is used to work with xml doc | high|
-|~~ids~~| generates default ids | low, eliminate-done|
-|yaml|  It is used to work with yaml objects in Rmd file|high    |
-|rmarkdown|It is used to processe documents (Markdown, HTML) and to extract YAML from a Markdown document.| high   |
-|servr|It is provided a simple HTTP server.| high   |
-|rstudioapi|It provides a set of functions that enable access information about the current RStudio session, manage files and projects, and control the behavior of the RStudio IDE. **we are using viewer**|high   |
-|fs|It is provided a set of tools for file system operations|moderate    |
-|~~purrr~~|It provides keep() to filter lists|low - deleted |
-|stringr|it is provided a cohesive set of functions for working with strings.| moderate, but frequent in use   |
-|methods|It is used to display the methods associated with a generic function or to determine if methods are available for a specific function|???  |
-|lubridate|It is to convert datestamp of testResult  into a date-time object (extract_results.R) |low    |
-|magrittr|It is provided the %>% operator.| moderate  |
-|httr2|It is used for working with HTTP requests.| high   |
-|curl|It is used for transferring data with URLs. To put file in the body of the http request| high   |
-|digest|it generates a hash of the file name using the SHA-1 algorithm(extract_results.R) and used for handling sensitive information. |moderate   |
-|knitr|It is used to create tables in output formats (HTML, LaTeX) from R objects and to compile dynamic documents written in R Markdown that contain embedded R code chunks.|high    |
-|getPass|It is used to hide the password of the user(API, api_opal.R)   |high    |
-|keyring|It is provided a way to securely store and retrieve sensitive authentication data.| high   |
-|zip|It is used for manipulate ZIP archives.|high    |
-|~~textutils~~|to handle html entities| high - removed |
-|kableExtra|grading table formatting|low|
+```{r echo = FALSE, results = 'asis'}
+data <- read.csv("imported_packages.csv")
+kableExtra::kable(data, format = "html")
+
+```
+
+
