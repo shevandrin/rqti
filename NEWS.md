@@ -2,6 +2,8 @@
 
 ## Bug fixes
 
+* Handle problem with xsd scheme for xml validation.
+
 * Handle some problems with html and mathml entities.
 
 ## New features
