@@ -96,7 +96,7 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 numericGap <- function(solution,
                     response_identifier = generate_id(type = "gap"),
                     points = 1,
-                    placeholder = NA_character_,
+                    placeholder = "",
                     expected_length = NA_integer_,
                     tolerance = 0,
                     tolerance_type = "absolute",

@@ -86,7 +86,7 @@ inlineChoice <- function(choices,
                          choices_identifiers = paste0("Choice", LETTERS[seq(choices)]),
                          points = 1,
                          shuffle = TRUE,
-                         placeholder = NA_character_,
+                         placeholder = "",
                          expected_length = NA_integer_){
     params <- as.list(environment())
     params$Class <- "InlineChoice"
