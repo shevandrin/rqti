@@ -15,3 +15,9 @@ check_identifier <- function(id, quiet = FALSE) {
     }
     return(checker)
 }
+
+size_gap <- function(input) {
+    num <- nchar(as.character(input[1]))
+    size <- ifelse(num <= 2, 1, num-1)
+    return(size)
+}

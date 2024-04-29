@@ -63,9 +63,11 @@ setMethod("initialize", "InlineChoice", function(.Object, ...) {
 #'  order in which the choices are initially presented to the candidate. Default
 #'  is `TRUE`.
 #'@param placeholder A character value, optional, responsible for placing
-#'  helpful text in the text input field in the content delivery engine.
+#'  helpful text in the text input field in the content delivery engine. Default
+#'  is "".
 #'@param expected_length A numeric value, optional, responsible for setting the
-#'  size of the text input field in the content delivery engine.
+#'  size of the text input field in the content delivery engine. Default value
+#'  is adjusted by the first choice size.
 #'@return An object of class [InlineChoice]
 #'@seealso [entry()][numericGap()][textGap()][textGapOpal()]
 #' @examples
@@ -87,7 +89,7 @@ inlineChoice <- function(choices,
                          points = 1,
                          shuffle = TRUE,
                          placeholder = "",
-                         expected_length = NA_integer_){
+                         expected_length = size_gap(choices)){
     params <- as.list(environment())
     params$Class <- "InlineChoice"
     obj <- do.call("new", params)

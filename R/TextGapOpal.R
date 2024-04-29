@@ -35,9 +35,11 @@ setClass("TextGapOpal", contains = "TextGap", slots = c(tolerance = "numeric"),
 #'@param points A numeric value, optional, representing the number of points for
 #'  this gap. Default is 1
 #'@param placeholder A character value, optional, responsible for placing
-#'  helpful text in the text input field in the content delivery engine.
+#'  helpful text in the text input field in the content delivery engine. Default
+#'  is "".
 #'@param expected_length A numeric value, optional, responsible for setting the
-#'  size of the text input field in the content delivery engine.
+#'  size of the text input field in the content delivery engine. Default value
+#'  is adjusted by solution size.
 #'@param case_sensitive A boolean value, determining whether the evaluation of
 #'  the correct answer is case sensitive. Default is `FALSE`.
 #'@param tolerance A numeric value defining how many characters will be taken
@@ -61,7 +63,7 @@ textGapOpal <- function(solution,
                     response_identifier = generate_id(type = "gap"),
                     points = 1,
                     placeholder = "",
-                    expected_length = NA_integer_,
+                    expected_length = size_gap(solution),
                     case_sensitive = FALSE,
                     tolerance = 0){
     params <- as.list(environment())

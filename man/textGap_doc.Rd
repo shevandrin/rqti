@@ -9,8 +9,8 @@ textGap(
   solution,
   response_identifier = generate_id(type = "gap"),
   points = 1,
-  placeholder = NA_character_,
-  expected_length = NA_integer_,
+  placeholder = "",
+  expected_length = size_gap(solution),
   case_sensitive = FALSE
 )
 
@@ -18,8 +18,8 @@ gapText(
   solution,
   response_identifier = generate_id(type = "gap"),
   points = 1,
-  placeholder = NA_character_,
-  expected_length = NA_integer_,
+  placeholder = "",
+  expected_length = size_gap(solution),
   case_sensitive = FALSE
 )
 }
@@ -35,10 +35,12 @@ represents random digits.}
 this gap. Default is 1}
 
 \item{placeholder}{A character value, optional, responsible for placing
-helpful text in the text input field in the content delivery engine.}
+helpful text in the text input field in the content delivery engine. Default
+is "".}
 
 \item{expected_length}{A numeric value, optional, responsible for setting the
-size of the text input field in the content delivery engine.}
+size of the text input field in the content delivery engine. Default value
+is adjusted by solution size.}
 
 \item{case_sensitive}{A boolean value, determining whether the evaluation of
 the correct answer is case sensitive. Default is \code{FALSE}.}

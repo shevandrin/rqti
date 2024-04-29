@@ -46,8 +46,9 @@ setValidity("NumericGap", function(object) {
 setMethod("initialize", "NumericGap", function(.Object, ...) {
     .Object <- callNextMethod()
 
-    if (length(.Object@expected_length) == 0) {
-        .Object@expected_length = size_gap(.Object@solution)
+    el <- .Object@expected_length
+    if (any(is.na(el)) || length(el) == 0) {
+        .Object@expected_length <- size_gap(.Object@solution)
     }
 
     validObject(.Object)
@@ -64,9 +65,11 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'@param points A numeric value, optional, representing the number of points for
 #'  this gap. Default is 1
 #'@param placeholder A character value, optional, responsible for placing
-#'  helpful text in the text input field in the content delivery engine.
+#'  helpful text in the text input field in the content delivery engine. Default
+#'  is "".
 #'@param expected_length A numeric value, optional, responsible for setting the
-#'  size of the text input field in the content delivery engine.
+#'  size of the text input field in the content delivery engine. Default value
+#'  is adjusted by solution size.
 #'@param tolerance A numeric value, optional, specifying the value for the upper
 #'  and lower boundaries of the tolerance rate for candidate answers. Default is
 #'  0.
@@ -91,13 +94,13 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'                 expected_length = 4,
 #'                 tolerance = 5,
 #'                 tolerance_type = "relative")
-#' @rdname numericGap_doc
+#'@rdname numericGap_doc
 #'@export
 numericGap <- function(solution,
                     response_identifier = generate_id(type = "gap"),
                     points = 1,
                     placeholder = "",
-                    expected_length = NA_integer_,
+                    expected_length = size_gap(solution),
                     tolerance = 0,
                     tolerance_type = "absolute",
                     include_lower_bound = TRUE,

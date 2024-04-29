@@ -9,8 +9,8 @@ numericGap(
   solution,
   response_identifier = generate_id(type = "gap"),
   points = 1,
-  placeholder = NA_character_,
-  expected_length = NA_integer_,
+  placeholder = "",
+  expected_length = size_gap(solution),
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
@@ -21,8 +21,8 @@ gapNumeric(
   solution,
   response_identifier = generate_id(type = "gap"),
   points = 1,
-  placeholder = NA_character_,
-  expected_length = NA_integer_,
+  placeholder = "",
+  expected_length = size_gap(solution),
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
@@ -41,10 +41,12 @@ represents random digits.}
 this gap. Default is 1}
 
 \item{placeholder}{A character value, optional, responsible for placing
-helpful text in the text input field in the content delivery engine.}
+helpful text in the text input field in the content delivery engine. Default
+is "".}
 
 \item{expected_length}{A numeric value, optional, responsible for setting the
-size of the text input field in the content delivery engine.}
+size of the text input field in the content delivery engine. Default value
+is adjusted by solution size.}
 
 \item{tolerance}{A numeric value, optional, specifying the value for the upper
 and lower boundaries of the tolerance rate for candidate answers. Default is

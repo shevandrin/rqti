@@ -27,7 +27,8 @@ setClass("TextGap", contains = "Gap",
 setMethod("initialize", "TextGap", function(.Object,...){
     .Object <- callNextMethod()
 
-    if (length(.Object@expected_length) == 0) {
+    el <- .Object@expected_length
+    if (any(is.na(el)) || length(el) == 0) {
         .Object@expected_length <- size_gap(.Object@solution)
     }
 
@@ -45,9 +46,11 @@ setMethod("initialize", "TextGap", function(.Object,...){
 #'@param points A numeric value, optional, representing the number of points for
 #'  this gap. Default is 1
 #'@param placeholder A character value, optional, responsible for placing
-#'  helpful text in the text input field in the content delivery engine.
+#'  helpful text in the text input field in the content delivery engine. Default
+#'  is "".
 #'@param expected_length A numeric value, optional, responsible for setting the
-#'  size of the text input field in the content delivery engine.
+#'  size of the text input field in the content delivery engine. Default value
+#'  is adjusted by solution size.
 #'@param case_sensitive A boolean value, determining whether the evaluation of
 #'  the correct answer is case sensitive. Default is `FALSE`.
 #'@return An object of class [TextGap]
@@ -67,7 +70,7 @@ textGap <- function(solution,
                     response_identifier = generate_id(type = "gap"),
                     points = 1,
                     placeholder = "",
-                    expected_length = NA_integer_,
+                    expected_length = size_gap(solution),
                     case_sensitive = FALSE){
     params <- as.list(environment())
     params$Class <- "TextGap"

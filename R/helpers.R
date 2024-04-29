@@ -163,9 +163,3 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
     md_list <- paste0("- ", vect, gaps, collapse = "\n")
     return(md_list)
 }
-
-size_gap <- function(input) {
-    num <- nchar(as.character(input[1]))
-    size <- ifelse(num <= 2, 1, num-1)
-    return(size)
-}
