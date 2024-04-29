@@ -350,7 +350,7 @@ add_test_metadata <- function(object, params) {
         contr_ar <- lapply(contr, function(x) list(x@contributor, x@role))
         contr_unique <- contr[!duplicated(contr_ar)]
         if (length(contr_unique) != 0) {
-            msg <- paste(sapply(contr_unique, function(x) x@contributor),
+            msg <- paste(sapply(contr_unique, function(x) paste0(x@contributor, " (", x@role, ")")),
                          collapse = ", ")
             msg <- paste0("Authors are found in exercises and added as",
                           " contributors: ", msg, ".")
