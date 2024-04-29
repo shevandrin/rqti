@@ -84,8 +84,8 @@
 <span>  choices_identifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Choice"</span>, <span class="va">LETTERS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">choices</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  placeholder <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  expected_length <span class="op">=</span> <span class="cn">NA_integer_</span></span>
+<span>  placeholder <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">choices</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -127,12 +127,14 @@ is <code>TRUE</code>.</p></dd>
 
 <dt>placeholder</dt>
 <dd><p>A character value, optional, responsible for placing
-helpful text in the text input field in the content delivery engine.</p></dd>
+helpful text in the text input field in the content delivery engine. Default
+is "".</p></dd>
 
 
 <dt>expected_length</dt>
 <dd><p>A numeric value, optional, responsible for setting the
-size of the text input field in the content delivery engine.</p></dd>
+size of the text input field in the content delivery engine. Default value
+is adjusted by the first choice size.</p></dd>
 
 </dl></div>
     <div class="section level2">
