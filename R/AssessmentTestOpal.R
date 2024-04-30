@@ -85,8 +85,10 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTestOpal"),
                                          sep = ";")
               }
               if (!is.na(object@calculator)) {
-                  data_features <- paste(object@calculator, data_features,
-                                         sep = ";")
+                  calc_type <- NULL
+                  if ("simple" %in% object@calculator) calc_type <- "simple-calculator"
+                  if ("scientific" %in% object@calculator) calc_type <- "scientific-calculator"
+                  data_features <- paste(calc_type, data_features, sep = ";")
               }
               if (object@mark_items) {
                   data_features <- paste("mark-items", data_features,

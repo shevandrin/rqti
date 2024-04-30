@@ -11,7 +11,7 @@ test4opal(
   time_limit = 90L,
   max_attempts = 1L,
   files = NULL,
-  calculator = "scientific-calculator",
+  calculator = "scientific",
   academic_grading = FALSE,
   grade_label = c(en = "Grade", de = "Note"),
   table_label = c(en = "Grade", de = "Note"),
@@ -49,8 +49,8 @@ accessible to the candidate during the test/exam.}
 \item{calculator}{A character, optional; determines whether to show a
 calculator to the candidate. Possible values:
 \itemize{
-\item 'simple-calculator'
-\item 'scientific-calculator' (assigned by default).
+\item 'simple'
+\item 'scientific' (assigned by default).
 }}
 
 \item{academic_grading}{A boolean, optional; enables to show to candidate at

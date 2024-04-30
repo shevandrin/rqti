@@ -101,8 +101,8 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 #'  for a candidate to copy text into the text input field. Default is FALSE.
 #'@param calculator A character, optional, determining whether to show a
 #'  calculator to the candidate. Possible values:
-#'   * "simple-calculator"
-#'   * "scientific-calculator".
+#'   * "simple"
+#'   * "scientific".
 #'@param files A character vector, optional, containing paths to files that will
 #'  be accessible to the candidate during the test/exam.
 #'@return An object of class [Essay]

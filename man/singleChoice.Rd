@@ -68,8 +68,8 @@ which the choices are initially presented to the candidate. Default is
 \item{calculator}{A character, optional, determining whether to show a
 calculator to the candidate. Possible values:
 \itemize{
-\item "simple-calculator"
-\item "scientific-calculator".
+\item "simple"
+\item "scientific".
 }}
 
 \item{files}{A character vector, optional, containing paths to files that
