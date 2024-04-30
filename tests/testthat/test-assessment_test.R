@@ -508,7 +508,7 @@ exam <- new("AssessmentTestOpal", identifier = "id_test",
                       test_path("file/test_fig2.jpg")),
             max_attempts = 5, time_limit = 100, allow_comment = TRUE,
             rebuild_variables = TRUE,
-            show_test_time = TRUE, calculator = "simple-calculator",
+            show_test_time = TRUE, calculator = "simple",
             keep_responses = TRUE
             )
 suppressMessages(createQtiTest(exam, "test1a9b56cf96", "TRUE"))

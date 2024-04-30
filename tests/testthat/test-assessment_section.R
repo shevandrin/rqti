@@ -249,14 +249,14 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
     path1obj[[4]]@identifier <- "v4"
 
     path2 <- test_path("file/rmd/DirectedPair_SimpleCalc.Rmd")
-    # path 2 - The item contains the parameter: calculator: simple-calculator
+    # path 2 - The item contains the parameter: calculator: simple
     suppressMessages(path2obj <- Map(create_question_object, rep(path2, 3)))
     path2obj[[1]]@identifier <- "v11"
     path2obj[[2]]@identifier <- "v22"
     path2obj[[3]]@identifier <- "v33"
 
     path3 <- test_path("file/rmd/MultipleChoiceTable_as_table_F.Rmd")
-    # path 3 - The item contains the parameter: calculator:scientific-calculator
+    # path 3 - The item contains the parameter: calculator:scientific
     suppressMessages(path3obj <- Map(create_question_object, rep(path3, 2)))
     path3obj[[1]]@identifier <- "v111"
     path3obj[[2]]@identifier <- "v222"
@@ -295,7 +295,7 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
     sut_2 <- example_exam_2@calculator
     sut_3 <- example_exam_3@calculator
 
-    expect_equal(sut_1,"simple-calculator")
-    expect_equal(sut_2,"scientific-calculator")
-    expect_equal(sut_3,"scientific-calculator")
+    expect_equal(sut_1,"simple")
+    expect_equal(sut_2,"scientific")
+    expect_equal(sut_3,"scientific")
 })

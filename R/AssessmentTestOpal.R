@@ -56,10 +56,10 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
 
     found_calc <- c(sapply(.Object@section, getCalculator, USE.NAMES = FALSE))
     if (any(c("simple", "simple-calculator") %in% found_calc)) {
-        .Object@calculator = "simple-calculator"
+        .Object@calculator = "simple"
     }
     if (any(c("scientific", "scientific-calculator") %in% found_calc)) {
-        .Object@calculator = "scientific-calculator"
+        .Object@calculator = "scientific"
     }
 
     validObject(.Object)

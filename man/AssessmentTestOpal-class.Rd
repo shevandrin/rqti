@@ -88,8 +88,8 @@ the candidate elapsed processing time without time limit. Default is
 \item{\code{calculator}}{A character value, optional, determining whether to show a
 calculator to the candidate. Possible values:
 \itemize{
-\item "simple-calculator"
-\item "scientific-calculator".
+\item "simple"
+\item "scientific".
 }}
 
 \item{\code{mark_items}}{A boolean value, optional, determining whether to allow

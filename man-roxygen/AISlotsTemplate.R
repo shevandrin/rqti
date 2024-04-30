@@ -27,8 +27,8 @@
 #'   [CorrectFeedback], or [WrongFeedback] class.
 #' @slot calculator A character, optional, determining whether to show a
 #'   calculator to the candidate. Possible values:
-#'   * "simple-calculator"
-#'   * "scientific-calculator"
+#'   * "simple"
+#'   * "scientific"
 #' @slot files A character vector, optional, containing paths to files that will
 #'   be accessible to the candidate during the test/exam.
 #' @slot metadata An object of class [QtiMetadata] that holds metadata information

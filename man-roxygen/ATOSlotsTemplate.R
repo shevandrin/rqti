@@ -3,8 +3,8 @@
 #'   `FALSE`.
 #' @slot calculator A character value, optional, determining whether to show a
 #'   calculator to the candidate. Possible values:
-#'   * "simple-calculator"
-#'   * "scientific-calculator".
+#'   * "simple"
+#'   * "scientific".
 #' @slot mark_items A boolean value, optional, determining whether to allow
 #'   candidate marking of questions. Default is `TRUE`.
 #' @slot keep_responses A boolean value, optional, determining whether to save

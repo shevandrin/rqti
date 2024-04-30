@@ -2,7 +2,7 @@
 type: match
 identifier: test_DirectedPair_from_table
 knit: rqti::render_opal
-calculator: simple-calculator 
+calculator: simple
 ---
 
 # question
