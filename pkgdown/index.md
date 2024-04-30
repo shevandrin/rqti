@@ -6,15 +6,10 @@
 [![test-coverage](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shevandrin/rqti/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shevandrin/rqti?branch=main)
-[![Project Status: WIP - Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 # rqti
-
-Note: This project is currently in progress, and we anticipate a stable
-release in Q1 2024.
 
 The objective of `rqti` is to establish a robust and stand-alone R
 library tailored for crafting exercises and exams in adherence to the
@@ -30,8 +25,7 @@ especially advantageous, as it capitalizes on OPAL’s robust API.
 
 ## Installation
 
-The `rqti` package is currently in active development, and as of now,
-the exclusive installation method is through GitHub:
+The `rqti` package is available on CRAN, ensuring easy installation and access to its features:
 
 ``` r
 #install.pacakges("librarian") # install librarian if you do not have it yet
