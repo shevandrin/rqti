@@ -69,6 +69,24 @@ setMethod("initialize", "Essay", function(.Object, ...) {
         }
     }
 
+    fix_na <- function(slot_value) {
+        if (length(slot_value) !=0) {
+            if(is.na(slot_value)) {
+                if (is.character(slot_value)) {
+                    return(character(0))
+                } else {
+                    return(numeric(0))
+                }
+            }
+        }
+        return(slot_value)
+    }
+
+    .Object@expected_length <- fix_na(.Object@expected_length)
+    .Object@expected_lines <- fix_na(.Object@expected_lines)
+    .Object@words_max <- fix_na(.Object@words_max)
+    .Object@words_min <- fix_na(.Object@words_min)
+
     validObject(.Object)
     .Object
 })
