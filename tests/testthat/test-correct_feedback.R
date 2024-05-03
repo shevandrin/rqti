@@ -62,7 +62,7 @@ test_that("Testing method createModalFeedback() for WrongFeedback class", {
 
 test_that("Testing method createResponseCondition() for CorrectFeedback class",
           {
-    sut <- new("CorrectFeedback", outcome_identifier = "FEEDBACKMODAL",
+    sut <- correctFeedback(outcome_identifier = "FEEDBACKMODAL",
                          show = FALSE,
                          title = "Feedback wrong name",
                          content = list("<p>Text Feedback wrong</p>")
