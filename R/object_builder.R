@@ -64,7 +64,6 @@ create_question_object <- function(file, file_dir = NULL) {
     # ignore parameters that are not related to object creation
     attrs <- attrs[! names(attrs) %in% c("knit", "metadata")]
 
-    file_name <- tools::file_path_sans_ext(basename(file))
     tdir <- tempdir()
 
     md_path <- file.path(tdir, "_temp_md.md")
@@ -117,7 +116,13 @@ create_question_object <- function(file, file_dir = NULL) {
         stop("The type of the task is not specified properly")
     }
 
-    if (is.null(slots$identifier)) slots$identifier <- file_name
+
+    if (is.null(slots$identifier)) {
+        file_name <- tools::file_path_sans_ext(basename(file))
+        id <- ifelse(check_identifier(file_name, quiet = TRUE), file_name, generate_id())
+        slots$identifier <- id
+    }
+
     feedback <- list(parse_feedback(doc, file_dir))
     slots <- c(slots, feedback = feedback, metadata = mtdata)
     if (is.null(slots$content)) {
@@ -289,9 +294,9 @@ create_dp_slots <- function(html, attrs) {
     return(attrs)
 }
 
-parse_list <- function(html) {
+parse_list <- function(html_q) {
     # find solution indexed in list with possible answers
-    question_list <- xml2::xml_find_all(html, "//ul")
+    question_list <- xml2::xml_find_all(html_q, "./ul")
     question_list <- question_list[length(question_list)]
     choices  <- xml2::xml_find_all(question_list, ".//li")
     # build a list with possible answers, that keeps formatting of the content (mathml)
