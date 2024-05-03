@@ -48,7 +48,7 @@ test_that("Testing method createResponseCondition() for WrongFeedback class", {
     expect_equal(sut, expected)
 })
 
-test_that("Testing wrongFeedback function", {
+test_that("Testing the constructor for WrongFeedback class", {
     # Expected WrongFeedback object
     expected <- new("WrongFeedback", content = list("Some comments"),
                     title = "Feedback", show = TRUE)
@@ -56,8 +56,8 @@ test_that("Testing wrongFeedback function", {
     # Create WrongFeedback object using the wrongFeedback function
     sut <- wrongFeedback(content = list("Some comments"), title = "Feedback")
 
-    # # Check if the object is of class WrongFeedback
-    expect_s3_class(sut, "WrongFeedback")
+    # Check if the object is of class WrongFeedback
+    expect_s4_class(sut, "WrongFeedback")
 
     # Check if the parameters are set correctly
     expect_equal(slot(sut, "title"), "Feedback")
