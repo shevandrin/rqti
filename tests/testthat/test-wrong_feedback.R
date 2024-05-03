@@ -15,9 +15,7 @@ test_that("Testing method createModalFeedback() for WrongFeedback class", {
 })
 
 test_that("Testing method createResponseCondition() for WrongFeedback class", {
-    sut <- new("WrongFeedback", outcome_identifier = "FEEDBACKMODAL",
-                         show = FALSE,
-                         title = "Feedback wrong name",
+    sut <- wrongFeedback(show = FALSE, title = "Feedback wrong name",
                          content = list("<p>Text Feedback wrong</p>")
     )
 
@@ -47,7 +45,6 @@ test_that("Testing method createResponseCondition() for WrongFeedback class", {
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
-
 test_that("Testing the constructor for WrongFeedback class", {
     # Expected WrongFeedback object
     expected <- new("WrongFeedback", content = list("Some comments"),
@@ -67,4 +64,3 @@ test_that("Testing the constructor for WrongFeedback class", {
     # Check if the created object matches the expected object
     expect_identical(sut, expected)
 })
-
