@@ -47,3 +47,24 @@ test_that("Testing method createResponseCondition() for WrongFeedback class", {
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
+
+test_that("Testing wrongFeedback function", {
+    # Expected WrongFeedback object
+    expected <- new("WrongFeedback", content = list("Some comments"),
+                    title = "Feedback", show = TRUE)
+
+    # Create WrongFeedback object using the wrongFeedback function
+    sut <- wrongFeedback(content = list("Some comments"), title = "Feedback")
+
+    # # Check if the object is of class WrongFeedback
+    expect_s3_class(sut, "WrongFeedback")
+
+    # Check if the parameters are set correctly
+    expect_equal(slot(sut, "title"), "Feedback")
+    expect_equal(slot(sut, "content"), list("Some comments"))
+    expect_equal(slot(sut, "show"), TRUE)
+
+    # Check if the created object matches the expected object
+    expect_identical(sut, expected)
+})
+
