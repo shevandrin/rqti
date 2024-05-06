@@ -106,3 +106,17 @@ test_that("Testing outcomeDeclaration OneInColTable", {
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
+test_that("Testing the constructor for OneInColTable class", {
+    sut <- oneInColTable(content = list("<p>\"One in column table\" task</p>"),
+                         rows = c("alfa", "beta", "gamma"),
+                         rows_identifiers = c("a", "b", "g"),
+                         cols = c("A", "B", "G", "a"),
+                         cols_identifiers = c("as", "bs", "gs", "aas"),
+                         answers_identifiers = c("a as", "b bs", "g gs",
+                                                 "a aas"))
+
+    xml_sut <- create_assessment_item(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
+    expect_s4_class(sut, "OneInColTable")
+})

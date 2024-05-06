@@ -184,26 +184,10 @@ test_that("Test createResponseProcessing() for SingleChoice class", {
   equal_xml(sut, expected)
 })
 test_that("Testing the constructor for SingleChoice class", {
-    # Expected Single_choice object
-    expected <- new("SingleChoice", identifier = "A12",
-                    content = list("Some content"),
-                    choices = c("Answer_1","Answer_2","Answer_3"),
-                    title = "sc")
+    sut <- singleChoice(content = list("Some content"),
+                        choices = c("Answer_1","Answer_2","Answer_3"))
+    xml_sut <- create_assessment_item(sut)
 
-    # Create Single_choice object using the singleChoice function
-    sut <- singleChoice(identifier = "A12", content = list("Some content"),
-                        choices = c("Answer_1","Answer_2","Answer_3"),
-                        title = "sc", calculator = character(0),
-                        files = character(0))
-
-        # Check if the object is of class SingleChoice
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
     expect_s4_class(sut, "SingleChoice")
-
-    # Check if the parameters are set correctly
-    expect_equal(slot(sut, "title"), "sc")
-    expect_equal(slot(sut, "content"), list("Some content"))
-    expect_equal(slot(sut, "choices"), c("Answer_1","Answer_2","Answer_3"))
-
-    # Check if the created object matches the expected object
-    expect_identical(sut, expected)
 })

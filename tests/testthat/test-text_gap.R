@@ -401,3 +401,18 @@ test_that("Testing warning message in the case Identifiers of objects
     ))
     expect_equal(warning_message, sut_warning)
 })
+
+test_that("Testing the constructor for Entry class", {
+    sut <- entry(content = list(textGap("answer"),
+                                textGapOpal("answer"),
+                                numericGap(5.1),
+                                inlineChoice(c("answer1", "answer2", "answer3"))))
+
+    xml_sut <- create_assessment_item(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
+    expect_s4_class(sut, "Entry")
+})
+
+
+

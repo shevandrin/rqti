@@ -115,3 +115,18 @@ test_that("Testing outcomeDeclaration MultipleChoiceTable",{
     expect_equal(sut, example)
 
 })
+test_that("Testing the constructor for MultipleChoiceTable class", {
+    sut <- multipleChoiceTable(content = list("<p>\"Multiple choice table\" task</p>"),
+                               rows = c("alfa", "beta", "gamma", "alpha"),
+                               rows_identifiers = c("a", "b", "g", "aa"),
+                               cols = c("A", "B", "G", "a"),
+                               cols_identifiers = c("as", "bs", "gs", "aas"),
+                               answers_identifiers = c("a as", "b bs", "g gs",
+                                                       "aa as", "a aas",
+                                                       "aa aas"))
+
+    xml_sut <- create_assessment_item(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
+    expect_s4_class(sut, "MultipleChoiceTable")
+})

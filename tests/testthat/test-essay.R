@@ -67,3 +67,12 @@ test_that("Testing of set default max count of words and
   expect_equal(sut@expected_length, 24)
   expect_equal(sut@expected_lines, 1)
 })
+test_that("Testing the constructor for Essay class", {
+
+    sut <- suppressWarnings(essay(content = list("Some content",
+                                                 "Some content")))
+    xml_sut <- create_assessment_item(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
+    expect_s4_class(sut, "Essay")
+})

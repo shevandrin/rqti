@@ -208,3 +208,11 @@ test_that("Testing createResponseProcessing() for Order class", {
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
+test_that("Testing the constructor for Ordering class", {
+    sut <- ordering(prompt = "Set the right order:",
+                    choices = c("Step1", "Step2", "Step3"))
+    xml_sut <- create_assessment_item(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
+    expect_s4_class(sut, "Ordering")
+})

@@ -97,3 +97,11 @@ test_that("Test createOutcomeDeclaration() for Multiple Choice",{
     expected <- xml2::read_xml(example)
     equal_xml(sut, expected)
 })
+test_that("Testing the constructor for MultipleChoice class", {
+    sut <- multipleChoice(choices = c("option1", "option2", "option3"),
+                          points = c(0, 0.5, 0.5))
+    xml_sut <- create_assessment_item(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
+    expect_s4_class(sut, "MultipleChoice")
+})

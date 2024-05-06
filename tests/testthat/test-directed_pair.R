@@ -113,3 +113,15 @@ test_that("Testing OutcomeDeclaration DirectedPair", {
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
 })
+test_that("Testing the constructor for DirectedPair class", {
+    sut <- directedPair(content = list("<p>\"Directed pairs\" task</p>"),
+                        rows = c("alfa", "beta", "gamma"),
+                        rows_identifiers = c("a", "b", "g"),
+                        cols = c("A", "B", "G;"),
+                        cols_identifiers = c("as", "bs", "gs"),
+                        answers_identifiers = c("a as", "b bs", 'g gs'))
+    xml_sut <- create_assessment_item(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut)))
+    expect_s4_class(sut, "DirectedPair")
+})

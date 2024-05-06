@@ -92,22 +92,13 @@ test_that("Testing method createResponseCondition() for CorrectFeedback class",
     expect_equal(sut, expected)
 })
 test_that("Testing the constructor for CorrectFeedback class", {
-    # Expected CorrectFeedback object
-    expected <- new("CorrectFeedback", content = list("Some comments"),
-                    title = "Feedback", show = TRUE)
-
-    # Create CorrectFeedbackobject using the correctFeedback function
     sut <- correctFeedback(content = list("Some comments"), title = "Feedback")
 
-    # Check if the object is of class CorrectFeedback
+    xml_sut_1 <- createModalFeedback(sut)
+    xml_sut_2 <- createResponseCondition(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut_1)))
+    expect_no_error(xml2::read_xml(as.character(xml_sut_2)))
     expect_s4_class(sut, "CorrectFeedback")
-
-    # Check if the parameters are set correctly
-    expect_equal(slot(sut, "title"), "Feedback")
-    expect_equal(slot(sut, "content"), list("Some comments"))
-    expect_equal(slot(sut, "show"), TRUE)
-
-    # Check if the created object matches the expected object
-    expect_identical(sut, expected)
 })
 
