@@ -6,7 +6,9 @@
 [![test-coverage](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shevandrin/rqti/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shevandrin/rqti?branch=main)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 # rqti
@@ -25,11 +27,11 @@ especially advantageous, as it capitalizes on OPAL’s robust API.
 
 ## Installation
 
-The `rqti` package is available on CRAN, ensuring easy installation and access to its features:
+The `rqti` package is available on CRAN, ensuring easy installation and
+access to its features:
 
 ``` r
-#install.pacakges("librarian") # install librarian if you do not have it yet
-librarian::shelf(shevandrin/rqti)
+install.packages("rqti")
 ```
 
 <!-- `rqti` have not published yet on CRAN. After publishing it will be possible to install package as follows: -->

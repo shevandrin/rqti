@@ -15,23 +15,20 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/shevandrin/rqti/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shevandrin/rqti/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml)
 [![Codecov test coverage](https://codecov.io/gh/shevandrin/rqti/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shevandrin/rqti?branch=main)
-[![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 # rqti
-
-Note: This project is currently in progress, and we anticipate a stable release in Q1 2024.
 
 The objective of `rqti` is to establish a robust and stand-alone R library tailored for crafting exercises and exams in adherence to the [QTI v2.1](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html) standard directly from R. Users have the flexibility to render the exercises either locally (using qtijs) or integrate them seamlessly into the OPAL learning management system. Our primary audience comprises instructors specializing in research methods and statistics who seek to harness the full capabilities of R while aligning with the QTI standard. In particular, instructors utilizing OPAL will find our package especially advantageous, as it capitalizes on OPAL's robust API.
 
 
 ## Installation
 
-The `rqti` package is currently in active development, and as of now, the exclusive installation method is through GitHub:
+The `rqti` package is available on CRAN, ensuring easy installation and access to its features:
 
 ```{r eval=FALSE}
-#install.pacakges("librarian") # install librarian if you do not have it yet
-librarian::shelf(shevandrin/rqti)
+install.packages("rqti")
 ```
 
 <!-- `rqti` have not published yet on CRAN. After publishing it will be possible to install package as follows: -->
@@ -40,7 +37,7 @@ librarian::shelf(shevandrin/rqti)
 <!-- install.packages("rqti") -->
 <!-- ``` -->
 
-<!-- Note that this will start a qtijs server, which will be used for previewing exercises. If you do not need this, turn it off with the environment variable: QTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or in .Renviron). -->
+<!-- Note that this will start a qtijs server, which will be used for previewing exercises. If you do not need this, turn it off with the environment variable: RQTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or in .Renviron). -->
 
 ## Quick start
 
