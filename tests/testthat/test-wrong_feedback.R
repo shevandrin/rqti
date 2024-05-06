@@ -55,4 +55,14 @@ test_that("Testing the constructor for WrongFeedback class", {
     expect_no_error(xml2::read_xml(as.character(xml_sut_2)))
     expect_s4_class(sut, "WrongFeedback")
 })
+test_that("Testing the constructor for ModalFeedback class", {
+    sut <- modalFeedback(content = list("Model answer"), title = "Feedback")
+
+    xml_sut_1 <- createModalFeedback(sut)
+    xml_sut_2 <- createResponseCondition(sut)
+
+    expect_no_error(xml2::read_xml(as.character(xml_sut_1)))
+    expect_no_error(xml2::read_xml(as.character(xml_sut_2)))
+    expect_s4_class(sut, "ModalFeedback")
+})
 
