@@ -130,7 +130,7 @@ const CURRENT_FRAME_SEL = `${CURRENT_ITEM_SEL},${CURRENT_TEST_FDBK_SEL}`;
 
 // message identifiers
 const MSG_OK            = `${PREFIX}-msg-ok`;
-const MSG_NONE          = `${PREFIX}-msg-none`;   
+const MSG_NONE          = `${PREFIX}-msg-none`;
 const MSG_NO_SKIP       = `${PREFIX}-msg-no-skip`;
 const MSG_TOO_MANY      = `${PREFIX}-msg-too-many`;
 const MSG_TOO_FEW       = `${PREFIX}-msg-too-few`;
@@ -183,14 +183,14 @@ const XML_NS = "http://www.w3.org/XML/1998/namespace";
 const RANDOM_FUNCTION = Math.random;
 const START_DELAY_ITEM = 100;
 const START_DELAY_TEST = 1500;
-const SCROLL_ADJUST = -170; 
+const SCROLL_ADJUST = -170;
 
 const EN = {
   UPLOAD: "Upload file",
   COMMENT: "Comment on this question if you wish.",
   EXPECTED_CHARS: (len)=>``,//expected: ${len} chars`,
   EXPECTED_LINES: (lines)=>`expected: $(lines) lines`,
-  END_TEST: "<p>You have reached the end of the test</p>",  
+  END_TEST: "<p>You have reached the end of the test</p>",
 }
 
 const QTI = {
@@ -223,7 +223,7 @@ const QTI = {
     associateInteraction:        {setup: setupDragAndDropInteraction,},
     gapMatchInteraction:         {setup: setupDragAndDropInteraction,},
     orderInteraction:            {setup: setupDragAndDropInteraction,},
-    
+
     customInteraction:           {setup: setupCustomInteraction,},
     drawingInteraction:          {setup: setupDrawingInteraction,},
     graphicAssociateInteraction: {setup: setupGraphicAssociateInteraction,},
@@ -248,7 +248,7 @@ const QTI = {
   TRANSFORMING: false,
   XML_CACHE: {},
   _BTH: null,
-  
+
   postResponseVariable: postResponseVariable,
 };
 
@@ -292,7 +292,7 @@ const EXECUTORS = {
   assessmentStimulus:          transform,
   assessmentStimulusRef:       referent,
   assessmentTest:              transform,
-  branchRule:                  expression, 
+  branchRule:                  expression,
   feedbackBlock:               transform,
   feedbackInline:              transform,
   infoControl:                 transform,
@@ -337,7 +337,7 @@ const EXECUTORS = {
   textEntryInteraction:        interaction,
   uploadInteraction:           interaction,
   customInteraction:           extension,
-  
+
   // Interaction Building blocks
   associableHotspot:           transform,
   gap:                         transform,
@@ -361,16 +361,16 @@ const EXECUTORS = {
   interpolationTable:          mapping,
   interpolationTableEntry:     mapEntry,
   mapEntry:                    mapEntry,
-  mapping:                     mapping, 
+  mapping:                     mapping,
   matchTable:                  mapping,
   matchTableEntry:             mapEntry,
   outcomeDeclaration:          declaration,
   responseDeclaration:         declaration,
   templateDeclaration:         declaration,
   value:                       value,
-  
+
   // Processing
-  exitResponse:                elem => { throw "exitResponse" }, 
+  exitResponse:                elem => { throw "exitResponse" },
   exitTemplate:                elem => { throw "exitTemplate" },
   exitTest:                    elem => { throw "exitTest" },
   lookupOutcomeValue:          lookupOutcomeValue,
@@ -543,7 +543,7 @@ function transformChildren(elem) {
       WARN("unhandled node type", elem, node.nodeType, node);
       return "";
     }
-  });    
+  });
 }
 
 // Does nothing quietly.
@@ -638,7 +638,7 @@ function customOperator(elem) {
       handled:true,
       value: !QTI.TRANSFORMING? oplib(elem, "DEBUG_OPERATORS"): null,
     }
-  }    
+  }
 }
 
 // Default extension handler for customInteraction.  Just does a
@@ -675,7 +675,7 @@ function script(elem) {
 }
 
 // Rewrites href and src URLs so that they are absolute, taking
-// xml:base into consideration.  
+// xml:base into consideration.
 function xmlbase(elem) {
   for (let attribute of ["src","href"]) {
     let v = elem.getAttribute(attribute);
@@ -684,7 +684,7 @@ function xmlbase(elem) {
   }
   return {handled: false};
 }
-                          
+
 // Default "last chance" extension handler.  Emits the element
 // verbatim into the HTML DOM. If the element has any children, they
 // will go through the usual transform, which may be something other
@@ -723,7 +723,7 @@ function doTransforms(elem, ctx) {
   let result = exec(elem, ctx);
   QTI.TRANSFORMING = false;
   DEBUG("end transform", identifier(elem), clock()+"msecs");
-  
+
   return result;
 }
 
@@ -735,22 +735,22 @@ function doTransforms(elem, ctx) {
 function transform(elem) {
   if (!elem)
     return "";
-  
+
   let item = getQTIAssessmentItem(elem);
   let id = elem.getAttribute("id");
   let interaction = QTI.INTERACTION_STACK[QTI.INTERACTION_STACK.length-1];
-  
+
   if (!id) {
     id = getId(elem);
     elem.setAttribute("id", id);
   }
-  
+
   // The default transform is to a div, plus standard transformChildren
   // and transformAttributes.
   let T = {
     attribs:[
       {name:"tag", value:elem.tagName},
-      {name:"id", value:id, prefix:false},
+      {name:"id", value:id, prefix:false}
     ],
     content: transformChildren(elem),
     tag:"div",
@@ -788,6 +788,7 @@ function transform(elem) {
     break;
   case "assessmentItem":
     addCommentInteraction(elem, T);
+    addModalFeedback(elem, T);
     addNavigation(elem, T);
     if (!allowSkipping(item))
       T.attribs.push({name:"class", value:MANDATORY});
@@ -795,7 +796,7 @@ function transform(elem) {
       T.attribs.push({name:"section",value:identifier(item.parentElement),
                       prefix:true});
     break;
-    
+
   case "associateInteraction":
     transformAssociateInteraction(elem, T);
     break;
@@ -806,7 +807,7 @@ function transform(elem) {
     transformExtendedTextInteraction(elem, T);
     break;
   case "hotspotInteraction":
-  case "graphicAssociateInteraction":    
+  case "graphicAssociateInteraction":
   case "graphicOrderInteraction":
   case "selectPointInteraction":
     transformPointInteraction(elem, T);
@@ -896,7 +897,7 @@ function transform(elem) {
     const matchMaxRE = new RegExp("("+[
       "associableHotspot", "gapImg", "gapText", "simpleAssociableChoice"
     ].join("|")+")");
-    
+
     let classList = [];
 
     if (elem.tagName.match(inlineRE))
@@ -913,7 +914,7 @@ function transform(elem) {
     // we rely on it; so if it is missing, default it to "1".
     if (elem.tagName.match(matchMaxRE) && !elem.getAttribute("matchMax"))
       elem.setAttribute("matchMax", "1");
-    
+
     attribs = attribs.filter(a=>{
       if (a.name=="class") {
         classList.push(a.value);
@@ -937,14 +938,14 @@ function transform(elem) {
         attribs.push({name:a.name,value:a.value,prefix:false});
         if (a.name=="identifier" || a.name=="responseIdentifier")
           attribs.push({name:a.name,value:a.value,prefix:true});
-        
+
       } else {
         switch(a.name) {
         case "class":
           // Add to classList
           classList.push(a.value);
           break;
-          
+
         case "base":
         case "label":
         case "language":
@@ -955,14 +956,14 @@ function transform(elem) {
           attribs.push({name:a.name,value:a.value,prefix:false});
           break;
 
-        case "data":  
+        case "data":
         case "dir":
         case "href":
         case "id":
-        case "lang":  
+        case "lang":
         case "media":
         case "role":
-        case "title":  
+        case "title":
         case "type":
           // These are either global or contextually-valid HTML5
           // attributes, which are allowed also in the QTI XML.  They are
@@ -976,15 +977,15 @@ function transform(elem) {
           attribs.push({name:a.name,value:a.value,prefix:false});
           break;
 
-        case "access":  
+        case "access":
         case "category":
         case "format":
-        case "hotspotLabel":          
+        case "hotspotLabel":
         case "identifier":
-        case "matchGroup":  
+        case "matchGroup":
         case "navigationMode":
         case "orientation":
-        case "objectLabel":  
+        case "objectLabel":
         case "outcomeIdentifier":
         case "responseIdentifier":
         case "showHide":
@@ -1007,19 +1008,34 @@ function transform(elem) {
     });
     if (classList.length)
       attribs.push({name:"class",value:classList.join(" "),prefix:false});
-    
+
     return attribs.map(a=>`${snakeCase(a)}="${a.value}"`).join(" ");
   }
 
   // Adds a pseudo extendedTextInteraction to an item for a user comment.
   function addCommentInteraction(item, T) {
     if (allowComment(item)) {
-      T.content.push("<details><summary>Comment</summary>" 
+      T.content.push("<details><summary>Comment</summary>"
        +`<div ${TAG}="extendedTextInteraction" ${ITEM}="${identifier(elem)}"`
        +` ${RESPONSE_ID}="$comment" class="${INTERACTION} ${BLOCK} ${COMMENT}">`
        +`<textarea placeholder="${QTI.LANG.COMMENT}"></textarea>`
        +"</div></details>");
     }
+  }
+
+  // Adds a modal feedback message
+  function addModalFeedback(elem, T) {
+      let mfb = elem.querySelector('[identifier="modal_feedback"]');
+      if (mfb) {
+          let ttl = mfb.getAttribute("title");
+          html = "<hr><h3>Modal Feedback (not shown to students)";
+          if (ttl != null) {
+              html += ": " + ttl;
+          }
+          html += "</h3>";
+          html += mfb.innerHTML;
+          T.content.push(html);
+      }
   }
 
   // Adds "nav" element to assessmentTest, testPart,
@@ -1035,7 +1051,7 @@ function transform(elem) {
     }
     T.content.push(`</nav>`);
   }
-    
+
   // Transforms hottext, simpleChoice, or simpleAssociableChoice.
   function transformChoice(elem, T) {
     let interaction = QTI.INTERACTION_STACK[QTI.INTERACTION_STACK.length-1];
@@ -1049,7 +1065,7 @@ function transform(elem) {
       // wanted, they needed to have done the transform themselves
       // with custom code
       break;
-      
+
     case "matchInteraction":
       // transform of children inside a matchInteraction.
       // matchInteraction has a special transform of its children, so
@@ -1057,7 +1073,7 @@ function transform(elem) {
       T.content=[];
       break;
 
-    case "choiceInteraction": 
+    case "choiceInteraction":
     case "hottextInteraction":
       // renders choice as a radio button or checkbox.
       let maxChoices = Math.max(interaction.getAttribute("maxChoices")||1,0);
@@ -1111,7 +1127,7 @@ function transform(elem) {
     T.attribs.push({name:"rel", value:"stylesheet", prefix: false});
     elem.setAttribute("href", new URL(href, getBase(elem)));
   }
-  
+
   // Transforms an "object". drawingInteraction is a special
   // case, where we turn an "object" into a <canvas> element and also
   // generate the tool palette.  Otherwise, <object> transforms
@@ -1120,7 +1136,7 @@ function transform(elem) {
     let data = elem.getAttribute("data");
     if (data)
       elem.setAttribute("data", new URL(data, getBase(elem)));
-    
+
     const DRAWING_TOOLS_TABLE = `
     <table class="${DRAWING_TOOLS}">
     <tr>
@@ -1140,7 +1156,7 @@ function transform(elem) {
     </table>`;
 
     let interaction = QTI.INTERACTION_STACK[QTI.INTERACTION_STACK.length-1];
-    
+
     T.tag = elem.tagName;
     if (interaction) {
       switch(interaction.tagName) {
@@ -1172,12 +1188,13 @@ function transform(elem) {
     let ph = getPlaceholder(elem, "");
     T.content.push(`<textarea placeholder="${ph}"></textarea>`);
   }
-  
+
   // Generates an input type=text for textEntryInteraction
   function transformTextEntryInteraction(elem, T) {
+    let ex_len = elem.getAttribute("expectedLength");
     T.tag = "span";
     T.content.unshift(
-      `<input type="text" placeholder="${getPlaceholder(elem, "")}"/>`);
+      `<input type="text" placeholder="${getPlaceholder(elem, "")}" size="${ex_len}"/>`);
   }
 
   // Returns placeholder text for an input or textarea.
@@ -1186,19 +1203,19 @@ function transform(elem) {
     let expectedLength = elem.getAttribute("expectedLength");
     let expectedLines = elem.getAttribute("expectedLines");
     let expected = "";
-    if (expectedLength) 
+    if (expectedLength)
       return`${placeholder} ${QTI.LANG.EXPECTED_CHARS(expectedLength)}`;
     else if (expectedLines)
       return `${placeholder} ${QTI.LANG.EXPECTED_LINES(expectedLines)})`;
     else
       return `${placeholder}`
   }
-  
+
   // Generates an input type=file for uploadInteraction
   function transformUploadInteraction(elem, T) {
     T.content.push(`<label>${QTI.LANG.UPLOAD}: <input type="file"/></label>`);
   }
-            
+
   // Generates an input type=range for a sliderInteraction.
   function transformSliderInteraction(elem, T) {
     let datalist = `<datalist id="tickmarks">`;
@@ -1228,9 +1245,9 @@ function transform(elem) {
     T.tag = "button";
     T.content.unshift(elem.getAttribute("title"));
   }
-  
+
   // Generates table for associateInteraction
-  function transformAssociateInteraction(elem, T) {  
+  function transformAssociateInteraction(elem, T) {
     const gap = `<td class="${GAP}"></td>`;
     const bar = `<td></td>`;
     let choices = elem.getElementsByTagName("simpleAssociableChoice").length;
@@ -1253,8 +1270,23 @@ function transform(elem) {
       choices = shouldBeShuffled(elem) ? shuffleNodes(choices): choices;
       return choices.map(choice=>[identifier(choice),trim(choice.innerHTML)]);
     });
-    
-    let maxAssocs = +elem.getAttribute("maxAssociations")||1;
+    let maxAssocs = +elem.getAttribute("maxAssociations");
+	if (maxAssocs == 0) {
+		let html = `<div class="rqti-container">
+		<div id="rqti-left">`;
+		rows.forEach(row=>html += `<div class="rqti-list" draggable="true" id-row=${row[0]}>${row[1]}</div>`);
+		html += `</div><div id="rqti-right" data-qtijs-response-identifier="RESPONSE">`;
+		cols.forEach(col=>html += `<div class="rqti-row">
+        <div class="rqti-dropzone">
+			drop here
+		</div>
+		<div class="rqti-order-label">${col[1]}</div>
+		<input type="hidden" class="rqti-hidden" ${ID}="some_id2" name="${getId(interaction,"RG")}" id-col="${col[0]}" id-row="" value="">
+		</div>`);
+		html += `</div></div>`;
+		T.content.push(html);
+	} else {
+    // let maxAssocs = +elem.getAttribute("maxAssociations")||1;
     let type = maxAssocs==1? "radio": "checkbox";
     let cell = (row,col)=>
         `<td><input ${ID}="${row[0]} ${col[0]}"`
@@ -1271,6 +1303,7 @@ function transform(elem) {
     });
     html += "</table>";
     T.content.push(html);
+	};
   }
 
   // Generates stage and SVG overlay for the graphic interactions:
@@ -1280,7 +1313,7 @@ function transform(elem) {
     let html = transform(elem.querySelector("prompt"));
     let stage = elem.querySelector(`${elem.tagName} > object`);
     let stageId = getId(stage, "STAGE");
-    
+
     if (stage) {
       let height = +stage.getAttribute("height");
       let width = +stage.getAttribute("width");
@@ -1290,7 +1323,7 @@ function transform(elem) {
       let fontsize = Math.round(width/12);
       let viewBox = "", onload = "";
       let maxChoices = elem.getAttribute("maxChoices")||0;
-      
+
       if (width && height) {
         viewBox = `viewBox="0 0 ${width} ${height}"`
       } else {
@@ -1310,7 +1343,7 @@ function transform(elem) {
         let coords = h.getAttribute("coords").split(",");
         let id = identifier(h);
         let matchMax = h.getAttribute("matchMax");
-        
+
         switch(shape) {
         case "circle":
           [cx, cy, r] = coords;
@@ -1325,7 +1358,7 @@ function transform(elem) {
           attribs = `points = "${coords.join(",")}"`
           break;
         }
-        if (matchMax) 
+        if (matchMax)
           attribs += ` ${MATCH_MAX}="${matchMax}"`
         html += `<g><${shape} class="${hotspotClass}" ${ID}="${id}"`
           +`${attribs}/></g>`;
@@ -1354,7 +1387,7 @@ function transform(elem) {
     let item = getQTIAssessmentItem(elem);
     let stage = elem.children[0];
     let html = "";
-    let objects = [...elem.querySelectorAll("positionObjectInteraction object")]  
+    let objects = [...elem.querySelectorAll("positionObjectInteraction object")]
 
     if (stage) {
       let height = stage.getAttribute("height");
@@ -1386,7 +1419,7 @@ function transform(elem) {
     let stageWidth = stage.getAttribute("width");
     let gapFills = [...elem.querySelectorAll("gapImg object")]
         .concat([...elem.querySelectorAll("gapText")]);
-    
+
     transformPointInteraction(elem, T, "", GAP);
     T.content.push("<p>");
     T.content.push(gapFills.map(gf => {
@@ -1442,7 +1475,7 @@ function transform(elem) {
       break;
     }
   }
-  
+
   function countItems(elem) {
     return [...elem.querySelectorAll("assessmentItem")].length;
   }
@@ -1555,7 +1588,7 @@ function selection(elem) {
       let instances = selected.filter(sel=>sel==child);
       for (let i=0; i<instances.length-1; i++)
         section.insertBefore(clone(child),child.nextSibling);
-    }                       
+    }
   });
   return {handled:true};
 
@@ -1581,7 +1614,7 @@ function selection(elem) {
     return tree2;
   }
 }
-  
+
 // Order sections and itemRefs with in a test part or section
 // according to the ordering spec.  Implemented as an "extension", so
 // that per the QTI spec, it can be overridden.  This is the standard
@@ -1591,7 +1624,7 @@ function ordering(elem) {
     return {handled: false, value: null};
   if (QTI.TRANSFORMING)
     return {handled: true, value: null};
-  
+
   if (elem.getAttribute("shuffle")==="true") {
     let section = elem.parentElement;
     let children = [...section.children];
@@ -1654,7 +1687,7 @@ function isShufflable(node) {
       "simpleAssociableChoice",
       "inlineChoice",
       "gapText",
-      "gapImg", 
+      "gapImg",
       "assessmentSection",
       "assessmentSectionRef",
       "assessmentItemRef"
@@ -1731,7 +1764,6 @@ function setupNavigationUI(item) {
 function setupInputInteraction(interaction) {
   let qtiInteraction = QTI.DOM.getElementById(interaction.id);
   let responseVariable = getResponseVariable(interaction);
-
   switch(interaction.tagName) {
   case "SELECT":
     interaction.onchange=handleResponse;
@@ -1742,20 +1774,19 @@ function setupInputInteraction(interaction) {
   default:
     let inputs =  [...interaction.querySelectorAll("input")]
       .concat([...interaction.querySelectorAll("textarea")]);
-    inputs.forEach(input=>input.onchange=handleResponse);
+    inputs.forEach(input=>input.onfocus=handleResponse);
     break;
   }
 
   // Called after templateProcessing, just before presentation.
   interaction.init = initInteraction;
-    
+
   // Handler for change and click events.
   function handleResponse(evt) {
     const input = evt.currentTarget;
-
     evt.stopPropagation();
 
-    if (input.tagName=="BUTTON" 
+    if (input.tagName=="BUTTON"
         || input.tagName=="SELECT"
         || input.tagName=="TEXTAREA") {
       setInputResponseVariable(input);
@@ -1808,9 +1839,9 @@ function setupInputInteraction(interaction) {
     let maxChoices = qtiInteraction.getAttribute("maxChoices")||1;
     return maxChoices<=1
       || !responseVariable.value
-      || responseVariable.value.length<maxChoices;    
+      || responseVariable.value.length<maxChoices;
   }
-  
+
   // Inits interactions after templateProcessing and before
   // first attempt on interaction.
   function initInteraction() {
@@ -1932,10 +1963,10 @@ function setupDragAndDropInteraction(interaction) {
   let dragging;
   let ghost;
 
-  draggables.forEach(draggable=>setDraggableHandlers(draggable));  
+  draggables.forEach(draggable=>setDraggableHandlers(draggable));
   gaps.concat(choices).forEach(g=>setDropZoneHandlers(g));
 
-  function setDropZoneHandlers(dropzone) {                               
+  function setDropZoneHandlers(dropzone) {
     dropzone.ondragover = handleDragOver;
     dropzone.ondragleave = handleDragLeave;
     dropzone.ondrop = handleDrop;
@@ -1948,14 +1979,14 @@ function setupDragAndDropInteraction(interaction) {
     draggable.ondragleave = handleDragLeave;
     draggable.ondrop = handleDrop;
   }
-  
+
   // On drag start, create the ghost element for the drag image
   // and set "dragging"
   function handleDragStart(evt) {
     let rect = this.getBoundingClientRect();
     let x = evt.clientX - rect.left;
     let y = evt.clientY - rect.top;
-    
+
     dragging = this;
     if (dragging) {
       ghost = document.createElement("div");
@@ -1982,7 +2013,7 @@ function setupDragAndDropInteraction(interaction) {
         else
           evt.preventDefault();
         break;
-      default:   
+      default:
       case "associateInteraction":
         evt.preventDefault();
         break;
@@ -2078,7 +2109,7 @@ function setupDragAndDropInteraction(interaction) {
       let nodes = document.querySelectorAll(DRAGGING_SEL);
       nodes.forEach(n=>n.classList.remove(DRAGGING));
       nodes = document.querySelectorAll(DRAGOVER_SEL);
-      nodes.forEach(n=>n.classList.remove(DRAGOVER));     
+      nodes.forEach(n=>n.classList.remove(DRAGOVER));
       setDropResponseVariable();
     }
   }
@@ -2129,7 +2160,7 @@ function setupDragAndDropInteraction(interaction) {
       }).filter(pair=>pair!=null);
     }
 
-    postResponseVariable(interaction, value);  
+    postResponseVariable(interaction, value);
   }
 }
 
@@ -2227,13 +2258,13 @@ function selectPoint(interaction, x, y, clz=SELECTED, dropped) {
     value = [value];
   if (maxChoices>0 && value.length>=maxChoices)
     return;
-    
+
   let svg = interaction.querySelector("svg");
 
   [x, y] = viewboxOffset(svg, x, y);
   value.push(x+" "+y);
   svgElem.value = x+" "+y;
-  
+
   switch(interaction.getAttribute(TAG)) {
   case "selectPointInteraction":
     svgElem.setAttribute("cx",x);
@@ -2241,7 +2272,7 @@ function selectPoint(interaction, x, y, clz=SELECTED, dropped) {
     svgElem.setAttribute("r","8");
     postResponseVariable(interaction, value)
     break;
-    
+
   case "positionObjectStage":
     let src = dropped.getAttribute("src");
     let width = getComputedStyle(dropped).getPropertyValue("width");
@@ -2262,7 +2293,7 @@ function selectPoint(interaction, x, y, clz=SELECTED, dropped) {
   svgElem.classList.add(HOTSPOT);
   svgElem.onclick = removePoint;
   svg.append(svgElem);
-  
+
   // Removes point.
   function removePoint(evt) {
     let idx = responseVariable.value.indexOf(x+" "+y);
@@ -2290,7 +2321,7 @@ function evaporate(svgElem, callback){
 function setupGraphicAssociateInteraction(interaction) {
   let line = null;
   let lines = [];
-  
+
   [...interaction.querySelectorAll(HOTSPOT_SEL)].forEach(h=>{
     h.onclick = (evt)=>(line? endLine: extendLine)(evt,h);
   });
@@ -2342,11 +2373,11 @@ function setupGraphicAssociateInteraction(interaction) {
       maxAssocs=1;
     if (maxAssocs>0 && value.length>=maxAssocs)
       return;
-    
+
     let x1 = +line.getAttribute("x1");
     let y1 = +line.getAttribute("y1");
     let {cx:x2, cy:y2} = getDimensions(hotspot);
-    
+
     line.setAttribute("x2", x2);
     line.setAttribute("y2", y2);
     interaction.onmousemove = null;
@@ -2362,7 +2393,7 @@ function setupGraphicAssociateInteraction(interaction) {
         lines.splice(idx, 1);
         evaporate(theLine, setGraphicAssociateResponseVariable);
         evt.stopPropagation();
-      }      
+      }
     }
     setGraphicAssociateResponseVariable();
     line = null;
@@ -2371,7 +2402,7 @@ function setupGraphicAssociateInteraction(interaction) {
 
   function isDuplicate(lines, line) {
     return lines.some(l => {
-      let result = 
+      let result =
           (l[0]==line[0] && l[1]==line[1]
            && l[2]==line[2] && l[3]==line[3])
           || (l[0]==line[2] && l[1]==line[3]
@@ -2397,7 +2428,7 @@ function setupGraphicOrderInteraction(interaction) {
     let order = hotspot.getAttribute(ORDER);
     let togo = interaction.querySelector("#togo");
     let orders = togo.innerHTML.trim();
-    
+
     orders = orders? orders.split(" "): [];
     if (order) {
       let text = interaction.querySelector(`text[${ORDER}="${order}"]`);
@@ -2434,7 +2465,7 @@ function setupGraphicOrderInteraction(interaction) {
 function setupGraphicGapMatchInteraction(interaction) {
   let svg = interaction.querySelector("svg");
   let dragging;
-  
+
   function hitTest(svg, inX, inY) {
     let [x,y] = viewboxOffset(svg, inX, inY);
     let hits = [...interaction.querySelectorAll(GAP_SEL)].filter(h=>{
@@ -2481,7 +2512,7 @@ function setupGraphicGapMatchInteraction(interaction) {
 
     if (!(gap && dragging))
       return;
-    
+
     let elem;
     let prevMatch = gap.parentElement.querySelectorAll(`${MATCH_SEL}`);
     let gapMatchMax = +gap.getAttribute(MATCH_MAX);
@@ -2495,7 +2526,7 @@ function setupGraphicGapMatchInteraction(interaction) {
       prevMatch[0].remove();
       prevMatch = [];
     }
-    
+
     if (evt.dataTransfer.getData("type")=="image") {
       let href = evt.dataTransfer.getData("image");
       let imgWidth, imgHeight, row, col, cols;
@@ -2579,7 +2610,7 @@ function setupDrawingInteraction(interaction) {
       let canvas = document.querySelector("canvas");
       let ctx = canvas.getContext('2d');
       let R, G, B;
-      
+
       if (color.startsWith("#"))
         color = color.slice(1);
       color = parseInt(color, 16);
@@ -2628,7 +2659,7 @@ function setupDrawingInteraction(interaction) {
         let d = (y*canvas.width+x)*4;
         return {R:data[d], G:data[d+1], B:data[d+2], A:data[d+3]}
       }
-      
+
       function setPixel(data, x, y, rgba) {
         let d = (y*canvas.width+x)*4;
         data[d] = rgba.R;
@@ -2645,13 +2676,13 @@ function setupDrawingInteraction(interaction) {
       }
     },
   }
-  
+
   let image = new Image();
   let toolSel = `table.${DRAWING_TOOLS} td`
   let selectedToolSel = `table.${DRAWING_TOOLS} td.${SELECTED}`;
   let selected = interaction.querySelectorAll(selectedToolSel);
   let canvas = interaction.querySelector("canvas");
-  
+
   image.onload = function() {
     let ctx = canvas.getContext('2d');
     let aspect = this.naturalHeight/this.naturalWidth;
@@ -2659,13 +2690,13 @@ function setupDrawingInteraction(interaction) {
     ctx.drawImage(this, 0, 0, canvas.width, canvas.height )
   }
 
-  image.src = canvas.getAttribute("data"); 
+  image.src = canvas.getAttribute("data");
   selected.forEach(sel => selectTool(sel));
   tools[tool](color);
   document.querySelectorAll(toolSel).forEach(td => {
     td.onclick = clickTool;
   });
-  
+
   function clickTool(evt) {
     selectTool(evt.currentTarget);
     tools[tool](color);
@@ -2737,7 +2768,7 @@ function setupMediaInteraction(interaction) {
 // For media interactions using YouTube videos, we use the
 // YouTube IFrame API to tell when the video is played.
 // TBD
-function onYouTubeIframeAPIReady() {    
+function onYouTubeIframeAPIReady() {
   DEBUG("youtube api ready");
 }
 
@@ -2757,14 +2788,14 @@ function postResponseVariable(htmlInteraction, value, variable) {
   let item = decl.elem.parentElement;
   let htmlItem = getHTMLItemById(item.id);
   let qtiInteraction = QTI.DOM.getElementById(htmlInteraction.id);
-  
+
   if (value !== undefined)
     decl.value = value;
   setCompletionStatus(decl.elem, "unknown", "not_attempted");
   htmlItem.classList.add(SUBMITTABLE);
   htmlItem.classList.remove(SUBMITTED);
   logVarChange("setResponseVariable", decl);
-  setCurrent(htmlItem, false);  
+  setCurrent(htmlItem, false);
 
   if (qtiInteraction && qtiInteraction.tagName==="endAttemptInteraction") {
     if (value==true)
@@ -2777,13 +2808,13 @@ function endAttempt(item, htmlInteraction) {
   let responseVar = htmlInteraction.getAttribute(RESPONSE_ID);
   [...item.querySelectorAll("endAttemptInteraction")].forEach(ea=>{
     let rv = ea.getAttribute("responseIdentifier");
-    if (rv != responseVar) 
+    if (rv != responseVar)
       item.declarations[rv].value = false;
   });
   htmlInteraction.classList.add(CLICKED);
   control({currentTarget:htmlInteraction}, +1);
 }
-  
+
 // Session control: move a specified number of steps in the
 // sequence from the current item.  negative number of steps
 // means move backward.
@@ -2792,7 +2823,7 @@ function control(evt, k=+1) {
   let target = evt.currentTarget;
   let current = document.querySelector(CURRENT_FRAME_SEL);
   let scrollTo = true;
-  
+
   if (target && target!=window) {
     target = getHTMLAssessmentItem(target);
     if (target) {
@@ -2836,12 +2867,12 @@ function controlItem(current, item, k, scrollTo) {
   // current, before letting the user see the new presentation
   // state of the current item.
   let dirty = false;
-  
+
   DEBUG("item=",identifier(item), "k=", k,
               "forward=",forward, "isSkip=", isSkip);
 
   message(item, MSG_NONE);
-  
+
   if (forward) {
     if (isSkip) {
       if (navigationMode=="linear" && !allowSkipping(item)) {
@@ -2859,8 +2890,8 @@ function controlItem(current, item, k, scrollTo) {
       let errors = [];
 
       dirty = getDirty(item);
-      if (validateResponses(item)) 
-        errors = validateAssessmentItem(item);      
+      if (validateResponses(item))
+        errors = validateAssessmentItem(item);
       if (!attemptable && vi.length==0) {
         current.classList.add(NOT_ATTEMPTABLE);
         if (!allowReview(item)) {
@@ -2868,7 +2899,7 @@ function controlItem(current, item, k, scrollTo) {
           scrollTo = false;
         }
       }
-      
+
       // If there are no errors and no visible
       // interactions which have no response, then
       // submit the item and style it as "submitted".
@@ -2879,10 +2910,10 @@ function controlItem(current, item, k, scrollTo) {
       } else {
         current.classList.remove(SUBMITTED);
         current.classList.remove(SUBMITTABLE);
-        if (dirty && attemptable) 
+        if (dirty && attemptable)
           current.classList.add(SUBMITTABLE);
         if (errors.length)
-          message(item, errors[0].id);          
+          message(item, errors[0].id);
         // stay on this item.
         k=0;
       }
@@ -2895,7 +2926,7 @@ function controlItem(current, item, k, scrollTo) {
       // outside the scope of the spec.
       DEBUG("simultaneous mode, deferring submission: ",
            identifier(item));
-    }      
+    }
   }
 
   if (!dirty)
@@ -2908,7 +2939,7 @@ function controlItem(current, item, k, scrollTo) {
 //
 // In a linear testPart, the candidate may interact only with the
 // "current" item, and must either make an attempt (submit a response)
-// or "skip" the current item in order to make a different item 
+// or "skip" the current item in order to make a different item
 // current.  Stylesheets for linear navigationMode almost always use a
 // "slideshow" style (though it is not strictly required), which shows
 // one item at a time. Many non-linear themes are slideshows as well,
@@ -2964,7 +2995,7 @@ function setCurrent(nextCurrent, forward=true, scrollTo=true) {
         }
       } else if (nextCurrentQTI.tagName == "testFeedback") {
         endTestPart();
-      }      
+      }
     }
     setContainerAttributes();
     QTI.PROMISES = [];
@@ -3088,7 +3119,7 @@ function hasTriggerables(item) {
 function visibleInteractionsWithNoResponse(elem) {
   return [...elem.querySelectorAll(INTERACTION_SEL)].filter(interaction=>{
     let rv = getResponseVariable(interaction);
-    if (interaction.offsetParent==null) //not visible 
+    if (interaction.offsetParent==null) //not visible
       return false;
     return rv && rv.value==null; // no response
   });
@@ -3104,7 +3135,7 @@ function inSection(item, section) {
 function getNextItem(htmlItem, step=0) {
   let item = null;
 
-  if (!QTI.SEQUENCE) 
+  if (!QTI.SEQUENCE)
     QTI.SEQUENCE = generateSequence();
   if (htmlItem) {
     item = QTI.SEQUENCE.find(entry=>entry.elem.id==htmlItem.id);
@@ -3149,7 +3180,7 @@ function getNextItem(htmlItem, step=0) {
     let nextItem = applyBranchRules(item)
         || QTI.SEQUENCE[item.seq+step];
 
-    DEBUG("getNextItemInSequence", step, item, nextItem);    
+    DEBUG("getNextItemInSequence", step, item, nextItem);
 
     if (!nextItem) {
       return item;
@@ -3205,7 +3236,7 @@ function getNextItem(htmlItem, step=0) {
         : null;
     }
   }
-  
+
   // Generates the sequence of items to be presented.
   function generateSequence() {
     let sequence = [];
@@ -3272,14 +3303,14 @@ function dumpSequence(sequence=QTI.SEQUENCE) {
   let seq=0;
   [...sequence].forEach(entry=>console.log(seq++, entry));
 }
-                       
+
 // Determines the first "current" item and initializes it.
 function initializeCurrentItem() {
   if (!QTI.CURRENT_ITEM_INITIALIZED) {
     setCurrent(getNextItem(), false);
     QTI.CURRENT_ITEM_INITIALIZED = true;
   }
-} 
+}
 
 // Sets attributes such as offstage, noreview, current of a
 // container based on the children.   For example, a section
@@ -3312,11 +3343,11 @@ function setContainerAttributes(elem=QTI.ROOT, depth=0) {
     if (noreview && !htmlElem.classList.contains(NO_REVIEW))
       htmlElem.classList.add(NO_REVIEW);
     else if (!noreview && htmlElem.classList.contains(NO_REVIEW))
-      htmlElem.classList.remove(NO_REVIEW);    
+      htmlElem.classList.remove(NO_REVIEW);
     if (offstage && !htmlElem.classList.contains(OFFSTAGE))
       htmlElem.classList.add(OFFSTAGE);
     else if (!offstage && htmlElem.classList.contains(OFFSTAGE))
-      htmlElem.classList.remove(OFFSTAGE);    
+      htmlElem.classList.remove(OFFSTAGE);
     if (current && !htmlElem.classList.contains(CURRENT))
       htmlElem.classList.add(CURRENT);
     else if (!current && htmlElem.classList.contains(CURRENT))
@@ -3423,7 +3454,7 @@ function validateAssessmentItem(item) {
 ** DECLARATIONS
 */
 
-// Executor which declares a response, outcome, or template variable.  
+// Executor which declares a response, outcome, or template variable.
 function declaration(elem) {
   let decl = {value:null};
   let parent = elem.parentElement;
@@ -3445,7 +3476,7 @@ function initializeAllDeclarations(elem) {
   [...elem.querySelectorAll(sel)].forEach(child=>initializeDeclarations(child));
 }
 
-// Initializes declarations for an element.  
+// Initializes declarations for an element.
 function initializeDeclarations(elem) {
   if (!elem.declarations) {
     elem.declarations = {};
@@ -3466,7 +3497,7 @@ function initializeDeclarations(elem) {
     elem.declarations[id].ctx = elem.parentElement || elem;
   }
 }
-  
+
 // Climbs DOM tree looking for an element with variable declarations
 // and returns the declarations.
 function getDeclarations(elem) {
@@ -3527,7 +3558,7 @@ function coerce(decl, value, defaultValue) {
       && result.length==0
       && Array.isArray(defaultValue))
     result = defaultValue;
-  
+
   switch(decl.cardinality) {
   case "single":
     if (Array.isArray(result)) {
@@ -3544,14 +3575,14 @@ function coerce(decl, value, defaultValue) {
     case "integer":
       result = Math.round(result);
       break;
-    case "identifier":  
+    case "identifier":
     case "string":
       if (result !== null)
         result += "";
       break;
     }
     break;
-  case "ordered":  
+  case "ordered":
   case "multiple":
     if (!Array.isArray(result))
       result = [result];
@@ -3631,7 +3662,7 @@ function responseProcessing(item) {
   return true;
 }
 
-// Executes Outcome Processing 
+// Executes Outcome Processing
 function outcomeProcessing(test=QTI.ROOT) {
   DEBUG("outcomeProcessing", identifier(test), clock()+"msecs");
   [...test.getElementsByTagName("outcomeProcessing")].forEach(op=>{
@@ -3666,7 +3697,7 @@ function templateProcessing(elem) {
     else
       processingComplete(elem);
     break;
-    
+
   case "testPart":
     // Run templateDefaults/templateProcessing for all items
     // in the testPart
@@ -3753,7 +3784,7 @@ function triggerShowHide(item) {
     if (decl) {
       let tag = elem.getAttribute(TAG);
       if (feedbackTypes.indexOf(tag)>=0) {
-        if (!showFeedback(item)) 
+        if (!showFeedback(item))
           return;
       }
       DEBUG(identifier(item), "triggering showHide on", tag, elem);
@@ -3778,7 +3809,7 @@ function triggerShowHide(item) {
       if (tag=="hottext") {
         let showHide = elem.getAttribute(SHOWHIDE)
         let labelActive = triggered? showHide: showHide=="show"? "hide": "show";
-        elem.parentElement.setAttribute(`${ACTIVE}`, labelActive);        
+        elem.parentElement.setAttribute(`${ACTIVE}`, labelActive);
       }
     }
   });
@@ -3932,7 +3963,7 @@ function constraint(elem) {
 
 // Executor which executes the children of the element
 // until one of the executions returns true.
-function condition(elem) {  
+function condition(elem) {
   let child = [...elem.children];
   let i = 0;
   while (i<child.length && !exec(child[i])) {
@@ -4114,7 +4145,7 @@ function opN(elem, n_ary) {
 function oplib(elem, lib) {
   let name = elem.getAttribute("name")||elem.getAttribute("class");
   if (EXECUTORS[lib] && EXECUTORS[lib][name])
-    return EXECUTORS[lib][name](elem);    
+    return EXECUTORS[lib][name](elem);
   WARN("Undefined operator", lib, name);
 }
 
@@ -4153,7 +4184,7 @@ function sumOfDiffsSquared(values,y) {
 
 // Returns the sample variance of an array
 function sampleVariance(values) {
-  return sumOfDiffsSquared(values,mean(values))/values.length;  
+  return sumOfDiffsSquared(values,mean(values))/values.length;
 }
 
 // Returns the population variance of an array
@@ -4357,7 +4388,7 @@ function inside(area, point) {
 // Helper for inside, handles circle shapes.
 function pointInCircle(x, y, coords) {
   let [cx, cy, r] = coords;
-  return ((cx-x)*(cx-x) + (cy-y)*(cy-y)) < r*r; 
+  return ((cx-x)*(cx-x) + (cy-y)*(cy-y)) < r*r;
 }
 
 // Helper for inside, handles polygon shapes.
@@ -4379,7 +4410,7 @@ function pointInRectangle(x, y, coords) {
   let [x0, y0, x1, y1] = coords;
   return x>x0 && x<x1 && y>y0 && y<y1;
 }
-  
+
 // Returns true if arguments "match".
 function match(a, b) {
   let result =
@@ -4441,7 +4472,7 @@ function variable(elem, id=identifier(elem),
     result = decl? coerce(decl, decl.value, getDefaultValue(decl)): null;
   }
   if (!result && result!==0) {
-    result = null;    
+    result = null;
   } else if (weightIdentifier && decl.baseType && decl.baseType=="float") {
     result = result * getWeight(ctx, weightIdentifier);
   }
@@ -4461,7 +4492,7 @@ function mapVariable(elem, id) {
     id = mapping.getAttribute("sourceIdentifier")||id;
   return id;
 }
-  
+
 // Returns values of a variable across all assessmentItems.
 function testVariables(elem) {
   let variableIdentifier = elem.getAttribute("variableIdentifier");
@@ -4476,8 +4507,8 @@ function testVariables(elem) {
   return result;
 }
 
-function filterItem(item, filters) {      
-  let result = 
+function filterItem(item, filters) {
+  let result =
       ((!filters.category
         || ((!filters.includeCategory
              || filters.category===filters.includeCategory)
@@ -4532,7 +4563,7 @@ function declAttribute(elem, attrib, id=identifier(elem),
   let decl = getDeclarations(elem)[id]
   let result = decl? decl[attrib]: null;
   if (!result && result!==0) {
-    result = null;    
+    result = null;
   } else if (weightIdentifier && decl.baseType && decl.baseType=="float") {
     result = result * getWeight(elem, weightIdentifier);
   }
@@ -4598,7 +4629,7 @@ function getResponses(item) {
   });
 }
 
-// 
+//
 // Returns true if all the response variables for the item which have
 // the specified property ("correctResponse" or "defaultValue")
 // defined have a value which matches the property.
@@ -4759,15 +4790,15 @@ function updateTimeLimits(elem=document) {
     if (M<10) M = '0'+M;
     if (S<10) S = '0'+S;
     let formatted = (+H!='00'? `${H}:${M}:${S}`: `${M}:${S}`);
-  }                 
-  
+  }
+
   function isOvertime(elapsed, maxTime) {
     return maxTime && (elapsed/1000 > maxTime);
   }
-                                                                    
+
   function isUndertime(elapsed, minTime) {
     return minTime && (elapsed/1000 < minTime);
-  }    
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -4824,7 +4855,7 @@ function submit(item) {
       testResult.setAttribute("datestamp", now);
       if (appendVariables(testResult, elem.declarations))
         assessmentResult.appendChild(testResult);
-      break;      
+      break;
     case "assessmentItem":
       itemResult = QTI.DOM.createElement("itemResult");
       itemResult.setAttribute("identifier", identifier(elem));
@@ -4840,7 +4871,7 @@ function submit(item) {
       break;
     }
   }
-  
+
   function appendVariables(result, declarations) {
     let appended = 0;
     [...Object.getOwnPropertyNames(declarations)].forEach(id=>{
@@ -4850,7 +4881,7 @@ function submit(item) {
           && !(decl.view=="testConstructor" || decl.view=="author")) {
         let variable, valuesParent;
         let values = !Array.isArray(decl.value)? [decl.value]: decl.value;
-        
+
         switch(decl.elem.tagName) {
         case "responseDeclaration":
           variable = QTI.DOM.createElement("responseVariable");
@@ -4859,9 +4890,9 @@ function submit(item) {
           break;
         case "outcomeDeclaration":
           variable = valuesParent = QTI.DOM.createElement("outcomeVariable");
-          break;        
+          break;
         case "templateDeclaration":
-          variable = valuesParent = QTI.DOM.createElement("templateVariable");        
+          variable = valuesParent = QTI.DOM.createElement("templateVariable");
           break;
         }
         if (variable) {
@@ -4928,7 +4959,7 @@ function getQTIItemById(itemId) {
     return QTI.ROOT.querySelector(`assessmentItem[identifier=${itemId}]`);
   }
 }
-  
+
 // Returns ancestor of HTML element with a specified tag.
 function getHTMLAncestor(elem, tagName) {
   while (elem && elem.getAttribute(TAG)!=tagName)
@@ -4965,7 +4996,7 @@ function getAncestorAttribute(elem, attribute) {
 function getHTMLItemById(id) {
   return document.getElementById(id);
 }
-  
+
 // Returns an attribute from the QTI XML element corresponding
 // to an HTML element.
 function getQTIAttribute(htmlElem, attribute) {
@@ -5002,7 +5033,7 @@ function getTags(tag, attribs) {
     "hr", "img", "input", "keygen", "link", "meta", "param",
     "source", "track", "wbr",
   ];
-  
+
   let opentag = `<${tag}`, closetag="";
 
   if (attribs)
@@ -5015,7 +5046,7 @@ function getTags(tag, attribs) {
   }
   return [opentag,closetag];
 }
-  
+
 // Converts a name to snake case (with prefixes)
 function snakeCase({name, prefix=true}) {
   let outName = "";
@@ -5044,7 +5075,7 @@ function getId(scope, prefix="ID") {
 }
 
 // Generates a random integer using Math.random
-function randomInteger(range={}) {  
+function randomInteger(range={}) {
   let min = range.min||0;
   let max = range.max||Number.MAX_SAFE_INTEGER;
   let step = range.step||1;
@@ -5203,7 +5234,7 @@ function uuid2str(uuid) {
     for (var i = 0; i < 256; i++)
       QTI._BTH[i] = (i + 0x100).toString(16).substr(1);
   }
-  
+
   let out = "";
   for (let i=0; i<16; i++) {
     if (i==4 || i==6 || i==8 || i==10)
@@ -5262,7 +5293,7 @@ function viewboxScaleHeight(svg, height) {
       = svg.getAttribute("viewBox").split(" ");
   return Math.round((height*vbHeight)/svg.clientHeight);
 }
-    
+
 // Gets position, width, and height of a hotspot in SVG
 // coordinate system.
 function getDimensions(hotspot) {
@@ -5293,16 +5324,16 @@ function getDimensions(hotspot) {
     y = points[0].y*1;
     for (let p=0; p<points.length; p++) {
       max.x=Math.max(points[p].x, max.x);
-      max.y=Math.max(points[p].y, max.y);      
+      max.y=Math.max(points[p].y, max.y);
       min.x=Math.min(points[p].x, min.x);
-      min.y=Math.min(points[p].y, min.y);      
+      min.y=Math.min(points[p].y, min.y);
     }
     cx = max.x-min.x;
     cy = max.y-min.y;
     r = cx/2;
     break;
   case "rect":
-  case "image":  
+  case "image":
     height = +hotspot.getAttribute("height");
     width = +hotspot.getAttribute("width");
     x = +hotspot.getAttribute("x");
@@ -5329,7 +5360,7 @@ function getPolygonPoints(elem) {
 // Sets SVGViewBox after stage image has loaded.
 function setSVGViewboxFromStage(img) {
   let svg = img.parentElement.querySelector("svg");
-  svg.setAttribute("viewBox", `0 0 ${img.naturalWidth} ${img.naturalHeight}`);  
+  svg.setAttribute("viewBox", `0 0 ${img.naturalWidth} ${img.naturalHeight}`);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -5414,7 +5445,7 @@ function getScript(uri) {
   xhr.open("GET", uri);
   xhr.send();
 }
-  
+
 // Load XML file
 function loadXml(uri, base, loaded, failed) {
   let cacheKey = uri.toString();
@@ -5433,7 +5464,7 @@ function loadXml(uri, base, loaded, failed) {
     DEBUG("cache miss", cacheKey);
     QTI.LOADING_COUNT++;
     QTI.PROMISES.push(new Promise(function(resolve, reject) {
-      let xhr = new XMLHttpRequest();  
+      let xhr = new XMLHttpRequest();
       uri = new URL(uri, getBase(base));
       xhr.addEventListener("load", function() {
         QTI.LOADING_COUNT--;
@@ -5464,7 +5495,7 @@ function loadXml(uri, base, loaded, failed) {
   function setXMLBase(node, uri) {
     node.setAttributeNS(XML_NS, "xml:base", uri);
   }
-    
+
   // This turns a URI into a "simplified" cache key.
   // Basically remove everything in the uri except the final part
   // of the path.  Also remove an ".xml" extension, if present.
@@ -5472,7 +5503,7 @@ function loadXml(uri, base, loaded, failed) {
     let parts = uri.split("/");
     return parts[parts.length-1].replace(".xml","");
   }
-    
+
   // Calls DOMParser to parse XML, after first removing
   // the "<?xml" tag at the beginning.  Also "m:" prefix
   // is removed.  If MathML namespace prefix isn't "m:", then
@@ -5510,7 +5541,7 @@ window.addEventListener("load",function() {
   });
   DEBUG("end window.onload", clock()+"msecs");
 
-  
+
   // Loads index file.
   // The root document is fully expanded all the way down,
   // with selection/ordering, transform, and for non-linear
@@ -5569,7 +5600,7 @@ window.addEventListener("load",function() {
       waitForSectionExpansion(QTI.ROOT,function() {
         QTI.SECTIONS_EXPANDED = true;
         QTI.PROMISES = [];
-        
+
         selectAndOrder(QTI.ROOT);
         setInstances(QTI.ROOT);
         addAtEndTestFeedback(QTI.ROOT);
@@ -5581,7 +5612,7 @@ window.addEventListener("load",function() {
       });
     }
   }
-  
+
   // Reads manifest and loads first test.
   function loadManifest(manifest) {
     manifest = manifest.children[0];
@@ -5624,8 +5655,9 @@ window.addEventListener("load",function() {
   }
 
   // Checks a CSS custom property giving the name of a "theme script",
-  // and, if found, loads it.   
+  // and, if found, loads it.
   function loadThemeScript() {
+	getScript("rqti.js");
     if (QTI.ENABLE_THEME_SCRIPT) {
       let theme = params.get("theme")||DEFAULT_THEME;
       let computedStyle = window.getComputedStyle(document.body);
@@ -5636,7 +5668,7 @@ window.addEventListener("load",function() {
       }
     }
   }
-  
+
   // Expands assessmentSectionRefs in an element.
   function expandSectionRefs(elem) {
     [...elem.children].forEach(child => {
@@ -5655,7 +5687,7 @@ window.addEventListener("load",function() {
       }
     });
   }
-  
+
   // Repeatedly waits on the QTI.PROMISES until QTI.LOADING_COUNT is 0.
   // Promise.all is called iteratively because between the time it is
   // called and the time when those promises resolve, there may have
@@ -5665,7 +5697,7 @@ window.addEventListener("load",function() {
   // Only 20-sections-deep is allowed in order to prevent hanging due
   // to a circular expansion loop.
   function waitForSectionExpansion(dom, onexpansion, iterations=0) {
-    if (iterations<=20) { 
+    if (iterations<=20) {
       Promise.all(QTI.PROMISES).then(function(values) {
         if (QTI.LOADING_COUNT==0) {
           if (onexpansion)
