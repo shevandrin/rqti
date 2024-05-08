@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rqti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,19 +71,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.0" id="rqti-020">rqti 0.2.0<a class="anchor" aria-label="anchor" href="#rqti-020"></a></h2><p class="text-muted">CRAN release: 2024-05-08</p>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
 <ul><li><p>Handle problem with xsd scheme for xml validation.</p></li>
 <li><p>Handle some problems with html and mathml entities.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Added constructor functions for task classes: singleChoice(), multipleChoice(), essay(), ordering(), entry(), directedPair(), oneInColTable(), oneInRowTable(), myltipleChoiceTable().</p></li>
+<h3 id="new-features-0-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h3>
+<ul><li><p>Improved the appearance of the tasks in QTIJS viewer.</p></li>
+<li><p>Added constructor functions for task classes: singleChoice(), multipleChoice(), essay(), ordering(), entry(), directedPair(), oneInColTable(), oneInRowTable(), myltipleChoiceTable().</p></li>
 <li><p>Added constructor functions for content of Entry class: numericGap(), textGap(), textGapOpal(), inlineChoice().</p></li>
 <li><p>Added constructor functions for the feedback objects: modalFeedback(), correctFeedback(), wrongFeedback().</p></li>
 <li><p>Added the ability to upload SURVEY resource type to Opal using the API. The upload2opal() function now includes a new parameter, as_survey, which allows you to specify the resource type. Set as_survey = TRUE to upload as a SURVEY resource type.</p></li>
-<li><p>Added ability to put metadata in manifest file for tests. To store metadata information AssessmentItem and AssessmentTest use slot <a href="https://github.com/metadata" class="external-link">@metadata</a> that takes QtiMetadata (and QtiContributor inside) classes as type. To create objects added two construction functions: qti_metadata() and qti_contributor().</p></li>
+<li><p>Added the ability to put metadata in the manifest file for tests. To store metadata information AssessmentItem and AssessmentTest use slot <a href="https://github.com/metadata" class="external-link">@metadata</a> that takes QtiMetadata (and QtiContributor inside) classes as type. Two construction functions have been added to create objects: qti_metadata() and qti_contributor().</p></li>
 </ul></div>
 </div>
     <div class="section level2">
