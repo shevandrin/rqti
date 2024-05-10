@@ -356,6 +356,9 @@ add_test_metadata <- function(object, params) {
             msg <- paste0("Authors are found in exercises and added as",
                           " contributors: ", msg, ".")
             message(msg)
+            contr_unique <- lapply(contr_unique, function(x) {
+                                            x@contribution_date <- Sys.Date()
+                                            return(x)})
             mtdata@contributor = contr_unique
         }
     }
