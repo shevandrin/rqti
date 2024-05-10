@@ -245,3 +245,17 @@ test_that("Testing InlineChoice class in case its score is undefined", {
     expect_equal(inline_choice_1@points, 1)
     expect_equal(inline_choice_2@points, 1)
 })
+
+test_that("Testing InlineChoice class in case points are zero", {
+sut <- suppressMessages(new("Entry",
+                              content = list(
+                                  "<p>One hour is",new("InlineChoice",
+                                                       response_identifier = "RESPONSE",
+                                                       solution_index = 3,
+                                                       points = numeric(0L),
+                                                       shuffle = FALSE,
+                                                       choices = c("160","90","60"),
+                                                       choices_identifiers = c("1","2","3")),
+                                  "minutes</p>")))
+expect_equal(sut@points, 1)
+})
