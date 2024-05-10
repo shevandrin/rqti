@@ -241,6 +241,7 @@ test_that("Testing values of slot prompt and slot identifier
 test_that("Testing of type of calculators in yaml section of Rmd file", {
 
     # Reading of tasks from Rmd files and create of unique identifiers
+    # no value for calculator
     path1 <- test_path("file/rmd/DirectedPair_with_table.Rmd")
     suppressMessages(path1obj <- Map(create_question_object, rep(path1, 4)))
     path1obj[[1]]@identifier <- "v1"
@@ -261,6 +262,7 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
     path3obj[[1]]@identifier <- "v111"
     path3obj[[2]]@identifier <- "v222"
 
+    # no value for calculator
     path4 <- test_path("file/rmd/OneInRowTable_rowid_colid_example.Rmd")
     suppressMessages(path4obj <- Map(create_question_object, rep(path4, 2)))
     path4obj[[1]]@identifier <- "v1111"

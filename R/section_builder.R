@@ -254,7 +254,8 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #' @param calculator A character, optional; determines whether to show a
 #'   calculator to the candidate. Possible values:
 #'   - 'simple'
-#'   - 'scientific' (assigned by default).
+#'   - 'scientific'.
+#'   Default is `NULL`.
 #' @param academic_grading A boolean, optional; enables to show to candidate at
 #'   the end of the testing a grade according to 5-point academic grade system
 #'   as a feedback; Default is `FALSE`.
@@ -311,7 +312,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #' @export
 test4opal <- function(content, identifier = "test_identifier",
                       title = "Test Title", time_limit = 90L, max_attempts = 1L,
-                      files = NULL, calculator = "scientific",
+                      files = NULL, calculator = NULL,
                       academic_grading = FALSE,
                       grade_label = c(en="Grade", de="Note"),
                       table_label = c(en="Grade", de="Note"),

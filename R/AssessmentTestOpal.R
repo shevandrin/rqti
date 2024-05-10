@@ -54,12 +54,14 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
     found_files <- c(sapply(.Object@section, getFiles, USE.NAMES = FALSE))
     .Object@files <- c(.Object@files, unique(unlist(found_files)))
 
-    found_calc <- c(sapply(.Object@section, getCalculator, USE.NAMES = FALSE))
-    if (any(c("simple", "simple-calculator") %in% found_calc)) {
-        .Object@calculator = "simple"
-    }
-    if (any(c("scientific", "scientific-calculator") %in% found_calc)) {
-        .Object@calculator = "scientific"
+    if (is.na(.Object@calculator)) {
+        found_calc <- c(sapply(.Object@section, getCalculator, USE.NAMES = FALSE))
+        if (any(c("simple", "simple-calculator") %in% found_calc)) {
+            .Object@calculator = "simple"
+        }
+        if (any(c("scientific", "scientific-calculator") %in% found_calc)) {
+            .Object@calculator = "scientific"
+        }
     }
 
     validObject(.Object)
