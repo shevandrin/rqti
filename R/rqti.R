@@ -16,7 +16,7 @@ check_identifier <- function(id, quiet = FALSE) {
     return(checker)
 }
 
-# helper to put default value into slots of classess without na values
+# helper to put default value into slots of classes without na values
 replace_na <- function(input) {
     if (length(input) !=0) {
         if(is.na(input)) {
