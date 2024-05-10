@@ -11,9 +11,9 @@ essay(
   prompt = "",
   points = 1,
   feedback = list(),
-  expected_length = NA_integer_,
-  expected_lines = NA_integer_,
-  words_max = NA_integer_,
+  expected_length = length_expected(feedback),
+  expected_lines = lines_expected(feedback),
+  words_max = max_words(feedback),
   words_min = NA_integer_,
   data_allow_paste = FALSE,
   calculator = NA_character_,
@@ -42,13 +42,19 @@ the entire task. Default is 1.}
 candidates.}
 
 \item{expected_length}{A numeric, optional. Responsible for setting the size
-of the text input field in the content delivery engine.}
+of the text input field in the content delivery engine. By default it will
+be calculated according to model answer in the slot \code{content} of
+\code{ModalFeedback}.}
 
 \item{expected_lines}{A numeric, optional. Responsible for setting the number
-of rows of the text input field in the content delivery engine.}
+of rows of the text input field in the content delivery engine. By default
+it will be calculated according to model answer in the slot \code{content} of
+\code{ModalFeedback}.}
 
 \item{words_max}{A numeric, optional. Responsible for setting the maximum
-number of words that a candidate can write in the text input field.}
+number of words that a candidate can write in the text input field. By
+default it will be calculated according to model answer in the slot
+\code{content} of \code{ModalFeedback}.}
 
 \item{words_min}{A numeric, optional. Responsible for setting the minimum
 number of words that a candidate should write in the text input field.}

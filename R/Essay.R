@@ -51,41 +51,14 @@ setMethod("initialize", "Essay", function(.Object, ...) {
                 call. = FALSE)
     }
 
-    if (length(.Object@feedback) == 1) {
-        answer_str <- paste(.Object@feedback[[1]]@content, collapse = " ")
-        nwords <- length(unlist(strsplit(answer_str, "\\s+")))
-        # set default max count of words
-        if (length(.Object@words_max) == 0) .Object@words_max <- nwords * 2
-        # set default size as expected length parameter
-        n_characters <- 6 * nwords
-        if (length(.Object@expected_length) == 0) {
-            if (n_characters < 150) {
-                .Object@expected_length <- n_characters
-                .Object@expected_lines <- 1
-            } else {
-                .Object@expected_length <- 150
-                .Object@expected_lines <- round(n_characters / 150) + 2
-            }
-        }
-    }
+    if (length(.Object@words_max) == 0) .Object@words_max <- max_words(.Object@feedback)
+    if (length(.Object@expected_length) == 0) .Object@expected_length <- length_expected(.Object@feedback)
+    if (length(.Object@expected_lines) == 0) .Object@expected_lines <- lines_expected(.Object@feedback)
 
-    fix_na <- function(slot_value) {
-        if (length(slot_value) !=0) {
-            if(is.na(slot_value)) {
-                if (is.character(slot_value)) {
-                    return(character(0))
-                } else {
-                    return(numeric(0))
-                }
-            }
-        }
-        return(slot_value)
-    }
-
-    .Object@expected_length <- fix_na(.Object@expected_length)
-    .Object@expected_lines <- fix_na(.Object@expected_lines)
-    .Object@words_max <- fix_na(.Object@words_max)
-    .Object@words_min <- fix_na(.Object@words_min)
+    .Object@expected_length <- replace_na(.Object@expected_length)
+    .Object@expected_lines <- replace_na(.Object@expected_lines)
+    .Object@words_max <- replace_na(.Object@words_max)
+    .Object@words_min <- replace_na(.Object@words_min)
 
     validObject(.Object)
     .Object
@@ -108,11 +81,17 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 #'@param feedback A list containing feedback message-object [ModalFeedback] for
 #'  candidates.
 #'@param expected_length A numeric, optional. Responsible for setting the size
-#'  of the text input field in the content delivery engine.
+#'  of the text input field in the content delivery engine. By default it will
+#'  be calculated according to model answer in the slot `content` of
+#'  `ModalFeedback`.
 #'@param expected_lines A numeric, optional. Responsible for setting the number
-#'  of rows of the text input field in the content delivery engine.
+#'  of rows of the text input field in the content delivery engine. By default
+#'  it will be calculated according to model answer in the slot `content` of
+#'  `ModalFeedback`.
 #'@param words_max A numeric, optional. Responsible for setting the maximum
-#'  number of words that a candidate can write in the text input field.
+#'  number of words that a candidate can write in the text input field. By
+#'  default it will be calculated according to model answer in the slot
+#'  `content` of `ModalFeedback`.
 #'@param words_min A numeric, optional. Responsible for setting the minimum
 #'  number of words that a candidate should write in the text input field.
 #'@param data_allow_paste A boolean, optional. Determines whether it is possible
@@ -149,9 +128,9 @@ essay <- function(identifier = generate_id(),
                   prompt = "",
                   points = 1,
                   feedback = list(),
-                  expected_length = NA_integer_,
-                  expected_lines = NA_integer_,
-                  words_max = NA_integer_,
+                  expected_length = length_expected(feedback),
+                  expected_lines = lines_expected(feedback),
+                  words_max = max_words(feedback),
                   words_min = NA_integer_,
                   data_allow_paste = FALSE,
                   calculator = NA_character_,
