@@ -101,7 +101,7 @@ test_that("XML validation with schema file for SingleChoice", {
 })
 
 test_that("XML validation with schema file for MultipleChoiceTable", {
-    mc <- new("MultipleChoiceTable",
+    mc <- suppressMessages(new("MultipleChoiceTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers  = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -112,7 +112,7 @@ test_that("XML validation with schema file for MultipleChoiceTable", {
               points = 4,
               title = "MultipleChoiceTable",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
-    )
+    ))
     sut <- xml2::read_xml(toString(create_assessment_item(mc)))
     file <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
     schema <- xml2::read_xml(file)

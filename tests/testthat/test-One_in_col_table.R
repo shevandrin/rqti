@@ -37,7 +37,7 @@ test_that("Testing CreateItemBody OneInColTable", {
 })
 
 test_that("Testing create_response_declaration_OneInColTable", {
-    sut <- new("OneInColTable",
+    sut <- suppressMessages(new("OneInColTable",
               cols = c("Capulet", "Demetrius", "Prospero"),
               cols_identifiers = c("C", "D", "P"),
               rows = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -48,7 +48,7 @@ test_that("Testing create_response_declaration_OneInColTable", {
               points = 5,
               title = "one_in_col_table",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
-    )
+    ))
 
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
 <correctResponse>

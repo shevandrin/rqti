@@ -34,7 +34,7 @@ test_that("Testing CreateItemBody OneInRowTable", {
 })
 
 test_that("Testing create_response_declaration_OneInRowTable",{
-    sut <- new("OneInRowTable",
+    sut <- suppressMessages(new("OneInRowTable",
               rows = c("Capulet", "Demetrius", "Lysander", "Prospero"),
               rows_identifiers = c("C", "D", "L", "P"),
               cols = c("A Midsummer-Night's Dream", "Romeo and Juliet",
@@ -45,7 +45,7 @@ test_that("Testing create_response_declaration_OneInRowTable",{
               points = 5,
               title = "one_in_row_table",
               prompt = "Match the following characters to the Shakespeare play they appeared in:"
-    )
+    ))
 
     example <- '<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
 <correctResponse>
@@ -119,3 +119,4 @@ test_that("Testing the constructor for OneInRowTable class", {
     expect_no_error(xml2::read_xml(as.character(xml_sut)))
     expect_s4_class(sut, "OneInRowTable")
 })
+

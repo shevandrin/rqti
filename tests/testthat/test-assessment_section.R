@@ -280,18 +280,18 @@ test_that("Testing of type of calculators in yaml section of Rmd file", {
     root_section_3 = suppressMessages(list(section(c(path2obj[[3]],
                                                      path3obj[[2]]))))
 
-    example_exam_1 <- new("AssessmentTestOpal",
+    example_exam_1 <- suppressWarnings(new("AssessmentTestOpal",
                           identifier = "id_test_1",
                           title = "Mock test",
-                          section = root_section_1)
-    example_exam_2 <- new("AssessmentTestOpal",
+                          section = root_section_1))
+    example_exam_2 <- suppressWarnings(new("AssessmentTestOpal",
                           identifier = "id_test_2",
                           title = "Mock test",
-                          section = root_section_2)
-    example_exam_3 <- new("AssessmentTestOpal",
+                          section = root_section_2))
+    example_exam_3 <- suppressWarnings(new("AssessmentTestOpal",
                           identifier = "id_test_2",
                           title = "Mock test",
-                          section = root_section_3)
+                          section = root_section_3))
 
     sut_1 <- example_exam_1@calculator
     sut_2 <- example_exam_2@calculator
