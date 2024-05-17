@@ -196,9 +196,6 @@ create_prompt <- function(object) {
 
 #' Create XML file for question specification
 #'
-#' @usage create_qti_task(object,
-#'                 dir = NULL,
-#'                 verification = FALSE)
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
 #'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair]).
@@ -238,10 +235,10 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     }
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
-    path <- paste0(dir, "/", file_name, ".xml")
-    xml2::write_xml(doc, path)
-    message(paste("see assessment item:", path))
-    return(stringr::str_remove(path, getwd()))
+    path_task <- file.path(dir, paste0(file_name, ".xml"))
+    xml2::write_xml(doc, path_task)
+    message("see assessment item: ", path_task)
+    return(stringr::str_remove(path_task, getwd()))
 }
 
 # verifies xml according to xsd scheme
@@ -302,7 +299,7 @@ create_task_zip <- function(object, path = ".", verification = FALSE,
     tdir <- tempfile()
     dir.create(tdir)
 
-    task_path <- create_qti_task(object, tdir)
+    task_path <- suppressMessages(create_qti_task(object, tdir))
 
     manifest <- create_manifest_task(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
@@ -310,5 +307,6 @@ create_task_zip <- function(object, path = ".", verification = FALSE,
     xml2::write_xml(doc_manifest, manifest_path)
 
     path <- zip_wrapper(file_name, tdir, path, NULL, zip_only)
+    message("see zip with assessment item: ", path)
     return(path)
 }

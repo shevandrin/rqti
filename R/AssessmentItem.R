@@ -91,9 +91,9 @@ setGeneric("createOutcomeDeclaration",
 setGeneric("createResponseProcessing",
            function(object) standardGeneric("createResponseProcessing"))
 
-#' Create XML file for question specification
+#' Create XML or zip file for question specification
 #'
-#' @usage createQtiTask(object, dir = NULL, verification = FALSE)
+#' @usage createQtiTask(object, dir = NULL, verification = FALSE, zip = FALSE)
 #' @param object An instance of the S4 object ([SingleChoice], [MultipleChoice],
 #'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair]).
@@ -101,12 +101,17 @@ setGeneric("createResponseProcessing",
 #'   directory is used by default.
 #' @param verification A boolean value, optional; to check validity of xml file.
 #'   Default is `FALSE`.
-#' @return A path to xml file.
+#' @param zip A boolean value, optional; the `TRUE` value allows to create a
+#'   zip archive with the manifest and task files inside. Default is `FALSE`.
+#' @return A path to xml or zip file.
 #' @examples
 #' essay <- new("Essay", prompt = "Test task", title = "Essay")
 #' \dontrun{
+#' # creates folder with XML (side effect)
+#' createQtiTask(essay, "result")
 #' # creates folder with zip (side effect)
-#' createQtiTask(essay, "result", TRUE)}
+#' createQtiTask(essay, "result", zip = TRUE)
+#' }
 #' @name createQtiTask-methods
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask
@@ -114,7 +119,8 @@ setGeneric("createResponseProcessing",
 #' @export
 setGeneric("createQtiTask",
            function(object, dir = NULL,
-                    verification = FALSE) standardGeneric("createQtiTask"))
+                    verification = FALSE,
+                    zip = FALSE) standardGeneric("createQtiTask"))
 
 #' Create zip-archive of the qti test specification
 #'
@@ -272,8 +278,9 @@ setMethod("getContributors", signature(object = "AssessmentItem"),
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
 setMethod("createQtiTask", signature(object = "AssessmentItem"),
-          function(object, dir = NULL, verification = FALSE) {
-              create_qti_task(object, dir, verification)
+          function(object, dir = NULL, verification = FALSE, zip = FALSE) {
+              ifelse(zip, create_task_zip(object, dir, verification),
+                     create_qti_task(object, dir, verification))
           })
 
 #' @rdname createQtiTest-methods

@@ -4,9 +4,7 @@
 \alias{create_qti_task}
 \title{Create XML file for question specification}
 \usage{
-create_qti_task(object,
-                dir = NULL,
-                verification = FALSE)
+create_qti_task(object, dir = NULL, verification = FALSE)
 }
 \arguments{
 \item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},

@@ -6,11 +6,11 @@
 \alias{createQtiTask}
 \alias{createQtiTask,AssessmentItem-method}
 \alias{createQtiTask,AssessmentItem}
-\title{Create XML file for question specification}
+\title{Create XML or zip file for question specification}
 \usage{
-createQtiTask(object, dir = NULL, verification = FALSE)
+createQtiTask(object, dir = NULL, verification = FALSE, zip = FALSE)
 
-\S4method{createQtiTask}{AssessmentItem}(object, dir = NULL, verification = FALSE)
+\S4method{createQtiTask}{AssessmentItem}(object, dir = NULL, verification = FALSE, zip = FALSE)
 }
 \arguments{
 \item{object}{An instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
@@ -22,16 +22,22 @@ directory is used by default.}
 
 \item{verification}{A boolean value, optional; to check validity of xml file.
 Default is \code{FALSE}.}
+
+\item{zip}{A boolean value, optional; the \code{TRUE} value allows to create a
+zip archive with the manifest and task files inside. Default is \code{FALSE}.}
 }
 \value{
-A path to xml file.
+A path to xml or zip file.
 }
 \description{
-Create XML file for question specification
+Create XML or zip file for question specification
 }
 \examples{
 essay <- new("Essay", prompt = "Test task", title = "Essay")
 \dontrun{
+# creates folder with XML (side effect)
+createQtiTask(essay, "result")
 # creates folder with zip (side effect)
-createQtiTask(essay, "result", TRUE)}
+createQtiTask(essay, "result", zip = TRUE)
+}
 }
