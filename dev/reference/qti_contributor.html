@@ -80,7 +80,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qti_contributor</span><span class="op">(</span></span>
 <span>  contributor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RQTI_AUTHOR"</span><span class="op">)</span>,</span>
 <span>  role <span class="op">=</span> <span class="st">"author"</span>,</span>
-<span>  contribution_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  contribution_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">contributor</span> <span class="op">!=</span> <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">NA_Date_</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -100,7 +100,8 @@ matter expert. Default is "author".</p></dd>
 
 <dt>contribution_date</dt>
 <dd><p>A character string representing date of the
-contribution. Default is the current system date.</p></dd>
+contribution. Default is the current system date, when contributor is
+assigned.</p></dd>
 
 </dl></div>
 
