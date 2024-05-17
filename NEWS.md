@@ -1,5 +1,15 @@
 # rqti (development version)
 
+## Bug fixes
+
+* In metadata default value for the slot contribution date is assigned to 
+Date(0). 
+
+## New features
+
+* method createQtiTask() can create XML or zip files, to control this parameter
+zip=TRUE is
+
 # rqti 0.2.0
 
 ## Bug fixes
