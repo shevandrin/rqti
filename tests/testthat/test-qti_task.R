@@ -401,14 +401,55 @@ test_that("Testing InlineChoice task in case of the entity contains
 test_that("Testing of create_manifest_task() function", {
     sc <- new("SingleChoice",
               identifier = "SingleChoice")
+    sc_metadata = qti_metadata(contributor = qti_contributor(""), rights = character(0))
+    sc@metadata <- sc_metadata
     sut <- toString(create_manifest_task(sc))
 
-expected <- '<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd" identifier="SingleChoice_manifest">
-  <metadata></metadata>
+expected <- '<manifest xmlns=\"http://www.imsglobal.org/xsd/imscp_v1p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd http://ltsc.ieee.org/xsd/LOM http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd\" identifier=\"SingleChoice_manifest\">
+  <metadata>
+    <lom xmlns=\"http://ltsc.ieee.org/xsd/LOM\">
+      <lifeCycle>
+        <version>
+          <string>0.0.9</string>
+        </version>
+        <contribute>
+          <role>
+            <source>LOMv1.0</source>
+            <value>author</value>
+          </role>
+          <entity>BEGIN:VCARD\r
+FN:\r
+END:VCARD\r
+</entity>
+          <date>
+            <dateTime></dateTime>
+          </date>
+        </contribute>
+      </lifeCycle>
+      <general>
+        <identifier>
+          <entry>SingleChoice</entry>
+        </identifier>
+        <title>
+          <string>SingleChoice</string>
+        </title>
+        <description>
+          <string>
+</string>
+        </description>
+      </general>
+      <technical>
+        <format>IMS QTI 2.1</format>
+      </technical>
+      <rights>
+        <description></description>
+      </rights>
+    </lom>
+  </metadata>
   <organisations></organisations>
   <resources>
-    <resource identifier="SingleChoice" type="imsqti_item_xmlv2p1" href="SingleChoice.xml">
-      <file href="SingleChoice.xml"></file>
+    <resource identifier=\"SingleChoice\" type=\"imsqti_item_xmlv2p1\" href=\"SingleChoice.xml\">
+      <file href=\"SingleChoice.xml\"></file>
     </resource>
   </resources>
 </manifest>'

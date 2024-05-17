@@ -252,7 +252,7 @@ verify_qti <- function(doc) {
 # returns manifest for task
 create_manifest_task <- function(object) {
     manifest <- tag("manifest", create_manifest_attributes(object))
-    metadata <- tag("metadata", c())
+    metadata <- createMetadata(object)
     organisations <- tag("organisations", c())
 
     file_name <- paste0(object@identifier, ".xml")
