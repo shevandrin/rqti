@@ -34,11 +34,12 @@ setClass("QtiContributor", slots = c(contributor = "character",
                                      contribution_date = "Date"),
          prototype = prototype(contributor = Sys.getenv("RQTI_AUTHOR"),
                                role = "author",
-                               contribution_date = Sys.Date()),
+                               contribution_date = Date(0)),
          validity = check_contributor)
 
 setMethod("initialize", "QtiContributor", function(.Object, ...) {
     .Object <- callNextMethod()
+    if (.Object@contributor != "") .Object@contribution_date <- Sys.Date()
     validObject(.Object)
     .Object
 })
@@ -54,15 +55,18 @@ setMethod("initialize", "QtiContributor", function(.Object, ...) {
 #'   educational validator, script writer, instructional designer, subject
 #'   matter expert. Default is "author".
 #' @param contribution_date A character string representing date of the
-#'   contribution. Default is the current system date.
+#'   contribution. Default is the current system date, when contributor is
+#'   assigned.
 #' @examples
 #' creator= qti_contributor("Max Mustermann", "technical validator")
 #' @export
 qti_contributor <- function(contributor = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
-                            contribution_date = Sys.Date()) {
+                            contribution_date = ifelse(contributor != "", Sys.Date(), NA_Date_)) {
     params <- as.list(environment())
     params$Class <- "QtiContributor"
+    if (is.na(params$contribution_date)) params$contribution_date <- Date(0)
+    params$contribution_date <- as.Date(params$contribution_date)
     obj <- do.call("new", params)
     return(obj)
 }
