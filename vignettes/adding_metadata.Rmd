@@ -1,0 +1,52 @@
+---
+title: "Adding metadata"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+    %\VignetteIndexEntry{Adding metadata}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE}
+library(rqti)
+```
+
+## Adding metadata
+
+Metadata in QTI XML files, containing information about creators, rights, and descriptions, is crucial for ensuring accountability, legal compliance, and clarity in the management and use of assessment items and tests.
+
+Here it is an example of metadata with two contributors in Rmd yaml section :
+
+```{r comment='', echo = F}
+cat(readLines("images/templates/metadata_template.Rmd"), sep = '\n')
+```
+Metadata may contain the following information:
+
+* description - A character string representing a textual description of the contents of this learning object.
+
+* rights - A character string describing the intellectual property rights and terms of use of this learning object.
+
+* version - A character string representing the edition/version of this learning object.
+
+* contributor - list of details about contributors, each contributor may contain the following information:
+
+    * contributor - A character string representing the name of the author
+
+    * role - A character string representing a type of contribution. Possible values: author, publisher, unknown, initiator, terminator, validator, editor, graphical designer, technical implementer, content provider, technical validator, educational validator, script writer, instructional designer, subject matter expert. By default `rqti` set this value to "author".
+
+    * contribution_date - A character string representing date of the contribution. By default `rqti` set this value to the current system date.
+    
+Author can also assign environment variables `RQTI_AUTHOR` and `RQTI_RIGHTS` for default values of the metadata.
+Examples:
+
+* RQTI_AUTHOR="Max Mustermann"
+
+* RQTI_RIGHTS="This file is Copyright (C) 2024 Max Mustermann. All rights reserved."

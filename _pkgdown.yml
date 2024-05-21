@@ -15,6 +15,7 @@ articles:
   - order
   - directedpairs
   - table
+  - adding_metadata
 - title: Sections and Tests
   navbar: Create sections and tests
   contents:

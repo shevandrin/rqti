@@ -1,0 +1,19 @@
+---
+title: Demo of metadata
+type: essay
+knit: rqti::render_qtijs
+identifier: demo_metadata
+
+metadata:
+    contributor:
+        - contributor: Andrey S
+          role: author
+        - contributor: Max M
+          role: author
+    description: Place some text description here
+    rights: This file is Copyright (C) 2024 Andrey S., Max M. All rights reserved.
+---
+
+# question
+
+Task with metadata attributes in the yaml section.
