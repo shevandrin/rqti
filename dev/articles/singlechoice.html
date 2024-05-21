@@ -256,6 +256,8 @@ title: A meaningful title that can be displayed in the LMS
 shuffle: false # random order of choices
 orientation: horizontal # OR horizontal
 points: 0.5
+calculator: scientific # OPAL specific attribute
+files: attachment.pdf # OPAL scpecific attribute
 ---
 
 # question
@@ -323,6 +325,21 @@ choices (setting shuffle to <code>false</code>).</p>
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
 <p>How many points are given for the correct solution. Default is 1.</p>
+</div>
+<div class="section level3">
+<h3 id="calculator">calculator<a class="anchor" aria-label="anchor" href="#calculator"></a>
+</h3>
+<p>If a calculator is required for this task, you need to assign the
+‘calculator’ attribute the type ‘simple’ or ‘scientific’. This only
+works on OPAL.</p>
+</div>
+<div class="section level3">
+<h3 id="files">files<a class="anchor" aria-label="anchor" href="#files"></a>
+</h3>
+<p>If additional files are required to complete this task, you need to
+assign the ‘files’ attribute a single file path or a list of paths to
+these files. Keep these additional files in the same folder with Rmd.
+This only works on OPAL.</p>
 </div>
 </div>
 <div class="section level2">
