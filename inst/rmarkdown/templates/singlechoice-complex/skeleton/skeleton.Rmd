@@ -6,6 +6,8 @@ title: A meaningful title that can be displayed in the LMS
 shuffle: false # random order of choices
 orientation: horizontal # OR horizontal
 points: 0.5
+calculator: scientific # OPAL specific attribute
+files: attachment.pdf # OPAL scpecific attribute
 ---
 
 # question
