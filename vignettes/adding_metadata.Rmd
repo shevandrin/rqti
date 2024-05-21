@@ -26,7 +26,7 @@ Metadata in QTI XML files, containing information about creators, rights, and de
 Here it is an example of metadata with two contributors in Rmd yaml section :
 
 ```{r comment='', echo = F}
-cat(readLines("images/templates/metadata_template.Rmd"), sep = '\n')
+cat(readLines("metadata_template.Rmd"), sep = '\n')
 ```
 Metadata may contain the following information:
 
