@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, echo=FALSE}
 library(rqti)
+path <- fs::path_package("exercises", package = "rqti")
 ```
 
 ## Adding metadata
@@ -26,7 +27,7 @@ Metadata in QTI XML files, containing information about creators, rights, and de
 Here it is an example of metadata with two contributors in Rmd yaml section :
 
 ```{r comment='', echo = F}
-cat(readLines("metadata_template.Rmd"), sep = '\n')
+cat(readLines(file.path(path, "metadata_template.Rmd")), sep = '\n')
 ```
 Metadata may contain the following information:
 
