@@ -299,6 +299,8 @@ parse_list <- function(html_q) {
     question_list <- xml2::xml_find_all(html_q, "./ul")
     question_list <- question_list[length(question_list)]
     choices  <- xml2::xml_find_all(question_list, ".//li")
+    comments <- xml2::xml_find_all(choices, "//comment()")
+    lapply(comments, FUN = xml2::xml_remove)
     # build a list with possible answers, that keeps formatting of the content (mathml)
     choices_str <- c()
     solution <- c()
