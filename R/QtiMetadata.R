@@ -39,7 +39,6 @@ setClass("QtiContributor", slots = c(contributor = "character",
 
 setMethod("initialize", "QtiContributor", function(.Object, ...) {
     .Object <- callNextMethod()
-    print(.Object@contribution_date)
     if (.Object@contributor != "" && length(.Object@contribution_date) == 0) {
         .Object@contribution_date <- Sys.Date()
     }
