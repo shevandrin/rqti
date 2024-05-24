@@ -4,7 +4,7 @@
 \alias{create_qti_task}
 \title{Create XML file for question specification}
 \usage{
-create_qti_task(object, dir = NULL, verification = FALSE)
+create_qti_task(object, dir = NULL, verification = FALSE, show_score = FALSE)
 }
 \arguments{
 \item{object}{an instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
@@ -16,6 +16,9 @@ default}
 
 \item{verification}{boolean, optional; to check validity of xml file, default
 \code{FALSE}}
+
+\item{show_score}{boolean, optional; put div tag with score value. Default
+is \code{FALSE}.}
 }
 \value{
 xml document.

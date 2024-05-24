@@ -388,8 +388,10 @@ setMethod("getCalculator", signature(object = "AssessmentItem"),
 #' @aliases prepareQTIJSFiles,AssessmentItem
 setMethod("prepareQTIJSFiles", signature(object = "AssessmentItem"),
           function(object, dir = "") {
-              suppressMessages(createQtiTask(object,
-                                             file.path(dir, "index.xml")))
+              xml_path <- file.path(dir, "index.xml")
+              suppressMessages(create_qti_task(object, xml_path,
+                                               verification = FALSE,
+                                               show_score = TRUE))
           })
 
 #' @rdname createMetadata-methods

@@ -145,7 +145,11 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
               }
               out_path <- file.path(dir, "index.xml")
               ext <- file_ext(object)
-              if (ext %in% c("Rmd", "md")) rmd2xml(object, out_path)
+              if (ext %in% c("Rmd", "md")) {
+                  task <- create_question_object(object)
+                  create_qti_task(task, out_path, verification = FALSE,
+                                  show_score = TRUE)
+              }
               if (ext == "xml") file.copy(object, out_path)
               if (ext == "zip") zip::unzip(object, exdir = dir)
               return(NULL)

@@ -203,12 +203,15 @@ create_prompt <- function(object) {
 #'   default
 #' @param verification boolean, optional; to check validity of xml file, default
 #'   `FALSE`
+#' @param show_score boolean, optional; put div tag with score value. Default
+#' is `FALSE`.
 #' @return xml document.
 #' @name create_qti_task
 #' @rdname create_qti_task
 #' @aliases create_qti_task
 #' @importFrom textutils HTMLdecode
-create_qti_task <- function(object, dir = NULL, verification = FALSE) {
+create_qti_task <- function(object, dir = NULL, verification = FALSE,
+                            show_score = FALSE) {
     content <- as.character(create_assessment_item(object))
     # to handle reading of the xml with html entities
     # dtype <- "<!DOCTYPE assessmentItem PUBLIC \"-//W3C//DTD MathML 2.0//EN\" \"http://www.w3.org/Math/DTD/mathml3/mathml3.dtd\">"
@@ -234,6 +237,13 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
         dir <- dirname(dir)
     }
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+    # add tag div with printedVariable SCORE for QTIJS rendering
+    if (show_score) {
+        new_node <- xml2::read_xml('<div class="rqti-ai-result">Score:
+<printedVariable identifier="SCORE" format="%d" /></div>')
+        root_node <- xml2::xml_root(doc)
+        xml2::xml_add_child(root_node, new_node)
+    }
 
     path_task <- file.path(dir, paste0(file_name, ".xml"))
     xml2::write_xml(doc, path_task)
