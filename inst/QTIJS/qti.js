@@ -788,7 +788,8 @@ function transform(elem) {
     break;
   case "assessmentItem":
     addCommentInteraction(elem, T);
-    addModalFeedback(elem, T);
+    // it is muted in 0.2.1 to show only feedback onchange() event
+    //addModalFeedback(elem, T);
     addNavigation(elem, T);
     if (!allowSkipping(item))
       T.attribs.push({name:"class", value:MANDATORY});
@@ -1024,7 +1025,8 @@ function transform(elem) {
   }
 
   // Adds a modal feedback message
-  function addModalFeedback(elem, T) {
+  // it is muted in 0.2.1 to show fb only for onchange() event
+/*  function addModalFeedback(elem, T) {
       let mfb = elem.querySelector('[identifier="modal_feedback"]');
       if (mfb) {
           let ttl = mfb.getAttribute("title");
@@ -1036,7 +1038,7 @@ function transform(elem) {
           html += mfb.innerHTML;
           T.content.push(html);
       }
-  }
+  }*/
 
   // Adds "nav" element to assessmentTest, testPart,
   // assessmentSection, and assessmentItem.
@@ -1774,7 +1776,7 @@ function setupInputInteraction(interaction) {
   default:
     let inputs =  [...interaction.querySelectorAll("input")]
       .concat([...interaction.querySelectorAll("textarea")]);
-    inputs.forEach(input=>input.onfocus=handleResponse);
+    inputs.forEach(input=>input.onchange=handleResponse);
     break;
   }
 
@@ -3783,16 +3785,16 @@ function triggerShowHide(item) {
 
     if (decl) {
       let tag = elem.getAttribute(TAG);
-      if (feedbackTypes.indexOf(tag)>=0) {
+      // it is muted in patch 0.2.1 to show feedback
+/*      if (feedbackTypes.indexOf(tag)>=0) {
         if (!showFeedback(item))
           return;
-      }
+      }*/
       DEBUG(identifier(item), "triggering showHide on", tag, elem);
       let value = decl.value;
       let triggered = elem.classList.contains(TRIGGERED);
       if (!value || (Array.isArray(value) && value.length==0))
         value = getDefaultValue(decl);
-
       if (matchesOrMember(id, value)) {
          if (!triggered)
           setDirty(item);
@@ -4816,7 +4818,7 @@ function updateTimeLimits(elem=document) {
 function submit(item) {
   if (!QTI.RESULTS_ENDPOINT
       || QTI.RESULTS_ENDPOINT.startsWith("https://example.com/"))
-    return;
+    QTI.RESULTS_ENDPOINT = window.origin;
 
   DEBUG("submit: endpoint=", QTI.RESULTS_ENDPOINT,
         "headers=", QTI.RESULTS_HEADERS);
