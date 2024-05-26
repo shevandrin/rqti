@@ -7,8 +7,10 @@ Date(0).
 
 ## New features
 
-* method createQtiTask() can create XML or zip files, to control this parameter
-zip=TRUE is
+* method createQtiTask() can create XML or zip files, to control this use 
+parameter zip=TRUE.
+
+* QTIJS rendering shows feedback and score for tasks.
 
 # rqti 0.2.0
 
