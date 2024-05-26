@@ -2,6 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
+  adding_metadata: adding_metadata.html
   api_opal: api_opal.html
   compatibility: compatibility.html
   directedpairs: directedpairs.html
@@ -16,7 +17,7 @@ articles:
   singlechoice: singlechoice.html
   table: table.html
   workflow: workflow.html
-last_built: 2024-05-08T20:36Z
+last_built: 2024-05-26T09:22Z
 urls:
   reference: https://shevandrin.github.io/rqti/reference
   article: https://shevandrin.github.io/rqti/articles

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rqti</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,7 @@
     <a class="dropdown-item" href="../articles/order.html">Order Exercises</a>
     <a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a>
     <a class="dropdown-item" href="../articles/table.html">Table Exercises</a>
+    <a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6>
     <a class="dropdown-item" href="../articles/section.html">Sections and Tests</a>
@@ -84,9 +85,9 @@
 <span>  prompt <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  feedback <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  expected_length <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
-<span>  expected_lines <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
-<span>  words_max <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
+<span>  expected_length <span class="op">=</span> <span class="fu">length_expected</span><span class="op">(</span><span class="va">feedback</span><span class="op">)</span>,</span>
+<span>  expected_lines <span class="op">=</span> <span class="fu">lines_expected</span><span class="op">(</span><span class="va">feedback</span><span class="op">)</span>,</span>
+<span>  words_max <span class="op">=</span> <span class="fu">max_words</span><span class="op">(</span><span class="va">feedback</span><span class="op">)</span>,</span>
 <span>  words_min <span class="op">=</span> <span class="cn">NA_integer_</span>,</span>
 <span>  data_allow_paste <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  calculator <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
@@ -130,17 +131,23 @@ candidates.</p></dd>
 
 <dt>expected_length</dt>
 <dd><p>A numeric, optional. Responsible for setting the size
-of the text input field in the content delivery engine.</p></dd>
+of the text input field in the content delivery engine. By default it will
+be calculated according to model answer in the slot <code>content</code> of
+<code>ModalFeedback</code>.</p></dd>
 
 
 <dt>expected_lines</dt>
 <dd><p>A numeric, optional. Responsible for setting the number
-of rows of the text input field in the content delivery engine.</p></dd>
+of rows of the text input field in the content delivery engine. By default
+it will be calculated according to model answer in the slot <code>content</code> of
+<code>ModalFeedback</code>.</p></dd>
 
 
 <dt>words_max</dt>
 <dd><p>A numeric, optional. Responsible for setting the maximum
-number of words that a candidate can write in the text input field.</p></dd>
+number of words that a candidate can write in the text input field. By
+default it will be calculated according to model answer in the slot
+<code>content</code> of <code>ModalFeedback</code>.</p></dd>
 
 
 <dt>words_min</dt>
