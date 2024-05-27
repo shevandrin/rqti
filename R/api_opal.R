@@ -298,6 +298,7 @@ get_resource_url <- function(display_name, endpoint = NULL,
                   function(item) paste0(endpoint, "auth/RepositoryEntry/", item))
     return(url)
 }
+
 #' Get elements of the course by courseId
 #'
 #' @param course_id A length one character vector with course id.
@@ -339,6 +340,39 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
     df <- data.frame(nodeId=ids, shortTitle=shortTitles, shortName=shortNames,
                      longTitle=longTitles)
     return(df)
+}
+
+#' Get course results by course id and node id
+#'
+#' @param course_id A length one character vector with course id.
+#' @param node_id A length one character vector with node id (test).
+#' @param api_user A character value of the username in the OPAL.
+#' @param api_password A character value of the password in the OPAL.
+#' @param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'  environment variable `RQTI_API_ENDPOINT`. To set a global environment
+#'  variable, you need to call `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
+#'  or you can put these command into .Renviron.
+#' @return A dataframe with the results of the course.
+#' @examplesIf interactive()
+#' df <- get_course_results("89068111333293", "1617337826161777006")
+#' @export
+get_course_results <- function(course_id, node_id,
+                               api_user = NULL, api_password = NULL,
+                               endpoint = NULL) {
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
+    # check auth
+    if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
+        user_id <- auth_opal(api_user, api_password)
+        if (is.null(user_id)) return(NULL)
+    }
+    url_res <- paste0(endpoint, "restapi/repo/courses/", course_id,
+                      "/assessments/", node_id, "/results")
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    print(response)
+    parse <- resp_body_xml(response)
+    return(parse)
 }
 
 upload_resource <- function(file, display_name, rtype, access,
