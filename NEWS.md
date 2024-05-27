@@ -5,6 +5,9 @@
 * new API OPAL function get_course_elements() returns dataframe with elements of 
 the course by course id.
 
+* new API OPAL function get_course_results() returns an xml with data about 
+results by course id and node id.
+
 # rqti 0.2.1
 
 ## Bug fixes
