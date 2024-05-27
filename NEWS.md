@@ -1,5 +1,10 @@
 # rqti (development version)
 
+## New features
+
+* new API OPAL function get_course_elements() returns dataframe with elements of 
+the course by course id.
+
 # rqti 0.2.1
 
 ## Bug fixes
