@@ -298,6 +298,48 @@ get_resource_url <- function(display_name, endpoint = NULL,
                   function(item) paste0(endpoint, "auth/RepositoryEntry/", item))
     return(url)
 }
+#' Get elements of the course by courseId
+#'
+#' @param course_id A length one character vector with course id.
+#' @param api_user A character value of the username in the OPAL.
+#' @param api_password A character value of the password in the OPAL.
+#' @param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'  environment variable `RQTI_API_ENDPOINT`. To set a global environment
+#'  variable, you need to call `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
+#'  or you can put these command into .Renviron.
+#' @return A dataframe with the elements of the course (fields: nodeId,
+#' shortTitle, shortName, longTitle)
+#' @examplesIf interactive()
+#' df <- get_course_elements("89068111333293")
+#' @export
+get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
+                                endpoint = NULL) {
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
+    # check auth
+    if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
+        user_id <- auth_opal(api_user, api_password)
+        if (is.null(user_id)) return(NULL)
+    }
+    url_elem <- paste0(endpoint, "restapi/repo/courses/", course_id, "/elements")
+    req <- request(url_elem) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    parse <- resp_body_xml(response)
+    rlist <- xml2::as_list(parse)
+
+    is_not_neg_one <- function(node) {
+        pos <- as.numeric(node$position[[1]])
+        return(pos != -1)
+    }
+    flist <- rlist$courseNodeVOes[sapply(rlist$courseNodeVOes, is_not_neg_one)]
+    ids <- unlist(lapply(flist, function(x) ifelse(is.null(x$id), NA, x$id)))
+    shortTitles <- unlist(lapply(flist, function(x) ifelse(is.null(x$shortTitle), NA, x$shortTitle)))
+    shortNames <- unlist(lapply(flist, function(x) ifelse(is.null(x$shortName), NA, x$shortName)))
+    longTitles <- unlist(lapply(flist, function(x) ifelse(is.null(x$longTitle), NA, x$longTitle)))
+    df <- data.frame(nodeId=ids, shortTitle=shortTitles, shortName=shortNames,
+                     longTitle=longTitles)
+    return(df)
+}
 
 upload_resource <- function(file, display_name, rtype, access,
                             endpoint = NULL) {
