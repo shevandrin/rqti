@@ -333,10 +333,13 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
         return(pos != -1)
     }
     flist <- rlist$courseNodeVOes[sapply(rlist$courseNodeVOes, is_not_neg_one)]
-    ids <- unlist(lapply(flist, function(x) ifelse(is.null(x$id), NA, x$id)))
-    shortTitles <- unlist(lapply(flist, function(x) ifelse(is.null(x$shortTitle), NA, x$shortTitle)))
-    shortNames <- unlist(lapply(flist, function(x) ifelse(is.null(x$shortName), NA, x$shortName)))
-    longTitles <- unlist(lapply(flist, function(x) ifelse(is.null(x$longTitle), NA, x$longTitle)))
+    get_values <- function(item, field) {
+        ifelse(length(unlist(item[field])) == 0, NA, item[field])
+    }
+    ids <- unlist(Map(get_values, flist, "id"), use.names = FALSE)
+    shortTitles <- unlist(Map(get_values, flist, "shortTitle"), use.names = FALSE)
+    shortNames <- unlist(Map(get_values, flist, "shortName"), use.names = FALSE)
+    longTitles <- unlist(Map(get_values, flist, "longTitle"), use.names = FALSE)
     df <- data.frame(nodeId=ids, shortTitle=shortTitles, shortName=shortNames,
                      longTitle=longTitles)
     return(df)
@@ -370,9 +373,19 @@ get_course_results <- function(course_id, node_id,
     req <- request(url_res) %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
-    print(response)
     parse <- resp_body_xml(response)
-    return(parse)
+    data_tag <- xml2::xml_find_first(parse, ".//data")
+    if (!is.na(data_tag)) {
+        zip_url <- xml2::xml_text(data_tag)
+        destfile <- paste0("results_", course_id, "_", node_id, ".zip")
+        download.file(zip_url, destfile)
+        message("See ", destfile, " in your working directory.")
+    } else {
+        zip_url <- NULL
+        message("There is no data about the results.")
+    }
+
+    return(zip_url)
 }
 
 upload_resource <- function(file, display_name, rtype, access,
