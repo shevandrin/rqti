@@ -350,18 +350,23 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
 #' @param course_id A length one character vector with course id.
 #' @param node_id A length one character vector with node id (test).
 #' @param path A length one character vector with path, where the zip should be
-#'  stored. Default is working directory.
+#'   stored. Default is working directory.
+#' @param rename A boolean value; optional; Set `TRUE` value to take the short
+#'   name of the course element for naming zip (results_shortName.zip). `FALSE`
+#'   combines in zip name course id and node id. Default is `TRUE`.
 #' @param api_user A character value of the username in the OPAL.
 #' @param api_password A character value of the password in the OPAL.
 #' @param endpoint A string of endpoint of LMS Opal; by default it is got from
-#'  environment variable `RQTI_API_ENDPOINT`. To set a global environment
-#'  variable, you need to call `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
-#'  or you can put these command into .Renviron.
+#'   environment variable `RQTI_API_ENDPOINT`. To set a global environment
+#'   variable, you need to call
+#'   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+#'   command into .Renviron.
 #' @return A dataframe with the results of the course.
 #' @examplesIf interactive()
 #' df <- get_course_results("89068111333293", "1617337826161777006")
 #' @export
 get_course_results <- function(course_id, node_id, path = ".",
+                               rename = TRUE,
                                api_user = NULL, api_password = NULL,
                                endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- catch_endpoint()
@@ -382,7 +387,14 @@ get_course_results <- function(course_id, node_id, path = ".",
 
     if (ext == "") {
         dir <- path
-        file_name <- paste0("results_", course_id, "_", node_id, ".zip")
+        if (rename) {
+            df <- get_course_elements(course_id, api_user, api_password, endpoint)
+            short_name <- subset(df, df$nodeId == node_id)$shortName
+            short_name <- paste(strsplit(short_name, " ")[[1]], collapse = "_")
+            file_name <- paste0("results_", short_name, ".zip")
+        } else {
+            file_name <- paste0("results_", course_id, "_", node_id, ".zip")
+        }
     } else {
         dir <- dirname(path)
         file_name <- basename(path)
