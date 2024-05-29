@@ -7,6 +7,7 @@
 get_course_results(
   course_id,
   node_id,
+  path = ".",
   api_user = NULL,
   api_password = NULL,
   endpoint = NULL
@@ -16,6 +17,9 @@ get_course_results(
 \item{course_id}{A length one character vector with course id.}
 
 \item{node_id}{A length one character vector with node id (test).}
+
+\item{path}{A length one character vector with path, where the zip should be
+stored. Default is working directory.}
 
 \item{api_user}{A character value of the username in the OPAL.}
 

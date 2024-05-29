@@ -349,6 +349,8 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
 #'
 #' @param course_id A length one character vector with course id.
 #' @param node_id A length one character vector with node id (test).
+#' @param path A length one character vector with path, where the zip should be
+#'  stored. Default is working directory.
 #' @param api_user A character value of the username in the OPAL.
 #' @param api_password A character value of the password in the OPAL.
 #' @param endpoint A string of endpoint of LMS Opal; by default it is got from
@@ -359,7 +361,7 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
 #' @examplesIf interactive()
 #' df <- get_course_results("89068111333293", "1617337826161777006")
 #' @export
-get_course_results <- function(course_id, node_id,
+get_course_results <- function(course_id, node_id, path = ".",
                                api_user = NULL, api_password = NULL,
                                endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- catch_endpoint()
@@ -368,18 +370,30 @@ get_course_results <- function(course_id, node_id,
         user_id <- auth_opal(api_user, api_password)
         if (is.null(user_id)) return(NULL)
     }
+
     url_res <- paste0(endpoint, "restapi/repo/courses/", course_id,
                       "/assessments/", node_id, "/results")
     req <- request(url_res) %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     parse <- resp_body_xml(response)
+
+    ext <- tools::file_ext(path)
+
+    if (ext == "") {
+        dir <- path
+        file_name <- paste0("results_", course_id, "_", node_id, ".zip")
+    } else {
+        dir <- dirname(path)
+        file_name <- basename(path)
+    }
+    if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
+
     data_tag <- xml2::xml_find_first(parse, ".//data")
     if (!is.na(data_tag)) {
         zip_url <- xml2::xml_text(data_tag)
-        destfile <- paste0("results_", course_id, "_", node_id, ".zip")
-        download.file(zip_url, destfile)
-        message("See ", destfile, " in your working directory.")
+        result <- download.file(zip_url, file.path(dir, file_name))
+        if (result == 0) message("See zip in ", file.path(dir, file_name))
     } else {
         zip_url <- NULL
         message("There is no data about the results.")
