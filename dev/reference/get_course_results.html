@@ -81,6 +81,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_course_results</span><span class="op">(</span></span>
 <span>  <span class="va">course_id</span>,</span>
 <span>  <span class="va">node_id</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
 <span>  api_user <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  api_password <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  endpoint <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -95,6 +96,11 @@
 
 <dt>node_id</dt>
 <dd><p>A length one character vector with node id (test).</p></dd>
+
+
+<dt>path</dt>
+<dd><p>A length one character vector with path, where the zip should be
+stored. Default is working directory.</p></dd>
 
 
 <dt>api_user</dt>
