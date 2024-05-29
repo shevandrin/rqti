@@ -252,6 +252,10 @@ const QTI = {
   postResponseVariable: postResponseVariable,
 };
 
+    let url_address = new URL(window.location.href);
+    const show_mfb = url_address.searchParams.get("mfb");
+
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // logging.js
@@ -788,8 +792,6 @@ function transform(elem) {
     break;
   case "assessmentItem":
     addCommentInteraction(elem, T);
-    // it is muted in 0.2.1 to show only feedback onchange() event
-    //addModalFeedback(elem, T);
     addNavigation(elem, T);
     if (!allowSkipping(item))
       T.attribs.push({name:"class", value:MANDATORY});
@@ -1023,22 +1025,6 @@ function transform(elem) {
        +"</div></details>");
     }
   }
-
-  // Adds a modal feedback message
-  // it is muted in 0.2.1 to show fb only for onchange() event
-/*  function addModalFeedback(elem, T) {
-      let mfb = elem.querySelector('[identifier="modal_feedback"]');
-      if (mfb) {
-          let ttl = mfb.getAttribute("title");
-          html = "<hr><h3>Modal Feedback (not shown to students)";
-          if (ttl != null) {
-              html += ": " + ttl;
-          }
-          html += "</h3>";
-          html += mfb.innerHTML;
-          T.content.push(html);
-      }
-  }*/
 
   // Adds "nav" element to assessmentTest, testPart,
   // assessmentSection, and assessmentItem.
@@ -3795,6 +3781,10 @@ function triggerShowHide(item) {
       let triggered = elem.classList.contains(TRIGGERED);
       if (!value || (Array.isArray(value) && value.length==0))
         value = getDefaultValue(decl);
+      if (show_mfb == 1 && !value) {
+          value = "modal_feedback";
+      }
+
       if (matchesOrMember(id, value)) {
          if (!triggered)
           setDirty(item);
