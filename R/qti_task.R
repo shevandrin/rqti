@@ -240,7 +240,8 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE,
     # add tag div with printedVariable SCORE for QTIJS rendering
     if (show_score) {
         new_node <- xml2::read_xml('<div class="rqti-ai-result">Score:
-<printedVariable identifier="SCORE" format="%d" /></div>')
+<printedVariable identifier="SCORE" format="%d" />(Max score:
+<printedVariable identifier="MAXSCORE" format="%d" />)</div>')
         root_node <- xml2::xml_root(doc)
         xml2::xml_add_child(root_node, new_node)
     }
