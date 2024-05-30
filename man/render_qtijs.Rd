@@ -4,11 +4,14 @@
 \alias{render_qtijs}
 \title{Render an RMD/xml file or rqti-object as qti xml with QTIJS}
 \usage{
-render_qtijs(input, ...)
+render_qtijs(input, show_mfb = FALSE, ...)
 }
 \arguments{
 \item{input}{(the path to the input Rmd/md/xml document or \link{AssessmentItem},
 \link{AssessmentTest}, \link{AssessmentTestOpal}, \link{AssessmentSection} object)}
+
+\item{show_mfb}{A boolean value; optional. Set \code{TRUE} value to always display
+a model feedback (for example, as a model answer). Default is \code{FALSE}.}
 
 \item{...}{required for passing arguments when knitting}
 }

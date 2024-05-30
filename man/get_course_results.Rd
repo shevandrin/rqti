@@ -7,6 +7,8 @@
 get_course_results(
   course_id,
   node_id,
+  path = ".",
+  rename = TRUE,
   api_user = NULL,
   api_password = NULL,
   endpoint = NULL
@@ -17,14 +19,22 @@ get_course_results(
 
 \item{node_id}{A length one character vector with node id (test).}
 
+\item{path}{A length one character vector with path, where the zip should be
+stored. Default is working directory.}
+
+\item{rename}{A boolean value; optional; Set \code{TRUE} value to take the short
+name of the course element for naming zip (results_shortName.zip). \code{FALSE}
+combines in zip name course id and node id. Default is \code{TRUE}.}
+
 \item{api_user}{A character value of the username in the OPAL.}
 
 \item{api_password}{A character value of the password in the OPAL.}
 
 \item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
 environment variable \code{RQTI_API_ENDPOINT}. To set a global environment
-variable, you need to call \code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
-or you can put these command into .Renviron.}
+variable, you need to call
+\code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or you can put these
+command into .Renviron.}
 }
 \value{
 A dataframe with the results of the course.
