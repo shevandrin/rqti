@@ -430,12 +430,8 @@ get_info_float <- function(node) {
         if (length(cand_values) == 0) cand_values = ""
         cand <- append(cand, cand_values)
 
-        expression <- paste0(".//d1:outcomeVariable[",
-                             "contains(@identifier, \'SCORE\') and ",
-                             "starts-with(@identifier, \'SCORE\') and ",
-                             "contains(@identifier, \'",
-                             id,
-                             "\')]")
+        expression <- paste0(".//d1:outcomeVariable[@identifier=\'SCORE_",
+                             id, "\']")
         score <- xml2::xml_find_all(node, expression)
         if (length(score) == 0) {
             score <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='SCORE']")
@@ -444,12 +440,8 @@ get_info_float <- function(node) {
         if (length(score) == 0) score_value <- "0"
         score_values <- append(score_values, score_value)
 
-        expression <- paste0(".//d1:outcomeVariable[",
-                             "contains(@identifier, \'MAXSCORE\') and ",
-                             "starts-with(@identifier, \'MAXSCORE\') and ",
-                             "contains(@identifier, \'",
-                             id,
-                             "\')]")
+        expression <- paste0(".//d1:outcomeVariable[@identifier=\'MAXSCORE_",
+                             id, "\']")
         maxscore <- xml2::xml_find_all(node, expression)
         if (length(maxscore) == 0) {
             maxscore <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='MAXSCORE']")
