@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="impassionate_grayfox" title="impassionate_grayfox" adaptive="false" timeDependent="false">
-  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+<!DOCTYPE assessmentItem>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="id_task_1777" title="id_task_1777" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="ordered" baseType="identifier">
     <correctResponse>
       <value>ChoiceA</value>
+      <value>ChoiceB</value>
     </correctResponse>
   </responseDeclaration>
   <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
@@ -20,68 +22,19 @@
       <value>0</value>
     </defaultValue>
   </outcomeDeclaration>
+  <outcomeDeclaration identifier="FEEDBACKBASIC" cardinality="single" baseType="identifier">
+    <defaultValue>
+      <value>empty</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="FEEDBACKMODAL" cardinality="multiple" baseType="identifier"/>
   <itemBody>
-    <math>
-      <mrow>
-        <mover accent="true">
-          <mi>p</mi>
-          <mo>^</mo>
-        </mover>
-        <mo>±</mo>
-        <mrow>
-          <mi>z</mi>
-          <mo>⋅</mo>
-          <msqrt>
-            <mstyle displaystyle="true">
-              <mfrac>
-                <mrow>
-                  <mover accent="true">
-                    <mi>p</mi>
-                    <mo>^</mo>
-                  </mover>
-                  <mo>⋅</mo>
-                  <mrow>
-                    <mo>(</mo>
-                    <mrow>
-                      <mn>1</mn>
-                      <mo>-</mo>
-                      <mover accent="true">
-                        <mi>p</mi>
-                        <mo>^</mo>
-                      </mover>
-                    </mrow>
-                    <mo>)</mo>
-                  </mrow>
-                </mrow>
-                <mi>N</mi>
-              </mfrac>
-            </mstyle>
-          </msqrt>
-        </mrow>
-      </mrow>
-    </math>
-    <choiceInteraction responseIdentifier="RESPONSE" shuffle="true" maxChoices="1" orientation="vertical">
+    <orderInteraction responseIdentifier="RESPONSE" shuffle="true">
       <simpleChoice identifier="ChoiceA">a</simpleChoice>
       <simpleChoice identifier="ChoiceB">b</simpleChoice>
-    </choiceInteraction>
+    </orderInteraction>
   </itemBody>
   <responseProcessing>
-    <responseCondition>
-      <responseIf>
-        <isNull>
-          <variable identifier="RESPONSE"/>
-        </isNull>
-      </responseIf>
-      <responseElseIf>
-        <match>
-          <variable identifier="RESPONSE"/>
-          <correct identifier="RESPONSE"/>
-        </match>
-        <setOutcomeValue identifier="SCORE">
-          <variable identifier="MAXSCORE"/>
-        </setOutcomeValue>
-      </responseElseIf>
-    </responseCondition>
     <responseCondition>
       <responseIf>
         <gt>
@@ -104,5 +57,118 @@
         </setOutcomeValue>
       </responseIf>
     </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <isNull>
+          <variable identifier="RESPONSE"/>
+        </isNull>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">empty</baseValue>
+        </setOutcomeValue>
+      </responseIf>
+      <responseElseIf>
+        <lt>
+          <variable identifier="SCORE"/>
+          <variable identifier="MAXSCORE"/>
+        </lt>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">incorrect</baseValue>
+        </setOutcomeValue>
+      </responseElseIf>
+      <responseElse>
+        <setOutcomeValue identifier="FEEDBACKBASIC">
+          <baseValue baseType="identifier">correct</baseValue>
+        </setOutcomeValue>
+      </responseElse>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <and>
+          <gte>
+            <variable identifier="SCORE"/>
+            <baseValue baseType="float">0</baseValue>
+          </gte>
+        </and>
+        <setOutcomeValue identifier="FEEDBACKMODAL">
+          <multiple>
+            <variable identifier="FEEDBACKMODAL"/>
+            <baseValue baseType="identifier">modal_feedback</baseValue>
+          </multiple>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <and>
+          <match>
+            <baseValue baseType="identifier">incorrect</baseValue>
+            <variable identifier="FEEDBACKBASIC"/>
+          </match>
+        </and>
+        <setOutcomeValue identifier="FEEDBACKMODAL">
+          <multiple>
+            <variable identifier="FEEDBACKMODAL"/>
+            <baseValue baseType="identifier">incorrect</baseValue>
+          </multiple>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <and>
+          <match>
+            <baseValue baseType="identifier">correct</baseValue>
+            <variable identifier="FEEDBACKBASIC"/>
+          </match>
+        </and>
+        <setOutcomeValue identifier="FEEDBACKMODAL">
+          <multiple>
+            <variable identifier="FEEDBACKMODAL"/>
+            <baseValue baseType="identifier">correct</baseValue>
+          </multiple>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <match>
+          <index n="1">
+            <variable identifier="RESPONSE"/>
+          </index>
+          <index n="1">
+            <correct identifier="RESPONSE"/>
+          </index>
+        </match>
+        <setOutcomeValue identifier="SCORE">
+          <sum>
+            <variable identifier="SCORE"/>
+            <baseValue baseType="float">0.5</baseValue>
+          </sum>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <responseCondition>
+      <responseIf>
+        <match>
+          <index n="2">
+            <variable identifier="RESPONSE"/>
+          </index>
+          <index n="2">
+            <correct identifier="RESPONSE"/>
+          </index>
+        </match>
+        <setOutcomeValue identifier="SCORE">
+          <sum>
+            <variable identifier="SCORE"/>
+            <baseValue baseType="float">0.5</baseValue>
+          </sum>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
   </responseProcessing>
+  <modalFeedback identifier="modal_feedback" outcomeIdentifier="FEEDBACKMODAL" showHide="show">model answer</modalFeedback>
+  <modalFeedback identifier="incorrect" outcomeIdentifier="FEEDBACKMODAL" showHide="show">wrong answer</modalFeedback>
+  <modalFeedback identifier="correct" outcomeIdentifier="FEEDBACKMODAL" showHide="show">correct answer</modalFeedback>
+  <div class="rqti-ai-result">Score:
+<printedVariable identifier="SCORE" format="%d"/></div>
 </assessmentItem>
