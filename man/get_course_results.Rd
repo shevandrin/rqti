@@ -2,7 +2,7 @@
 % Please edit documentation in R/api_opal.R
 \name{get_course_results}
 \alias{get_course_results}
-\title{Get course results by resource id and node id}
+\title{Get zip with course results by resource id and node id}
 \usage{
 get_course_results(
   resource_id,
@@ -37,13 +37,13 @@ variable, you need to call
 command into .Renviron.}
 }
 \value{
-A dataframe with the results of the course.
+It downloads a zip and return a character string with path.
 }
 \description{
-Get course results by resource id and node id
+Get zip with course results by resource id and node id
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-df <- get_course_results("89068111333293", "1617337826161777006")
+zip_file <- get_course_results("89068111333293", "1617337826161777006")
 \dontshow{\}) # examplesIf}
 }

@@ -345,7 +345,7 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
     return(df)
 }
 
-#' Get course results by resource id and node id
+#' Get zip with course results by resource id and node id
 #'
 #' @param resource_id A length one character vector with resource id.
 #' @param node_id A length one character vector with node id (test).
@@ -361,9 +361,9 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
 #'   variable, you need to call
 #'   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
 #'   command into .Renviron.
-#' @return A dataframe with the results of the course.
+#' @return It downloads a zip and return a character string with path.
 #' @examplesIf interactive()
-#' df <- get_course_results("89068111333293", "1617337826161777006")
+#' zip_file <- get_course_results("89068111333293", "1617337826161777006")
 #' @export
 get_course_results <- function(resource_id, node_id, path = ".",
                                rename = TRUE,
@@ -404,14 +404,14 @@ get_course_results <- function(resource_id, node_id, path = ".",
     data_tag <- xml2::xml_find_first(parse, ".//data")
     if (!is.na(data_tag)) {
         zip_url <- xml2::xml_text(data_tag)
-        result <- download.file(zip_url, file.path(dir, file_name))
-        if (result == 0) message("See zip in ", file.path(dir, file_name))
+        zip_path <- file.path(dir, file_name)
+        result <- download.file(zip_url, zip_path)
+        if (result == 0) message("See zip in ", zip_path)
+        return(normalizePath(zip_path, winslash = "/"))
     } else {
-        zip_url <- NULL
         message("There is no data about the results.")
+        return(NULL)
     }
-
-    return(zip_url)
 }
 
 upload_resource <- function(file, display_name, rtype, access,
