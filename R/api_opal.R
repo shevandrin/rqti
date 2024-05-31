@@ -345,9 +345,9 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
     return(df)
 }
 
-#' Get course results by course id and node id
+#' Get course results by resource id and node id
 #'
-#' @param course_id A length one character vector with course id.
+#' @param resource_id A length one character vector with resource id.
 #' @param node_id A length one character vector with node id (test).
 #' @param path A length one character vector with path, where the zip should be
 #'   stored. Default is working directory.
@@ -365,7 +365,7 @@ get_course_elements <- function(course_id, api_user = NULL, api_password = NULL,
 #' @examplesIf interactive()
 #' df <- get_course_results("89068111333293", "1617337826161777006")
 #' @export
-get_course_results <- function(course_id, node_id, path = ".",
+get_course_results <- function(resource_id, node_id, path = ".",
                                rename = TRUE,
                                api_user = NULL, api_password = NULL,
                                endpoint = NULL) {
@@ -376,7 +376,7 @@ get_course_results <- function(course_id, node_id, path = ".",
         if (is.null(user_id)) return(NULL)
     }
 
-    url_res <- paste0(endpoint, "restapi/repo/courses/", course_id,
+    url_res <- paste0(endpoint, "restapi/repo/courses/", resource_id,
                       "/assessments/", node_id, "/results")
     req <- request(url_res) %>%
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
@@ -388,12 +388,12 @@ get_course_results <- function(course_id, node_id, path = ".",
     if (ext == "") {
         dir <- path
         if (rename) {
-            df <- get_course_elements(course_id, api_user, api_password, endpoint)
+            df <- get_course_elements(resource_id, api_user, api_password, endpoint)
             short_name <- subset(df, df$nodeId == node_id)$shortName
             short_name <- paste(strsplit(short_name, " ")[[1]], collapse = "_")
             file_name <- paste0("results_", short_name, ".zip")
         } else {
-            file_name <- paste0("results_", course_id, "_", node_id, ".zip")
+            file_name <- paste0("results_", resource_id, "_", node_id, ".zip")
         }
     } else {
         dir <- dirname(path)

@@ -2,10 +2,10 @@
 % Please edit documentation in R/api_opal.R
 \name{get_course_results}
 \alias{get_course_results}
-\title{Get course results by course id and node id}
+\title{Get course results by resource id and node id}
 \usage{
 get_course_results(
-  course_id,
+  resource_id,
   node_id,
   path = ".",
   rename = TRUE,
@@ -15,7 +15,7 @@ get_course_results(
 )
 }
 \arguments{
-\item{course_id}{A length one character vector with course id.}
+\item{resource_id}{A length one character vector with resource id.}
 
 \item{node_id}{A length one character vector with node id (test).}
 
@@ -40,7 +40,7 @@ command into .Renviron.}
 A dataframe with the results of the course.
 }
 \description{
-Get course results by course id and node id
+Get course results by resource id and node id
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
