@@ -2,6 +2,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
 
+# pkgdown <img src="man/figures/logo.svg" align="right" />
+
 [![R-CMD-check](https://github.com/shevandrin/rqti/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shevandrin/rqti/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml)
 [![Codecov test
