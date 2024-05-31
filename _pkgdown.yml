@@ -3,6 +3,7 @@ development:
   mode: auto
 template:
   bootstrap: 5
+  logo: "man/figures/logo.svg"
 articles:
 - title: Exercises
   navbar: Create Rmd exercises

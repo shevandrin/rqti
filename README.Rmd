@@ -1,3 +1,4 @@
+# pkgdown <img src="man/figures/logo.svg" align="right" />
 ---
 output: github_document
 ---
