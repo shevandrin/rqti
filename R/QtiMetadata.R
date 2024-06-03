@@ -104,9 +104,18 @@ setClass("QtiMetadata", slots = c(contributor = "list",
                                   version = "character"),
          prototype = prototype(contributor = list(qti_contributor()),
                                rights = Sys.getenv("RQTI_RIGHTS"),
-                               version = "0.0.9",
+                               # version = "0.0.9",
                                description = ""),
          validity = check_metadata)
+
+setMethod("initialize", "QtiMetadata", function(.Object, ...) {
+    .Object <- callNextMethod()
+
+    .Object@version <- replace_na(.Object@version)
+
+    validObject(.Object)
+    .Object
+})
 
 #' Constructor function for class QtiMetadata
 #'
@@ -128,7 +137,8 @@ setClass("QtiMetadata", slots = c(contributor = "list",
 #'                       version = "1.0")
 #' @export
 qti_metadata<- function(contributor = list(), description = "",
-                        rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
+                        rights = Sys.getenv("RQTI_RIGHTS"),
+                        version = NA_character_) {
     if (!is(contributor, "list")) contributor <- list(contributor)
     params <- as.list(environment())
     params$Class <- "QtiMetadata"
