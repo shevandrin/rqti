@@ -104,7 +104,6 @@ setClass("QtiMetadata", slots = c(contributor = "list",
                                   version = "character"),
          prototype = prototype(contributor = list(qti_contributor()),
                                rights = Sys.getenv("RQTI_RIGHTS"),
-                               # version = "0.0.9",
                                description = ""),
          validity = check_metadata)
 

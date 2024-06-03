@@ -8,7 +8,7 @@ qti_metadata(
   contributor = list(),
   description = "",
   rights = Sys.getenv("RQTI_RIGHTS"),
-  version = "0.0.9"
+  version = NA_character_
 )
 }
 \arguments{
