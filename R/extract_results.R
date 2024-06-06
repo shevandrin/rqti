@@ -86,6 +86,7 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
             length(ai_files), " - files with assessment items")
 
     if (length(ai_files) > 0) db <- get_titles(ai_files, tdir)
+
     else {
         warning("In given archive files with exercises are not found.\n",
                 "The \'title\' column will be skipped in the final dataframe",
@@ -320,7 +321,13 @@ get_info_identifier <- function(node, options_node) {
     corr_values <- get_value(corr_res)
 
     cand_res <- xml2::xml_find_all(node, ".//d1:candidateResponse")[-1]
-    cand_values <- get_value(cand_res)
+    if (length(cand_res) !=0) {
+        cand_values <- get_value(cand_res)
+    } else {
+        cand_values <-  rep("", length(corr_values))
+    }
+
+
 
     choice_seq <- xml2::xml_attr(options_node, "choiceSequence")
 
