@@ -136,11 +136,13 @@ extract_xml <- function(file) {
     dir.create(tdir)
 
     xml_list <- list.files(path = zdir,full.names = TRUE, pattern = ".xml")
+    check_valid_utf8(xml_list)
     file.copy(xml_list, tdir, overwrite = TRUE)
     xml_list <- list.files(path = tdir,full.names = TRUE)
     Map(make_name_unique, xml_list, basename(xml_list))
 
     zip_files <- list.files(path = zdir, pattern = ".zip")
+    check_valid_utf8(zip_files)
     Map(get_all_xml, zip_files, zdir, tdir)
     return(tdir)
 }
@@ -505,6 +507,7 @@ get_all_xml <- function(file, indir, exdir) {
     zip_file <- file.path(indir, file)
     zip::unzip(zip_file, exdir = exdir, junkpaths = TRUE)
     content <- zip::zip_list(zip_file)$filename
+    check_valid_utf8(content)
     files <- file.path(exdir, content)
     files <- files[grep(".xml", files)]
 
@@ -531,4 +534,13 @@ get_titles <- function(files, folder) {
         }
     }
     return(result)
+}
+
+check_valid_utf8 <- function(input) {
+    not_valid <- input[!validUTF8(input)]
+    if (length(not_valid) > 0) {
+        stop("Some file names do not match Utf-8 encoding: ", not_valid,
+             call. = FALSE)
+    }
+    return(NULL)
 }
