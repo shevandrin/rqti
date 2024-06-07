@@ -146,7 +146,10 @@ create_response_declaration_order <- function(object) {
 setMethod("createResponseCondition", signature(object = "Ordering"),
     function(object) {
         if (object@points_per_answer) {
-            answ_points <- object@points / length(object@choices)
+            counts <- length(object@choices)
+            answ_points <- round(object@points / counts, 3)
+            answ_points <- rep(answ_points, counts - 1)
+            answ_points <- c(answ_points, object@points - sum(answ_points))
             indexes <- seq(length(object@choices))
             resp_cond <- Map(create_condition_points, answ_points, indexes)
             return(resp_cond)
