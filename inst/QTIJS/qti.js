@@ -2123,8 +2123,10 @@ function setupDragAndDropInteraction(interaction) {
         });
       }
       value = choices.map(choice=>choice.getAttribute(ID));
-      if (maxChoices && maxChoices<value.length)
-        value = value.slice(0, maxChoices);
+      // rqti: mute this part to deliver right point for ordering with points per answer
+/*      if (maxChoices && maxChoices<value.length)
+        value = value.slice(0, maxChoices);*/
+
 
     } else if (type=="associateInteraction") {
       let table = interaction.querySelector(ASSOC_TABLE_SEL);
@@ -2147,7 +2149,6 @@ function setupDragAndDropInteraction(interaction) {
           : null;
       }).filter(pair=>pair!=null);
     }
-
     postResponseVariable(interaction, value);
   }
 }
@@ -2776,7 +2777,6 @@ function postResponseVariable(htmlInteraction, value, variable) {
   let item = decl.elem.parentElement;
   let htmlItem = getHTMLItemById(item.id);
   let qtiInteraction = QTI.DOM.getElementById(htmlInteraction.id);
-
   if (value !== undefined)
     decl.value = value;
   setCompletionStatus(decl.elem, "unknown", "not_attempted");
@@ -3539,7 +3539,6 @@ function mapEntry(elem) {
 // and cardinality of the variable, if possible.
 function coerce(decl, value, defaultValue) {
   let result=value;
-
   if (result===null && defaultValue)
     result = defaultValue;
   if (Array.isArray(result)
@@ -3638,7 +3637,6 @@ function responseProcessing(item) {
     processingComplete(elem, processing);
     outcomeProcessing()
   };
-
   if (rpblocks.length) {
     rpblocks.forEach(rp=>{
       INFO("responseProcessing", identifier(item), clock()+"msecs");
@@ -3781,6 +3779,7 @@ function triggerShowHide(item) {
       let triggered = elem.classList.contains(TRIGGERED);
       if (!value || (Array.isArray(value) && value.length==0))
         value = getDefaultValue(decl);
+
       if (show_mfb == 1 && !value) {
           value = "modal_feedback";
       }
@@ -4408,7 +4407,9 @@ function match(a, b) {
   let result =
       a==b
       || (Array.isArray(a) && Array.isArray(b) && a.length==b.length
-          && a.filter(v=>!b.includes(v)).length==0);
+          // this conditions was changed for rqti package ordering type per answers=F
+          //&& a.filter(v=>!b.includes(v)).length==0);
+          && a.every((value, index) => value === b[index]));
   return result;
 }
 
