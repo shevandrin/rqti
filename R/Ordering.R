@@ -130,9 +130,7 @@ setMethod("createResponseDeclaration", signature(object = "Ordering"),
 #' @aliases createResponseProcessing,Ordering
 setMethod("createResponseProcessing", signature(object = "Ordering"),
           function(object) {
-              points_cond <- createResponseCondition(object)
-              rp <- create_default_resp_processing_order(object)
-              tagAppendChildren(rp, points_cond)
+              create_default_resp_processing_order(object)
           })
 
 create_response_declaration_order <- function(object) {

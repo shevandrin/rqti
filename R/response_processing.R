@@ -83,14 +83,15 @@ make_first_cond_sc_order <- function() {
 
 #process modalfeedback for order
 create_default_resp_processing_order <- function(object) {
+    points_cond <- createResponseCondition(object)
     resp_cond1 <- NULL
     if (!object@points_per_answer) resp_cond1 <- make_first_cond_sc_order()
     resp_cond23 <- make_default_resp_cond()
     resp_cond4 <- NULL
     if (length(object@feedback) > 0) resp_cond4 <- make_default_feedback_cond()
     conditions <- Map(createResponseCondition, object@feedback)
-    resp_proc <- responseProcessing(list(resp_cond1, resp_cond23, resp_cond4,
-                                         conditions))
+    resp_proc <- responseProcessing(list(points_cond, resp_cond1, resp_cond23,
+                                         resp_cond4, conditions))
     return(resp_proc)
 }
 
