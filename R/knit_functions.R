@@ -17,8 +17,8 @@
 #'
 #' @param input (the path to the input Rmd/md/xml document or [AssessmentItem],
 #'   [AssessmentTest], [AssessmentTestOpal], [AssessmentSection] object)
-#' @param show_mfb A boolean value; optional. Set `TRUE` value to always display
-#' a model feedback (for example, as a model answer). Default is `FALSE`.
+#' @param preview_feedback A boolean value; optional. Set `TRUE` value to always
+#' display a model feedback (for example, as a model answer). Default is `FALSE`.
 #' @param ... required for passing arguments when knitting
 #' @return An URL of the corresponding local server to display the rendering
 #'   result.
@@ -28,7 +28,7 @@
 #' render_qtijs(file)
 #'
 #' @export
-render_qtijs <- function(input, show_mfb = FALSE, ...) {
+render_qtijs <- function(input, preview_feedback = FALSE, ...) {
     clean_qtijs()
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
@@ -41,7 +41,7 @@ render_qtijs <- function(input, show_mfb = FALSE, ...) {
             url <- prepare_renderer()
         }
     }
-    url <- paste0(url, "?mfb=", as.numeric(show_mfb))
+    url <- paste0(url, "?mfb=", as.numeric(preview_feedback))
     message("Open browser at: ", url, " for preview")
     prepareQTIJSFiles(input, qtijs_path())
     if (Sys.getenv("RSTUDIO") == "1") {
