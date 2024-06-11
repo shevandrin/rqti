@@ -4,11 +4,19 @@
 
   function clearInputValues(inputItem) {
       if (inputItem !== null) {
-        inputItem.setAttribute("id-row", "");
-        inputItem.setAttribute("value", "");
+        inputItem.setAttribute("id-row", null);
+        updateHiddenInputValue(inputItem, null)
+        //inputItem.setAttribute("value", "");
         inputItem = null;
       };
 
+  };
+
+  function updateHiddenInputValue(input, value) {
+      input.value = value;
+
+      const event = new Event('change');
+      input.dispatchEvent(event);
   };
 
   function dragNdrop() {
@@ -79,7 +87,8 @@
           let id_row = draggedItem.getAttribute("id-row");
           inpt = this.parentElement.querySelector(".rqti-hidden");
           inpt.setAttribute("id-row", id_row);
-          inpt.setAttribute("value", id_row + " " + inpt.getAttribute("id-col"));
+          new_value = id_row + " " + inpt.getAttribute("id-col");
+          updateHiddenInputValue(inpt, new_value);
         });
 
         leftBox.addEventListener("dragover", function(e) {

@@ -1269,7 +1269,7 @@ function transform(elem) {
 			drop here
 		</div>
 		<div class="rqti-order-label">${col[1]}</div>
-		<input type="hidden" class="rqti-hidden" ${ID}="some_id2" name="${getId(interaction,"RG")}" id-col="${col[0]}" id-row="" value="">
+		<input type="hidden" class="rqti-hidden" ${ID}="${col[0]}" name="${getId(interaction,"RG")}" id-col="${col[0]}" id-row="" value="">
 		</div>`);
 		html += `</div></div>`;
 		T.content.push(html);
@@ -1773,7 +1773,6 @@ function setupInputInteraction(interaction) {
   function handleResponse(evt) {
     const input = evt.currentTarget;
     evt.stopPropagation();
-
     if (input.tagName=="BUTTON"
         || input.tagName=="SELECT"
         || input.tagName=="TEXTAREA") {
@@ -1878,6 +1877,11 @@ function setupInputInteraction(interaction) {
     switch(input.tagName) {
     case "INPUT":
       switch(input.getAttribute("type")) {
+      case "hidden":
+        responseVariable.value=[];
+        [...interaction.querySelectorAll('input[class="rqti-hidden"]')]
+           .forEach(el => {responseVariable.value.push(el.value)});
+        break;
       case "radio":
       case "checkbox":
         // choiceInteraction, hottextInteraction, matchInteraction
