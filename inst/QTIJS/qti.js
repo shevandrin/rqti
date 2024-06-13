@@ -739,7 +739,6 @@ function doTransforms(elem, ctx) {
 function transform(elem) {
   if (!elem)
     return "";
-  let span_inline_fb = "";
 
   let item = getQTIAssessmentItem(elem);
   let id = elem.getAttribute("id");
@@ -853,8 +852,6 @@ function transform(elem) {
     break;
   case "hottext":
   case "simpleChoice":
-      let id_resp = interaction.getAttribute("responseIdentifier")
-      span_inline_fb = `<span id=rqti-icon ${RESPONSE_ID}=${id_resp} class=visible></span>`;
   case "simpleAssociableChoice":
     transformChoice(elem, T);
     break;
@@ -880,7 +877,7 @@ function transform(elem) {
   if (T.tag != null) {
     let [opentag,closetag]
         = getTags(T.tag, transformAttributes(elem, T.attribs));
-    return [T.wrapstart,span_inline_fb, opentag,T.content.join(" "),
+    return [T.wrapstart,opentag,T.content.join(" "),
             closetag,T.wrapend].join(" ");
   } else {
     return "";
@@ -1071,8 +1068,9 @@ function transform(elem) {
       T.attribs.push({name:"type", value:type, prefix: false});
       T.attribs.push({name:"name", value:getId(interaction,"RG"),prefix:false});
       T.tag = "input";
+      let id_resp = interaction.getAttribute("responseIdentifier")
       if (interaction.tagName=="choiceInteraction") {
-        T.wrapstart = `<div class='${INPUT_WRAP}'><label class="${CHOICE}">`;
+        T.wrapstart = `<div class='${INPUT_WRAP}'><label class="${CHOICE}"><span id=rqti-icon ${RESPONSE_ID}=${id_resp} class=visible></span>`;
         T.wrapend = "</label></div>";
       } else {
         T.wrapstart = (T.wrapstart||"")
@@ -1102,6 +1100,8 @@ function transform(elem) {
       }
       T.tag = "li";
       T.attribs.push({name:"draggable", value:"true", prefix:false});
+      let id_resp_ord = interaction.getAttribute("responseIdentifier")
+      T.content.unshift(`<span id=rqti-icon ${RESPONSE_ID}=${id_resp_ord} class=visible></span>`);
       if (--interaction.choices===0) {
         T.wrapend = (T.wrapend||"") + `</ol>`;
         delete interaction.choices;
@@ -3816,14 +3816,32 @@ function triggerShowHide(item) {
 // Updates result icons
 function updateResultIcons(item) {
     let spanIcons = [...document.querySelectorAll('[id="rqti-icon"]')];
+    let count_order = 0;
     spanIcons.forEach(el=>{
         var resp_id = el.getAttribute(RESPONSE_ID);
         let base_type = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("baseType");
+        let cardinality = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("cardinality");
+
         switch(base_type) {
         case "identifier":
             let resp_user = item.declarations["RESPONSE"].value;
-            if (resp_user === null) return;
-                let resp_id = el.nextElementSibling.getAttribute(ID);
+            if (cardinality === "ordered") {
+                if (resp_user !== null) {
+                    let resp_id = el.parentElement.getAttribute(ID);
+                    let corr_resp = item.declarations["RESPONSE"].correctResponse;
+                    if (corr_resp[count_order] === resp_user[count_order])  {
+                        el.className = "rqti-correct";
+                        el.classList.add("visible");
+                    } else {
+                        el.className = "rqti-incorrect";
+                        el.classList.add("visible");
+                    };
+                    count_order += 1;
+                }
+            } else {
+               if (resp_user === null) return;
+               let resp_id = el.nextElementSibling.getAttribute(ID);
+
                 let was_given = resp_user.includes(resp_id);
                 if (was_given) {
                     let resp_corr = item.declarations["RESPONSE"].correctResponse;
@@ -3839,6 +3857,7 @@ function updateResultIcons(item) {
                     el.removeAttribute("class");
                     el.className = "visible";
                 };
+            }
             break;
         case "float":
             let resp_id_flt = el.getAttribute(RESPONSE_ID)
