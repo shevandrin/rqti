@@ -338,3 +338,27 @@ li[draggable=true] {
     padding: 5px;
     margin: 10px 0px 5px 0px;
 }
+
+span.rqti-correct {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("images/correct.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+span.rqti-incorrect {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("images/incorrect.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+span.visible {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+}

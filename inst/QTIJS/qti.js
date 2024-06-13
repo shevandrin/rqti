@@ -854,7 +854,7 @@ function transform(elem) {
   case "hottext":
   case "simpleChoice":
       let id_resp = interaction.getAttribute("responseIdentifier")
-      span_inline_fb = `<span id=rqti-icon ${RESPONSE_ID}=${id_resp}></span>`;
+      span_inline_fb = `<span id=rqti-icon ${RESPONSE_ID}=${id_resp} class=visible></span>`;
   case "simpleAssociableChoice":
     transformChoice(elem, T);
     break;
@@ -3817,7 +3817,7 @@ function triggerShowHide(item) {
 function updateResultIcons(item) {
     let spanIcons = [...document.querySelectorAll('[id="rqti-icon"]')];
     spanIcons.forEach(el=>{
-        let resp_id = el.getAttribute(RESPONSE_ID);
+        var resp_id = el.getAttribute(RESPONSE_ID);
         let base_type = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("baseType");
         switch(base_type) {
         case "identifier":
@@ -3829,28 +3829,45 @@ function updateResultIcons(item) {
                     let resp_corr = item.declarations["RESPONSE"].correctResponse;
                     if (resp_corr.includes(resp_id)) {
                         el.className = "rqti-correct";
+                        el.classList.add("visible");
+
                     } else {
                         el.className = "rqti-incorrect";
+                        el.classList.add("visible");
                     }
                 } else {
                     el.removeAttribute("class");
+                    el.className = "visible";
                 };
             break;
         case "float":
+            let resp_id_flt = el.getAttribute(RESPONSE_ID)
+            let resp_user_flt = item.declarations[resp_id_flt].value;
+            if (resp_user_flt !== null && resp_user_flt !== "") {
+                let resp_corr = item.declarations[resp_id_flt].correctResponse;
+                if (resp_corr === Number(resp_user_flt)) {
+                        el.className = "rqti-correct";
+                    } else {
+                        el.className = "rqti-incorrect";
+                    };
+            } else {
+                el.removeAttribute("class");
+            };
+
             break;
         case "string":
-            let resp_id_ = el.getAttribute(RESPONSE_ID)
-            let mapping_corr = item.declarations[resp_id_].mapping.entries;
+            let resp_id_str = el.getAttribute(RESPONSE_ID)
+            let mapping_corr = item.declarations[resp_id_str].mapping.entries;
             let resp_corr = Object.keys(mapping_corr).map(key => mapping_corr[key].mapKey);
             let register = Object.keys(mapping_corr).map(key => mapping_corr[key].caseSensitive);
             let case_sensitive = register.some(value => value === 'true');
-            let resp_user_ = item.declarations[resp_id_].value;
-            if (!case_sensitive && resp_user_ !== null) {
-                resp_user_ = resp_user_.toLowerCase();
+            let resp_user_str = item.declarations[resp_id_str].value;
+            if (!case_sensitive && resp_user_str !== null) {
+                resp_user_str = resp_user_str.toLowerCase();
                 resp_corr = resp_corr.map(value => value.toLowerCase());
             };
-            if (resp_user_ != null && resp_user_ !== "") {
-                if (resp_corr.includes(resp_user_)) {
+            if (resp_user_str != null && resp_user_str !== "") {
+                if (resp_corr.includes(resp_user_str)) {
                             el.className = "rqti-correct";
                         } else {
                             el.className = "rqti-incorrect";
