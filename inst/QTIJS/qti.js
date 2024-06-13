@@ -739,6 +739,7 @@ function doTransforms(elem, ctx) {
 function transform(elem) {
   if (!elem)
     return "";
+  let span_inline_fb = "";
 
   let item = getQTIAssessmentItem(elem);
   let id = elem.getAttribute("id");
@@ -852,6 +853,8 @@ function transform(elem) {
     break;
   case "hottext":
   case "simpleChoice":
+      let id_resp = interaction.getAttribute("responseIdentifier")
+      span_inline_fb = `<span id=rqti-icon ${RESPONSE_ID}=${id_resp}></span>`;
   case "simpleAssociableChoice":
     transformChoice(elem, T);
     break;
@@ -874,11 +877,10 @@ function transform(elem) {
     T.tag = elem.getAttribute(TAG) || "span";
     break;
   }
-
   if (T.tag != null) {
     let [opentag,closetag]
         = getTags(T.tag, transformAttributes(elem, T.attribs));
-    return [T.wrapstart,opentag,T.content.join(" "),
+    return [T.wrapstart,span_inline_fb, opentag,T.content.join(" "),
             closetag,T.wrapend].join(" ");
   } else {
     return "";
@@ -1179,10 +1181,11 @@ function transform(elem) {
 
   // Generates an input type=text for textEntryInteraction
   function transformTextEntryInteraction(elem, T) {
+    id_resp = elem.getAttribute("responseIdentifier");
     let ex_len = elem.getAttribute("expectedLength");
     T.tag = "span";
     T.content.unshift(
-      `<input type="text" placeholder="${getPlaceholder(elem, "")}" size="${ex_len}"/>`);
+      `<span id=rqti-icon ${RESPONSE_ID}=${id_resp}></span><input type="text" placeholder="${getPlaceholder(elem, "")}" size="${ex_len}"/>`);
   }
 
   // Returns placeholder text for an input or textarea.
@@ -3746,6 +3749,7 @@ function processingComplete(elem, processing) {
   triggerShowHide(elem);
   updatePrintedVariables(elem);
   updateMathMLVariables(elem);
+  updateResultIcons(elem);
   pivotTables(document)
 }
 
@@ -3787,7 +3791,6 @@ function triggerShowHide(item) {
       if (show_mfb == 1 && !value) {
           value = "modal_feedback";
       }
-
       if (matchesOrMember(id, value)) {
          if (!triggered)
           setDirty(item);
@@ -3808,6 +3811,58 @@ function triggerShowHide(item) {
       }
     }
   });
+}
+
+// Updates result icons
+function updateResultIcons(item) {
+    let spanIcons = [...document.querySelectorAll('[id="rqti-icon"]')];
+    spanIcons.forEach(el=>{
+        let resp_id = el.getAttribute(RESPONSE_ID);
+        let base_type = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("baseType");
+        switch(base_type) {
+        case "identifier":
+            let resp_user = item.declarations["RESPONSE"].value;
+            if (resp_user === null) return;
+                let resp_id = el.nextElementSibling.getAttribute(ID);
+                let was_given = resp_user.includes(resp_id);
+                if (was_given) {
+                    let resp_corr = item.declarations["RESPONSE"].correctResponse;
+                    if (resp_corr.includes(resp_id)) {
+                        el.className = "rqti-correct";
+                    } else {
+                        el.className = "rqti-incorrect";
+                    }
+                } else {
+                    el.removeAttribute("class");
+                };
+            break;
+        case "float":
+            break;
+        case "string":
+            let resp_id_ = el.getAttribute(RESPONSE_ID)
+            let mapping_corr = item.declarations[resp_id_].mapping.entries;
+            let resp_corr = Object.keys(mapping_corr).map(key => mapping_corr[key].mapKey);
+            let register = Object.keys(mapping_corr).map(key => mapping_corr[key].caseSensitive);
+            let case_sensitive = register.some(value => value === 'true');
+            let resp_user_ = item.declarations[resp_id_].value;
+            if (!case_sensitive && resp_user_ !== null) {
+                resp_user_ = resp_user_.toLowerCase();
+                resp_corr = resp_corr.map(value => value.toLowerCase());
+            };
+            if (resp_user_ != null && resp_user_ !== "") {
+                if (resp_corr.includes(resp_user_)) {
+                            el.className = "rqti-correct";
+                        } else {
+                            el.className = "rqti-incorrect";
+                        }
+            } else {
+                el.removeAttribute("class");
+            };
+            break;
+        case "directedPair":
+            break;
+        }; // end of switch
+    }); // end of for each for span
 }
 
 // Updates printed variables with latest variable values.
