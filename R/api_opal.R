@@ -444,6 +444,50 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
     return(response)
 }
 
+#' Referenzierte Lernressource eines Kursbausteins austauschen
+#'
+#' @param course_id - Kursnummer. Sie finden diese in den Detailinformationen
+#'   des Kurses (Ressourcen-ID).
+#' @param node_id Kursbausteinnummer. Diese befindet sich beispielsweise im
+#'   Kurseditor im Tab "Titel und Beschreibung" des betreffenden Kursbausteins.
+#' @param resource_id ID der Ressource. Sie finden diese u.a. in der
+#'   Detailansicht der gewünschten Ressource
+#' @param api_user A character value of the username in the OPAL.
+#' @param api_password A character value of the password in the OPAL.
+#' @param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'   environment variable `RQTI_API_ENDPOINT`. To set a global environment
+#'   variable, you need to call
+#'   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+#'   command into .Renviron.
+#' @return Zu einem Kurs mit der übergebenen Kursnummer (courseId) wird am
+#'   Kursbaustein (nodeId) die hinterlegte LernressourceID ausgetauscht. Die, in
+#'   der Anfrage enthaltene Ressource (repoID), wird als neuer Inhalt am
+#'   Kursbaustein referenziert. Eine solche Aktualisierung ist nur für
+#'   Ressourcen vom Typ Test und Fragebogen verfügbar.
+#' @examplesIf interactive()
+#'    zip_file <- update_test_course ("89068111333293",
+#'   "1617337826161777006", "44829868033")
+#' @export
+update_test_course <- function(course_id, node_id, resource_id,
+                               api_user = NULL, api_password = NULL,
+                               endpoint = NULL) {
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
+    # check auth
+    if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
+        user_id <- auth_opal(api_user, api_password)
+        if (is.null(user_id)) return(NULL)
+    }
+
+    url_res <- paste0(endpoint, "restapi/repo/courses/", course_id,
+                      "/elements/", node_id,
+                      "/test/update?testResourceableId=", resource_id)
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("PUT")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    print(response)
+
+}
+
 # check if this is a test using the manifest file
 is_test <- function(file) {
     zip_con <- unz(file, "imsmanifest.xml")
