@@ -362,3 +362,44 @@ span.visible {
     width: 12px;
     height: 12px;
 }
+
+.rqti-table-checkbox input[type="checkbox"]{
+    display: none;
+}
+.rqti-table-checkbox span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+            border: 2px solid #248F8F; /* Border color */
+            border-radius: 2px; /* Smooth border */
+            transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+            margin-right: 8px; /* Space between checkbox and label text */
+            vertical-align: middle;
+}
+
+.rqti-table-checkbox input[type="checkbox"]:checked + span {
+            background-color: #248F8F; /* Checked background color */
+            border-color: #248F8F; /* Checked border color */
+}
+
+.rqti-table-right input[type="checkbox"]:checked + span {
+            background-color: green; /* Checked background color */
+}
+
+.rqti-table-wrong input[type="checkbox"]:checked + span {
+            background-color: red; /* Checked background color */
+}
+
+.rqti-table-checkbox input[type="checkbox"]:checked + span::after {
+            content: '';
+            display: block;
+            width: 3px;
+            height: 5px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            position: relative;
+            left: 3px;
+            top: 1px;
+}

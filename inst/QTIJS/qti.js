@@ -1169,8 +1169,10 @@ function transform(elem) {
 
   // Generates a select for inlineChoiceInteraction
   function transformInlineChoiceInteraction(elem, T) {
+    let id_resp = interaction.getAttribute("responseIdentifier");
     T.tag = "select";
     T.content.push(`<option selected="true">Choose...</option>`);
+    T.wrapstart = `<span id=rqti-icon ${RESPONSE_ID}=${id_resp}></span>`;
   }
 
   // Generates textarea for an extendedTextInteraction
@@ -1263,25 +1265,30 @@ function transform(elem) {
     });
     let maxAssocs = +elem.getAttribute("maxAssociations");
 	if (maxAssocs == 0) {
+	    let id_resp = elem.getAttribute("responseIdentifier");
 		let html = `<div class="rqti-container">
 		<div id="rqti-left">`;
 		rows.forEach(row=>html += `<div class="rqti-list" draggable="true" id-row=${row[0]}>${row[1]}</div>`);
-		html += `</div><div id="rqti-right" data-qtijs-response-identifier="RESPONSE">`;
+		html += `</div><div id="rqti-right" data-qtijs-response-identifier=${id_resp}>`;
 		cols.forEach(col=>html += `<div class="rqti-row">
         <div class="rqti-dropzone">
 			drop here
 		</div>
-		<div class="rqti-order-label">${col[1]}</div>
+		<span id=rqti-icon ${RESPONSE_ID}=${id_resp} class=visible>
 		<input type="hidden" class="rqti-hidden" ${ID}="${col[0]}" name="${getId(interaction,"RG")}" id-col="${col[0]}" id-row="" value="">
+		</span>
+		<div class="rqti-order-label">${col[1]}</div>
+
 		</div>`);
 		html += `</div></div>`;
 		T.content.push(html);
 	} else {
     // let maxAssocs = +elem.getAttribute("maxAssociations")||1;
     let type = maxAssocs==1? "radio": "checkbox";
+    let id_resp = elem.getAttribute("responseIdentifier");
     let cell = (row,col)=>
-        `<td><input ${ID}="${row[0]} ${col[0]}"`
-        + ` name="${getId(interaction,"RG")}" type="${type}"/></td>`;
+        `<td><label class=rqti-table-checkbox id=rqti-icon ${RESPONSE_ID}=${id_resp}><input ${ID}="${row[0]} ${col[0]}"`
+        + ` name="${getId(interaction,"RG")}" type="${type}"/><span></span></label></td>`;
     let html = `<table class="${MATCH_TABLE} ${PIVOTABLE}">`;
 
     html += "<tr><th></th>";
@@ -3821,42 +3828,36 @@ function updateResultIcons(item) {
         var resp_id = el.getAttribute(RESPONSE_ID);
         let base_type = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("baseType");
         let cardinality = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("cardinality");
-
         switch(base_type) {
         case "identifier":
-            let resp_user = item.declarations["RESPONSE"].value;
+            let resp_user = item.declarations[el.getAttribute(RESPONSE_ID)].value;
             if (cardinality === "ordered") {
                 if (resp_user !== null) {
                     let resp_id = el.parentElement.getAttribute(ID);
                     let corr_resp = item.declarations["RESPONSE"].correctResponse;
-                    if (corr_resp[count_order] === resp_user[count_order])  {
-                        el.className = "rqti-correct";
-                        el.classList.add("visible");
-                    } else {
-                        el.className = "rqti-incorrect";
-                        el.classList.add("visible");
-                    };
+                    add_span_icon(corr_resp[count_order] === resp_user[count_order], el);
                     count_order += 1;
                 }
             } else {
-               if (resp_user === null) return;
-               let resp_id = el.nextElementSibling.getAttribute(ID);
-
-                let was_given = resp_user.includes(resp_id);
-                if (was_given) {
-                    let resp_corr = item.declarations["RESPONSE"].correctResponse;
-                    if (resp_corr.includes(resp_id)) {
-                        el.className = "rqti-correct";
-                        el.classList.add("visible");
-
-                    } else {
-                        el.className = "rqti-incorrect";
-                        el.classList.add("visible");
-                    }
-                } else {
-                    el.removeAttribute("class");
-                    el.className = "visible";
-                };
+                if (resp_user === null) return;
+                let type_interaction = el.nextElementSibling.getAttribute(TAG);
+                switch(type_interaction) {
+                    case "simpleChoice":
+                        let resp_id = el.nextElementSibling.getAttribute(ID);
+                        let was_given = resp_user.includes(resp_id);
+                        if (was_given) {
+                            let resp_corr = item.declarations["RESPONSE"].correctResponse;
+                            add_span_icon(resp_corr.includes(resp_id), el);
+                        } else {
+                            el.removeAttribute("class");
+                            el.className = "visible";
+                        };
+                        break;
+                    case "inlineChoiceInteraction":
+                        let resp_corr = item.declarations[el.getAttribute(RESPONSE_ID)].correctResponse;
+                        add_span_icon(resp_corr === resp_user, el, false);
+                        break;
+                }
             }
             break;
         case "float":
@@ -3864,11 +3865,7 @@ function updateResultIcons(item) {
             let resp_user_flt = item.declarations[resp_id_flt].value;
             if (resp_user_flt !== null && resp_user_flt !== "") {
                 let resp_corr = item.declarations[resp_id_flt].correctResponse;
-                if (resp_corr === Number(resp_user_flt)) {
-                        el.className = "rqti-correct";
-                    } else {
-                        el.className = "rqti-incorrect";
-                    };
+                add_span_icon(resp_corr === Number(resp_user_flt), el, false);
             } else {
                 el.removeAttribute("class");
             };
@@ -3886,19 +3883,41 @@ function updateResultIcons(item) {
                 resp_corr = resp_corr.map(value => value.toLowerCase());
             };
             if (resp_user_str != null && resp_user_str !== "") {
-                if (resp_corr.includes(resp_user_str)) {
-                            el.className = "rqti-correct";
-                        } else {
-                            el.className = "rqti-incorrect";
-                        }
+                add_span_icon(resp_corr.includes(resp_user_str), el, false);
             } else {
                 el.removeAttribute("class");
             };
             break;
         case "directedPair":
+            //console.log("dir pair el", el);
+            let resp_corr_tbl = item.declarations[resp_id].correctResponse;
+            //console.log("resp corr tbl", resp_corr_tbl);
+            let resp_cell_tbl = el.querySelector('input').getAttribute(ID);
+            //console.log("resp cell", resp_cell_tbl);
+            let is_checked = el.querySelector('input').checked;
+            if (is_checked) {
+                if (resp_corr_tbl.includes(resp_cell_tbl)) {
+                    el.classList.add("rqti-table-right");
+                } else {
+                    el.classList.add("rqti-table-wrong")
+                };
+            } else {
+                el.removeAttribute("class");
+                el.className = "rqti-table-checkbox"
+            };
             break;
         }; // end of switch
     }); // end of for each for span
+}
+
+function add_span_icon(cond, element, vis = true) {
+    if (cond) {
+        element.className = "rqti-correct";
+        if (vis) element.classList.add("visible");
+    } else {
+        element.className = "rqti-incorrect";
+        if (vis) element.classList.add("visible");
+    };
 }
 
 // Updates printed variables with latest variable values.
