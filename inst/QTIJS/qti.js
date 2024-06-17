@@ -1291,11 +1291,11 @@ function transform(elem) {
         + ` name="${getId(interaction,"RG")}" type="${type}"/><span></span></label></td>`;
     let html = `<table class="${MATCH_TABLE} ${PIVOTABLE}">`;
 
-    html += "<tr><th></th>";
+    html += "<tr class=rqti-table-head><th></th>";
     cols.forEach(col=>html += `<th>${col[1]}</th>`);
     html += "</tr>";
     rows.forEach(row=>{
-      html += `<tr><th>${row[1]}</th>`;
+      html += `<tr class=rqti-table-row><th>${row[1]}</th>`;
       cols.forEach(col=>html += cell(row,col));
       html += "</tr>";
     });

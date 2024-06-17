@@ -337,6 +337,7 @@ li[draggable=true] {
     min-width: 185px;
     padding: 5px;
     margin: 10px 0px 5px 0px;
+    border-radius: 3px;
 }
 
 span.rqti-correct {
@@ -402,4 +403,20 @@ span.visible {
             position: relative;
             left: 3px;
             top: 1px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.rqti-table-row:hover {
+    background-color: #eee;
+}
+
+.rqti-table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.rqti-table-head {
+    border-bottom: 1px solid #ddd;
 }
