@@ -465,10 +465,10 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
 #'   Kursbaustein referenziert. Eine solche Aktualisierung ist nur für
 #'   Ressourcen vom Typ Test und Fragebogen verfügbar.
 #' @examplesIf interactive()
-#'    zip_file <- update_test_course ("89068111333293",
+#'    zip_file <- update_course_test ("89068111333293",
 #'   "1617337826161777006", "44829868033")
 #' @export
-update_test_course <- function(course_id, node_id, resource_id,
+update_course_test <- function(course_id, node_id, resource_id,
                                api_user = NULL, api_password = NULL,
                                endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- catch_endpoint()
