@@ -371,7 +371,7 @@ span.visible {
             width: 10px;
             height: 10px;
             background-color: transparent;
-            border: 2px solid #248F8F; /* Border color */
+            border: 1px solid #248F8F; /* Border color */
             border-radius: 2px; /* Smooth border */
             transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
             margin-right: 8px; /* Space between checkbox and label text */

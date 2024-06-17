@@ -3889,21 +3889,36 @@ function updateResultIcons(item) {
             };
             break;
         case "directedPair":
-            //console.log("dir pair el", el);
             let resp_corr_tbl = item.declarations[resp_id].correctResponse;
-            //console.log("resp corr tbl", resp_corr_tbl);
-            let resp_cell_tbl = el.querySelector('input').getAttribute(ID);
-            //console.log("resp cell", resp_cell_tbl);
-            let is_checked = el.querySelector('input').checked;
-            if (is_checked) {
-                if (resp_corr_tbl.includes(resp_cell_tbl)) {
-                    el.classList.add("rqti-table-right");
+            let max_assoc= item.querySelector(`matchInteraction`).getAttribute("maxAssociations");
+            let is_table = (max_assoc != 0)? true: false;
+            if (is_table) {
+                let resp_cell_tbl = el.querySelector('input').getAttribute(ID);
+                let is_checked = el.querySelector('input').checked;
+                if (is_checked) {
+                    if (resp_corr_tbl.includes(resp_cell_tbl)) {
+                        el.classList.add("rqti-table-right");
+                    } else {
+                        el.classList.add("rqti-table-wrong")
+                    };
                 } else {
-                    el.classList.add("rqti-table-wrong")
+                    el.removeAttribute("class");
+                    el.className = "rqti-table-checkbox"
                 };
-            } else {
-                el.removeAttribute("class");
-                el.className = "rqti-table-checkbox"
+            } else { // as directd pair
+                let resp_dp = el.querySelector('input').getAttribute("value");
+                if (resp_dp != "") {
+                    if (resp_corr_tbl.includes(resp_dp)) {
+                        el.classList.remove("rqti-incorrect");
+                        el.classList.add("rqti-correct");
+                    } else {
+                        el.classList.remove("rqti-correct");
+                        el.classList.add("rqti-incorrect");
+                    };
+                } else {
+                    el.removeAttribute("class");
+                    el.className = "visible";
+                };
             };
             break;
         }; // end of switch
