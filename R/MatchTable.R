@@ -1,3 +1,14 @@
+match_table_validation <- function(object) {
+    errors <- list()
+    if (length(object@cols) != length(object@cols_identifiers)) {
+        errors <- c(errors, paste0("Number of cols and cols_identifiers are not equal."))
+    }
+    if (length(object@rows) != length(object@rows_identifiers)) {
+        errors <- c(errors, paste0("Number of rows and rows_identifiers are not equal."))
+    }
+    if (length(errors) == 0) TRUE else unlist(errors)
+}
+
 #' Class "MatchTable"
 #'
 #' Abstract class `MatchTable` is not meant to be instantiated directly;
@@ -25,7 +36,8 @@ setClass("MatchTable", contains = "AssessmentItem",
                      points = NA_real_,
                      shuffle_rows = TRUE,
                      shuffle_cols = TRUE,
-                     answers_scores = NA_real_)
+                     answers_scores = NA_real_),
+    validity = match_table_validation
 )
 
 setMethod("initialize", "MatchTable", function(.Object, ...) {
