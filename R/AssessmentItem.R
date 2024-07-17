@@ -93,7 +93,7 @@ setGeneric("createResponseProcessing",
 
 #' Create XML or zip file for question specification
 #'
-#' @usage createQtiTask(object, dir = NULL, verification = FALSE, zip = FALSE)
+#' @usage createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
 #' @param object An instance of the S4 object ([SingleChoice], [MultipleChoice],
 #'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair]).
@@ -118,7 +118,7 @@ setGeneric("createResponseProcessing",
 #' @docType methods
 #' @export
 setGeneric("createQtiTask",
-           function(object, dir = NULL,
+           function(object, dir = ".",
                     verification = FALSE,
                     zip = FALSE) standardGeneric("createQtiTask"))
 
@@ -278,7 +278,7 @@ setMethod("getContributors", signature(object = "AssessmentItem"),
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
 setMethod("createQtiTask", signature(object = "AssessmentItem"),
-          function(object, dir = NULL, verification = FALSE, zip = FALSE) {
+          function(object, dir = ".", verification = FALSE, zip = FALSE) {
               ifelse(zip, create_task_zip(object, dir, verification),
                      create_qti_task(object, dir, verification))
           })

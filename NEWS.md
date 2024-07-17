@@ -4,6 +4,7 @@
 
 * Fix extract_results(level="items") for Ordering type, when candidate response
 is not given
+* Fix error at createQtitask(obj, zip=TRUE)
 
 ## New features
 
