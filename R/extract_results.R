@@ -117,8 +117,17 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
     return(df)
 }
 
+safe_iconv <- function(x, from, to) {
+    tryCatch(
+        iconv(x, from = from, to = to),
+        error = function(e) {
+            return(x)
+        }
+    )
+}
+
 make_name_unique <- function(file, possible_name) {
-    possible_name <- iconv(possible_name, from = "CP850", to = "UTF-8")
+    possible_name <- safe_iconv(possible_name, from = "CP850", to = "UTF-8")
     dir_path <- dirname(file)
     content <- xml2::read_xml(file)
     root <- xml2::xml_name(xml2::xml_root(content))
