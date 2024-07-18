@@ -14,6 +14,8 @@ the course by course id.
 * New API OPAL function get_course_results() returns an xml with data about 
 results by course id and node id.
 
+* New API OPAL function publish_courses() for publishing a course by Resource ID.
+
 ## Improvements
 
 * QTIJS rendering.

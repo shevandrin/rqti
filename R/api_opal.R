@@ -465,8 +465,7 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
 #'   Kursbaustein referenziert. Eine solche Aktualisierung ist nur für
 #'   Ressourcen vom Typ Test und Fragebogen verfügbar.
 #' @examplesIf interactive()
-#'    zip_file <- update_course_test ("89068111333293",
-#'   "1617337826161777006", "44829868033")
+#'    update_course_test("89068111333293", "1617337826161777006", "44829868033")
 #' @export
 update_course_test <- function(course_id, node_id, resource_id,
                                api_user = NULL, api_password = NULL,
@@ -486,6 +485,36 @@ update_course_test <- function(course_id, node_id, resource_id,
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     print(response)
 
+}
+
+#' Publish a course on LMS Opal
+#'
+#' @param course_id - A string value of the number of course (Ressourcen-ID).
+#' @param api_user A character value of the username in the OPAL.
+#' @param api_password A character value of the password in the OPAL.
+#' @param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'   environment variable `RQTI_API_ENDPOINT`. To set a global environment
+#'   variable, you need to call
+#'   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
+#'   command into .Renviron.
+#' @return Status code.
+#' @examplesIf interactive()
+#'    publish_course("89068111333293")
+#' @export
+publish_course <- function(course_id, api_user = NULL, api_password = NULL,
+                           endpoint = NULL) {
+    if (is.null(endpoint)) endpoint <- catch_endpoint()
+    # check auth
+    if (!is_logged(endpoint) || !is.null(api_user) ||  !is.null(api_password)) {
+        user_id <- auth_opal(api_user, api_password)
+        if (is.null(user_id)) return(NULL)
+    }
+
+    url_res <- paste0(endpoint, "restapi/repo/courses/", course_id, "/publish")
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("POST")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    return(response$status_code)
 }
 
 # check if this is a test using the manifest file

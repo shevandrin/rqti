@@ -47,7 +47,6 @@ Referenzierte Lernressource eines Kursbausteins austauschen
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-   zip_file <- update_course_test ("89068111333293",
-  "1617337826161777006", "44829868033")
+   update_course_test("89068111333293", "1617337826161777006", "44829868033")
 \dontshow{\}) # examplesIf}
 }
