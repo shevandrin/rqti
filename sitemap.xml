@@ -1,336 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://shevandrin.github.io/rqti/404.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/adding_metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/api_opal.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/compatibility.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/directedpairs.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/dropdown.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/essay.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/gap.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/imported_packages.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/multiplechoice.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/order.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/qti_oop_model.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/section.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/singlechoice.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/table.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/articles/workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/AssessmentItem-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/AssessmentSection-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/AssessmentTest-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/AssessmentTestOpal-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/Choice-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/CorrectFeedback-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/DirectedPair-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/Entry-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/Essay-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/Gap-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/InlineChoice-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/MatchTable-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/ModalFeedback-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/MultipleChoice-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/MultipleChoiceTable-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/NumericGap-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/OneInColTable-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/OneInRowTable-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/Ordering-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/QtiContributor-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/QtiMetadata-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/SingleChoice-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/TextGap-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/TextGapOpal-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/WrongFeedback-class.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/auth_opal.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/buildAssessmentSection-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/correctFeedback.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createAssessmentTest-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createItemBody-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createMetadata-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createOutcomeDeclaration-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createQtiTask-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createQtiTest-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createResponseDeclaration-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createResponseProcessing-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createText-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/createZip-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/create_assessment_item.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/create_qti_task.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/create_qti_test.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/directedPair.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/dropdown.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/entry.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/essay.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/extract_results.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/gap_numeric.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/gap_text.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getAssessmentItems-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getCalculator-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getContributors-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getFiles-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getIdentifier-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getObject-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getPoints-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/getResponse-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/get_resource_url.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/get_resources.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/inlineChoice.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/mdlist.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/modalFeedback.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/multipleChoice.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/multipleChoiceTable.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/numericGap_doc.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/oneInColTable.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/oneInRowTable.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/ordering.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/prepareQTIJSFiles-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/prepare_renderer.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/qti_contributor.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/qti_metadata.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/qtijs_path.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/render_opal.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/render_qtijs.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/render_xml.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/render_zip.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/rmd2xml.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/rmd2zip.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/section.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/singleChoice.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/start_server.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/stop_server.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/test.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/test4opal.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/textGapOpal_doc.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/textGap_doc.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc>
-  </url>
-  <url>
-    <loc>https://shevandrin.github.io/rqti/reference/wrongFeedback.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://shevandrin.github.io/rqti/404.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/LICENSE.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/adding_metadata.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/api_opal.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/compatibility.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/directedpairs.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/dropdown.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/essay.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/gap.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/imported_packages.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/index.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/multiplechoice.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/order.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/qti_oop_model.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/section.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/singlechoice.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/table.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/workflow.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/authors.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/index.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/news/index.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/AssessmentItem-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/AssessmentSection-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/AssessmentTest-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/AssessmentTestOpal-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/Choice-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/CorrectFeedback-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/DirectedPair-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/Entry-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/Essay-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/Gap-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/InlineChoice-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/MatchTable-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/ModalFeedback-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/MultipleChoice-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/MultipleChoiceTable-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/NumericGap-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/OneInColTable-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/OneInRowTable-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/Ordering-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/QtiContributor-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/QtiMetadata-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/SingleChoice-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/TextGap-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/TextGapOpal-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/WrongFeedback-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/auth_opal.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/buildAssessmentSection-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/correctFeedback.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createAssessmentTest-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createItemBody-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createMetadata-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createOutcomeDeclaration-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createQtiTask-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createQtiTest-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createResponseDeclaration-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createResponseProcessing-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createText-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createZip-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/create_assessment_item.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/create_qti_task.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/create_qti_test.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/directedPair.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/dropdown.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/entry.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/essay.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/extract_results.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/gap_numeric.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/gap_text.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getAssessmentItems-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getCalculator-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getContributors-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getFiles-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getIdentifier-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getObject-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getPoints-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getResponse-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/get_course_elements.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/get_course_results.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/get_resource_url.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/get_resources.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/index.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/inlineChoice.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/mdlist.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/modalFeedback.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/multipleChoice.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/multipleChoiceTable.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/numericGap_doc.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/oneInColTable.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/oneInRowTable.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/ordering.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/pipe.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/prepareQTIJSFiles-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/prepare_renderer.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/publish_course.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/qti_contributor.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/qti_metadata.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/qtijs_path.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/render_opal.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/render_qtijs.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/render_xml.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/render_zip.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/rmd2xml.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/rmd2zip.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/section.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/singleChoice.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/start_server.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/stop_server.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/test.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/test4opal.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/textGapOpal_doc.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/textGap_doc.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/update_course_test.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/wrongFeedback.html</loc></url>
 </urlset>
+
