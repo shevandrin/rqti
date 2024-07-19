@@ -359,7 +359,7 @@ read_table <- function(html, attrs) {
     tbl <- xml2::xml_find_all(html, "//table")
     tbl <- tbl[length(tbl)]
 
-    cols <- xml2::xml_find_all(tbl, ".//tr[@class='header']//th")
+    cols <- xml2::xml_find_all(tbl, ".//tr//th")
     cols <- as.character(xml2::xml_contents(cols))
 
     tbd <- xml2::xml_find_all(tbl, "//tbody")
