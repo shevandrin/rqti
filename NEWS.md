@@ -1,4 +1,4 @@
-# rqti (development version)
+# rqti 0.3.0
 
 ## Bug fixes
 
