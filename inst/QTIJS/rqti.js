@@ -43,7 +43,7 @@
           parentItem.textContent += "drop here";
         };
         setTimeout(() => {
-          item.style.display = "block";
+          item.style.display = "flex";
           draggedItem = null;
         });
       });

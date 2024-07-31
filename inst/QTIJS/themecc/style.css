@@ -316,13 +316,14 @@ li[draggable=true] {
     min-height: 60px;
     margin: 3px;
     border: 1px dashed #000;
-    color: #000;
+    color: gray;
     padding: 1px;
-    // display: flex;
+    //display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    resize:both;
+    resize: both;
+    text-align: center;
 }
 .rqti-order-label{
     flex: 1;

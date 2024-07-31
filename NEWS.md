@@ -1,5 +1,9 @@
 # rqti (development version)
 
+## Improvements
+
+* QTIJS rendering for DirectedPair.
+
 # rqti 0.3.0
 
 ## Bug fixes
