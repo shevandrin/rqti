@@ -3951,6 +3951,7 @@ function updatePrintedVariables(item) {
       let decl = item.declarations[variable];
       if (decl) {
         let value = coerce(decl, decl.value, getDefaultValue(decl));
+        value = roundIfMoreThanThreeDecimals(value);
         if (decl.cardinality==="multiple")
           value = value.join(pv.getAttribute(DELIMITER));
         let prefix = pv.getAttribute(PREFIX_ATTRIB)||"";
@@ -3962,6 +3963,16 @@ function updatePrintedVariables(item) {
       }
     });
   }
+}
+
+// it rounds float variable, when it has more than three decimals
+function roundIfMoreThanThreeDecimals(vrb) {
+    let vrbStr = vrb.toString();
+    let parts = vrbStr.split('.');
+    if (parts.length >1 && parts[1].length > 3) {
+        vrb = vrb.toFixed(3);
+    }
+    return vrb;
 }
 
 // Updates MathML elements with latest variable values.
