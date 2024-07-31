@@ -1,8 +1,12 @@
 # rqti (development version)
 
+## New features
+
+* Added `verify_qti()` function to validate XML documents against the QTI v2.1 schema.
+
 ## Improvements
 
-* QTIJS rendering for DirectedPair.
+* QTIJS rendering (DirectedPair type, round Score and Maxscore values).
 
 # rqti 0.3.0
 

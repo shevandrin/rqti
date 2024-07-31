@@ -252,8 +252,24 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE,
     return(stringr::str_remove(path_task, getwd()))
 }
 
-# verifies xml according to xsd scheme
+#' Verify QTI XML against XSD Schema QTI v2.1
+#'
+#' This function validates a QTI XML document against the IMS QTI v2.1.2 XSD
+#' schema.
+#'
+#' @param doc A character string representing the path to the XML file or an
+#'   `xml2` document object.
+#' @return A logical value indicating whether the XML document is valid
+#'   according to the schema. If invalid, returns an object detailing the
+#'   validation errors.
+#' @examples
+#' \dontrun{
+#' # Validate an XML file
+#' result <- verify_qti("path/to/your/qti.xml")
+#' }
+#' @export
 verify_qti <- function(doc) {
+    if (is.character(doc)) doc <- xml2::read_xml(doc)
     file <- file.path(system.file(package = "rqti"), "imsqti_v2p1p2.xsd")
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(doc, schema)
