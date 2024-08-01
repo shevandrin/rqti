@@ -16,7 +16,6 @@
 
     <xs:include schemaLocation="imsqti_v2p1p2.xsd"/>
 
-
     <!-- Redefine the ItemBody.Type to add the details element -->
     <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
         <xs:complexType name="ItemBody.Type">
@@ -63,6 +62,17 @@
         </xs:complexType>
     </xs:redefine>
 
+    <!-- Redefine the MatchInteraction.Type to add the attr orientation -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="MatchInteraction.Type" abstract="false" mixed="false">
+            <xs:complexContent>
+                <xs:extension base="MatchInteraction.Type">
+                    <xs:attributeGroup ref="orientation.MatchInteraction.Attr" />
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
     <!-- Add new complex type for Details.Type -->
     <xs:complexType name="Details.Type" abstract="false" mixed="true">
         <xs:annotation>
@@ -82,11 +92,26 @@
     </xs:complexType>
 
     <!-- Define new elements -->
+
     <xs:element name="details" type="Details.Type"/>
     <xs:element name="summary" type="HTMLText.Type"/>
 
     <!-- Define new attributes -->
+
     <xs:attributeGroup name="data-allowPaste.ExtendedTextInteraction.Attr">
         <xs:attribute name="data-allowPaste" use="optional" default="false" type="xs:boolean" />
     </xs:attributeGroup>
+
+    <xs:attributeGroup name="orientation.MatchInteraction.Attr">
+        <xs:attribute name="orientation" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="horizontal" />
+                    <xs:enumeration value="vertical" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+
 </xs:schema>
