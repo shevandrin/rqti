@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1"
+     targetNamespace="http://www.imsglobal.org/xsd/imsqti_v2p1"
+     xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns:m="http://www.w3.org/1998/Math/MathML"
+     xmlns:apip="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+     version="IMS QTI 2.1.1"
+     elementFormDefault="qualified"
+     attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xsd/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="xsd/XInclude.xsd" />
+    <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml2/mathml2.xsd" />
+    <xs:import namespace="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0" schemaLocation="xsd/apipv1p0_qtiextv2p1_v1p0.xsd" />
+
+    <xs:include schemaLocation="imsqti_v2p1p2.xsd"/>
+
+
+    <!-- Redefine the ItemBody.Type to add the details element -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="ItemBody.Type">
+          <xs:complexContent>
+            <xs:extension base="ItemBody.Type">
+              <xs:sequence>
+                <xs:choice minOccurs="1" maxOccurs="unbounded">
+                  <xs:element ref="rubricBlock" minOccurs="1" maxOccurs="1"/>
+                  <xs:choice minOccurs="1" maxOccurs="1">
+                    <xs:choice minOccurs="1" maxOccurs="1">
+                      <xs:element name="details" type="Details.Type" minOccurs="0" maxOccurs="1"/>
+                    </xs:choice>
+                  </xs:choice>
+                </xs:choice>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
+    <!-- Redefine the ModalFeedback.Type to add the details element -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="ModalFeedback.Type" mixed="true">
+          <xs:complexContent>
+            <xs:extension base="ModalFeedback.Type">
+              <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="details" type="Details.Type" minOccurs="0" maxOccurs="1"/>
+                </xs:choice>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
+    <!-- Redefine the ExtendedTextInteraction.Type to add the attr data-allowPaste -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="ExtendedTextInteraction.Type" abstract="false" mixed="false">
+            <xs:complexContent>
+                <xs:extension base="ExtendedTextInteraction.Type">
+                    <xs:attributeGroup ref="data-allowPaste.ExtendedTextInteraction.Attr" />
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
+    <!-- Add new complex type for Details.Type -->
+    <xs:complexType name="Details.Type" abstract="false" mixed="true">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                The complexType for the HTML element details.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="m:math" minOccurs="1" maxOccurs="1" />
+                <xs:choice minOccurs="1" maxOccurs="1">
+                    <xs:element ref="summary" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="p" minOccurs="1" maxOccurs="1" />
+                </xs:choice>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Define new elements -->
+    <xs:element name="details" type="Details.Type"/>
+    <xs:element name="summary" type="HTMLText.Type"/>
+
+    <!-- Define new attributes -->
+    <xs:attributeGroup name="data-allowPaste.ExtendedTextInteraction.Attr">
+        <xs:attribute name="data-allowPaste" use="optional" default="false" type="xs:boolean" />
+    </xs:attributeGroup>
+</xs:schema>

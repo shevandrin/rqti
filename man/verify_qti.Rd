@@ -4,11 +4,15 @@
 \alias{verify_qti}
 \title{Verify QTI XML against XSD Schema QTI v2.1}
 \usage{
-verify_qti(doc)
+verify_qti(doc, extended_scheme = FALSE)
 }
 \arguments{
 \item{doc}{A character string representing the path to the XML file or an
 \code{xml2} document object.}
+
+\item{extended_scheme}{A boolean value that controls the version of the XSD
+schema used for validation. If \code{TRUE}, the extended version is used,
+allowing additional tags in the XML (e.g., \code{details}). Default is \code{FALSE}.}
 }
 \value{
 A logical value indicating whether the XML document is valid

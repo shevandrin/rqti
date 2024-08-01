@@ -259,6 +259,9 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE,
 #'
 #' @param doc A character string representing the path to the XML file or an
 #'   `xml2` document object.
+#' @param extended_scheme A boolean value that controls the version of the XSD
+#'   schema used for validation. If `TRUE`, the extended version is used,
+#'   allowing additional tags in the XML (e.g., `details`). Default is `FALSE`.
 #' @return A logical value indicating whether the XML document is valid
 #'   according to the schema. If invalid, returns an object detailing the
 #'   validation errors.
@@ -268,9 +271,10 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE,
 #' result <- verify_qti("path/to/your/qti.xml")
 #' }
 #' @export
-verify_qti <- function(doc) {
+verify_qti <- function(doc, extended_scheme = FALSE) {
     if (is.character(doc)) doc <- xml2::read_xml(doc)
-    file <- file.path(system.file(package = "rqti"), "imsqti_v2p1p2.xsd")
+    schema_name <- ifelse(extended_scheme, "qti_v2p1p2_extension.xsd", "imsqti_v2p1p2.xsd")
+    file <- file.path(system.file(package = "rqti"), schema_name)
     schema <- xml2::read_xml(file)
     validation <- xml2::xml_validate(doc, schema)
     ifelse(validation[1], return(validation[1]), return(validation))
