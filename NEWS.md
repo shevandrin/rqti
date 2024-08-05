@@ -4,6 +4,8 @@
 
 * Added a verify_qti() function to validate XML documents against the QTI v2.1 schema. Two schema versions are supported: the original IMS Global schema and an extended version that permits additional HTML tags.
 
+* Added a new constructor function assessmentTest().
+
 ## Improvements
 
 * QTIJS rendering (DirectedPair type, round Score and Maxscore values).
