@@ -2,6 +2,7 @@
 
 export("%>%")
 export(assessmentTest)
+export(assessmentTestOpal)
 export(auth_opal)
 export(correctFeedback)
 export(createQtiTask)
