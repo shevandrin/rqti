@@ -80,6 +80,55 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     .Object
 })
 
+
+#' Create an object [AssessmentSection]
+#'
+#' Create an [AssessmentSection] `rqti`-object as part of a test content
+#' @param assessment_item A list containing [AssessmentSection] and/or
+#'   Assessment item objects, such as [SingleChoice], [MultipleChoice], [Essay],
+#'   [Entry], [Ordering], [OneInRowTable], [OneInColTable],
+#'   [MultipleChoiceTable], and [DirectedPair].
+#' @param identifier A character value indicating the identifier of the test
+#'   file. By default, it is generated as 'id_section_dddd', where dddd
+#'   represents random digits.
+#' @param title A character value, optional, representing the file title. By
+#'   default, it takes the value of the `identifier`.
+#' @param selection An integer value, optional, defining how many children of
+#'   the section are delivered in the test. Default is `NA_integer_`, meaning
+#'   "no selection".
+#' @param time_limit An integer value, optional, controlling the amount of time
+#'   in munutes a candidate is allowed for this part of the test.
+#' @param visible A boolean value, optional, indicating whether the title of
+#'   this section is shown in the hierarchy of the test structure. Default is
+#'   `TRUE`.
+#' @param shuffle A boolean value, optional, responsible for randomizing the
+#'   order in which the assessment items and subsections are initially presented
+#'   to the candidate. Default is `FALSE`.
+#' @param max_attempts An integer value, optional, enabling the maximum number
+#'   of attempts allowed for a candidate to pass this section.
+#' @param allow_comment A boolean value, optional, enabling candidates to leave
+#'   comments on each question of the section. Default is `TRUE`.
+#' @return An object of class [AssessmentSection].
+#' @examples
+#' sc <- singleChoice(prompt = "Question", choices = c("A", "B", "C"))
+#' es <- essay(prompt = "Question")
+#' # Since ready-made S4 "AssessmentItem" objects are taken, in this example a
+#' #permanent section consisting of two tasks is created.
+#' s <- assessmentSection(list(sc, es), title = "Section with nonrandomized tasks")
+#' @seealso [section()], [test()], [test4opal()]
+#' @export
+assessmentSection <- function(assessment_item,
+                              identifier = generate_id(type = "section"),
+                              title = identifier, selection = NA_integer_,
+                              time_limit = NA_integer_, visible = TRUE,
+                              shuffle = FALSE, max_attempts = NA_integer_,
+                              allow_comment = TRUE) {
+    params <- as.list(environment())
+    params$Class <- "AssessmentSection"
+    obj <- do.call("new", params)
+    return(obj)
+}
+
 #' @rdname getAssessmentItems-methods
 #' @aliases getAssessmentItems,AssessmentSection
 setMethod("getAssessmentItems", signature(object = "AssessmentSection"),
