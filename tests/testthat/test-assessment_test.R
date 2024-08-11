@@ -673,3 +673,79 @@ test_that("Testing a specific attribute 'files' in yaml section of Rmd file",
     expect_equal(exam@files, expected)
 })
 
+test_that("Test assessmentSection function that return an object
+          of class AssessmentSection", {
+
+              sc <- singleChoice(prompt = "Question",
+                                       choices = c("A", "B", "C"))
+              es <- new("Essay", prompt = "Question")
+              s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+
+              sut <- assessmentSection(list(s), title = "Example of the Exam")
+
+              expected <- new("AssessmentSection",
+                              title = "Example of the Exam",
+                              assessment_item = list(s))
+
+              expected@identifier <- sut@identifier
+
+              # Check if the object is of class AssessmentSection
+              expect_true(inherits(sut, "AssessmentSection"))
+
+              # Check if the object is of class AssessmentSection
+              expect_equal(expected, sut)
+})
+
+test_that("Test assessmentTest function that return an object
+          of class AssessmentTest", {
+
+              sc <- singleChoice(prompt = "Question", choices = c("A", "B", "C"))
+              es <- new("Essay", prompt = "Question")
+              s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+
+              sut <- assessmentTest(list(s), title = "Example of the Exam")
+
+              expected <- new("AssessmentTest",
+                              title = "Example of the Exam",
+                              section = list(s),
+                              time_limit = 90,
+                              max_attempts = 1)
+
+              expected@identifier <- sut@identifier
+              expected@rebuild_variables <- sut@rebuild_variables
+              expected@metadata <- sut@metadata
+
+
+              # Check if the object is of class AssessmentTest
+              expect_true(inherits(sut, "AssessmentTest"))
+
+              # Check if the object is of class AssessmentTest
+              expect_equal(expected, sut)
+})
+
+test_that("Test assessmentTestOpal function that return an object
+          of class AssessmentTest", {
+
+              sc <- singleChoice(prompt = "Question", choices = c("A", "B", "C"))
+              es <- new("Essay", prompt = "Question")
+              s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+
+              sut <- assessmentTestOpal(list(s), title = "Example of the Exam" )
+
+              expected <- new("AssessmentTestOpal",
+                              title = "Example of the Exam",
+                              section = list(s),
+                              time_limit = 90,
+                              max_attempts = 1)
+
+              expected@identifier <- sut@identifier
+              expected@metadata <- sut@metadata
+              expected@rebuild_variables <- sut@rebuild_variables
+
+
+              # Check if the object is of class AssessmentTestOpal
+              expect_true(inherits(sut, "AssessmentTest"))
+
+              # Check if the object is of class AssessmentTestOpal
+              expect_equal(expected, sut)
+})
