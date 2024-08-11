@@ -149,7 +149,7 @@ assessmentTestOpal <- function(section, identifier = generate_id(type = "test"),
                            mark_items  = TRUE, keep_responses = FALSE,
                            metadata = qti_metadata(), points = NA_real_) {
     params <- as.list(environment())
-    params$Class <- "AssessmentTest"
+    params$Class <- "AssessmentTestOpal"
     obj <- do.call("new", params)
     return(obj)
 }
