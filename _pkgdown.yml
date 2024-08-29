@@ -29,8 +29,6 @@ articles:
   navbar: S4 rqti classes
   contents:
   - rqti_oop_model
-  - workflow
-  - imported_packages
 - title: Other
   navbar: Other
   contents:
