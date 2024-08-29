@@ -47,6 +47,9 @@ render_qtijs <- function(input, preview_feedback = FALSE, ...) {
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
+    current_rmd_fullpath <- normalizePath(input)
+    xml_target <- sub("\\.Rmd$", ".xml", current_rmd_fullpath)
+    file.copy(file.path(qtijs_path(), "index.xml"), xml_target)
     message("finished rendering")
     return(url)
 }
