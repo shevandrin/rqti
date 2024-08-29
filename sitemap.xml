@@ -12,7 +12,7 @@
 <url><loc>https://shevandrin.github.io/rqti/articles/index.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/articles/multiplechoice.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/articles/order.html</loc></url>
-<url><loc>https://shevandrin.github.io/rqti/articles/qti_oop_model.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/articles/rqti_oop_model.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/articles/section.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/articles/singlechoice.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/articles/table.html</loc></url>
@@ -45,6 +45,9 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/TextGap-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/TextGapOpal-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/WrongFeedback-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/assessmentSection.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/assessmentTest.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/assessmentTestOpal.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/auth_opal.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/buildAssessmentSection-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/correctFeedback.html</loc></url>
@@ -113,6 +116,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/textGap_doc.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/update_course_test.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/verify_qti.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/wrongFeedback.html</loc></url>
 </urlset>
 
