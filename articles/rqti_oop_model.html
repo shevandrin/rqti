@@ -164,35 +164,39 @@ following categories:</li>
 </ol>
 <p>Task Types. These functions create classes representing different
 types of tasks:</p>
-<pre><code><span><span class="op">-</span> <span class="va">`?singleChoice`</span></span>
-<span><span class="op">-</span> <span class="va">`?multipleChoice`</span></span>
-<span><span class="op">-</span> <span class="va">`?essay`</span></span>
-<span><span class="op">-</span> <span class="va">`?entry`</span></span>
-<span><span class="op">-</span> <span class="va">`?ordering`</span></span>
-<span><span class="op">-</span> <span class="va">`?directedPairs`</span></span>
-<span><span class="op">-</span> <span class="va">`?multipleChoiceTable`</span></span>
-<span><span class="op">-</span> <span class="va">`?OneInRowTable`</span></span>
-<span><span class="op">-</span> <span class="va">`?oneInColTable`</span></span>
-<span>    </span></code></pre>
+<ul>
+<li><code><a href="../reference/singleChoice.html">?singleChoice</a></code></li>
+<li><code><a href="../reference/multipleChoice.html">?multipleChoice</a></code></li>
+<li><code><a href="../reference/essay.html">?essay</a></code></li>
+<li><code><a href="../reference/entry.html">?entry</a></code></li>
+<li><code><a href="../reference/ordering.html">?ordering</a></code></li>
+<li><code>?directedPairs</code></li>
+<li><code><a href="../reference/multipleChoiceTable.html">?multipleChoiceTable</a></code></li>
+<li><code><a href="../reference/OneInRowTable-class.html">?OneInRowTable</a></code></li>
+<li><code><a href="../reference/oneInColTable.html">?oneInColTable</a></code></li>
+</ul>
 <p>Interactive Content. These functions create classes representing
 interactive elements within tasks:</p>
-<pre><code><span><span class="op">-</span> <span class="va">`?textGap`</span></span>
-<span><span class="op">-</span> <span class="va">`?numericGap`</span></span>
-<span><span class="op">-</span> <span class="va">`?textGapOpal`</span></span>
-<span><span class="op">-</span> <span class="va">`?modalFeedback`</span></span>
-<span><span class="op">-</span> <span class="va">`?correctFeedback`</span></span>
-<span><span class="op">-</span> <span class="va">`?wrongFeedback`</span></span>
-<span>    </span></code></pre>
+<ul>
+<li><code><a href="../reference/textGap_doc.html">?textGap</a></code></li>
+<li><code><a href="../reference/numericGap_doc.html">?numericGap</a></code></li>
+<li><code><a href="../reference/textGapOpal_doc.html">?textGapOpal</a></code></li>
+<li><code><a href="../reference/modalFeedback.html">?modalFeedback</a></code></li>
+<li><code><a href="../reference/correctFeedback.html">?correctFeedback</a></code></li>
+<li><code><a href="../reference/wrongFeedback.html">?wrongFeedback</a></code></li>
+</ul>
 <p>Tests and Sections. These functions create classes representing tests
 and their organizational sections:</p>
-<pre><code><span><span class="op">-</span> <span class="va">`?assessmentSection`</span></span>
-<span><span class="op">-</span> <span class="va">`?assessmentTest`</span></span>
-<span><span class="op">-</span> <span class="va">`?assessmentTestOpal`</span></span></code></pre>
+<ul>
+<li><code><a href="../reference/assessmentSection.html">?assessmentSection</a></code></li>
+<li><code><a href="../reference/assessmentTest.html">?assessmentTest</a></code></li>
+<li><code><a href="../reference/assessmentTestOpal.html">?assessmentTestOpal</a></code></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="examples-of-creating-task-objects">Examples of creating task objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-task-objects"></a>
 </h2>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a></span><span class="op">)</span></span>
 <span><span class="co"># simple examples</span></span>
 <span><span class="va">sc0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"SingleChoice"</span>,</span>
@@ -219,7 +223,7 @@ and their organizational sections:</p>
 <div class="section level2">
 <h2 id="examples-of-creating-section-objects">Examples of creating section objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-section-objects"></a>
 </h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># simple example</span></span>
 <span><span class="va">section0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentSection"</span>,</span>
 <span>                identifier <span class="op">=</span> <span class="st">"sect0"</span>,</span>
@@ -238,7 +242,7 @@ and their organizational sections:</p>
 <div class="section level2">
 <h2 id="examples-of-creating-test-objects">Examples of creating test objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-test-objects"></a>
 </h2>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># simple example with a call to `new`</span></span>
 <span><span class="va">test0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentTest"</span>,</span>
 <span>               identifier <span class="op">=</span> <span class="st">"test"</span>,</span>
