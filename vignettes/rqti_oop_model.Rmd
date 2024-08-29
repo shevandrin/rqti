@@ -53,6 +53,7 @@ The `rqti` class model consists of classes that represent types of tasks:
 - `?OneInRowTable`
 - `?OneInColTable`
 
+
 In addition there are classes for the elements of interactive content of tasks:
 
 - `?TextGap`
@@ -62,6 +63,7 @@ In addition there are classes for the elements of interactive content of tasks:
 - `?ModalFeedback`
 - `?CorrectFeedback`
 - `?WrongFeedback`
+
 
 Finally, there are classes for tests and their sections:
 
@@ -74,7 +76,32 @@ Finally, there are classes for tests and their sections:
 There are two ways to create task objects:
 
 1. A call to `new`.
-2. Using constructor functions.
+2. Using constructor functions:
+Constructor functions are available for creating various types of task-related objects, organized into the following categories:
+
+    Task Types. These functions create classes representing different types of tasks:
+        - `?singleChoice`
+        - `?multipleChoice`
+        - `?essay`
+        - `?entry`
+        - `?ordering`
+        - `?directedPairs`
+        - `?multipleChoiceTable`
+        - `?OneInRowTable`
+        - `?oneInColTable`
+        
+    Interactive Content. These functions create classes representing interactive elements within tasks:
+        - `?textGap`
+        - `?numericGap`
+        - `?textGapOpal`
+        - `?modalFeedback`
+        - `?correctFeedback`
+        - `?wrongFeedback`
+        
+    Tests and Sections. These functions create classes representing tests and their organizational sections:
+        - `?assessmentSection`
+        - `?assessmentTest`
+        - `?assessmentTestOpal`
 
 ## Examples of creating task objects
 
