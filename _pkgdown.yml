@@ -1,6 +1,6 @@
 url: https://shevandrin.github.io/rqti/
 development:
-  mode: auto
+  mode: 0.3.0.*
 template:
   bootstrap: 5
   logo: "man/figures/logo.svg"
