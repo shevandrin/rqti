@@ -47,6 +47,7 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 #'   [MultipleChoiceTable], [DirectedPair])
 #' @docType methods
 #' @rdname createItemBody-methods
+#' @export
 setGeneric("createItemBody", function(object) standardGeneric("createItemBody"))
 
 #' Create an element responseDeclaration of a qti-xml document
@@ -60,6 +61,7 @@ setGeneric("createItemBody", function(object) standardGeneric("createItemBody"))
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseDeclaration-methods
+#' @export
 setGeneric("createResponseDeclaration",
            function(object) standardGeneric("createResponseDeclaration"))
 
@@ -74,6 +76,7 @@ setGeneric("createResponseDeclaration",
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createOutcomeDeclaration-methods
+#' @export
 setGeneric("createOutcomeDeclaration",
            function(object) standardGeneric("createOutcomeDeclaration"))
 
@@ -88,6 +91,7 @@ setGeneric("createOutcomeDeclaration",
 #'   [InlineChoice])
 #' @docType methods
 #' @rdname createResponseProcessing-methods
+#' @export
 setGeneric("createResponseProcessing",
            function(object) standardGeneric("createResponseProcessing"))
 

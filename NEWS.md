@@ -6,6 +6,8 @@
 
 * Added new constructor functions assessmentTest(), assessmentTestOpal(), assessmentSection().
 
+* Generic functions are now exported to allow advanced users to extend the functionality of S4 classes (createItemBody, createResponseDeclaration, createOutcomeDeclaration, createResponseProcessing).
+
 ## Improvements
 
 * QTIJS rendering (DirectedPair type, round Score and Maxscore values).
