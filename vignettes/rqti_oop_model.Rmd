@@ -79,32 +79,32 @@ There are two ways to create task objects:
 2. Using constructor functions:
 Constructor functions are available for creating various types of task-related objects, organized into the following categories:
 
-    Task Types. These functions create classes representing different types of tasks:
+Task Types. These functions create classes representing different types of tasks:
     
-        - `?singleChoice`
-        - `?multipleChoice`
-        - `?essay`
-        - `?entry`
-        - `?ordering`
-        - `?directedPairs`
-        - `?multipleChoiceTable`
-        - `?OneInRowTable`
-        - `?oneInColTable`
+    - `?singleChoice`
+    - `?multipleChoice`
+    - `?essay`
+    - `?entry`
+    - `?ordering`
+    - `?directedPairs`
+    - `?multipleChoiceTable`
+    - `?OneInRowTable`
+    - `?oneInColTable`
         
-    Interactive Content. These functions create classes representing interactive elements within tasks:
+Interactive Content. These functions create classes representing interactive elements within tasks:
     
-        - `?textGap`
-        - `?numericGap`
-        - `?textGapOpal`
-        - `?modalFeedback`
-        - `?correctFeedback`
-        - `?wrongFeedback`
+    - `?textGap`
+    - `?numericGap`
+    - `?textGapOpal`
+    - `?modalFeedback`
+    - `?correctFeedback`
+    - `?wrongFeedback`
         
-    Tests and Sections. These functions create classes representing tests and their organizational sections:
+Tests and Sections. These functions create classes representing tests and their organizational sections:
     
-        - `?assessmentSection`
-        - `?assessmentTest`
-        - `?assessmentTestOpal`
+    - `?assessmentSection`
+    - `?assessmentTest`
+    - `?assessmentTestOpal`
 
 ## Examples of creating task objects
 
