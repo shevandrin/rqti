@@ -28,7 +28,7 @@ articles:
 - title: Workflow at the S4-classes level
   navbar: S4 rqti classes
   contents:
-  - qti_oop_model
+  - rqti_oop_model
   - workflow
   - imported_packages
 - title: Other
