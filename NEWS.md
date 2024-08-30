@@ -8,6 +8,8 @@
 
 * Generic functions are now exported to allow advanced users to extend the functionality of S4 classes (createItemBody, createResponseDeclaration, createOutcomeDeclaration, createResponseProcessing, createText).
 
+* Added support for the 'preview_feedback' option within 'params' in the YAML section of R Markdown files.
+
 ## Improvements
 
 * QTIJS rendering (DirectedPair type, round Score and Maxscore values).
