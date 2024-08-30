@@ -62,7 +62,7 @@ create_question_object <- function(file, file_dir = NULL) {
     mtdata$contributor <- contrs
     mtdata <- do.call(qti_metadata, mtdata)
     # ignore parameters that are not related to object creation
-    attrs <- attrs[! names(attrs) %in% c("knit", "metadata")]
+    attrs <- attrs[! names(attrs) %in% c("knit", "metadata", "params")]
 
     tdir <- tempdir()
 

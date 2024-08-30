@@ -27,9 +27,14 @@
 #' file <- system.file("exercises/sc1.Rmd", package='rqti')
 #' render_qtijs(file)
 #'
+#' @importFrom knitr knit_params
 #' @export
 render_qtijs <- function(input, preview_feedback = FALSE, ...) {
     clean_qtijs()
+    params <- knit_params(readLines(input))
+    if (!is.null(params$preview_feedback$value)) {
+        preview_feedback = params$preview_feedback$value
+    }
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
     url <- Sys.getenv("RQTI_URL")
