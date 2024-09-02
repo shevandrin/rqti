@@ -85,7 +85,7 @@ If `true` (the default), randomizes the order of the elements. Only in rare occa
 
 ###  points
 
-How many points are given for the whole exercise. Default is 1.
+How many points are given for the whole exercise. If not provided, the default is calculated as 0.5 points per pair.
 
 <!-- ### answers_scores -->
 

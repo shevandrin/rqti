@@ -14,6 +14,8 @@
 #'   the entire task. Default is 1, but pay attention:
 #'   * For tasks of the [Entry] type, it is
 #'   calculated as the sum of the gap points by default.
+#'   * For tasks of the [DirectedPairs], the default is calculated as 0.5 points
+#'  per pair.
 #'   * For tasks of the [MatchTable] type, it can also be calculated as the sum
 #'   of points for individual answers, when provided.
 #'   * For tasks of the [MultipleChoice] type, points is numeric vector and

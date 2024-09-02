@@ -41,7 +41,8 @@ consisting of one paragraph. This can supplement or replace content in the
 task. Default is "".}
 
 \item{points}{A numeric value, optional, representing the number of points for
-the entire task. Default is 1.}
+the entire task. If not provided, the default is calculated as 0.5 points
+per pair.}
 
 \item{rows}{A character vector specifying answer options as the first elements
 in couples.}
