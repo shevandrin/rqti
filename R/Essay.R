@@ -143,9 +143,10 @@ essay <- function(identifier = generate_id(),
 
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,Essay
-setMethod("createItemBody",  "Essay", function(object) {
-    create_item_body_essay(object)
-})
+setMethod("createItemBody", signature(object = "Essay"),
+          function(object) {
+              create_item_body_essay(object)
+          })
 
 #' @rdname createResponseDeclaration-methods
 #' @aliases createResponseDeclaration,Essay
