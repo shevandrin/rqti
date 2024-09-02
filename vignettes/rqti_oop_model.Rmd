@@ -86,7 +86,7 @@ Task Types. These functions create classes representing different types of tasks
 - `?essay`
 - `?entry`
 - `?ordering`
-- `?directedPairs`
+- `?directedPair`
 - `?multipleChoiceTable`
 - `?OneInRowTable`
 - `?oneInColTable`
