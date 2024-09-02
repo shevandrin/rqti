@@ -107,10 +107,9 @@ textual and numeric responses within a single exercise. This versatility
 enhances the range of assessment possibilities for instructors.</p>
 <p>A template is automatically created when you initiate an rqti project
 through RStudio. Alternatively, it can be added by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. The
-<code>rqti</code> templates start with <code>rqti</code>: Here we look
-at the templates <code>rqti: gap (simple)</code> and
-<code>rqti: gap (complex)</code>.</p>
+<code>New file -&gt; R Markdown -&gt; From Template</code>. Here we look
+at the templates <code>gap (simple)</code> and
+<code>gap (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: gap</code> (or the
 equivalent <code>type: cloze</code>) in the yaml-section and some text,
 where at least one gap is used, in a section called
@@ -190,8 +189,8 @@ tags).</p>
 <h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h3>
 <p>If you want to have more fine-grained control, consider the RMD
-template <code>rqti: gap (complex)</code>, which uses more yaml
-attributes and more complex calls of the helper functions.</p>
+template <code>gap (complex)</code>, which uses more yaml attributes and
+more complex calls of the helper functions.</p>
 <pre><code>---
 type: gap # type of exercise
 knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
