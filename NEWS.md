@@ -10,7 +10,9 @@
 
 * Added support for the 'preview_feedback' option within 'params' in the YAML section of R Markdown files.
 
-*  Changed the service name to "rqtiopal" in the keyring system credential storage.
+* Renamed the service name in the keyring system credential storage to "rqtiopal".
+
+* Renamed the 'contributor' slot in QtiContributor to 'name'.
 
 ## Improvements
 

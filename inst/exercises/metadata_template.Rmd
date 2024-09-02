@@ -6,9 +6,9 @@ identifier: demo_metadata
 
 metadata:
     contributor:
-        - contributor: Andrey S
+        - name: Andrey S
           role: author
-        - contributor: Max M
+        - name: Max M
           role: author
     description: Place some text description here
     rights: This file is Copyright (C) 2024 Andrey S., Max M. All rights reserved.

@@ -5,13 +5,13 @@
 \title{Constructor function for class QtiContributor}
 \usage{
 qti_contributor(
-  contributor = Sys.getenv("RQTI_AUTHOR"),
+  name = Sys.getenv("RQTI_AUTHOR"),
   role = "author",
-  contribution_date = ifelse(contributor != "", Sys.Date(), NA_Date_)
+  contribution_date = ifelse(name != "", Sys.Date(), NA_Date_)
 )
 }
 \arguments{
-\item{contributor}{A character string representing the name of the author.}
+\item{name}{A character string representing the name of the author.}
 
 \item{role}{A character string kind of contribution. Possible values: author,
 publisher, unknown, initiator, terminator, validator, editor, graphical

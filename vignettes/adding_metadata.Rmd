@@ -39,7 +39,7 @@ Metadata may contain the following information:
 
 * contributor - list of details about contributors, each contributor may contain the following information:
 
-    * contributor - A character string representing the name of the author
+    * name - A character string representing the name of the author
 
     * role - A character string representing a type of contribution. Possible values: author, publisher, unknown, initiator, terminator, validator, editor, graphical designer, technical implementer, content provider, technical validator, educational validator, script writer, instructional designer, subject matter expert. By default `rqti` set this value to "author".
 
