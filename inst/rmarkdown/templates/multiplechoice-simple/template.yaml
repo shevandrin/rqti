@@ -1,4 +1,4 @@
-name: "rqti: multiplechoice (simple)"
+name: "multiplechoice (simple)"
 description: >
    A simple example of a multiple choice exercise
 create_dir: FALSE

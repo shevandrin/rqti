@@ -1,4 +1,4 @@
-name: "rqti: table (simple)"
+name: "table (simple)"
 description: >
    A simple example of an exercise with several questions in a table (can be single choice or multiple choice).
 create_dir: FALSE
