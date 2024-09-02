@@ -10,6 +10,8 @@
 
 * Added support for the 'preview_feedback' option within 'params' in the YAML section of R Markdown files.
 
+*  Changed the service name to "rqtiopal" in the keyring system credential storage.
+
 ## Improvements
 
 * QTIJS rendering (DirectedPair type, round Score and Maxscore values).

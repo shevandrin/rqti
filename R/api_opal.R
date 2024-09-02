@@ -34,7 +34,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
     if (is.null(endpoint)) endpoint <- catch_endpoint()
 
     if (has_keyring_support()) {
-        keys <- key_list("qtiopal")
+        keys <- key_list("rqtiopal")
         if (!is.null(api_user)) {
             keys <- keys[keys$username == api_user,]
         }
@@ -43,13 +43,13 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
         if (n_keys == 0) {
             if (is.null(api_user)) api_user <- readline("Enter Username on Opal: ")
             if (is.null(api_password)) api_password <- getPass("Enter Password: ")
-            key_set_with_value("qtiopal", api_user, api_password)
+            key_set_with_value("rqtiopal", api_user, api_password)
         }
 
         if (n_keys == 1) {
             # handle options to rewrite or create new user
             api_user <- keys$username
-            api_password <- key_get("qtiopal", api_user)
+            api_password <- key_get("rqtiopal", api_user)
         }
 
         if (n_keys > 1) {
@@ -68,7 +68,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
             if (key %in% seq(length(menu_options) - 1)) {
                 api_user <- menu_options[key]
                 message("logging in as ", api_user)
-                api_password <- key_get("qtiopal", api_user)
+                api_password <- key_get("rqtiopal", api_user)
             }
         }
     } else {
@@ -96,7 +96,7 @@ auth_opal <- function(api_user = NULL, api_password = NULL, endpoint = NULL) {
         # Check the user's choice
         if (tolower(choice) == "y") {
             if (has_keyring_support()) {
-                key_delete("qtiopal", api_user)
+                key_delete("rqtiopal", api_user)
                 api_user <- readline("Enter Username on Opal: ")
             }
             user_id <- auth_opal(api_user)
