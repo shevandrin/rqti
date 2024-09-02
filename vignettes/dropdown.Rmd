@@ -23,7 +23,7 @@ library(rqti)
 
 In this type of exercise, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as *entry*-objects because this is essential what dropwdowns are. Several dropdowns can be combined in a single exercise, but a combination with numeric and text entries (gaps) is not possible; mainly due to LMS limitations. 
 
-A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`:. Here we look at the templates `rqti: dropdown (simple)` and `rqti: dropdown (complex)`.
+A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `dropdown (simple)` and `dropdown (complex)`.
 
 The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**.Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
 
@@ -51,7 +51,7 @@ optional, but usually it is a good idea to give some explanation for students. I
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `rqti: dropdown (complex)`, which uses more yaml attributes and a more complex use of the helper function `dropdown`.
+If you want to have more fine-grained control, consider the RMD template `dropdown (complex)`, which uses more yaml attributes and a more complex use of the helper function `dropdown`.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

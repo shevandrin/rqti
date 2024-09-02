@@ -54,8 +54,7 @@ To comprehend how to create sections and tests, refer to the *main.R*
 file in the working directory. More information on this topic can be
 found here: [Sections and Tests](articles/section.html).
 
-To incorporate additional templates, create a new RMarkdown file. Choose
-*From Template* and select one that starts with *rqti: …*. The simple
+To incorporate additional templates, create a new RMarkdown file. Choose *From Template* and select one of the templates associated with the `rqti` package. The simple
 templates include minimal parameters, while the complex ones demonstrate
 how to use additional settings. Click the *Knit* button, and you should
 observe a rendered exercise in the viewer pane. While the templates are

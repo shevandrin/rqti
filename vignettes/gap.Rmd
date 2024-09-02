@@ -25,7 +25,7 @@ In this particular exercise format, candidates are tasked with filling in one or
 
 Within our package, it is feasible to integrate gaps with both textual and numeric responses within a single exercise. This versatility enhances the range of assessment possibilities for instructors.
 
-A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`: Here we look at the templates `rqti: gap (simple)` and `rqti: gap (complex)`.
+A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `gap (simple)` and `gap (complex)`.
 
 The minimum you need to provide is the `type: gap` (or the equivalent `type: cloze`) in the yaml-section and some text, where at least one gap is used, in a section called  **\#question**. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
 
@@ -53,7 +53,7 @@ optional, but usually it is a good idea to give some explanation for students. I
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `rqti: gap (complex)`, which uses more yaml attributes and more complex calls of the helper functions.
+If you want to have more fine-grained control, consider the RMD template `gap (complex)`, which uses more yaml attributes and more complex calls of the helper functions.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/gap-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-This is just a normal multiple choice exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:`. Here we look at the templates `rqti`: multiplechoice (simple)` and `rqti: multiplechoice (complex)`.
+This is just a normal multiple choice exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `multiplechoice (simple)` and `multiplechoice (complex)`.
 
 The minimum you need to provide is the `type: mpc` (or the equivalent `type: multiplechoice` or `type: mchoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 

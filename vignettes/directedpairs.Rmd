@@ -22,7 +22,7 @@ library(rqti)
 
 ## Minimum version
 
-In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`:`. Here we look at the templates `rqti: directedpair (simple)` and `qrti: directedpair (complex)`.
+In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `directedpair (simple)` and `directedpair (complex)`.
 
 The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -48,7 +48,7 @@ which will handle the preview. Clicking the Knit button in RStudio renders the f
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `rqti: directedpair (complex)`, wich uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template `directedpair (complex)`, wich uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

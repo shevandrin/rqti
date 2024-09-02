@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-This is just a typical essay exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`: Here we look at the templates `rqti: essay (simple)` and `rqti: essay (complex)`.
+This is just a typical essay exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `essay (simple)` and `essay (complex)`.
 
 The minimum you need to provide is the `type: essay` in the yaml-section and some text as a task description in a section called **\#question**:
 
@@ -41,7 +41,7 @@ Note that in this example, a feedback section was also provided. Since an open q
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `rqti`: essay (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template `essay (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

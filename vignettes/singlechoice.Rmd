@@ -22,7 +22,7 @@ Please be aware that this is the inaugural article in our package, and consequen
 
 ## Minimum version
 
-The simplest exercise type in the rqti package is single choice. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:` Here we look at the templates `rqti: singlechoice (simple)` and `rqti: singlechoice (complex)`.
+The simplest exercise type in the rqti package is single choice. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `singlechoice (simple)` and `singlechoice (complex)`.
 
 The minimum you need to provide is the `type: sc` (or the equivalent `type: singlechoice`, or `type: schoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
@@ -98,7 +98,7 @@ Renders as:
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `rqti: singlechoice-complex`, which uses more yaml attributes. In addition you can also set feedback for correct and incorrect responses.
+If you want to have more fine-grained control, consider the RMD template `singlechoice-complex`, which uses more yaml attributes. In addition you can also set feedback for correct and incorrect responses.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

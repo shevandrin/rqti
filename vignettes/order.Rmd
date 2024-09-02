@@ -21,7 +21,7 @@ library(rqti)
 
 ## Minimum version
 
-In this type of exercise, the candidate has to bring a list of items in the correct order. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:` Here we look at the templates `rqti: order (simple)` and `rqti`: order (complex).
+In this type of exercise, the candidate has to bring a list of items in the correct order. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `order (simple)` and `order (complex)`.
 
 The minimum you need to provide is the `type: order` in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -44,7 +44,7 @@ optional, but usually it is a good idea to give some explanation for students.
 
 ## More control
 
-If you want to have more fine-grained control, consider the Rmd template `rqti: order (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template `order (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
