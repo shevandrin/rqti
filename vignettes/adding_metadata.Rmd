@@ -44,11 +44,11 @@ Currently, the metadata may contain the following information:
   
 If you are working on a set of exercises, setting metadata for each one individually can be tedious. To streamline this process, you can use the environment variables `RQTI_AUTHOR` and `RQTI_RIGHTS`, which will automatically populate these fields with default values.
 
-For example, you can create a `.Renviron` file and set the default author and usage rights as follows:
+For example, you can create an `.Rprofile` file and set the default author and usage rights as follows:
 
-```{bash}
-RQTI_AUTHOR="Ada Lovelace"
-RQTI_RIGHTS="CC BY SA"
+```{r, eval=F}
+Sys.setenv(RQTI_AUTHOR="Ada Lovelace")
+Sys.setenv(RQTI_RIGHTS="CC BY SA")
 ```
 
 If you need to use non-default values, just specify the yaml attributes, which will override the environment variables.
