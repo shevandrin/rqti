@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
-# rqti
+# Introduction to rqti
 
 The `rqti` package is designed to be a powerful, stand-alone R library for creating exercises, exams, and questionnaires that fully comply with the [QTI v2.1 standard](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html). This tool empowers users to generate QTI-compliant content directly from R, offering the flexibility to render exercises locally (using qtijs) or seamlessly integrate them into learning management systems like OPAL.
 
