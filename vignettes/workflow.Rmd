@@ -22,4 +22,4 @@ library(rqti)
 ## Workflow
 
 
-![](images/workflow.png)
+![Workflow of the rqti package](images/workflow.png)
