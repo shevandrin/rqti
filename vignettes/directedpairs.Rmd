@@ -1,28 +1,31 @@
 ---
-title: "Directed Pairs Exercises"
+title: "Directed Pair Exercises"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Directed Pairs Exercises}
+    %\VignetteIndexEntry{Directed Pair Exercises}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 css: style.css
 ---
 
-```{r, include = FALSE}
+```{r dp, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+source("helper.R")
 ```
 
-```{r setup, echo=FALSE}
+```{r setup dp, echo=FALSE}
 library(rqti)
 ```
 
+`r ltx("# Directed Pair Exercises", "")`
+
 ## Minimum version
 
-In this type of exercise, the candidate is given two sets of items, which need to be matched. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti`:`. Here we look at the templates `rqti: directedpair (simple)` and `qrti: directedpair (complex)`.
+In this type of exercise, the student is given two sets of items, which need to be matched. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `directedpair (simple)` and `directedpair (complex)`.
 
 The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -31,32 +34,32 @@ path <- fs::path_package("rmarkdown/templates/directedpair-simple/skeleton", "sk
 cat(readLines(path), sep = '\n')
 ```
 
-Knitting via the Knit-Button to qtijs, this exercise renders as:
+Knitting via the Knit-Button to qtijs, this exercise renders as`r ltx(" Figure \\ref{dpqtijs1}.", ":")`
 
-![](images/xml/directedpair-simple.jpg){width=100%}
+![\label{dpqtijs1}Directed pair exercise rendered with qtijs](images/xml/directedpair-simple.jpg){width=100%}
 
 The pairs are specified by a markdown list in which the matching elements are separated by `|`. This list has to be the last element of the question section!
 
-An alternative is to provide a table exercise with the matching elements, see [Tables](table.html).
+An alternative is to provide a table exercise with the matching elements, see the article \ref{table-exercises} [Tables](table.html).
 
 Note that in the used example, a feedback section was also provided. The feedback is optional, but usually it is a good idea to give some explanation for students.
 
 Note that the `knit` parameter is set to the custom rqti knit function,
-which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
+which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to opal directly, producing`r ltx(" the output in Figure \\ref{dpopal1}.", ":")`
 
-![](images/directedpair-simple.jpg){width=100%}
+![\label{dpopal1}Directed pair exercise rendered in OPAL](images/directedpair-simple.jpg){width=100%}
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `rqti: directedpair (complex)`, wich uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template ` directedpair (complex)`, wich uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-In OPAL this renders as (the viewport is a bit too small to capture the entire exercise):
+In OPAL this renders as `r ltx("shown in Figure \\ref{dp2opal}.", "shown in the next image.")` The viewport is a bit too small to capture the entire exercise.
 
-![](images/directedpair-complex.jpg){width=100%}
+![\label{dp2opal}More complex directed pair exercise rendered in OPAL](images/directedpair-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -83,9 +86,9 @@ Defines the `vertical` or `horizontal` mode of displaying responses. Default is 
 
 If `true` (the default), randomizes the order of the elements. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to `false`).
 
-###  points
+### points
 
-How many points are given for the whole exercise. Default is 1.
+How many points are given for the whole exercise. Default is $0.5\cdot n$, where $n$ is the number of pairs.
 
 <!-- ### answers_scores -->
 
@@ -93,7 +96,7 @@ How many points are given for the whole exercise. Default is 1.
 
 ### abbr_id
 
-If `abbr_id` is not specified, `rqti` generates the identifiers `right_1`, `right_2`, ... `right_N` and `left_1`, `left_2`, ... `left_N`. However, these lack inherent semantics. To enhance clarity, some users might want to use the `abbr_id` parameter, which introduces abbreviated identifiers. The utility of these abbreviations varies based on item length, but they consistently offer more meaningful identifiers compared to non-semantic alternatives.
+If `abbr_id` is not specified, `rqti` generates the identifiers `right_1`, `right_2`, ... `right_N` and `left_1`, `left_2`, ... `left_N`. However, these lack inherent semantics. To enhance clarity, some users might want to use the `abbr_id` parameter, which introduces abbreviated identifiers based on the text of the pairs. The utility of these abbreviations varies based on item length, but they consistently offer more meaningful identifiers compared to non-semantic alternatives.
 
 ## Feedback
 
@@ -105,6 +108,6 @@ Feedback can be provided with the section
 
 ## Some advice on directed pair exercises 
 
-Directed pairs are forced choice exercises, so they have similar problems as single choice and multiple choice exercises (guessing increases variance). A specific problem of directed pairs is that answers are not independent. Making a mistake will lead to additional mistakes because two elements are blocked by one match. Use directed pairs with care.
+Directed pairs are forced choice exercises, so they have similar problems as single choice and multiple choice exercises (guessing). A specific problem of directed pairs is that answers are not independent. Making a mistake will lead to additional mistakes because two elements are blocked by one match. Use directed pairs with care.
 
-One might think that directed pairs are superfluous because match tables serve the same purpose. The difference is that in match tables either the row or column can be used more than once. For directed pairs, matching a pair makes both elements unavailable for further matching. This is unique, so there are use cases for directed pairs. But it is important to note that match tables can also represent a direct pair, meaning both directed pairs and match tables can serve as interfaces to the same concept. However, match tables are generally more flexible and are often the preferred choice (refer to [Tables](table.html) for more details).
+One might think that directed pairs are superfluous because match tables serve the same purpose. The difference is that in match tables either the row or column can be used more than once. For directed pairs, matching a pair makes both elements unavailable for further matching. This is unique, so there are use cases for directed pairs. But it is important to note that match tables can also represent a direct pair, meaning both directed pairs and match tables can serve as interfaces to the same concept. However, match tables are generally more flexible and are often the preferred choice (refer to the article \ref{table-exercises} [Table Exercises](table.html) for more details).
