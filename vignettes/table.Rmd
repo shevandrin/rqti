@@ -13,15 +13,20 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+source("helper.R")
 ```
 
-```{r setup, echo=FALSE}
+```{r setup tbl, echo=FALSE}
 library(rqti)
 ```
 
+`r ltx("# Table Exercises", "")`
+
+In this type of exercise, the candidate matches rows with columns in a table. This format is often used when multiple questions need to be displayed concisely. Table exercises are highly versatile and are ideal for creating both single-choice and multiple-choice questions.
+
 ## Minimum version
 
-In this type of exercise, the candidate must match rows and columns of a table. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:`. Here we look at the templates `rqti: table (simple)` and `rqti: table (complex)`.
+A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `table (simple)` and `table (complex)`.
 
 The minimum you need to provide is the `type: table` in the yaml-section and a table in a section called **\#question**:
 
@@ -29,38 +34,39 @@ The minimum you need to provide is the `type: table` in the yaml-section and a t
 cat(readLines(fs::path_package("rmarkdown/templates/table-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Clicking the Knit-Button will produce:
+Clicking the Knit-Button will produce `r ltx("the output in Figure \\ref{tbl1qtijs}.", ":")`
 
-![Preview of table exercise rendered by QTIJS](images/xml/table-simple.jpg){width=100% border=2px}
+![\label{tbl1qtijs}Preview of table exercise rendered by qtijs](images/xml/table-simple.jpg){width=100% border=2px}
 
-Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [API Opal](api_opal.html)) to upload to opal directly, producing:
+Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article  \ref{working-with-the-opal-api}[Working with the OPAL API](api_opal.html)) to upload to opal directly, producing `r ltx("the output Figure \\ref{tbl1opal}.", ":")`
 
-![](images/table-simple.jpg){width=100%}
+![\label{tbl1opal}Preview of table exercise rendered by OPAL](images/table-simple.jpg){width=100%}
 
-The table entries in the Rmd-file contain the number of points for the response. Any number above 0 is considered correct. You can also use negative numbers, which will reduce the points reached, but never below 0. The number of correct responses per row and column can be specified as needed. This usually has an effect on the presentation of the table. For instance, there are special tables where only one row per column is correct and where only one column per row is correct. The `rqti` package takes care of this automatically, so you do not need to do anything. In this regard it is important to know that if you create a table that is actually a directed pair, it will be transformed into a directed pair exercise. If you do not want this, use `as_table = true` in the yaml-section.
+In the Rmd file, table entries indicate the points awarded for each response. Any positive number is considered correct. You can also assign negative numbers, which will reduce the total score, but the overall score will never go below zero. You can specify the number of correct responses per row and column as needed, which typically influences how the table is presented. For example, there are special table configurations where only one row is correct per column, and vice versa. The `rqti` package handles these cases automatically, so no additional steps are required on your part.
+
+However, it is important to note that if your table represents a directed pair, the `rqti` package will automatically convert it into a directed pair exercise. If you prefer to keep it as a standard table, use `as_table: true` in the YAML section of your Rmd file.
 
 The overall points for the exercise are calculated as the sum of the positive table entries.
 
 Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`. Just do not forget that the table has to be the last element of the question section.
 
-Note that in this example, a feedback section was also provided. The feedback is
-optional, but usually it is a good idea to give some explanation for students.
+In this example, a feedback section was also included. While feedback is optional, it is generally beneficial to provide some explanation to students. However, offering detailed feedback can be challenging for table exercises, especially when questions are presented in random order. Most learning management systems at least indicate which answers are correct or incorrect, so feedback can be more general, focusing on the overall topic.
 
 ## More control
 
-If you want to have more fine-grained control, consider the Rmd template `rqti: table (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template `table (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/table-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which, in Opal, renders as:
+Which, in Opal, renders as `r ltx("illustrated in Figure \\ref{tbl2opal}.", ":")`
 
-![Preview of complex table exercise in LMS OPAL](images/table-complex.jpg){width=100%}
+![\label{tbl2opal}Preview of complex table exercise in the learning management system OPAL](images/table-complex.jpg){width=100%}
 
-You can see that rows and columns are now fixed and there is a more meaningful title.
+You can see that the order of the columns is now the same as in the source table.
 
-# yaml attributes
+## yaml attributes
 
 ### type
 
@@ -89,7 +95,7 @@ Only shuffle the columns. Default is `true`. Overwritten by `shuffle`.
 
 ### abbr_id
 
-Defines the use of an abbreviation as a way to generate row and column identifiers. Explained in more detail in the section [Managing identifiers](#ids).
+Defines the use of an abbreviation as a way to generate row and column identifiers. Explained in more detail in the section \ref{ids} [Managing identifiers](#ids).
 
 ## Feedback
 
@@ -101,14 +107,14 @@ Feedback can be provided with the section
 
 ## Managing identifiers {#ids}
 
-The identifiers of rows and columns are useful for later data analysis of results. If you are doing extensive data analysis later on, it makes sense to specify meaningful identifiers, or at least make them more recognizable.
+The identifiers for rows and columns are valuable for later data analysis. If you plan to conduct extensive analysis, it is beneficial to assign meaningful and easily recognizable identifiers.
 
-There are currently two ways to form identifiers of rows and columns:
+Currently, there are two methods for creating row and column identifiers:
 
-1. By default `rqti` uses `row_1`...`row_N`, `col_1`...`col_N`.
-2. Using `abbr_id: true` in the yaml section of the Rmd file, `rqti` takes the first word of a row or column element and combines it with the abbreviation of the remaining text of the element. Example: for the element "Mean Value Theorem for Integrals" `rqti` makes the identifier "Mean_VTfI". If the row/column starts with digits, "col"/"row" is added as prefix as identifiers are not allowed to start with a number. All special characters are removed.
+1. **Default Method**: By default, `rqti` generates identifiers in the format `row_1`, `row_2`, ..., `row_N`, and `col_1`, `col_2`, ..., `col_N`.
+2. **Abbreviation Method**: By setting `abbr_id: true` in the YAML section of your Rmd file, `rqti` generates identifiers by combining the first word of a row or column element with an abbreviation of the remaining text. For example, the element "Mean Value Theorem for Integrals" would be shortened to "Mean_VTfI". If a row or column name starts with digits, `rqti` automatically adds a "row" or "col" prefix, as identifiers cannot begin with a number. Special characters are also removed.
 
-We experimented with different solutions and settled on these simple versions. If you need more control of the identifiers, please open an issue on github: <https://github.com/shevandrin/rqti/issues> and we will reconsider the options.
+After experimenting with various approaches, we settled on these straightforward methods. If you require more control over the identifiers, please open an issue on GitHub: <https://github.com/shevandrin/rqti/issues>. We are open to reconsidering the available options.
 
 <!-- 3. For more control, you might want to assign your own values as identifiers. -->
 

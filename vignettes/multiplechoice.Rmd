@@ -8,20 +8,25 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r mpc, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+source("helper.R")
 ```
 
 ```{r setup, echo=FALSE}
 library(rqti)
 ```
 
+`r if(knitr::is_latex_output()) "# Multiple-Choice Exercises"`
+
+This is just a normal multiple choice exercise. 
+
 ## Minimum version
 
-This is just a normal multiple choice exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates start with `rqti:`. Here we look at the templates `rqti`: multiplechoice (simple)` and `rqti: multiplechoice (complex)`.
+A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `multiplechoice (simple)` and `multiplechoice (complex)`.
 
 The minimum you need to provide is the `type: mpc` (or the equivalent `type: multiplechoice` or `type: mchoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
@@ -33,29 +38,33 @@ cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-simple/skelet
 
 Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students.
 
-Further note that the `knit` parameter is set to the custom `rqti` knit function, which will handle the preview. Clicking the Knit button in RStudio produces the following in the viewer pane (or browser of your choice):
+Further note that the `knit` parameter is set to the custom `rqti` knit function, which will handle the preview. Clicking the Knit button in RStudio produces`r ltx(" the output in Figure \\ref{mpc1qtijs}.", ":")`
 
-![](images/xml/multiplechoice-simple.jpg){width=100%}
+![\label{mpc1qtijs}Multiple choice exercise rendered in qtijs](images/xml/multiplechoice-simple.jpg){width=100%}
 
-You can also use the opal (set it up before, see: [API Opal](api_opal.html)) render function (`knit: rqti::render_opal`), which should produce the following:
+You can also use the Opal (set it up before, see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) render function (`knit: rqti::render_opal`), which should produce`r ltx(" the output in Figure \\ref{mpc1opal}.", ":")`
 
-![](images/multiplechoice-simple.jpg){width=100%}
+![\label{mpc1opal}Multiple choice exercise rendered in OPAL](images/multiplechoice-simple.jpg){width=100%}
 
-Multiple choice exercises are essentially the same as single choice exercises, except that none or several choices can be correct. The correct choices are specified by surrounding them with asterisks (markdown for italic). If you need to use italic in your choices, surround the whole question with the `<em> </em>` tag, instead. Note that the default points are $0.5n$, where $n$ is the number of choices. Here we have 4 choices, so 2 points can be reached. For a correct choice 0.5 points are gained, for an incorrect 0.5 are deducted. The minimum number of points is 0 in any case. 
+Multiple-choice exercises function similarly to single-choice exercises, with the key difference being that multiple (or no) answers can be correct. To indicate the correct options, surround them with asterisks (using markdown for italics). If you need to use italics within the choices themselves, enclose the entire question in `<em></em>` tags to avoid conflicts.
 
-Among various grading options, we find this to be the most intuitive, especially when considering the element of guessing. Given our inclination against forced-choice exercises, we do not see significant value in introducing different grading alternatives. Rather, we recommend directing attention towards better exercise types like gaps for a more effective assessment approach. See also the section [Some advice on multiple choice exercises].
+By default, the total points available for a question are calculated as $0.5n$, where $n$ is the number of answer choices. For example, if there are 4 choices, the maximum score for the question is 2 points. Correct selections earn 0.5 points each, while incorrect selections deduct 0.5 points. Regardless of how points are calculated, the minimum score you can receive is 0.
+
+Among various grading options, we find this to be the most intuitive, especially when considering the element of guessing. Given our inclination against forced-choice exercises, we do not see significant value in introducing different grading alternatives. Rather, we recommend directing attention towards better exercise types like gaps for a more effective assessment approach. See also the section \ref{some-advice-on-multiple-choice-exercises} [Some advice on multiple choice exercises].
 
 ## More control
 
-If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template `rqti`:multiple-choice (complex)`.
+If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template `multiple-choice (complex)`.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-complex/skeleton/", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which renders in Opal as:
+Which renders in OPAL as`r ltx(" shown in Figure \\ref{mpc2opal}.", ":")`
 
-![](images/multiplechoice-complex.jpg){width=100%}
+![\label{mpc2opal}More complex multiple choice exercise rendered in OPAL](images/multiplechoice-complex.jpg){width=100%}
+
+Let us now discuss all yaml attributes that can be used.
 
 ## yaml attributes
 
@@ -69,7 +78,7 @@ This is the ID of the exercise, useful for later data analysis of results. The d
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
+Title of the exercise. Can be displayed to students depending on the learning management system settings. The default is the file name.
 
 ### shuffle
 
@@ -86,7 +95,7 @@ Should the items be displayed in `vertical` or `horizontal` mode? Default is `ve
 
 ### points
 
-How many points are given for the whole exercise. Default is the number of choices times 0.5. The points $p$ are divided by the number of choices $c$ and then distributed over all choices. A correct choice will get the student +$p/c$, an incorrect choice -$p/c$. Witout such a procedure, a student could always select all answers and get the maximum number of points. See also the section [Some advice on multiple choice exercises].
+How many points are given for the whole exercise. Default is the number of choices times 0.5. The points $p$ are divided by the number of choices $c$ and then distributed over all choices. A correct choice will get the student +$p/c$, an incorrect choice -$p/c$. Witout such a procedure, a student could always select all answers and get the maximum number of points. See also the section \ref{some-advice-on-multiple-choice-exercises} [Some advice on multiple choice exercises].
 
 ## Feedback
 
@@ -107,8 +116,10 @@ mdlist(c("dropdown list", "programming language evaluation", "numeric gap"),
 
 ## Some advice on multiple choice exercises
 
-A multiple choice exercise can always be transformed to multiple single choice exercises with the choices true/false or yes/no. Thus, from a psychometric perspective both types suffer from the same problems. They should be avoided if possible. This is mainly because guessing can never be ruled out. Psychometric properties will usually be worse than for numeric or string gap exercises that are similar in content.
+A multiple-choice exercise can always be converted into multiple single-choice questions with true/false or yes/no options. From a psychometric standpoint, both types of exercises share the same drawbacks, primarily due to the potential for guessing. Consequently, they should be avoided when possible. Generally, their psychometric properties are inferior to those of numeric or string-based gap exercises that assess similar content.
 
-There are situations where forced choice exercises cannot be entirely avoided. For instance, presenting several statistical analyses and asking the student whether the result is statistically significant or not is a good exercise. Still, this exercise should not be a multiple choice exercise because there are better alternatives: single choice, dropdowns or match tables. A multiple choice exercise can always be transformed into several single choices or dropdowns with the choices yes/no. For a long multiple choice list this is rather inconvenient but one could use a match table with the choices yes/no instead.
+However, there are scenarios where forced-choice exercises are necessary. For example, presenting several statistical analyses and asking students to determine whether the results are statistically significant is a valuable exercise. Even in such cases, a multiple-choice format may not be the best option. Better alternatives include single-choice questions, dropdowns, or match tables. A multiple-choice question can often be restructured into several single-choice or dropdown questions with yes/no options. This may be cumbersome for longer multiple-choice lists, for which a match table with yes/no options can be a more convenient solution.
 
-The advantage of these other exercise types is that the student has to make a selection. If the student does not have to make a selection he or she could get points even though the question was not even answered. Imagine a multiple choice exercise where all choices are incorrect. Without even attempting to solve this exercise, a student would get all points. If you use multiple choice exercises you have to balance out the yes/no responses. For single choices, dropdowns and match tables, this is not the case. So although we do support multiple choice exercises, we advise strongly against using them at all.
+The main advantage of these alternative formats is that they require students to make explicit choices. In a multiple-choice exercise where all options are incorrect, a student could earn full points simply by not making any selections---effectively getting credit without engaging with the question. To avoid this, multiple-choice exercises must balance the distribution of correct and incorrect options, which is not necessary for single-choice, dropdown, or match table formats. 
+
+While multiple-choice exercises are supported, we strongly advise against using them whenever possible in favor of more robust alternatives.
