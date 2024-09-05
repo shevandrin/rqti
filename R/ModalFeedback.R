@@ -34,20 +34,21 @@ setMethod("initialize", "ModalFeedback", function(.Object, ...) {
 
 #' Create object [ModalFeedback]
 #'
-#' @param content A list of character content to form the text of the modal
-#'   feedback, which can include HTML tags.
+#' @param content A character string or a list of character strings to form the
+#'   text of the question, which may include HTML tags.
 #' @param title A character value, optional, representing the title of the modal
 #'   feedback window.
 #' @param show A boolean value, optional, determining whether to show (`TRUE`) or
 #'   hide (`FALSE`) the modal feedback. Default is `TRUE`.
 #' @return An object of class [ModalFeedback]
 #' @examples
-#' fb <- modalFeedback(content = list("Model answer"), title = "Feedback")
+#' fb <- modalFeedback(content = "Model answer", title = "Feedback")
 #' @export
 modalFeedback <- function(content = list(),
                        title = character(0),
                        show = TRUE) {
     params <- as.list(environment())
+    if (is.character(params$content)) params$content <- list(params$content)
     params$Class <- "ModalFeedback"
     obj <- do.call("new", params)
     return(obj)

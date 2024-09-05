@@ -26,20 +26,21 @@ setMethod("initialize", "WrongFeedback", function(.Object, ...) {
 
 #' Create object [WrongFeedback]
 #'
-#' @param content A list of character content to form the text of the feedback,
-#'   which can include HTML tags.
+#' @param content A character string or a list of character strings to form the
+#'   text of the question, which may include HTML tags.
 #' @param title A character value, optional, representing the title of the
 #'   feedback window.
 #' @param show A boolean value, optional, determining whether to show (`TRUE`)
 #'   or hide (`FALSE`) the feedback. Default is `TRUE`.
 #' @return An object of class [WrongFeedback]
 #' @examples
-#' wfb <- wrongFeedback(content = list("Some comments"), title = "Feedback")
+#' wfb <- wrongFeedback(content = "Some comments", title = "Feedback")
 #' @export
 wrongFeedback <- function(content = list(),
                           title = character(0),
                           show = TRUE) {
     params <- as.list(environment())
+    if (is.character(params$content)) params$content <- list(params$content)
     params$Class <- "WrongFeedback"
     obj <- do.call("new", params)
     return(obj)

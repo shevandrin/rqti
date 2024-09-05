@@ -7,8 +7,8 @@
 wrongFeedback(content = list(), title = character(0), show = TRUE)
 }
 \arguments{
-\item{content}{A list of character content to form the text of the feedback,
-which can include HTML tags.}
+\item{content}{A character string or a list of character strings to form the
+text of the question, which may include HTML tags.}
 
 \item{title}{A character value, optional, representing the title of the
 feedback window.}
@@ -23,5 +23,5 @@ An object of class \link{WrongFeedback}
 Create object \link{WrongFeedback}
 }
 \examples{
-wfb <- wrongFeedback(content = list("Some comments"), title = "Feedback")
+wfb <- wrongFeedback(content = "Some comments", title = "Feedback")
 }
