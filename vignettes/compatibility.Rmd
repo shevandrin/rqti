@@ -3,7 +3,7 @@ title: "Compatibility with Learning Management Systems"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Compatibility}
+  %\VignetteIndexEntry{Compatibility with Learning Management Systems}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
