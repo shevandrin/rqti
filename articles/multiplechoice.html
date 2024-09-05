@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Multiple Choice Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/multiplechoice.Rmd" class="external-link"><code>vignettes/multiplechoice.Rmd</code></a></small>
       <div class="d-none name"><code>multiplechoice.Rmd</code></div>
@@ -94,13 +94,14 @@
 
     
     
+<p>This is just a normal multiple choice exercise.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>This is just a normal multiple choice exercise. A template is
-automatically created when you initiate an rqti project through RStudio.
-Alternatively, it can be added by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. Here we look
+<p>A minimum template is automatically created when you initiate an rqti
+project through RStudio. Alternatively, it can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates end with <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a>. Here we look
 at the templates <code>multiplechoice (simple)</code> and
 <code>multiplechoice (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: mpc</code> (or the
@@ -129,25 +130,31 @@ is optional, but usually it is a good idea to give some explanation for
 students.</p>
 <p>Further note that the <code>knit</code> parameter is set to the
 custom <code>rqti</code> knit function, which will handle the preview.
-Clicking the Knit button in RStudio produces the following in the viewer
-pane (or browser of your choice):</p>
-<p><img src="images/xml/multiplechoice-simple.jpg" style="width:100.0%"></p>
-<p>You can also use the opal (set it up before, see: <a href="api_opal.html">API Opal</a>) render function
-(<code>knit: rqti::render_opal</code>), which should produce the
-following:</p>
-<p><img src="images/multiplechoice-simple.jpg" style="width:100.0%"></p>
-<p>Multiple choice exercises are essentially the same as single choice
-exercises, except that none or several choices can be correct. The
-correct choices are specified by surrounding them with asterisks
-(markdown for italic). If you need to use italic in your choices,
-surround the whole question with the <code>&lt;em&gt; &lt;/em&gt;</code>
-tag, instead. Note that the default points are
+Clicking the Knit button in RStudio produces:</p>
+<div class="float">
+<img src="images/xml/multiplechoice-simple.jpg" style="width:100.0%" alt="Multiple choice exercise rendered in qtijs"><div class="figcaption">Multiple choice exercise rendered in qtijs</div>
+</div>
+<p>You can also use the Opal (set it up before, see article <a href="api_opal.html">Working with the OPAL API</a>) render function
+(<code>knit: rqti::render_opal</code>), which should produce:</p>
+<div class="float">
+<img src="images/multiplechoice-simple.jpg" style="width:100.0%" alt="Multiple choice exercise rendered in OPAL"><div class="figcaption">Multiple choice exercise rendered in OPAL</div>
+</div>
+<p>Multiple-choice exercises function similarly to single-choice
+exercises, with the key difference being that multiple (or no) answers
+can be correct. To indicate the correct options, surround them with
+asterisks (using markdown for italics). If you need to use italics
+within the choices themselves, enclose the entire question in
+<code>&lt;em&gt;&lt;/em&gt;</code> tags to avoid conflicts.</p>
+<p>By default, the total points available for a question are calculated
+as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">0.5n</annotation></semantics></math>,
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
-is the number of choices. Here we have 4 choices, so 2 points can be
-reached. For a correct choice 0.5 points are gained, for an incorrect
-0.5 are deducted. The minimum number of points is 0 in any case.</p>
+is the number of answer choices. For example, if there are 4 choices,
+the maximum score for the question is 2 points. Correct selections earn
+0.5 points each, while incorrect selections deduct 0.5 points.
+Regardless of how points are calculated, the minimum score you can
+receive is 0.</p>
 <p>Among various grading options, we find this to be the most intuitive,
 especially when considering the element of guessing. Given our
 inclination against forced-choice exercises, we do not see significant
@@ -161,7 +168,7 @@ choice exercises</a>.</p>
 </h2>
 <p>If you want to have more fine-grained control, consider the available
 attributes for the yaml section in the RMD template
-<code>rqti</code>:multiple-choice (complex)`.</p>
+<code>multiple-choice (complex)</code>.</p>
 <pre><code>---
 type: multiplechoice # equivalent to mpc
 knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
@@ -184,8 +191,12 @@ Which exercise types are supported by the R package rqti?
 # feedback
 
 All basic types of QTI are supported. More advanced exercises (as available in OPAL/ONYX) are not yet supported because they are LMS specific.</code></pre>
-<p>Which renders in Opal as:</p>
-<p><img src="images/multiplechoice-complex.jpg" style="width:100.0%"></p>
+<p>Which renders in OPAL as:</p>
+<div class="float">
+<img src="images/multiplechoice-complex.jpg" style="width:100.0%" alt="More complex multiple choice exercise rendered in OPAL"><div class="figcaption">More complex multiple choice exercise rendered
+in OPAL</div>
+</div>
+<p>Let us now discuss all yaml attributes that can be used.</p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -208,7 +219,7 @@ all other cases, the file name should be fine.</p>
 <h3 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
 </h3>
 <p>Title of the exercise. Can be displayed to students depending on the
-learning management system settings. Default is the file name.</p>
+learning management system settings. The default is the file name.</p>
 </div>
 <div class="section level3">
 <h3 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
@@ -273,31 +284,33 @@ available as a variable. In this case you can use the helper function
 <div class="section level2">
 <h2 id="some-advice-on-multiple-choice-exercises">Some advice on multiple choice exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-multiple-choice-exercises"></a>
 </h2>
-<p>A multiple choice exercise can always be transformed to multiple
-single choice exercises with the choices true/false or yes/no. Thus,
-from a psychometric perspective both types suffer from the same
-problems. They should be avoided if possible. This is mainly because
-guessing can never be ruled out. Psychometric properties will usually be
-worse than for numeric or string gap exercises that are similar in
-content.</p>
-<p>There are situations where forced choice exercises cannot be entirely
-avoided. For instance, presenting several statistical analyses and
-asking the student whether the result is statistically significant or
-not is a good exercise. Still, this exercise should not be a multiple
-choice exercise because there are better alternatives: single choice,
-dropdowns or match tables. A multiple choice exercise can always be
-transformed into several single choices or dropdowns with the choices
-yes/no. For a long multiple choice list this is rather inconvenient but
-one could use a match table with the choices yes/no instead.</p>
-<p>The advantage of these other exercise types is that the student has
-to make a selection. If the student does not have to make a selection he
-or she could get points even though the question was not even answered.
-Imagine a multiple choice exercise where all choices are incorrect.
-Without even attempting to solve this exercise, a student would get all
-points. If you use multiple choice exercises you have to balance out the
-yes/no responses. For single choices, dropdowns and match tables, this
-is not the case. So although we do support multiple choice exercises, we
-advise strongly against using them at all.</p>
+<p>A multiple-choice exercise can always be converted into multiple
+single-choice questions with true/false or yes/no options. From a
+psychometric standpoint, both types of exercises share the same
+drawbacks, primarily due to the potential for guessing. Consequently,
+they should be avoided when possible. Generally, their psychometric
+properties are inferior to those of numeric or string-based gap
+exercises that assess similar content.</p>
+<p>However, there are scenarios where forced-choice exercises are
+necessary. For example, presenting several statistical analyses and
+asking students to determine whether the results are statistically
+significant is a valuable exercise. Even in such cases, a
+multiple-choice format may not be the best option. Better alternatives
+include single-choice questions, dropdowns, or match tables. A
+multiple-choice question can often be restructured into several
+single-choice or dropdown questions with yes/no options. This may be
+cumbersome for longer multiple-choice lists, for which a match table
+with yes/no options can be a more convenient solution.</p>
+<p>The main advantage of these alternative formats is that they require
+students to make explicit choices. In a multiple-choice exercise where
+all options are incorrect, a student could earn full points simply by
+not making any selections—effectively getting credit without engaging
+with the question. To avoid this, multiple-choice exercises must balance
+the distribution of correct and incorrect options, which is not
+necessary for single-choice, dropdown, or match table formats.</p>
+<p>While multiple-choice exercises are supported, we strongly advise
+against using them whenever possible in favor of more robust
+alternatives.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

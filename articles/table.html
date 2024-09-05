@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Table Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/table.Rmd" class="external-link"><code>vignettes/table.Rmd</code></a></small>
       <div class="d-none name"><code>table.Rmd</code></div>
@@ -94,14 +94,18 @@
 
     
     
-<div class="section level3">
-<h3 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
-</h3>
-<p>In this type of exercise, the candidate must match rows and columns
-of a table. A template is automatically created when you initiate an
-rqti project through RStudio. Alternatively, it can be added by clicking
-on <code>New file -&gt; R Markdown -&gt; From Template</code>. Here we
-look at the templates <code>table (simple)</code> and
+<p>In this type of exercise, the candidate matches rows with columns in
+a table. This format is often used when multiple questions need to be
+displayed concisely. Table exercises are highly versatile and are ideal
+for creating both single-choice and multiple-choice questions.</p>
+<div class="section level2">
+<h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
+</h2>
+<p>A minimum template is automatically created when you initiate an rqti
+project through RStudio. Alternatively, it can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates end with <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a>. Here we look
+at the templates <code>table (simple)</code> and
 <code>table (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: table</code> in
 the yaml-section and a table in a section called
@@ -130,39 +134,47 @@ Hint: Use visual editing mode in RStudio to quickly change your table.
 # feedback
 
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.</code></pre>
-<p>Clicking the Knit-Button will produce:</p>
+<p>Clicking the Knit-Button will produce :</p>
 <div class="float">
-<img src="images/xml/table-simple.jpg" style="width:100.0%" border="2px" alt="Preview of table exercise rendered by QTIJS"><div class="figcaption">Preview of table exercise rendered by
-QTIJS</div>
+<img src="images/xml/table-simple.jpg" style="width:100.0%" border="2px" alt="Preview of table exercise rendered by qtijs"><div class="figcaption">Preview of table exercise rendered by
+qtijs</div>
 </div>
 <p>Alternatively, change the knit parameter to
-<code>knit: rqti::render_opal</code> (see <a href="api_opal.html">API
-Opal</a>) to upload to opal directly, producing:</p>
-<p><img src="images/table-simple.jpg" style="width:100.0%"></p>
-<p>The table entries in the Rmd-file contain the number of points for
-the response. Any number above 0 is considered correct. You can also use
-negative numbers, which will reduce the points reached, but never below
-0. The number of correct responses per row and column can be specified
-as needed. This usually has an effect on the presentation of the table.
-For instance, there are special tables where only one row per column is
-correct and where only one column per row is correct. The
-<code>rqti</code> package takes care of this automatically, so you do
-not need to do anything. In this regard it is important to know that if
-you create a table that is actually a directed pair, it will be
-transformed into a directed pair exercise. If you do not want this, use
-<code>as_table = true</code> in the yaml-section.</p>
+<code>knit: rqti::render_opal</code> (see article <a href="api_opal.html">Working with the OPAL API</a>) to upload to opal
+directly, producing :</p>
+<div class="float">
+<img src="images/table-simple.jpg" style="width:100.0%" alt="Preview of table exercise rendered by OPAL"><div class="figcaption">Preview of table exercise rendered by OPAL</div>
+</div>
+<p>In the Rmd file, table entries indicate the points awarded for each
+response. Any positive number is considered correct. You can also assign
+negative numbers, which will reduce the total score, but the overall
+score will never go below zero. You can specify the number of correct
+responses per row and column as needed, which typically influences how
+the table is presented. For example, there are special table
+configurations where only one row is correct per column, and vice versa.
+The <code>rqti</code> package handles these cases automatically, so no
+additional steps are required on your part.</p>
+<p>However, it is important to note that if your table represents a
+directed pair, the <code>rqti</code> package will automatically convert
+it into a directed pair exercise. If you prefer to keep it as a standard
+table, use <code>as_table: true</code> in the YAML section of your Rmd
+file.</p>
 <p>The overall points for the exercise are calculated as the sum of the
 positive table entries.</p>
 <p>Of course you can also just load a csv and print it as a markdown
 table via <code>knitr::kable(yourtable)</code>. Just do not forget that
 the table has to be the last element of the question section.</p>
-<p>Note that in this example, a feedback section was also provided. The
-feedback is optional, but usually it is a good idea to give some
-explanation for students.</p>
+<p>In this example, a feedback section was also included. While feedback
+is optional, it is generally beneficial to provide some explanation to
+students. However, offering detailed feedback can be challenging for
+table exercises, especially when questions are presented in random
+order. Most learning management systems at least indicate which answers
+are correct or incorrect, so feedback can be more general, focusing on
+the overall topic.</p>
 </div>
-<div class="section level3">
-<h3 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
-</h3>
+<div class="section level2">
+<h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
+</h2>
 <p>If you want to have more fine-grained control, consider the Rmd
 template <code>table (complex)</code>, which uses more yaml
 attributes.</p>
@@ -196,65 +208,66 @@ Use visual editing mode in RStudio to quickly change your table.
 # feedback
 
 Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.</code></pre>
-<p>Which, in Opal, renders as:</p>
+<p>Which, in Opal, renders as :</p>
 <div class="float">
-<img src="images/table-complex.jpg" style="width:100.0%" alt="Preview of complex table exercise in LMS OPAL"><div class="figcaption">Preview of complex table exercise in LMS
-OPAL</div>
+<img src="images/table-complex.jpg" style="width:100.0%" alt="Preview of complex table exercise in the learning management system OPAL"><div class="figcaption">Preview of complex table exercise in the
+learning management system OPAL</div>
 </div>
-<p>You can see that rows and columns are now fixed and there is a more
-meaningful title.</p>
+<p>You can see that the order of the columns is now the same as in the
+source table.</p>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
 </h2>
-<div class="section level4">
-<h4 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
-</h4>
+<div class="section level3">
+<h3 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
+</h3>
 <p>Has to be <code>table</code> or <code>match</code>.</p>
 </div>
-<div class="section level4">
-<h4 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
-</h4>
+<div class="section level3">
+<h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
+</h3>
 <p>This is the ID of the exercise, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
 </div>
-<div class="section level4">
-<h4 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
-</h4>
+<div class="section level3">
+<h3 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
+</h3>
 <p>Title of the exercise. Can be displayed to students depending on the
 learning management system settings. Default is the file name.</p>
 </div>
-<div class="section level4">
-<h4 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
-</h4>
+<div class="section level3">
+<h3 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
+</h3>
 <p>If <code>true</code> (the default), randomizes the order of rows and
 columns. Only in rare occasions it makes sense to have a strict order of
 elements (setting shuffle to <code>false</code>). Overwrites
 <code>shuffle_rows</code> and <code>shuffle_cols</code>.</p>
 </div>
-<div class="section level4">
-<h4 id="shuffle_rows">shuffle_rows<a class="anchor" aria-label="anchor" href="#shuffle_rows"></a>
-</h4>
+<div class="section level3">
+<h3 id="shuffle_rows">shuffle_rows<a class="anchor" aria-label="anchor" href="#shuffle_rows"></a>
+</h3>
 <p>Only shuffle the rows. Default is <code>true</code>. Overwritten by
 <code>shuffle</code>.</p>
 </div>
-<div class="section level4">
-<h4 id="shuffle_cols">shuffle_cols<a class="anchor" aria-label="anchor" href="#shuffle_cols"></a>
-</h4>
+<div class="section level3">
+<h3 id="shuffle_cols">shuffle_cols<a class="anchor" aria-label="anchor" href="#shuffle_cols"></a>
+</h3>
 <p>Only shuffle the columns. Default is <code>true</code>. Overwritten
 by <code>shuffle</code>.</p>
 </div>
-<div class="section level4">
-<h4 id="abbr_id">abbr_id<a class="anchor" aria-label="anchor" href="#abbr_id"></a>
-</h4>
+<div class="section level3">
+<h3 id="abbr_id">abbr_id<a class="anchor" aria-label="anchor" href="#abbr_id"></a>
+</h3>
 <p>Defines the use of an abbreviation as a way to generate row and
 column identifiers. Explained in more detail in the section <a href="#ids">Managing identifiers</a>.</p>
 </div>
-<div class="section level3">
-<h3 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
-</h3>
+</div>
+<div class="section level2">
+<h2 id="feedback">Feedback<a class="anchor" aria-label="anchor" href="#feedback"></a>
+</h2>
 <p>Feedback can be provided with the section</p>
 <ul>
 <li>
@@ -268,32 +281,35 @@ points)</li>
 reach all points)</li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="ids">Managing identifiers<a class="anchor" aria-label="anchor" href="#ids"></a>
-</h3>
-<p>The identifiers of rows and columns are useful for later data
-analysis of results. If you are doing extensive data analysis later on,
-it makes sense to specify meaningful identifiers, or at least make them
-more recognizable.</p>
-<p>There are currently two ways to form identifiers of rows and
-columns:</p>
+<div class="section level2">
+<h2 id="ids">Managing identifiers<a class="anchor" aria-label="anchor" href="#ids"></a>
+</h2>
+<p>The identifiers for rows and columns are valuable for later data
+analysis. If you plan to conduct extensive analysis, it is beneficial to
+assign meaningful and easily recognizable identifiers.</p>
+<p>Currently, there are two methods for creating row and column
+identifiers:</p>
 <ol style="list-style-type: decimal">
-<li>By default <code>rqti</code> uses
-<code>row_1</code>…<code>row_N</code>,
-<code>col_1</code>…<code>col_N</code>.</li>
-<li>Using <code>abbr_id: true</code> in the yaml section of the Rmd
-file, <code>rqti</code> takes the first word of a row or column element
-and combines it with the abbreviation of the remaining text of the
-element. Example: for the element “Mean Value Theorem for Integrals”
-<code>rqti</code> makes the identifier “Mean_VTfI”. If the row/column
-starts with digits, “col”/“row” is added as prefix as identifiers are
-not allowed to start with a number. All special characters are
+<li>
+<strong>Default Method</strong>: By default, <code>rqti</code>
+generates identifiers in the format <code>row_1</code>,
+<code>row_2</code>, …, <code>row_N</code>, and <code>col_1</code>,
+<code>col_2</code>, …, <code>col_N</code>.</li>
+<li>
+<strong>Abbreviation Method</strong>: By setting
+<code>abbr_id: true</code> in the YAML section of your Rmd file,
+<code>rqti</code> generates identifiers by combining the first word of a
+row or column element with an abbreviation of the remaining text. For
+example, the element “Mean Value Theorem for Integrals” would be
+shortened to “Mean_VTfI”. If a row or column name starts with digits,
+<code>rqti</code> automatically adds a “row” or “col” prefix, as
+identifiers cannot begin with a number. Special characters are also
 removed.</li>
 </ol>
-<p>We experimented with different solutions and settled on these simple
-versions. If you need more control of the identifiers, please open an
-issue on github: <a href="https://github.com/shevandrin/rqti/issues" class="external-link uri">https://github.com/shevandrin/rqti/issues</a> and we will
-reconsider the options.</p>
+<p>After experimenting with various approaches, we settled on these
+straightforward methods. If you require more control over the
+identifiers, please open an issue on GitHub: <a href="https://github.com/shevandrin/rqti/issues" class="external-link uri">https://github.com/shevandrin/rqti/issues</a>. We are open
+to reconsidering the available options.</p>
 <!-- 3. For more control, you might want to assign your own values as identifiers. -->
 <!-- ```{markdown} -->
 <!-- | ROWID       | row     | 27 | 36  | 25 | 6 | -->
@@ -305,14 +321,13 @@ reconsider the options.</p>
 <!-- | twelvethree | 12\*3 = | 0  | 1   | 0  | 0 | -->
 <!-- ``` -->
 </div>
-<div class="section level3">
-<h3 id="some-advice-on-table-exercises">Some advice on table exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-table-exercises"></a>
-</h3>
+<div class="section level2">
+<h2 id="some-advice-on-table-exercises">Some advice on table exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-table-exercises"></a>
+</h2>
 <p>Table exercises are forced choice exercises, so they suffer from the
 sample problems as <a href="singlechoice.html">single choice</a> and <a href="multiplechoice.html">multiple choice</a> exercises. The advantage
 of table exercises is that they are easy so manage (e.g. in csv-tables)
 and many questions can be asked at once, using little space.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

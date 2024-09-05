@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Essay Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/essay.Rmd" class="external-link"><code>vignettes/essay.Rmd</code></a></small>
       <div class="d-none name"><code>essay.Rmd</code></div>
@@ -94,14 +94,16 @@
 
     
     
+<p>This is a standard essay exercise with an open field for students to
+write a comprehensive response.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>This is just a typical essay exercise. A template is automatically
-created when you initiate an rqti project through RStudio.
-Alternatively, it can be added by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. Here we look
-at the templates <code>essay (simple)</code> and
+<p>A minimum template is automatically created when you initiate an rqti
+project through RStudio. Alternatively, it can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates end with <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a> Here we look at
+the templates <code>essay (simple)</code> and
 <code>essay (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: essay</code> in
 the yaml-section and some text as a task description in a section called
@@ -118,12 +120,16 @@ What are the advantages and disadvantages of the `rqti` package as compared to t
 # feedback
 
 The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.</code></pre>
-<p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
-<p><img src="images/xml/essay-simple.jpg" style="width:100.0%"></p>
+<p>Knitting via the Knit-Button to qtijs, this exercise renders asd:</p>
+<div class="float">
+<img src="images/xml/essay-simple.jpg" style="width:100.0%" alt="Simple essay erxercise rendered by qtijs"><div class="figcaption">Simple essay erxercise rendered by qtijs</div>
+</div>
 <p>Alternatively, change the knit parameter to
-<code>knit: render_opal</code> (see <a href="api_opal.html">API
-Opal</a>) to upload to Opal directly, producing:</p>
-<p><img src="images/essay-simple.jpg" style="width:100.0%"></p>
+<code>knit: render_opal</code> (see <a href="api_opal.html">Working with
+the OPAL API</a>) to upload to Opal directly, producing:</p>
+<div class="float">
+<img src="images/essay-simple.jpg" style="width:100.0%" alt="Simple essay exercise rendered by OPAL"><div class="figcaption">Simple essay exercise rendered by OPAL</div>
+</div>
 <p>Note that in this example, a feedback section was also provided.
 Since an open question requires manual review, only general feedback
 without conditions should be provided. The feedback is optional, but
@@ -160,8 +166,11 @@ What are the advantages and disadvantages of the `rqti` package as compared to t
 # feedback
 
 The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.</code></pre>
-<p>Which, in Opal, renders as:</p>
-<p><img src="images/essay-complex.jpg" style="width:100.0%"></p>
+<p>Which, in Opal, renders as :</p>
+<div class="float">
+<img src="images/essay-complex.jpg" style="width:100.0%" alt="More complex essay exercise rendered in OPAL"><div class="figcaption">More complex essay exercise rendered in
+OPAL</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -216,7 +225,7 @@ candidate in the text input field.</p>
 <h3 id="data_allow_paste">data_allow_paste<a class="anchor" aria-label="anchor" href="#data_allow_paste"></a>
 </h3>
 <p>Determines whether the candidate is allowed to copy text from the
-clipboard to the text input field. Default is <code>FALSE</code>.</p>
+clipboard to the text input field. Default is <code>false</code>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -239,14 +248,13 @@ as essay exercises have to be graded manually.</p>
 <div class="section level2">
 <h2 id="some-advice-on-essay-exercises">Some advice on essay exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-exercises"></a>
 </h2>
-<p>Essay exercises can prove immensly diagnostic, provided the
-instructor poses thought-provoking questions. Regrettably, a
-considerable number of instructors lack creativity and specificity when
-formulating essay prompts, resulting in ambiguous grading criteria. To
-counteract this issue, it is advisable to consistently provide an
-exemplary solution in the feedback section. This approach not only
-enriches the learning experience for your students but also garners
-appreciation from colleagues responsible for grading.</p>
+<p>Essay exercises can be highly diagnostic, especially when instructors
+pose thought-provoking questions. Unfortunately, many instructors
+struggle with creativity and precision when crafting essay prompts,
+leading to vague grading criteria. To address this issue, it is
+recommended to always include an exemplary solution in the feedback
+section. This not only enhances the learning experience for students but
+also earns appreciation from colleagues involved in grading.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

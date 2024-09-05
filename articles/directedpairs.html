@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Directed Pairs Exercises • rqti</title>
+<title>Directed Pair Exercises • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Directed Pairs Exercises">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Directed Pair Exercises">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -84,9 +84,9 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Directed Pairs Exercises</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Directed Pair Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/directedpairs.Rmd" class="external-link"><code>vignettes/directedpairs.Rmd</code></a></small>
       <div class="d-none name"><code>directedpairs.Rmd</code></div>
@@ -97,11 +97,12 @@
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>In this type of exercise, the candidate is given two sets of items,
+<p>In this type of exercise, the student is given two sets of items,
 which need to be matched. A template is automatically created when you
 initiate an rqti project through RStudio. Alternatively, it can be added
 by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. Here we look
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates end with <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a>. Here we look
 at the templates <code>directedpair (simple)</code> and
 <code>directedpair (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: pair</code> (or
@@ -129,21 +130,26 @@ Match the following `rqti` functions with their purpose:
 
 Provide your feedback here.</code></pre>
 <p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
-<p><img src="images/xml/directedpair-simple.jpg" style="width:100.0%"></p>
+<div class="float">
+<img src="images/xml/directedpair-simple.jpg" style="width:100.0%" alt="Directed pair exercise rendered with qtijs"><div class="figcaption">Directed pair exercise rendered with qtijs</div>
+</div>
 <p>The pairs are specified by a markdown list in which the matching
 elements are separated by <code>|</code>. This list has to be the last
 element of the question section!</p>
 <p>An alternative is to provide a table exercise with the matching
-elements, see <a href="table.html">Tables</a>.</p>
+elements, see the article <a href="table.html">Tables</a>.</p>
 <p>Note that in the used example, a feedback section was also provided.
 The feedback is optional, but usually it is a good idea to give some
 explanation for students.</p>
 <p>Note that the <code>knit</code> parameter is set to the custom rqti
 knit function, which will handle the preview. Clicking the Knit button
 in RStudio renders the file in the viewer pane. Alternatively, change
-the knit parameter to <code>knit: rqti::render_opal</code> (see <a href="api_opal.html">API Opal</a>) to upload to opal directly,
-producing:</p>
-<p><img src="images/directedpair-simple.jpg" style="width:100.0%"></p>
+the knit parameter to <code>knit: rqti::render_opal</code> (see article
+<a href="api_opal.html">Working with the OPAL API</a>) to upload to opal
+directly, producing:</p>
+<div class="float">
+<img src="images/directedpair-simple.jpg" style="width:100.0%" alt="Directed pair exercise rendered in OPAL"><div class="figcaption">Directed pair exercise rendered in OPAL</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
@@ -187,9 +193,12 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 --&gt;</code></pre>
-<p>In OPAL this renders as (the viewport is a bit too small to capture
-the entire exercise):</p>
-<p><img src="images/directedpair-complex.jpg" style="width:100.0%"></p>
+<p>In OPAL this renders as shown in the next image. The viewport is a
+bit too small to capture the entire exercise.</p>
+<div class="float">
+<img src="images/directedpair-complex.jpg" style="width:100.0%" alt="More complex directed pair exercise rendered in OPAL"><div class="figcaption">More complex directed pair exercise rendered in
+OPAL</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -229,8 +238,11 @@ of elements (setting shuffle to <code>false</code>).</p>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>How many points are given for the whole exercise. If not provided,
-the default is calculated as 0.5 points per pair.</p>
+<p>How many points are given for the whole exercise. Default is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn><mo>⋅</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">0.5\cdot n</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+is the number of pairs.</p>
 <!-- ### answers_scores -->
 <!-- If it is important to have different values of points for different pairs, it is necessary to list these points in the same order that the pairs are defined in the list: `answers_scores: 2, 2, 1`. In this case, the total number of points will be calculated as the sum of 'answers_scores', and the attribute 'points', if set, will be ignored. -->
 </div>
@@ -242,10 +254,10 @@ the identifiers <code>right_1</code>, <code>right_2</code>, …
 <code>right_N</code> and <code>left_1</code>, <code>left_2</code>, …
 <code>left_N</code>. However, these lack inherent semantics. To enhance
 clarity, some users might want to use the <code>abbr_id</code>
-parameter, which introduces abbreviated identifiers. The utility of
-these abbreviations varies based on item length, but they consistently
-offer more meaningful identifiers compared to non-semantic
-alternatives.</p>
+parameter, which introduces abbreviated identifiers based on the text of
+the pairs. The utility of these abbreviations varies based on item
+length, but they consistently offer more meaningful identifiers compared
+to non-semantic alternatives.</p>
 </div>
 </div>
 <div class="section level2">
@@ -268,11 +280,10 @@ reach all points)</li>
 <h2 id="some-advice-on-directed-pair-exercises">Some advice on directed pair exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-directed-pair-exercises"></a>
 </h2>
 <p>Directed pairs are forced choice exercises, so they have similar
-problems as single choice and multiple choice exercises (guessing
-increases variance). A specific problem of directed pairs is that
-answers are not independent. Making a mistake will lead to additional
-mistakes because two elements are blocked by one match. Use directed
-pairs with care.</p>
+problems as single choice and multiple choice exercises (guessing). A
+specific problem of directed pairs is that answers are not independent.
+Making a mistake will lead to additional mistakes because two elements
+are blocked by one match. Use directed pairs with care.</p>
 <p>One might think that directed pairs are superfluous because match
 tables serve the same purpose. The difference is that in match tables
 either the row or column can be used more than once. For directed pairs,
@@ -281,8 +292,7 @@ This is unique, so there are use cases for directed pairs. But it is
 important to note that match tables can also represent a direct pair,
 meaning both directed pairs and match tables can serve as interfaces to
 the same concept. However, match tables are generally more flexible and
-are often the preferred choice (refer to <a href="table.html">Tables</a>
-for more details).</p>
+are often the preferred choice (refer to the article <a href="table.html">Table Exercises</a> for more details).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

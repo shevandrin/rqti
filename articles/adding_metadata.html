@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Adding metadata</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/adding_metadata.Rmd" class="external-link"><code>vignettes/adding_metadata.Rmd</code></a></small>
       <div class="d-none name"><code>adding_metadata.Rmd</code></div>
@@ -94,71 +94,85 @@
 
     
     
-<div class="section level2">
-<h2 id="adding-metadata">Adding metadata<a class="anchor" aria-label="anchor" href="#adding-metadata"></a>
-</h2>
-<p>Metadata in QTI XML files, containing information about creators,
-rights, and descriptions, is crucial for ensuring accountability, legal
-compliance, and clarity in the management and use of assessment items
-and tests.</p>
-<p>Here it is an example of metadata with two contributors in Rmd yaml
-section :</p>
+<p>Metadata—including details about creators, rights, and
+descriptions—is essential for ensuring accountability, legal compliance,
+and clarity in the management and use of assessment items and tests.
+This information helps track content origin and ownership, while also
+providing clear descriptions that facilitate better organization and
+retrieval of assessment resources.</p>
+<p>We utilize ONYX’s metadata implementation, which largely supports the
+IEEE Learning Object Metadata (LOM) standard. As a result, metadata is
+stored in XML format within the IMS manifest of the test data. However,
+it is important to note that this metadata may not be displayed by other
+learning management systems, and even Opal may overwrite it. The primary
+purpose is to maintain metadata within the original xml files being
+shared.</p>
+<p>Here is an example of metadata with two contributors in the yaml
+section:</p>
 <pre><code>---
-title: Demo of metadata
+title: Demonstration of metadata
 type: essay
 knit: rqti::render_qtijs
 identifier: demo_metadata
 
 metadata:
-    contributor:
-        - name: Andrey S
-          role: author
-        - name: Max M
-          role: author
-    description: Place some text description here
-    rights: This file is Copyright (C) 2024 Andrey S., Max M. All rights reserved.
+  contributor:
+    - name: Andrey Shevandrin
+      role: author
+    - name: Johannes Titz 
+      role: author
+  description: Demonstration of metadata
+  rights: CC BY SA Andrey Shevandrin and Johannes Titz (2024).
 ---
 
 # question
 
-Task with metadata attributes in the yaml section.</code></pre>
-<p>Metadata may contain the following information:</p>
+Essay exercise with metadata attributes in the yaml section.</code></pre>
+<p>Currently, the metadata may contain the following information:</p>
 <ul>
-<li><p>description - A character string representing a textual
-description of the contents of this learning object.</p></li>
-<li><p>rights - A character string describing the intellectual property
-rights and terms of use of this learning object.</p></li>
-<li><p>version - A character string representing the edition/version of
-this learning object.</p></li>
 <li>
-<p>contributor - list of details about contributors, each
-contributor may contain the following information:</p>
+<strong>description</strong>: A string providing a description of
+the exercise content.</li>
+<li>
+<strong>rights</strong>: A string outlining the usage rights and
+terms associated with the exercise.</li>
+<li>
+<strong>version</strong>: A string indicating the version of the
+exercise.</li>
+<li>
+<strong>contributor</strong>: A list of contributor details, where
+each contributor entry may include the following information:
 <ul>
-<li><p>name - A character string representing the name of the
-author</p></li>
-<li><p>role - A character string representing a type of contribution.
-Possible values: author, publisher, unknown, initiator, terminator,
-validator, editor, graphical designer, technical implementer, content
-provider, technical validator, educational validator, script writer,
-instructional designer, subject matter expert. By default
-<code>rqti</code> set this value to “author”.</p></li>
-<li><p>contribution_date - A character string representing date of the
-contribution. By default <code>rqti</code> set this value to the current
-system date.</p></li>
+<li>
+<strong>name</strong>: A string representing the contributor’s
+name.</li>
+<li>
+<strong>role</strong>: A string specifying the type of contribution.
+Possible values include: author, publisher, unknown, initiator,
+terminator, validator, editor, graphical designer, technical
+implementer, content provider, technical validator, educational
+validator, script writer, instructional designer, and subject matter
+expert. By default, <code>rqti</code> sets this value to “author”.</li>
+<li>
+<strong>contribution_date</strong>: A string representing the date
+of contribution. By default, <code>rqti</code> sets this to the current
+system date.</li>
 </ul>
 </li>
 </ul>
-<p>Author can also assign environment variables <code>RQTI_AUTHOR</code>
-and <code>RQTI_RIGHTS</code> for default values of the metadata.
-Examples:</p>
-<ul>
-<li><p>RQTI_AUTHOR=“Max Mustermann”</p></li>
-<li><p>RQTI_RIGHTS=“This file is Copyright (C) 2024 Max Mustermann. All
-rights reserved.”</p></li>
-</ul>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
+<p>If you are working on a set of exercises, setting metadata for each
+one individually can be tedious. To streamline this process, you can use
+the environment variables <code>RQTI_AUTHOR</code> and
+<code>RQTI_RIGHTS</code>, which will automatically populate these fields
+with default values.</p>
+<p>For example, you can create an <code>.Rprofile</code> file and set
+the default author and usage rights as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>RQTI_AUTHOR <span class="op">=</span> <span class="st">"Ada Lovelace"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>RQTI_RIGHTS <span class="op">=</span> <span class="st">"CC BY SA"</span><span class="op">)</span></span></code></pre></div>
+<p>If you need to use non-default values, just specify the yaml
+attributes, which will override the environment variables.</p>
+  </main>
 </div>
 
 

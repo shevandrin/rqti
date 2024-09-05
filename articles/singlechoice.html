@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,6 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Single Choice Exercises</h1>
             
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/singlechoice.Rmd" class="external-link"><code>vignettes/singlechoice.Rmd</code></a></small>
       <div class="d-none name"><code>singlechoice.Rmd</code></div>
@@ -93,19 +94,20 @@
 
     
     
-<p>Please be aware that this is the inaugural article in our package,
-and consequently, it may exhibit more verbosity than subsequent
-articles. We aim to highlight crucial points that might not be as
-explicitly addressed in other articles. Therefore, we suggest thoroughly
-reading through this article once before proceeding to the exercise
-types that pique your specific interest.</p>
+<p>Please note that this is the first article in this manual, and as
+such, it may be more detailed than those that follow. Our goal is to
+emphasize key points that might not be as thoroughly covered in later
+articles. For this reason, we recommend reading through this article
+carefully before diving into the exercise types that most interest
+you.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
 <p>The simplest exercise type in the rqti package is single choice. A
 template is automatically created when you initiate an rqti project
 through RStudio. Alternatively, it can be added by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. Here we look
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates end with <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a>. Here we look
 at the templates <code>singlechoice (simple)</code> and
 <code>singlechoice (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: sc</code> (or the
@@ -136,42 +138,49 @@ This is based on the typical understanding of a 5% significance level in hypothe
 <p>Note that in this example, a feedback section was also provided. This
 is optional, but usually it is a good idea to give some explanation for
 students.</p>
-<p>Further note that the <code>knit</code> parameter is set to a custom
-<code>rqti</code> function, which will handle the preview. This is not
-necessarily required, but simplifies the workflow substantially. If you
-leave it out, the default preview is just an html file. If you add our
-knit function, you will get a more realistic preview.</p>
-<p>To see what the final result might look like in a learning management
-system you can just click the <code>Knit</code> button in RStudio. This
-will produce an rqti xml file and render it in the viewer pane via QTIJS
-(you can also just fire up the displayed server url in the browser if
-you do not use RStudio).</p>
+<p>Additionally, note that the <code>knit</code> parameter is set to a
+custom <code>rqti</code> function, which streamlines the preview
+process. While this is optional, it significantly simplifies the
+workflow. Without it, the default preview will be a basic HTML file. By
+including our custom knit function, you will get a more realistic
+preview that allows for interaction with the exercise.</p>
+<p>To preview the final result, simply click the <em>Knit</em> button in
+RStudio (if you are not using RStudio, call <code>render_qtijs</code> on
+the file). This will generate a QTI XML file and render it in the viewer
+pane using QTIJS. If you are not using RStudio, you can also open the
+server URL displayed in the console directly in your browser for the
+same preview experience.</p>
+<!-- ![Preview of single choice exercise rendered by QTIJS](images/xml/singlechoice-simple.jpg){width=100%} -->
+<p>You can now interact with the exercise by selecting an option and
+then clicking <code>Submit</code> in the top right corner. By default,
+after submitting, the feedback and reached points are displayed:</p>
 <div class="float">
-<img src="images/xml/singlechoice-simple.jpg" style="width:100.0%" alt="Preview of single choice exercise rendered by QTIJS"><div class="figcaption">Preview of single choice exercise rendered by
-QTIJS</div>
+<img src="images/xml/scfb.jpg" style="width:100.0%" alt="Preview of single choice exercise with feedback rendered by QTIJS"><div class="figcaption">Preview of single choice exercise with feedback
+rendered by QTIJS</div>
 </div>
 <p>The corresponding xml file is created in the same folder as the Rmd
 file if you click the Knit-Button.
 <!-- or in the current directory if you execute the functions from the console. Usually, the Knit button will be sufficient for most use cases, but if you need more control the functions `rmd2qti, render_xml, render_zip` are handy. The functions give a message about the path of the created file. --></p>
-<p>Many learning management systems can directly import a QTI-xml-file,
+<p>Many learning management systems can directly import a QTI-XML-file,
 so all you need to do is upload the generated file. Compositions of
-exercises are covered in the article: <a href="section.html">sections
-and tests</a>.</p>
+exercises are covered in the article <a href="section.html">Sections and
+Tests</a>.</p>
 <p>If you happen to use OPAL/ONYX, you can also upload your exercises
-with the knit parameter directly:</p>
+directly by modifying the knit parameter:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">knit</span><span class="op">:</span> <span class="va">render_opal</span></span></code></pre></div>
-<p>This will upload the file and open a browser with the opal url. It
+<p>This will upload the file and open a browser with the OPAL url. It
 should look like this:</p>
-<p><img src="images/singlechoice-simple.jpg" style="width:100.0%"></p>
+<div class="float">
+<img src="images/singlechoice-simple.jpg" style="width:100.0%" alt="Single choice exercise renderd in OPAL"><div class="figcaption">Single choice exercise renderd in OPAL</div>
+</div>
 <p>Setting up OPAL requires some additional steps, which are covered in
-the article: <a href="api_opal.html">Setting up OPAL</a>.</p>
+the article <a href="api_opal.html">Working with the OPAL API</a>.</p>
 <p>By default the rights of the uploaded material in OPAL are set to
 public, so no authentication is required to view the material. Otherwise
 you have to login into OPAL, which will log you out in the API. Please
 take this into account when testing your material. Without changing the
 defaults anyone with the link has access to your exercise.</p>
-<!-- The function `render_opal` will aks you for credentials first. Depending on the OPAL setup you might need to use a VPN. Furthermore only password-based authentication accounts work (Shibboleth does not work). You probably need to consult your IT before using `upload2opal`. More information on this can be found in the article: OPAL API. Specifically, we describe how to setup the API at TU Chemnitz. -->
 </div>
 <div class="section level2">
 <h2 id="syntax-explained">Syntax explained<a class="anchor" aria-label="anchor" href="#syntax-explained"></a>
@@ -214,9 +223,10 @@ For instance:</p>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="ss">- </span>D</span></code></pre></div>
 <p>Once again, this is much easier to read than providing the solution
 somewhere else (e.g. in the yaml section). Furthermore, producing a
-preview as html directly shows you which element is correct.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;If you want to use italics in your choice, you can also
-wrap the correct solution in emphasize tags
-&lt;code&gt;&amp;lt;em&amp;gt; a choice with *some italics*&amp;lt;/em&amp;gt;&lt;/code&gt;&lt;/p&gt;"><sup>1</sup></a></p>
+preview as html directly shows you which element is correct. If you want
+to use italics in your choice, you can also wrap the correct solution in
+emphasize tags:
+<code>&lt;em&gt; a choice with *some italics*&lt;/em&gt;</code>.</p>
 <p>An important note: Do not forget to put a blank line before your
 question and the answer list, otherwise the list will not be a proper
 list:</p>
@@ -269,7 +279,10 @@ Try again. (Only displayed if the solution is not correct.)
 
 &lt;!-- If you prefer general feedback, just use the the section # feedback and delete the other feedback sections--&gt;</code></pre>
 <p>Which renders in OPAL as:</p>
-<p><img src="images/singlechoice-complex.jpg" style="width:100.0%"></p>
+<div class="float">
+<img src="images/singlechoice-complex.jpg" style="width:100.0%" alt="More complex single choice exercise rendered in OPAL"><div class="figcaption">More complex single choice exercise rendered in
+OPAL</div>
+</div>
 <p>Let us now discuss all yaml attributes that can be used</p>
 </div>
 <div class="section level2">
@@ -352,7 +365,19 @@ conditional feedback. Basically, we never use feedback+ and feedback-.
 It is often more effective to present the entire solution, organized
 into manageable chunks that users can expand or collapse, such as HTML
 elements with <code>&lt;details&gt;</code> and
-<code>&lt;summary&gt;</code> tags.</p>
+<code>&lt;summary&gt;</code> tags. To give an example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>will render as:</p>
+<details><summary> Question 1</summary>
+  Provide Feedback for Question 1
+</details><details><summary> Question 2</summary>
+  Provide Feedback for Question 2
+</details><p>Thus, there is no need to go beyond using the general feedback.</p>
 </div>
 <div class="section level2">
 <h2 id="list-of-answers-as-a-variable">List of answers as a variable<a class="anchor" aria-label="anchor" href="#list-of-answers-as-a-variable"></a>
@@ -360,8 +385,8 @@ elements with <code>&lt;details&gt;</code> and
 <p>For more complex exercises the list of answers is often just
 available as a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
 <!-- make a separate vignette for this -->
 <!-- ## A programatic low level approach -->
 <!-- The `rqti` package is very flexible in that you can also use low level functions to create rqti content. Let us say you have a csv table with many single choice exercises. It is quite easy to transform this to a rqti section: -->
@@ -369,37 +394,33 @@ available as a variable. In this case you can use the helper function
 <div class="section level2">
 <h2 id="some-advice-on-single-choice-exercises">Some advice on single choice exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-single-choice-exercises"></a>
 </h2>
-<p>From a psychometric perspective single choice exercises are the worst
-option for ability assessment. This is mainly because guessing can never
-be ruled out. Psychometric properties will usually be worse than for gap
-exercises that are similar in content.</p>
-<p>In an alternative R package designed for test creation, namely
-<code>exams</code>, numerous instances demonstrate the transformation of
-numeric gaps into single-choice exercises. In our perspective, this
-approach is justified only in scenarios where the learning management
-system lacks support for gap exercises, exhibits poor support, or
-demands a print exam with automated grading. In all other cases, opting
-for numeric (or string) gaps would generally yield more effective
-exercises.</p>
-<p>Certain situations necessitate the use of single-choice exercises.
-For example, when addressing the level of measurement, there are only
-five options (nominal, ordinal, interval, ratio, absolute). In such
-cases, we advise posing multiple questions instead of a single one.
-Additionally, it could be beneficial to assign fewer points to
-single-choice exercises overall to mitigate the impact of guessing and
-minimize variance.</p>
-<p>If you have several single choice exercises where the answer options
-stay the same, consider using a match table instead: <a href="table.html">Match Tables</a></p>
-<p>In conclusion, it is advisable to steer clear of single-choice
-exercises whenever possible. Specifically, refrain from converting
-numeric gap exercises into single-choice format unless there is a
-compelling reason to do so. If the use of single-choice exercises is
-unavoidable, opt for posing multiple questions, perhaps utilizing a
-match table. Additionally, contemplating a reduced weight for
-single-choice exercises in grading can contribute to a more balanced
-assessment.</p>
+<p>From a psychometric standpoint, single-choice exercises are often the
+least effective option for assessing ability. This is primarily because
+guessing cannot be entirely ruled out, leading to weaker psychometric
+properties compared to similar content presented in gap exercises.</p>
+<p>For example, the <code>exams</code> package, an alternative R package
+for test creation, frequently converts numeric gaps into single-choice
+exercises. However, we believe this approach is justified only when the
+learning management system either does not support gap exercises,
+provides inadequate support, or the instructor requires printed exams
+with automated grading. In all other cases, using numeric or string gaps
+is generally more effective.</p>
+<p>In some cases, single-choice exercises may be unavoidable. For
+instance, when determining whether a statistical test is significant,
+there are only two possible answers. In such situations, we suggest
+asking multiple related questions rather than relying on a single one.
+Additionally, assigning fewer points to single-choice exercises can help
+mitigate the effects of guessing.</p>
+<p>If you have multiple single-choice exercises with identical answer
+options, consider using a match table instead (see article <a href="table.html">Table Exercises</a>).</p>
+<p>In conclusion, it is advisable to avoid single-choice exercises
+whenever possible. Specifically, refrain from converting numeric gap
+exercises into single-choice format unless absolutely necessary. If
+single-choice exercises are unavoidable, consider asking multiple
+related questions or using a match table. Additionally, reducing the
+weight of single-choice exercises in the overall grading can help create
+a more balanced and fair assessment.</p>
 </div>
-
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>

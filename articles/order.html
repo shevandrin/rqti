@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Order Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/order.Rmd" class="external-link"><code>vignettes/order.Rmd</code></a></small>
       <div class="d-none name"><code>order.Rmd</code></div>
@@ -94,14 +94,15 @@
 
     
     
+<p>In this type of exercise, the candidate has to bring a list of items
+in the correct order.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>In this type of exercise, the candidate has to bring a list of items
-in the correct order. A template is automatically created when you
-initiate an rqti project through RStudio. Alternatively, it can be added
-by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. Here we look
+<p>A minimum template is automatically created when you initiate an rqti
+project through RStudio. Alternatively, it can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates end with <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a>. Here we look
 at the templates <code>order (simple)</code> and
 <code>order (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: order</code> in
@@ -125,11 +126,15 @@ What is the structure of an exam in QTI terms, starting from the top (the exam) 
 
 For order exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.</code></pre>
 <p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
-<p><img src="images/xml/order-simple.jpg" style="width:100.0%"></p>
+<div class="float">
+<img src="images/xml/order-simple.jpg" style="width:100.0%" alt="Simple order exercise rendered in qtijs"><div class="figcaption">Simple order exercise rendered in qtijs</div>
+</div>
 <p>Alternatively, change the knit parameter to
-<code>knit: render_opal</code> (see <a href="api_opal.html">API
-Opal</a>) to upload to Opal directly, producing:</p>
-<p><img src="images/order-simple.jpg" style="width:100.0%"></p>
+<code>knit: render_opal</code> (see article <a href="api_opal.html">Working with the OPAL API</a>) to upload to Opal
+directly, producing:</p>
+<div class="float">
+<img src="images/order-simple.jpg" style="width:100.0%" alt="Simple order exercise rendered in OPAL"><div class="figcaption">Simple order exercise rendered in OPAL</div>
+</div>
 <p>The order of the items in the Rmd-list is considered to be the
 correct one.</p>
 <p>Note that in this example, a feedback section was provided. The
@@ -177,7 +182,10 @@ Nice. (Only displayed when the solution is correct.)
 Try again. (Only displayed if the solution is not correct.)
 --&gt;</code></pre>
 <p>Which on Opal renders as:</p>
-<p><img src="images/order-complex.jpg" style="width:100.0%"></p>
+<div class="float">
+<img src="images/order-complex.jpg" style="width:100.0%" alt="More complex order exercise rendered in OPAL"><div class="figcaption">More complex order exercise rendered in
+OPAL</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -214,9 +222,9 @@ is the length of the list.</p>
 <h3 id="points_per_answer">points_per_answer<a class="anchor" aria-label="anchor" href="#points_per_answer"></a>
 </h3>
 <p>Defines the scoring method. If <code>true</code> each selected answer
-will be scored individually (according to absolute position of the
+will be scored individually (according to the absolute position of the
 element in the list), if <code>false</code> the whole task will be
-scored and a single mistake leads to 0 points. Default is
+scored and a single error leads to 0 points. Default is
 <code>true</code>.</p>
 </div>
 </div>
@@ -237,18 +245,13 @@ reach all points)</li>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="helpers">helpers<a class="anchor" aria-label="anchor" href="#helpers"></a>
+<h2 id="list-of-answers-as-a-variable">List of answers as a variable<a class="anchor" aria-label="anchor" href="#list-of-answers-as-a-variable"></a>
 </h2>
 <p>For more complex exercises the list of answers is sometimes available
 as a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">order_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mdlist.html">mdlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Test"</span>, <span class="st">"Section"</span>, <span class="st">"Item"</span>, <span class="st">"Interaction"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">order_list</span><span class="op">)</span></span>
-<span><span class="op">-</span> <span class="va">Test</span></span>
-<span><span class="op">-</span> <span class="va">Section</span></span>
-<span><span class="op">-</span> <span class="va">Item</span></span>
-<span><span class="op">-</span> <span class="va">Interaction</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"Test"</span>, <span class="st">"Section"</span>, <span class="st">"Item"</span>, <span class="st">"Interaction"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- Test</span><span class="sc">\n</span><span class="st">- Section</span><span class="sc">\n</span><span class="st">- Item</span><span class="sc">\n</span><span class="st">- Interaction"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="some-advice-on-order-exercises">Some advice on order exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-order-exercises"></a>

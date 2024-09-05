@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Sections and Tests</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/section.Rmd" class="external-link"><code>vignettes/section.Rmd</code></a></small>
       <div class="d-none name"><code>section.Rmd</code></div>
@@ -106,14 +106,15 @@ sources of exercise files:</p>
 <li>
 <strong>Rmd (md) files</strong>: You can use Rmarkdown files that
 are consistent with the <code>rqti</code> package (the
-<code>exams</code> package will not work but see below)</li>
+<code>exams</code> package will not work, but see below)</li>
 <li>
 <strong>QTI XML files</strong>: These files should be valid
 regarding the QTI standard. To use your Rmd-files from the
 <code>exams</code> package you can convert them to xml first.</li>
 <li>
 <strong>Objects of S4 <code>rqti</code> classes</strong>: You can
-also use objects from the <code>rqti</code> package directly. See <a href="qti_oop_model.html">QTI OOP model</a>.</li>
+also use objects from the <code>rqti</code> package directly. See
+article <a href="rqti_oop_model.html">rqti OOP model</a>.</li>
 </ul>
 <div class="section level2">
 <h2 id="using-the-section-and-test-functions">Using the <code>section</code> and <code>test</code> functions<a class="anchor" aria-label="anchor" href="#using-the-section-and-test-functions"></a>
@@ -130,26 +131,33 @@ exercises.</p>
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"exercises"</span>, package <span class="op">=</span> <span class="st">"rqti"</span><span class="op">)</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap1.Rmd"</span>, <span class="st">"gap2.Rmd"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">root_section</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span>content <span class="op">=</span> <span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<p>Now we can make a test out of this and upload it to Opal. Again there
+<p>Now we can make a test out of this and upload it to OPAL. Again there
 are helpers for that: <code>test</code> and <code>test4opal</code>.
 <code>test</code> is more general and is always consistent with the QTI
-model, whereas <code>test4opal</code> can use additional Opal-specific
+model, whereas <code>test4opal</code> can use additional OPAL-specific
 parameters that are not necessarily consistent with QTI.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/test.html">test</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test1"</span><span class="op">)</span></span>
-<span><span class="co"># createQtiTest is a method of the OOP test class</span></span>
+<code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test.html">test</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test1"</span><span class="op">)</span></span>
+<span><span class="co"># createQtiTest is a method of the OOP class `test`</span></span>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">test</span>, zip_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test1.zip"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>Note that you could also call <code>upload2opal(test)</code>
 directly. We just wanted to demonstrate how to write out a test locally
-before uploading it somewhere.</p>
-<p>We now have 10 variants of the test, two of which look like this in
-Opal:</p>
-<p><img src="images/Atest1.jpg" style="width:100.0%"><img src="images/Btest1.jpg" style="width:100.0%"></p>
+before uploading it somewhere. Of course you can also just use
+<code>render_qtijs(test)</code> to preview the test locally— but in
+qtijs you will not see the structure of the test, so we use OPAL for
+demonstration purposes.</p>
+<p>We now have 10 variants of the test, two of which are:</p>
+<div class="float">
+<img src="images/Atest1.jpg" style="width:100.0%" alt="Test structure for seed 8833."><div class="figcaption">Test structure for seed 8833.</div>
+</div>
+<div class="float">
+<img src="images/Btest1.jpg" style="width:100.0%" alt="Test structure for seed 7829."><div class="figcaption">Test structure for seed 7829.</div>
+</div>
 <p>After the root section you can see the section exam_8833 (image 1)
 and exam_S7829 (image 2). There are actually 8 more (10 in total) and if
 you restart the exam, you will get one randomly assigned. You can try it
-yourself: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/43470389249" class="external-link uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/43470389249</a></p>
+yourself: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46081048578" class="external-link uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46081048578</a></p>
 <p>To summarize so far: You can just pass your exercise files to the
 <code>content</code> parameter in <code>section</code> and define how
 many variants you would like to create of each file.</p>
@@ -158,21 +166,28 @@ exercises. Single choice and multiple choice exercises could be part of
 different sections:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">non_random_exercises</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sc1.Rmd"</span>, <span class="st">"mpc1.Rmd"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">root_section</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span>
+<span><span class="va">root_section</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>                     <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">non_random_exercises</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Note that we use a list here for the root section. This is important
 as the <code>test</code> functions expect a list to be more flexible
 with different inputs (e.g. objects instead of files). Now we can again
-make a test out of this and upload it to Opal:</p>
+make a test out of this and upload it to OPAL:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">:::</span><span class="fu"><a href="../reference/test4opal.html">test4opal</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test2"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test4opal.html">test4opal</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">test</span>, zip_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test2.zip"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p>In Opal this will create the following structure:</p>
-<p><img src="images/Atest2.jpg" style="width:100.0%"><img src="images/Btest2.jpg" style="width:100.0%"></p>
+<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test2.zip"</span>, <span class="st">"test2"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p>In OPAL this will create the following structure:</p>
+<div class="float">
+<img src="images/Atest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, seed 9808."><div class="figcaption">Test structure with one fixed section, seed
+9808.</div>
+</div>
+<div class="float">
+<img src="images/Btest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, for seed 8833."><div class="figcaption">Test structure with one fixed section, for seed
+8833.</div>
+</div>
 <p>As you can see, we still have our variable section with different
-variants (you see two of them in the images). But now, we also have a
-fixed section that is the same for all tests. Try it out yourself: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/43477368832" class="external-link uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/43477368832</a></p>
+variants (you see two of them in the screenshots). But now, we also have
+a fixed section that is the same for all tests. Try it out yourself: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46075805699" class="external-link uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46075805699</a></p>
 <p>Note that the function <code>section</code> returns an
 <code>AssessmentSection</code> rqti-object:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -201,29 +216,33 @@ you should navigate through with ease.</p>
 <!-- ``` -->
 </div>
 <div class="section level2">
-<h2 id="two-approaches-for-different-variants-of-a-single-exercise">Two approaches for different variants of a single exercise<a class="anchor" aria-label="anchor" href="#two-approaches-for-different-variants-of-a-single-exercise"></a>
+<h2 id="two-approaches-for-parallel-versions-of-an-exercise">Two approaches for parallel versions of an exercise<a class="anchor" aria-label="anchor" href="#two-approaches-for-parallel-versions-of-an-exercise"></a>
 </h2>
 <p>By default the <code>section</code> function creates different
 variants of an exercise by drawing different seeds and creating
 subsections with these seeds. There is also a different approach to
-introduce randomness. Check out the following figure:</p>
-<p><img src="images/sections_scheme.svg" style="width:80.0%" alt="Two approaches for structuring exercise variants"> On the
-left-hand side, four distinct subsections were generated, each housing
-the same exercise files but with <strong>different variants</strong>. A
-participant, starting at the root section, is randomly assigned to one
-of these subsections, encountering all exercises within that specific
-subsection. This setup, a common experimental design, is generally
+introduce randomness. Have a look at the following schema:</p>
+<div class="float">
+<img src="images/sectionsscheme.png" style="width:100.0%" alt="Two approaches for structuring parallel versions of exercises"><div class="figcaption">Two approaches for structuring parallel versions
+of exercises</div>
+</div>
+<p>On the left-hand side, three distinct subsections were generated,
+each housing the same exercise files but with <strong>different
+variants</strong>. A participant, starting at the root section, is
+randomly assigned to one of these subsections, encountering all
+exercises within that specific subsection. This setup is generally
 satisfactory for most instructors conducting exams. It ensures that all
 participants within a subsection encounter the same set of exercises,
 facilitating psychometric analysis. However, a drawback is the potential
-for collaboration between participants within the same subsection.</p>
+for forbidden collaboration between participants within the same
+subsection.</p>
 <p>On the right-hand side, an alternative strategy was implemented. Each
 exercise <strong>file</strong> now has its dedicated subsection,
 encompassing its diverse variants. Participants navigate through each
-section, being assigned only one variant per section. The noteworthy
-distinction from the initial approach lies in the plethora of potential
-paths available in the test. Given the presence of 3 variants for each
-of the 4 files, a total of
+section, being assigned only one variant of the exercise per section.
+The noteworthy distinction from the other approach lies in the plethora
+of potential paths available in the test. Given the presence of 3
+variants for each of the 4 files, a total of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn></mrow><annotation encoding="application/x-tex">3^4 = 81</annotation></semantics></math>
 paths emerges. While this configuration may complicate psychometric
 analysis and introduce challenges in maintaining exercise difficulty
@@ -249,6 +268,8 @@ meaningful description. If you have an idea, drop an issue on github: &lt;a href
 <li>For “by files” (right scheme) use <code>by = "files"</code>
 </li>
 </ol>
+<p>We are still looking for better semantics of these cases, so if you
+have a good idea, open an issue on our github page: <a href="https://github.com/shevandrin/rqti" class="external-link uri">https://github.com/shevandrin/rqti</a></p>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

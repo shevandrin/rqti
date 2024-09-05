@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Dropdown Exercises</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/dropdown.Rmd" class="external-link"><code>vignettes/dropdown.Rmd</code></a></small>
       <div class="d-none name"><code>dropdown.Rmd</code></div>
@@ -94,24 +94,25 @@
 
     
     
+<p>In this type of exercise, the candidate has to select an element form
+a dropdown-list. Note that our package implements dropdowns as
+<em>entry</em>-objects because this is essentially what dropwdowns are.
+Several dropdowns can be combined in a single exercise, but a
+combination with numeric and text entries (gaps) is not possible; mainly
+due to limitations on the site of learning managment systems.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
-<p>In this type of exercise, the candidate has to select an element form
-a dropdown-list. Note that our package implements dropdowns as
-<em>entry</em>-objects because this is essential what dropwdowns are.
-Several dropdowns can be combined in a single exercise, but a
-combination with numeric and text entries (gaps) is not possible; mainly
-due to LMS limitations.</p>
-<p>A template is automatically created when you initiate an rqti project
-through RStudio. Alternatively, it can be added by clicking on
-<code>New file -&gt; R Markdown -&gt; From Template</code>. Here we look
+<p>A minimum template is automatically created when you initiate an rqti
+project through RStudio. Alternatively, it can be added by clicking on
+<code>New file -&gt; R Markdown -&gt; From Template</code>. The
+<code>rqti</code> templates end with <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a>. Here we look
 at the templates <code>dropdown (simple)</code> and
 <code>dropdown (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: dropdown</code>
 (or the equivalent <code>type: dd</code>) in the yaml-section and some
 text, where at least one gap is formed as a dropdown-element, in a
-section called <strong>#question</strong>.Furthermore, when employing
+section called <strong>#question</strong>. Furthermore, when employing
 helper functions from the rqti package, it is essential to ensure its
 prior loading.</p>
 <pre><code>---
@@ -133,19 +134,23 @@ Under the hood, the rqti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no OOP"
 
 The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
 <p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
-<p><img src="images/xml/dropdown-simple.jpg" style="width:100.0%"></p>
+<div class="float">
+<img src="images/xml/dropdown-simple.jpg" style="width:100.0%" alt="Simple dropdown exercise rendered in qtijs"><div class="figcaption">Simple dropdown exercise rendered in qtijs</div>
+</div>
 <p>Alternatively, change the knit parameter to
-<code>knit: render_opal</code> (see <a href="api_opal.html">API
-Opal</a>) to upload to Opal directly, producing:</p>
-<p><img src="images/dropdown-simple.jpg" style="width:100.0%"></p>
-<p>There are 2 ways to specify a dropdown-element in Rmd content:</p>
+<code>knit: render_opal</code> (see article <a href="api_opal.html">Working with the OPAL API</a>) to upload to OPAL
+directly, producing:</p>
+<div class="float">
+<img src="images/dropdown-simple.jpg" style="width:100.0%" alt="Simple dropdown exercise rendered in OPAL"><div class="figcaption">Simple dropdown exercise rendered in OPAL</div>
+</div>
+<p>There are two ways to specify a dropdown-element in Rmd content:</p>
 <ul>
-<li>Put the right answer inside <code>&lt;&lt;</code> …
+<li>Put the correct answer inside <code>&lt;&lt;</code> …
 <code>&gt;&gt;</code> (or the equivalent <code>&lt;gap&gt;</code> …
 <code>&lt;/gap&gt;</code>). Example:
 <code>&lt;&lt;element1|element2|element3&gt;&gt;</code>
 </li>
-<li>use the helper function <code><a href="../reference/dropdown.html">?dropdown</a></code> (also see section <a href="#helper-function-dropdown"><code>helper dropdown</code></a>)</li>
+<li>use the helper function <code><a href="../reference/dropdown.html">?dropdown</a></code> (also see section <a href="#helper-function-dropdown">Helper function dropdown</a>)</li>
 </ul>
 <p>By default, 1 point can be reached for each dropdown (specify
 <code>points</code> to your needs). The total number of points for
@@ -155,8 +160,21 @@ feedback is optional, but usually it is a good idea to give some
 explanation for students. In dropdown exercises the feedback refers to
 the whole task, not to a specific dropdown. Group your feedback into
 appropriate sections, which can be opened/closed for better user
-experience (e.g. use <code>&lt;details&gt;</code> and
-<code>&lt;summary&gt;</code> html tags).</p>
+experience. A great way to do this is to use
+<code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> html
+tags:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>will render as:</p>
+<details><summary> Question 1</summary>
+  Provide Feedback for Question 1
+</details><details><summary> Question 2</summary>
+  Provide Feedback for Question 2
+</details>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
@@ -185,8 +203,11 @@ Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = 
 # feedback
 
 The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
-<p>Which renders as:</p>
-<p><img src="images/dropdown-complex.jpg" style="width:100.0%"></p>
+<p>Which renders in OPAL as :</p>
+<div class="float">
+<img src="images/dropdown-complex.jpg" style="width:100.0%" alt="More complex dropdown exercise rendered in OPAL"><div class="figcaption">More complex dropdown exercise rendered in
+OPAL</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
@@ -232,18 +253,19 @@ reach all points)</li>
 </h2>
 <p>This helper function is used to generate a formatted string
 describing a dropdown in Rmd content:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">choices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"c1"</span> <span class="op">=</span> <span class="st">"S4 OOP"</span>, <span class="st">"c2"</span> <span class="op">=</span> <span class="st">"S3 OOP"</span>, <span class="st">"c3"</span> <span class="op">=</span> <span class="st">"no OOP"</span>, <span class="st">"c4"</span> <span class="op">=</span> <span class="st">"R6 OOP"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">choices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"s4"</span> <span class="op">=</span> <span class="st">"S4 OOP"</span>, <span class="st">"s3"</span> <span class="op">=</span> <span class="st">"S3 OOP"</span>, <span class="st">"none"</span> <span class="op">=</span> <span class="st">"no OOP"</span>, <span class="st">"r6"</span> <span class="op">=</span> <span class="st">"R6 OOP"</span><span class="op">)</span></span>
 <span><span class="va">oop_task</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dropdown.html">dropdown</a></span><span class="op">(</span>choices <span class="op">=</span> <span class="va">choices</span>, solution <span class="op">=</span> <span class="st">"S4 OOP"</span>,</span>
 <span>                     response_identifier <span class="op">=</span> <span class="st">"OOP_task"</span><span class="op">)</span></span>
 <span><span class="va">oop_task</span></span>
-<span><span class="co">#&gt; [1] "&lt;gap&gt;{choices: [S4 OOP,S3 OOP,no OOP,R6 OOP], solution_index: S4 OOP, points: 1.0, shuffle: yes, response_identifier: OOP_task, choices_identifiers: [c1,c2,c3,c4], type: InlineChoice}&lt;/gap&gt;"</span></span></code></pre></div>
-<p>Argument list of <code>dropdown</code>:</p>
+<span><span class="co">#&gt; [1] "&lt;gap&gt;{choices: [S4 OOP,S3 OOP,no OOP,R6 OOP], solution_index: S4 OOP, points: 1.0, shuffle: yes, response_identifier: OOP_task, choices_identifiers: [s4,s3,none,r6], type: InlineChoice}&lt;/gap&gt;"</span></span></code></pre></div>
+<p>The arguments of the <code>dropdown</code> function are:</p>
 <div class="section level3">
 <h3 id="choices">choices<a class="anchor" aria-label="anchor" href="#choices"></a>
 </h3>
 <p>Elements of dropdown. If you use a named vector, the names will be
-used as identifiers. This is useful for later data analysis.</p>
+used as identifiers. This is useful for later data analysis and is
+generally adviced.</p>
 </div>
 <div class="section level3">
 <h3 id="solution_index">solution_index<a class="anchor" aria-label="anchor" href="#solution_index"></a>

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Working with API OPAL from rqti • rqti</title>
+<title>Working with the OPAL API • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Working with API OPAL from rqti">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Working with the OPAL API">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -47,7 +47,7 @@
     <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pairs Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -55,13 +55,13 @@
     <li><a class="dropdown-item" href="../articles/section.html">Sections and Tests</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>API</h6></li>
-    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with API OPAL from rqti</a></li>
+    <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
-    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility</a></li>
+    <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul>
 </li>
@@ -84,9 +84,9 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Working with API OPAL from rqti</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Working with the OPAL API</h1>
             
-            <h4 data-toc-skip class="date">2024-09-03</h4>
+            <h4 data-toc-skip class="date">2024-09-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/api_opal.Rmd" class="external-link"><code>vignettes/api_opal.Rmd</code></a></small>
       <div class="d-none name"><code>api_opal.Rmd</code></div>
@@ -94,49 +94,11 @@
 
     
     
-<hr>
-<div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h2>
 <p>The <code>rqti</code> package facilitates seamless content uploads to
 the OPAL learning management system through its <code>upload2opal</code>
-function, leveraging the OPAL API.</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Upload a Zip Archive:</strong> If you possess a
-pre-existing zip archive containing a QTI-compliant test, it can be
-effortlessly uploaded to OPAL.</p></li>
-<li><p><strong>Upload an Rmd File:</strong> For an Rmd exercise file,
-the <code>upload2opal</code> function wraps it into a zip archive before
-initiating the upload process to OPAL.</p></li>
-<li><p><strong>Upload an XML File:</strong> Should you have a
-QTI-compliant exercise file in XML format, the <code>upload2opal</code>
-function wraps it into a zip archive prior to uploading it to
-OPAL.</p></li>
-</ol>
-<p>If you are working on individual exercises, you can just use
-<code>knit: rqti::render_opal</code> in the yaml-section to
-automatically render to opal.</p>
-<p>There are several opal-specific yaml attributes, which are explicitly
-explained in the articles (top right). Two additional ones you might
-want to use are:</p>
-<div class="section level4">
-<h4 id="calculator">calculator<a class="anchor" aria-label="anchor" href="#calculator"></a>
-</h4>
-<p>If a calculator is required for this task, you need to assign the
-‘calculator’ attribute the type ‘simple’ or ‘scientific’. This only
-works on OPAL.</p>
-</div>
-<div class="section level4">
-<h4 id="files">files<a class="anchor" aria-label="anchor" href="#files"></a>
-</h4>
-<p>If additional files are required to complete this task, you need to
-assign the ‘files’ attribute a single file path or a list of paths to
-these files. This only works on OPAL.</p>
-<p>Note that these attributes are mainly useful if you work on a single
-exercise. For collections of exercises (tests) it is better to set these
-attributes when creating the test intead of in the RMD-file.</p>
-</div>
-</div>
+function, leveraging the OPAL API. In addition, there are useful
+functions to get a list of resources and exchanging existing resources
+in courses.</p>
 <div class="section level2">
 <h2 id="prerequisites">Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites"></a>
 </h2>
@@ -163,11 +125,10 @@ additional keys unless you have a more complex setup (e.g. using
 multiple learning management systems).</p>
 <p>Some universities only allow to use the OPAL API in the network of
 the university. Before calling <code><a href="../reference/upload2opal.html">upload2opal()</a></code> set up a VPN
-client accordingly. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link">see the
-instructions here</a>.</p>
+client accordingly. For TU Chemnitz see the instructions here: <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link uri">https://www.tu-chemnitz.de/urz/network/access/vpn.html</a></p>
 </div>
 <div class="section level2">
-<h2 id="uploading-testexercise-to-opal">Uploading test/exercise to OPAL<a class="anchor" aria-label="anchor" href="#uploading-testexercise-to-opal"></a>
+<h2 id="uploading-exercises-and-tests-to-opal">Uploading exercises and tests to OPAL<a class="anchor" aria-label="anchor" href="#uploading-exercises-and-tests-to-opal"></a>
 </h2>
 <p>You can either set the <code>knit: rqti::render_opal</code> parameter
 in the yaml-section of your Rmd file or just call
@@ -175,16 +136,17 @@ in the yaml-section of your Rmd file or just call
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span> <span class="co"># or "exercise.Rmd" or "exercise.xml"</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre></div>
-<p>If this is successful you can expect the following outcomes:</p>
+<p>Note that rqti-Rmd files as well as QTI compliant zip archives and
+xml files are supported.</p>
+<p>If you set up Opal correctly you can expect the following outcome
+after running the above command:</p>
 <ol style="list-style-type: decimal">
-<li><p>A web browser will open automatically, displaying the OPAL page
-with your uploaded test or exercise.</p></li>
-<li><p>In your R console, you will receive a status code 200. This
-status code indicates that the request to upload the content to OPAL was
-successful.</p></li>
-<li><p>The result variable will contain a list with the following
-data:</p></li>
-</ol>
+<li>A web browser will open automatically, displaying the OPAL page with
+your uploaded test or exercise.</li>
+<li>In your R console, you will receive a status code 200. This status
+code indicates that the request to upload the content to OPAL was
+successful.</li>
+<li>The result variable will contain a list with the following data:
 <ul>
 <li>$key: An identifier for this resource on OPAL, which you can use for
 reference.</li>
@@ -192,6 +154,8 @@ reference.</li>
 browser on OPAL.</li>
 <li>$url: A permanent link to access this resource on OPAL.</li>
 </ul>
+</li>
+</ol>
 <p><code><a href="../reference/upload2opal.html">upload2opal()</a></code> always checks the uniqueness of the
 <code>display_name</code> in your personal repository of resources on
 OPAL. If a resource with the same name is found, <code>rqti</code> will
@@ -220,7 +184,7 @@ out the documentation <code><a href="../reference/upload2opal.html">?upload2opal
 <h2 id="access-rights">Access rights<a class="anchor" aria-label="anchor" href="#access-rights"></a>
 </h2>
 <p>Note that the access rights of the resource are set to public by
-default. This might appear very unusual, but for creating exercises
+default. This might appear unusual, but for creating exercises
 incrementally this is the best option. If you use any other access
 rights, you need to login to OPAL via your browser to see the web page,
 which will log you out via the API. Currently, there is not better
@@ -241,12 +205,12 @@ upcoming exam. You can set the access rights via</p>
 <p>We are using the OPAL instance <strong>E-Learning-Informationsportal
 für Sächsische Hochschulen</strong>, so our package sets the endpoint
 for <code>upload2opal</code> to <em><a href="https://bildungsportal.sachsen.de/opal/" class="external-link uri">https://bildungsportal.sachsen.de/opal/</a></em>. If you use
-a different OPAL instance, you can either pass this to
-<code>endpoint</code> of <code>upload2opal</code> or just set it as an
-environment variable in the .Renviron file: RQTI_API_ENDPOINT=“yoururl”.
+a different OPAL instance, you can either pass this to the
+<code>endpoint</code> parameter of <code>upload2opal</code> or just set
+it in .Rprofile: <code>Sys.setenv(RQTI_API_ENDPOINT = "yoururl")</code>.
 When initiating an <code>rqti</code> project in RStudio through <em>New
 Project</em>, you have the option to configure the API endpoint at that
-stage. This configuration is also just written to the .RProfile
+stage. This configuration is also just written to the .Rprofile
 file.</p>
 </div>
 <div class="section level2">
@@ -254,8 +218,7 @@ file.</p>
 </h2>
 <p><strong>403</strong> - Authorization failed. Some universities allow
 the use of the API only within the university network. You may need to
-run a VPN client to use the API. For TU Chemnitz <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link">see
-here</a></p>
+run a VPN client to use the API. For TU Chemnitz see here: <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link uri">https://www.tu-chemnitz.de/urz/network/access/vpn.html</a></p>
 <p>If you already run a VPN client, please check with your IT and/or
 OPAL provider, whether the API can be used and what configuration you
 need.</p>
@@ -266,6 +229,30 @@ that students typically do not possess author rights by default and are
 required to request such privileges before utilizing the API. To
 facilitate this process, it is advisable to reach out to your IT and/or
 OPAL provider for assistance.</p>
+</div>
+<div class="section level2">
+<h2 id="opal-specific-yaml-attributes">Opal specific yaml attributes<a class="anchor" aria-label="anchor" href="#opal-specific-yaml-attributes"></a>
+</h2>
+<p>There are several opal-specific yaml attributes, which are explicitly
+explained in the articles on the exercise types. Two of them apply on
+the test level:</p>
+<div class="section level3">
+<h3 id="calculator">calculator<a class="anchor" aria-label="anchor" href="#calculator"></a>
+</h3>
+<p>If a calculator is required for this task, you need to assign the
+‘calculator’ attribute the type ‘simple’ or ‘scientific’.</p>
+</div>
+<div class="section level3">
+<h3 id="files">files<a class="anchor" aria-label="anchor" href="#files"></a>
+</h3>
+<p>If additional files are required to complete this task, you need to
+assign the ‘files’ attribute a single file path or a list of paths to
+these files.</p>
+<p>Note that setting these two attributes in the Rmd file directly is
+mainly useful if you work on a single exercise. For collections of
+exercises (tests) it is better to set these attributes when creating the
+test intead of in the Rmd-file.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
