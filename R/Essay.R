@@ -71,8 +71,8 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 #'  represents random digits.
 #'@param title A character representing the title of the XML file associated
 #'  with the task. By default, it takes the value of the identifier.
-#'@param content A list of character content to form the text of the question,
-#'  which can include HTML tags.
+#'@param content A list of character content or character string to form the
+#'  text of the question, which can include HTML tags.
 #'@param prompt An optional character representing a simple question text,
 #'  consisting of one paragraph. This can supplement or replace content in the
 #'  task. Default is "".
@@ -136,6 +136,7 @@ essay <- function(identifier = generate_id(),
                   calculator = NA_character_,
                   files = NA_character_) {
     params <- as.list(environment())
+    params$content <- ifelse(is.list(params$content), params$content, list(params$content))
     params$Class <- "Essay"
     obj <- do.call("new", params)
     return(obj)

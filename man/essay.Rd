@@ -28,8 +28,8 @@ represents random digits.}
 \item{title}{A character representing the title of the XML file associated
 with the task. By default, it takes the value of the identifier.}
 
-\item{content}{A list of character content to form the text of the question,
-which can include HTML tags.}
+\item{content}{A list of character content or character string to form the
+text of the question, which can include HTML tags.}
 
 \item{prompt}{An optional character representing a simple question text,
 consisting of one paragraph. This can supplement or replace content in the
