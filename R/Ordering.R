@@ -51,8 +51,8 @@ setMethod("initialize", "Ordering", function(.Object, ...) {
 #'   identifiers for answers. By default, identifiers are generated
 #'   automatically according to the template "ChoiceD", where D is a letter
 #'   representing the alphabetical order of the answer in the list.
-#' @param content A list of character content to form the text of the question,
-#'   which can include HTML tags.
+#' @param content A character string or a list of character strings to form the
+#'   text of the question, which may include HTML tags.
 #' @param prompt An optional character representing a simple question text,
 #'   consisting of one paragraph. This can supplement or replace content in the
 #'   task. Default is "".
@@ -83,7 +83,7 @@ setMethod("initialize", "Ordering", function(.Object, ...) {
 #'              title = "Order Task",
 #'              choices = c("Step1", "Step2", "Step3"),
 #'              choices_identifiers = c("a", "b", "c"),
-#'              content = list("<p>Set the right order</p>"),
+#'              content = "<p>Set the right order</p>",
 #'              prompt = "Plain text, can be used instead of content",
 #'              points = 2,
 #'              points_per_answer = FALSE,
@@ -107,6 +107,7 @@ ordering <- function(identifier = generate_id(),
                   calculator = NA_character_,
                   files = NA_character_) {
     params <- as.list(environment())
+    if (is.character(params$content)) params$content <- list(params$content)
     params$Class <- "Ordering"
     obj <- do.call("new", params)
     return(obj)

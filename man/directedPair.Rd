@@ -33,8 +33,8 @@ represents random digits.}
 \item{title}{A character representing the title of the XML file associated
 with the task. By default, it takes the value of the identifier.}
 
-\item{content}{A list of character content to form the text of the question,
-which can include HTML tags.}
+\item{content}{A character string or a list of character strings to form the
+text of the question, which may include HTML tags.}
 
 \item{prompt}{An optional character representing a simple question text,
 consisting of one paragraph. This can supplement or replace content in the
@@ -103,7 +103,7 @@ An object of class \link{DirectedPair}
 Create object \link{DirectedPair}
 }
 \examples{
-dp_min <- directedPair(content = list("<p>\"Directed pairs\" task</p>"),
+dp_min <- directedPair(content = "<p>\"Directed pairs\" task</p>",
                        rows = c("alfa", "beta", "gamma"),
                        rows_identifiers = c("a", "b", "g"),
                        cols = c("A", "B", "G;"),
@@ -112,7 +112,7 @@ dp_min <- directedPair(content = list("<p>\"Directed pairs\" task</p>"),
 
 dp <- directedPair(identifier = "id_task_1234",
                    title = "Directed Pair Task",
-                   content = list("<p>\"Directed pairs\" task</p>"),
+                   content = "<p>\"Directed pairs\" task</p>",
                    prompt = "Plain text, can be used instead of the content",
                    rows = c("alfa", "beta", "gamma"),
                    rows_identifiers = c("a", "b", "g"),

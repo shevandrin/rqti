@@ -46,8 +46,8 @@ setClass("SingleChoice", contains = "Choice",
 #' @param solution A numeric value, optional. Represents the index of the
 #'   correct answer in the choices slot. By default, the first item in the
 #'   choices slot is considered the correct answer. Default is 1.
-#' @param content A list of character content to form the text of the question,
-#'   which can include HTML tags.
+#' @param content A character string or a list of character strings to form the
+#'   text of the question, which may include HTML tags.
 #' @param prompt An optional character representing a simple question text,
 #'   consisting of one paragraph. This can supplement or replace content in the
 #'   task. Default is "".
@@ -76,7 +76,7 @@ setClass("SingleChoice", contains = "Choice",
 #'
 #' sc <- singleChoice(identifier = "id_task_1234",
 #'                    title = "Single Choice Task",
-#'                    content = list("<p>Pick up the right option</p>"),
+#'                    content = "<p>Pick up the right option</p>",
 #'                    prompt = "Plain text, can be used instead of content",
 #'                    points = 2,
 #'                    feedback = list(new("WrongFeedback",
@@ -104,6 +104,7 @@ singleChoice <- function(identifier = generate_id(),
                          calculator = NA_character_,
                          files = NA_character_) {
     params <- as.list(environment())
+    if (is.character(params$content)) params$content <- list(params$content)
     params$Class <- "SingleChoice"
     obj <- do.call("new", params)
     return(obj)

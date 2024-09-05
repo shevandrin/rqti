@@ -35,8 +35,8 @@ identifiers for answers. By default, identifiers are generated
 automatically according to the template "ChoiceD", where D is a letter
 representing the alphabetical order of the answer in the list.}
 
-\item{content}{A list of character content to form the text of the question,
-which can include HTML tags.}
+\item{content}{A character string or a list of character strings to form the
+text of the question, which may include HTML tags.}
 
 \item{prompt}{An optional character representing a simple question text,
 consisting of one paragraph. This can supplement or replace content in the
@@ -82,7 +82,7 @@ ord <- ordering(identifier = "id_task_1234",
              title = "Order Task",
              choices = c("Step1", "Step2", "Step3"),
              choices_identifiers = c("a", "b", "c"),
-             content = list("<p>Set the right order</p>"),
+             content = "<p>Set the right order</p>",
              prompt = "Plain text, can be used instead of content",
              points = 2,
              points_per_answer = FALSE,
