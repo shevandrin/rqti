@@ -103,8 +103,8 @@ with the task. By default, it takes the value of the identifier.</p></dd>
 
 
 <dt id="arg-content">content<a class="anchor" aria-label="anchor" href="#arg-content"></a></dt>
-<dd><p>A list of character content to form the text of the question,
-which can include HTML tags.</p></dd>
+<dd><p>A character string or a list of character strings to form the
+text of the question, which may include HTML tags.</p></dd>
 
 
 <dt id="arg-prompt">prompt<a class="anchor" aria-label="anchor" href="#arg-prompt"></a></dt>
@@ -200,7 +200,7 @@ be accessible to the candidate during the test/exam.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dp_min</span> <span class="op">&lt;-</span> <span class="fu">directedPair</span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"&lt;p&gt;\"Directed pairs\" task&lt;/p&gt;"</span><span class="op">)</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dp_min</span> <span class="op">&lt;-</span> <span class="fu">directedPair</span><span class="op">(</span>content <span class="op">=</span> <span class="st">"&lt;p&gt;\"Directed pairs\" task&lt;/p&gt;"</span>,</span></span>
 <span class="r-in"><span>                       rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alfa"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                       rows_identifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"g"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                       cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"G;"</span><span class="op">)</span>,</span></span>
@@ -209,7 +209,7 @@ be accessible to the candidate during the test/exam.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dp</span> <span class="op">&lt;-</span> <span class="fu">directedPair</span><span class="op">(</span>identifier <span class="op">=</span> <span class="st">"id_task_1234"</span>,</span></span>
 <span class="r-in"><span>                   title <span class="op">=</span> <span class="st">"Directed Pair Task"</span>,</span></span>
-<span class="r-in"><span>                   content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"&lt;p&gt;\"Directed pairs\" task&lt;/p&gt;"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   content <span class="op">=</span> <span class="st">"&lt;p&gt;\"Directed pairs\" task&lt;/p&gt;"</span>,</span></span>
 <span class="r-in"><span>                   prompt <span class="op">=</span> <span class="st">"Plain text, can be used instead of the content"</span>,</span></span>
 <span class="r-in"><span>                   rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alfa"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   rows_identifiers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"g"</span><span class="op">)</span>,</span></span>
