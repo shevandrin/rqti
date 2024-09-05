@@ -37,13 +37,17 @@ setClass("Entry", contains = "AssessmentItem")
 
 setMethod("initialize", "Entry", function(.Object, ...) {
     .Object <- callNextMethod()
+
+    is_gap <- sapply(.Object@content, function(x) is(x, "Gap"))
+    if (!any(is_gap)) stop("The content of 'Entry' type must include at least one gap instance.", call. = FALSE)
+
     content_obj <- Map(getResponse, .Object@content)
     content_obj <- Filter(Negate(is.null), content_obj)
     points <- sum(sapply(content_obj, function(x) x@points))
     .Object@points <- points
 
     # check identifiers
-    objs <- .Object@content[sapply(.Object@content, function(x) is(x, "Gap"))]
+    objs <- .Object@content[is_gap]
     ids <- sapply(objs, getIdentifier)
     if (length(ids) != length(unique(ids))) {
         ids <- paste(ids, collapse = ", ")
