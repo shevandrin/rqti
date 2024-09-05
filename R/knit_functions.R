@@ -31,10 +31,6 @@
 #' @export
 render_qtijs <- function(input, preview_feedback = FALSE, ...) {
     clean_qtijs()
-    params <- knit_params(readLines(input))
-    if (!is.null(params$preview_feedback$value)) {
-        preview_feedback = params$preview_feedback$value
-    }
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
     url <- Sys.getenv("RQTI_URL")
@@ -46,15 +42,14 @@ render_qtijs <- function(input, preview_feedback = FALSE, ...) {
             url <- prepare_renderer()
         }
     }
+    preparation <- prepareQTIJSFiles(input, qtijs_path())
+    if (!is.null(preparation)) preview_feedback <- preparation
     url <- paste0(url, "?mfb=", as.numeric(preview_feedback))
     message("Open browser at: ", url, " for preview")
-    prepareQTIJSFiles(input, qtijs_path())
+
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
-    current_rmd_fullpath <- normalizePath(input)
-    xml_target <- sub("\\.Rmd$", ".xml", current_rmd_fullpath)
-    file.copy(file.path(qtijs_path(), "index.xml"), xml_target)
     message("finished rendering")
     return(url)
 }
