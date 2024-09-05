@@ -69,7 +69,7 @@ While the templates are generally intuitive, you can refer to other articles of 
 - \ref{directed-pair-exercises} [Directed Pair Exercises](articles/directedpairs.html)
 - \ref{table-exercises} [Table Exercises](articles/table.html)
 
-To add metadata to your exercises, refer to the article \ref{adding-metadata} [Adding metadata](articles/metadata.html)
+To add metadata to your exercises, refer to the article \ref{adding-metadata} [Adding metadata](articles/adding_metadata.html)
 
 To integrate various exercises into a test, refer to the article \ref{sections-and-tests} [Sections and Tests](articles/section.html)
 
