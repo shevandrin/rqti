@@ -8,24 +8,27 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r gap, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+source("helper.R")
 ```
 
-```{r setup, echo=FALSE}
+```{r setup gap, echo=FALSE}
 library(rqti)
 ```
 
+`r if(knitr::is_latex_output()) "# Gap Exercises"`
+
+In this exercise format, candidates are required to fill in one or more gaps. We believe this method is one of the most effective ways to assess students' abilities, as it reduces the likelihood of guessing compared to multiple-choice questions. Emphasizing gap-fill exercises often leads to more reliable assessment outcomes.
+
+Our package allows for the integration of both textual and numeric responses within a single exercise, offering instructors greater flexibility in designing assessments.
+
 ## Minimum version
 
-In this particular exercise format, candidates are tasked with filling in one or multiple gaps. We contend that this method stands out as the most effective means of assessing students' abilities since guessing becomes more challenging compared to forced-choice answers. Focusing on gap exercises will often yield improved test properties.
-
-Within our package, it is feasible to integrate gaps with both textual and numeric responses within a single exercise. This versatility enhances the range of assessment possibilities for instructors.
-
-A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `gap (simple)` and `gap (complex)`.
+A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates ` gap (simple)` and ` gap (complex)`.
 
 The minimum you need to provide is the `type: gap` (or the equivalent `type: cloze`) in the yaml-section and some text, where at least one gap is used, in a section called  **\#question**. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
 
@@ -33,37 +36,67 @@ The minimum you need to provide is the `type: gap` (or the equivalent `type: clo
 cat(readLines(fs::path_package("rmarkdown/templates/gap-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Clicking on the Knit-button will produce the following in the viewer pane:
+Clicking on the Knit-button will produce`r ltx(" the output in Figure \\ref{gap1qtijs}.", ":")`
 
-![](images/xml/gap-simple.jpg){width=100%}
+![\label{gap1qtijs}Simple gap exercise rendered in qtijs](images/xml/gap-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](api_opal.html)) to upload to Opal directly, producing:
+Alternatively, change the knit parameter to `knit: render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{gap1opal}.", ":")`
 
-![](images/gap-simple.jpg){width=100%}
+![\label{gap1opal}Simple gap exercise rendered in OPAL](images/gap-simple.jpg){width=100%}
 
-As you can see, there are two ways to create a gap in Rmd content:
+As you can see, there are two ways to create a gap in a Rmd file:
 
 - Put the correct answer between `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`). Example: `<<3.14>>` or `<<sometext>>`
-- use the helper functions `?gap_numeric` and `?gap_text` (also see details below, [gap text](#gaptext), [gap numeric](#gapnumeric))
+- use the helper functions `?gap_numeric` and `?gap_text` (also see details below, section \ref{gaptext} [Helper function gap text](#gaptext), \ref{gapnumeric} [Helper function gap numeric](#gapnumeric))
 
-By default, 1 point can be reached for each gap (specify `points` to your needs). The total number of points for completing a task is defined as the sum of points of all gaps.
+By default, 1 point can be reached for each gap (specify `points` in the helper function to your needs). The total number of points for completing a task is defined as the sum of points of all gaps.
 
 Note that in this example, a feedback section was also provided. The feedback is
 optional, but usually it is a good idea to give some explanation for students. In gap exercises the feedback refers to the whole task, not to a specific gap. Group your feedback into appropriate sections, which can be opened/closed for better user experience (use `<details>` and `<summary>` html tags).
 
+A great way to do this is to use `<details>` and `<summary>` html tags:
+
+```{html}
+<details><summary>Question1</summary>
+  Provide Feedback for Question 1
+</details>
+<details><summary>Question 2</summary>
+  Provide Feedback for Question 2
+</details>
+```
+
+
+will render as:
+
+```{=html}
+<details><summary> Question 1</summary>
+  Provide Feedback for Question 1
+</details>
+<details><summary> Question 2</summary>
+  Provide Feedback for Question 2
+</details>
+```
+
+```{=latex}
+\textrightarrow{} Question 1\\
+\textrightarrow{} Question 2\\
+
+By clicking on the arrows, the details will unfold.
+```
+
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `gap (complex)`, which uses more yaml attributes and more complex calls of the helper functions.
+If you want to have more fine-grained control, consider the RMD template ` gap (complex)`, which uses more yaml attributes and more complex calls of the helper functions.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/gap-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-In Opal this renders as:
+In Opal this renders as `r ltx("shown in Figure \\ref{gap2opal}.", ":")`
 
-![Preview of gap exercise in LMS OPAL](images/gap-complex.jpg){width=100%}
+![\label{gap2opal}Preview of complex gap exercise in OPAL](images/gap-complex.jpg){width=100%}
 
-# yaml attributes
+## yaml attributes
 
 ### type
 
@@ -100,7 +133,7 @@ gap1 <- gap_numeric(solution = 1.4, tolerance = 10, tolerance_type = "relative",
 cat(gap1)
 ```
 
-As you can see, we just use yaml in the end, but for most users it is more convenient to have a specific R function instead.
+As you can see, YAML is ultimately used, but for most users, it is more convenient to have a dedicated R function instead.
 
 Argument list of `gap_numeric`:
 
@@ -110,14 +143,14 @@ Correct numeric answer.
 
 ### tolerance
 
-Determines the boundaries of values within which the answer is considered as correct.
+Defines the range of values within which an answer is deemed correct.
 
 ### tolerance_type
 
-Determines how the tolerance is calculated. If we have `solution = 50` and `tolerance 10`:
+Defines how the tolerance is calculated. For instance, if the solution is 50 and the tolerance is 10:
 
-- setting `tolreance_type` to `relative`, would make the interval of the correct answser go from 45 to 55 (50+-10%)
-- setting it to `absolute`, produces the interval between 40 and 60 (50+-10)
+- Setting `tolerance_type` to `relative` results in a correct answer range from 45 to 55 (50 ± 10%).
+- Setting it to `absolute` creates a range from 40 to 60 (50 ± 10).
 
 ### points
 
@@ -145,7 +178,7 @@ Text displayed in the gap, before an answer is attempted. Can be used for hints 
 
 ## Helper function `gap_text` {#gaptext}
 
-This helper function is designed to generate a formatted string describing a gap in Rmd content, where the answer is a string/character:
+This helper function is designed to generate a formatted string describing a gap in Rmd content, where the answer is a string:
 
 ```{r results="plaintext", comment=""}
 gap2 <- gap_text(gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"),
@@ -163,7 +196,7 @@ Determines a string vector of values that are considered as correct answers.
 
 ### tolerance (works only in LMS OPAL)
 
-Defines how many characters will be taken into account to tolerate spelling mistakes.
+Defines how many characters will be taken into account to tolerate spelling mistakes. The exact algorithm of OPAL is unclear.
 
 ### case_sensitive (works only in LMS OPAL)
 
@@ -180,7 +213,7 @@ This is the ID of the gap, useful for later data analysis. The default has the f
 
 ### expected_length	
 
-Specifies the size of the text input field in the content delivery engine. This value is not directly assigned, it is calculated based on the number of symbols in the solution value. Browsers display the input field length inconsistently, but we have endeavored to establish sensible defaults.
+Specifies the size of the text input field in the content delivery engine. The default value is calculated based on the number of symbols in the solution value. Browsers display the input field length inconsistently, but we have endeavored to establish sensible defaults. Please adjust to your needs.
 
 ### placeholder
 
@@ -188,6 +221,6 @@ Text displayed in the gap, before an answer is attempted. Can be used for hints 
 
 ## Some advice on gap exercises 
 
-Gap exercises are generally foolproof, offering an ideal format by minimizing guessing and often presenting a reasonably high level of difficulty. Numeric exercises, involving calculations that are typically not guessable, are especially effective. While crafting text gaps may be more intricate, the option to offer multiple alternative solutions and leverage Opal to accommodate spelling errors enhances their versatility. Nevertheless, it is important to note that, like any exercise, gap exercises can be poorly designed, so be mindful in their creation.
+Gap exercises are generally foolproof, offering an ideal format by minimizing guessing and often presenting a reasonably high level of difficulty. Numeric exercises, involving calculations that are typically not guessable, are especially effective. While crafting text gaps may be more intricate, the option to offer multiple alternative solutions and leverage OPAL to accommodate spelling errors enhances their versatility. Nevertheless, it is important to note that, like any exercise, gap exercises can be poorly designed, so be mindful in their creation.
 
-Here is another tip: To seamlessly integrate single-choice questions with gaps in a single exercise, employ a numeric gap for the single-choice questions and include the solutions within the question. For example, fill in the blank: ____ (0 = not significant, 1 = significant). This approach allows you to use gaps for all questions, showcasing their remarkable flexibility.
+As mentioned earlier, numeric and text gaps can be combined in a single exercise, making them quite versatile. In fact, the flexibility of gaps allows for the integration of various exercise types within a single task. For instance, to incorporate single-choice questions alongside gaps, you can use a numeric gap for the single-choice question and include the answer options directly in the question. For example, "Fill in the blank: ____ (0 = not significant, 1 = significant)". This approach enables you to use gaps for many types of questions, highlighting their exceptional adaptability.

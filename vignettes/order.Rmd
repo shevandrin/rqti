@@ -8,20 +8,25 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r order, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+source("helper.R")
 ```
 
-```{r setup, echo=FALSE}
+```{r setup order, echo=FALSE}
 library(rqti)
 ```
 
+`r if(knitr::is_latex_output()) "# Order Exercises"`
+
+In this type of exercise, the candidate has to bring a list of items in the correct order.
+
 ## Minimum version
 
-In this type of exercise, the candidate has to bring a list of items in the correct order. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `order (simple)` and `order (complex)`.
+A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `order (simple)` and `order (complex)`.
 
 The minimum you need to provide is the `type: order` in the yaml-section and a list with at least two elements in a section called **\#question**:
 
@@ -29,13 +34,13 @@ The minimum you need to provide is the `type: order` in the yaml-section and a l
 cat(readLines(fs::path_package("rmarkdown/templates/order-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Knitting via the Knit-Button to qtijs, this exercise renders as:
+Knitting via the Knit-Button to qtijs, this exercise renders as`r ltx(" shown in Figure \\ref{order1qtijs}.", ":")`
 
-![](images/xml/order-simple.jpg){width=100%}
+![\label{order1qtijs}Simple order exercise rendered in qtijs](images/xml/order-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](api_opal.html)) to upload to Opal directly, producing:
+Alternatively, change the knit parameter to `knit: render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to Opal directly, producing`r ltx(" the output in Figure \\ref{order1opal}.", ":")`
 
-![](images/order-simple.jpg){width=100%}
+![\label{order1opal}Simple order exercise rendered in OPAL](images/order-simple.jpg){width=100%}
 
 The order of the items in the Rmd-list is considered to be the correct one.
 
@@ -50,9 +55,9 @@ If you want to have more fine-grained control, consider the Rmd template `order 
 cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which on Opal renders as:
+Which on Opal renders as`r ltx(" shown in Figure \\ref{order2opal}.", ":")`
 
-![](images/order-complex.jpg){width=100%}
+![\label{order2opal}More complex order exercise rendered in OPAL](images/order-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -76,7 +81,7 @@ How many points are given for the whole exercise. Default is $0.25n$, where $n$ 
 
 ### points_per_answer
 
-Defines the scoring method. If `true` each selected answer will be scored individually (according to absolute position of the element in the list), if `false` the whole task will be scored and a single mistake leads to 0 points. Default is `true`.
+Defines the scoring method. If `true` each selected answer will be scored individually (according to the absolute position of the element in the list), if `false` the whole task will be scored and a single error leads to 0 points. Default is `true`.
 
 ## Feedback
 
@@ -86,13 +91,12 @@ Feedback can be provided with the section
 -   **\# feedback+** (only provided if student reaches all points)
 -   **\# feedback-** (only provided if student does not reach all points)
 
-## helpers
+## List of answers as a variable
 
 For more complex exercises the list of answers is sometimes available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
 
 ```{r results="plaintext", comment=""}
-order_list <- mdlist(c("Test", "Section", "Item", "Interaction"))
-cat(order_list)
+mdlist(c("Test", "Section", "Item", "Interaction"))
 ```
 
 ## Some advice on order exercises 

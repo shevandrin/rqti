@@ -8,20 +8,25 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r essay, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+source("helper.R")
 ```
 
-```{r setup, echo=FALSE}
+```{r setup essay, echo=FALSE}
 library(rqti)
 ```
 
+`r if(knitr::is_latex_output()) "# Essay Exercises"`
+
+This is a standard essay exercise with an open field for students to write a comprehensive response.
+
 ## Minimum version
 
-This is just a typical essay exercise. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `essay (simple)` and `essay (complex)`.
+A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}` Here we look at the templates ` essay (simple)` and ` essay (complex)`.
 
 The minimum you need to provide is the `type: essay` in the yaml-section and some text as a task description in a section called **\#question**:
 
@@ -29,13 +34,13 @@ The minimum you need to provide is the `type: essay` in the yaml-section and som
 cat(readLines(fs::path_package("rmarkdown/templates/essay-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Knitting via the Knit-Button to qtijs, this exercise renders as:
+Knitting via the Knit-Button to qtijs, this exercise renders asd`r ltx(" shown in Figure \\ref{essay1qtijs}.", ":")`
 
-![](images/xml/essay-simple.jpg){width=100%}
+![\label{essay1qtijs}Simple essay erxercise rendered by qtijs](images/xml/essay-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](api_opal.html)) to upload to Opal directly, producing:
+Alternatively, change the knit parameter to `knit: render_opal` (see [Working with the OPAL API](api_opal.html)) to upload to Opal directly, producing`r ltx(" the output in Figure \\ref{essay1opal}.", ":")`
 
-![](images/essay-simple.jpg){width=100%}
+![\label{essay1opal}Simple essay exercise rendered by OPAL](images/essay-simple.jpg){width=100%}
 
 Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay exercises can serve as a good basis for grading student's answers. In addition the length of the feedback section is taken into account in constructing the text field and the maximum number of words. If no feedback is provided, sensible defaults are used.
 
@@ -47,9 +52,9 @@ If you want to have more fine-grained control, consider the RMD template `essay 
 cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which, in Opal, renders as:
+Which, in Opal, renders as `r ltx("shown in Figure \\ref{essay2opal}.", ":")`
 
-![](images/essay-complex.jpg){width=100%}
+![\label{essay2opal}More complex essay exercise rendered in OPAL](images/essay-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -87,7 +92,7 @@ Defines the minimum number of words that must be written by the candidate in the
 
 ### data_allow_paste
 
-Determines whether the candidate is allowed to copy text from the clipboard to the text input field. Default is `FALSE`.
+Determines whether the candidate is allowed to copy text from the clipboard to the text input field. Default is `false`.
 
 ## Feedback
 
@@ -101,4 +106,4 @@ Further note that it does not make sense to give conditional feedback as essay e
 
 ## Some advice on essay exercises
 
-Essay exercises can prove immensly diagnostic, provided the instructor poses thought-provoking questions. Regrettably, a considerable number of instructors lack creativity and specificity when formulating essay prompts, resulting in ambiguous grading criteria. To counteract this issue, it is advisable to consistently provide an exemplary solution in the feedback section. This approach not only enriches the learning experience for your students but also garners appreciation from colleagues responsible for grading.
+Essay exercises can be highly diagnostic, especially when instructors pose thought-provoking questions. Unfortunately, many instructors struggle with creativity and precision when crafting essay prompts, leading to vague grading criteria. To address this issue, it is recommended to always include an exemplary solution in the feedback section. This not only enhances the learning experience for students but also earns appreciation from colleagues involved in grading.

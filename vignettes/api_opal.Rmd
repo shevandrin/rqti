@@ -1,50 +1,26 @@
 ---
-title: "Working with API OPAL from rqti" 
+title: "Working with the OPAL API" 
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Working with API OPAL from rqti}
+    %\VignetteIndexEntry{Working with the OPAL API}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
 
----
-```{r, include = FALSE}
+```{r api, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
-```{r setup, echo=FALSE}
+```{r setup api opal, echo=FALSE}
 library(rqti)
 ```
 
-## Introduction
+`r if(knitr::is_latex_output()) "# Working with the OPAL API"`
 
-The `rqti` package facilitates seamless content uploads to the OPAL learning management system through its `upload2opal` function, leveraging the OPAL API.
-
-1. **Upload a Zip Archive:**
-   If you possess a pre-existing zip archive containing a QTI-compliant test, it can be effortlessly uploaded to OPAL.
-
-2. **Upload an Rmd File:**
-   For an Rmd exercise file, the `upload2opal` function wraps it into a zip archive before initiating the upload process to OPAL.
-
-3. **Upload an XML File:**
-   Should you have a QTI-compliant exercise file in XML format, the `upload2opal` function wraps it into a zip archive prior to uploading it to OPAL.
-
-If you are working on individual exercises, you can just use `knit: rqti::render_opal` in the yaml-section to automatically render to opal.
-
-There are several opal-specific yaml attributes, which are explicitly explained in the articles (top right). Two additional ones you might want to use are:
-
-#### calculator
-
-If a calculator is required for this task, you need to assign the 'calculator' attribute the type 'simple' or 'scientific'. This only works on OPAL.
-
-#### files
-
-If additional files are required to complete this task, you need to assign the 'files' attribute a single file path or a list of paths to these files. This only works on OPAL.
-
-Note that these attributes are mainly useful if you work on a single exercise. For collections of exercises (tests) it is better to set these attributes when creating the test intead of in the RMD-file.
+The `rqti` package facilitates seamless content uploads to the OPAL learning management system through its `upload2opal` function, leveraging the OPAL API. In addition, there are useful functions to get a list of resources and exchanging existing resources in courses.
 
 ## Prerequisites
 
@@ -55,9 +31,9 @@ If you currently lack a password-based login, kindly submit a request for one th
 To store the username and password, `rqti` uses the keyring system credential storage. The first time authentication is attempted, it asks for a username and a password and saves them in a key with service name "rqtiopal". Once the key is created, it is automatically used in further sessions. It is not recommended to create additional keys unless you have a more complex setup (e.g. using multiple learning management systems).
 
 Some universities only allow to use the OPAL API in the network of the university. Before calling `upload2opal()` set up a VPN client accordingly. 
-For TU Chemnitz [see the instructions here](https://www.tu-chemnitz.de/urz/network/access/vpn.html).
+For TU Chemnitz see the instructions here: <https://www.tu-chemnitz.de/urz/network/access/vpn.html>
 
-## Uploading test/exercise to OPAL
+## Uploading exercises and tests to OPAL
 
 You can either set the `knit: rqti::render_opal` parameter in the yaml-section of your Rmd file or just call `upload2opal()` with the file as the first parameter:
 
@@ -66,35 +42,34 @@ file <- "my_zip_file.zip" # or "exercise.Rmd" or "exercise.xml"
 result <- upload2opal(file)
 ```
 
-If this is successful you can expect the following outcomes:
+Note that rqti-Rmd files as well as QTI compliant zip archives and xml files are supported.
+
+If you set up Opal correctly you can expect the following outcome after running the above command:
 
 1. A web browser will open automatically, displaying the OPAL page with your uploaded test or exercise.
-
 2. In your R console, you will receive a status code 200. This status code indicates that the request to upload the content to OPAL was successful.
-
 3. The result variable will contain a list with the following data:
-
-- $key: An identifier for this resource on OPAL, which you can use for reference.
-- $display_name: The title of the resource as it appears in the browser on OPAL.
-- $url: A permanent link to access this resource on OPAL.
+    - $key: An identifier for this resource on OPAL, which you can use for reference.
+    - $display_name: The title of the resource as it appears in the browser on OPAL.
+    - $url: A permanent link to access this resource on OPAL.
 
 `upload2opal()` always checks the uniqueness of the `display_name` in your personal repository of resources on OPAL. If a resource with the same name is found, `rqti` will overwrite it by default. This is useful for incrementally improving and previewing/testing the exercise. It avoids cluttering your OPAL repo with dozens of versions of the same exercise. If there are several resources with the same name, `upload2opal` will ask you what to do.
 
 By default `upload2opal()` uses the file name as the `display_name`. But you can define your own as the second parameter:
 
-```{r eval=FALSE}
+```{r upload, eval=FALSE}
 result <- upload2opal(file, display_name = "Exam123")
 ```
 
 Currently, there is no option to delete exercises via the API. But you can display the URL of an exercise via:
 
-```{r eval=F}
+```{r resource, eval=F}
 get_resource_url(display_name = "Exam123")
 ```
 
 Or show all resources via:
 
-```{r eval=F}
+```{r resources, eval=F}
 get_resources()
 ```
 
@@ -104,7 +79,7 @@ If you want to have more fine-grained control for uploading, check out the docum
 
 ## Access rights
 
-Note that the access rights of the resource are set to public by default. This might appear very unusual, but for creating exercises incrementally this is the best option. If you use any other access rights, you need to login to OPAL via your browser to see the web page, which will log you out via the API. Currently, there is not better solution for this procedure. Take this into account if you upload sensitive content! For instance, exercises that will be used in an upcoming exam. You can set the access rights via
+Note that the access rights of the resource are set to public by default. This might appear unusual, but for creating exercises incrementally this is the best option. If you use any other access rights, you need to login to OPAL via your browser to see the web page, which will log you out via the API. Currently, there is not better solution for this procedure. Take this into account if you upload sensitive content! For instance, exercises that will be used in an upcoming exam. You can set the access rights via
 
 ```{r, eval = F}
 uplod2opal(..., access = ?)
@@ -117,15 +92,29 @@ uplod2opal(..., access = ?)
 
 ## Endpoint
 
-We are using the OPAL instance **E-Learning-Informationsportal für Sächsische Hochschulen**, so our package sets the endpoint for `upload2opal` to *https://bildungsportal.sachsen.de/opal/*. If you use a different OPAL instance, you can either pass this to `endpoint` of `upload2opal` or just set it as an environment variable in the .Renviron file: RQTI_API_ENDPOINT="yoururl". When initiating an `rqti` project in RStudio through *New Project*, you have the option to configure the API endpoint at that stage. This configuration is also just written to the .RProfile file.
+We are using the OPAL instance **E-Learning-Informationsportal für Sächsische Hochschulen**, so our package sets the endpoint for `upload2opal` to *https://bildungsportal.sachsen.de/opal/*. If you use a different OPAL instance, you can either pass this to the `endpoint` parameter of `upload2opal` or just set it in .Rprofile: `Sys.setenv(RQTI_API_ENDPOINT = "yoururl")`. When initiating an `rqti` project in RStudio through *New Project*, you have the option to configure the API endpoint at that stage. This configuration is also just written to the .Rprofile file.
 
 ## Error Handling
 
 **403** - Authorization failed. Some universities allow the use of the API only within the university network. You may need to run a VPN client to use the API. 
-For TU Chemnitz [see here](https://www.tu-chemnitz.de/urz/network/access/vpn.html)
+For TU Chemnitz see here: <https://www.tu-chemnitz.de/urz/network/access/vpn.html>
 
 If you already run a VPN client, please check with your IT and/or OPAL provider, whether the API can be used and what configuration you need.
 
 **401** Unauthorized
 
 Your RQTI_API_USER and/or RQTI_API_PASSWORD are wrong or your credentials are not sufficient to work with the API. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
+
+## Opal specific yaml attributes
+
+There are several opal-specific yaml attributes, which are explicitly explained in the articles on the exercise types. Two of them apply on the test level:
+
+### calculator
+
+If a calculator is required for this task, you need to assign the 'calculator' attribute the type 'simple' or 'scientific'.
+
+### files
+
+If additional files are required to complete this task, you need to assign the 'files' attribute a single file path or a list of paths to these files.
+
+Note that setting these two attributes in the Rmd file directly is mainly useful if you work on a single exercise. For collections of exercises (tests) it is better to set these attributes when creating the test intead of in the Rmd-file.

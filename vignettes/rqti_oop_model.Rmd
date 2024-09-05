@@ -3,7 +3,7 @@ title: "RQTI OOP Model"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{QTI OOP Model}
+  %\VignetteIndexEntry{RQTI OOP Model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

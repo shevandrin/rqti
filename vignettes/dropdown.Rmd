@@ -8,58 +8,89 @@ vignette: >
     %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r dd, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+source("helper.R")
 ```
 
-```{r setup, echo=FALSE}
+```{r setup dd, echo=FALSE}
 library(rqti)
 ```
 
+`r if(knitr::is_latex_output()) "# Dropdown Exercises"`
+
+In this type of exercise, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as *entry*-objects because this is essentially what dropwdowns are. Several dropdowns can be combined in a single exercise, but a combination with numeric and text entries (gaps) is not possible; mainly due to limitations on the site of learning managment systems. 
+
 ## Minimum version
 
-In this type of exercise, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as *entry*-objects because this is essential what dropwdowns are. Several dropdowns can be combined in a single exercise, but a combination with numeric and text entries (gaps) is not possible; mainly due to LMS limitations. 
+A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates ` dropdown (simple)` and ` dropdown (complex)`.
 
-A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. Here we look at the templates `dropdown (simple)` and `dropdown (complex)`.
-
-The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**.Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
+The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Knitting via the Knit-Button to qtijs, this exercise renders as:
+Knitting via the Knit-Button to qtijs, this exercise renders as`r ltx(" shown in Figure \\ref{dd1qtijs}.", ":")`
 
-![](images/xml/dropdown-simple.jpg){width=100%}
+![\label{dd1qtijs}Simple dropdown exercise rendered in qtijs](images/xml/dropdown-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see [API Opal](api_opal.html)) to upload to Opal directly, producing:
+Alternatively, change the knit parameter to `knit: render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{dd1opal}.", ":")`
 
-![](images/dropdown-simple.jpg){width=100%}
+![\label{dd1opal}Simple dropdown exercise rendered in OPAL](images/dropdown-simple.jpg){width=100%}
 
-There are 2 ways to specify a dropdown-element in Rmd content:
+There are two ways to specify a dropdown-element in Rmd content:
 
-- Put the right answer inside `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`). Example: `<<element1|element2|element3>>`
-- use the helper function `?dropdown` (also see section [`helper dropdown`](#helper-function-dropdown))
+- Put the correct answer inside `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`). Example: `<<element1|element2|element3>>`
+- use the helper function `?dropdown` (also see section \ref{helper-function-dropdown} [Helper function dropdown](#helper-function-dropdown))
 
 By default, 1 point can be reached for each dropdown (specify `points` to your needs). The total number of points for completing a task is defined as the sum of points of all dropdowns.
 
 Note that in this example, a feedback section was also provided. The feedback is
-optional, but usually it is a good idea to give some explanation for students. In dropdown exercises the feedback refers to the whole task, not to a specific dropdown. Group your feedback into appropriate sections, which can be opened/closed for better user experience (e.g. use `<details>` and `<summary>` html tags).
+optional, but usually it is a good idea to give some explanation for students. In dropdown exercises the feedback refers to the whole task, not to a specific dropdown. Group your feedback into appropriate sections, which can be opened/closed for better user experience. A great way to do this is to use `<details>` and `<summary>` html tags:
+
+```{html}
+<details><summary>Question1</summary>
+  Provide Feedback for Question 1
+</details>
+<details><summary>Question 2</summary>
+  Provide Feedback for Question 2
+</details>
+```
+
+
+will render as:
+
+```{=html}
+<details><summary> Question 1</summary>
+  Provide Feedback for Question 1
+</details>
+<details><summary> Question 2</summary>
+  Provide Feedback for Question 2
+</details>
+```
+
+```{=latex}
+\textrightarrow{} Question 1\\
+\textrightarrow{} Question 2\\
+
+By clicking on the arrows, the details will unfold.
+```
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `dropdown (complex)`, which uses more yaml attributes and a more complex use of the helper function `dropdown`.
+If you want to have more fine-grained control, consider the RMD template ` dropdown (complex)`, which uses more yaml attributes and a more complex use of the helper function `dropdown`.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which renders as:
+Which renders in OPAL as `r ltx(" shown in Figure \\ref{dd2opal}.", ":")`
 
-![](images/dropdown-complex.jpg){width=100%}
+![\label{dd2opal}More complex dropdown exercise rendered in OPAL](images/dropdown-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -88,17 +119,17 @@ Feedback can be provided with the section
 This helper function is used to generate a formatted string describing a dropdown in Rmd content:
 
 ```{r}
-choices <- c("c1" = "S4 OOP", "c2" = "S3 OOP", "c3" = "no OOP", "c4" = "R6 OOP")
+choices <- c("s4" = "S4 OOP", "s3" = "S3 OOP", "none" = "no OOP", "r6" = "R6 OOP")
 oop_task <- dropdown(choices = choices, solution = "S4 OOP",
                      response_identifier = "OOP_task")
 oop_task
 ```
 
-Argument list of `dropdown`:
+The arguments of the  `dropdown` function are:
 
 ### choices
 
-Elements of dropdown. If you use a named vector, the names will be used as identifiers. This is useful for later data analysis.
+Elements of dropdown. If you use a named vector, the names will be used as identifiers. This is useful for later data analysis and is generally adviced.
 
 ### solution_index
 
