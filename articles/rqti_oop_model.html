@@ -107,15 +107,28 @@
     transition: transform 0.3s; /* Adjust the transition duration as needed */
   }
 </style>
-<p>This section is still under construction and only relevant if you
-want to create exercises without relying on Rmd files. Under the hood,
-rqti uses S4 OOP. This means that you can create all exercise types as
-objects, which gives you more flexibility and is much faster. If you are
-happy with Rmd, there is nothing wrong using it. If you want to go to
-the next level, consider creating exercise objects directly. In the
-future we want to add simple constructor functions instead of relying on
-the <code>new</code> function, so that the OOP system is more
-accessible. Currently, the focus is still on the RMD interface.</p>
+<p>The Rmd interface of <code>rqti</code> is excellent for quickly
+getting started, but it has some drawbacks. First, it can be quite slow,
+as the Rmd file must be converted to HTML before it can be used. This
+delay is especially noticeable when generating several versions of
+multiple exercises. Additionally, Rmd lacks flexibility in handling
+exercise parameters. For instance, while it is possible to select
+specific questions within an exercise by passing parameters during
+knitting, this approach is not very convenient.</p>
+<p>Another challenge with Rmd is storing and distributing the files, as
+there is no standard method for doing so. While you can host the files
+somewhere, there is no easy way for instructors to know when a new
+version is available. Ultimately, while Rmd is great for readability, it
+is not designed for rigorous programming. If you want to fully leverage
+a programming language when creating exercises and exams, a programming
+interface is a better choice.</p>
+<p>The <code>rqti</code> package offers such an interface, as it uses S4
+object-oriented programming (OOP) under the hood. This allows you to
+create all exercise types as objects, providing greater flexibility and
+faster performance. You can also share your exercises by creating an R
+package. If you are content with Rmd, there is nothing wrong with
+continuing to use it. However, if you are looking to take your work to
+the next level, consider creating exercise objects directly.</p>
 <p>First, check out the overview of our classes:</p>
 <div class="zoomable-image">
 <p><img src="images/s4model.svg" alt="Class diagram S4"></p>
@@ -133,8 +146,8 @@ types of tasks:</p>
 <li><code><a href="../reference/OneInRowTable-class.html">?OneInRowTable</a></code></li>
 <li><code><a href="../reference/OneInColTable-class.html">?OneInColTable</a></code></li>
 </ul>
-<p>In addition there are classes for the elements of interactive content
-of tasks:</p>
+<p>In addition there are classes for the interaction elements of
+tasks:</p>
 <ul>
 <li><code><a href="../reference/TextGap-class.html">?TextGap</a></code></li>
 <li><code><a href="../reference/NumericGap-class.html">?NumericGap</a></code></li>
@@ -155,13 +168,15 @@ of tasks:</p>
 </h2>
 <p>There are two ways to create task objects:</p>
 <ol style="list-style-type: decimal">
-<li>A call to <code>new</code>.</li>
-<li>Using constructor functions: Constructor functions are available for
-creating various types of task-related objects, organized into the
-following categories:</li>
+<li>A call to <code>new</code> with the corresponding class and
+parameters.</li>
+<li>Using constructor functions (recommended).</li>
 </ol>
-<p>Task Types. These functions create classes representing different
-types of tasks:</p>
+<p>Constructor functions share the same names as their corresponding
+classes, with the first letter in lowercase. These constructors are
+again categorized into tasks, interactions, and sections/tests.</p>
+<p>The following functions create classes representing different types
+of tasks:</p>
 <ul>
 <li><code><a href="../reference/singleChoice.html">?singleChoice</a></code></li>
 <li><code><a href="../reference/multipleChoice.html">?multipleChoice</a></code></li>
@@ -173,8 +188,8 @@ types of tasks:</p>
 <li><code><a href="../reference/OneInRowTable-class.html">?OneInRowTable</a></code></li>
 <li><code><a href="../reference/oneInColTable.html">?oneInColTable</a></code></li>
 </ul>
-<p>Interactive Content. These functions create classes representing
-interactive elements within tasks:</p>
+<p>The following functions create classes representing interactions
+within tasks:</p>
 <ul>
 <li><code><a href="../reference/textGap_doc.html">?textGap</a></code></li>
 <li><code><a href="../reference/numericGap_doc.html">?numericGap</a></code></li>
@@ -183,8 +198,8 @@ interactive elements within tasks:</p>
 <li><code><a href="../reference/correctFeedback.html">?correctFeedback</a></code></li>
 <li><code><a href="../reference/wrongFeedback.html">?wrongFeedback</a></code></li>
 </ul>
-<p>Tests and Sections. These functions create classes representing tests
-and their organizational sections:</p>
+<p>The following functions create classes representing tests and their
+sections:</p>
 <ul>
 <li><code><a href="../reference/assessmentSection.html">?assessmentSection</a></code></li>
 <li><code><a href="../reference/assessmentTest.html">?assessmentTest</a></code></li>
@@ -192,78 +207,306 @@ and their organizational sections:</p>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="examples-of-creating-task-objects">Examples of creating task objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-task-objects"></a>
+<h2 id="creating-task-objects">Creating task objects<a class="anchor" aria-label="anchor" href="#creating-task-objects"></a>
 </h2>
+<p>First, it is important to know that you can create an object directly
+from Rmd files:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a></span><span class="op">)</span></span>
-<span><span class="co"># simple examples</span></span>
-<span><span class="va">sc0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"SingleChoice"</span>,</span>
-<span>           identifier <span class="op">=</span> <span class="st">"sc0"</span>,</span>
-<span>           choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"answer1"</span>, <span class="st">"answer2"</span>, <span class="st">"answer3"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">ord0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"Ordering"</span>,</span>
-<span>            identifier <span class="op">=</span> <span class="st">"ord0"</span>,</span>
-<span>            choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"item1"</span>, <span class="st">"item2"</span>, <span class="st">"item3"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># more advance example</span></span>
-<span><span class="va">sc1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"SingleChoice"</span>,</span>
-<span>          choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"option 1"</span>, <span class="st">"option 2"</span>, <span class="st">"option 3"</span>, <span class="st">"option 4"</span><span class="op">)</span>,</span>
-<span>          title <span class="op">=</span> <span class="st">"Single Choice Task"</span>,</span>
-<span>          content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Select the correct choice."</span><span class="op">)</span>,</span>
-<span>          points <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>          identifier <span class="op">=</span> <span class="st">"sc_v0"</span>,</span>
-<span>          feedback <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">new</span><span class="op">(</span><span class="st">"WrongFeedback"</span>, title <span class="op">=</span> <span class="st">"Error"</span>,</span>
-<span>                           content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"You made a mistake"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                       <span class="fu">new</span><span class="op">(</span><span class="st">"CorrectFeedback"</span>, title <span class="op">=</span> <span class="st">"Success"</span>,</span>
-<span>                           content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Well done"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                       <span class="fu">new</span><span class="op">(</span><span class="st">"ModalFeedback"</span>, title <span class="op">=</span> <span class="st">"Common information"</span>,</span>
-<span>                           content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Model answer of some details"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>To see the full list of slots call <code><a href="../reference/SingleChoice-class.html">?SingleChoice</a></code></p>
-</div>
-<div class="section level2">
-<h2 id="examples-of-creating-section-objects">Examples of creating section objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-section-objects"></a>
-</h2>
+<code class="sourceCode R"><span><span class="va">scpath</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"rmarkdown/templates/singlechoice-simple/skeleton"</span>, </span>
+<span>                           <span class="st">"skeleton.Rmd"</span>, package <span class="op">=</span> <span class="st">"rqti"</span><span class="op">)</span></span>
+<span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">:::</span><span class="fu"><a href="../reference/create_question_object.html">create_question_object</a></span><span class="op">(</span><span class="va">scpath</span><span class="op">)</span></span>
+<span><span class="va">sc</span></span>
+<span><span class="co">#&gt; An object of class "SingleChoice"</span></span>
+<span><span class="co">#&gt; Slot "solution":</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "choices":</span></span>
+<span><span class="co">#&gt; [1] "There is a 5% probability that you will mistakenly reject the null hypothesis, when it is actually correct. "</span></span>
+<span><span class="co">#&gt; [2] "There is a 5% probability that the null hypothesis is correct."                                              </span></span>
+<span><span class="co">#&gt; [3] "There is a 5% probability that you will mistakenly reject the alternative hypothesis, when it is correct."   </span></span>
+<span><span class="co">#&gt; [4] "The test power is 95%."                                                                                      </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "choice_identifiers":</span></span>
+<span><span class="co">#&gt; [1] "ChoiceA" "ChoiceB" "ChoiceC" "ChoiceD"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "shuffle":</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "orientation":</span></span>
+<span><span class="co">#&gt; [1] "vertical"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "identifier":</span></span>
+<span><span class="co">#&gt; [1] "skeleton"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "title":</span></span>
+<span><span class="co">#&gt; [1] "skeleton"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "content":</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; [1] "&lt;p&gt;An alpha error of 5% means that:&lt;/p&gt;"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "prompt":</span></span>
+<span><span class="co">#&gt; [1] ""</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "points":</span></span>
+<span><span class="co">#&gt; [1] 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "feedback":</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; An object of class "ModalFeedback"</span></span>
+<span><span class="co">#&gt; Slot "outcome_identifier":</span></span>
+<span><span class="co">#&gt; [1] "FEEDBACKMODAL"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "show":</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "identifier":</span></span>
+<span><span class="co">#&gt; [1] "modal_feedback"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "title":</span></span>
+<span><span class="co">#&gt; character(0)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "content":</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; [1] "&lt;p&gt;The correct interpretation is:&lt;/p&gt;"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; [1] "&lt;p&gt;There is a 5% probability that you will mistakenly reject the null hypothesis, when it is correct.&lt;/p&gt;"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span>
+<span><span class="co">#&gt; [1] "&lt;p&gt;This is based on the typical understanding of a 5% significance level in hypothesis testing, which means that you are willing to accept a 5% chance of making a Type I error.&lt;/p&gt;"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "files":</span></span>
+<span><span class="co">#&gt; character(0)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "calculator":</span></span>
+<span><span class="co">#&gt; character(0)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "metadata":</span></span>
+<span><span class="co">#&gt; An object of class "QtiMetadata"</span></span>
+<span><span class="co">#&gt; Slot "contributor":</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; An object of class "QtiContributor"</span></span>
+<span><span class="co">#&gt; Slot "name":</span></span>
+<span><span class="co">#&gt; [1] ""</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "role":</span></span>
+<span><span class="co">#&gt; [1] "author"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "contribution_date":</span></span>
+<span><span class="co">#&gt; Date of length 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "description":</span></span>
+<span><span class="co">#&gt; [1] ""</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "rights":</span></span>
+<span><span class="co">#&gt; [1] ""</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Slot "version":</span></span>
+<span><span class="co">#&gt; character(0)</span></span></code></pre></div>
+<p>The structure of the object feels somewhat intimidating but is mostly
+self-explanatory. For instance it has a slot named <code>solution</code>
+and another one named <code>choices</code>. Other slots contain
+additional objects such as a feedback or metadata object.</p>
+<p>Now you can render this object with <code>render_qtijs</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># simple example</span></span>
-<span><span class="va">section0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentSection"</span>,</span>
-<span>                identifier <span class="op">=</span> <span class="st">"sect0"</span>,</span>
-<span>                assessment_item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ord0</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># note that assessment_item expects a list!</span></span>
-<span><span class="co"># more advance example</span></span>
-<span><span class="va">section1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentSection"</span>,</span>
-<span>                identifier <span class="op">=</span> <span class="st">"sect1"</span>,</span>
-<span>                title <span class="op">=</span> <span class="st">"First Section"</span>,</span>
-<span>                time_limit <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>                visible <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                assessment_item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sc0</span>, <span class="va">sc1</span><span class="op">)</span>,</span>
-<span>                max_attempts <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>                allow_comment <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">sc</span><span class="op">)</span></span></code></pre></div>
+<p>You will notice that this approach is much faster than knitting, as
+it eliminates intermediate steps. The XML file is generated directly
+from the object representation and then copied to the qtijs server. No
+need for Pandoc or any other translation tools.</p>
+<p>But how would you create this object from scratch? This is not very
+hard:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">choices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"There is a 5% probability that you will mistakenly reject the null hypothesis, when it is actually correct."</span>, </span>
+<span>  <span class="st">"There is a 5% probability that the null hypothesis is correct."</span>, </span>
+<span>  <span class="st">"There is a 5% probability that you will mistakenly reject the alternative hypothesis, when it is correct."</span>, </span>
+<span>  <span class="st">"The test power is 95%."</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/singleChoice.html">singleChoice</a></span><span class="op">(</span>choices <span class="op">=</span> <span class="va">choices</span>, </span>
+<span>                    content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"An alpha error of 5% means that:"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Note that the content parameter is a list because it can also contain
+non-strings. If you just put the text string, rqti will give you an
+error. In the future we will simplify this case.</p>
+<p>Again, you can render the object:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">sc2</span><span class="op">)</span></span></code></pre></div>
+<p>It looks the same because it is almost the same:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">sc</span>, <span class="va">sc2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Attributes: &lt; Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) &gt;"</span></span>
+<span><span class="co">#&gt; [2] "Attributes: &lt; Component \"choices\": 1 string mismatch &gt;"                                   </span></span>
+<span><span class="co">#&gt; [3] "Attributes: &lt; Component \"content\": Component 1: 1 string mismatch &gt;"                      </span></span>
+<span><span class="co">#&gt; [4] "Attributes: &lt; Component \"feedback\": Length mismatch: comparison on first 0 components &gt;"  </span></span>
+<span><span class="co">#&gt; [5] "Attributes: &lt; Component \"files\": Lengths (0, 1) differ (string compare on first 0) &gt;"     </span></span>
+<span><span class="co">#&gt; [6] "Attributes: &lt; Component \"identifier\": 1 string mismatch &gt;"                                </span></span>
+<span><span class="co">#&gt; [7] "Attributes: &lt; Component \"title\": 1 string mismatch &gt;"</span></span></code></pre></div>
+<p>There are some differences in defaults, and we did not provide
+feedback in this case, but overall, creating objects from scratch is
+relatively straightforward. However, it becomes more challenging when
+incorporating HTML, math, and images. These elements are seamlessly
+handled by the Rmd-interface, but doing it from scratch requires more
+effort.</p>
+<p>Let us add a feedback object, including some html formatting created
+with htmltools:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/htmltools" class="external-link">htmltools</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">text1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span></span>
+<span>  <span class="st">"The correct interpretation is: "</span>, </span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">strong</a></span><span class="op">(</span><span class="st">"There is a 5% probability that you will mistakenly reject the null hypothesis, when it is correct."</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">text2</span> <span class="op">&lt;-</span> <span class="va">tags</span><span class="op">$</span><span class="fu">details</span><span class="op">(</span></span>
+<span>  <span class="va">tags</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="st">"More Information"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"This is based on the typical understanding of a 5% significance level in hypothesis testing, which means that you are willing to accept a 5% chance of making a Type I error."</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modalFeedback.html">modalFeedback</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">text1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">text2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">sc2b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/singleChoice.html">singleChoice</a></span><span class="op">(</span>choices <span class="op">=</span> <span class="va">choices</span>, </span>
+<span>                     content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"An alpha error of 5% means that:"</span><span class="op">)</span>,</span>
+<span>                     feedback <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fb</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Let us render the new task and activate the feedback in qtijs (you
+might still need to reload the Viewer pane):</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">sc2b</span>, preview_feedback <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p>A couple of things should be noticed:</p>
+<ul>
+<li>we create the html tags with <code>htmltools</code>, but you can
+also use raw html tags
+(e.g. <code>&lt;strong&gt;my text&lt;/strong&gt;</code>)</li>
+<li>details and summary tags are not available by default in htmltools,
+so must be created with <code>tags$</code>
+</li>
+<li>the feedback must be created with the constructors, in this case
+<code>modalFeedback</code>, which simply means that this feedback is
+displayed independently of the number of points reached</li>
+<li>the <code>feedback</code> parameter <code>content</code> can only
+take lists</li>
+<li>the <code>singleChoice</code> parameter <code>feedback</code> can
+only take lists</li>
+</ul>
+<p>What if we want to add some math? There are several ways to achieve
+this, but the simplest is to use latex syntax in html as per
+MathJax:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">math</span> <span class="op">&lt;-</span> <span class="st">r"(When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$)"</span></span></code></pre></div>
+<p>Note the use of <code>\(</code> and <code>\)</code> for inline math
+and <code>$$</code> for displayed math. You cannot use <code>$</code>
+for inline math as per MathJax syntax.</p>
+<p>Further note the <code>r"(...)"</code>-syntax, which escapes special
+characters automatically.</p>
+<p>Let us render it, this time within an essay exercise:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span></span>
+<span>    content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="va">math</span>, </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"Provide a proof for this solution."</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Adding math is straightforward, but what about images? There are
+various ways to incorporate them. A simple method is to save your image
+as raw bytes and embed it directly in an image tag.</p>
+<p>Let us first create a graph and save it in a temporary file:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">imgfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="va">imgfile</span>, width <span class="op">=</span> <span class="fl">800</span>, height <span class="op">=</span> <span class="fl">600</span>, type <span class="op">=</span> <span class="st">"cairo"</span>, pointsize <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; agg_png </span></span>
+<span><span class="co">#&gt;       2</span></span></code></pre></div>
+<p>Now we can convert this to a raw byte string and put it inside image
+tags using htmltools:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu">RCurl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RCurl/man/base64.html" class="external-link">base64Encode</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readBin.html" class="external-link">readBin</a></span><span class="op">(</span><span class="va">imgfile</span>, <span class="st">"raw"</span>,</span>
+<span>                                   <span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.info</a></span><span class="op">(</span><span class="va">imgfile</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"size"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>                           <span class="st">"txt"</span><span class="op">)</span></span>
+<span><span class="va">image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">img</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"400"</span>, </span>
+<span>                          src <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"data:image/png;base64,"</span>, <span class="va">txt</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Finally, let us add in a simple gap exercise:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gap_with_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/entry.html">entry</a></span><span class="op">(</span></span>
+<span>  content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"Here is an illustration of the standard normal distribution:"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>    <span class="va">image</span>, </span>
+<span>    <span class="st">"&lt;p&gt;What proportion of values is between -1 and +1 SD of a normal distribution?"</span>,</span>
+<span>    <span class="fu"><a href="../reference/numericGap_doc.html">gapNumeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>, tolerance <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>               tolerance_type <span class="op">=</span> <span class="st">"relative"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"Round to two decimal points!"</span>,</span>
+<span>    <span class="st">"&lt;/p&gt;"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>and render it:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">gap_with_img</span><span class="op">)</span></span></code></pre></div>
+<p>A few things to keep in mind during this process:</p>
+<ul>
+<li>Ensure your image is well-prepared with the right aspect ratio,
+resolution, etc.</li>
+<li>You can use ggplot2 or other graphics libraries similarly.</li>
+<li>Consider creating a helper function to decode the image into raw
+bytes.</li>
+<li>For gap exercises, the gap must be placed within the content
+parameter, which makes using htmltools challenging. Currently, you need
+to use raw HTML tags to surround the gaps.</li>
+<li>Although the process is more complex than with Rmd, it gives you
+greater control over both the image creation and its display in
+HTML.</li>
+<li>Future improvements will simplify the process with constructors. For
+now, we need more experience and user feedback.</li>
+</ul>
+<p>We covered most aspects of creating exercises with constructor
+functions. Let us now look at creating sections and tests:</p>
 </div>
 <div class="section level2">
-<h2 id="examples-of-creating-test-objects">Examples of creating test objects<a class="anchor" aria-label="anchor" href="#examples-of-creating-test-objects"></a>
+<h2 id="creating-sections-and-tests">Creating Sections and Tests<a class="anchor" aria-label="anchor" href="#creating-sections-and-tests"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># simple example with a call to `new`</span></span>
-<span><span class="va">test0</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentTest"</span>,</span>
-<span>               identifier <span class="op">=</span> <span class="st">"test"</span>,</span>
-<span>               section <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># simple example using constructor `test()`</span></span>
-<span><span class="va">test0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test.html">test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span>, <span class="st">"test"</span><span class="op">)</span></span>
-<span><span class="co"># more advance example with a call to `new`</span></span>
-<span><span class="va">test1</span> <span class="op">&lt;-</span> <span class="fu">new</span><span class="op">(</span><span class="st">"AssessmentTest"</span>,</span>
-<span>             identifier <span class="op">=</span> <span class="st">"test"</span>,</span>
-<span>             title <span class="op">=</span> <span class="st">"Test"</span>,</span>
-<span>             navigation_mode <span class="op">=</span> <span class="st">"linear"</span>,</span>
-<span>             section <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span>,</span>
-<span>             time_limit <span class="op">=</span> <span class="fl">60</span>,</span>
-<span>             max_attempts <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>             allow_comment <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co"># more advance example using constructor `test()`</span></span>
-<span><span class="va">test1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test.html">test</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">section0</span>, <span class="va">section1</span><span class="op">)</span>,</span>
-<span>              identifier <span class="op">=</span> <span class="st">"test"</span>,</span>
-<span>              title <span class="op">=</span> <span class="st">"Test"</span>, </span>
-<span>              navigation_mode <span class="op">=</span> <span class="st">"linear"</span>, </span>
-<span>              time_limit <span class="op">=</span> <span class="fl">60</span>, </span>
-<span>              max_attempts <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>              allow_comment <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Let us combine the exercises from above into a section:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">section1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentSection.html">assessmentSection</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sc</span>, <span class="va">gap_with_img</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>And render it:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">section1</span><span class="op">)</span></span></code></pre></div>
+<p>There is not much to see here because we only have one section and
+qtijs does not reveal the underlying structure. To illustrate better,
+let us add another section and make a test:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Who was Ada Lovelace?"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>              <span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Who was Grace Hopper?"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The data_allow_paste property only works on LMS Opal and OpenOlat.</span></span>
+<span><span class="co">#&gt; Warning: The data_allow_paste property only works on LMS Opal and OpenOlat.</span></span>
+<span><span class="va">section2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentSection.html">assessmentSection</a></span><span class="op">(</span><span class="va">items</span>, selection <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">exam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentTest.html">assessmentTest</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section1</span>, <span class="va">section2</span><span class="op">)</span>, time_limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<p>Render it:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">exam</span><span class="op">)</span></span></code></pre></div>
+<p>What is happening here? There are two sections, but only one item is
+selected from section 2. Additionally, a time limit has been imposed for
+the test.</p>
+<p>The flexibility to arrange and select items within sections, and
+organize sections within tests, provides significant control over the
+assessment process. You can create parallel versions of items and easily
+develop custom exam functions that generate different versions of
+exercises.</p>
+<p>We have now covered the key constructor functions of the rqti
+package. These functions empower you to build questions and exams from
+scratch, giving you full control over the process. Moreover, this
+approach allows you to package your questions and exams into standard R
+packages, making distribution simple and efficient. While there is much
+more to explore, you will need to dive deeper into the possibilities on
+your own.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
