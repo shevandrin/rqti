@@ -44,7 +44,8 @@ Suggests:
     dplyr,
     testthat (>= 3.0.0),
     XML,
-    readr
+    readr,
+    RCurl
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 URL: https://github.com/shevandrin/rqti, https://shevandrin.github.io/rqti/
