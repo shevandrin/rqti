@@ -1,4 +1,4 @@
-name: "rqti: gap (simple)"
+name: "gap (simple)"
 description: >
    A simple example of a gap exercise including numeric and text gaps
 create_dir: FALSE

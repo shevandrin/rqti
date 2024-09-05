@@ -1,4 +1,4 @@
-name: "rqti: directedpair (simple)"
+name: "directedpair (simple)"
 description: >
    A simple example of an exercise where a candidate should match pairs from given items
 create_dir: FALSE

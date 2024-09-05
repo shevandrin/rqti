@@ -6,6 +6,14 @@
 
 * Added new constructor functions assessmentTest(), assessmentTestOpal(), assessmentSection().
 
+* Generic functions are now exported to allow advanced users to extend the functionality of S4 classes (createItemBody, createResponseDeclaration, createOutcomeDeclaration, createResponseProcessing, createText).
+
+* Added support for the 'preview_feedback' option within 'params' in the YAML section of R Markdown files.
+
+* Renamed the service name in the keyring system credential storage to "rqtiopal".
+
+* Renamed the 'contributor' slot in QtiContributor to 'name'.
+
 ## Improvements
 
 * QTIJS rendering (DirectedPair type, round Score and Maxscore values).

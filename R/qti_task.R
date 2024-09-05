@@ -248,7 +248,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE,
 
     path_task <- file.path(dir, paste0(file_name, ".xml"))
     xml2::write_xml(doc, path_task)
-    message("see assessment item: ", path_task)
+    if (interactive()) message("see assessment item: ", path_task)
     return(stringr::str_remove(path_task, getwd()))
 }
 

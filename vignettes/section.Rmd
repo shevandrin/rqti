@@ -29,7 +29,7 @@ The `rqti` package makes it very simple to mix different sources of exercise fil
 
 - **Rmd (md) files**: You can use Rmarkdown files that are consistent with the `rqti` package (the `exams` package will not work, but see below)
 - **QTI XML files**: These files should be valid regarding the QTI standard. To use your Rmd-files from the `exams` package you can convert them to xml first.
-- **Objects of S4 `rqti` classes**: You can also use objects from the `rqti` package directly. See article \ref{rqti-oop-model}[rqti OOP model](qti_oop_model.html).
+- **Objects of S4 `rqti` classes**: You can also use objects from the `rqti` package directly. See article \ref{rqti-oop-model}[rqti OOP model](rqti_oop_model.html).
 
 ##  Using the `section` and `test` functions
 

@@ -47,8 +47,8 @@ If you are working on a set of exercises, setting metadata for each one individu
 For example, you can create an `.Rprofile` file and set the default author and usage rights as follows:
 
 ```{r, eval=F}
-Sys.setenv(RQTI_AUTHOR="Ada Lovelace")
-Sys.setenv(RQTI_RIGHTS="CC BY SA")
+Sys.setenv(RQTI_AUTHOR = "Ada Lovelace")
+Sys.setenv(RQTI_RIGHTS = "CC BY SA")
 ```
 
 If you need to use non-default values, just specify the yaml attributes, which will override the environment variables.

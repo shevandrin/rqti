@@ -11,7 +11,7 @@ This class stores metadata information about contributors.
 \section{Slots}{
 
 \describe{
-\item{\code{contributor}}{A character string representing the name of the author.
+\item{\code{name}}{A character string representing the name of the author.
 By default it takes value from environment variable 'RQTI_AUTHOR'.}
 
 \item{\code{role}}{A character string kind of contribution. Possible values: author,

@@ -44,7 +44,8 @@ setClass("DirectedPair", contains = "MatchTable",
 #'  consisting of one paragraph. This can supplement or replace content in the
 #'  task. Default is "".
 #'@param points A numeric value, optional, representing the number of points for
-#'  the entire task. Default is 1.
+#'  the entire task. If not provided, the default is calculated as 0.5 points
+#'  per pair.
 #'@param rows A character vector specifying answer options as the first elements
 #'  in couples.
 #'@param rows_identifiers A character vector, optional, specifies identifiers of
@@ -127,9 +128,11 @@ directedPair <- function(identifier = generate_id(),
     return(obj)
 }
 
+
 #' @rdname createItemBody-methods
 #' @aliases createItemBody,DirectedPair
-setMethod("createItemBody",  "DirectedPair", function(object) {
-    if (object@orientation == "horizontal") ort <- "horizontal" else ort <- NULL
-    create_item_body_match_table(object, 1, 1, 0, ort)
+setMethod("createItemBody", signature(object = "DirectedPair"),
+          function(object) {
+              if (object@orientation == "horizontal") ort <- "horizontal" else ort <- NULL
+              create_item_body_match_table(object, 1, 1, 0, ort)
 })

@@ -1,5 +1,5 @@
 ---
-title: "QTI OOP Model"
+title: "RQTI OOP Model"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
@@ -47,11 +47,12 @@ The `rqti` class model consists of classes that represent types of tasks:
 - `?MultipleChoice`
 - `?Essay`
 - `?Entry`
-- `?Order`
+- `?Ordering`
 - `?DirectedPair`
 - `?MultipleChoiceTable`
 - `?OneInRowTable`
 - `?OneInColTable`
+
 
 In addition there are classes for the elements of interactive content of tasks:
 
@@ -63,6 +64,7 @@ In addition there are classes for the elements of interactive content of tasks:
 - `?CorrectFeedback`
 - `?WrongFeedback`
 
+
 Finally, there are classes for tests and their sections:
 
 - `?AssessmentSection`
@@ -73,8 +75,36 @@ Finally, there are classes for tests and their sections:
 
 There are two ways to create task objects:
 
-1. a call to `new`
-2. using constructor functions (**will be delivered in the future**)
+1. A call to `new`.
+2. Using constructor functions:
+Constructor functions are available for creating various types of task-related objects, organized into the following categories:
+
+Task Types. These functions create classes representing different types of tasks:
+    
+- `?singleChoice`
+- `?multipleChoice`
+- `?essay`
+- `?entry`
+- `?ordering`
+- `?directedPair`
+- `?multipleChoiceTable`
+- `?OneInRowTable`
+- `?oneInColTable`
+        
+Interactive Content. These functions create classes representing interactive elements within tasks:
+    
+- `?textGap`
+- `?numericGap`
+- `?textGapOpal`
+- `?modalFeedback`
+- `?correctFeedback`
+- `?wrongFeedback`
+        
+Tests and Sections. These functions create classes representing tests and their organizational sections:
+    
+- `?assessmentSection`
+- `?assessmentTest`
+- `?assessmentTestOpal`
 
 ## Examples of creating task objects
 
@@ -84,7 +114,7 @@ library(rqti)
 sc0 <- new("SingleChoice",
            identifier = "sc0",
            choices = c("answer1", "answer2", "answer3"))
-ord0 <- new("Order",
+ord0 <- new("Ordering",
             identifier = "ord0",
             choices = c("item1", "item2", "item3"))
 # more advance example
@@ -116,7 +146,7 @@ section0 <- new("AssessmentSection",
 section1 <- new("AssessmentSection",
                 identifier = "sect1",
                 title = "First Section",
-                time_limits = 20,
+                time_limit = 20,
                 visible = FALSE,
                 assessment_item = list(sc0, sc1),
                 max_attempts = 2,
@@ -138,7 +168,7 @@ test1 <- new("AssessmentTest",
              title = "Test",
              navigation_mode = "linear",
              section = list(section0, section1),
-             time_limits = 60,
+             time_limit = 60,
              max_attempts = 1,
              allow_comment = TRUE)
 # more advance example using constructor `test()`
@@ -146,7 +176,7 @@ test1 <- test(content = c(section0, section1),
               identifier = "test",
               title = "Test", 
               navigation_mode = "linear", 
-              time_limits = 60, 
+              time_limit = 60, 
               max_attempts = 1, 
               allow_comment = TRUE)
 ```

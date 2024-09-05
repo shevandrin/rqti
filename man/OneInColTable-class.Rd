@@ -34,6 +34,8 @@ the entire task. Default is 1, but pay attention:
 \itemize{
 \item For tasks of the \link{Entry} type, it is
 calculated as the sum of the gap points by default.
+\item For tasks of the \link{DirectedPair}, the default is calculated as 0.5 points
+per pair.
 \item For tasks of the \link{MatchTable} type, it can also be calculated as the sum
 of points for individual answers, when provided.
 \item For tasks of the \link{MultipleChoice} type, points is numeric vector and

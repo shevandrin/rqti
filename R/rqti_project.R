@@ -46,7 +46,7 @@ rqti_project <- function(path, ...) {
         "",
         "# Step 1: Prepare Rmd files with individual exercises.",
         "# To create an Rmd file, select RStudio templates starting with rqti ",
-        "# File -> New File -> R Markdown -> From Template -> rqti: ...",
+        "# File -> New File -> R Markdown -> From Template ->  ... {rqti}",
         "# Alternatively, modify the templates copied to your working directory",
         "# when the project was created. They can be found in the Files tab",
         "# in the bottom right region in RStudio, such as gap or dropdown."

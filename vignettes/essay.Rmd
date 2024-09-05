@@ -46,7 +46,7 @@ Note that in this example, a feedback section was also provided. Since an open q
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template `rqti`: essay (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template `essay (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')

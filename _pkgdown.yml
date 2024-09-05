@@ -1,6 +1,6 @@
 url: https://shevandrin.github.io/rqti/
 development:
-  mode: auto
+  mode: unreleased
 template:
   bootstrap: 5
   logo: "man/figures/logo.svg"
@@ -28,7 +28,9 @@ articles:
 - title: Workflow at the S4-classes level
   navbar: S4 rqti classes
   contents:
-  - qti_oop_model
-  - workflow
+  - rqti_oop_model
+- title: Other
+  navbar: Other
+  contents:
   - compatibility
   - imported_packages

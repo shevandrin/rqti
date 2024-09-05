@@ -6,9 +6,9 @@ identifier: demo_metadata
 
 metadata:
   contributor:
-    - contributor: Andrey Shevandrin
+    - name: Andrey Shevandrin
       role: author
-    - contributor: Johannes Titz 
+    - name: Johannes Titz 
       role: author
   description: Demonstration of metadata
   rights: CC BY SA Andrey Shevandrin and Johannes Titz (2024).
