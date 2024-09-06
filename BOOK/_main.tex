@@ -191,35 +191,35 @@ Once your project is created, open one of the templates from the working directo
 
 Explore the other templates to familiarize yourself with the various features and task types that \texttt{rqti} supports. This will help you create tasks that align with your specific needs.
 
-To learn how to create sections and tests, start by reviewing the \emph{main.R} file in your working directory. This file provides a foundational understanding of structuring your work. For more detailed information, you can refer to the Chapter \ref{sections-and-tests} \href{articles/section.html}{Sections and Tests}.
+To learn how to create sections and tests, start by reviewing the \emph{main.R} file in your working directory. This file provides a foundational understanding of structuring your work. For more detailed information, you can refer to Chapter \ref{sections-and-tests} \href{Chapters/section.html}{Sections and Tests}.
 
 To add more templates, create a new RMarkdown file. In RStudio, go to \emph{File} \textrightarrow{} \emph{New File} \textrightarrow{} \emph{R Markdown} \textrightarrow{} \emph{From Template}, and choose one that ends with \{rqti\}. The simpler templates focus on basic parameters, while the more advanced templates showcase additional settings and customization options. After selecting a template, click the \emph{Knit} button to render the task in the viewer pane.
 
-While the templates are generally intuitive, you can refer to other articles of the documentation for detailed guidance on specific task types. This will help you fully utilize the features of \texttt{rqti} for your projects. The following task types are available and explained in the corresponding chapters:
+While the templates are generally intuitive, you can refer to other Chapters of the documentation for detailed guidance on specific task types. This will help you fully utilize the features of \texttt{rqti} for your projects. The following task types are available and explained in the corresponding chapters:
 
 \begin{itemize}
 \tightlist
 \item
-  \ref{single-choice-tasks} \href{articles/singlechoice.html}{Single-Choice tasks}
+  \ref{single-choice-tasks} \href{Chapters/singlechoice.html}{Single-Choice tasks}
 \item
-  \ref{multiple-choice-tasks} \href{articles/multiplechoice.html}{Multiple-Choice tasks}
+  \ref{multiple-choice-tasks} \href{Chapters/multiplechoice.html}{Multiple-Choice tasks}
 \item
-  \ref{essay-tasks} \href{articles/essay.html}{Essay tasks}
+  \ref{essay-tasks} \href{Chapters/essay.html}{Essay tasks}
 \item
-  \ref{gap-tasks} \href{articles/gap.html}{Gap tasks}
+  \ref{gap-tasks} \href{Chapters/gap.html}{Gap tasks}
 \item
-  \ref{dropdown-tasks} \href{articles/dropdown.html}{Dropdown tasks}
+  \ref{dropdown-tasks} \href{Chapters/dropdown.html}{Dropdown tasks}
 \item
-  \ref{order-tasks} \href{articles/order.html}{Order tasks}
+  \ref{order-tasks} \href{Chapters/order.html}{Order tasks}
 \item
-  \ref{directed-pair-tasks} \href{articles/directedpairs.html}{Directed Pair tasks}
+  \ref{directed-pair-tasks} \href{Chapters/directedpairs.html}{Directed Pair tasks}
 \item
-  \ref{table-tasks} \href{articles/table.html}{Table tasks}
+  \ref{table-tasks} \href{Chapters/table.html}{Table tasks}
 \end{itemize}
 
-To add metadata to your tasks, refer to the Chapter \ref{adding-metadata} \href{articles/adding_metadata.html}{Adding metadata}.
-To integrate various tasks into a test, refer to the Chapter \ref{sections-and-tests} \href{articles/section.html}{Sections and Tests}.
-For users of the learning management system OPAL, explore the Chapter \ref{working-with-the-opal-api} \href{articles/api_opal.html}{Working with the OPAL API}.
+To add metadata to your tasks, refer to Chapter \ref{adding-metadata} \href{Chapters/adding_metadata.html}{Adding metadata}.
+To integrate various tasks into a test, refer to Chapter \ref{sections-and-tests} \href{Chapters/section.html}{Sections and Tests}.
+For users of the learning management system OPAL, explore Chapter \ref{working-with-the-opal-api} \href{Chapters/api_opal.html}{Working with the OPAL API}.
 
 \section{General workflow}\label{general-workflow}
 
@@ -240,7 +240,7 @@ The fundamental workflow with the \texttt{rqti} package involves the following s
   \item
     Specify additional attributes in the yaml section. Detailed explanations for all types are available in the following sections of this manual.
   \item
-    Choose a previewer: Either qtijs (\texttt{knit:\ rqti::render\_qtijs}), for local rendering, or the learning management system Opal (\texttt{knit:\ rqti::render\_opal}). Note that Opal usage requires prior setup, which is explained in the Chapter \ref{working-with-the-opal-api} \href{articles/api_opal.html}{Working with the Opal API}.
+    Choose a previewer: Either qtijs (\texttt{knit:\ rqti::render\_qtijs}), for local rendering, or the learning management system Opal (\texttt{knit:\ rqti::render\_opal}). Note that Opal usage requires prior setup, which is explained in Chapter \ref{working-with-the-opal-api} \href{Chapters/api_opal.html}{Working with the Opal API}.
   \item
     Verify if your task appears as desired. Make adjustments until you are satisfied.
   \end{itemize}
@@ -254,13 +254,13 @@ The fundamental workflow with the \texttt{rqti} package involves the following s
 
 Each step involves specific \texttt{rqti} functions, with the most useful ones illustrated in Figure \ref{workflow}
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/workflow.png}
 \caption{\label{workflow}Basic workflow to create tasks and tests with rqti}
-\end{figure}
+\end{figure*}
 
-The most effective way to grasp the workflow is to create a simple task, such as \emph{Single-Choice} as demonstrated in the Chapter \ref{single-choice-tasks} \href{articles/singlechoice.html}{Single-Choice tasks}. Once you have completed that, explore the other task types discussed in the subsequent chapters.
+The most effective way to grasp the workflow is to create a simple task, such as \emph{Single-Choice} as demonstrated in Chapter \ref{single-choice-tasks} \href{Chapters/singlechoice.html}{Single-Choice tasks}. Once you have completed that, explore the other task types discussed in the subsequent chapters.
 
 \section{Support and Bug Reports}\label{support-and-bug-reports}
 
@@ -268,7 +268,7 @@ Should you find any missing features or encounter issues, please do not hesitate
 
 \chapter{Single-Choice tasks}\label{single-choice-tasks}
 
-Please note that this is the first type of task described in this manual, and as such, it may be more detailed than those that follow. Our goal is to emphasize key points that might not be as thoroughly covered in later articles. For this reason, we recommend reading through this Chapter carefully before diving into the task types that most interest you.
+Please note that this is the first type of task described in this manual, and as such, it may be more detailed than those that follow. Our goal is to emphasize key points that might not be as thoroughly covered in later Chapters. For this reason, we recommend reading through this Chapter carefully before diving into the task types that most interest you.
 
 \section{Minimum version}\label{minimum-version}
 
@@ -287,11 +287,11 @@ knit: rqti::render_qtijs
 
 An alpha error of 5% means that:
 
-- There is a 5% probability that you will mistakenly reject the null hypothesis,
-when it is actually correct. <!-- First option is treated as the correct one by
+- There is a 5% probability that you will mistakenly reject the null hypothesis, 
+when it is actually correct. <!-- First option is treated as the correct one by 
 default. -->
 - There is a 5% probability that the null hypothesis is correct.
-- There is a 5% probability that you will mistakenly reject the alternative
+- There is a 5% probability that you will mistakenly reject the alternative 
 hypothesis, when it is correct.
 - The test power is 95%.
 
@@ -299,7 +299,7 @@ hypothesis, when it is correct.
 
 The correct interpretation is:
 
-There is a 5% probability that you will mistakenly reject the null hypothesis,
+There is a 5% probability that you will mistakenly reject the null hypothesis, 
 when it is correct.
 
 This is based on the typical understanding of a 5% significance level in
@@ -316,15 +316,15 @@ To preview the final result, simply click the \emph{Knit} button in RStudio (if 
 
 You can now interact with the task by selecting an option and then clicking \texttt{Submit} in the top right corner. By default, after submitting, the feedback and reached points are displayed as shown in Figure \ref{sc1qtijs}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/scfb.jpg}
 \caption{\label{sc1qtijs}Preview of single choice task with feedback rendered by QTIJS}
-\end{figure}
+\end{figure*}
 
 The corresponding xml file is created in the same folder as the Rmd file if you click the Knit-Button.
 
-Many learning management systems can directly import a QTI-XML-file, so all you need to do is upload the generated file. Compositions of tasks are covered in the Chapter \ref{sections-and-tests} \href{section.html}{Sections and Tests}.
+Many learning management systems can directly import a QTI-XML-file, so all you need to do is upload the generated file. Compositions of tasks are covered in Chapter \ref{sections-and-tests} \href{section.html}{Sections and Tests}.
 
 If you happen to use OPAL/ONYX, you can also upload your tasks directly by modifying the knit parameter:
 
@@ -336,13 +336,13 @@ If you happen to use OPAL/ONYX, you can also upload your tasks directly by modif
 
 This will upload the file and open a browser with the OPAL url. It should look like in Figure \ref{sc1opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/singlechoice-simple.jpg}
 \caption{\label{sc1opal}Single choice task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
-Setting up OPAL requires some additional steps, which are covered in the Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}.
+Setting up OPAL requires some additional steps, which are covered in Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}.
 
 By default the rights of the uploaded material in OPAL are set to public, so no authentication is required to view the material. Otherwise you have to login into OPAL, which will log you out in the API. Please take this into account when testing your material. Without changing the defaults anyone with the link has access to your task.
 
@@ -361,11 +361,11 @@ knit: rqti::render_qtijs
 
 An alpha error of 5% means that:
 
-- There is a 5% probability that you will mistakenly reject the null hypothesis,
-when it is actually correct. <!-- First option is treated as the correct one by
+- There is a 5% probability that you will mistakenly reject the null hypothesis, 
+when it is actually correct. <!-- First option is treated as the correct one by 
 default. -->
 - There is a 5% probability that the null hypothesis is correct.
-- There is a 5% probability that you will mistakenly reject the alternative
+- There is a 5% probability that you will mistakenly reject the alternative 
 hypothesis, when it is correct.
 - The test power is 95%.
 
@@ -373,7 +373,7 @@ hypothesis, when it is correct.
 
 The correct interpretation is:
 
-There is a 5% probability that you will mistakenly reject the null hypothesis,
+There is a 5% probability that you will mistakenly reject the null hypothesis, 
 when it is correct.
 
 This is based on the typical understanding of a 5% significance level in
@@ -389,7 +389,7 @@ Of course you can specify the correct choice if need be. Our preferred way of do
 \begin{Shaded}
 \begin{Highlighting}[]
 \AnnotationTok{Choose the correct one:}
-
+  
 \SpecialStringTok{{-} }\NormalTok{A}
 \SpecialStringTok{{-} }\NormalTok{B}
 \SpecialStringTok{{-} }\NormalTok{*C* }\CommentTok{\textless{}!{-}{-} treated as correct {-}{-}\textgreater{}}
@@ -452,18 +452,18 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 
-<!-- If you prefer general feedback, just use the the section # feedback and
+<!-- If you prefer general feedback, just use the the section # feedback and 
 delete the other feedback sections-->
 \end{Highlighting}
 \end{Shaded}
 
 Which renders in OPAL as shown in Figure \ref{sc2opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/singlechoice-complex.jpg}
 \caption{\label{sc2opal}More complex single choice task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 Notably, the choices are now displayed horizontally, and the title and points have been updated. The next section provides a detailed explanation of all YAML attributes.
 
@@ -596,19 +596,19 @@ Note that in this example, a feedback section was also provided. This is optiona
 
 Further note that the \texttt{knit} parameter is set to the custom \texttt{rqti} knit function, which will handle the preview. Clicking the Knit button in RStudio produces the output in Figure \ref{mpc1qtijs}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/multiplechoice-simple.jpg}
 \caption{\label{mpc1qtijs}Multiple choice task rendered in qtijs}
-\end{figure}
+\end{figure*}
 
 You can also use the OPAL (set it up before, see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) render function (\texttt{knit:\ rqti::render\_opal}), which should produce the output in Figure \ref{mpc1opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/multiplechoice-simple.jpg}
 \caption{\label{mpc1opal}Multiple choice task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 Multiple-choice tasks function similarly to single-choice tasks, with the key difference being that multiple (or no) answers can be correct. To indicate the correct options, surround them with asterisks (using markdown for italics). If you need to use italics within the choices themselves, enclose the entire question in \texttt{\textless{}em\textgreater{}\textless{}/em\textgreater{}} tags to avoid conflicts.
 
@@ -650,11 +650,11 @@ OPAL/ONYX) are not yet supported because they are LMS specific.
 
 Which renders in OPAL as shown in Figure \ref{mpc2opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/multiplechoice-complex.jpg}
 \caption{\label{mpc2opal}More complex multiple choice task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 \section{yaml attributes}\label{yaml-attributes-1}
 
@@ -752,7 +752,7 @@ mean_iq <- mean(iq)
 
 IQ Tests are standardized to have a mean value of <<100>>.
 
-You conducted an IQ test for 10 persons and found the following values:
+You conducted an IQ test for 10 persons and found the following values: 
 
 `r iq`
 
@@ -779,19 +779,19 @@ See `?gap_text` for more options (e.g. tolerance).
 
 Clicking on the Knit-button will produce the output in Figure \ref{gap1qtijs}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/gap-simple.jpg}
 \caption{\label{gap1qtijs}Simple gap task rendered in qtijs}
-\end{figure}
+\end{figure*}
 
-\noindent \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{gap1opal}.
+\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{gap1opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/gap-simple.jpg}
 \caption{\label{gap1opal}Simple gap task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 As you can see, there are two ways to create a gap in an Rmd file:
 
@@ -856,7 +856,7 @@ mean_iq <- mean(iq)
 
 IQ Tests are standardized to have a mean value of <<100>>.
 
-You conducted an IQ test for 10 persons and found the following values:
+You conducted an IQ test for 10 persons and found the following values: 
 
 `r iq`
 
@@ -911,11 +911,11 @@ Try again. (Only displayed if the solution is not correct.)
 
 In OPAL this renders as shown in Figure \ref{gap2opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/gap-complex.jpg}
 \caption{\label{gap2opal}Preview of complex gap task in OPAL}
-\end{figure}
+\end{figure*}
 
 \section{yaml attributes}\label{yaml-attributes-2}
 
@@ -1098,19 +1098,19 @@ and do it well" is more appropriate. Under the hood we use S4 OOP.
 
 Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref{dd1qtijs}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/dropdown-simple.jpg}
 \caption{\label{dd1qtijs}Simple dropdown task rendered in qtijs}
-\end{figure}
+\end{figure*}
 
-\noindent \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{dd1opal}.
+\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{dd1opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/dropdown-simple.jpg}
 \caption{\label{dd1opal}Simple dropdown task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 There are two ways to specify a dropdown-element in Rmd content:
 
@@ -1180,11 +1180,11 @@ and do it well" is more appropriate. Under the hood we use S4 OOP.
 
 Which renders in OPAL as shown in Figure \ref{dd2opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/dropdown-complex.jpg}
 \caption{\label{dd2opal}More complex dropdown task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 \section{yaml attributes}\label{yaml-attributes-3}
 
@@ -1287,19 +1287,19 @@ based on S4 OOP.
 
 Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref{essay1qtijs}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/essay-simple.jpg}
 \caption{\label{essay1qtijs}Simple essay erxercise rendered by qtijs}
-\end{figure}
+\end{figure*}
 
-\noindent \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{essay1opal}.
+\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{essay1opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/essay-simple.jpg}
 \caption{\label{essay1opal}Simple essay task rendered by OPAL}
-\end{figure}
+\end{figure*}
 
 Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay tasks can serve as a good basis for grading student's answers. In addition the length of the feedback section is taken into account in constructing the text field and the maximum number of words. If no feedback is provided, sensible defaults are used.
 
@@ -1338,11 +1338,11 @@ based on S4 OOP.
 
 Which, in OPAL, renders as shown in Figure \ref{essay2opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/essay-complex.jpg}
 \caption{\label{essay2opal}More complex essay task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 \section{yaml attributes}\label{yaml-attributes-4}
 
@@ -1436,19 +1436,19 @@ might still want to provide a detailed feedback.
 
 Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref{order1qtijs}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/order-simple.jpg}
 \caption{\label{order1qtijs}Simple order task rendered in qtijs}
-\end{figure}
+\end{figure*}
 
-\noindent \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{order1opal}.
+\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{order1opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/order-simple.jpg}
 \caption{\label{order1opal}Simple order task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 The order of the items in the Rmd-list is considered to be the correct one.
 
@@ -1466,9 +1466,9 @@ type: order
 knit: rqti::render_qtijs
 identifier: order001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
-# defines the scoring method, `false` means the correct order must be restored
+# defines the scoring method, `false` means the correct order must be restored 
 # completely by the candidate in order to get points
-points_per_answer: false
+points_per_answer: false 
 points: 2
 ---
 
@@ -1503,11 +1503,11 @@ Try again. (Only displayed if the solution is not correct.)
 
 Which on OPAL renders as shown in Figure \ref{order2opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/order-complex.jpg}
 \caption{\label{order2opal}More complex order task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 \section{yaml attributes}\label{yaml-attributes-5}
 
@@ -1598,26 +1598,26 @@ Provide your feedback here.
 
 Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref{dpqtijs1}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/directedpair-simple.jpg}
 \caption{\label{dpqtijs1}Directed pair task rendered with qtijs}
-\end{figure}
+\end{figure*}
 
 The pairs are specified by a markdown list in which the matching elements are separated by \texttt{\textbar{}}. This list has to be the last element of the question section!
 
-An alternative is to provide a table task with the matching elements, see the Chapter \ref{table-tasks} \href{table.html}{Tables}.
+An alternative is to provide a table task with the matching elements, see Chapter \ref{table-tasks} \href{table.html}{Tables}.
 
 Note that in the used example, a feedback section was also provided. The feedback is optional, but usually it is a good idea to give some explanation for students.
 
 Note that the \texttt{knit} parameter is set to the custom rqti knit function,
-which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. \noindent \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to opal directly, producing the output in Figure \ref{dpopal1}.
+which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to opal directly, producing the output in Figure \ref{dpopal1}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/directedpair-simple.jpg}
 \caption{\label{dpopal1}Directed pair task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 \section{More control}\label{more-control-6}
 
@@ -1668,11 +1668,11 @@ Try again. (Only displayed if the solution is not correct.)
 
 In OPAL this renders as shown in Figure \ref{dp2opal}. The viewport is a bit too small to capture the entire task.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/directedpair-complex.jpg}
 \caption{\label{dp2opal}More complex directed pair task rendered in OPAL}
-\end{figure}
+\end{figure*}
 
 \section{yaml attributes}\label{yaml-attributes-6}
 
@@ -1725,7 +1725,7 @@ Feedback can be provided with the section
 
 Directed pairs are forced choice tasks, so they have similar problems as single choice and multiple choice tasks (guessing). A specific problem of directed pairs is that answers are not independent. Making a mistake will lead to additional mistakes because two elements are blocked by one match. Use directed pairs with care.
 
-One might think that directed pairs are superfluous because match tables serve the same purpose. The difference is that in match tables either the row or column can be used more than once. For directed pairs, matching a pair makes both elements unavailable for further matching. This is unique, so there are use cases for directed pairs. But it is important to note that match tables can also represent a direct pair, meaning both directed pairs and match tables can serve as interfaces to the same concept. However, match tables are generally more flexible and are often the preferred choice (refer to the Chapter \ref{table-tasks} \href{table.html}{Table tasks} for more details).
+One might think that directed pairs are superfluous because match tables serve the same purpose. The difference is that in match tables either the row or column can be used more than once. For directed pairs, matching a pair makes both elements unavailable for further matching. This is unique, so there are use cases for directed pairs. But it is important to note that match tables can also represent a direct pair, meaning both directed pairs and match tables can serve as interfaces to the same concept. However, match tables are generally more flexible and are often the preferred choice (refer to Chapter \ref{table-tasks} \href{table.html}{Table tasks} for more details).
 
 \chapter{Table tasks}\label{table-tasks}
 
@@ -1775,19 +1775,19 @@ systems will at least show which answers are correct and incorrect.
 
 Clicking the Knit-Button will produce the output in Figure \ref{tbl1qtijs}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/table-simple.jpg}
 \caption{\label{tbl1qtijs}Preview of table task rendered by qtijs}
-\end{figure}
+\end{figure*}
 
-\noindent \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api}\href{api_opal.html}{Working with the OPAL API}) to upload to opal directly, producing the output Figure \ref{tbl1opal}.
+\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api}\href{api_opal.html}{Working with the OPAL API}) to upload to opal directly, producing the output Figure \ref{tbl1opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/table-simple.jpg}
 \caption{\label{tbl1opal}Preview of table task rendered by OPAL}
-\end{figure}
+\end{figure*}
 
 In the Rmd file, table entries indicate the points awarded for each response. Any positive number is considered correct. You can also assign negative numbers, which will reduce the total score, but the overall score will never go below zero. You can specify the number of correct responses per row and column as needed, which typically influences how the table is presented. For example, there are special table configurations where only one row is correct per column, and vice versa. The \texttt{rqti} package handles these cases automatically, so no additional steps are required on your part.
 
@@ -1846,11 +1846,11 @@ systems will at least show which answers are correct and incorrect.
 
 Which, in OPAL, renders as illustrated in Figure \ref{tbl2opal}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/table-complex.jpg}
 \caption{\label{tbl2opal}Preview of complex table task in the learning management system OPAL}
-\end{figure}
+\end{figure*}
 
 You can see that the order of the columns is now the same as in the source table.
 
@@ -1940,7 +1940,7 @@ metadata:
   contributor:
     - name: Andrey Shevandrin
       role: author
-    - name: Johannes Titz
+    - name: Johannes Titz 
       role: author
   description: Demonstration of metadata
   rights: CC BY SA Andrey Shevandrin and Johannes Titz (2024).
@@ -2034,17 +2034,17 @@ Note that you could also call \texttt{upload2opal(test)} directly. We just wante
 
 We now have 10 variants of the test, two of which are displayed in Figures \ref{a1} and \ref{b1}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/Atest1.jpg}
 \caption{\label{a1}Test structure for seed 8833.}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/Btest1.jpg}
 \caption{\label{b1}Test structure for seed 7829.}
-\end{figure}
+\end{figure*}
 
 After the root section you can see the section exam\_8833 (image 1) and exam\_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: \url{https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46081048578}
 
@@ -2072,17 +2072,17 @@ Note that we use a list here for the root section. This is important as the \tex
 
 In OPAL this will create the structure displayed in Figures \ref{a2} and \ref{b2}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/Atest2.jpg}
 \caption{\label{a2}Test structure with one fixed section, seed 9808.}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/Btest2.jpg}
 \caption{\label{b2}Test structure with one fixed section, for seed 8833.}
-\end{figure}
+\end{figure*}
 
 As you can see, we still have our variable section with different variants (you see two of them in the screenshots). But now, we also have a fixed section that is the same for all tests. Try it out yourself: \url{https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46075805699}
 
@@ -2111,11 +2111,11 @@ To customize your sections and tests, check out the references: \texttt{?section
 
 By default the \texttt{section} function creates different variants of a task by drawing different seeds and creating subsections with these seeds. There is also a different approach to introduce randomness. Have a look at Figure \ref{scheme}.
 
-\begin{figure}
+\begin{figure*}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/sectionsscheme.png}
 \caption{\label{scheme}Two approaches for structuring parallel versions of tasks}
-\end{figure}
+\end{figure*}
 
 On the left-hand side, three distinct subsections were generated, each housing the same task files but with \textbf{different variants}. A participant, starting at the root section, is randomly assigned to one of these subsections, encountering all tasks within that specific subsection. This setup is generally satisfactory for most instructors conducting exams. It ensures that all participants within a subsection encounter the same set of tasks, facilitating psychometric analysis. However, a drawback is the potential for forbidden collaboration between participants within the same subsection.
 
