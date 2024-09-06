@@ -35,8 +35,8 @@ identifiers for answers. By default, identifiers are generated
 automatically according to the template "ChoiceD", where D is a letter
 representing the alphabetical order of the answer in the list.}
 
-\item{content}{A list of character content to form the text of the question,
-which can include HTML tags.}
+\item{content}{A character string or a list of character strings to form the
+text of the question, which may include HTML tags.}
 
 \item{prompt}{An optional character representing a simple question text,
 consisting of one paragraph. This can supplement or replace content in the
@@ -85,7 +85,7 @@ mc_min <- multipleChoice(choices = c("option1", "option2", "option3"),
 
 mc <- multipleChoice(identifier = "id_task_1234",
                    title = "Multiple Choice Task",
-                   content = list("<p>Pick up the right options</p>"),
+                   content = "<p>Pick up the right options</p>",
                    prompt = "Plain text, can be used instead of content",
                    points = c(0, 0.5, 0.5),
                    feedback = list(new("WrongFeedback",

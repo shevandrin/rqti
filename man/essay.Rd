@@ -28,8 +28,8 @@ represents random digits.}
 \item{title}{A character representing the title of the XML file associated
 with the task. By default, it takes the value of the identifier.}
 
-\item{content}{A list of character content or character string to form the
-text of the question, which can include HTML tags.}
+\item{content}{A character string or a list of character strings to form the
+text of the question, which may include HTML tags.}
 
 \item{prompt}{An optional character representing a simple question text,
 consisting of one paragraph. This can supplement or replace content in the
@@ -83,17 +83,16 @@ es_min <- essay(content = list("<h2>Open question</h2>", "Write your answer here
 
 es <- essay(identifier = "id_task_1234",
            title = "Essay Task",
-                   content = list("<h2>Open question</h2>",
-                                  "Write your answer here"),
-                   prompt = "Plain text, can be used instead of content",
-                   points = 2,
-                   expected_length = 100,
-                   expected_lines = 5,
-                   words_max = 100,
-                   words_min = 1,
-                   data_allow_paste = TRUE,
-                   feedback = list(new("ModalFeedback",
-                                   content = list("Model answer"))),
-                   calculator = "scientific-calculator",
-                   files = "text_book.pdf")
+           content = "<h2>Open question</h2> Write your answer here",
+           prompt = "Plain text, can be used instead of content",
+           points = 2,
+           expected_length = 100,
+           expected_lines = 5,
+           words_max = 100,
+           words_min = 1,
+           data_allow_paste = TRUE,
+           feedback = list(new("ModalFeedback",
+                            content = list("Model answer"))),
+           calculator = "scientific-calculator",
+           files = "text_book.pdf")
 }

@@ -37,8 +37,8 @@ setClass("MultipleChoiceTable", contains = "MatchTable",
 #'  represents random digits.
 #'@param title A character representing the title of the XML file associated
 #'  with the task. By default, it takes the value of the identifier.
-#'@param content A list of character content to form the text of the question,
-#'  which can include HTML tags.
+#'@param content A character string or a list of character strings to form the
+#'   text of the question, which may include HTML tags.
 #'@param prompt An optional character representing a simple question text,
 #'  consisting of one paragraph. This can supplement or replace content in the
 #'  task. Default is "".
@@ -78,7 +78,7 @@ setClass("MultipleChoiceTable", contains = "MatchTable",
 #'  be accessible to the candidate during the test/exam.
 #'@return An object of class [MultipleChoiceTable]
 #' @examples
-#' mt_min <- multipleChoiceTable(content = list("<p>\"Multiple choice table\" task</p>"),
+#' mt_min <- multipleChoiceTable(content = "<p>\"Multiple choice table\" task</p>",
 #'                        rows = c("alfa", "beta", "gamma", "alpha"),
 #'                        rows_identifiers = c("a", "b", "g", "aa"),
 #'                        cols = c("A", "B", "G", "a"),
@@ -87,7 +87,7 @@ setClass("MultipleChoiceTable", contains = "MatchTable",
 #'
 #' mt <- multipleChoiceTable(identifier = "id_task_1234",
 #'                    title = "Table with many possible answers in rows and cols",
-#'                    content = list("<p>\"Multiple choice table\" task</p>"),
+#'                    content = "<p>\"Multiple choice table\" task</p>",
 #'                    prompt = "Plain text, can be used instead of the content",
 #'                    rows = c("alfa", "beta", "gamma", "alpha"),
 #'                    rows_identifiers = c("a", "b", "g", "aa"),
@@ -116,6 +116,7 @@ multipleChoiceTable <- function(identifier = generate_id(),
                           calculator = NA_character_,
                           files = NA_character_) {
     params <- as.list(environment())
+    if (is.character(params$content)) params$content <- list(params$content)
     params$Class <- "MultipleChoiceTable"
     obj <- do.call("new", params)
     return(obj)

@@ -396,6 +396,7 @@ setMethod("prepareQTIJSFiles", signature(object = "AssessmentItem"),
               suppressMessages(create_qti_task(object, xml_path,
                                                verification = FALSE,
                                                show_score = TRUE))
+              return(NULL)
           })
 
 #' @rdname createMetadata-methods

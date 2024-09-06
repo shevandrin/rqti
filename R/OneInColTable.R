@@ -32,8 +32,8 @@ setClass("OneInColTable", contains = "MatchTable")
 #'  represents random digits.
 #'@param title A character representing the title of the XML file associated
 #'  with the task. By default, it takes the value of the identifier.
-#'@param content A list of character content to form the text of the question,
-#'  which can include HTML tags.
+#'@param content A character string or a list of character strings to form the
+#'   text of the question, which may include HTML tags.
 #'@param prompt An optional character representing a simple question text,
 #'  consisting of one paragraph. This can supplement or replace content in the
 #'  task. Default is "".
@@ -73,7 +73,7 @@ setClass("OneInColTable", contains = "MatchTable")
 #'  be accessible to the candidate during the test/exam.
 #'@return An object of class [OneInColTable]
 #' @examples
-#' ct_min <- oneInColTable(content = list("<p>\"One in column table\" task</p>"),
+#' ct_min <- oneInColTable(content = "<p>\"One in column table\" task</p>",
 #'                        rows = c("alfa", "beta", "gamma"),
 #'                        rows_identifiers = c("a", "b", "g"),
 #'                        cols = c("A", "B", "G", "a"),
@@ -82,7 +82,7 @@ setClass("OneInColTable", contains = "MatchTable")
 #'
 #' ct <- oneInColTable(identifier = "id_task_1234",
 #'                    title = "Table with one answer per column",
-#'                    content = list("<p>\"One in column table\" task</p>"),
+#'                    content = "<p>\"One in column table\" task</p>",
 #'                    prompt = "Plain text, can be used instead of the content",
 #'                    rows = c("alfa", "beta", "gamma"),
 #'                    rows_identifiers = c("a", "b", "g"),
@@ -111,6 +111,7 @@ oneInColTable <- function(identifier = generate_id(),
                          calculator = NA_character_,
                          files = NA_character_) {
     params <- as.list(environment())
+    if (is.character(params$content)) params$content <- list(params$content)
     params$Class <- "OneInColTable"
     obj <- do.call("new", params)
     return(obj)

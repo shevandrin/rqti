@@ -149,9 +149,16 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
                   task <- create_question_object(object)
                   create_qti_task(task, out_path, verification = FALSE,
                                   show_score = TRUE)
+                  current_rmd_fullpath <- normalizePath(object)
+                  xml_target <- sub("\\.Rmd$", ".xml", current_rmd_fullpath)
+                  file.copy(out_path, xml_target)
               }
               if (ext == "xml") file.copy(object, out_path)
               if (ext == "zip") zip::unzip(object, exdir = dir)
+              params <- knit_params(readLines(object))
+              if (!is.null(params$preview_feedback$value)) {
+                  return(params$preview_feedback$value)
+              }
               return(NULL)
           })
 

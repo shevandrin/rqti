@@ -32,8 +32,8 @@ represents random digits.}
 \item{title}{A character representing the title of the XML file associated
 with the task. By default, it takes the value of the identifier.}
 
-\item{content}{A list of character content to form the text of the question,
-which can include HTML tags.}
+\item{content}{A character string or a list of character strings to form the
+text of the question, which may include HTML tags.}
 
 \item{prompt}{An optional character representing a simple question text,
 consisting of one paragraph. This can supplement or replace content in the
@@ -95,7 +95,7 @@ An object of class \link{OneInColTable}
 Create object \link{OneInColTable}
 }
 \examples{
-ct_min <- oneInColTable(content = list("<p>\"One in column table\" task</p>"),
+ct_min <- oneInColTable(content = "<p>\"One in column table\" task</p>",
                        rows = c("alfa", "beta", "gamma"),
                        rows_identifiers = c("a", "b", "g"),
                        cols = c("A", "B", "G", "a"),
@@ -104,7 +104,7 @@ ct_min <- oneInColTable(content = list("<p>\"One in column table\" task</p>"),
 
 ct <- oneInColTable(identifier = "id_task_1234",
                    title = "Table with one answer per column",
-                   content = list("<p>\"One in column table\" task</p>"),
+                   content = "<p>\"One in column table\" task</p>",
                    prompt = "Plain text, can be used instead of the content",
                    rows = c("alfa", "beta", "gamma"),
                    rows_identifiers = c("a", "b", "g"),
