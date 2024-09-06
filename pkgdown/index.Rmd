@@ -44,7 +44,7 @@ install.packages("rqti")
 <!-- install.packages("rqti") -->
 <!-- ``` -->
 
-<!-- Note that this will start a qtijs server, which will be used for previewing exercises. If you do not need this, turn it off with the environment variable: RQTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or in .Renviron). -->
+<!-- Note that this will start a qtijs server, which will be used for previewing tasks. If you do not need this, turn it off with the environment variable: RQTI_AUTOSTART_SERVER=FALSE (in your .Rprofile or in .Renviron). -->
 
 ## Quick start
 
@@ -52,32 +52,32 @@ In RStudio, start by navigating to *File* -> *New Project*, and then select **rq
 
 Once your project is created, open one of the templates from the working directory (e.g., `gap/gap.Rmd`). To preview it, simply click *Knit*. The output will be displayed in the RStudio Viewer or in a new browser window if you are working outside of RStudio.
 
-Explore the other templates to familiarize yourself with the various features and task types that `rqti` supports. This will help you create exercises that align with your specific needs.
+Explore the other templates to familiarize yourself with the various features and task types that `rqti` supports. This will help you create tasks that align with your specific needs.
 
 To learn how to create sections and tests, start by reviewing the *main.R* file in your working directory. This file provides a foundational understanding of structuring your work. For more detailed information, you can refer to the article \ref{sections-and-tests} [Sections and Tests](articles/section.html).
 
-To add more templates, create a new RMarkdown file. In RStudio, go to *File* -> *New File* -> *R Markdown* -> *From Template*, and choose one that ends with {rqti}. The simpler templates focus on basic parameters, while the more advanced templates showcase additional settings and customization options. After selecting a template, click the *Knit* button to render the exercise in the viewer pane.
+To add more templates, create a new RMarkdown file. In RStudio, go to *File* -> *New File* -> *R Markdown* -> *From Template*, and choose one that ends with {rqti}. The simpler templates focus on basic parameters, while the more advanced templates showcase additional settings and customization options. After selecting a template, click the *Knit* button to render the task in the viewer pane.
 
-While the templates are generally intuitive, you can refer to other articles of the documentation for detailed guidance on specific exercise types. This will help you fully utilize the features of `rqti` for your projects. The following exercise types are available`r ltx(" and explained in the corresponding chapters", "")`:
+While the templates are generally intuitive, you can refer to other articles of the documentation for detailed guidance on specific task types. This will help you fully utilize the features of `rqti` for your projects. The following task types are available`r ltx(" and explained in the corresponding chapters", "")`:
 
-- \ref{single-choice-exercises} [Single-Choice Exercises](articles/singlechoice.html)
-- \ref{multiple-choice-exercises} [Multiple-Choice Exercises](articles/multiplechoice.html)
-- \ref{essay-exercises} [Essay Exercises](articles/essay.html)
-- \ref{gap-exercises} [Gap Exercises](articles/gap.html)
-- \ref{dropdown-exercises} [Dropdown Exercises](articles/dropdown.html)
-- \ref{order-exercises} [Order Exercises](articles/order.html)
-- \ref{directed-pair-exercises} [Directed Pair Exercises](articles/directedpairs.html)
-- \ref{table-exercises} [Table Exercises](articles/table.html)
+- \ref{single-choice-tasks} [Single-Choice tasks](articles/singlechoice.html)
+- \ref{multiple-choice-tasks} [Multiple-Choice tasks](articles/multiplechoice.html)
+- \ref{essay-tasks} [Essay tasks](articles/essay.html)
+- \ref{gap-tasks} [Gap tasks](articles/gap.html)
+- \ref{dropdown-tasks} [Dropdown tasks](articles/dropdown.html)
+- \ref{order-tasks} [Order tasks](articles/order.html)
+- \ref{directed-pair-tasks} [Directed Pair tasks](articles/directedpairs.html)
+- \ref{table-tasks} [Table tasks](articles/table.html)
 
-To add metadata to your exercises, refer to the article \ref{adding-metadata} [Adding metadata](articles/adding_metadata.html)
-To integrate various exercises into a test, refer to the article \ref{sections-and-tests} [Sections and Tests](articles/section.html)
+To add metadata to your tasks, refer to the article \ref{adding-metadata} [Adding metadata](articles/adding_metadata.html).
+To integrate various tasks into a test, refer to the article \ref{sections-and-tests} [Sections and Tests](articles/section.html).
 For users of the learning management system OPAL, explore the article \ref{working-with-the-opal-api} [Working with the OPAL API](articles/api_opal.html).
 
 ## General workflow
 
 The fundamental workflow with the `rqti` package involves the following steps:
 
-1. Create exercise files.
+1. Create task files.
     - Start by generating an Rmd document. You can either start from scratch or leverage Rmd templates ending with the suffix `{rqti}`.
     - Create a section titled `# question` and construct your interactions (gaps, choices, etc.) Utilize `rqti` helper functions where applicable.
     - Specify additional attributes in the yaml section. Detailed explanations for all types are available in the `r if (knitr::is_latex_output()) "following sections of this manual." else "**Articles** menu on this website (top)."`
@@ -91,7 +91,7 @@ Each step involves specific `rqti` functions, with the most useful ones illustra
 
 ![\label{workflow}Basic workflow to create tasks and tests with rqti](vignettes/images/workflow.png){width=100%}
 
-The most effective way to grasp the workflow is to create a simple task, such as *Single-Choice* as demonstrated in the article \ref{single-choice-tasks} [Single-Choice Exercises](articles/singlechoice.html). Once you have completed that, explore the other task types discussed in the subsequent chapters.
+The most effective way to grasp the workflow is to create a simple task, such as *Single-Choice* as demonstrated in the article \ref{single-choice-tasks} [Single-Choice tasks](articles/singlechoice.html). Once you have completed that, explore the other task types discussed in the subsequent chapters.
 
 ## Support and Bug Reports
 
@@ -102,14 +102,14 @@ Should you find any missing features or encounter issues, please do not hesitate
 <!-- - `rqti` has more (QTI) features (e.g. task type) than `exams` -->
 <!-- - `rqti` uses OOP (S4), the system is easy to extend (LMS specific needs) -->
 <!-- - the Rmd-interface is cleaner as it just focues on QTI -->
-<!-- - low-level functions can be used flexibly to create exercises -->
+<!-- - low-level functions can be used flexibly to create tasks -->
 <!-- - `rqti` puts a premium on testing, with currently over 100 tests -->
 <!-- - rendering of QTI files in the browser (or viewer pane of RStudio) directly from R -->
 <!-- - functions to upload files via REST API to LMS (for us OPAL, but you can implement your own) -->
 
-<!-- If you just use QTI-exercises, you should check out our package. If you need different formats next to QTI, e.g. print, LMS that do not support QTI stick to `exams`. -->
+<!-- If you just use QTI-tasks, you should check out our package. If you need different formats next to QTI, e.g. print, LMS that do not support QTI stick to `exams`. -->
 
-<!-- Just focusing on QTI gives us more time to support great features of the QTI standard that are missing in `exams`. For instance, `rqti` offers dropdown-inputs, ordering-exercises, and match-tables. -->
+<!-- Just focusing on QTI gives us more time to support great features of the QTI standard that are missing in `exams`. For instance, `rqti` offers dropdown-inputs, ordering-tasks, and match-tables. -->
 
 <!-- ## Installation -->
 
@@ -122,14 +122,14 @@ Should you find any missing features or encounter issues, please do not hesitate
 
 <!-- ## What is not possible -->
 
-<!-- - Composites (several exercise types in one task) are not implemented because they do not work in our LMS (OPAL); several gaps do work, though -->
+<!-- - Composites (several task types in one task) are not implemented because they do not work in our LMS (OPAL); several gaps do work, though -->
 <!-- - Associates are not implemented because they does not work in OPAL -->
 
 
 <!-- ## Comparison between exams and rqti -->
 
-<!-- The `exams` package uses templates and pastes strings together to create rqti files. This has some disadvantages: it is error prone, not easy to maintain and difficult to extend. If for instance, a new exercise type needs to be added, many locations have to be changed. `rqti` is supposed to make life easier by providing some standard functions to create all parts of the QTI xml file. -->
+<!-- The `exams` package uses templates and pastes strings together to create rqti files. This has some disadvantages: it is error prone, not easy to maintain and difficult to extend. If for instance, a new task type needs to be added, many locations have to be changed. `rqti` is supposed to make life easier by providing some standard functions to create all parts of the QTI xml file. -->
 
 <!-- Extending exams is just a matter of composing the correct `rqti` functions. Testing small `rqti` functions is easy, whereas the main function of `exams` `make_item_body` consists of 736 lines. Indeed, this function has grown substantially over time (todo: provide evidence). -->
 
-<!-- Based on rqti one can also develop new interfaces for creating exercises. -->
+<!-- Based on rqti one can also develop new interfaces for creating tasks. -->
