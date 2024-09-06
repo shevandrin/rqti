@@ -24,3 +24,4 @@ s4_example.R
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
 ^BOOK$
+^cover$
