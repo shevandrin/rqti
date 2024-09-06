@@ -18,7 +18,7 @@ for creating exercises, exams, and questionnaires that fully comply with
 the [QTI v2.1
 standard](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html).
 This tool empowers users to generate QTI-compliant content directly from
-R, offering the flexibility to render tasks locally (using qtijs) or
+R, offering the flexibility to render exercises locally (using qtijs) or
 seamlessly integrate them into learning management systems like OPAL.
 
 Our primary target audience includes instructors specializing in
@@ -120,7 +120,7 @@ steps:
       API](articles/api_opal.html).
     - Verify if your task appears as desired. Make adjustments until you
       are satisfied.
-2.  Create sections and tests based on your task files.
+2.  Create sections and tests based on your exercise files.
 3.  Write the test (xml) to disk according to the QTI standard and
     upload the test file to your learning management system.
 4.  Download results data from your learning management system and
@@ -131,15 +131,16 @@ illustrated in the following diagram:
 
 <figure>
 <img src="vignettes/images/workflow.png" style="width:100.0%"
-alt="Basic workflow to create tasks and tests with rqti" />
-<figcaption aria-hidden="true">Basic workflow to create tasks and tests
-with rqti</figcaption>
+alt="Basic workflow to create exercises and tests with rqti" />
+<figcaption aria-hidden="true">Basic workflow to create exercises and
+tests with rqti</figcaption>
 </figure>
 
-The most effective way to grasp the workflow is to create a simple task,
-such as *Single-Choice* as demonstrated in the article [Single-Choice
-Exercises](articles/singlechoice.html). Once you have completed that,
-explore the other task types discussed in the subsequent chapters.
+The most effective way to grasp the workflow is to create a simple
+exercise, such as *Single-Choice* as demonstrated in the article
+[Single-Choice Exercises](articles/singlechoice.html). Once you have
+completed that, explore the other exercise types discussed in the
+subsequent chapters.
 
 ## Support and Bug Reports
 
@@ -151,7 +152,7 @@ Following that, we will maintain a stable, usable version, with support
 for new features provided as time permits.
 
 <!-- Why do we need another package for creating exams when there is already the `exams`-package? The philosophy of `exams` is **one for all**, whereas `rqti` follows the Unix-philosophy: **do one thing and do it well**. tldr: -->
-<!-- - `rqti` has more (QTI) features (e.g. task type) than `exams` -->
+<!-- - `rqti` has more (QTI) features (e.g. exercise type) than `exams` -->
 <!-- - `rqti` uses OOP (S4), the system is easy to extend (LMS specific needs) -->
 <!-- - the Rmd-interface is cleaner as it just focues on QTI -->
 <!-- - low-level functions can be used flexibly to create exercises -->
