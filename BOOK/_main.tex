@@ -2,6 +2,7 @@
 
 % ams
 \usepackage{amssymb,amsmath}
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
 
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
@@ -21,6 +22,9 @@
   \makeatother
 
 \fi
+
+
+
 
 % graphix
 \usepackage{graphicx}
@@ -141,30 +145,45 @@
 \usepackage{makecell}
 \usepackage{xcolor}
 
+
+\makeatletter
+
+\fancypagestyle{mystyle}{%
+\fancyhf{}%
+\renewcommand{\chaptermark}[1]{\markboth{##1}{}}%
+\fancyhead[LE]{\thepage\quad\smallcaps{\newlinetospace{\leftmark}}}%
+\fancyhead[RO]{\smallcaps{\newlinetospace{\@author}}\quad\thepage}%
+}
+\makeatother
+
+
 \begin{document}
 
 \maketitle
 
 
-
+\fancyhead{}
 {
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
 
-\chapter{Foreword}\label{foreword}
+\chapter*{Foreword}\label{foreword}
 
 This book is a printed version of our online documentation for the \texttt{rqti} package, available at \url{https://shevandrin.github.io/rqti/}, with a few minor modifications. Please note that this book has not been copy-edited and should not be considered a finished product. But then again, what is truly finished these days? Think of this document as a perpetual beta, evolving alongside the package.
 
-You may encounter minor ``bugs'', such as spelling errors, awkward phrasing or poor typesetting. There could also be more significant issues, such as code listings that no longer run correctly or figures that do not display the correct content. We are committed to addressing these problems and improving this documentation over time. Nevertheless, we believe this resource will already be valuable to anyone using our package, which is why we are offering this print version.
+You may come across minor issues like spelling errors, awkward phrasing, or poor typesetting. More significant problems could also arise, such as code listings that no longer run correctly or figures that fail to display the correct content. Additionally, some important topics, such as how to import QTI data for analysis, are not yet covered. We are committed to addressing these issues and enhancing this documentation over time. However, we believe that this resource already offers substantial value to anyone using our package, which is why we are providing this print version.
 
-We owe a deep debt of gratitude to the \emph{Stiftung für Innovation in der Hochschullehre} (project MEME), which provided financial support from 2022-2024: \url{https://stiftung-hochschullehre.de/projekt/meme/}. Without their backing, the \texttt{rqti} package would never have come to life. Now that it has, we are pleased to use it ourselves---and often find ourselves referring back to this documentation. We hope you will find it as useful as we do.
+Note that this material is licensed under CC BY SA \copyright\ Johannes Titz and Andrey Shevandrin, 2024.
+
+We express our deepest gratitude to the \emph{Stiftung für Innovation in der Hochschullehre}, whose financial support from 2022 to 2024 made the development of the \texttt{rqti} package possible.\footnote{project MEME, see \url{https://stiftung-hochschullehre.de/projekt/meme/}} Without their backing, the \texttt{rqti} package would not have come to life. Now that it has, we not only eagerly recommend it to our colleagues but also frequently use it ourselves---and often find ourselves revisiting this documentation. We hope you will find it as valuable as we do.
+
 \vspace{0.5cm}
 
 \noindent Johannes Titz and Andrey Shevandrin\\
 Chemnitz, September 2024
 
-
+\pagestyle{mystyle}
 \chapter{Introduction to rqti}\label{introduction-to-rqti}
 
 The \texttt{rqti} package is designed to be a powerful, stand-alone R library for creating exercises, exams, and questionnaires that fully comply with the \href{https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html}{QTI v2.1 standard}. This tool empowers users to generate QTI-compliant content directly from R, offering the flexibility to render tasks locally (using qtijs) or seamlessly integrate them into learning management systems like OPAL.
@@ -234,11 +253,11 @@ The fundamental workflow with the \texttt{rqti} package involves the following s
   \begin{itemize}
   \tightlist
   \item
-    Start by generating an Rmd document. You can either start from scratch or leverage Rmd templates ending with the suffix \texttt{\{rqti\}}.
+    Start by generating an Rmd document. You can either start from scratch or leverage Rmd templates ending with the suffix~\texttt{\{rqti\}}.
   \item
     Create a section titled \texttt{\#\ question} and construct your interactions (gaps, choices, etc.) Utilize \texttt{rqti} helper functions where applicable.
   \item
-    Specify additional attributes in the yaml section. Detailed explanations for all types are available in the following sections of this manual.
+    Specify additional attributes in the YAML section. Detailed explanations for all types are available in the following sections of this manual.
   \item
     Choose a previewer: Either qtijs (\texttt{knit:\ rqti::render\_qtijs}), for local rendering, or the learning management system Opal (\texttt{knit:\ rqti::render\_opal}). Note that Opal usage requires prior setup, which is explained in Chapter \ref{working-with-the-opal-api} \href{Chapters/api_opal.html}{Working with the Opal API}.
   \item
@@ -272,9 +291,9 @@ Please note that this is the first type of task described in this manual, and as
 
 \section{Minimum version}\label{minimum-version}
 
-The simplest task type in the rqti package is single choice. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{singlechoice\ (simple)} and \texttt{singlechoice\ (complex)}.
+The simplest task type in the \texttt{rqti} package is single choice. A template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{singlechoice\ (simple)} and \texttt{singlechoice\ (complex)}.
 
-The minimum you need to provide is the \texttt{type:\ sc} (or the equivalent \texttt{type:\ singlechoice}, or \texttt{type:\ schoice}) in the yaml-section and a list with at least two elements in a section called \textbf{\# question}:
+The minimum you need to provide is the \texttt{type:\ sc} (or the equivalent \texttt{type:\ singlechoice}, or \texttt{type:\ schoice}) in the YAML-section and a list with at least two elements in a section called \textbf{\# question}:
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -287,11 +306,11 @@ knit: rqti::render_qtijs
 
 An alpha error of 5% means that:
 
-- There is a 5% probability that you will mistakenly reject the null hypothesis, 
-when it is actually correct. <!-- First option is treated as the correct one by 
+- There is a 5% probability that you will mistakenly reject the null hypothesis,
+when it is actually correct. <!-- First option is treated as the correct one by
 default. -->
 - There is a 5% probability that the null hypothesis is correct.
-- There is a 5% probability that you will mistakenly reject the alternative 
+- There is a 5% probability that you will mistakenly reject the alternative
 hypothesis, when it is correct.
 - The test power is 95%.
 
@@ -299,7 +318,7 @@ hypothesis, when it is correct.
 
 The correct interpretation is:
 
-There is a 5% probability that you will mistakenly reject the null hypothesis, 
+There is a 5% probability that you will mistakenly reject the null hypothesis,
 when it is correct.
 
 This is based on the typical understanding of a 5% significance level in
@@ -336,11 +355,11 @@ If you happen to use OPAL/ONYX, you can also upload your tasks directly by modif
 
 This will upload the file and open a browser with the OPAL url. It should look like in Figure \ref{sc1opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/singlechoice-simple.jpg}
 \caption{\label{sc1opal}Single choice task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
 Setting up OPAL requires some additional steps, which are covered in Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}.
 
@@ -361,11 +380,11 @@ knit: rqti::render_qtijs
 
 An alpha error of 5% means that:
 
-- There is a 5% probability that you will mistakenly reject the null hypothesis, 
-when it is actually correct. <!-- First option is treated as the correct one by 
+- There is a 5% probability that you will mistakenly reject the null hypothesis,
+when it is actually correct. <!-- First option is treated as the correct one by
 default. -->
 - There is a 5% probability that the null hypothesis is correct.
-- There is a 5% probability that you will mistakenly reject the alternative 
+- There is a 5% probability that you will mistakenly reject the alternative
 hypothesis, when it is correct.
 - The test power is 95%.
 
@@ -373,7 +392,7 @@ hypothesis, when it is correct.
 
 The correct interpretation is:
 
-There is a 5% probability that you will mistakenly reject the null hypothesis, 
+There is a 5% probability that you will mistakenly reject the null hypothesis,
 when it is correct.
 
 This is based on the typical understanding of a 5% significance level in
@@ -389,7 +408,7 @@ Of course you can specify the correct choice if need be. Our preferred way of do
 \begin{Shaded}
 \begin{Highlighting}[]
 \AnnotationTok{Choose the correct one:}
-  
+
 \SpecialStringTok{{-} }\NormalTok{A}
 \SpecialStringTok{{-} }\NormalTok{B}
 \SpecialStringTok{{-} }\NormalTok{*C* }\CommentTok{\textless{}!{-}{-} treated as correct {-}{-}\textgreater{}}
@@ -397,7 +416,7 @@ Of course you can specify the correct choice if need be. Our preferred way of do
 \end{Highlighting}
 \end{Shaded}
 
-Once again, this is much easier to read than providing the solution somewhere else (e.g.~in the yaml section). Furthermore, producing a preview as html directly shows you which element is correct. If you want to use italics in your choice, you can also wrap the correct solution in emphasize tags: \texttt{\textless{}em\textgreater{}\ a\ choice\ with\ *some\ italics*\textless{}/em\textgreater{}}.
+Once again, this is much easier to read than providing the solution somewhere else (e.g.~in the YAML section). Furthermore, producing a preview as html directly shows you which element is correct. If you want to use italics in your choice, you can also wrap the correct solution in emphasize tags: \texttt{\textless{}em\textgreater{}a\ choice\ with\ *some\ italics*\textless{}/em\textgreater{}}.
 
 An important note: Do not forget to put a blank line before your question and the answer list, otherwise the list will not be a proper list:
 
@@ -419,7 +438,7 @@ A question text that is not separated by a blank line - A - B - C - D
 
 \section{More control}\label{more-control}
 
-If you want to have more fine-grained control, consider the RMD template \texttt{singlechoice-complex}, which uses more yaml attributes. In addition you can also set feedback for correct and incorrect responses.
+If you want to have more fine-grained control, consider the RMD template \texttt{singlechoice-complex}, which uses more YAML attributes. In addition you can also set feedback for correct and incorrect responses.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -452,7 +471,7 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 
-<!-- If you prefer general feedback, just use the the section # feedback and 
+<!-- If you prefer general feedback, just use the the section # feedback and
 delete the other feedback sections-->
 \end{Highlighting}
 \end{Shaded}
@@ -464,10 +483,10 @@ Which renders in OPAL as shown in Figure \ref{sc2opal}.
 \includegraphics[width=1\textwidth,height=\textheight]{images/singlechoice-complex.jpg}
 \caption{\label{sc2opal}More complex single choice task rendered in OPAL}
 \end{figure*}
-
+\newpage
 Notably, the choices are now displayed horizontally, and the title and points have been updated. The next section provides a detailed explanation of all YAML attributes.
 
-\section{yaml attributes}\label{yaml-attributes}
+\section{YAML attributes}\label{YAML-attributes}
 
 \noindent\textbf{type}\label{type}
 
@@ -564,9 +583,9 @@ This is just a normal multiple choice task.
 
 \section{Minimum version}\label{minimum-version-1}
 
-A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{multiplechoice\ (simple)} and \texttt{multiplechoice\ (complex)}.
+A minimum template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{multiplechoice\ (simple)} and \texttt{multiplechoice\ (complex)}.
 
-The minimum you need to provide is the \texttt{type:\ mpc} (or the equivalent \texttt{type:\ multiplechoice} or \texttt{type:\ mchoice}) in the yaml-section and a list with at least two elements in a section called \textbf{\# question}:
+The minimum you need to provide is the \texttt{type:\ mpc} (or the equivalent \texttt{type:\ multiplechoice} or \texttt{type:\ mchoice}) in the YAML-section and a list with at least two elements in a section called \textbf{\# question}:
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -604,13 +623,13 @@ Further note that the \texttt{knit} parameter is set to the custom \texttt{rqti}
 
 You can also use the OPAL (set it up before, see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) render function (\texttt{knit:\ rqti::render\_opal}), which should produce the output in Figure \ref{mpc1opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/multiplechoice-simple.jpg}
 \caption{\label{mpc1opal}Multiple choice task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
-Multiple-choice tasks function similarly to single-choice tasks, with the key difference being that multiple (or no) answers can be correct. To indicate the correct options, surround them with asterisks (using markdown for italics). If you need to use italics within the choices themselves, enclose the entire question in \texttt{\textless{}em\textgreater{}\textless{}/em\textgreater{}} tags to avoid conflicts.
+Multiple-choice tasks function similarly to single-choice tasks, with the key difference being that multiple (or no) answers can be correct. To indicate the correct options, surround them with asterisks. If you need to use italics within the choices themselves, enclose the entire question in \texttt{\textless{}em\textgreater{}\textless{}/em\textgreater{}} tags to avoid conflicts.
 
 By default, the total points available for a question are calculated as \(0.5n\), where \(n\) is the number of answer choices. For example, if there are 4 choices, the maximum score for the question is 2 points. Correct selections earn 0.5 points each, while incorrect selections deduct 0.5 points. Regardless of how points are calculated, the minimum score you can receive is 0.
 
@@ -618,7 +637,7 @@ Among various grading options, we find this to be the most intuitive, especially
 
 \section{More control}\label{more-control-1}
 
-If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template \texttt{multiple-choice\ (complex)}.
+If you want to have more fine-grained control, consider the available attributes for the YAML section in the RMD template \texttt{multiple-choice\ (complex)}.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -648,15 +667,16 @@ OPAL/ONYX) are not yet supported because they are LMS specific.
 \end{Highlighting}
 \end{Shaded}
 
-Which renders in OPAL as shown in Figure \ref{mpc2opal}.
+\newpage
+This renders in OPAL as shown in Figure \ref{mpc2opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/multiplechoice-complex.jpg}
 \caption{\label{mpc2opal}More complex multiple choice task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
-\section{yaml attributes}\label{yaml-attributes-1}
+\section{YAML attributes}\label{YAML-attributes-1}
 
 \noindent\textbf{type}\label{type-1}
 
@@ -726,9 +746,9 @@ Our package allows for the integration of both textual and numeric responses wit
 
 \section{Minimum version}\label{minimum-version-2}
 
-A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{gap\ (simple)} and \texttt{gap\ (complex)}.
+A minimum template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{gap\ (simple)} and \texttt{gap\ (complex)}.
 
-The minimum you need to provide is the \texttt{type:\ gap} (or the equivalent \texttt{type:\ cloze}) in the yaml-section and some text, where at least one gap is used, in a section called \textbf{\#question}. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
+The minimum you need to provide is the \texttt{type:\ gap} (or the equivalent \texttt{type:\ cloze}) in the YAML-section and some text, where at least one gap is used, in a section called \textbf{\#question}. Furthermore, when employing helper functions from the \texttt{rqti} package, it is essential to ensure its prior loading.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -752,7 +772,7 @@ mean_iq <- mean(iq)
 
 IQ Tests are standardized to have a mean value of <<100>>.
 
-You conducted an IQ test for 10 persons and found the following values: 
+You conducted an IQ test for 10 persons and found the following values:
 
 `r iq`
 
@@ -779,29 +799,31 @@ See `?gap_text` for more options (e.g. tolerance).
 
 Clicking on the Knit-button will produce the output in Figure \ref{gap1qtijs}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/gap-simple.jpg}
 \caption{\label{gap1qtijs}Simple gap task rendered in qtijs}
-\end{figure*}
+\end{figure}
 
 \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{gap1opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/gap-simple.jpg}
 \caption{\label{gap1opal}Simple gap task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
-As you can see, there are two ways to create a gap in an Rmd file:
+There are two ways to create a gap in an Rmd file:
 
 \begin{itemize}
 \tightlist
 \item
-  Put the correct answer between \texttt{\textless{}\textless{}} \ldots{} \texttt{\textgreater{}\textgreater{}} (or the equivalent \texttt{\textless{}gap\textgreater{}} \ldots{} \texttt{\textless{}/gap\textgreater{}}). Example: \texttt{\textless{}\textless{}3.14\textgreater{}\textgreater{}} or \texttt{\textless{}\textless{}sometext\textgreater{}\textgreater{}}
+  Put the correct answer between \texttt{\textless{}\textless{}} \ldots{} \texttt{\textgreater{}\textgreater{}}. Example: \texttt{\textless{}\textless{}3.14\textgreater{}\textgreater{}} or \texttt{\textless{}\textless{}sometext\textgreater{}\textgreater{}}
 \item
-  use the helper functions \texttt{?gap\_numeric} and \texttt{?gap\_text} (also see details below, section \ref{gaptext} \hyperref[gaptext]{Helper function gap text}, \ref{gapnumeric} \hyperref[gapnumeric]{Helper function gap numeric})
+  use the helper functions \texttt{?gap\_numeric} and \texttt{?gap\_text} (see Sections \ref{gaptext} \hyperref[gaptext]{Helper function gap text}, \ref{gapnumeric} \hyperref[gapnumeric]{Helper function gap numeric})
 \end{itemize}
+
+We generally recommend to use the helper function as it allows to set additional parameters.
 
 By default, 1 point can be reached for each gap (specify \texttt{points} in the helper function to your needs). The total number of points for completing a task is defined as the sum of points of all gaps.
 
@@ -830,7 +852,7 @@ By clicking on the arrows, the details will unfold.
 
 \section{More control}\label{more-control-2}
 
-If you want to have more fine-grained control, consider the RMD template \texttt{gap\ (complex)}, which uses more yaml attributes and more complex calls of the helper functions.
+If you want to have more fine-grained control, consider the RMD template \texttt{gap\ (complex)}, which uses more YAML attributes and more complex calls of the helper functions.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -856,7 +878,7 @@ mean_iq <- mean(iq)
 
 IQ Tests are standardized to have a mean value of <<100>>.
 
-You conducted an IQ test for 10 persons and found the following values: 
+You conducted an IQ test for 10 persons and found the following values:
 
 `r iq`
 
@@ -911,18 +933,18 @@ Try again. (Only displayed if the solution is not correct.)
 
 In OPAL this renders as shown in Figure \ref{gap2opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/gap-complex.jpg}
 \caption{\label{gap2opal}Preview of complex gap task in OPAL}
-\end{figure*}
+\end{figure}
 
-\section{yaml attributes}\label{yaml-attributes-2}
+\section{YAML attributes}\label{YAML-attributes-2}
 
 \noindent\textbf{type}\label{type-2}
 
 Has to be \texttt{gap} or \texttt{cloze}.
-
+\newpage
 \noindent\textbf{identifier}\label{identifier-2}
 
 This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
@@ -950,7 +972,7 @@ Feedback can be provided with the section
 
 \section{\texorpdfstring{Helper function \texttt{gap\_numeric}}{Helper function gap\_numeric}}\label{gapnumeric}
 
-This helper function is designed to generate a formatted string describing a gap in Rmd content, where the answer has a numeric type:
+This helper function generates a formatted string to describe a gap in Rmd content, specifically where the expected answer is numeric. It supports numerous attributes, with the most useful ones demonstrated in the following example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -959,11 +981,16 @@ This helper function is designed to generate a formatted string describing a gap
                     \AttributeTok{include\_lower\_bound =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{include\_upper\_bound =} \ConstantTok{TRUE}\NormalTok{,}
                     \AttributeTok{expected\_length =} \DecValTok{10}\NormalTok{, }\AttributeTok{placeholder =} \StringTok{"put mean value here"}\NormalTok{)}
 \FunctionTok{cat}\NormalTok{(gap1)}
-\SpecialCharTok{\textless{}}\NormalTok{gap}\SpecialCharTok{\textgreater{}}\NormalTok{\{solution}\SpecialCharTok{:}\NormalTok{ [}\FloatTok{1.4}\NormalTok{], tolerance}\SpecialCharTok{:} \FloatTok{10.0}\NormalTok{, tolerance\_type}\SpecialCharTok{:}\NormalTok{ relative, points}\SpecialCharTok{:} \FloatTok{5.0}\NormalTok{, response\_identifier}\SpecialCharTok{:}\NormalTok{ mean\_value, include\_lower\_bound}\SpecialCharTok{:}\NormalTok{ yes, include\_upper\_bound}\SpecialCharTok{:}\NormalTok{ yes, expected\_length}\SpecialCharTok{:} \FloatTok{10.0}\NormalTok{, placeholder}\SpecialCharTok{:}\NormalTok{ put mean value here, type}\SpecialCharTok{:}\NormalTok{ numeric\}}\SpecialCharTok{\textless{}}\ErrorTok{/}\NormalTok{gap}\SpecialCharTok{\textgreater{}}
+\SpecialCharTok{\textless{}}\NormalTok{gap}\SpecialCharTok{\textgreater{}}\NormalTok{\{solution}\SpecialCharTok{:}\NormalTok{ [}\FloatTok{1.4}\NormalTok{], tolerance}\SpecialCharTok{:} \FloatTok{10.0}\NormalTok{, tolerance\_type}\SpecialCharTok{:}\NormalTok{ relative, points}\SpecialCharTok{:} \FloatTok{5.0}\NormalTok{,}
+\NormalTok{response\_identifier}\SpecialCharTok{:}\NormalTok{ mean\_value, include\_lower\_bound}\SpecialCharTok{:}\NormalTok{ yes,}
+\NormalTok{include\_upper\_bound}\SpecialCharTok{:}\NormalTok{ yes, expected\_length}\SpecialCharTok{:} \FloatTok{10.0}\NormalTok{, placeholder}\SpecialCharTok{:}\NormalTok{ put mean value here,}
+\NormalTok{type}\SpecialCharTok{:}\NormalTok{ numeric\}}\SpecialCharTok{\textless{}}\ErrorTok{/}\NormalTok{gap}\SpecialCharTok{\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
-As you can see, YAML is ultimately used, but for most users, it is more convenient to have a dedicated R function instead. Let us now look at the argument list of \texttt{gap\_numeric}:
+As you can see, YAML is ultimately used as the input, so you do not necessarily need the helper function. Still, for most users, it is more convenient to have a dedicated R function to simplify the workflow.
+
+Let us now look at the argument list of \texttt{gap\_numeric}:
 
 \noindent\textbf{solution}\label{solution}
 
@@ -1019,12 +1046,10 @@ This helper function is designed to generate a formatted string describing a gap
                           \AttributeTok{tolerance =} \DecValTok{4}\NormalTok{, }\AttributeTok{case\_sensitive =} \ConstantTok{FALSE}\NormalTok{, }
                           \AttributeTok{placeholder =} \StringTok{"text without special characters"}\NormalTok{,}
                           \AttributeTok{expected\_length =} \DecValTok{25}\NormalTok{))}
-\FunctionTok{cat}\NormalTok{(gap2)}
-\SpecialCharTok{\textless{}}\NormalTok{gap}\SpecialCharTok{\textgreater{}}\NormalTok{\{solution}\SpecialCharTok{:}\NormalTok{ [}\SpecialCharTok{\textless{}}\NormalTok{gap}\SpecialCharTok{\textgreater{}}\NormalTok{\{solution}\SpecialCharTok{:}\NormalTok{ [Bildungsportal Sachsen,Bildungs Portal Sachsen], tolerance}\SpecialCharTok{:}\NormalTok{,   }\FloatTok{4.0}\NormalTok{, case\_sensitive}\SpecialCharTok{:}\NormalTok{ no, points}\SpecialCharTok{:} \FloatTok{1.0}\NormalTok{, expected\_length}\SpecialCharTok{:} \FloatTok{25.0}\NormalTok{, placeholder}\SpecialCharTok{:}\NormalTok{ text without,   special characters, type}\SpecialCharTok{:}\NormalTok{ text\_opal\}}\SpecialCharTok{\textless{}}\ErrorTok{/}\NormalTok{gap}\SpecialCharTok{\textgreater{}}\NormalTok{], case\_sensitive}\SpecialCharTok{:}\NormalTok{ no, points}\SpecialCharTok{:} \FloatTok{1.0}\NormalTok{, expected\_length}\SpecialCharTok{:} \FloatTok{205.0}\NormalTok{, type}\SpecialCharTok{:}\NormalTok{ text\}}\SpecialCharTok{\textless{}}\ErrorTok{/}\NormalTok{gap}\SpecialCharTok{\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 
-Argument list of \texttt{gap\_text}:
+The argument list of \texttt{gap\_text} is similar to \texttt{gap\_numeric}, but most learning management systems do not handle tolerance by default. However, OPAL has implemented a method to manage tolerance, which works reasonably well. Keep in mind that this functionality only works on OPAL and does not comply with the QTI standard. Let us look at all available parameters of \texttt{gap\_text}:
 
 \noindent\textbf{solution}\label{solution-1}
 
@@ -1066,9 +1091,9 @@ In this type of task, the candidate has to select an element form a dropdown-lis
 
 \section{Minimum version}\label{minimum-version-3}
 
-A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{dropdown\ (simple)} and \texttt{dropdown\ (complex)}.
+A minimum template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{dropdown\ (simple)} and \texttt{dropdown\ (complex)}.
 
-The minimum you need to provide is the \texttt{type:\ dropdown} (or the equivalent \texttt{type:\ dd}) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called \textbf{\#question}. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
+The minimum you need to provide is the \texttt{type:\ dropdown} (or the equivalent \texttt{type:\ dd}) in the YAML-section and some text, where at least one gap is formed as a dropdown-element, in a section called \textbf{\#question}. Furthermore, when employing helper functions from the \texttt{rqti} package, it is essential to ensure its prior loading.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1111,7 +1136,7 @@ Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref
 \includegraphics[width=1\textwidth,height=\textheight]{images/dropdown-simple.jpg}
 \caption{\label{dd1opal}Simple dropdown task rendered in OPAL}
 \end{figure*}
-
+\newpage
 There are two ways to specify a dropdown-element in Rmd content:
 
 \begin{itemize}
@@ -1147,7 +1172,7 @@ By clicking on the arrows, the details will unfold.
 
 \section{More control}\label{more-control-3}
 
-If you want to have more fine-grained control, consider the RMD template \texttt{dropdown\ (complex)}, which uses more yaml attributes and a more complex use of the helper function \texttt{dropdown}.
+If you want to have more fine-grained control, consider the RMD template \texttt{dropdown\ (complex)}, which uses more YAML attributes and a more complex use of the helper function \texttt{dropdown}.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1178,7 +1203,7 @@ and do it well" is more appropriate. Under the hood we use S4 OOP.
 \end{Highlighting}
 \end{Shaded}
 
-Which renders in OPAL as shown in Figure \ref{dd2opal}.
+This renders in OPAL as shown in Figure \ref{dd2opal}. In reality, there is not much to observe here since the relevant settings are only visible during interaction with the exercise. The only changes are to the title and points.
 
 \begin{figure*}
 \centering
@@ -1186,7 +1211,9 @@ Which renders in OPAL as shown in Figure \ref{dd2opal}.
 \caption{\label{dd2opal}More complex dropdown task rendered in OPAL}
 \end{figure*}
 
-\section{yaml attributes}\label{yaml-attributes-3}
+Since dropdowns are primarily defined through helper functions, there are few relevant YAML attributes.
+
+\section{YAML attributes}\label{YAML-attributes-3}
 
 \noindent\textbf{type}\label{type-3}
 
@@ -1223,8 +1250,6 @@ This helper function is used to generate a formatted string describing a dropdow
 \NormalTok{choices }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"s4"} \OtherTok{=} \StringTok{"S4 OOP"}\NormalTok{, }\StringTok{"s3"} \OtherTok{=} \StringTok{"S3 OOP"}\NormalTok{, }\StringTok{"none"} \OtherTok{=} \StringTok{"no OOP"}\NormalTok{, }\StringTok{"r6"} \OtherTok{=} \StringTok{"R6 OOP"}\NormalTok{)}
 \NormalTok{oop\_task }\OtherTok{\textless{}{-}} \FunctionTok{dropdown}\NormalTok{(}\AttributeTok{choices =}\NormalTok{ choices, }\AttributeTok{solution =} \StringTok{"S4 OOP"}\NormalTok{,}
                      \AttributeTok{response\_identifier =} \StringTok{"OOP\_task"}\NormalTok{)}
-\NormalTok{oop\_task}
-\CommentTok{\#\textgreater{} [1] "\textless{}gap\textgreater{}\{choices: [S4 OOP,S3 OOP,no OOP,R6 OOP], solution\_index: S4 OOP, points: 1.0, shuffle: yes, response\_identifier: OOP\_task, choices\_identifiers: [s4,s3,none,r6], type: InlineChoice\}\textless{}/gap\textgreater{}"}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1256,13 +1281,13 @@ Dropdown tasks are forced choice items, so are equivalent to single choice tasks
 
 \chapter{Essay tasks}\label{essay-tasks}
 
-This is a standard essay task with an open field for students to write a comprehensive response.
+This is a standard essay task that allows students to provide a comprehensive response in an open field. Unlike other types of assessments, essays cannot be graded automatically by default. However, if AI is integrated, it can assist in evaluating the responses.
 
 \section{Minimum version}\label{minimum-version-4}
 
-A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}} Here we look at the templates \texttt{essay\ (simple)} and \texttt{essay\ (complex)}.
+A minimum template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}} Here we look at the templates \texttt{essay\ (simple)} and \texttt{essay\ (complex)}.
 
-The minimum you need to provide is the \texttt{type:\ essay} in the yaml-section and some text as a task description in a section called \textbf{\#question}:
+The minimum you need to provide is the \texttt{type:\ essay} in the YAML-section and some text as a task description in a section called \textbf{\#question}:
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1293,19 +1318,19 @@ Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref
 \caption{\label{essay1qtijs}Simple essay erxercise rendered by qtijs}
 \end{figure*}
 
-\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{essay1opal}.
-
-\begin{figure*}
-\centering
-\includegraphics[width=1\textwidth,height=\textheight]{images/essay-simple.jpg}
-\caption{\label{essay1opal}Simple essay task rendered by OPAL}
-\end{figure*}
+\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing a very similar rendering.
+%
+% \begin{figure}
+% \centering
+% \includegraphics[width=1\textwidth,height=\textheight]{images/essay-simple.jpg}
+% \caption{\label{essay1opal}Simple essay task rendered by OPAL}
+% \end{figure}
 
 Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay tasks can serve as a good basis for grading student's answers. In addition the length of the feedback section is taken into account in constructing the text field and the maximum number of words. If no feedback is provided, sensible defaults are used.
 
 \section{More control}\label{more-control-4}
 
-If you want to have more fine-grained control, consider the RMD template \texttt{essay\ (complex)}, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template \texttt{essay\ (complex)}, which uses more YAML attributes.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1344,7 +1369,7 @@ Which, in OPAL, renders as shown in Figure \ref{essay2opal}.
 \caption{\label{essay2opal}More complex essay task rendered in OPAL}
 \end{figure*}
 
-\section{yaml attributes}\label{yaml-attributes-4}
+\section{YAML attributes}\label{YAML-attributes-4}
 
 \noindent\textbf{type}\label{type-4}
 
@@ -1402,13 +1427,13 @@ Essay tasks can be highly diagnostic, especially when instructors pose thought-p
 
 \chapter{Order tasks}\label{order-tasks}
 
-In this type of task, the candidate has to bring a list of items in the correct order.
+In this type of task, the candidate must arrange a list of items in the correct order. While this task offers an engaging variation, it presents some challenges, as grading is less straightforward.
 
 \section{Minimum version}\label{minimum-version-5}
 
-A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{order\ (simple)} and \texttt{order\ (complex)}.
+A minimum template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{order\ (simple)} and \texttt{order\ (complex)}.
 
-The minimum you need to provide is the \texttt{type:\ order} in the yaml-section and a list with at least two elements in a section called \textbf{\#question}:
+The minimum you need to provide is the \texttt{type:\ order} in the YAML-section and a list with at least two elements in a section called \textbf{\#question}:
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1436,19 +1461,19 @@ might still want to provide a detailed feedback.
 
 Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref{order1qtijs}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/xml/order-simple.jpg}
 \caption{\label{order1qtijs}Simple order task rendered in qtijs}
-\end{figure*}
+\end{figure}
 
 \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to OPAL directly, producing the output in Figure \ref{order1opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/order-simple.jpg}
 \caption{\label{order1opal}Simple order task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
 The order of the items in the Rmd-list is considered to be the correct one.
 
@@ -1457,7 +1482,7 @@ optional, but usually it is a good idea to give some explanation for students.
 
 \section{More control}\label{more-control-5}
 
-If you want to have more fine-grained control, consider the Rmd template \texttt{order\ (complex)}, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template \texttt{order\ (complex)}, which uses more YAML attributes.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1466,9 +1491,9 @@ type: order
 knit: rqti::render_qtijs
 identifier: order001 # think twice about this id for later data analysis!
 title: A meaningful title that can be displayed in the LMS
-# defines the scoring method, `false` means the correct order must be restored 
+# defines the scoring method, `false` means the correct order must be restored
 # completely by the candidate in order to get points
-points_per_answer: false 
+points_per_answer: false
 points: 2
 ---
 
@@ -1503,13 +1528,13 @@ Try again. (Only displayed if the solution is not correct.)
 
 Which on OPAL renders as shown in Figure \ref{order2opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/order-complex.jpg}
 \caption{\label{order2opal}More complex order task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
-\section{yaml attributes}\label{yaml-attributes-5}
+\section{YAML attributes}\label{YAML-attributes-5}
 
 \noindent\textbf{type}\label{type-5}
 
@@ -1564,11 +1589,12 @@ Typically, order tasks tend to emphasize memorization of procedural steps, a fac
 
 \chapter{Directed Pair tasks}\label{directed-pair-tasks}
 
+In this type of task, the student is presented with two sets of items that need to be matched. This task is a variation of a table task and can also be defined as a table input.
+
 \section{Minimum version}\label{minimum-version-6}
+A minimum template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{directedpair\ (simple)} and \texttt{directedpair\ (complex)}.
 
-In this type of task, the student is given two sets of items, which need to be matched. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{directedpair\ (simple)} and \texttt{directedpair\ (complex)}.
-
-The minimum you need to provide is the \texttt{type:\ pair} (or the equivalent \texttt{type:\ dp}) in the yaml-section and a list with at least two elements in a section called \textbf{\#question}:
+The minimum you need to provide is the \texttt{type:\ pair} (or the equivalent \texttt{type:\ dp}) in the YAML-section and a list with at least two elements in a section called \textbf{\#question}:
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1606,22 +1632,22 @@ Knitting via the Knit-Button to qtijs, this task renders as shown in Figure \ref
 
 The pairs are specified by a markdown list in which the matching elements are separated by \texttt{\textbar{}}. This list has to be the last element of the question section!
 
-An alternative is to provide a table task with the matching elements, see Chapter \ref{table-tasks} \href{table.html}{Tables}.
+An alternative is to provide a table task with the matching elements, see Chapter \ref{table-tasks} \href{table.html}{Table Tasks}.
 
 Note that in the used example, a feedback section was also provided. The feedback is optional, but usually it is a good idea to give some explanation for students.
 
-Note that the \texttt{knit} parameter is set to the custom rqti knit function,
+Note that the \texttt{knit} parameter is set to the custom \texttt{rqti} knit function,
 which will handle the preview. Clicking the Knit button in RStudio renders the file in the viewer pane. \noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to opal directly, producing the output in Figure \ref{dpopal1}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/directedpair-simple.jpg}
 \caption{\label{dpopal1}Directed pair task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
 \section{More control}\label{more-control-6}
 
-If you want to have more fine-grained control, consider the RMD template \texttt{directedpair\ (complex)}, wich uses more yaml attributes.
+If you want to have more fine-grained control, consider the RMD template \texttt{directedpair\ (complex)}, wich uses more YAML attributes.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1668,13 +1694,13 @@ Try again. (Only displayed if the solution is not correct.)
 
 In OPAL this renders as shown in Figure \ref{dp2opal}. The viewport is a bit too small to capture the entire task.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/directedpair-complex.jpg}
 \caption{\label{dp2opal}More complex directed pair task rendered in OPAL}
-\end{figure*}
+\end{figure}
 
-\section{yaml attributes}\label{yaml-attributes-6}
+\section{YAML attributes}\label{YAML-attributes-6}
 
 \noindent\textbf{type}\label{type-6}
 
@@ -1733,9 +1759,9 @@ In this type of task, the candidate matches rows with columns in a table. This f
 
 \section{Minimum version}\label{minimum-version-7}
 
-A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{table\ (simple)} and \texttt{table\ (complex)}.
+A minimum template is automatically created when you initiate an \texttt{rqti} project through RStudio. Alternatively, it can be added by clicking on \texttt{New\ file\ \textrightarrow{}\ R\ Markdown\ \textrightarrow{}\ From\ Template}. The \texttt{rqti} templates end with \texttt{\{rqti\}}. Here we look at the templates \texttt{table\ (simple)} and \texttt{table\ (complex)}.
 
-The minimum you need to provide is the \texttt{type:\ table} in the yaml-section and a table in a section called \textbf{\#question}:
+The minimum you need to provide is the \texttt{type:\ table} in the YAML-section and a table in a section called \textbf{\#question}:
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1781,27 +1807,27 @@ Clicking the Knit-Button will produce the output in Figure \ref{tbl1qtijs}.
 \caption{\label{tbl1qtijs}Preview of table task rendered by qtijs}
 \end{figure*}
 
-\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api}\href{api_opal.html}{Working with the OPAL API}) to upload to opal directly, producing the output Figure \ref{tbl1opal}.
+\noindent Alternatively, change the knit parameter to \texttt{knit:\ rqti::render\_opal} (see Chapter \ref{working-with-the-opal-api} \href{api_opal.html}{Working with the OPAL API}) to upload to opal directly, producing the output Figure \ref{tbl1opal}.
 
-\begin{figure*}
+\begin{figure}
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/table-simple.jpg}
 \caption{\label{tbl1opal}Preview of table task rendered by OPAL}
-\end{figure*}
+\end{figure}
 
-In the Rmd file, table entries indicate the points awarded for each response. Any positive number is considered correct. You can also assign negative numbers, which will reduce the total score, but the overall score will never go below zero. You can specify the number of correct responses per row and column as needed, which typically influences how the table is presented. For example, there are special table configurations where only one row is correct per column, and vice versa. The \texttt{rqti} package handles these cases automatically, so no additional steps are required on your part.
+In the Rmd file, table entries indicate the points awarded for each response. Any positive number is considered correct. You can also assign negative numbers, which will reduce the total score, but the overall score will never go below zero. You can specify the number of correct responses per row and column as needed, which typically influences how the table is presented. For example, there are special table configurations where only one row is correct per column, and vice versa. The \texttt{rqti} package handles these cases automatically.
 
 However, it is important to note that if your table represents a directed pair, the \texttt{rqti} package will automatically convert it into a directed pair task. If you prefer to keep it as a standard table, use \texttt{as\_table:\ true} in the YAML section of your Rmd file.
 
 The overall points for the task are calculated as the sum of the positive table entries.
 
-Of course you can also just load a csv and print it as a markdown table via \texttt{knitr::kable(yourtable)}. Just do not forget that the table has to be the last element of the question section.
+Of course you can also load a csv file (or any other table-like file) and print it as a markdown table via \texttt{knitr::kable(yourtable)}. Just keep in mind that the table has to be the last element of the question section. Styles can be applied to the table and are usually handled well by learning management systems. But keep in mind that style attributes might not be conforming to the QTI standard.
 
 In this example, a feedback section was also included. While feedback is optional, it is generally beneficial to provide some explanation to students. However, offering detailed feedback can be challenging for table tasks, especially when questions are presented in random order. Most learning management systems at least indicate which answers are correct or incorrect, so feedback can be more general, focusing on the overall topic.
 
 \section{More control}\label{more-control-7}
 
-If you want to have more fine-grained control, consider the Rmd template \texttt{table\ (complex)}, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template \texttt{table\ (complex)}, which uses more YAML attributes.
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1844,17 +1870,15 @@ systems will at least show which answers are correct and incorrect.
 \end{Highlighting}
 \end{Shaded}
 
-Which, in OPAL, renders as illustrated in Figure \ref{tbl2opal}.
+Which, in OPAL, renders as illustrated in Figure \ref{tbl2opal}. You can see that the order of the columns is now the same as in the source table.
 
-\begin{figure*}
+\begin{figure}[htb]
 \centering
 \includegraphics[width=1\textwidth,height=\textheight]{images/table-complex.jpg}
 \caption{\label{tbl2opal}Preview of complex table task in the learning management system OPAL}
-\end{figure*}
+\end{figure}
 
-You can see that the order of the columns is now the same as in the source table.
-
-\section{yaml attributes}\label{yaml-attributes-7}
+\section{YAML attributes}\label{YAML-attributes-7}
 
 \noindent\textbf{type}\label{type-7}
 
@@ -1871,7 +1895,7 @@ Title of the task. Can be displayed to students depending on the learning manage
 
 \noindent\textbf{shuffle}\label{shuffle-4}
 
-If \texttt{true} (the default), randomizes the order of rows and columns. Only in rare occasions it makes sense to have a strict order of elements (setting shuffle to \texttt{false}). Overwrites \texttt{shuffle\_rows} and \texttt{shuffle\_cols}.
+If \texttt{true} (the default), randomizes the order of rows and columns. Only in rare occasions it makes sense to set shuffle to \texttt{false}. For instance, when asking for scale types (nominal, ordinal, interval, ratio) it is better to stick to this order instead of a random one. Overwrites \texttt{shuffle\_rows} and \texttt{shuffle\_cols}.
 
 \noindent\textbf{shuffle\_rows}\label{shuffle_rows}
 
@@ -1926,7 +1950,7 @@ Metadata---including details about creators, rights, and descriptions---is essen
 
 We utilize ONYX's metadata implementation, which largely supports the IEEE Learning Object Metadata (LOM) standard. As a result, metadata is stored in XML format within the IMS manifest of the test data. However, it is important to note that this metadata may not be displayed by other learning management systems, and even OPAL may overwrite it. The primary purpose is to maintain metadata within the original xml files being shared.
 
-Here is an example of metadata with two contributors in the yaml section:
+Here is an example of metadata with two contributors in the YAML section:
 
 \begin{Shaded}
 \begin{Highlighting}
@@ -1940,7 +1964,7 @@ metadata:
   contributor:
     - name: Andrey Shevandrin
       role: author
-    - name: Johannes Titz 
+    - name: Johannes Titz
       role: author
   description: Demonstration of metadata
   rights: CC BY SA Andrey Shevandrin and Johannes Titz (2024).
@@ -1948,7 +1972,7 @@ metadata:
 
 # question
 
-Essay exercise with metadata attributes in the yaml section.
+Essay exercise with metadata attributes in the YAML section.
 \end{Highlighting}
 \end{Shaded}
 
@@ -1987,11 +2011,11 @@ For example, you can create an \texttt{.Rprofile} file and set the default autho
 \end{Highlighting}
 \end{Shaded}
 
-If you need to use non-default values, just specify the yaml attributes, which will override the environment variables.
+If you need to use non-default values, just specify the YAML attributes, which will override the environment variables.
 
 \chapter{Sections and Tests}\label{sections-and-tests}
 
-Creating single tasks is not particularly useful as one usually wants to combine different tasks into a test. A test in the QTI standard typically consists of one or more sections. Each Section can contain a combination of tasks or other subsections, providing great flexibility in test structure. Sections can be customized with respect to various parameters, such as time limit and shuffling.
+Creating individual tasks is not particularly useful, as the goal is usually to combine various tasks into a comprehensive test. In the QTI standard, a test consists of one or more sections. Each section can contain a mix of tasks or subsections, offering great flexibility in test structure. Sections can be customized with parameters like time limits and task shuffling. Additionally, tests can include parameters such as time limits, the option to add comments to tasks, supplementary files, or even a calculator---depending on the capabilities of the LMS. %e other features of rqti, sections and tests must be configured using functions rather than within an Rmd file.
 
 The \texttt{rqti} package makes it very simple to mix different sources of task files:
 
@@ -2002,7 +2026,7 @@ The \texttt{rqti} package makes it very simple to mix different sources of task 
 \item
   \textbf{QTI XML files}: These files should be valid regarding the QTI standard. To use your Rmd-files from the \texttt{exams} package you can convert them to xml first.
 \item
-  \textbf{Objects of S4 \texttt{rqti} classes}: You can also use objects from the \texttt{rqti} package directly. See Chapter \ref{rqti-oop-model}\href{rqti_oop_model.html}{rqti OOP model}.
+  \textbf{Objects of S4 \texttt{rqti} classes}: You can also use objects from the \texttt{rqti} package directly. See Chapter \ref{rqti-oop-model} \href{rqti_oop_model.html}{rqti OOP model}.
 \end{itemize}
 
 \section{\texorpdfstring{Using the \texttt{section} and \texttt{test} functions}{Using the section and test functions}}\label{using-the-section-and-test-functions}
@@ -2046,11 +2070,11 @@ We now have 10 variants of the test, two of which are displayed in Figures \ref{
 \caption{\label{b1}Test structure for seed 7829.}
 \end{figure*}
 
-After the root section you can see the section exam\_8833 (image 1) and exam\_S7829 (image 2). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: \url{https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46081048578}
+After the root section you can see the section exam\_8833 (Figure \ref{a1}) and exam\_S7829 (Figure \ref{b1}). There are actually 8 more (10 in total) and if you restart the exam, you will get one randomly assigned. You can try it yourself: \url{https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46081048578}. Note that the tasks inside the section have the same seed.
 
 To summarize so far: You can just pass your task files to the \texttt{content} parameter in \texttt{section} and define how many variants you would like to create of each file.
 
-Of course, creating several variants only makes sense for random tasks. Single choice and multiple choice tasks could be part of different sections:
+Creating multiple variants is mainly useful for random tasks, like providing different numbers for statistical calculations in gap tasks. On the other hand, single-choice and multiple-choice tasks are usually fixed and can be organized into a separate section, which aids in later data analysis. While each task needs a unique identifier, you generally do not want different identifiers for non-random tasks. To create an additional section, we can call:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2084,9 +2108,9 @@ In OPAL this will create the structure displayed in Figures \ref{a2} and \ref{b2
 \caption{\label{b2}Test structure with one fixed section, for seed 8833.}
 \end{figure*}
 
-As you can see, we still have our variable section with different variants (you see two of them in the screenshots). But now, we also have a fixed section that is the same for all tests. Try it out yourself: \url{https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46075805699}
+As you can see, we still have our variable section with different variants (two of them are displayed in the Figures). But now, we also have a fixed section that is the same for all tests. Try it out yourself: \url{https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46075805699}.
 
-Note that the function \texttt{section} returns an \texttt{AssessmentSection} rqti-object:
+Note that the function \texttt{section} returns an \texttt{AssessmentSection} \texttt{rqti}-object:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2103,9 +2127,9 @@ Note that the function \texttt{section} returns an \texttt{AssessmentSection} rq
 \end{Highlighting}
 \end{Shaded}
 
-The entire rqti-package relies on S4 Object-Oriented Programming (OOP), where tasks, sections, and tests are treated as distinct objects. If you are not accustomed to OOP, it might seem unfamiliar at first, but you do not need to delve into all the technical details to use it effectively. Simply utilize the provided helper functions, and you should navigate through with ease.
+The entire \texttt{rqti}-package relies on S4 Object-Oriented Programming (OOP), where tasks, sections, and tests are treated as distinct objects. If you are not accustomed to OOP, it might seem unfamiliar at first, but you do not need to delve into all the technical details to use it effectively. Simply utilize the provided helper functions, and you should navigate through with ease.
 
-To customize your sections and tests, check out the references: \texttt{?section} and \texttt{?test} or \texttt{?test4opal}.
+To customize your sections and tests, check out the references: \texttt{?section} and \texttt{?test} or \texttt{?test4opal}. All parameters are explained there in more detail. We plan to add examples of the most useful parameters to this documentation in the future.
 
 \section{Two approaches for parallel versions of a task}\label{two-approaches-for-parallel-versions-of-a-task}
 
@@ -2148,7 +2172,7 @@ The \texttt{rqti} package facilitates seamless content uploads to the OPAL learn
 
 \section{Prerequisites}\label{prerequisites}
 
-To leverage the functionality of the OPAL API, it is essential for OPAL users to possess the requisite permissions. Access to the system necessitates logging in with a username and password. Please note that utilizing the API through Shibboleth authorization is not supported.
+To leverage the functionality of the OPAL API, it is essential for OPAL users to possess the requisite permissions. Access to the system necessitates logging in with a username and password. Utilizing the API through Shibboleth authorization is not supported.
 
 If you currently lack a password-based login, kindly submit a request for one through your IT department. For users affiliated with \textbf{TU Chemnitz}, you can expedite this process by sending an email to \href{mailto:e-learning@tu-chemnitz.de}{\nolinkurl{e-learning@tu-chemnitz.de}}. In your email, explicitly state your need for a password-based login to facilitate API usage, and include your username for reference. You should also state the purpose of API usage. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
 
@@ -2159,7 +2183,7 @@ For TU Chemnitz see the instructions here: \url{https://www.tu-chemnitz.de/urz/n
 
 \section{Uploading tasks and tests to OPAL}\label{uploading-tasks-and-tests-to-opal}
 
-You can either set the \texttt{knit:\ rqti::render\_opal} parameter in the yaml-section of your Rmd file or just call \texttt{upload2opal()} with the file as the first parameter:
+You can either set the \texttt{knit:\ rqti::render\_opal} parameter in the YAML-section of your Rmd file or just call \texttt{upload2opal()} with the file as the first parameter:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2168,7 +2192,7 @@ You can either set the \texttt{knit:\ rqti::render\_opal} parameter in the yaml-
 \end{Highlighting}
 \end{Shaded}
 
-Note that rqti-Rmd files as well as QTI compliant zip archives and xml files are supported.
+Note that \texttt{rqti}-Rmd files as well as QTI compliant zip archives and xml files are supported.
 
 If you set up OPAL correctly you can expect the following outcome after running the above command:
 
@@ -2249,18 +2273,17 @@ We are using the OPAL instance \textbf{E-Learning-Informationsportal für Sächs
 
 \section{Error Handling}\label{error-handling}
 
-Various issues can occur with the API. While some problems can be resolved quickly, you may often need to contact your IT department for proper API setup. The most common issues include:
+The most common issues with the API include:
 
 \textbf{403} - Authorization failed. Some universities allow the use of the API only within the university network. You may need to run a VPN client to use the API.
-For TU Chemnitz see here: \url{https://www.tu-chemnitz.de/urz/network/access/vpn.html}
-
+%For TU Chemnitz see here: \url{https://www.tu-chemnitz.de/urz/network/access/vpn.html}
 If you already run a VPN client, please check with your IT and/or OPAL provider, whether the API can be used and what configuration you need.
 
 \textbf{401} - Unauthorized. Your RQTI\_API\_USER or RQTI\_API\_PASSWORD are wrong or your credentials are not sufficient to work with the API. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
 
-\section{OPAL specific yaml attributes}\label{opal-specific-yaml-attributes}
+\section{OPAL specific YAML attributes}\label{opal-specific-YAML-attributes}
 
-There are several opal-specific yaml attributes, which are explicitly explained in Chapters on the task types. Two of them apply on the test level:
+There are several opal-specific YAML attributes, which are explicitly explained in Chapters on the task types. Two of them apply on the test level:
 
 \noindent\textbf{calculator}\label{calculator-1}
 
@@ -2338,7 +2361,7 @@ Finally, there are classes for tests and their sections:
   \texttt{?AssessmentTestOpal}
 \end{itemize}
 
-\section{Creating objects}\label{creating-objects}
+%\section{Creating objects}\label{creating-objects}
 
 There are two ways to create objects:
 
@@ -2422,9 +2445,11 @@ First, it is important to know that you can create an object directly from Rmd f
 \CommentTok{\#\textgreater{} [1] 1}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Slot "choices":}
-\CommentTok{\#\textgreater{} [1] "There is a 5\% probability that you will mistakenly reject the null hypothesis, when it is actually correct. "}
+\CommentTok{\#\textgreater{} [1] "There is a 5\% probability that you will mistakenly reject the null hypothesis,}
+\CommentTok{when it is actually correct. "}
 \CommentTok{\#\textgreater{} [2] "There is a 5\% probability that the null hypothesis is correct."                                              }
-\CommentTok{\#\textgreater{} [3] "There is a 5\% probability that you will mistakenly reject the alternative hypothesis, when it is correct."   }
+\CommentTok{\#\textgreater{} [3] "There is a 5\% probability that you will mistakenly reject the alternative}
+\CommentTok{hypothesis, when it is correct."   }
 \CommentTok{\#\textgreater{} [4] "The test power is 95\%."                                                                                      }
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} Slot "choice\_identifiers":}
@@ -2473,10 +2498,13 @@ First, it is important to know that you can create an object directly from Rmd f
 \CommentTok{\#\textgreater{} [1] "\textless{}p\textgreater{}The correct interpretation is:\textless{}/p\textgreater{}"}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} [[2]]}
-\CommentTok{\#\textgreater{} [1] "\textless{}p\textgreater{}There is a 5\% probability that you will mistakenly reject the null hypothesis, when it is correct.\textless{}/p\textgreater{}"}
+\CommentTok{\#\textgreater{} [1] "\textless{}p\textgreater{}There is a 5\% probability that you will mistakenly reject the null}
+\CommentTok{hypothesis, when it is correct.\textless{}/p\textgreater{}"}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} [[3]]}
-\CommentTok{\#\textgreater{} [1] "\textless{}p\textgreater{}This is based on the typical understanding of a 5\% significance level in hypothesis testing, which means that you are willing to accept a 5\% chance of making a Type I error.\textless{}/p\textgreater{}"}
+\CommentTok{\#\textgreater{} [1] "\textless{}p\textgreater{}This is based on the typical understanding of a 5\% significance level}
+\CommentTok{in hypothesis testing, which means that you are willing to accept a 5\% chance of}
+\CommentTok{making a Type I error.\textless{}/p\textgreater{}"}
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} }
 \CommentTok{\#\textgreater{} }
@@ -2514,7 +2542,7 @@ First, it is important to know that you can create an object directly from Rmd f
 \end{Highlighting}
 \end{Shaded}
 
-The structure of the object feels somewhat intimidating but is mostly self-explanatory. For instance it has a slot named \texttt{solution} and another one named \texttt{choices}. Other slots contain additional objects such as a feedback or metadata object.
+The structure of the object may seem intimidating at first, but it is largely self-explanatory. For example, it includes a slot named \texttt{solution} for the correct answer and another named \texttt{choices} for the possible options. Additionally, other slots contain objects such as feedback or metadata, which are themselves composed of various slots. While the nested structure can appear complex, each element is logically organized to support the overall functionality.
 
 Now you can render this object with \texttt{render\_qtijs}:
 
@@ -2544,9 +2572,7 @@ But how would you create this object from scratch? This is not very hard:
 \end{Highlighting}
 \end{Shaded}
 
-Note that the content parameter is a list because it can also contain non-strings. If you just put the text string, rqti will give you an error. In the future we will simplify this case.
-
-Again, you can render the object:
+Note that the content parameter is a list because it can also contain non-strings. If you use a text string, \texttt{rqti} will give you an error. In the future we will simplify this case. Again, you can render the object:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2559,12 +2585,16 @@ It looks the same because it is almost the same:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{all.equal}\NormalTok{(sc, sc2)}
-\CommentTok{\#\textgreater{} [1] "Attributes: \textless{} Component \textbackslash{}"calculator\textbackslash{}": Lengths (0, 1) differ (string compare on first 0) \textgreater{}"}
+\CommentTok{\#\textgreater{} [1] "Attributes: \textless{} Component \textbackslash{}"calculator\textbackslash{}":}
+\CommentTok{ Lengths (0, 1) differ (string compare on first 0) \textgreater{}"}
 \CommentTok{\#\textgreater{} [2] "Attributes: \textless{} Component \textbackslash{}"choices\textbackslash{}": 2 string mismatches \textgreater{}"                                 }
-\CommentTok{\#\textgreater{} [3] "Attributes: \textless{} Component \textbackslash{}"content\textbackslash{}": Component 1: 1 string mismatch \textgreater{}"                      }
-\CommentTok{\#\textgreater{} [4] "Attributes: \textless{} Component \textbackslash{}"feedback\textbackslash{}": Length mismatch: comparison on first 0 components \textgreater{}"  }
-\CommentTok{\#\textgreater{} [5] "Attributes: \textless{} Component \textbackslash{}"files\textbackslash{}": Lengths (0, 1) differ (string compare on first 0) \textgreater{}"     }
-\CommentTok{\#\textgreater{} [6] "Attributes: \textless{} Component \textbackslash{}"identifier\textbackslash{}": 1 string mismatch \textgreater{}"                                }
+\CommentTok{\#\textgreater{} [3] "Attributes: \textless{} Component \textbackslash{}"content\textbackslash{}":}
+\CommentTok{ Component 1: 1 string mismatch \textgreater{}"                      }
+\CommentTok{\#\textgreater{} [4] "Attributes: \textless{} Component \textbackslash{}"feedback\textbackslash{}":}
+\CommentTok{ Length mismatch: comparison on first 0 components \textgreater{}"  }
+\CommentTok{\#\textgreater{} [5] "Attributes: \textless{} Component \textbackslash{}"files\textbackslash{}":}
+\CommentTok{ Lengths (0, 1) differ (string compare on first 0) \textgreater{}"     }
+\CommentTok{\#\textgreater{} [6] "Attributes: \textless{} Component \textbackslash{}"identifier\textbackslash{}":} \CommentTok{ 1 string mismatch \textgreater{}"                                }
 \CommentTok{\#\textgreater{} [7] "Attributes: \textless{} Component \textbackslash{}"title\textbackslash{}": 1 string mismatch \textgreater{}"}
 \end{Highlighting}
 \end{Shaded}
@@ -2723,7 +2753,7 @@ A few things to keep in mind during this process:
 \item
   You can use ggplot2 or other graphics libraries similarly.
 \item
-  Consider creating a helper function to decode the image into raw bytes.
+  Consider creating a helper function to decode the image into raw bytes. In the future we will ship our own, but it is good to know how the general process works.
 \item
   For gap tasks, the gap must be placed within the content parameter, which makes using htmltools challenging. Currently, you need to use raw HTML tags to surround the gaps.
 \item
@@ -2775,7 +2805,7 @@ What is happening here? There are two sections, but only one item is selected fr
 
 The flexibility to arrange and select items within sections, and organize sections within tests, provides significant control over the assessment process. You can create parallel versions of items and easily develop custom exam functions that generate different versions of tasks.
 
-We have now covered the key constructor functions of the rqti package. These functions empower you to build questions and exams from scratch, giving you full control over the process. Moreover, this approach allows you to package your questions and exams into standard R packages, making distribution simple and efficient. While there is much more to explore, you will need to dive deeper into the possibilities on your own.
+We have now covered the key constructor functions of the \texttt{rqti} package. These functions empower you to build questions and exams from scratch, giving you full control over the process. Moreover, this approach allows you to package your questions and exams into standard R packages, making distribution simple and efficient. While there is much more to explore, you will need to dive deeper into the possibilities on your own.
 
 \chapter{Compatibility with Learning Management Systems}\label{compatibility-with-learning-management-systems}
 
@@ -2817,6 +2847,10 @@ The following functionalities encounter issues when used on Canvas:
   All tables are converted to the \texttt{match} type, rendering only tables with a single possible answer in each row meaningful (one-in-row-table).
 \end{itemize}
 
-
+\blankpage
+\blankpage
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}% No header rule
+Imprint: Johannes Titz, Apollostr. 5, 09111, Chemnitz
 
 \end{document}
