@@ -34,15 +34,15 @@ cat(readLines(file.path(path, "metadata_template.Rmd")), sep = '\n')
 
 Currently, the metadata may contain the following information:
 
-- **description**: A string providing a description of the exercise content.
-- **rights**: A string outlining the usage rights and terms associated with the exercise.
-- **version**: A string indicating the version of the exercise.
+- **description**: A string providing a description of the task content.
+- **rights**: A string outlining the usage rights and terms associated with the task.
+- **version**: A string indicating the version of the task.
 - **contributor**: A list of contributor details, where each contributor entry may include the following information:
   - **name**: A string representing the contributor's name.
   - **role**: A string specifying the type of contribution. Possible values include: author, publisher, unknown, initiator, terminator, validator, editor, graphical designer, technical implementer, content provider, technical validator, educational validator, script writer, instructional designer, and subject matter expert. By default, `rqti` sets this value to "author".
   - **contribution_date**: A string representing the date of contribution. By default, `rqti` sets this to the current system date.
   
-If you are working on a set of exercises, setting metadata for each one individually can be tedious. To streamline this process, you can use the environment variables `RQTI_AUTHOR` and `RQTI_RIGHTS`, which will automatically populate these fields with default values.
+If you are working on a set of tasks, setting metadata for each one individually can be tedious. To streamline this process, you can use the environment variables `RQTI_AUTHOR` and `RQTI_RIGHTS`, which will automatically populate these fields with default values.
 
 For example, you can create an `.Rprofile` file and set the default author and usage rights as follows:
 

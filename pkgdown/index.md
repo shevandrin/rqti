@@ -18,7 +18,7 @@ for creating exercises, exams, and questionnaires that fully comply with
 the [QTI v2.1
 standard](https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html).
 This tool empowers users to generate QTI-compliant content directly from
-R, offering the flexibility to render exercises locally (using qtijs) or
+R, offering the flexibility to render tasks locally (using qtijs) or
 seamlessly integrate them into learning management systems like OPAL.
 
 Our primary target audience includes instructors specializing in
@@ -53,7 +53,7 @@ install.packages("rqti")
 In RStudio, start by navigating to *File* -\> *New Project*, and then
 select **rqti Project** as the project type. For a quick start, you can
 proceed with the default settings. If you prefer to customize the
-options, make sure to select ‘YES’ for ‘Create Templates’—this will
+options, make sure to select *YES* for *Create Templates*—this will
 generate RMarkdown templates tailored for different task types.
 
 Once your project is created, open one of the templates from the working
@@ -93,13 +93,11 @@ projects. The following exercise types are available:
 -  [Table Exercises](articles/table.html)
 
 To add metadata to your exercises, refer to the article [Adding
-metadata](articles/metadata.html)
-
-To integrate various exercises into a test, refer to the article
-[Sections and Tests](articles/section.html)
-
-For users of the learning management system OPAL, explore the article
-[Working with the OPAL API](articles/api_opal.html).
+metadata](articles/adding_metadata.html) To integrate various exercises
+into a test, refer to the article [Sections and
+Tests](articles/section.html) For users of the learning management
+system OPAL, explore the article [Working with the OPAL
+API](articles/api_opal.html).
 
 ## General workflow
 
@@ -107,23 +105,22 @@ The fundamental workflow with the `rqti` package involves the following
 steps:
 
 1.  Create exercise files.
-    1.  Start by generating an Rmd document. You can either start from
-        scratch or leverage Rmd templates ending with the suffix
-        `{rqti}`.
-    2.  Create a section titled `# question` and construct your
-        interactions (gaps, choices, etc.). Utilize `rqti` helper
-        functions where applicable.
-    3.  Specify additional attributes in the yaml section. Detailed
-        explanations for all types are available in the **Articles**
-        menu on this website (top).
-    4.  Choose a previewer: Either qtijs (`knit: rqti::render_qtijs`),
-        for local rendering, or the learning management system Opal
-        (`knit: rqti::render_opal`). Note that Opal usage requires prior
-        setup, which is explained in the article [Working with the Opal
-        API](articles/api_opal.html).
-    5.  Verify if your task appears as desired. Make adjustments until
-        you are satisfied.
-2.  Create sections and tests based on your exercise files.
+    - Start by generating an Rmd document. You can either start from
+      scratch or leverage Rmd templates ending with the suffix `{rqti}`.
+    - Create a section titled `# question` and construct your
+      interactions (gaps, choices, etc.) Utilize `rqti` helper functions
+      where applicable.
+    - Specify additional attributes in the yaml section. Detailed
+      explanations for all types are available in the **Articles** menu
+      on this website (top).
+    - Choose a previewer: Either qtijs (`knit: rqti::render_qtijs`), for
+      local rendering, or the learning management system Opal
+      (`knit: rqti::render_opal`). Note that Opal usage requires prior
+      setup, which is explained in the article [Working with the Opal
+      API](articles/api_opal.html).
+    - Verify if your task appears as desired. Make adjustments until you
+      are satisfied.
+2.  Create sections and tests based on your task files.
 3.  Write the test (xml) to disk according to the QTI standard and
     upload the test file to your learning management system.
 4.  Download results data from your learning management system and
@@ -134,16 +131,15 @@ illustrated in the following diagram:
 
 <figure>
 <img src="vignettes/images/workflow.png" style="width:100.0%"
-alt="Basic workflow to create exercises and tests with rqti" />
-<figcaption aria-hidden="true">Basic workflow to create exercises and
-tests with rqti</figcaption>
+alt="Basic workflow to create tasks and tests with rqti" />
+<figcaption aria-hidden="true">Basic workflow to create tasks and tests
+with rqti</figcaption>
 </figure>
 
-The most effective way to grasp the workflow is to create a simple
-exercise, such as “Single-Choice” as demonstrated in the article
-[Single-Choice Exercises](articles/singlechoice.html). Once you have
-completed that, explore the other exercise types discussed in the
-subsequent chapters.
+The most effective way to grasp the workflow is to create a simple task,
+such as *Single-Choice* as demonstrated in the article [Single-Choice
+Exercises](articles/singlechoice.html). Once you have completed that,
+explore the other task types discussed in the subsequent chapters.
 
 ## Support and Bug Reports
 
@@ -155,7 +151,7 @@ Following that, we will maintain a stable, usable version, with support
 for new features provided as time permits.
 
 <!-- Why do we need another package for creating exams when there is already the `exams`-package? The philosophy of `exams` is **one for all**, whereas `rqti` follows the Unix-philosophy: **do one thing and do it well**. tldr: -->
-<!-- - `rqti` has more (QTI) features (e.g. exercise type) than `exams` -->
+<!-- - `rqti` has more (QTI) features (e.g. task type) than `exams` -->
 <!-- - `rqti` uses OOP (S4), the system is easy to extend (LMS specific needs) -->
 <!-- - the Rmd-interface is cleaner as it just focues on QTI -->
 <!-- - low-level functions can be used flexibly to create exercises -->

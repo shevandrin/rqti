@@ -1,9 +1,9 @@
 ---
-title: "Single Choice Exercises"
+title: "Single Choice tasks"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Single Choice Exercises}
+  %\VignetteIndexEntry{Single Choice tasks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,17 +16,17 @@ knitr::opts_chunk$set(
 source("helper.R")
 ```
 
-`r if(knitr::is_latex_output()) "# Single-Choice Exercises"`
+`r if(knitr::is_latex_output()) "# Single-Choice tasks"`
 
 ```{r setup sc, echo = F, message=F}
 library(rqti)
 ```
 
-Please note that this is the first article in this manual, and as such, it may be more detailed than those that follow. Our goal is to emphasize key points that might not be as thoroughly covered in later articles. For this reason, we recommend reading through this article carefully before diving into the exercise types that most interest you.
+Please note that this is the first type of task described in this manual, and as such, it may be more detailed than those that follow. Our goal is to emphasize key points that might not be as thoroughly covered in later articles. For this reason, we recommend reading through this article carefully before diving into the task types that most interest you.
 
 ## Minimum version
 
-The simplest exercise type in the rqti package is single choice. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `singlechoice (simple)` and `singlechoice (complex)`.
+The simplest task type in the rqti package is single choice. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `singlechoice (simple)` and `singlechoice (complex)`.
 
 The minimum you need to provide is the `type: sc` (or the equivalent `type: singlechoice`, or `type: schoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
@@ -36,34 +36,34 @@ cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-simple/skeleton
 
 Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students.
 
-Additionally, note that the `knit` parameter is set to a custom `rqti` function, which streamlines the preview process. While this is optional, it significantly simplifies the workflow. Without it, the default preview will be a basic HTML file. By including our custom knit function, you will get a more realistic preview that allows for interaction with the exercise.
+Additionally, note that the `knit` parameter is set to a custom `rqti` function, which streamlines the preview process. While this is optional, it significantly simplifies the workflow. Without it, the default preview will be a basic HTML file. By including our custom knit function, you will get a more realistic preview that allows for interaction with the task.
 
 To preview the final result, simply click the *Knit* button in RStudio (if you are not using RStudio, call `render_qtijs` on the file). This will generate a QTI XML file and render it in the viewer pane using QTIJS. If you are not using RStudio, you can also open the server URL displayed in the console directly in your browser for the same preview experience.
 
-<!-- ![Preview of single choice exercise rendered by QTIJS](images/xml/singlechoice-simple.jpg){width=100%} -->
+<!-- ![Preview of single choice task rendered by QTIJS](images/xml/singlechoice-simple.jpg){width=100%} -->
 
-You can now interact with the exercise by selecting an option and then clicking `Submit` in the top right corner. By default, after submitting, the feedback and reached points are displayed`r ltx(" as shown in Figure \\ref{sc1qtijs}.", ":")`
+You can now interact with the task by selecting an option and then clicking `Submit` in the top right corner. By default, after submitting, the feedback and reached points are displayed`r ltx(" as shown in Figure \\ref{sc1qtijs}.", ":")`
 
-![\label{sc1qtijs}Preview of single choice exercise with feedback rendered by QTIJS](images/xml/scfb.jpg){width=100%}
+![\label{sc1qtijs}Preview of single choice task with feedback rendered by QTIJS](images/xml/scfb.jpg){width=100%}
 
 The corresponding xml file is created in the same folder as the Rmd file if you click the Knit-Button.
 <!-- or in the current directory if you execute the functions from the console. Usually, the Knit button will be sufficient for most use cases, but if you need more control the functions `rmd2qti, render_xml, render_zip` are handy. The functions give a message about the path of the created file. -->
 
-Many learning management systems can directly import a QTI-XML-file, so all you need to do is upload the generated file. Compositions of exercises are covered in the article \ref{sections-and-tests} [Sections and Tests](section.html).
+Many learning management systems can directly import a QTI-XML-file, so all you need to do is upload the generated file. Compositions of tasks are covered in the article \ref{sections-and-tests} [Sections and Tests](section.html).
 
-If you happen to use OPAL/ONYX, you can also upload your exercises directly by modifying the knit parameter:
+If you happen to use OPAL/ONYX, you can also upload your tasks directly by modifying the knit parameter:
 
 ```{r scrender, eval=FALSE}
-knit: render_opal
+knit: rqti::render_opal
 ```
 
 This will upload the file and open a browser with the OPAL url. It should look like `r ltx(" in Figure \\ref{sc1opal}.", "this:")`
 
-![\label{sc1opal}Single choice exercise renderd in OPAL](images/singlechoice-simple.jpg){width=100%}
+![\label{sc1opal}Single choice task rendered in OPAL](images/singlechoice-simple.jpg){width=100%}
 
 Setting up OPAL requires some additional steps, which are covered in the article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html).
 
-By default the rights of the uploaded material in OPAL are set to public, so no authentication is required to view the material. Otherwise you have to login into OPAL, which will log you out in the API. Please take this into account when testing your material. Without changing the defaults anyone with the link has access to your exercise.
+By default the rights of the uploaded material in OPAL are set to public, so no authentication is required to view the material. Otherwise you have to login into OPAL, which will log you out in the API. Please take this into account when testing your material. Without changing the defaults anyone with the link has access to your task.
 
 ## Syntax explained
 
@@ -112,9 +112,9 @@ cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-complex/skeleto
 
 Which renders in OPAL as`r ltx(" shown in Figure \\ref{sc2opal}.", ":")`
 
-![\label{sc2opal}More complex single choice exercise rendered in OPAL](images/singlechoice-complex.jpg){width=100%}
+![\label{sc2opal}More complex single choice task rendered in OPAL](images/singlechoice-complex.jpg){width=100%}
 
-Let us now discuss all yaml attributes that can be used
+Notably, the choices are now displayed horizontally, and the title and points have been updated. The next section provides a detailed explanation of all YAML attributes.
 
 ## yaml attributes
 
@@ -124,11 +124,11 @@ Has to be `singlechoice` or `sc` (a shortcut for singlechoice) or `schoice` (com
 
 ### identifier
 
-This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
+This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
+Title of the task. Can be displayed to students depending on the learning management system settings. Default is the file name.
 
 ### shuffle
 
@@ -186,15 +186,13 @@ will render as:
 ```{=latex}
 \textrightarrow{} Question 1\\
 \textrightarrow{} Question 2\\
-
-By clicking on the arrows, the details will unfold.
 ```
 
-Thus, there is no need to go beyond using the general feedback.
+By clicking on the arrows, the details will unfold. Thus, there is no need to go beyond using the general feedback.
 
 ## List of answers as a variable
 
-For more complex exercises the list of answers is often just available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
+For more complex tasks the list of answers is often just available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
 
 ```{r results="plaintext", comment=""}
 mdlist(c(1.2, 2.1, 2.2, 3.0), solutions = 2)
@@ -204,16 +202,16 @@ mdlist(c(1.2, 2.1, 2.2, 3.0), solutions = 2)
 
 <!-- ## A programatic low level approach -->
 
-<!-- The `rqti` package is very flexible in that you can also use low level functions to create rqti content. Let us say you have a csv table with many single choice exercises. It is quite easy to transform this to a rqti section: -->
+<!-- The `rqti` package is very flexible in that you can also use low level functions to create rqti content. Let us say you have a csv table with many single choice tasks. It is quite easy to transform this to a rqti section: -->
 
-## Some advice on single choice exercises
+## Some advice on single choice tasks
 
-From a psychometric standpoint, single-choice exercises are often the least effective option for assessing ability. This is primarily because guessing cannot be entirely ruled out, leading to weaker psychometric properties compared to similar content presented in gap exercises.
+From a psychometric standpoint, single-choice tasks are often the least effective option for assessing ability. This is primarily because guessing cannot be entirely ruled out, leading to weaker psychometric properties compared to similar content presented in gap tasks.
 
-For example, the `exams` package, an alternative R package for test creation, frequently converts numeric gaps into single-choice exercises. However, we believe this approach is justified only when the learning management system either does not support gap exercises, provides inadequate support, or the instructor requires printed exams with automated grading. In all other cases, using numeric or string gaps is generally more effective.
+For example, the `exams` package, an alternative R package for test creation, frequently converts numeric gaps into single-choice tasks. However, we believe this approach is justified only when the learning management system either does not support gap tasks, provides inadequate support, or the instructor requires printed exams with automated grading. In all other cases, using numeric or string gaps is generally more effective.
 
-In some cases, single-choice exercises may be unavoidable. For instance, when determining whether a statistical test is significant, there are only two possible answers. In such situations, we suggest asking multiple related questions rather than relying on a single one. Additionally, assigning fewer points to single-choice exercises can help mitigate the effects of guessing.
+In some cases, single-choice tasks may be unavoidable. For instance, when determining whether a statistical test is significant, there are only two possible answers. In such situations, we suggest asking multiple related questions rather than relying on a single one. Additionally, assigning fewer points to single-choice tasks can help mitigate the effects of guessing.
 
-If you have multiple single-choice exercises with identical answer options, consider using a match table instead (see article \ref{table-exercises} [Table Exercises](table.html)).
+If you have multiple single-choice tasks with identical answer options, consider using a match table instead (see article \ref{table-tasks} [Table tasks](table.html)).
 
-In conclusion, it is advisable to avoid single-choice exercises whenever possible. Specifically, refrain from converting numeric gap exercises into single-choice format unless absolutely necessary. If single-choice exercises are unavoidable, consider asking multiple related questions or using a match table. Additionally, reducing the weight of single-choice exercises in the overall grading can help create a more balanced and fair assessment.
+In conclusion, it is advisable to avoid single-choice tasks whenever possible. Specifically, refrain from converting numeric gap tasks into single-choice format unless absolutely necessary. If single-choice tasks are unavoidable, consider asking multiple related questions or using a match table. Additionally, reducing the weight of single-choice tasks in the overall grading can help create a more balanced and fair assessment.

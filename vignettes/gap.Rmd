@@ -1,9 +1,9 @@
 ---
-title: "Gap Exercises"
+title: "Gap tasks"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Gap Exercises}
+    %\VignetteIndexEntry{Gap tasks}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -20,11 +20,11 @@ source("helper.R")
 library(rqti)
 ```
 
-`r if(knitr::is_latex_output()) "# Gap Exercises"`
+`r if(knitr::is_latex_output()) "# Gap tasks"`
 
-In this exercise format, candidates are required to fill in one or more gaps. We believe this method is one of the most effective ways to assess students' abilities, as it reduces the likelihood of guessing compared to multiple-choice questions. Emphasizing gap-fill exercises often leads to more reliable assessment outcomes.
+In this task format, candidates are required to fill in one or more gaps. We believe this method is one of the most effective ways to assess students' abilities, as it reduces the likelihood of guessing compared to multiple-choice questions. Emphasizing gap-fill tasks often leads to more reliable assessment outcomes.
 
-Our package allows for the integration of both textual and numeric responses within a single exercise, offering instructors greater flexibility in designing assessments.
+Our package allows for the integration of both textual and numeric responses within a single task, offering instructors greater flexibility in designing assessments.
 
 ## Minimum version
 
@@ -38,13 +38,13 @@ cat(readLines(fs::path_package("rmarkdown/templates/gap-simple/skeleton", "skele
 
 Clicking on the Knit-button will produce`r ltx(" the output in Figure \\ref{gap1qtijs}.", ":")`
 
-![\label{gap1qtijs}Simple gap exercise rendered in qtijs](images/xml/gap-simple.jpg){width=100%}
+![\label{gap1qtijs}Simple gap task rendered in qtijs](images/xml/gap-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{gap1opal}.", ":")`
+Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{gap1opal}.", ":")`
 
-![\label{gap1opal}Simple gap exercise rendered in OPAL](images/gap-simple.jpg){width=100%}
+![\label{gap1opal}Simple gap task rendered in OPAL](images/gap-simple.jpg){width=100%}
 
-As you can see, there are two ways to create a gap in a Rmd file:
+As you can see, there are two ways to create a gap in an Rmd file:
 
 - Put the correct answer between `<<` ... `>>` (or the equivalent `<gap>` ... `</gap>`). Example: `<<3.14>>` or `<<sometext>>`
 - use the helper functions `?gap_numeric` and `?gap_text` (also see details below, section \ref{gaptext} [Helper function gap text](#gaptext), \ref{gapnumeric} [Helper function gap numeric](#gapnumeric))
@@ -52,7 +52,7 @@ As you can see, there are two ways to create a gap in a Rmd file:
 By default, 1 point can be reached for each gap (specify `points` in the helper function to your needs). The total number of points for completing a task is defined as the sum of points of all gaps.
 
 Note that in this example, a feedback section was also provided. The feedback is
-optional, but usually it is a good idea to give some explanation for students. In gap exercises the feedback refers to the whole task, not to a specific gap. Group your feedback into appropriate sections, which can be opened/closed for better user experience (use `<details>` and `<summary>` html tags).
+optional, but usually it is a good idea to give some explanation for students. In gap tasks the feedback refers to the whole task, not to a specific gap. Group your feedback into appropriate sections, which can be opened/closed for better user experience (use `<details>` and `<summary>` html tags).
 
 A great way to do this is to use `<details>` and `<summary>` html tags:
 
@@ -94,7 +94,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/gap-complex/skeleton", "skel
 
 In Opal this renders as `r ltx("shown in Figure \\ref{gap2opal}.", ":")`
 
-![\label{gap2opal}Preview of complex gap exercise in OPAL](images/gap-complex.jpg){width=100%}
+![\label{gap2opal}Preview of complex gap task in OPAL](images/gap-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -104,13 +104,13 @@ Has to be `gap` or `cloze`.
 
 ### identifier
 
-This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
+This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
 specify a meaningful identifier. In all other cases, the file name should be
 fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on
+Title of the task. Can be displayed to students depending on
 the learning management system settings. Default is the file name.
 
 ## Feedback
@@ -133,9 +133,7 @@ gap1 <- gap_numeric(solution = 1.4, tolerance = 10, tolerance_type = "relative",
 cat(gap1)
 ```
 
-As you can see, YAML is ultimately used, but for most users, it is more convenient to have a dedicated R function instead.
-
-Argument list of `gap_numeric`:
+As you can see, YAML is ultimately used, but for most users, it is more convenient to have a dedicated R function instead. Let us now look at the argument list of `gap_numeric`:
 
 ### solution
 
@@ -219,8 +217,8 @@ Specifies the size of the text input field in the content delivery engine. The d
 
 Text displayed in the gap, before an answer is attempted. Can be used for hints (e.g. *numbers only*).
 
-## Some advice on gap exercises 
+## Some advice on gap tasks 
 
-Gap exercises are generally foolproof, offering an ideal format by minimizing guessing and often presenting a reasonably high level of difficulty. Numeric exercises, involving calculations that are typically not guessable, are especially effective. While crafting text gaps may be more intricate, the option to offer multiple alternative solutions and leverage OPAL to accommodate spelling errors enhances their versatility. Nevertheless, it is important to note that, like any exercise, gap exercises can be poorly designed, so be mindful in their creation.
+Gap tasks are generally foolproof, offering an ideal format by minimizing guessing and often presenting a reasonably high level of difficulty. Numeric tasks, involving calculations that are typically not guessable, are especially effective. While crafting text gaps may be more intricate, the option to offer multiple alternative solutions and leverage OPAL to accommodate spelling errors enhances their versatility. Nevertheless, it is important to note that, like any task, gap tasks can be poorly designed, so be mindful in their creation.
 
-As mentioned earlier, numeric and text gaps can be combined in a single exercise, making them quite versatile. In fact, the flexibility of gaps allows for the integration of various exercise types within a single task. For instance, to incorporate single-choice questions alongside gaps, you can use a numeric gap for the single-choice question and include the answer options directly in the question. For example, "Fill in the blank: ____ (0 = not significant, 1 = significant)". This approach enables you to use gaps for many types of questions, highlighting their exceptional adaptability.
+As mentioned earlier, numeric and text gaps can be combined in a single task, making them quite versatile. In fact, the flexibility of gaps allows for the integration of various task types within a single task. For instance, to incorporate single-choice questions alongside gaps, you can use a numeric gap for the single-choice question and include the answer options directly in the question. For example, "Fill in the blank: ____ (0 = not significant, 1 = significant)". This approach enables you to use gaps for many types of questions, highlighting their exceptional adaptability.

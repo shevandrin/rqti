@@ -1,9 +1,9 @@
 ---
-title: "Multiple Choice Exercises"
+title: "Multiple Choice tasks"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Multiple Choice Exercises}
+  %\VignetteIndexEntry{Multiple Choice tasks}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,9 +20,9 @@ source("helper.R")
 library(rqti)
 ```
 
-`r if(knitr::is_latex_output()) "# Multiple-Choice Exercises"`
+`r if(knitr::is_latex_output()) "# Multiple-Choice tasks"`
 
-This is just a normal multiple choice exercise. 
+This is just a normal multiple choice task. 
 
 ## Minimum version
 
@@ -40,17 +40,17 @@ Note that in this example, a feedback section was also provided. This is optiona
 
 Further note that the `knit` parameter is set to the custom `rqti` knit function, which will handle the preview. Clicking the Knit button in RStudio produces`r ltx(" the output in Figure \\ref{mpc1qtijs}.", ":")`
 
-![\label{mpc1qtijs}Multiple choice exercise rendered in qtijs](images/xml/multiplechoice-simple.jpg){width=100%}
+![\label{mpc1qtijs}Multiple choice task rendered in qtijs](images/xml/multiplechoice-simple.jpg){width=100%}
 
 You can also use the Opal (set it up before, see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) render function (`knit: rqti::render_opal`), which should produce`r ltx(" the output in Figure \\ref{mpc1opal}.", ":")`
 
-![\label{mpc1opal}Multiple choice exercise rendered in OPAL](images/multiplechoice-simple.jpg){width=100%}
+![\label{mpc1opal}Multiple choice task rendered in OPAL](images/multiplechoice-simple.jpg){width=100%}
 
-Multiple-choice exercises function similarly to single-choice exercises, with the key difference being that multiple (or no) answers can be correct. To indicate the correct options, surround them with asterisks (using markdown for italics). If you need to use italics within the choices themselves, enclose the entire question in `<em></em>` tags to avoid conflicts.
+Multiple-choice tasks function similarly to single-choice tasks, with the key difference being that multiple (or no) answers can be correct. To indicate the correct options, surround them with asterisks (using markdown for italics). If you need to use italics within the choices themselves, enclose the entire question in `<em></em>` tags to avoid conflicts.
 
 By default, the total points available for a question are calculated as $0.5n$, where $n$ is the number of answer choices. For example, if there are 4 choices, the maximum score for the question is 2 points. Correct selections earn 0.5 points each, while incorrect selections deduct 0.5 points. Regardless of how points are calculated, the minimum score you can receive is 0.
 
-Among various grading options, we find this to be the most intuitive, especially when considering the element of guessing. Given our inclination against forced-choice exercises, we do not see significant value in introducing different grading alternatives. Rather, we recommend directing attention towards better exercise types like gaps for a more effective assessment approach. See also the section \ref{some-advice-on-multiple-choice-exercises} [Some advice on multiple choice exercises].
+Among various grading options, we find this to be the most intuitive, especially when considering the element of guessing. Given our inclination against forced-choice tasks, we do not see significant value in introducing different grading alternatives. Rather, we recommend directing attention towards better task types like gaps for a more effective assessment approach. See also the section \ref{some-advice-on-multiple-choice-tasks} [Some advice on multiple choice tasks].
 
 ## More control
 
@@ -62,9 +62,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-complex/skele
 
 Which renders in OPAL as`r ltx(" shown in Figure \\ref{mpc2opal}.", ":")`
 
-![\label{mpc2opal}More complex multiple choice exercise rendered in OPAL](images/multiplechoice-complex.jpg){width=100%}
-
-Let us now discuss all yaml attributes that can be used.
+![\label{mpc2opal}More complex multiple choice task rendered in OPAL](images/multiplechoice-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -74,11 +72,11 @@ Has to be `multiplechoice` or `mpc` or `mchoice` (compatible with `exams` packag
 
 ### identifier
 
-This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
+This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on, it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on the learning management system settings. The default is the file name.
+Title of the task. Can be displayed to students depending on the learning management system settings. The default is the file name.
 
 ### shuffle
 
@@ -95,7 +93,7 @@ Should the items be displayed in `vertical` or `horizontal` mode? Default is `ve
 
 ### points
 
-How many points are given for the whole exercise. Default is the number of choices times 0.5. The points $p$ are divided by the number of choices $c$ and then distributed over all choices. A correct choice will get the student +$p/c$, an incorrect choice -$p/c$. Witout such a procedure, a student could always select all answers and get the maximum number of points. See also the section \ref{some-advice-on-multiple-choice-exercises} [Some advice on multiple choice exercises].
+How many points are given for the whole task. Default is the number of choices times 0.5. The points $p$ are divided by the number of choices $c$ and then distributed over all choices. A correct choice will get the student +$p/c$, an incorrect choice -$p/c$. Witout such a procedure, a student could always select all answers and get the maximum number of points. See also the section \ref{some-advice-on-multiple-choice-tasks} [Some advice on multiple choice tasks].
 
 ## Feedback
 
@@ -107,19 +105,19 @@ Feedback can be provided with the section
 
 ## List of answers as a variable
 
-For more complex exercises the list of answers is often just available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
+For more complex tasks the list of answers is often just available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
 
 ```{r results="plaintext", comment=""}
 mdlist(c("dropdown list", "programming language evaluation", "numeric gap"), 
        solutions = c(1, 3))
 ```
 
-## Some advice on multiple choice exercises
+## Some advice on multiple choice tasks
 
-A multiple-choice exercise can always be converted into multiple single-choice questions with true/false or yes/no options. From a psychometric standpoint, both types of exercises share the same drawbacks, primarily due to the potential for guessing. Consequently, they should be avoided when possible. Generally, their psychometric properties are inferior to those of numeric or string-based gap exercises that assess similar content.
+A multiple-choice task can always be converted into multiple single-choice questions with true/false or yes/no options. From a psychometric standpoint, both types of tasks share the same drawbacks, primarily due to the potential for guessing. Consequently, they should be avoided when possible. Generally, their psychometric properties are inferior to those of numeric or string-based gap tasks that assess similar content.
 
-However, there are scenarios where forced-choice exercises are necessary. For example, presenting several statistical analyses and asking students to determine whether the results are statistically significant is a valuable exercise. Even in such cases, a multiple-choice format may not be the best option. Better alternatives include single-choice questions, dropdowns, or match tables. A multiple-choice question can often be restructured into several single-choice or dropdown questions with yes/no options. This may be cumbersome for longer multiple-choice lists, for which a match table with yes/no options can be a more convenient solution.
+However, there are scenarios where forced-choice tasks are necessary. For example, presenting several statistical analyses and asking students to determine whether the results are statistically significant is a valuable task. Even in such cases, a multiple-choice format may not be the best option. Better alternatives include single-choice questions, dropdowns, or match tables. A multiple-choice question can often be restructured into several single-choice or dropdown questions with yes/no options. This may be cumbersome for longer multiple-choice lists, for which a match table with yes/no options can be a more convenient solution.
 
-The main advantage of these alternative formats is that they require students to make explicit choices. In a multiple-choice exercise where all options are incorrect, a student could earn full points simply by not making any selections---effectively getting credit without engaging with the question. To avoid this, multiple-choice exercises must balance the distribution of correct and incorrect options, which is not necessary for single-choice, dropdown, or match table formats. 
+The main advantage of these alternative formats is that they require students to make explicit choices. In a multiple-choice task where all options are incorrect, a student could earn full points simply by not making any selections---effectively getting credit without engaging with the question. To avoid this, multiple-choice tasks must balance the distribution of correct and incorrect options, which is not necessary for single-choice, dropdown, or match table formats. 
 
-While multiple-choice exercises are supported, we strongly advise against using them whenever possible in favor of more robust alternatives.
+While multiple-choice tasks are supported, we strongly advise against using them whenever possible in favor of more robust alternatives.

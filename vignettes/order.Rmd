@@ -1,9 +1,9 @@
 ---
-title: "Order Exercises"
+title: "Order tasks"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Order Exercises}
+    %\VignetteIndexEntry{Order tasks}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -20,9 +20,9 @@ source("helper.R")
 library(rqti)
 ```
 
-`r if(knitr::is_latex_output()) "# Order Exercises"`
+`r if(knitr::is_latex_output()) "# Order tasks"`
 
-In this type of exercise, the candidate has to bring a list of items in the correct order.
+In this type of task, the candidate has to bring a list of items in the correct order.
 
 ## Minimum version
 
@@ -34,13 +34,13 @@ The minimum you need to provide is the `type: order` in the yaml-section and a l
 cat(readLines(fs::path_package("rmarkdown/templates/order-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Knitting via the Knit-Button to qtijs, this exercise renders as`r ltx(" shown in Figure \\ref{order1qtijs}.", ":")`
+Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Figure \\ref{order1qtijs}.", ":")`
 
-![\label{order1qtijs}Simple order exercise rendered in qtijs](images/xml/order-simple.jpg){width=100%}
+![\label{order1qtijs}Simple order task rendered in qtijs](images/xml/order-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to Opal directly, producing`r ltx(" the output in Figure \\ref{order1opal}.", ":")`
+Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to Opal directly, producing`r ltx(" the output in Figure \\ref{order1opal}.", ":")`
 
-![\label{order1opal}Simple order exercise rendered in OPAL](images/order-simple.jpg){width=100%}
+![\label{order1opal}Simple order task rendered in OPAL](images/order-simple.jpg){width=100%}
 
 The order of the items in the Rmd-list is considered to be the correct one.
 
@@ -57,7 +57,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "sk
 
 Which on Opal renders as`r ltx(" shown in Figure \\ref{order2opal}.", ":")`
 
-![\label{order2opal}More complex order exercise rendered in OPAL](images/order-complex.jpg){width=100%}
+![\label{order2opal}More complex order task rendered in OPAL](images/order-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -67,17 +67,17 @@ Has to be `order`.
 
 ### identifier
 
-This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
+This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to
 specify a meaningful identifier. In all other cases, the file name should be
 fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
+Title of the task. Can be displayed to students depending on the learning management system settings. Default is the file name.
 
 ### points
 
-How many points are given for the whole exercise. Default is $0.25n$, where $n$ is the length of the list.
+How many points are given for the whole task. Default is $0.25n$, where $n$ is the length of the list.
 
 ### points_per_answer
 
@@ -93,12 +93,12 @@ Feedback can be provided with the section
 
 ## List of answers as a variable
 
-For more complex exercises the list of answers is sometimes available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
+For more complex tasks the list of answers is sometimes available as a variable. In this case you can use the helper function `mdlist` to convert the vector into a markdown list:
 
 ```{r results="plaintext", comment=""}
 mdlist(c("Test", "Section", "Item", "Interaction"))
 ```
 
-## Some advice on order exercises 
+## Some advice on order tasks 
 
-Typically, order exercises tend to emphasize memorization of procedural steps, a facet of knowledge that may not always be critically important. In practice, even professionals often rely on checklists or cheatsheets for such scenarios. Additionally, grading order exercises can be intricate since the absolute position of an item is often less crucial than its relative placement within a sequence. We advise to use order exercises with caution.
+Typically, order tasks tend to emphasize memorization of procedural steps, a facet of knowledge that may not always be critically important. In practice, even professionals often rely on checklists or cheatsheets for such scenarios. Additionally, grading order tasks can be intricate since the absolute position of an item is often less crucial than its relative placement within a sequence. We advise to use order tasks with caution.
