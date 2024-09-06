@@ -38,7 +38,7 @@ Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Fig
 
 ![\label{order1qtijs}Simple order task rendered in qtijs](images/xml/order-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to Opal directly, producing`r ltx(" the output in Figure \\ref{order1opal}.", ":")`
+Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{order1opal}.", ":")`
 
 ![\label{order1opal}Simple order task rendered in OPAL](images/order-simple.jpg){width=100%}
 
@@ -55,7 +55,7 @@ If you want to have more fine-grained control, consider the Rmd template `order 
 cat(readLines(fs::path_package("rmarkdown/templates/order-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which on Opal renders as`r ltx(" shown in Figure \\ref{order2opal}.", ":")`
+Which on OPAL renders as`r ltx(" shown in Figure \\ref{order2opal}.", ":")`
 
 ![\label{order2opal}More complex order task rendered in OPAL](images/order-complex.jpg){width=100%}
 

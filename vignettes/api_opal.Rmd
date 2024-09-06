@@ -44,7 +44,7 @@ result <- upload2opal(file)
 
 Note that rqti-Rmd files as well as QTI compliant zip archives and xml files are supported.
 
-If you set up Opal correctly you can expect the following outcome after running the above command:
+If you set up OPAL correctly you can expect the following outcome after running the above command:
 
 1. A web browser will open automatically, displaying the OPAL page with your uploaded test or task.
 2. In your R console, you will receive a status code 200. This status code indicates that the request to upload the content to OPAL was successful.
@@ -103,7 +103,7 @@ If you already run a VPN client, please check with your IT and/or OPAL provider,
 
 **401** - Unauthorized. Your RQTI_API_USER or RQTI_API_PASSWORD are wrong or your credentials are not sufficient to work with the API. Please be aware that students typically do not possess author rights by default and are required to request such privileges before utilizing the API. To facilitate this process, it is advisable to reach out to your IT and/or OPAL provider for assistance.
 
-## Opal specific yaml attributes
+## OPAL specific yaml attributes
 
 There are several opal-specific yaml attributes, which are explicitly explained in the articles on the task types. Two of them apply on the test level:
 

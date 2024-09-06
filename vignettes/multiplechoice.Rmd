@@ -42,7 +42,7 @@ Further note that the `knit` parameter is set to the custom `rqti` knit function
 
 ![\label{mpc1qtijs}Multiple choice task rendered in qtijs](images/xml/multiplechoice-simple.jpg){width=100%}
 
-You can also use the Opal (set it up before, see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) render function (`knit: rqti::render_opal`), which should produce`r ltx(" the output in Figure \\ref{mpc1opal}.", ":")`
+You can also use the OPAL (set it up before, see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) render function (`knit: rqti::render_opal`), which should produce`r ltx(" the output in Figure \\ref{mpc1opal}.", ":")`
 
 ![\label{mpc1opal}Multiple choice task rendered in OPAL](images/multiplechoice-simple.jpg){width=100%}
 

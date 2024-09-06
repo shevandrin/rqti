@@ -60,7 +60,7 @@ If you want to have more fine-grained control, consider the Rmd template `table 
 cat(readLines(fs::path_package("rmarkdown/templates/table-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which, in Opal, renders as `r ltx("illustrated in Figure \\ref{tbl2opal}.", ":")`
+Which, in OPAL, renders as `r ltx("illustrated in Figure \\ref{tbl2opal}.", ":")`
 
 ![\label{tbl2opal}Preview of complex table task in the learning management system OPAL](images/table-complex.jpg){width=100%}
 

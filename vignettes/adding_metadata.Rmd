@@ -24,7 +24,7 @@ path <- fs::path_package("exercises", package = "rqti")
 
 Metadata---including details about creators, rights, and descriptions---is essential for ensuring accountability, legal compliance, and clarity in the management and use of assessment items and tests. This information helps track content origin and ownership, while also providing clear descriptions that facilitate better organization and retrieval of assessment resources.
 
-We utilize ONYX's metadata implementation, which largely supports the IEEE Learning Object Metadata (LOM) standard. As a result, metadata is stored in XML format within the IMS manifest of the test data. However, it is important to note that this metadata may not be displayed by other learning management systems, and even Opal may overwrite it. The primary purpose is to maintain metadata within the original xml files being shared.
+We utilize ONYX's metadata implementation, which largely supports the IEEE Learning Object Metadata (LOM) standard. As a result, metadata is stored in XML format within the IMS manifest of the test data. However, it is important to note that this metadata may not be displayed by other learning management systems, and even OPAL may overwrite it. The primary purpose is to maintain metadata within the original xml files being shared.
 
 Here is an example of metadata with two contributors in the yaml section:
 

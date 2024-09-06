@@ -92,7 +92,7 @@ If you want to have more fine-grained control, consider the RMD template ` gap (
 cat(readLines(fs::path_package("rmarkdown/templates/gap-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-In Opal this renders as `r ltx("shown in Figure \\ref{gap2opal}.", ":")`
+In OPAL this renders as `r ltx("shown in Figure \\ref{gap2opal}.", ":")`
 
 ![\label{gap2opal}Preview of complex gap task in OPAL](images/gap-complex.jpg){width=100%}
 

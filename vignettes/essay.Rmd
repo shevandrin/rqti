@@ -38,7 +38,7 @@ Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Fig
 
 ![\label{essay1qtijs}Simple essay erxercise rendered by qtijs](images/xml/essay-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [Working with the OPAL API](api_opal.html)) to upload to Opal directly, producing`r ltx(" the output in Figure \\ref{essay1opal}.", ":")`
+Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{essay1opal}.", ":")`
 
 ![\label{essay1opal}Simple essay task rendered by OPAL](images/essay-simple.jpg){width=100%}
 
@@ -52,7 +52,7 @@ If you want to have more fine-grained control, consider the RMD template `essay 
 cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which, in Opal, renders as `r ltx("shown in Figure \\ref{essay2opal}.", ":")`
+Which, in OPAL, renders as `r ltx("shown in Figure \\ref{essay2opal}.", ":")`
 
 ![\label{essay2opal}More complex essay task rendered in OPAL](images/essay-complex.jpg){width=100%}
 
