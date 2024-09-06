@@ -10,9 +10,13 @@ abbr_id: true
 
 # question
 
-Specify any kind of table with the table entries representing the number of points for the response. The table has to be the last element of the question section!
+Specify any kind of table with the table entries representing the number of
+points for the response. The table has to be the last element of the question
+section!
 
-The `rqti` package is clever enough to transform your table into the appropriate QTI object (single choice or multiple choice). Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`
+The `rqti` package is clever enough to transform your table into the appropriate
+QTI object (single choice or multiple choice). Of course you can also just load
+a csv and print it as a markdown table via `knitr::kable(yourtable)`
 
 Use visual editing mode in RStudio to quickly change your table.
 
@@ -27,4 +31,6 @@ Use visual editing mode in RStudio to quickly change your table.
 
 # feedback
 
-Provide your feedback here. For tables it is difficult to provide useful feedback because there are usually many questions. But most learning management systems will at least show which answers are correct and incorrect.
+Provide your feedback here. For tables it is difficult to provide useful
+feedback because there are usually many questions. But most learning management
+systems will at least show which answers are correct and incorrect.

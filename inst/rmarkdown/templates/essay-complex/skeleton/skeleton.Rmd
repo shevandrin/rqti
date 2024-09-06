@@ -7,14 +7,18 @@ expected_length: 30 # defines the width of the text input field
 expected_lines: 3 # defines the number of lines of the text input field
 words_max: 100 # how many words can be written in the text input field
 words_min: 10 # the minimum number of words to send a response
-data_allow_paste: false # whether the candidate is allowed to copy text from the clipboard
+data_allow_paste: false # allows to copy text from the clipboard
 points: 2
 ---
 
 # question
 
-What are the advantages and disadvantages of the `rqti` package as compared to the `exams` package?
+What are the advantages and disadvantages of the `rqti` package as compared to
+the `exams` package?
 
 # feedback
 
-The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.
+The rqti package can only export to the QTI format, which makes it less general
+than the `exams` package. But the rqti package supports more exercise types, can
+preview xml files, supports the OPAL API and has an extensible core architecture
+based on S4 OOP.

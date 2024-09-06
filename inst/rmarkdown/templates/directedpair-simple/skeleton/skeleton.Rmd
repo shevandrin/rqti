@@ -7,7 +7,8 @@ knit: rqti::render_qtijs
 
 In this task the candidate has to match elements from two sets.
 
-As a source of data just provide a markdown list with the correct pairs of items, separated by `|`.
+As a source of data just provide a markdown list with the correct pairs of
+items, separated by `|`.
 
 Match the following `rqti` functions with their purpose:
 

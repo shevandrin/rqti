@@ -14,4 +14,6 @@ Which exercise types are supported by the R package rqti?
 
 # feedback
 
-All basic types of QTI are supported, including dropdown list. More advanced exercises (as available in OPAL/ONYX) are not yet supported because they are LMS specific.
+All basic types of QTI are supported, including dropdown list. More advanced
+exercises (as available in OPAL/ONYX) are not yet supported because they are LMS
+specific.
