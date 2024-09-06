@@ -1,9 +1,9 @@
 ---
-title: "Essay Exercises"
+title: "Essay tasks"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Essay Exercises}
+    %\VignetteIndexEntry{Essay tasks}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -20,9 +20,9 @@ source("helper.R")
 library(rqti)
 ```
 
-`r if(knitr::is_latex_output()) "# Essay Exercises"`
+`r if(knitr::is_latex_output()) "# Essay tasks"`
 
-This is a standard essay exercise with an open field for students to write a comprehensive response.
+This is a standard essay task with an open field for students to write a comprehensive response.
 
 ## Minimum version
 
@@ -34,15 +34,15 @@ The minimum you need to provide is the `type: essay` in the yaml-section and som
 cat(readLines(fs::path_package("rmarkdown/templates/essay-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Knitting via the Knit-Button to qtijs, this exercise renders asd`r ltx(" shown in Figure \\ref{essay1qtijs}.", ":")`
+Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Figure \\ref{essay1qtijs}.", ":")`
 
 ![\label{essay1qtijs}Simple essay erxercise rendered by qtijs](images/xml/essay-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see [Working with the OPAL API](api_opal.html)) to upload to Opal directly, producing`r ltx(" the output in Figure \\ref{essay1opal}.", ":")`
+Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{essay1opal}.", ":")`
 
-![\label{essay1opal}Simple essay exercise rendered by OPAL](images/essay-simple.jpg){width=100%}
+![\label{essay1opal}Simple essay task rendered by OPAL](images/essay-simple.jpg){width=100%}
 
-Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay exercises can serve as a good basis for grading student's answers. In addition the length of the feedback section is taken into account in constructing the text field and the maximum number of words. If no feedback is provided, sensible defaults are used.
+Note that in this example, a feedback section was also provided. Since an open question requires manual review, only general feedback without conditions should be provided. The feedback is optional, but usually it is a good idea to give some explanation for students. Furthermore, a feedback section for essay tasks can serve as a good basis for grading student's answers. In addition the length of the feedback section is taken into account in constructing the text field and the maximum number of words. If no feedback is provided, sensible defaults are used.
 
 ## More control
 
@@ -52,9 +52,9 @@ If you want to have more fine-grained control, consider the RMD template `essay 
 cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which, in Opal, renders as `r ltx("shown in Figure \\ref{essay2opal}.", ":")`
+Which, in OPAL, renders as `r ltx("shown in Figure \\ref{essay2opal}.", ":")`
 
-![\label{essay2opal}More complex essay exercise rendered in OPAL](images/essay-complex.jpg){width=100%}
+![\label{essay2opal}More complex essay task rendered in OPAL](images/essay-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -64,15 +64,15 @@ Has to be `essay`.
 
 ### identifier
 
-This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
+This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
+Title of the task. Can be displayed to students depending on the learning management system settings. Default is the file name.
 
 ### points
 
-How many points are given for the whole exercise. Default is 1. 
+How many points are given for the whole task. Default is 1. 
 
 ### expected_length
 
@@ -100,10 +100,10 @@ Feedback can be provided with the section
 
 -  **\# feedback** (general feedback, displayed every time, without conditions)
 
-The feedback plays an important role in essay exercises because the expected length and maximum words are calculated from the feedback section, if one is given. Providing useful feedback also defines explicit criteria for grading, so do not skip it for essay exercises, unless you have good reasons to.
+The feedback plays an important role in essay tasks because the expected length and maximum words are calculated from the feedback section, if one is given. Providing useful feedback also defines explicit criteria for grading, so do not skip it for essay tasks, unless you have good reasons to.
 
-Further note that it does not make sense to give conditional feedback as essay exercises have to be graded manually.
+Further note that it does not make sense to give conditional feedback as essay tasks have to be graded manually.
 
-## Some advice on essay exercises
+## Some advice on essay tasks
 
-Essay exercises can be highly diagnostic, especially when instructors pose thought-provoking questions. Unfortunately, many instructors struggle with creativity and precision when crafting essay prompts, leading to vague grading criteria. To address this issue, it is recommended to always include an exemplary solution in the feedback section. This not only enhances the learning experience for students but also earns appreciation from colleagues involved in grading.
+Essay tasks can be highly diagnostic, especially when instructors pose thought-provoking questions. Unfortunately, many instructors struggle with creativity and precision when crafting essay prompts, leading to vague grading criteria. To address this issue, it is recommended to always include an exemplary solution in the feedback section. This not only enhances the learning experience for students but also earns appreciation from colleagues involved in grading.

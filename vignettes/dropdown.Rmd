@@ -1,9 +1,9 @@
 ---
-title: "Dropdown Exercises"
+title: "Dropdown tasks"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Dropdown Exercises}
+    %\VignetteIndexEntry{Dropdown tasks}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -20,9 +20,9 @@ source("helper.R")
 library(rqti)
 ```
 
-`r if(knitr::is_latex_output()) "# Dropdown Exercises"`
+`r if(knitr::is_latex_output()) "# Dropdown tasks"`
 
-In this type of exercise, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as *entry*-objects because this is essentially what dropwdowns are. Several dropdowns can be combined in a single exercise, but a combination with numeric and text entries (gaps) is not possible; mainly due to limitations on the site of learning managment systems. 
+In this type of task, the candidate has to select an element form a dropdown-list. Note that our package implements dropdowns as *entry*-objects because this is essentially what dropwdowns are. Several dropdowns can be combined in a single task, but a combination with numeric and text entries (gaps) is not possible; mainly due to limitations on the site of learning managment systems. 
 
 ## Minimum version
 
@@ -34,13 +34,13 @@ The minimum you need to provide is the `type: dropdown` (or the equivalent `type
 cat(readLines(fs::path_package("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Knitting via the Knit-Button to qtijs, this exercise renders as`r ltx(" shown in Figure \\ref{dd1qtijs}.", ":")`
+Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Figure \\ref{dd1qtijs}.", ":")`
 
-![\label{dd1qtijs}Simple dropdown exercise rendered in qtijs](images/xml/dropdown-simple.jpg){width=100%}
+![\label{dd1qtijs}Simple dropdown task rendered in qtijs](images/xml/dropdown-simple.jpg){width=100%}
 
-Alternatively, change the knit parameter to `knit: render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{dd1opal}.", ":")`
+Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article \ref{working-with-the-opal-api} [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{dd1opal}.", ":")`
 
-![\label{dd1opal}Simple dropdown exercise rendered in OPAL](images/dropdown-simple.jpg){width=100%}
+![\label{dd1opal}Simple dropdown task rendered in OPAL](images/dropdown-simple.jpg){width=100%}
 
 There are two ways to specify a dropdown-element in Rmd content:
 
@@ -50,7 +50,7 @@ There are two ways to specify a dropdown-element in Rmd content:
 By default, 1 point can be reached for each dropdown (specify `points` to your needs). The total number of points for completing a task is defined as the sum of points of all dropdowns.
 
 Note that in this example, a feedback section was also provided. The feedback is
-optional, but usually it is a good idea to give some explanation for students. In dropdown exercises the feedback refers to the whole task, not to a specific dropdown. Group your feedback into appropriate sections, which can be opened/closed for better user experience. A great way to do this is to use `<details>` and `<summary>` html tags:
+optional, but usually it is a good idea to give some explanation for students. In dropdown tasks the feedback refers to the whole task, not to a specific dropdown. Group your feedback into appropriate sections, which can be opened/closed for better user experience. A great way to do this is to use `<details>` and `<summary>` html tags:
 
 ```{html}
 <details><summary>Question1</summary>
@@ -90,7 +90,7 @@ cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", 
 
 Which renders in OPAL as `r ltx(" shown in Figure \\ref{dd2opal}.", ":")`
 
-![\label{dd2opal}More complex dropdown exercise rendered in OPAL](images/dropdown-complex.jpg){width=100%}
+![\label{dd2opal}More complex dropdown task rendered in OPAL](images/dropdown-complex.jpg){width=100%}
 
 ## yaml attributes
 
@@ -100,11 +100,11 @@ Has to be `dropdown` or `dd`.
 
 ### identifier
 
-This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
+This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
+Title of the task. Can be displayed to students depending on the learning management system settings. Default is the file name.
 
 ## Feedback
 
@@ -142,7 +142,7 @@ The index of the correct choice as a numeric. Default is 1, meaning that you can
 
 ### points
 
-The number of points for the exercise. Default is 1.
+The number of points for the task. Default is 1.
 
 ### shuffle
 
@@ -152,6 +152,6 @@ If `TRUE`, randomizes the order of the choices. Defaults to `TRUE`. Only in rare
 
 This is the ID of the dropdown-element, useful for later data analysis of results. The default has the format "response_1", "response_2", ..."response_n" for several dropdowns. If you are doing extensive data analysis later on, it makes sense to specify a more meaningful identifier.
 
-## Some advice on dropdown exercises 
+## Some advice on dropdown tasks 
 
-Dropdown exercises are forced choice items, so are equivalent to single choice exercises. The advantage is that they can be placed in between other text and several of them can be used in a single exercise. Still, they suffer from the same problems as [single choice exercises](singlechoice.html).
+Dropdown tasks are forced choice items, so are equivalent to single choice tasks. The advantage is that they can be placed in between other text and several of them can be used in a single task. Still, they suffer from the same problems as [single choice tasks](singlechoice.html).

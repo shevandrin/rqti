@@ -27,4 +27,5 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 
-<!-- If you prefer general feedback, just use the the section # feedback and delete the other feedback sections-->
+<!-- If you prefer general feedback, just use the the section # feedback and 
+delete the other feedback sections-->

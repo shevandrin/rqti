@@ -1,9 +1,9 @@
 ---
-title: "Table Exercises"
+title: "Table tasks"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-    %\VignetteIndexEntry{Table Exercises}
+    %\VignetteIndexEntry{Table tasks}
     %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
 ---
@@ -20,9 +20,9 @@ source("helper.R")
 library(rqti)
 ```
 
-`r ltx("# Table Exercises", "")`
+`r ltx("# Table tasks", "")`
 
-In this type of exercise, the candidate matches rows with columns in a table. This format is often used when multiple questions need to be displayed concisely. Table exercises are highly versatile and are ideal for creating both single-choice and multiple-choice questions.
+In this type of task, the candidate matches rows with columns in a table. This format is often used when multiple questions need to be displayed concisely. Table tasks are highly versatile and are ideal for creating both single-choice and multiple-choice questions.
 
 ## Minimum version
 
@@ -36,21 +36,21 @@ cat(readLines(fs::path_package("rmarkdown/templates/table-simple/skeleton", "ske
 
 Clicking the Knit-Button will produce `r ltx("the output in Figure \\ref{tbl1qtijs}.", ":")`
 
-![\label{tbl1qtijs}Preview of table exercise rendered by qtijs](images/xml/table-simple.jpg){width=100% border=2px}
+![\label{tbl1qtijs}Preview of table task rendered by qtijs](images/xml/table-simple.jpg){width=100% border=2px}
 
 Alternatively, change the knit parameter to `knit: rqti::render_opal` (see article  \ref{working-with-the-opal-api}[Working with the OPAL API](api_opal.html)) to upload to opal directly, producing `r ltx("the output Figure \\ref{tbl1opal}.", ":")`
 
-![\label{tbl1opal}Preview of table exercise rendered by OPAL](images/table-simple.jpg){width=100%}
+![\label{tbl1opal}Preview of table task rendered by OPAL](images/table-simple.jpg){width=100%}
 
 In the Rmd file, table entries indicate the points awarded for each response. Any positive number is considered correct. You can also assign negative numbers, which will reduce the total score, but the overall score will never go below zero. You can specify the number of correct responses per row and column as needed, which typically influences how the table is presented. For example, there are special table configurations where only one row is correct per column, and vice versa. The `rqti` package handles these cases automatically, so no additional steps are required on your part.
 
-However, it is important to note that if your table represents a directed pair, the `rqti` package will automatically convert it into a directed pair exercise. If you prefer to keep it as a standard table, use `as_table: true` in the YAML section of your Rmd file.
+However, it is important to note that if your table represents a directed pair, the `rqti` package will automatically convert it into a directed pair task. If you prefer to keep it as a standard table, use `as_table: true` in the YAML section of your Rmd file.
 
-The overall points for the exercise are calculated as the sum of the positive table entries.
+The overall points for the task are calculated as the sum of the positive table entries.
 
 Of course you can also just load a csv and print it as a markdown table via `knitr::kable(yourtable)`. Just do not forget that the table has to be the last element of the question section.
 
-In this example, a feedback section was also included. While feedback is optional, it is generally beneficial to provide some explanation to students. However, offering detailed feedback can be challenging for table exercises, especially when questions are presented in random order. Most learning management systems at least indicate which answers are correct or incorrect, so feedback can be more general, focusing on the overall topic.
+In this example, a feedback section was also included. While feedback is optional, it is generally beneficial to provide some explanation to students. However, offering detailed feedback can be challenging for table tasks, especially when questions are presented in random order. Most learning management systems at least indicate which answers are correct or incorrect, so feedback can be more general, focusing on the overall topic.
 
 ## More control
 
@@ -60,9 +60,9 @@ If you want to have more fine-grained control, consider the Rmd template `table 
 cat(readLines(fs::path_package("rmarkdown/templates/table-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
-Which, in Opal, renders as `r ltx("illustrated in Figure \\ref{tbl2opal}.", ":")`
+Which, in OPAL, renders as `r ltx("illustrated in Figure \\ref{tbl2opal}.", ":")`
 
-![\label{tbl2opal}Preview of complex table exercise in the learning management system OPAL](images/table-complex.jpg){width=100%}
+![\label{tbl2opal}Preview of complex table task in the learning management system OPAL](images/table-complex.jpg){width=100%}
 
 You can see that the order of the columns is now the same as in the source table.
 
@@ -74,12 +74,12 @@ Has to be `table` or `match`.
 
 ### identifier
 
-This is the ID of the exercise, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be
+This is the ID of the task, useful for later data analysis of results. The default is the file name. If you are doing extensive data analysis later on it makes sense to specify a meaningful identifier. In all other cases, the file name should be
 fine.
 
 ### title
 
-Title of the exercise. Can be displayed to students depending on the learning management system settings. Default is the file name.
+Title of the task. Can be displayed to students depending on the learning management system settings. Default is the file name.
 
 ### shuffle
 
@@ -129,6 +129,6 @@ After experimenting with various approaches, we settled on these straightforward
 <!-- ``` -->
 
 
-## Some advice on table exercises 
+## Some advice on table tasks 
 
-Table exercises are forced choice exercises, so they suffer from the sample problems as [single choice](singlechoice.html) and [multiple choice](multiplechoice.html) exercises. The advantage of table exercises is that they are easy so manage (e.g. in csv-tables) and many questions can be asked at once, using little space.
+Table tasks are forced choice tasks, so they suffer from the sample problems as [single choice](singlechoice.html) and [multiple choice](multiplechoice.html) tasks. The advantage of table tasks is that they are easy so manage (e.g. in csv-tables) and many questions can be asked at once, using little space.

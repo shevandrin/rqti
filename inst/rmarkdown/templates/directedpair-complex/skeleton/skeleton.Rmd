@@ -11,7 +11,8 @@ shuffle: true # random order of elements
 
 In this task the candidate has to match elements from two sets.
 
-As a source of data just provide a markdown list with the correct pairs, separated by `|`.
+As a source of data just provide a markdown list with the correct pairs,
+separated by `|`.
 
 Match the following `rqti` functions with their purpose:
 
@@ -24,7 +25,8 @@ Match the following `rqti` functions with their purpose:
 
 Provide your feedback here.
 
-<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
+<!-- If you prefer specific feedback for correct and incorrect solution, delete
+the general feedback section and uncomment everything starting from this line:
 
 # feedback+
 

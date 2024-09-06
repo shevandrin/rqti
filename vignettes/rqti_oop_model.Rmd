@@ -1,9 +1,9 @@
 ---
-title: "RQTI OOP Model"
+title: "rqti OOP Model"
 output: rmarkdown::html_vignette
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{RQTI OOP Model}
+  %\VignetteIndexEntry{rqti OOP Model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   message=F
 )
+source("helper.R")
 ```
 
 ```{r, echo=FALSE}
@@ -34,11 +35,13 @@ library(rqti)
   }
 </style>
 
-The Rmd interface of `rqti` is excellent for quickly getting started, but it has some drawbacks. First, it can be quite slow, as the Rmd file must be converted to HTML before it can be used. This delay is especially noticeable when generating several versions of multiple exercises. Additionally, Rmd lacks flexibility in handling exercise parameters. For instance, while it is possible to select specific questions within an exercise by passing parameters during knitting, this approach is not very convenient.
+`r ltx("# rqti OOP model", "")`
+
+The Rmd interface of `rqti` is excellent for quickly getting started, but it has some drawbacks. First, it can be quite slow, as the Rmd file must be converted to HTML before it can be used. This delay is especially noticeable when generating several versions of multiple tasks. Additionally, Rmd lacks flexibility in handling task parameters. For instance, while it is possible to select specific questions within a task by passing parameters during knitting, this approach is not very convenient.
 
 Another challenge with Rmd is storing and distributing the files, as there is no standard method for doing so. While you can host the files somewhere, there is no easy way for instructors to know when a new version is available. Ultimately, while Rmd is great for readability, it is not designed for rigorous programming. If you want to fully leverage a programming language when creating exercises and exams, a programming interface is a better choice.
 
-The `rqti` package offers such an interface, as it uses S4 object-oriented programming (OOP) under the hood. This allows you to create all exercise types as objects, providing greater flexibility and faster performance. You can also share your exercises by creating an R package. If you are content with Rmd, there is nothing wrong with continuing to use it. However, if you are looking to take your work to the next level, consider creating exercise objects directly.
+The `rqti` package offers such an interface, as it uses S4 object-oriented programming (OOP) under the hood. This allows you to create all task types as objects, providing greater flexibility and faster performance. You can also share your tasks by creating an R package. If you are content with Rmd, there is nothing wrong with continuing to use it. However, if you are looking to take your work to the next level, consider creating task objects directly.
 
 First, check out the overview of our classes:
 
@@ -74,9 +77,9 @@ Finally, there are classes for tests and their sections:
 - `?AssessmentTest`
 - `?AssessmentTestOpal`
 
-## How to create task objects
+## Creating objects
 
-There are two ways to create task objects:
+There are two ways to create objects:
 
 1. A call to `new` with the corresponding class and parameters.
 2. Using constructor functions (recommended).
@@ -110,7 +113,7 @@ The following functions create classes representing tests and their sections:
 - `?assessmentTest`
 - `?assessmentTestOpal`
 
-## Creating task objects
+## Creating tasks
 
 First, it is important to know that you can create an object directly from Rmd files:
 
@@ -135,9 +138,11 @@ But how would you create this object from scratch? This is not very hard:
 
 ```{r}
 choices <- c(
-  "There is a 5% probability that you will mistakenly reject the null hypothesis, when it is actually correct.", 
-  "There is a 5% probability that the null hypothesis is correct.", 
-  "There is a 5% probability that you will mistakenly reject the alternative hypothesis, when it is correct.", 
+  "There is a 5% probability that you will mistakenly reject the null
+ hypothesis, when it is actually correct.",
+  "There is a 5% probability that the null hypothesis is correct.",
+  "There is a 5% probability that you will mistakenly reject the alternative
+ hypothesis, when it is correct.",
   "The test power is 95%."
 )
 
@@ -160,6 +165,8 @@ all.equal(sc, sc2)
 
 There are some differences in defaults, and we did not provide feedback in this case, but overall, creating objects from scratch is relatively straightforward. However, it becomes more challenging when incorporating HTML, math, and images. These elements are seamlessly handled by the Rmd-interface, but doing it from scratch requires more effort.
 
+## Using html
+
 Let us add a feedback object, including some html formatting created with htmltools:
 
 ```{r}
@@ -167,12 +174,15 @@ library(htmltools)
 
 text1 <- p(
   "The correct interpretation is: ", 
-  strong("There is a 5% probability that you will mistakenly reject the null hypothesis, when it is correct.")
+  strong("There is a 5% probability that you will mistakenly reject the null 
+ hypothesis, when it is correct.")
 )
 
 text2 <- tags$details(
   tags$summary("More Information"),
-  "This is based on the typical understanding of a 5% significance level in hypothesis testing, which means that you are willing to accept a 5% chance of making a Type I error."
+  "This is based on the typical understanding of a 5% significance level in
+ hypothesis testing, which means that you are willing to accept a 5% chance of 
+ making a Type I error."
 )
 
 fb <- modalFeedback(content = list(as.character(text1), as.character(text2)))
@@ -196,17 +206,22 @@ A couple of things should be noticed:
 - the `feedback` parameter `content` can only take lists
 - the `singleChoice` parameter `feedback` can only take lists
 
-What if we want to add some math? There are several ways to achieve this, but the simplest is to use latex syntax in html as per MathJax:
+What if we want to add some math? 
+
+## Using maths
+
+There are several ways to add formulas to your content, but the simplest is to use latex syntax in html as per MathJax:
 
 ```{r}
-math <- r"(When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$)"
+math <- r"(When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\)
+ and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$)"
 ```
 
 Note the use of `\(` and `\)` for inline math and `$$` for displayed math. You cannot use `$` for inline math as per MathJax syntax.
 
 Further note the `r"(...)"`-syntax, which escapes special characters automatically.
 
-Let us render it, this time within an essay exercise:
+Let us render it, this time within an essay task:
 
 ```{r eval=F}
 render_qtijs(
@@ -219,7 +234,11 @@ render_qtijs(
 )
 ```
 
-Adding math is straightforward, but what about images? There are various ways to incorporate them. A simple method is to save your image as raw bytes and embed it directly in an image tag.
+Adding math is straightforward, but what about graphics? 
+
+## Using graphics
+
+There are various ways to incorporate them. A simple method is to save a plot or image as raw bytes and embed it directly in a html image tag.
 
 Let us first create a graph and save it in a temporary file:
 
@@ -241,7 +260,7 @@ image <- as.character(img(width = "400",
                           src = paste0("data:image/png;base64,", txt)))
 ```
 
-Finally, let us add in a simple gap exercise:
+Finally, let us add it to a simple gap task:
 
 ```{r}
 gap_with_img <- entry(
@@ -268,15 +287,15 @@ A few things to keep in mind during this process:
 - Ensure your image is well-prepared with the right aspect ratio, resolution, etc.
 - You can use ggplot2 or other graphics libraries similarly.
 - Consider creating a helper function to decode the image into raw bytes.
-- For gap exercises, the gap must be placed within the content parameter, which makes using htmltools challenging. Currently, you need to use raw HTML tags to surround the gaps.
+- For gap tasks, the gap must be placed within the content parameter, which makes using htmltools challenging. Currently, you need to use raw HTML tags to surround the gaps.
 - Although the process is more complex than with Rmd, it gives you greater control over both the image creation and its display in HTML.
 - Future improvements will simplify the process with constructors. For now, we need more experience and user feedback.
 
-We covered most aspects of creating exercises with constructor functions. Let us now look at creating sections and tests:
+We covered most aspects of creating tasks with constructor functions. Let us now look at creating sections and tests:
 
-## Creating Sections and Tests
+## Creating sections and tests
 
-Let us combine the exercises from above into a section:
+Let us combine the tasks from above into a section:
 
 ```{r}
 section1 <- assessmentSection(list(sc, gap_with_img))
@@ -289,7 +308,7 @@ render_qtijs(section1)
 ```
 There is not much to see here because we only have one section and qtijs does not reveal the underlying structure. To illustrate better, let us add another section and make a test:
 
-```{r}
+```{r warning=FALSE}
 items <- list(essay(content = list("Who was Ada Lovelace?")), 
               essay(content = list("Who was Grace Hopper?")))
 section2 <- assessmentSection(items, selection = 1)
@@ -304,6 +323,6 @@ render_qtijs(exam)
 
 What is happening here? There are two sections, but only one item is selected from section 2. Additionally, a time limit has been imposed for the test.
 
-The flexibility to arrange and select items within sections, and organize sections within tests, provides significant control over the assessment process. You can create parallel versions of items and easily develop custom exam functions that generate different versions of exercises.
+The flexibility to arrange and select items within sections, and organize sections within tests, provides significant control over the assessment process. You can create parallel versions of items and easily develop custom exam functions that generate different versions of tasks.
 
 We have now covered the key constructor functions of the rqti package. These functions empower you to build questions and exams from scratch, giving you full control over the process. Moreover, this approach allows you to package your questions and exams into standard R packages, making distribution simple and efficient. While there is much more to explore, you will need to dive deeper into the possibilities on your own.

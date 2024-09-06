@@ -11,10 +11,14 @@ library(rqti)
 
 # question
 
-The philosophy of the rqti package is <<do one thing and do it well|one for all>>.
+The philosophy of the rqti package is <<do one thing and do it well|one for
+all>>.
 
-Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2, response_identifier = "OOP_task")`.
+Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" =
+"S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2,
+response_identifier = "OOP_task")`.
 
 # feedback
 
-The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.
+The package `rqti` is specialized for producing xml rqti files so "do one thing
+and do it well" is more appropriate. Under the hood we use S4 OOP.

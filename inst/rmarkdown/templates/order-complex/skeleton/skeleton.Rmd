@@ -11,7 +11,8 @@ points: 2
 
 # question
 
-What is the structure of an exam in QTI terms, starting from the top (the exam) to the bottom (individual questions).
+What is the structure of an exam in QTI terms, starting from the top (the exam)
+to the bottom (individual questions).
 
 - test
 - section
@@ -20,9 +21,11 @@ What is the structure of an exam in QTI terms, starting from the top (the exam) 
 
 # feedback
 
-For order exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.
+For order exercises it is usually clear why the given order is correct, but you
+might still want to provide a detailed feedback.
 
-<!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
+<!-- If you prefer specific feedback for correct and incorrect solution, delete
+the general feedback section and uncomment everything starting from this line:
 
 # feedback+
 

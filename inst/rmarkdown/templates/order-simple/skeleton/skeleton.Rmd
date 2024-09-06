@@ -5,7 +5,8 @@ knit: rqti::render_qtijs
 
 # question
 
-What is the structure of an exam in QTI terms, starting from the top (the exam) to the bottom (individual questions).
+What is the structure of an exam in QTI terms, starting from the top (the exam)
+to the bottom (individual questions).
 
 - test
 - section
@@ -14,4 +15,5 @@ What is the structure of an exam in QTI terms, starting from the top (the exam) 
 
 # feedback
 
-For order exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.
+For order exercises it is usually clear why the given order is correct, but you
+might still want to provide a detailed feedback.

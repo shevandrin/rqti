@@ -5,8 +5,12 @@ knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
 
 # question
 
-What are the advantages and disadvantages of the `rqti` package as compared to the `exams` package?
+What are the advantages and disadvantages of the `rqti` package as compared to
+the `exams` package?
 
 # feedback
 
-The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.
+The rqti package can only export to the QTI format, which makes it less general
+than the `exams` package. But the rqti package supports more exercise types, can
+preview xml files, supports the OPAL API and has an extensible core architecture
+based on S4 OOP.
