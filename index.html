@@ -44,14 +44,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -61,7 +61,7 @@
     <li><a class="dropdown-item" href="articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -106,7 +106,7 @@
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<p>In RStudio, start by navigating to <em>File</em> -&gt; <em>New Project</em>, and then select <strong>rqti Project</strong> as the project type. For a quick start, you can proceed with the default settings. If you prefer to customize the options, make sure to select ‘YES’ for ‘Create Templates’—this will generate RMarkdown templates tailored for different task types.</p>
+<p>In RStudio, start by navigating to <em>File</em> -&gt; <em>New Project</em>, and then select <strong>rqti Project</strong> as the project type. For a quick start, you can proceed with the default settings. If you prefer to customize the options, make sure to select <em>YES</em> for <em>Create Templates</em>—this will generate RMarkdown templates tailored for different task types.</p>
 <p>Once your project is created, open one of the templates from the working directory (e.g., <code>gap/gap.Rmd</code>). To preview it, simply click <em>Knit</em>. The output will be displayed in the RStudio Viewer or in a new browser window if you are working outside of RStudio.</p>
 <p>Explore the other templates to familiarize yourself with the various features and task types that <code>rqti</code> supports. This will help you create exercises that align with your specific needs.</p>
 <p>To learn how to create sections and tests, start by reviewing the <em>main.R</em> file in your working directory. This file provides a foundational understanding of structuring your work. For more detailed information, you can refer to the article <a href="articles/section.html">Sections and Tests</a>.</p>
@@ -122,9 +122,7 @@
 <li><a href="articles/directedpairs.html">Directed Pair Exercises</a></li>
 <li><a href="articles/table.html">Table Exercises</a></li>
 </ul>
-<p>To add metadata to your exercises, refer to the article <a href="articles/metadata.html">Adding metadata</a></p>
-<p>To integrate various exercises into a test, refer to the article <a href="articles/section.html">Sections and Tests</a></p>
-<p>For users of the learning management system OPAL, explore the article <a href="articles/api_opal.html">Working with the OPAL API</a>.</p>
+<p>To add metadata to your exercises, refer to the article <a href="articles/adding_metadata.html">Adding metadata</a> To integrate various exercises into a test, refer to the article <a href="articles/section.html">Sections and Tests</a> For users of the learning management system OPAL, explore the article <a href="articles/api_opal.html">Working with the OPAL API</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="general-workflow">General workflow<a class="anchor" aria-label="anchor" href="#general-workflow"></a>
@@ -132,13 +130,13 @@
 <p>The fundamental workflow with the <code>rqti</code> package involves the following steps:</p>
 <ol style="list-style-type: decimal">
 <li>Create exercise files.
-<ol style="list-style-type: decimal">
+<ul>
 <li>Start by generating an Rmd document. You can either start from scratch or leverage Rmd templates ending with the suffix <a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a>.</li>
-<li>Create a section titled <code># question</code> and construct your interactions (gaps, choices, etc.). Utilize <code>rqti</code> helper functions where applicable.</li>
+<li>Create a section titled <code># question</code> and construct your interactions (gaps, choices, etc.) Utilize <code>rqti</code> helper functions where applicable.</li>
 <li>Specify additional attributes in the yaml section. Detailed explanations for all types are available in the <strong>Articles</strong> menu on this website (top).</li>
 <li>Choose a previewer: Either qtijs (<code>knit: rqti::render_qtijs</code>), for local rendering, or the learning management system Opal (<code>knit: rqti::render_opal</code>). Note that Opal usage requires prior setup, which is explained in the article <a href="articles/api_opal.html">Working with the Opal API</a>.</li>
 <li>Verify if your task appears as desired. Make adjustments until you are satisfied.</li>
-</ol>
+</ul>
 </li>
 <li>Create sections and tests based on your exercise files.</li>
 <li>Write the test (xml) to disk according to the QTI standard and upload the test file to your learning management system.</li>
@@ -147,7 +145,7 @@
 <p>Each step involves specific <code>rqti</code> functions, with the most useful ones illustrated in the following diagram:</p>
 <figure><img src="articles/images/workflow.png" style="width:100.0%" alt="Basic workflow to create exercises and tests with rqti"><figcaption aria-hidden="true">
 Basic workflow to create exercises and tests with rqti
-</figcaption></figure><p>The most effective way to grasp the workflow is to create a simple exercise, such as “Single-Choice” as demonstrated in the article <a href="articles/singlechoice.html">Single-Choice Exercises</a>. Once you have completed that, explore the other exercise types discussed in the subsequent chapters.</p>
+</figcaption></figure><p>The most effective way to grasp the workflow is to create a simple exercise, such as <em>Single-Choice</em> as demonstrated in the article <a href="articles/singlechoice.html">Single-Choice Exercises</a>. Once you have completed that, explore the other exercise types discussed in the subsequent chapters.</p>
 </div>
 <div class="section level2">
 <h2 id="support-and-bug-reports">Support and Bug Reports<a class="anchor" aria-label="anchor" href="#support-and-bug-reports"></a>

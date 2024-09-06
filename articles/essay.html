@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Essay Exercises • rqti</title>
+<title>Essay tasks • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Essay Exercises">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Essay tasks">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -41,14 +41,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -58,7 +58,7 @@
     <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -84,9 +84,9 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Essay Exercises</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Essay tasks</h1>
             
-            <h4 data-toc-skip class="date">2024-09-05</h4>
+            <h4 data-toc-skip class="date">2024-09-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/essay.Rmd" class="external-link"><code>vignettes/essay.Rmd</code></a></small>
       <div class="d-none name"><code>essay.Rmd</code></div>
@@ -94,7 +94,7 @@
 
     
     
-<p>This is a standard essay exercise with an open field for students to
+<p>This is a standard essay task with an open field for students to
 write a comprehensive response.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
@@ -115,26 +115,30 @@ knit: rqti::render_qtijs # if you do not want our preview renderer, remove this
 
 # question
 
-What are the advantages and disadvantages of the `rqti` package as compared to the `exams` package?
+What are the advantages and disadvantages of the `rqti` package as compared to
+the `exams` package?
 
 # feedback
 
-The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.</code></pre>
-<p>Knitting via the Knit-Button to qtijs, this exercise renders asd:</p>
+The rqti package can only export to the QTI format, which makes it less general
+than the `exams` package. But the rqti package supports more exercise types, can
+preview xml files, supports the OPAL API and has an extensible core architecture
+based on S4 OOP.</code></pre>
+<p>Knitting via the Knit-Button to qtijs, this task renders as:</p>
 <div class="float">
 <img src="images/xml/essay-simple.jpg" style="width:100.0%" alt="Simple essay erxercise rendered by qtijs"><div class="figcaption">Simple essay erxercise rendered by qtijs</div>
 </div>
 <p>Alternatively, change the knit parameter to
-<code>knit: render_opal</code> (see <a href="api_opal.html">Working with
-the OPAL API</a>) to upload to Opal directly, producing:</p>
+<code>knit: rqti::render_opal</code> (see <a href="api_opal.html">Working with the OPAL API</a>) to upload to OPAL
+directly, producing:</p>
 <div class="float">
-<img src="images/essay-simple.jpg" style="width:100.0%" alt="Simple essay exercise rendered by OPAL"><div class="figcaption">Simple essay exercise rendered by OPAL</div>
+<img src="images/essay-simple.jpg" style="width:100.0%" alt="Simple essay task rendered by OPAL"><div class="figcaption">Simple essay task rendered by OPAL</div>
 </div>
 <p>Note that in this example, a feedback section was also provided.
 Since an open question requires manual review, only general feedback
 without conditions should be provided. The feedback is optional, but
 usually it is a good idea to give some explanation for students.
-Furthermore, a feedback section for essay exercises can serve as a good
+Furthermore, a feedback section for essay tasks can serve as a good
 basis for grading student’s answers. In addition the length of the
 feedback section is taken into account in constructing the text field
 and the maximum number of words. If no feedback is provided, sensible
@@ -155,21 +159,24 @@ expected_length: 30 # defines the width of the text input field
 expected_lines: 3 # defines the number of lines of the text input field
 words_max: 100 # how many words can be written in the text input field
 words_min: 10 # the minimum number of words to send a response
-data_allow_paste: false # whether the candidate is allowed to copy text from the clipboard
+data_allow_paste: false # allows to copy text from the clipboard
 points: 2
 ---
 
 # question
 
-What are the advantages and disadvantages of the `rqti` package as compared to the `exams` package?
+What are the advantages and disadvantages of the `rqti` package as compared to
+the `exams` package?
 
 # feedback
 
-The rqti package can only export to the QTI format, which makes it less general than the `exams` package. But the rqti package supports more exercise types, can preview xml files, supports the OPAL API and has an extensible core architecture based on S4 OOP.</code></pre>
-<p>Which, in Opal, renders as :</p>
+The rqti package can only export to the QTI format, which makes it less general
+than the `exams` package. But the rqti package supports more exercise types, can
+preview xml files, supports the OPAL API and has an extensible core architecture
+based on S4 OOP.</code></pre>
+<p>Which, in OPAL, renders as :</p>
 <div class="float">
-<img src="images/essay-complex.jpg" style="width:100.0%" alt="More complex essay exercise rendered in OPAL"><div class="figcaption">More complex essay exercise rendered in
-OPAL</div>
+<img src="images/essay-complex.jpg" style="width:100.0%" alt="More complex essay task rendered in OPAL"><div class="figcaption">More complex essay task rendered in OPAL</div>
 </div>
 </div>
 <div class="section level2">
@@ -183,7 +190,7 @@ OPAL</div>
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the ID of the exercise, useful for later data analysis of
+<p>This is the ID of the task, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
@@ -191,13 +198,13 @@ all other cases, the file name should be fine.</p>
 <div class="section level3">
 <h3 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
 </h3>
-<p>Title of the exercise. Can be displayed to students depending on the
+<p>Title of the task. Can be displayed to students depending on the
 learning management system settings. Default is the file name.</p>
 </div>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>How many points are given for the whole exercise. Default is 1.</p>
+<p>How many points are given for the whole task. Default is 1.</p>
 </div>
 <div class="section level3">
 <h3 id="expected_length">expected_length<a class="anchor" aria-label="anchor" href="#expected_length"></a>
@@ -237,18 +244,18 @@ clipboard to the text input field. Default is <code>false</code>.</p>
 <strong># feedback</strong> (general feedback, displayed every time,
 without conditions)</li>
 </ul>
-<p>The feedback plays an important role in essay exercises because the
+<p>The feedback plays an important role in essay tasks because the
 expected length and maximum words are calculated from the feedback
 section, if one is given. Providing useful feedback also defines
-explicit criteria for grading, so do not skip it for essay exercises,
-unless you have good reasons to.</p>
+explicit criteria for grading, so do not skip it for essay tasks, unless
+you have good reasons to.</p>
 <p>Further note that it does not make sense to give conditional feedback
-as essay exercises have to be graded manually.</p>
+as essay tasks have to be graded manually.</p>
 </div>
 <div class="section level2">
-<h2 id="some-advice-on-essay-exercises">Some advice on essay exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-exercises"></a>
+<h2 id="some-advice-on-essay-tasks">Some advice on essay tasks<a class="anchor" aria-label="anchor" href="#some-advice-on-essay-tasks"></a>
 </h2>
-<p>Essay exercises can be highly diagnostic, especially when instructors
+<p>Essay tasks can be highly diagnostic, especially when instructors
 pose thought-provoking questions. Unfortunately, many instructors
 struggle with creativity and precision when crafting essay prompts,
 leading to vague grading criteria. To address this issue, it is

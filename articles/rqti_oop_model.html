@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>RQTI OOP Model • rqti</title>
+<title>rqti OOP Model • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="RQTI OOP Model">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="rqti OOP Model">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -41,14 +41,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -58,7 +58,7 @@
     <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -84,9 +84,9 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>RQTI OOP Model</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>rqti OOP Model</h1>
             
-            <h4 data-toc-skip class="date">2024-09-05</h4>
+            <h4 data-toc-skip class="date">2024-09-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/rqti_oop_model.Rmd" class="external-link"><code>vignettes/rqti_oop_model.Rmd</code></a></small>
       <div class="d-none name"><code>rqti_oop_model.Rmd</code></div>
@@ -111,10 +111,10 @@
 getting started, but it has some drawbacks. First, it can be quite slow,
 as the Rmd file must be converted to HTML before it can be used. This
 delay is especially noticeable when generating several versions of
-multiple exercises. Additionally, Rmd lacks flexibility in handling
-exercise parameters. For instance, while it is possible to select
-specific questions within an exercise by passing parameters during
-knitting, this approach is not very convenient.</p>
+multiple tasks. Additionally, Rmd lacks flexibility in handling task
+parameters. For instance, while it is possible to select specific
+questions within a task by passing parameters during knitting, this
+approach is not very convenient.</p>
 <p>Another challenge with Rmd is storing and distributing the files, as
 there is no standard method for doing so. While you can host the files
 somewhere, there is no easy way for instructors to know when a new
@@ -124,11 +124,11 @@ a programming language when creating exercises and exams, a programming
 interface is a better choice.</p>
 <p>The <code>rqti</code> package offers such an interface, as it uses S4
 object-oriented programming (OOP) under the hood. This allows you to
-create all exercise types as objects, providing greater flexibility and
-faster performance. You can also share your exercises by creating an R
+create all task types as objects, providing greater flexibility and
+faster performance. You can also share your tasks by creating an R
 package. If you are content with Rmd, there is nothing wrong with
 continuing to use it. However, if you are looking to take your work to
-the next level, consider creating exercise objects directly.</p>
+the next level, consider creating task objects directly.</p>
 <p>First, check out the overview of our classes:</p>
 <div class="zoomable-image">
 <p><img src="images/s4model.svg" alt="Class diagram S4"></p>
@@ -164,9 +164,9 @@ tasks:</p>
 <li><code><a href="../reference/AssessmentTestOpal-class.html">?AssessmentTestOpal</a></code></li>
 </ul>
 <div class="section level2">
-<h2 id="how-to-create-task-objects">How to create task objects<a class="anchor" aria-label="anchor" href="#how-to-create-task-objects"></a>
+<h2 id="creating-objects">Creating objects<a class="anchor" aria-label="anchor" href="#creating-objects"></a>
 </h2>
-<p>There are two ways to create task objects:</p>
+<p>There are two ways to create objects:</p>
 <ol style="list-style-type: decimal">
 <li>A call to <code>new</code> with the corresponding class and
 parameters.</li>
@@ -207,7 +207,7 @@ sections:</p>
 </ul>
 </div>
 <div class="section level2">
-<h2 id="creating-task-objects">Creating task objects<a class="anchor" aria-label="anchor" href="#creating-task-objects"></a>
+<h2 id="creating-tasks">Creating tasks<a class="anchor" aria-label="anchor" href="#creating-tasks"></a>
 </h2>
 <p>First, it is important to know that you can create an object directly
 from Rmd files:</p>
@@ -325,9 +325,11 @@ need for Pandoc or any other translation tools.</p>
 hard:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">choices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"There is a 5% probability that you will mistakenly reject the null hypothesis, when it is actually correct."</span>, </span>
-<span>  <span class="st">"There is a 5% probability that the null hypothesis is correct."</span>, </span>
-<span>  <span class="st">"There is a 5% probability that you will mistakenly reject the alternative hypothesis, when it is correct."</span>, </span>
+<span>  <span class="st">"There is a 5% probability that you will mistakenly reject the null</span></span>
+<span><span class="st"> hypothesis, when it is actually correct."</span>,</span>
+<span>  <span class="st">"There is a 5% probability that the null hypothesis is correct."</span>,</span>
+<span>  <span class="st">"There is a 5% probability that you will mistakenly reject the alternative</span></span>
+<span><span class="st"> hypothesis, when it is correct."</span>,</span>
 <span>  <span class="st">"The test power is 95%."</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -343,7 +345,7 @@ error. In the future we will simplify this case.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">sc</span>, <span class="va">sc2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Attributes: &lt; Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) &gt;"</span></span>
-<span><span class="co">#&gt; [2] "Attributes: &lt; Component \"choices\": 1 string mismatch &gt;"                                   </span></span>
+<span><span class="co">#&gt; [2] "Attributes: &lt; Component \"choices\": 2 string mismatches &gt;"                                 </span></span>
 <span><span class="co">#&gt; [3] "Attributes: &lt; Component \"content\": Component 1: 1 string mismatch &gt;"                      </span></span>
 <span><span class="co">#&gt; [4] "Attributes: &lt; Component \"feedback\": Length mismatch: comparison on first 0 components &gt;"  </span></span>
 <span><span class="co">#&gt; [5] "Attributes: &lt; Component \"files\": Lengths (0, 1) differ (string compare on first 0) &gt;"     </span></span>
@@ -355,6 +357,10 @@ relatively straightforward. However, it becomes more challenging when
 incorporating HTML, math, and images. These elements are seamlessly
 handled by the Rmd-interface, but doing it from scratch requires more
 effort.</p>
+</div>
+<div class="section level2">
+<h2 id="using-html">Using html<a class="anchor" aria-label="anchor" href="#using-html"></a>
+</h2>
 <p>Let us add a feedback object, including some html formatting created
 with htmltools:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -362,12 +368,15 @@ with htmltools:</p>
 <span></span>
 <span><span class="va">text1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span></span>
 <span>  <span class="st">"The correct interpretation is: "</span>, </span>
-<span>  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">strong</a></span><span class="op">(</span><span class="st">"There is a 5% probability that you will mistakenly reject the null hypothesis, when it is correct."</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">strong</a></span><span class="op">(</span><span class="st">"There is a 5% probability that you will mistakenly reject the null </span></span>
+<span><span class="st"> hypothesis, when it is correct."</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">text2</span> <span class="op">&lt;-</span> <span class="va">tags</span><span class="op">$</span><span class="fu">details</span><span class="op">(</span></span>
 <span>  <span class="va">tags</span><span class="op">$</span><span class="fu">summary</span><span class="op">(</span><span class="st">"More Information"</span><span class="op">)</span>,</span>
-<span>  <span class="st">"This is based on the typical understanding of a 5% significance level in hypothesis testing, which means that you are willing to accept a 5% chance of making a Type I error."</span></span>
+<span>  <span class="st">"This is based on the typical understanding of a 5% significance level in</span></span>
+<span><span class="st"> hypothesis testing, which means that you are willing to accept a 5% chance of </span></span>
+<span><span class="st"> making a Type I error."</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modalFeedback.html">modalFeedback</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">text1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">text2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -395,17 +404,22 @@ take lists</li>
 <li>the <code>singleChoice</code> parameter <code>feedback</code> can
 only take lists</li>
 </ul>
-<p>What if we want to add some math? There are several ways to achieve
-this, but the simplest is to use latex syntax in html as per
-MathJax:</p>
+<p>What if we want to add some math?</p>
+</div>
+<div class="section level2">
+<h2 id="using-maths">Using maths<a class="anchor" aria-label="anchor" href="#using-maths"></a>
+</h2>
+<p>There are several ways to add formulas to your content, but the
+simplest is to use latex syntax in html as per MathJax:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">math</span> <span class="op">&lt;-</span> <span class="st">r"(When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$)"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">math</span> <span class="op">&lt;-</span> <span class="st">r"(When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\)</span></span>
+<span><span class="st"> and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$)"</span></span></code></pre></div>
 <p>Note the use of <code>\(</code> and <code>\)</code> for inline math
 and <code>$$</code> for displayed math. You cannot use <code>$</code>
 for inline math as per MathJax syntax.</p>
 <p>Further note the <code>r"(...)"</code>-syntax, which escapes special
 characters automatically.</p>
-<p>Let us render it, this time within an essay exercise:</p>
+<p>Let us render it, this time within an essay task:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span></span>
@@ -415,9 +429,14 @@ characters automatically.</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Adding math is straightforward, but what about images? There are
-various ways to incorporate them. A simple method is to save your image
-as raw bytes and embed it directly in an image tag.</p>
+<p>Adding math is straightforward, but what about graphics?</p>
+</div>
+<div class="section level2">
+<h2 id="using-graphics">Using graphics<a class="anchor" aria-label="anchor" href="#using-graphics"></a>
+</h2>
+<p>There are various ways to incorporate them. A simple method is to
+save a plot or image as raw bytes and embed it directly in a html image
+tag.</p>
 <p>Let us first create a graph and save it in a temporary file:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imgfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span></span>
@@ -435,7 +454,7 @@ tags using htmltools:</p>
 <span>                           <span class="st">"txt"</span><span class="op">)</span></span>
 <span><span class="va">image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">img</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"400"</span>, </span>
 <span>                          src <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"data:image/png;base64,"</span>, <span class="va">txt</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Finally, let us add in a simple gap exercise:</p>
+<p>Finally, let us add it to a simple gap task:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gap_with_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/entry.html">entry</a></span><span class="op">(</span></span>
 <span>  content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -458,22 +477,22 @@ resolution, etc.</li>
 <li>You can use ggplot2 or other graphics libraries similarly.</li>
 <li>Consider creating a helper function to decode the image into raw
 bytes.</li>
-<li>For gap exercises, the gap must be placed within the content
-parameter, which makes using htmltools challenging. Currently, you need
-to use raw HTML tags to surround the gaps.</li>
+<li>For gap tasks, the gap must be placed within the content parameter,
+which makes using htmltools challenging. Currently, you need to use raw
+HTML tags to surround the gaps.</li>
 <li>Although the process is more complex than with Rmd, it gives you
 greater control over both the image creation and its display in
 HTML.</li>
 <li>Future improvements will simplify the process with constructors. For
 now, we need more experience and user feedback.</li>
 </ul>
-<p>We covered most aspects of creating exercises with constructor
-functions. Let us now look at creating sections and tests:</p>
+<p>We covered most aspects of creating tasks with constructor functions.
+Let us now look at creating sections and tests:</p>
 </div>
 <div class="section level2">
-<h2 id="creating-sections-and-tests">Creating Sections and Tests<a class="anchor" aria-label="anchor" href="#creating-sections-and-tests"></a>
+<h2 id="creating-sections-and-tests">Creating sections and tests<a class="anchor" aria-label="anchor" href="#creating-sections-and-tests"></a>
 </h2>
-<p>Let us combine the exercises from above into a section:</p>
+<p>Let us combine the tasks from above into a section:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">section1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentSection.html">assessmentSection</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sc</span>, <span class="va">gap_with_img</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>And render it:</p>
@@ -485,8 +504,6 @@ let us add another section and make a test:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Who was Ada Lovelace?"</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>              <span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Who was Grace Hopper?"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The data_allow_paste property only works on LMS Opal and OpenOlat.</span></span>
-<span><span class="co">#&gt; Warning: The data_allow_paste property only works on LMS Opal and OpenOlat.</span></span>
 <span><span class="va">section2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentSection.html">assessmentSection</a></span><span class="op">(</span><span class="va">items</span>, selection <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">exam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentTest.html">assessmentTest</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section1</span>, <span class="va">section2</span><span class="op">)</span>, time_limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>Render it:</p>
@@ -499,7 +516,7 @@ the test.</p>
 organize sections within tests, provides significant control over the
 assessment process. You can create parallel versions of items and easily
 develop custom exam functions that generate different versions of
-exercises.</p>
+tasks.</p>
 <p>We have now covered the key constructor functions of the rqti
 package. These functions empower you to build questions and exams from
 scratch, giving you full control over the process. Moreover, this

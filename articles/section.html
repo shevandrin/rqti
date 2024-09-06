@@ -41,14 +41,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -58,7 +58,7 @@
     <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Sections and Tests</h1>
             
-            <h4 data-toc-skip class="date">2024-09-05</h4>
+            <h4 data-toc-skip class="date">2024-09-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/section.Rmd" class="external-link"><code>vignettes/section.Rmd</code></a></small>
       <div class="d-none name"><code>section.Rmd</code></div>
@@ -94,14 +94,14 @@
 
     
     
-<p>Creating single exercises is not particularly useful as one usually
-wants to combine different exercises into a test. A test in the QTI
-standard typically consists of one or more sections. Each Section can
-contain a combination of exercises or other subsections, providing great
-flexibility in test structure. Sections can be customized with respect
-to various parameters, such as time limit and shuffling.</p>
+<p>Creating single tasks is not particularly useful as one usually wants
+to combine different tasks into a test. A test in the QTI standard
+typically consists of one or more sections. Each Section can contain a
+combination of tasks or other subsections, providing great flexibility
+in test structure. Sections can be customized with respect to various
+parameters, such as time limit and shuffling.</p>
 <p>The <code>rqti</code> package makes it very simple to mix different
-sources of exercise files:</p>
+sources of task files:</p>
 <ul>
 <li>
 <strong>Rmd (md) files</strong>: You can use Rmarkdown files that
@@ -119,14 +119,13 @@ article <a href="rqti_oop_model.html">rqti OOP model</a>.</li>
 <div class="section level2">
 <h2 id="using-the-section-and-test-functions">Using the <code>section</code> and <code>test</code> functions<a class="anchor" aria-label="anchor" href="#using-the-section-and-test-functions"></a>
 </h2>
-<p>Although it is possible to feed a test with exercises directly, we
+<p>Although it is possible to feed a test with tasks directly, we
 suggest to always use a section, as this provides more flexibility and
 avoids several problems. Even if you do not need a section, you can just
-create a root section and put the exercises there.</p>
+create a root section and put the tasks there.</p>
 <p>We designed a simple wrapper for sections. Here we load some files
 from our package and use the function <code>section</code> to create the
-section. Note that we request 10 different variants of all
-exercises.</p>
+section. Note that we request 10 different variants of all tasks.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"exercises"</span>, package <span class="op">=</span> <span class="st">"rqti"</span><span class="op">)</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap1.Rmd"</span>, <span class="st">"gap2.Rmd"</span><span class="op">)</span><span class="op">)</span></span>
@@ -158,16 +157,16 @@ demonstration purposes.</p>
 and exam_S7829 (image 2). There are actually 8 more (10 in total) and if
 you restart the exam, you will get one randomly assigned. You can try it
 yourself: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46081048578" class="external-link uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46081048578</a></p>
-<p>To summarize so far: You can just pass your exercise files to the
+<p>To summarize so far: You can just pass your task files to the
 <code>content</code> parameter in <code>section</code> and define how
 many variants you would like to create of each file.</p>
 <p>Of course, creating several variants only makes sense for random
-exercises. Single choice and multiple choice exercises could be part of
+tasks. Single choice and multiple choice tasks could be part of
 different sections:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">non_random_exercises</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sc1.Rmd"</span>, <span class="st">"mpc1.Rmd"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">non_random_tasks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sc1.Rmd"</span>, <span class="st">"mpc1.Rmd"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">root_section</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
-<span>                     <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">non_random_exercises</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                     <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">non_random_tasks</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Note that we use a list here for the root section. This is important
 as the <code>test</code> functions expect a list to be more flexible
 with different inputs (e.g. objects instead of files). Now we can again
@@ -202,11 +201,11 @@ a fixed section that is the same for all tests. Try it out yourself: <a href="ht
 <span><span class="co">#&gt; attr(,"package")</span></span>
 <span><span class="co">#&gt; [1] "rqti"</span></span></code></pre></div>
 <p>The entire rqti-package relies on S4 Object-Oriented Programming
-(OOP), where exercises, sections, and tests are treated as distinct
-objects. If you are not accustomed to OOP, it might seem unfamiliar at
-first, but you do not need to delve into all the technical details to
-use it effectively. Simply utilize the provided helper functions, and
-you should navigate through with ease.</p>
+(OOP), where tasks, sections, and tests are treated as distinct objects.
+If you are not accustomed to OOP, it might seem unfamiliar at first, but
+you do not need to delve into all the technical details to use it
+effectively. Simply utilize the provided helper functions, and you
+should navigate through with ease.</p>
 <p>To customize your sections and tests, check out the references:
 <code><a href="../reference/section.html">?section</a></code> and <code><a href="../reference/test.html">?test</a></code> or
 <code><a href="../reference/test4opal.html">?test4opal</a></code>.</p>
@@ -216,49 +215,48 @@ you should navigate through with ease.</p>
 <!-- ``` -->
 </div>
 <div class="section level2">
-<h2 id="two-approaches-for-parallel-versions-of-an-exercise">Two approaches for parallel versions of an exercise<a class="anchor" aria-label="anchor" href="#two-approaches-for-parallel-versions-of-an-exercise"></a>
+<h2 id="two-approaches-for-parallel-versions-of-a-task">Two approaches for parallel versions of a task<a class="anchor" aria-label="anchor" href="#two-approaches-for-parallel-versions-of-a-task"></a>
 </h2>
 <p>By default the <code>section</code> function creates different
-variants of an exercise by drawing different seeds and creating
-subsections with these seeds. There is also a different approach to
-introduce randomness. Have a look at the following schema:</p>
+variants of a task by drawing different seeds and creating subsections
+with these seeds. There is also a different approach to introduce
+randomness. Have a look at the following schema:</p>
 <div class="float">
-<img src="images/sectionsscheme.png" style="width:100.0%" alt="Two approaches for structuring parallel versions of exercises"><div class="figcaption">Two approaches for structuring parallel versions
-of exercises</div>
+<img src="images/sectionsscheme.png" style="width:100.0%" alt="Two approaches for structuring parallel versions of tasks"><div class="figcaption">Two approaches for structuring parallel versions
+of tasks</div>
 </div>
 <p>On the left-hand side, three distinct subsections were generated,
-each housing the same exercise files but with <strong>different
+each housing the same task files but with <strong>different
 variants</strong>. A participant, starting at the root section, is
-randomly assigned to one of these subsections, encountering all
-exercises within that specific subsection. This setup is generally
-satisfactory for most instructors conducting exams. It ensures that all
-participants within a subsection encounter the same set of exercises,
-facilitating psychometric analysis. However, a drawback is the potential
-for forbidden collaboration between participants within the same
+randomly assigned to one of these subsections, encountering all tasks
+within that specific subsection. This setup is generally satisfactory
+for most instructors conducting exams. It ensures that all participants
+within a subsection encounter the same set of tasks, facilitating
+psychometric analysis. However, a drawback is the potential for
+forbidden collaboration between participants within the same
 subsection.</p>
 <p>On the right-hand side, an alternative strategy was implemented. Each
-exercise <strong>file</strong> now has its dedicated subsection,
+task <strong>file</strong> now has its dedicated subsection,
 encompassing its diverse variants. Participants navigate through each
-section, being assigned only one variant of the exercise per section.
-The noteworthy distinction from the other approach lies in the plethora
-of potential paths available in the test. Given the presence of 3
-variants for each of the 4 files, a total of
+section, being assigned only one variant of the task per section. The
+noteworthy distinction from the other approach lies in the plethora of
+potential paths available in the test. Given the presence of 3 variants
+for each of the 4 files, a total of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>3</mn><mn>4</mn></msup><mo>=</mo><mn>81</mn></mrow><annotation encoding="application/x-tex">3^4 = 81</annotation></semantics></math>
 paths emerges. While this configuration may complicate psychometric
-analysis and introduce challenges in maintaining exercise difficulty
+analysis and introduce challenges in maintaining task difficulty
 equilibrium, it provides a notable advantage in thwarting cheating, as
 the paths of two students are likely to differ.</p>
 <p>However, exercising caution is imperative when adopting this
 approach, particularly in an exam setting. Interestingly, this setup
-finds greater utility when exchanging specific exercises among
-instructors. For instance, generating 20 variants of an exercise and
-bundling them into a test allows for easy import as a subtest in other
-instructors’ exams. Notably, such flexibility would not be feasible with
-the structure on the left-hand side.</p>
+finds greater utility when exchanging specific tasks among instructors.
+For instance, generating 20 variants of a task and bundling them into a
+test allows for easy import as a subtest in other instructors’ exams.
+Notably, such flexibility would not be feasible with the structure on
+the left-hand side.</p>
 <p>To choose between these two versions you can use the parameter
 <code>by</code> in the sense of <code>section</code> by
-<code>variants</code> or <code>section</code> by <code>files</code>.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;We are still searching for a semantically more
-meaningful description. If you have an idea, drop an issue on github: &lt;a href="https://github.com/shevandrin/rqti/issues" class="external-link uri"&gt;https://github.com/shevandrin/rqti/issues&lt;/a&gt;&lt;/p&gt;'><sup>1</sup></a></p>
+<code>variants</code> or <code>section</code> by <code>files</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">root_section</span> <span class="op">=</span> <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span>content <span class="op">=</span> <span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">3</span>, by <span class="op">=</span> <span class="st">"files"</span><span class="op">)</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
@@ -271,7 +269,6 @@ meaningful description. If you have an idea, drop an issue on github: &lt;a href
 <p>We are still looking for better semantics of these cases, so if you
 have a good idea, open an issue on our github page: <a href="https://github.com/shevandrin/rqti" class="external-link uri">https://github.com/shevandrin/rqti</a></p>
 </div>
-
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Dropdown Exercises • rqti</title>
+<title>Dropdown tasks • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Dropdown Exercises">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Dropdown tasks">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -41,14 +41,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -58,7 +58,7 @@
     <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -84,9 +84,9 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Dropdown Exercises</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Dropdown tasks</h1>
             
-            <h4 data-toc-skip class="date">2024-09-05</h4>
+            <h4 data-toc-skip class="date">2024-09-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/dropdown.Rmd" class="external-link"><code>vignettes/dropdown.Rmd</code></a></small>
       <div class="d-none name"><code>dropdown.Rmd</code></div>
@@ -94,12 +94,12 @@
 
     
     
-<p>In this type of exercise, the candidate has to select an element form
-a dropdown-list. Note that our package implements dropdowns as
+<p>In this type of task, the candidate has to select an element form a
+dropdown-list. Note that our package implements dropdowns as
 <em>entry</em>-objects because this is essentially what dropwdowns are.
-Several dropdowns can be combined in a single exercise, but a
-combination with numeric and text entries (gaps) is not possible; mainly
-due to limitations on the site of learning managment systems.</p>
+Several dropdowns can be combined in a single task, but a combination
+with numeric and text entries (gaps) is not possible; mainly due to
+limitations on the site of learning managment systems.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
@@ -126,22 +126,25 @@ library(rqti)
 
 # question
 
-The philosophy of the rqti package is &lt;&lt;do one thing and do it well|one for all&gt;&gt;.
+The philosophy of the rqti package is &lt;&lt;do one thing and do it well|one for
+all&gt;&gt;.
 
-Under the hood, the rqti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no OOP", "R6 OOP"))`.
+Under the hood, the rqti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no
+OOP", "R6 OOP"))`.
 
 # feedback
 
-The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
-<p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
+The package `rqti` is specialized for producing xml rqti files so "do one thing
+and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
+<p>Knitting via the Knit-Button to qtijs, this task renders as:</p>
 <div class="float">
-<img src="images/xml/dropdown-simple.jpg" style="width:100.0%" alt="Simple dropdown exercise rendered in qtijs"><div class="figcaption">Simple dropdown exercise rendered in qtijs</div>
+<img src="images/xml/dropdown-simple.jpg" style="width:100.0%" alt="Simple dropdown task rendered in qtijs"><div class="figcaption">Simple dropdown task rendered in qtijs</div>
 </div>
 <p>Alternatively, change the knit parameter to
-<code>knit: render_opal</code> (see article <a href="api_opal.html">Working with the OPAL API</a>) to upload to OPAL
+<code>knit: rqti::render_opal</code> (see article <a href="api_opal.html">Working with the OPAL API</a>) to upload to OPAL
 directly, producing:</p>
 <div class="float">
-<img src="images/dropdown-simple.jpg" style="width:100.0%" alt="Simple dropdown exercise rendered in OPAL"><div class="figcaption">Simple dropdown exercise rendered in OPAL</div>
+<img src="images/dropdown-simple.jpg" style="width:100.0%" alt="Simple dropdown task rendered in OPAL"><div class="figcaption">Simple dropdown task rendered in OPAL</div>
 </div>
 <p>There are two ways to specify a dropdown-element in Rmd content:</p>
 <ul>
@@ -157,8 +160,8 @@ directly, producing:</p>
 completing a task is defined as the sum of points of all dropdowns.</p>
 <p>Note that in this example, a feedback section was also provided. The
 feedback is optional, but usually it is a good idea to give some
-explanation for students. In dropdown exercises the feedback refers to
-the whole task, not to a specific dropdown. Group your feedback into
+explanation for students. In dropdown tasks the feedback refers to the
+whole task, not to a specific dropdown. Group your feedback into
 appropriate sections, which can be opened/closed for better user
 experience. A great way to do this is to use
 <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> html
@@ -196,16 +199,20 @@ library(rqti)
 
 # question
 
-The philosophy of the rqti package is &lt;&lt;do one thing and do it well|one for all&gt;&gt;.
+The philosophy of the rqti package is &lt;&lt;do one thing and do it well|one for
+all&gt;&gt;.
 
-Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2, response_identifier = "OOP_task")`.
+Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" =
+"S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2,
+response_identifier = "OOP_task")`.
 
 # feedback
 
-The package `rqti` is specialized for producing xml rqti files so "do one thing and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
+The package `rqti` is specialized for producing xml rqti files so "do one thing
+and do it well" is more appropriate. Under the hood we use S4 OOP.</code></pre>
 <p>Which renders in OPAL as :</p>
 <div class="float">
-<img src="images/dropdown-complex.jpg" style="width:100.0%" alt="More complex dropdown exercise rendered in OPAL"><div class="figcaption">More complex dropdown exercise rendered in
+<img src="images/dropdown-complex.jpg" style="width:100.0%" alt="More complex dropdown task rendered in OPAL"><div class="figcaption">More complex dropdown task rendered in
 OPAL</div>
 </div>
 </div>
@@ -220,7 +227,7 @@ OPAL</div>
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the ID of the exercise, useful for later data analysis of
+<p>This is the ID of the task, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
@@ -228,7 +235,7 @@ all other cases, the file name should be fine.</p>
 <div class="section level3">
 <h3 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
 </h3>
-<p>Title of the exercise. Can be displayed to students depending on the
+<p>Title of the task. Can be displayed to students depending on the
 learning management system settings. Default is the file name.</p>
 </div>
 </div>
@@ -280,7 +287,7 @@ vector <code>choices</code>.
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>The number of points for the exercise. Default is 1.</p>
+<p>The number of points for the task. Default is 1.</p>
 </div>
 <div class="section level3">
 <h3 id="shuffle">shuffle<a class="anchor" aria-label="anchor" href="#shuffle"></a>
@@ -300,12 +307,13 @@ meaningful identifier.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="some-advice-on-dropdown-exercises">Some advice on dropdown exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-dropdown-exercises"></a>
+<h2 id="some-advice-on-dropdown-tasks">Some advice on dropdown tasks<a class="anchor" aria-label="anchor" href="#some-advice-on-dropdown-tasks"></a>
 </h2>
-<p>Dropdown exercises are forced choice items, so are equivalent to
-single choice exercises. The advantage is that they can be placed in
-between other text and several of them can be used in a single exercise.
-Still, they suffer from the same problems as <a href="singlechoice.html">single choice exercises</a>.</p>
+<p>Dropdown tasks are forced choice items, so are equivalent to single
+choice tasks. The advantage is that they can be placed in between other
+text and several of them can be used in a single task. Still, they
+suffer from the same problems as <a href="singlechoice.html">single
+choice tasks</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

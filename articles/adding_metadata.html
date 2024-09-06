@@ -41,14 +41,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -58,7 +58,7 @@
     <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Adding metadata</h1>
             
-            <h4 data-toc-skip class="date">2024-09-05</h4>
+            <h4 data-toc-skip class="date">2024-09-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/adding_metadata.Rmd" class="external-link"><code>vignettes/adding_metadata.Rmd</code></a></small>
       <div class="d-none name"><code>adding_metadata.Rmd</code></div>
@@ -104,7 +104,7 @@ retrieval of assessment resources.</p>
 IEEE Learning Object Metadata (LOM) standard. As a result, metadata is
 stored in XML format within the IMS manifest of the test data. However,
 it is important to note that this metadata may not be displayed by other
-learning management systems, and even Opal may overwrite it. The primary
+learning management systems, and even OPAL may overwrite it. The primary
 purpose is to maintain metadata within the original xml files being
 shared.</p>
 <p>Here is an example of metadata with two contributors in the yaml
@@ -132,13 +132,13 @@ Essay exercise with metadata attributes in the yaml section.</code></pre>
 <ul>
 <li>
 <strong>description</strong>: A string providing a description of
-the exercise content.</li>
+the task content.</li>
 <li>
 <strong>rights</strong>: A string outlining the usage rights and
-terms associated with the exercise.</li>
+terms associated with the task.</li>
 <li>
 <strong>version</strong>: A string indicating the version of the
-exercise.</li>
+task.</li>
 <li>
 <strong>contributor</strong>: A list of contributor details, where
 each contributor entry may include the following information:
@@ -160,9 +160,9 @@ system date.</li>
 </ul>
 </li>
 </ul>
-<p>If you are working on a set of exercises, setting metadata for each
-one individually can be tedious. To streamline this process, you can use
-the environment variables <code>RQTI_AUTHOR</code> and
+<p>If you are working on a set of tasks, setting metadata for each one
+individually can be tedious. To streamline this process, you can use the
+environment variables <code>RQTI_AUTHOR</code> and
 <code>RQTI_RIGHTS</code>, which will automatically populate these fields
 with default values.</p>
 <p>For example, you can create an <code>.Rprofile</code> file and set

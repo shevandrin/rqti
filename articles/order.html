@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Order Exercises • rqti</title>
+<title>Order tasks • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Order Exercises">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Order tasks">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -41,14 +41,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -58,7 +58,7 @@
     <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -84,9 +84,9 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Order Exercises</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Order tasks</h1>
             
-            <h4 data-toc-skip class="date">2024-09-05</h4>
+            <h4 data-toc-skip class="date">2024-09-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/order.Rmd" class="external-link"><code>vignettes/order.Rmd</code></a></small>
       <div class="d-none name"><code>order.Rmd</code></div>
@@ -94,8 +94,8 @@
 
     
     
-<p>In this type of exercise, the candidate has to bring a list of items
-in the correct order.</p>
+<p>In this type of task, the candidate has to bring a list of items in
+the correct order.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
 </h2>
@@ -115,7 +115,8 @@ knit: rqti::render_qtijs
 
 # question
 
-What is the structure of an exam in QTI terms, starting from the top (the exam) to the bottom (individual questions).
+What is the structure of an exam in QTI terms, starting from the top (the exam)
+to the bottom (individual questions).
 
 - test
 - section
@@ -124,16 +125,17 @@ What is the structure of an exam in QTI terms, starting from the top (the exam) 
 
 # feedback
 
-For order exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.</code></pre>
-<p>Knitting via the Knit-Button to qtijs, this exercise renders as:</p>
+For order exercises it is usually clear why the given order is correct, but you
+might still want to provide a detailed feedback.</code></pre>
+<p>Knitting via the Knit-Button to qtijs, this task renders as:</p>
 <div class="float">
-<img src="images/xml/order-simple.jpg" style="width:100.0%" alt="Simple order exercise rendered in qtijs"><div class="figcaption">Simple order exercise rendered in qtijs</div>
+<img src="images/xml/order-simple.jpg" style="width:100.0%" alt="Simple order task rendered in qtijs"><div class="figcaption">Simple order task rendered in qtijs</div>
 </div>
 <p>Alternatively, change the knit parameter to
-<code>knit: render_opal</code> (see article <a href="api_opal.html">Working with the OPAL API</a>) to upload to Opal
+<code>knit: rqti::render_opal</code> (see article <a href="api_opal.html">Working with the OPAL API</a>) to upload to OPAL
 directly, producing:</p>
 <div class="float">
-<img src="images/order-simple.jpg" style="width:100.0%" alt="Simple order exercise rendered in OPAL"><div class="figcaption">Simple order exercise rendered in OPAL</div>
+<img src="images/order-simple.jpg" style="width:100.0%" alt="Simple order task rendered in OPAL"><div class="figcaption">Simple order task rendered in OPAL</div>
 </div>
 <p>The order of the items in the Rmd-list is considered to be the
 correct one.</p>
@@ -160,7 +162,8 @@ points: 2
 
 # question
 
-What is the structure of an exam in QTI terms, starting from the top (the exam) to the bottom (individual questions).
+What is the structure of an exam in QTI terms, starting from the top (the exam)
+to the bottom (individual questions).
 
 - test
 - section
@@ -169,9 +172,11 @@ What is the structure of an exam in QTI terms, starting from the top (the exam) 
 
 # feedback
 
-For order exercises it is usually clear why the given order is correct, but you might still want to provide a detailed feedback.
+For order exercises it is usually clear why the given order is correct, but you
+might still want to provide a detailed feedback.
 
-&lt;!-- If you prefer specific feedback for correct and incorrect solution, delete the general feedback section and uncomment everything starting from this line:
+&lt;!-- If you prefer specific feedback for correct and incorrect solution, delete
+the general feedback section and uncomment everything starting from this line:
 
 # feedback+
 
@@ -181,10 +186,9 @@ Nice. (Only displayed when the solution is correct.)
 
 Try again. (Only displayed if the solution is not correct.)
 --&gt;</code></pre>
-<p>Which on Opal renders as:</p>
+<p>Which on OPAL renders as:</p>
 <div class="float">
-<img src="images/order-complex.jpg" style="width:100.0%" alt="More complex order exercise rendered in OPAL"><div class="figcaption">More complex order exercise rendered in
-OPAL</div>
+<img src="images/order-complex.jpg" style="width:100.0%" alt="More complex order task rendered in OPAL"><div class="figcaption">More complex order task rendered in OPAL</div>
 </div>
 </div>
 <div class="section level2">
@@ -198,7 +202,7 @@ OPAL</div>
 <div class="section level3">
 <h3 id="identifier">identifier<a class="anchor" aria-label="anchor" href="#identifier"></a>
 </h3>
-<p>This is the ID of the exercise, useful for later data analysis of
+<p>This is the ID of the task, useful for later data analysis of
 results. The default is the file name. If you are doing extensive data
 analysis later on it makes sense to specify a meaningful identifier. In
 all other cases, the file name should be fine.</p>
@@ -206,13 +210,13 @@ all other cases, the file name should be fine.</p>
 <div class="section level3">
 <h3 id="title">title<a class="anchor" aria-label="anchor" href="#title"></a>
 </h3>
-<p>Title of the exercise. Can be displayed to students depending on the
+<p>Title of the task. Can be displayed to students depending on the
 learning management system settings. Default is the file name.</p>
 </div>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>How many points are given for the whole exercise. Default is
+<p>How many points are given for the whole task. Default is
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.25</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">0.25n</annotation></semantics></math>,
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
@@ -247,22 +251,22 @@ reach all points)</li>
 <div class="section level2">
 <h2 id="list-of-answers-as-a-variable">List of answers as a variable<a class="anchor" aria-label="anchor" href="#list-of-answers-as-a-variable"></a>
 </h2>
-<p>For more complex exercises the list of answers is sometimes available
-as a variable. In this case you can use the helper function
+<p>For more complex tasks the list of answers is sometimes available as
+a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"Test"</span>, <span class="st">"Section"</span>, <span class="st">"Item"</span>, <span class="st">"Interaction"</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- Test</span><span class="sc">\n</span><span class="st">- Section</span><span class="sc">\n</span><span class="st">- Item</span><span class="sc">\n</span><span class="st">- Interaction"</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="some-advice-on-order-exercises">Some advice on order exercises<a class="anchor" aria-label="anchor" href="#some-advice-on-order-exercises"></a>
+<h2 id="some-advice-on-order-tasks">Some advice on order tasks<a class="anchor" aria-label="anchor" href="#some-advice-on-order-tasks"></a>
 </h2>
-<p>Typically, order exercises tend to emphasize memorization of
-procedural steps, a facet of knowledge that may not always be critically
-important. In practice, even professionals often rely on checklists or
-cheatsheets for such scenarios. Additionally, grading order exercises
-can be intricate since the absolute position of an item is often less
-crucial than its relative placement within a sequence. We advise to use
-order exercises with caution.</p>
+<p>Typically, order tasks tend to emphasize memorization of procedural
+steps, a facet of knowledge that may not always be critically important.
+In practice, even professionals often rely on checklists or cheatsheets
+for such scenarios. Additionally, grading order tasks can be intricate
+since the absolute position of an item is often less crucial than its
+relative placement within a sequence. We advise to use order tasks with
+caution.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

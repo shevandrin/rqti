@@ -41,14 +41,14 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create Rmd exercises</h6></li>
-    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/gap.html">Gap Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/essay.html">Essay Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/order.html">Order Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair Exercises</a></li>
-    <li><a class="dropdown-item" href="../articles/table.html">Table Exercises</a></li>
+    <li><a class="dropdown-item" href="../articles/singlechoice.html">Single Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/multiplechoice.html">Multiple Choice tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/gap.html">Gap tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/dropdown.html">Dropdown tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/essay.html">Essay tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/order.html">Order tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/directedpairs.html">Directed Pair tasks</a></li>
+    <li><a class="dropdown-item" href="../articles/table.html">Table tasks</a></li>
     <li><a class="dropdown-item" href="../articles/adding_metadata.html">Adding metadata</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Create sections and tests</h6></li>
@@ -58,7 +58,7 @@
     <li><a class="dropdown-item" href="../articles/api_opal.html">Working with the OPAL API</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>S4 rqti classes</h6></li>
-    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">RQTI OOP Model</a></li>
+    <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Working with the OPAL API</h1>
             
-            <h4 data-toc-skip class="date">2024-09-05</h4>
+            <h4 data-toc-skip class="date">2024-09-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/api_opal.Rmd" class="external-link"><code>vignettes/api_opal.Rmd</code></a></small>
       <div class="d-none name"><code>api_opal.Rmd</code></div>
@@ -128,21 +128,21 @@ the university. Before calling <code><a href="../reference/upload2opal.html">upl
 client accordingly. For TU Chemnitz see the instructions here: <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link uri">https://www.tu-chemnitz.de/urz/network/access/vpn.html</a></p>
 </div>
 <div class="section level2">
-<h2 id="uploading-exercises-and-tests-to-opal">Uploading exercises and tests to OPAL<a class="anchor" aria-label="anchor" href="#uploading-exercises-and-tests-to-opal"></a>
+<h2 id="uploading-tasks-and-tests-to-opal">Uploading tasks and tests to OPAL<a class="anchor" aria-label="anchor" href="#uploading-tasks-and-tests-to-opal"></a>
 </h2>
 <p>You can either set the <code>knit: rqti::render_opal</code> parameter
 in the yaml-section of your Rmd file or just call
 <code><a href="../reference/upload2opal.html">upload2opal()</a></code> with the file as the first parameter:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span> <span class="co"># or "exercise.Rmd" or "exercise.xml"</span></span>
+<code class="sourceCode R"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="st">"my_zip_file.zip"</span> <span class="co"># or "task.Rmd" or "task.xml"</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span></code></pre></div>
 <p>Note that rqti-Rmd files as well as QTI compliant zip archives and
 xml files are supported.</p>
-<p>If you set up Opal correctly you can expect the following outcome
+<p>If you set up OPAL correctly you can expect the following outcome
 after running the above command:</p>
 <ol style="list-style-type: decimal">
 <li>A web browser will open automatically, displaying the OPAL page with
-your uploaded test or exercise.</li>
+your uploaded test or task.</li>
 <li>In your R console, you will receive a status code 200. This status
 code indicates that the request to upload the content to OPAL was
 successful.</li>
@@ -160,37 +160,35 @@ browser on OPAL.</li>
 <code>display_name</code> in your personal repository of resources on
 OPAL. If a resource with the same name is found, <code>rqti</code> will
 overwrite it by default. This is useful for incrementally improving and
-previewing/testing the exercise. It avoids cluttering your OPAL repo
-with dozens of versions of the same exercise. If there are several
-resources with the same name, <code>upload2opal</code> will ask you what
-to do.</p>
+previewing/testing the task. It avoids cluttering your OPAL repo with
+dozens of versions of the same task. If there are several resources with
+the same name, <code>upload2opal</code> will ask you what to do.</p>
 <p>By default <code><a href="../reference/upload2opal.html">upload2opal()</a></code> uses the file name as the
 <code>display_name</code>. But you can define your own as the second
 parameter:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="va">file</span>, display_name <span class="op">=</span> <span class="st">"Exam123"</span><span class="op">)</span></span></code></pre></div>
-<p>Currently, there is no option to delete exercises via the API. But
-you can display the URL of an exercise via:</p>
+<p>Currently, there is no option to delete tasks via the API. But you
+can display the URL of a task via:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_resource_url.html">get_resource_url</a></span><span class="op">(</span>display_name <span class="op">=</span> <span class="st">"Exam123"</span><span class="op">)</span></span></code></pre></div>
-<p>Or show all resources via:</p>
+<p>Or return all resources as a dataframe via:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_resources.html">get_resources</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>This will return a dataframe with all resources.</p>
 <p>If you want to have more fine-grained control for uploading, check
-out the documentation <code><a href="../reference/upload2opal.html">?upload2opal</a></code></p>
+out the documentation <code><a href="../reference/upload2opal.html">?upload2opal</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="access-rights">Access rights<a class="anchor" aria-label="anchor" href="#access-rights"></a>
 </h2>
 <p>Note that the access rights of the resource are set to public by
-default. This might appear unusual, but for creating exercises
-incrementally this is the best option. If you use any other access
-rights, you need to login to OPAL via your browser to see the web page,
-which will log you out via the API. Currently, there is not better
-solution for this procedure. Take this into account if you upload
-sensitive content! For instance, exercises that will be used in an
-upcoming exam. You can set the access rights via</p>
+default. This might appear unusual, but for creating tasks incrementally
+this is the best option. If you use any other access rights, you need to
+login to OPAL via your browser to see the web page, which will log you
+out via the API. Currently, there is not better solution for this
+procedure. Take this into account if you upload sensitive content! For
+instance, tasks that will be used in an upcoming exam. You can set the
+access rights via</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">uplod2opal</span>(..., <span class="at">access =</span> ?)</span></code></pre></div>
 <ul>
 <li>1: only the persons responsible for this learning resource</li>
@@ -216,26 +214,29 @@ file.</p>
 <div class="section level2">
 <h2 id="error-handling">Error Handling<a class="anchor" aria-label="anchor" href="#error-handling"></a>
 </h2>
+<p>Various issues can occur with the API. While some problems can be
+resolved quickly, you may often need to contact your IT department for
+proper API setup. The most common issues include:</p>
 <p><strong>403</strong> - Authorization failed. Some universities allow
 the use of the API only within the university network. You may need to
 run a VPN client to use the API. For TU Chemnitz see here: <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link uri">https://www.tu-chemnitz.de/urz/network/access/vpn.html</a></p>
 <p>If you already run a VPN client, please check with your IT and/or
 OPAL provider, whether the API can be used and what configuration you
 need.</p>
-<p><strong>401</strong> Unauthorized</p>
-<p>Your RQTI_API_USER and/or RQTI_API_PASSWORD are wrong or your
-credentials are not sufficient to work with the API. Please be aware
-that students typically do not possess author rights by default and are
-required to request such privileges before utilizing the API. To
-facilitate this process, it is advisable to reach out to your IT and/or
-OPAL provider for assistance.</p>
+<p><strong>401</strong> - Unauthorized. Your RQTI_API_USER or
+RQTI_API_PASSWORD are wrong or your credentials are not sufficient to
+work with the API. Please be aware that students typically do not
+possess author rights by default and are required to request such
+privileges before utilizing the API. To facilitate this process, it is
+advisable to reach out to your IT and/or OPAL provider for
+assistance.</p>
 </div>
 <div class="section level2">
-<h2 id="opal-specific-yaml-attributes">Opal specific yaml attributes<a class="anchor" aria-label="anchor" href="#opal-specific-yaml-attributes"></a>
+<h2 id="opal-specific-yaml-attributes">OPAL specific yaml attributes<a class="anchor" aria-label="anchor" href="#opal-specific-yaml-attributes"></a>
 </h2>
 <p>There are several opal-specific yaml attributes, which are explicitly
-explained in the articles on the exercise types. Two of them apply on
-the test level:</p>
+explained in the articles on the task types. Two of them apply on the
+test level:</p>
 <div class="section level3">
 <h3 id="calculator">calculator<a class="anchor" aria-label="anchor" href="#calculator"></a>
 </h3>
@@ -249,9 +250,9 @@ the test level:</p>
 assign the ‘files’ attribute a single file path or a list of paths to
 these files.</p>
 <p>Note that setting these two attributes in the Rmd file directly is
-mainly useful if you work on a single exercise. For collections of
-exercises (tests) it is better to set these attributes when creating the
-test intead of in the Rmd-file.</p>
+mainly useful if you work on a single task. For collections of tasks
+(tests) it is better to set these attributes when creating the test
+intead of in the Rmd-file.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
