@@ -1,0 +1,18 @@
+rmd_files:
+  - "index.Rmd"
+  - "intro.Rmd"
+  - "singlechoice.Rmd"
+  - "multiplechoice.Rmd"
+  - "gap.Rmd"
+  - "dropdown.Rmd"
+  - "essay.Rmd"
+  - "order.Rmd"
+  - "directedpairs.Rmd"
+  - "table.Rmd"
+  - "adding_metadata.Rmd"
+  - "section.Rmd"
+  - "api_opal.Rmd"
+  - "rqti_oop_model.Rmd"
+  - "compatibility.Rmd"
+  - "title.Rmd"
+delete_merged_file: false
