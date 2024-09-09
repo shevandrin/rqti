@@ -262,10 +262,10 @@ get_resources <- function(api_user = NULL, api_password = NULL,
 get_resources_by_name <- function(display_name, endpoint = NULL, rtype = NULL) {
     if (is.null(endpoint)) endpoint <- catch_endpoint()
     df <- get_resources(endpoint = endpoint)
+    rlist <- subset(df, df$displayname == display_name)
     if (!is.null(rtype)) {
         rlist <- subset(df, df$resourceableTypeName == rtype)
     }
-    rlist <- subset(df, df$displayname == display_name)
     return(rlist)
 }
 
