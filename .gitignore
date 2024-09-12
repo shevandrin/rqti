@@ -21,3 +21,4 @@ engine.bin
 vignettes/*.zip
 vignettes/*.xml
 inst/QTIJS/index.xml
+tests/testthat/test-api_lms.R
