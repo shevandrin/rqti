@@ -62,7 +62,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Added a verify_qti() function to validate XML documents against the QTI v2.1 schema. Two schema versions are supported: the original IMS Global schema and an extended version that permits additional HTML tags.</p></li>
+<ul><li><p>Major API Refactor: The API functionality has been refactored to require creating an Opal object for establishing a connection. Methods are now called on this object for interacting with the LMS API, replacing the previous function-based approach.</p></li>
+<li><p>Added a verify_qti() function to validate XML documents against the QTI v2.1 schema. Two schema versions are supported: the original IMS Global schema and an extended version that permits additional HTML tags.</p></li>
 <li><p>Added new constructor functions assessmentTest(), assessmentTestOpal(), assessmentSection().</p></li>
 <li><p>Generic functions are now exported to allow advanced users to extend the functionality of S4 classes (createItemBody, createResponseDeclaration, createOutcomeDeclaration, createResponseProcessing, createText).</p></li>
 <li><p>Added support for the ‘preview_feedback’ option within ‘params’ in the YAML section of R Markdown files.</p></li>
@@ -147,7 +148,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

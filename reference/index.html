@@ -136,6 +136,12 @@
         <dd>Class "InlineChoice"</dd>
       </dl><dl><dt>
 
+          <code><a href="LMS-class.html">LMS-class</a></code> <code><a href="LMS-class.html">LMS</a></code>
+
+        </dt>
+        <dd>Class LMS</dd>
+      </dl><dl><dt>
+
           <code><a href="MatchTable-class.html">MatchTaable-classs</a></code> <code><a href="MatchTable-class.html">MatchTable</a></code>
 
         </dt>
@@ -176,6 +182,12 @@
 
         </dt>
         <dd>Class "OneInRowTable"</dd>
+      </dl><dl><dt>
+
+          <code><a href="Opal-class.html">Opal-class</a></code> <code><a href="Opal-class.html">Opal</a></code>
+
+        </dt>
+        <dd>Class LMS OPAL</dd>
       </dl><dl><dt>
 
           <code><a href="Ordering-class.html">Ordering-class</a></code> <code><a href="Ordering-class.html">Ordering</a></code>
@@ -238,10 +250,10 @@
         <dd>Create an object AssessmentTestOpal</dd>
       </dl><dl><dt>
 
-          <code><a href="auth_opal.html">auth_opal()</a></code>
+          <code><a href="authLMS-methods.html">authLMS()</a></code>
 
         </dt>
-        <dd>Authentification in OPAL API</dd>
+        <dd>Authenticate with LMS</dd>
       </dl><dl><dt>
 
           <code><a href="buildAssessmentSection-methods.html">buildAssessmentSection()</a></code>
@@ -400,6 +412,30 @@
         <dd>Get list of contributors values</dd>
       </dl><dl><dt>
 
+          <code><a href="getCourseElements-Opal-method.html">getCourseElements(<i>&lt;Opal&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Retrieve Data About Course Elements from LMS Opal</dd>
+      </dl><dl><dt>
+
+          <code><a href="getCourseElements.html">getCourseElements()</a></code>
+
+        </dt>
+        <dd>Get elements of the course by courseId from LMS</dd>
+      </dl><dl><dt>
+
+          <code><a href="getCourseResult-Opal-method.html">getCourseResult(<i>&lt;Opal&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Get zip with course results by resource id and node id</dd>
+      </dl><dl><dt>
+
+          <code><a href="getCourseResult.html">getCourseResult()</a></code>
+
+        </dt>
+        <dd>Get zip with course results by resource id and node id</dd>
+      </dl><dl><dt>
+
           <code><a href="getFiles-methods.html">getFiles()</a></code>
 
         </dt>
@@ -410,6 +446,42 @@
 
         </dt>
         <dd>Get identifier</dd>
+      </dl><dl><dt>
+
+          <code><a href="getLMSResourceURL-Opal-method.html">getLMSResourceURL(<i>&lt;Opal&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Create a URL using the resource's display name in LMS Opal</dd>
+      </dl><dl><dt>
+
+          <code><a href="getLMSResourceURL.html">getLMSResourceURL()</a></code>
+
+        </dt>
+        <dd>Create a URL using the resource's display name in LMS</dd>
+      </dl><dl><dt>
+
+          <code><a href="getLMSResources-Opal-method.html">getLMSResources(<i>&lt;Opal&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Get records of all current user's resources on LMS Opal</dd>
+      </dl><dl><dt>
+
+          <code><a href="getLMSResources.html">getLMSResources()</a></code>
+
+        </dt>
+        <dd>Get records of all current user's resources on LMS</dd>
+      </dl><dl><dt>
+
+          <code><a href="getLMSResourcesByName-Opal-method.html">getLMSResourcesByName(<i>&lt;Opal&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Get selected records of the current user's resources on LMS Opal by display name.</dd>
+      </dl><dl><dt>
+
+          <code><a href="getLMSResourcesByName.html">getLMSResourcesByName()</a></code>
+
+        </dt>
+        <dd>Get select records about user resources by name.</dd>
       </dl><dl><dt>
 
           <code><a href="getObject-methods.html">getObject()</a></code>
@@ -430,34 +502,16 @@
         <dd>Get and process a piece of question content</dd>
       </dl><dl><dt>
 
-          <code><a href="get_course_elements.html">get_course_elements()</a></code>
-
-        </dt>
-        <dd>Get elements of the course by courseId</dd>
-      </dl><dl><dt>
-
-          <code><a href="get_course_results.html">get_course_results()</a></code>
-
-        </dt>
-        <dd>Get zip with course results by resource id and node id</dd>
-      </dl><dl><dt>
-
-          <code><a href="get_resource_url.html">get_resource_url()</a></code>
-
-        </dt>
-        <dd>Create a URL using the resource's display name in LMS OPAL</dd>
-      </dl><dl><dt>
-
-          <code><a href="get_resources.html">get_resources()</a></code>
-
-        </dt>
-        <dd>Get records of all current user's resources on LMS OPAL</dd>
-      </dl><dl><dt>
-
           <code><a href="inlineChoice.html">inlineChoice()</a></code>
 
         </dt>
         <dd>Create object InlineChoice</dd>
+      </dl><dl><dt>
+
+          <code><a href="isUserLoggedIn-methods.html">isUserLoggedIn()</a></code>
+
+        </dt>
+        <dd>Check if User is Logged in LMS</dd>
       </dl><dl><dt>
 
           <code><a href="mdlist.html">mdlist()</a></code>
@@ -520,10 +574,16 @@
         <dd>Prepare QTIJS renderer</dd>
       </dl><dl><dt>
 
-          <code><a href="publish_course.html">publish_course()</a></code>
+          <code><a href="publishCourse-Opal-method.html">publishCourse(<i>&lt;Opal&gt;</i>)</a></code>
 
         </dt>
         <dd>Publish a course on LMS Opal</dd>
+      </dl><dl><dt>
+
+          <code><a href="publishCourse.html">publishCourse()</a></code>
+
+        </dt>
+        <dd>Publish a course on LMS</dd>
       </dl><dl><dt>
 
           <code><a href="qti_contributor.html">qti_contributor()</a></code>
@@ -628,16 +688,22 @@
         <dd>Create object TextGap</dd>
       </dl><dl><dt>
 
-          <code><a href="update_course_test.html">update_course_test()</a></code>
+          <code><a href="updateCourseElementResource-Opal-method.html">updateCourseElementResource(<i>&lt;Opal&gt;</i>)</a></code>
 
         </dt>
-        <dd>Referenzierte Lernressource eines Kursbausteins austauschen</dd>
+        <dd>Update the referenced learning resource of a course element in the LMS Opal</dd>
       </dl><dl><dt>
 
-          <code><a href="upload2opal.html">upload2opal()</a></code>
+          <code><a href="updateCourseElementResource.html">updateCourseElementResource()</a></code>
 
         </dt>
-        <dd>Upload a resource on OPAL</dd>
+        <dd>Update the referenced learning resource of a course element in the LMS</dd>
+      </dl><dl><dt>
+
+          <code><a href="upload2LMS-methods.html">upload2LMS()</a></code>
+
+        </dt>
+        <dd>Upload content to LMS</dd>
       </dl><dl><dt>
 
           <code><a href="verify_qti.html">verify_qti()</a></code>
@@ -659,7 +725,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

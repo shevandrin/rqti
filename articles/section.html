@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Sections and Tests</h1>
             
-            <h4 data-toc-skip class="date">2024-09-12</h4>
+            <h4 data-toc-skip class="date">2024-10-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/section.Rmd" class="external-link"><code>vignettes/section.Rmd</code></a></small>
       <div class="d-none name"><code>section.Rmd</code></div>
@@ -139,7 +139,7 @@ parameters that are not necessarily consistent with QTI.</p>
 <code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test.html">test</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test1"</span><span class="op">)</span></span>
 <span><span class="co"># createQtiTest is a method of the OOP class `test`</span></span>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">test</span>, zip_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test1.zip"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu">upload2opal</span><span class="op">(</span><span class="st">"test1.zip"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>Note that you could also call <code>upload2opal(test)</code>
 directly. We just wanted to demonstrate how to write out a test locally
 before uploading it somewhere. Of course you can also just use
@@ -148,10 +148,10 @@ qtijs you will not see the structure of the test, so we use OPAL for
 demonstration purposes.</p>
 <p>We now have 10 variants of the test, two of which are:</p>
 <div class="float">
-<img src="images/Atest1.jpg" style="width:100.0%" alt="Test structure for seed 8833."><div class="figcaption">Test structure for seed 8833.</div>
+<img src="images%2FAtest1.jpg" style="width:100.0%" alt="Test structure for seed 8833."><div class="figcaption">Test structure for seed 8833.</div>
 </div>
 <div class="float">
-<img src="images/Btest1.jpg" style="width:100.0%" alt="Test structure for seed 7829."><div class="figcaption">Test structure for seed 7829.</div>
+<img src="images%2FBtest1.jpg" style="width:100.0%" alt="Test structure for seed 7829."><div class="figcaption">Test structure for seed 7829.</div>
 </div>
 <p>After the root section you can see the section exam_8833 (image 1)
 and exam_S7829 (image 2). There are actually 8 more (10 in total) and if
@@ -174,14 +174,14 @@ make a test out of this and upload it to OPAL:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test4opal.html">test4opal</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">test</span>, zip_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test2.zip"</span>, <span class="st">"test2"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu">upload2opal</span><span class="op">(</span><span class="st">"test2.zip"</span>, <span class="st">"test2"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>In OPAL this will create the following structure:</p>
 <div class="float">
-<img src="images/Atest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, seed 9808."><div class="figcaption">Test structure with one fixed section, seed
+<img src="images%2FAtest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, seed 9808."><div class="figcaption">Test structure with one fixed section, seed
 9808.</div>
 </div>
 <div class="float">
-<img src="images/Btest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, for seed 8833."><div class="figcaption">Test structure with one fixed section, for seed
+<img src="images%2FBtest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, for seed 8833."><div class="figcaption">Test structure with one fixed section, for seed
 8833.</div>
 </div>
 <p>As you can see, we still have our variable section with different
@@ -222,7 +222,7 @@ variants of a task by drawing different seeds and creating subsections
 with these seeds. There is also a different approach to introduce
 randomness. Have a look at the following schema:</p>
 <div class="float">
-<img src="images/sectionsscheme.png" style="width:100.0%" alt="Two approaches for structuring parallel versions of tasks"><div class="figcaption">Two approaches for structuring parallel versions
+<img src="images%2Fsectionsscheme.png" style="width:100.0%" alt="Two approaches for structuring parallel versions of tasks"><div class="figcaption">Two approaches for structuring parallel versions
 of tasks</div>
 </div>
 <p>On the left-hand side, three distinct subsections were generated,
@@ -280,7 +280,7 @@ have a good idea, open an issue on our github page: <a href="https://github.com/
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
