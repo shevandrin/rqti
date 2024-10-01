@@ -161,7 +161,8 @@ stop_server <- function() {
 #' @export
 render_opal <- function(input, ...) {
     knit_test <- rmd2zip(input)
-    result <- upload2opal(knit_test)
+    con <- new("Opal")
+    result <- upload2LMS(con, knit_test)
     unlink(knit_test)
     return(result)
 }
