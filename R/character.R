@@ -147,8 +147,7 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
               ext <- file_ext(object)
               if (ext %in% c("Rmd", "md")) {
                   task <- create_question_object(object)
-                  create_qti_task(task, out_path, verification = FALSE,
-                                  show_score = TRUE)
+                  create_qti_task(task, out_path, verification = FALSE)
                   current_rmd_fullpath <- normalizePath(object)
                   xml_target <- sub("\\.Rmd$", ".xml", current_rmd_fullpath)
                   file.copy(out_path, xml_target)

@@ -407,8 +407,7 @@ setMethod("prepareQTIJSFiles", signature(object = "AssessmentItem"),
           function(object, dir = "") {
               xml_path <- file.path(dir, "index.xml")
               suppressMessages(create_qti_task(object, xml_path,
-                                               verification = FALSE,
-                                               show_score = TRUE))
+                                               verification = FALSE))
               return(NULL)
           })
 

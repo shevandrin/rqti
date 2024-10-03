@@ -5693,9 +5693,30 @@ window.addEventListener("load",function() {
 
     if (QTI.ROOT.tagName=="assessmentItem") {
       // The root XML document is a standalone assessmentItem.
+      // Create and add to the ROOT tag with printedVarible to show SCORE and MAXSCORE
+      const newDiv = document.createElement('div');
+      newDiv.className = "rqti-ai-result";
+      const textBefore = document.createTextNode('Score: ');
+      const scoreVar = document.createElementNS("", "printedVariable");
+      scoreVar.setAttribute('identifier', 'SCORE');
+      scoreVar.setAttribute('format', '%d');
+      const textBetween = document.createTextNode(' (Max score: ');
+      const maxScoreVar = document.createElementNS("", "printedVariable");
+      maxScoreVar.setAttribute('identifier', 'MAXSCORE');
+      maxScoreVar.setAttribute('format', '%d');
+      const textAfter = document.createTextNode(')');
+      // Append everything in the correct order
+      newDiv.appendChild(textBefore);
+      newDiv.appendChild(scoreVar);
+      newDiv.appendChild(textBetween);
+      newDiv.appendChild(maxScoreVar);
+      newDiv.appendChild(textAfter);
+      QTI.ROOT.appendChild(newDiv);
+
       append(doTransforms(QTI.ROOT));
       setupAssessmentItem(QTI.ROOT);
       setTimeout(start, START_DELAY_ITEM);
+
     } else {
 
       if (QTI.ROOT.tagName=="assessmentSection") {
