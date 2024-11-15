@@ -72,49 +72,55 @@
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
-<ul><li>QTIJS rendering (DirectedPair type, round Score and Maxscore values).</li>
-</ul></div>
+<ul><li><p>QTIJS rendering (DirectedPair type, round Score and Maxscore values).</p></li>
+<li>
+<p>Added a ’</p>
+<div>
+<p>’ tag as a root child within the ‘itemBody’ element for ‘entry’ type tasks to ensure compatibility with the LMS OpenOlat.</p>
+
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.0" id="rqti-030">rqti 0.3.0<a class="anchor" aria-label="anchor" href="#rqti-030"></a></h2><p class="text-muted">CRAN release: 2024-07-19</p>
+</li>
+</ul></div>
+<div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-1">rqti 0.3.0<a class="anchor" aria-label="anchor" href="#rqti-development-version-1"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-3-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h3>
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>Fix parsing R Markdown files with tables according the latest pandoc version.</li>
 <li>Fix extract_results(level=“items”) for Ordering type, when candidate response is not given</li>
 <li>Fix error at createQtitask(obj, zip=TRUE)</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-0-3-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h3>
+<h3 id="new-features-development-version-1">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-1"></a></h3>
 <ul><li><p>New API OPAL function get_course_elements() returns dataframe with elements of the course by course id.</p></li>
 <li><p>New API OPAL function get_course_results() returns an xml with data about results by course id and node id.</p></li>
 <li><p>New API OPAL function publish_courses() for publishing a course by Resource ID.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-0-3-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-3-0"></a></h3>
+<h3 id="improvements-development-version-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version-1"></a></h3>
 <ul><li>QTIJS rendering.</li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.1" id="rqti-021">rqti 0.2.1<a class="anchor" aria-label="anchor" href="#rqti-021"></a></h2><p class="text-muted">CRAN release: 2024-05-26</p>
+<div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-2">rqti 0.2.1<a class="anchor" aria-label="anchor" href="#rqti-development-version-2"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-2-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-1"></a></h3>
+<h3 id="bug-fixes-development-version-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-1"></a></h3>
 <ul><li>In metadata default value for the slot contribution date is assigned to Date(0).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-0-2-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-1"></a></h3>
+<h3 id="new-features-development-version-2">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-2"></a></h3>
 <ul><li><p>method createQtiTask() can create XML or zip files, to control this use parameter zip=TRUE.</p></li>
 <li><p>QTIJS rendering shows feedback and score for tasks.</p></li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.0" id="rqti-020">rqti 0.2.0<a class="anchor" aria-label="anchor" href="#rqti-020"></a></h2><p class="text-muted">CRAN release: 2024-05-08</p>
+<div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-3">rqti 0.2.0<a class="anchor" aria-label="anchor" href="#rqti-development-version-3"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h3>
+<h3 id="bug-fixes-development-version-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-2"></a></h3>
 <ul><li><p>Handle problem with xsd scheme for xml validation.</p></li>
 <li><p>Handle some problems with html and mathml entities.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-0-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h3>
+<h3 id="new-features-development-version-3">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-3"></a></h3>
 <ul><li><p>Improved the appearance of the tasks in QTIJS viewer.</p></li>
 <li><p>Added constructor functions for task classes: singleChoice(), multipleChoice(), essay(), ordering(), entry(), directedPair(), oneInColTable(), oneInRowTable(), myltipleChoiceTable().</p></li>
 <li><p>Added constructor functions for content of Entry class: numericGap(), textGap(), textGapOpal(), inlineChoice().</p></li>
@@ -123,22 +129,23 @@
 <li><p>Added the ability to put metadata in the manifest file for tests. To store metadata information AssessmentItem and AssessmentTest use slot <a href="https://github.com/metadata" class="external-link">@metadata</a> that takes QtiMetadata (and QtiContributor inside) classes as type. Two construction functions have been added to create objects: qti_metadata() and qti_contributor().</p></li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.1" id="rqti-011">rqti 0.1.1<a class="anchor" aria-label="anchor" href="#rqti-011"></a></h2><p class="text-muted">CRAN release: 2024-03-21</p>
+<div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-4">rqti 0.1.1<a class="anchor" aria-label="anchor" href="#rqti-development-version-4"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-1-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-1"></a></h3>
+<h3 id="bug-fixes-development-version-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-3"></a></h3>
 <ul><li><p>Added the missing qti.js for rendering Rmd-files with tasks.</p></li>
 <li><p>Added processing of the pandoc –embed-resources parameter for pandoc versions &lt; 2.19.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="new-features-0-1-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-1-1"></a></h3>
+<h3 id="new-features-development-version-4">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-4"></a></h3>
 <ul><li>Identifiers of AssessmentItem, AssessmentSection and AssessmentTest objects are checked for compliance with QTI requirements.</li>
 </ul></div>
 </div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="rqti-010">rqti 0.1.0<a class="anchor" aria-label="anchor" href="#rqti-010"></a></h2><p class="text-muted">CRAN release: 2024-03-19</p>
+<div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-5">rqti 0.1.0<a class="anchor" aria-label="anchor" href="#rqti-development-version-5"></a></h2>
 <ul><li>Initial CRAN submission.</li>
 </ul></div>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
