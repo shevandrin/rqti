@@ -37,9 +37,11 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    The speed of light is equal
-    <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="2"/>
-    m/s
+    <div>
+      The speed of light is equal
+      <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="2"/>
+      m/s
+    </div>
   </itemBody>
   <responseProcessing>
     <responseCondition>

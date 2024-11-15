@@ -41,7 +41,8 @@ create_value <- function(value) {
 create_item_body_entry <- function(object) {
     prompt <- NULL
     if (object@prompt != "") prompt <- tag("p", list(object@prompt))
-    tag("itemBody", list(prompt, Map(createText, object@content)))
+    tag_div <- tag("div", list(prompt, Map(createText, object@content)))
+    tag("itemBody", list(tag_div))
 }
 
 create_item_body_essay <- function(object) {

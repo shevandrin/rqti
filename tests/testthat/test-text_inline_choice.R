@@ -21,23 +21,25 @@ In the deep bosom of the ocean buried.
     )))
 
     example <- '<itemBody>
+<div>
 <p>Identify the missing word in this famous quote from Shakespeare\'s Richard III.</p>
 <blockquote>
 <p>
 Now is the winter of our discontent
 <br/>
 Made glorious summer by this sun of
-  <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
+    <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
 <inlineChoice identifier="G">Gloucester</inlineChoice>
 <inlineChoice identifier="L">Lancaster</inlineChoice>
 <inlineChoice identifier="Y">York</inlineChoice>
 </inlineChoiceInteraction>
-  ;<br/>
+    ;<br/>
 And all the clouds that lour\'d upon our house
 <br/>
 In the deep bosom of the ocean buried.
 </p>
 </blockquote>
+</div>
 </itemBody>'
 
     sut <- xml2::read_xml(toString(createItemBody(entry)))
@@ -158,15 +160,15 @@ test_that("Testing CreateItemBody Inline", {
                               choices = c("160","90","60"),
                               choices_identifiers = c("1","2","3")),
                               "minutes</p>")))
-    example <- '<itemBody>
+    example <- '<itemBody><div>
 	    <p>One hour is
-  <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
+    <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
 				<inlineChoice identifier="1">160</inlineChoice>
 				<inlineChoice identifier="2">90</inlineChoice>
 				<inlineChoice identifier="3">60</inlineChoice>
 			</inlineChoiceInteraction>
-  minutes</p>
-	</itemBody>'
+    minutes</p>
+	</div></itemBody>'
     sut <- xml2::read_xml(toString(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
@@ -183,15 +185,15 @@ test_that("Testing CreateItemBody Inline", {
                                           choices = c("160","90","60"),
                                           choices_identifiers = c("1","2","3")),
                                       "minutes</p>")))
-    example <- '<itemBody>
+    example <- '<itemBody><div>
 	    <p>One hour is
-  <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
+    <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
 				<inlineChoice identifier="1">160</inlineChoice>
 				<inlineChoice identifier="2">90</inlineChoice>
 				<inlineChoice identifier="3">60</inlineChoice>
 			</inlineChoiceInteraction>
-  minutes</p>
-	</itemBody>'
+    minutes</p>
+	</div></itemBody>'
     sut <- xml2::read_xml(toString(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)
@@ -206,15 +208,15 @@ test_that("Testing CreateItemBody Inline", {
                                            shuffle = FALSE,
                                            choices = c("160","90","60")),
                                            "minutes</p>")))
-    example <- '<itemBody>
+    example <- '<itemBody><div>
 	    <p>One hour is
-  <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
+    <inlineChoiceInteraction responseIdentifier="RESPONSE" shuffle="false">
 				<inlineChoice identifier="OptionA">160</inlineChoice>
 				<inlineChoice identifier="OptionB">90</inlineChoice>
 				<inlineChoice identifier="OptionC">60</inlineChoice>
 			</inlineChoiceInteraction>
-  minutes</p>
-	</itemBody>'
+    minutes</p>
+	</div></itemBody>'
     sut <- xml2::read_xml(toString(createItemBody(entry)))
     expected <- xml2::read_xml(example)
     expect_equal(sut, expected)

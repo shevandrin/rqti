@@ -40,9 +40,11 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    The speed of light is equal
-    <inlineChoiceInteraction responseIdentifier="RESPONSE_1" shuffle="true"><inlineChoice identifier="OptionA">400</inlineChoice><inlineChoice identifier="OptionB">300</inlineChoice><inlineChoice identifier="OptionC">500</inlineChoice></inlineChoiceInteraction>
-    m/s
+    <div>
+      The speed of light is equal
+      <inlineChoiceInteraction responseIdentifier="RESPONSE_1" shuffle="true"><inlineChoice identifier="OptionA">400</inlineChoice><inlineChoice identifier="OptionB">300</inlineChoice><inlineChoice identifier="OptionC">500</inlineChoice></inlineChoiceInteraction>
+      m/s
+    </div>
   </itemBody>
   <responseProcessing>
     <responseCondition>

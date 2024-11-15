@@ -20,6 +20,8 @@
 
 * QTIJS rendering (DirectedPair type, round Score and Maxscore values).
 
+* Added a '<div>' tag as a root child within the 'itemBody' element for 'entry' type tasks to ensure compatibility with the LMS OpenOlat.
+
 # rqti 0.3.0
 
 ## Bug fixes

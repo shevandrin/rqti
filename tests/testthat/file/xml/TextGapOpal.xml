@@ -42,9 +42,11 @@
     </defaultValue>
   </outcomeDeclaration>
   <itemBody>
-    <p>The speed of light is
-    <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="3"/>
-    than the speed of sound</p>
+    <div>
+      <p>The speed of light is
+      <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="3"/>
+      than the speed of sound</p>
+    </div>
   </itemBody>
   <responseProcessing>
     <responseCondition>

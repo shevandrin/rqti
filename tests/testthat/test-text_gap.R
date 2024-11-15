@@ -33,20 +33,22 @@ test_that("Testing create_item_body_text ", {
     # example doesn't work in OPAL
 
     example <- '<itemBody>
+    <div>
         <p>Identify the missing words in this famous quote from Shakespeare\'s Richard III.</p>
         <p>
-  Now is the of our discontent
-  <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="10"/>
-  </p>
+    Now is the of our discontent
+    <textEntryInteraction responseIdentifier="RESPONSE_1" expectedLength="10"/>
+    </p>
   <p>
   <textEntryInteraction responseIdentifier="RESPONSE_2" expectedLength="4"/>
-  leaves by this sun of York;
+    leaves by this sun of York;
   </p>
   <p>And all the clouds that lour\'d upon our house</p>
   <p>
   In the deep bosom of the ocean buried.  At
-  <textEntryInteraction responseIdentifier="RESPONSE_4" expectedLength="5" placeholderText="Floating point"/>
-  meters under the darkness is found.</p>
+    <textEntryInteraction responseIdentifier="RESPONSE_4" expectedLength="5" placeholderText="Floating point"/>
+    meters under the darkness is found.</p>
+  </div>
 </itemBody>'
 
     sut <- xml2::read_xml(as.character(createItemBody(entry)))
@@ -413,6 +415,3 @@ test_that("Testing the constructor for Entry class", {
     expect_no_error(xml2::read_xml(as.character(xml_sut)))
     expect_s4_class(sut, "Entry")
 })
-
-
-
