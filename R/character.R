@@ -113,6 +113,30 @@ setMethod("createQtiTest", signature(object = "character"),
               return(file)
           })
 
+#' @rdname createQtiTask-methods
+#' @aliases createQtiTask,character
+setMethod("createQtiTask", signature(object = "character"),
+          function(object, dir = getwd()) {
+
+              file <- object
+              if (length(file) > 1) {
+                  stop("Only one file can be provided as input.", call. = FALSE)
+              }
+
+              if (!all(file.exists(file))) {
+                  stop("The file does not exist", call. = FALSE)
+              }
+
+              ext <- file_ext(file)
+              if (ext != "zip") {
+                  if (ext %in% c("Rmd", "md")) {
+                      obj <- create_question_object(file)
+                      file <- createQtiTask(obj, dir = dir, zip = TRUE)
+                  }
+              }
+              return(file)
+          })
+
 #' @rdname getObject-methods
 #' @aliases getObject,character
 setMethod("getObject", signature(object = "character"),
