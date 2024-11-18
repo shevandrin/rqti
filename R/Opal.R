@@ -15,10 +15,10 @@ setMethod("initialize", "Opal", function(.Object, ...) {
         endpoint <- Sys.getenv("RQTI_OPAL_API_ENDPOINT")
         if (endpoint == "") {
             message("The enviroment variable RQTI_OPAL_API_ENDPOINT was empty, it was assigned the value \"https://bildungsportal.sachsen.de/opal/\"")
-            .Object@endpoint <- "https://bildungsportal.sachsen.de/opal/"
+            endpoint <- "https://bildungsportal.sachsen.de/opal/"
         }
+        .Object@endpoint <- endpoint
     }
-
 
     api_user <- .Object@api_user
     if (length(.Object@api_user) == 0) api_user <- NULL
