@@ -94,8 +94,6 @@
 
     
     
-<pre><code><span><span class="co">#&gt; Warning: replacing previous import 'httr2::url_parse' by 'xml2::url_parse' when</span></span>
-<span><span class="co">#&gt; loading 'rqti'</span></span></code></pre>
 <p>In this task format, candidates are required to fill in one or more
 gaps. We believe this method is one of the most effective ways to assess
 students’ abilities, as it reduces the likelihood of guessing compared
@@ -194,12 +192,12 @@ sections, which can be opened/closed for better user experience (use
 tags).</p>
 <p>A great way to do this is to use <code>&lt;details&gt;</code> and
 <code>&lt;summary&gt;</code> html tags:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>will render as:</p>
 <details><summary> Question 1</summary>
   Provide Feedback for Question 1
@@ -335,12 +333,12 @@ reach all points)</li>
 <p>This helper function is designed to generate a formatted string
 describing a gap in Rmd content, where the answer has a numeric
 type:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>gap1 <span class="ot">&lt;-</span> <span class="fu">gap_numeric</span>(<span class="at">solution =</span> <span class="fl">1.4</span>, <span class="at">tolerance =</span> <span class="dv">10</span>, <span class="at">tolerance_type =</span> <span class="st">"relative"</span>,</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                    <span class="at">points =</span> <span class="dv">5</span>, <span class="at">response_identifier =</span> <span class="st">"mean_value"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                    <span class="at">include_lower_bound =</span> <span class="cn">TRUE</span>, <span class="at">include_upper_bound =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                    <span class="at">expected_length =</span> <span class="dv">10</span>, <span class="at">placeholder =</span> <span class="st">"put mean value here"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">cat</span>(gap1)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="fl">1.4</span>], tolerance<span class="sc">:</span> <span class="fl">10.0</span>, tolerance_type<span class="sc">:</span> relative, points<span class="sc">:</span> <span class="fl">5.0</span>, response_identifier<span class="sc">:</span> mean_value, include_lower_bound<span class="sc">:</span> yes, include_upper_bound<span class="sc">:</span> yes, expected_length<span class="sc">:</span> <span class="fl">10.0</span>, placeholder<span class="sc">:</span> put mean value here, type<span class="sc">:</span> numeric}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>gap1 <span class="ot">&lt;-</span> <span class="fu">gap_numeric</span>(<span class="at">solution =</span> <span class="fl">1.4</span>, <span class="at">tolerance =</span> <span class="dv">10</span>, <span class="at">tolerance_type =</span> <span class="st">"relative"</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                    <span class="at">points =</span> <span class="dv">5</span>, <span class="at">response_identifier =</span> <span class="st">"mean_value"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                    <span class="at">include_lower_bound =</span> <span class="cn">TRUE</span>, <span class="at">include_upper_bound =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                    <span class="at">expected_length =</span> <span class="dv">10</span>, <span class="at">placeholder =</span> <span class="st">"put mean value here"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">cat</span>(gap1)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="fl">1.4</span>], tolerance<span class="sc">:</span> <span class="fl">10.0</span>, tolerance_type<span class="sc">:</span> relative, points<span class="sc">:</span> <span class="fl">5.0</span>, response_identifier<span class="sc">:</span> mean_value, include_lower_bound<span class="sc">:</span> yes, include_upper_bound<span class="sc">:</span> yes, expected_length<span class="sc">:</span> <span class="fl">10.0</span>, placeholder<span class="sc">:</span> put mean value here, type<span class="sc">:</span> numeric}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
 <p>As you can see, YAML is ultimately used, but for most users, it is
 more convenient to have a dedicated R function instead. Let us now look
 at the argument list of <code>gap_numeric</code>:</p>
@@ -413,12 +411,12 @@ for hints (e.g. <em>numbers only</em>).</p>
 </h2>
 <p>This helper function is designed to generate a formatted string
 describing a gap in Rmd content, where the answer is a string:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>gap2 <span class="ot">&lt;-</span> <span class="fu">gap_text</span>(<span class="fu">gap_text</span>(<span class="fu">c</span>(<span class="st">"Bildungsportal Sachsen"</span>, <span class="st">"Bildungs Portal Sachsen"</span>),</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                          <span class="at">tolerance =</span> <span class="dv">4</span>, <span class="at">case_sensitive =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                          <span class="at">placeholder =</span> <span class="st">"text without special characters"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                          <span class="at">expected_length =</span> <span class="dv">25</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">cat</span>(gap2)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [Bildungsportal Sachsen,Bildungs Portal Sachsen], tolerance<span class="sc">:</span>,   <span class="fl">4.0</span>, case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">25.0</span>, placeholder<span class="sc">:</span> text without,   special characters, type<span class="sc">:</span> text_opal}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span>], case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">205.0</span>, type<span class="sc">:</span> text}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>gap2 <span class="ot">&lt;-</span> <span class="fu">gap_text</span>(<span class="fu">gap_text</span>(<span class="fu">c</span>(<span class="st">"Bildungsportal Sachsen"</span>, <span class="st">"Bildungs Portal Sachsen"</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                          <span class="at">tolerance =</span> <span class="dv">4</span>, <span class="at">case_sensitive =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                          <span class="at">placeholder =</span> <span class="st">"text without special characters"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                          <span class="at">expected_length =</span> <span class="dv">25</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">cat</span>(gap2)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [Bildungsportal Sachsen,Bildungs Portal Sachsen], tolerance<span class="sc">:</span>,   <span class="fl">4.0</span>, case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">25.0</span>, placeholder<span class="sc">:</span> text without,   special characters, type<span class="sc">:</span> text_opal}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span>], case_sensitive<span class="sc">:</span> no, points<span class="sc">:</span> <span class="fl">1.0</span>, expected_length<span class="sc">:</span> <span class="fl">205.0</span>, type<span class="sc">:</span> text}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
 <p>Argument list of <code>gap_text</code>:</p>
 <div class="section level3">
 <h3 id="solution-1">solution<a class="anchor" aria-label="anchor" href="#solution-1"></a>

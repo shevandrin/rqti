@@ -94,8 +94,6 @@
 
     
     
-<pre><code><span><span class="co">#&gt; Warning: replacing previous import 'httr2::url_parse' by 'xml2::url_parse' when</span></span>
-<span><span class="co">#&gt; loading 'rqti'</span></span></code></pre>
 <style>
   .zoomable-image {
     position: relative;
@@ -213,7 +211,7 @@ sections:</p>
 </h2>
 <p>First, it is important to know that you can create an object directly
 from Rmd files:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scpath</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"rmarkdown/templates/singlechoice-simple/skeleton"</span>, </span>
 <span>                           <span class="st">"skeleton.Rmd"</span>, package <span class="op">=</span> <span class="st">"rqti"</span><span class="op">)</span></span>
 <span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">:::</span><span class="fu"><a href="../reference/create_question_object.html">create_question_object</a></span><span class="op">(</span><span class="va">scpath</span><span class="op">)</span></span>
@@ -317,7 +315,7 @@ self-explanatory. For instance it has a slot named <code>solution</code>
 and another one named <code>choices</code>. Other slots contain
 additional objects such as a feedback or metadata object.</p>
 <p>Now you can render this object with <code>render_qtijs</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">sc</span><span class="op">)</span></span></code></pre></div>
 <p>You will notice that this approach is much faster than knitting, as
 it eliminates intermediate steps. The XML file is generated directly
@@ -325,7 +323,7 @@ from the object representation and then copied to the qtijs server. No
 need for Pandoc or any other translation tools.</p>
 <p>But how would you create this object from scratch? This is not very
 hard:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">choices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"There is a 5% probability that you will mistakenly reject the null</span></span>
 <span><span class="st"> hypothesis, when it is actually correct."</span>,</span>
@@ -341,10 +339,10 @@ hard:</p>
 non-strings. If you just put the text string, rqti will give you an
 error. In the future we will simplify this case.</p>
 <p>Again, you can render the object:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">sc2</span><span class="op">)</span></span></code></pre></div>
 <p>It looks the same because it is almost the same:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">sc</span>, <span class="va">sc2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Attributes: &lt; Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) &gt;"</span></span>
 <span><span class="co">#&gt; [2] "Attributes: &lt; Component \"choices\": 2 string mismatches &gt;"                                 </span></span>
@@ -365,7 +363,7 @@ effort.</p>
 </h2>
 <p>Let us add a feedback object, including some html formatting created
 with htmltools:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/htmltools" class="external-link">htmltools</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">text1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span></span>
@@ -388,7 +386,7 @@ with htmltools:</p>
 <span>                     feedback <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fb</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Let us render the new task and activate the feedback in qtijs (you
 might still need to reload the Viewer pane):</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">sc2b</span>, preview_feedback <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p>A couple of things should be noticed:</p>
 <ul>
@@ -413,7 +411,7 @@ only take lists</li>
 </h2>
 <p>There are several ways to add formulas to your content, but the
 simplest is to use latex syntax in html as per MathJax:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">math</span> <span class="op">&lt;-</span> <span class="st">r"(When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\)</span></span>
 <span><span class="st"> and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$)"</span></span></code></pre></div>
 <p>Note the use of <code>\(</code> and <code>\)</code> for inline math
@@ -422,7 +420,7 @@ for inline math as per MathJax syntax.</p>
 <p>Further note the <code>r"(...)"</code>-syntax, which escapes special
 characters automatically.</p>
 <p>Let us render it, this time within an essay task:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span></span>
 <span>    content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -440,7 +438,7 @@ characters automatically.</p>
 save a plot or image as raw bytes and embed it directly in a html image
 tag.</p>
 <p>Let us first create a graph and save it in a temporary file:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imgfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".png"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="va">imgfile</span>, width <span class="op">=</span> <span class="fl">800</span>, height <span class="op">=</span> <span class="fl">600</span>, type <span class="op">=</span> <span class="st">"cairo"</span>, pointsize <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">0.1</span><span class="op">)</span></span>
@@ -450,14 +448,14 @@ tag.</p>
 <span><span class="co">#&gt;       2</span></span></code></pre></div>
 <p>Now we can convert this to a raw byte string and put it inside image
 tags using htmltools:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">txt</span> <span class="op">&lt;-</span> <span class="fu">RCurl</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RCurl/man/base64.html" class="external-link">base64Encode</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readBin.html" class="external-link">readBin</a></span><span class="op">(</span><span class="va">imgfile</span>, <span class="st">"raw"</span>,</span>
 <span>                                   <span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.info</a></span><span class="op">(</span><span class="va">imgfile</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"size"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>                           <span class="st">"txt"</span><span class="op">)</span></span>
 <span><span class="va">image</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">img</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"400"</span>, </span>
 <span>                          src <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"data:image/png;base64,"</span>, <span class="va">txt</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, let us add it to a simple gap task:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gap_with_img</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/entry.html">entry</a></span><span class="op">(</span></span>
 <span>  content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">p</a></span><span class="op">(</span><span class="st">"Here is an illustration of the standard normal distribution:"</span><span class="op">)</span><span class="op">)</span>, </span>
@@ -470,7 +468,7 @@ tags using htmltools:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>and render it:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">gap_with_img</span><span class="op">)</span></span></code></pre></div>
 <p>A few things to keep in mind during this process:</p>
 <ul>
@@ -495,21 +493,21 @@ Let us now look at creating sections and tests:</p>
 <h2 id="creating-sections-and-tests">Creating sections and tests<a class="anchor" aria-label="anchor" href="#creating-sections-and-tests"></a>
 </h2>
 <p>Let us combine the tasks from above into a section:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">section1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentSection.html">assessmentSection</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">sc</span>, <span class="va">gap_with_img</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>And render it:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">section1</span><span class="op">)</span></span></code></pre></div>
 <p>There is not much to see here because we only have one section and
 qtijs does not reveal the underlying structure. To illustrate better,
 let us add another section and make a test:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">items</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Who was Ada Lovelace?"</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>              <span class="fu"><a href="../reference/essay.html">essay</a></span><span class="op">(</span>content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Who was Grace Hopper?"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">section2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentSection.html">assessmentSection</a></span><span class="op">(</span><span class="va">items</span>, selection <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">exam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assessmentTest.html">assessmentTest</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">section1</span>, <span class="va">section2</span><span class="op">)</span>, time_limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>Render it:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">exam</span><span class="op">)</span></span></code></pre></div>
 <p>What is happening here? There are two sections, but only one item is
 selected from section 2. Additionally, a time limit has been imposed for
