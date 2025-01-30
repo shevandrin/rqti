@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Sections and Tests</h1>
             
-            <h4 data-toc-skip class="date">2025-01-27</h4>
+            <h4 data-toc-skip class="date">2025-01-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/section.Rmd" class="external-link"><code>vignettes/section.Rmd</code></a></small>
       <div class="d-none name"><code>section.Rmd</code></div>
@@ -94,6 +94,8 @@
 
     
     
+<pre><code><span><span class="co">#&gt; Warning: replacing previous import 'httr2::url_parse' by 'xml2::url_parse' when</span></span>
+<span><span class="co">#&gt; loading 'rqti'</span></span></code></pre>
 <p>Creating single tasks is not particularly useful as one usually wants
 to combine different tasks into a test. A test in the QTI standard
 typically consists of one or more sections. Each Section can contain a
@@ -126,7 +128,7 @@ create a root section and put the tasks there.</p>
 <p>We designed a simple wrapper for sections. Here we load some files
 from our package and use the function <code>section</code> to create the
 section. Note that we request 10 different variants of all tasks.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"exercises"</span>, package <span class="op">=</span> <span class="st">"rqti"</span><span class="op">)</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap1.Rmd"</span>, <span class="st">"gap2.Rmd"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">root_section</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span>content <span class="op">=</span> <span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
@@ -135,11 +137,11 @@ are helpers for that: <code>test</code> and <code>test4opal</code>.
 <code>test</code> is more general and is always consistent with the QTI
 model, whereas <code>test4opal</code> can use additional OPAL-specific
 parameters that are not necessarily consistent with QTI.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test.html">test</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test1"</span><span class="op">)</span></span>
 <span><span class="co"># createQtiTest is a method of the OOP class `test`</span></span>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">test</span>, zip_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu">upload2opal</span><span class="op">(</span><span class="st">"test1.zip"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test1.zip"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>Note that you could also call <code>upload2opal(test)</code>
 directly. We just wanted to demonstrate how to write out a test locally
 before uploading it somewhere. Of course you can also just use
@@ -163,7 +165,7 @@ many variants you would like to create of each file.</p>
 <p>Of course, creating several variants only makes sense for random
 tasks. Single choice and multiple choice tasks could be part of
 different sections:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">non_random_tasks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sc1.Rmd"</span>, <span class="st">"mpc1.Rmd"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">root_section</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
 <span>                     <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span><span class="va">non_random_tasks</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -171,10 +173,10 @@ different sections:</p>
 as the <code>test</code> functions expect a list to be more flexible
 with different inputs (e.g. objects instead of files). Now we can again
 make a test out of this and upload it to OPAL:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/test4opal.html">test4opal</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="st">"test2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">test</span>, zip_only <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu">upload2opal</span><span class="op">(</span><span class="st">"test2.zip"</span>, <span class="st">"test2"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test2.zip"</span>, <span class="st">"test2"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>In OPAL this will create the following structure:</p>
 <div class="float">
 <img src="images%2FAtest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, seed 9808."><div class="figcaption">Test structure with one fixed section, seed
@@ -189,7 +191,7 @@ variants (you see two of them in the screenshots). But now, we also have
 a fixed section that is the same for all tests. Try it out yourself: <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46075805699" class="external-link uri">https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/46075805699</a></p>
 <p>Note that the function <code>section</code> returns an
 <code>AssessmentSection</code> rqti-object:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">root_section</span>, <span class="va">class</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] "AssessmentSection"</span></span>
@@ -257,7 +259,7 @@ the left-hand side.</p>
 <p>To choose between these two versions you can use the parameter
 <code>by</code> in the sense of <code>section</code> by
 <code>variants</code> or <code>section</code> by <code>files</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">root_section</span> <span class="op">=</span> <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span>content <span class="op">=</span> <span class="va">files</span>, n_variants <span class="op">=</span> <span class="fl">3</span>, by <span class="op">=</span> <span class="st">"files"</span><span class="op">)</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li>For “by variants” (left scheme on the picture) use

@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Multiple Choice tasks</h1>
             
-            <h4 data-toc-skip class="date">2025-01-27</h4>
+            <h4 data-toc-skip class="date">2025-01-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/multiplechoice.Rmd" class="external-link"><code>vignettes/multiplechoice.Rmd</code></a></small>
       <div class="d-none name"><code>multiplechoice.Rmd</code></div>
@@ -94,6 +94,8 @@
 
     
     
+<pre><code><span><span class="co">#&gt; Warning: replacing previous import 'httr2::url_parse' by 'xml2::url_parse' when</span></span>
+<span><span class="co">#&gt; loading 'rqti'</span></span></code></pre>
 <p>This is just a normal multiple choice task.</p>
 <div class="section level2">
 <h2 id="minimum-version">Minimum version<a class="anchor" aria-label="anchor" href="#minimum-version"></a>
@@ -279,9 +281,9 @@ reach all points)</li>
 <p>For more complex tasks the list of answers is often just available as
 a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"dropdown list"</span>, <span class="st">"programming language evaluation"</span>, <span class="st">"numeric gap"</span>), </span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>       <span class="at">solutions =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- *dropdown list*</span><span class="sc">\n</span><span class="st">- programming language evaluation</span><span class="sc">\n</span><span class="st">- *numeric gap*"</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"dropdown list"</span>, <span class="st">"programming language evaluation"</span>, <span class="st">"numeric gap"</span>), </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>       <span class="at">solutions =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- *dropdown list*</span><span class="sc">\n</span><span class="st">- programming language evaluation</span><span class="sc">\n</span><span class="st">- *numeric gap*"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="some-advice-on-multiple-choice-tasks">Some advice on multiple choice tasks<a class="anchor" aria-label="anchor" href="#some-advice-on-multiple-choice-tasks"></a>

@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Adding metadata</h1>
             
-            <h4 data-toc-skip class="date">2025-01-27</h4>
+            <h4 data-toc-skip class="date">2025-01-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/adding_metadata.Rmd" class="external-link"><code>vignettes/adding_metadata.Rmd</code></a></small>
       <div class="d-none name"><code>adding_metadata.Rmd</code></div>
@@ -94,6 +94,8 @@
 
     
     
+<pre><code><span><span class="co">#&gt; Warning: replacing previous import 'httr2::url_parse' by 'xml2::url_parse' when</span></span>
+<span><span class="co">#&gt; loading 'rqti'</span></span></code></pre>
 <p>Metadata—including details about creators, rights, and
 descriptions—is essential for ensuring accountability, legal compliance,
 and clarity in the management and use of assessment items and tests.
@@ -167,7 +169,7 @@ environment variables <code>RQTI_AUTHOR</code> and
 with default values.</p>
 <p>For example, you can create an <code>.Rprofile</code> file and set
 the default author and usage rights as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>RQTI_AUTHOR <span class="op">=</span> <span class="st">"Ada Lovelace"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>RQTI_RIGHTS <span class="op">=</span> <span class="st">"CC BY SA"</span><span class="op">)</span></span></code></pre></div>
 <p>If you need to use non-default values, just specify the yaml

@@ -86,7 +86,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Single Choice tasks</h1>
             
-            <h4 data-toc-skip class="date">2025-01-27</h4>
+            <h4 data-toc-skip class="date">2025-01-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/singlechoice.Rmd" class="external-link"><code>vignettes/singlechoice.Rmd</code></a></small>
       <div class="d-none name"><code>singlechoice.Rmd</code></div>
@@ -94,6 +94,8 @@
 
     
     
+<pre><code><span><span class="co">#&gt; Warning: replacing previous import 'httr2::url_parse' by 'xml2::url_parse' when</span></span>
+<span><span class="co">#&gt; loading 'rqti'</span></span></code></pre>
 <p>Please note that this is the first type of task described in this
 manual, and as such, it may be more detailed than those that follow. Our
 goal is to emphasize key points that might not be as thoroughly covered
@@ -173,7 +175,7 @@ tasks are covered in the article <a href="section.html">Sections and
 Tests</a>.</p>
 <p>If you happen to use OPAL/ONYX, you can also upload your tasks
 directly by modifying the knit parameter:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">knit</span><span class="op">:</span> <span class="fu">rqti</span><span class="fu">::</span><span class="va"><a href="../reference/render_opal.html">render_opal</a></span></span></code></pre></div>
 <p>This will upload the file and open a browser with the OPAL url. It
 should look like this:</p>
@@ -227,12 +229,12 @@ file for checking the correct answer.</p>
 <p>Of course you can specify the correct choice if need be. Our
 preferred way of doing this is by putting asterisks around this option.
 For instance:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="an">Choose the correct one:</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  </span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="ss">- </span>A</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="ss">- </span>B</span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="ss">- </span>*C* <span class="co">&lt;!-- treated as correct --&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="ss">- </span>D</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="an">Choose the correct one:</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ss">- </span>A</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="ss">- </span>B</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="ss">- </span>*C* <span class="co">&lt;!-- treated as correct --&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="ss">- </span>D</span></code></pre></div>
 <p>Once again, this is much easier to read than providing the solution
 somewhere else (e.g. in the yaml section). Furthermore, producing a
 preview as html directly shows you which element is correct. If you want
@@ -242,11 +244,11 @@ emphasize tags:
 <p>An important note: Do not forget to put a blank line before your
 question and the answer list, otherwise the list will not be a proper
 list:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>A question text that is not separated by a blank line</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>- A</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>- B</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>- C</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>- D</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>A question text that is not separated by a blank line</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>- A</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>- B</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>- C</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>- D</span></code></pre></div>
 <p>Renders as:</p>
 <blockquote>
 <p>A question text that is not separated by a blank line - A - B - C -
@@ -381,12 +383,12 @@ It is often more effective to present the entire solution, organized
 into manageable chunks that users can expand or collapse, such as HTML
 elements with <code>&lt;details&gt;</code> and
 <code>&lt;summary&gt;</code> tags. To give an example:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>will render as:</p>
 <details><summary> Question 1</summary>
   Provide Feedback for Question 1
@@ -401,8 +403,8 @@ need to go beyond using the general feedback.</p>
 <p>For more complex tasks the list of answers is often just available as
 a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
 <!-- make a separate vignette for this -->
 <!-- ## A programatic low level approach -->
 <!-- The `rqti` package is very flexible in that you can also use low level functions to create rqti content. Let us say you have a csv table with many single choice tasks. It is quite easy to transform this to a rqti section: -->
