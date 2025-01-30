@@ -11,7 +11,8 @@ setClass("Opal", contains = "LMS",
 setMethod("initialize", "Opal", function(.Object, ...) {
     .Object <- callNextMethod()
 
-    if (length(.Object@endpoint) == 0) {
+    if (length(.Object@endpoint) == 0) .Object@endpoint <- NA_character_
+    if (is.na(.Object@endpoint)) {
         endpoint <- Sys.getenv("RQTI_OPAL_API_ENDPOINT")
         if (endpoint == "") {
             message("The enviroment variable RQTI_OPAL_API_ENDPOINT was empty, it was assigned the value \"https://bildungsportal.sachsen.de/opal/\"")
@@ -457,3 +458,48 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
     }
     return(response)
 }
+
+
+#'Upload a resource on OPAL
+#'
+#'Function `upload2opal()` takes full prepared zip archive of QTI-test or
+#'QTI-task and uploads it to the OPAL.
+#'
+#'@param test A length one character vector of [AssessmentTest],
+#'  [AssessmentTestOpal] or [AssessmentItem] objects, Rmd/md or XML files;
+#'  required.
+#'@param display_name A length one character vector to entitle file in OPAL;
+#'  file name without extension by default; optional.
+#'@param access An integer value, optional; it is responsible for publication
+#'  status, where 1 - only those responsible for this learning resource; 2 -
+#'  responsible and other authors; 3 - all registered users; 4 - registered
+#'  users and guests. Default is 4.
+#'@param overwrite A boolean value; if the value is `TRUE`, if only one file
+#'  with the specified display name is found, it will be overwritten. Default is
+#'  `TRUE`.
+#'@param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'  environment variable `RQTI_API_ENDPOINT`. To set a global environment
+#'  variable, you need to call `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
+#'  or you can put these command into .Renviron.
+#'@param open_in_browser A boolean value; optional; it controls whether to open
+#'  a URL in default browser. Default is `TRUE.`
+#'@param as_survey A boolean value; optional; it controls resource type (test
+#'r survey). Default is `FALSE`.
+#'@param api_user A character value of the username in the OPAL.
+#'@return A list with the key, display name, and URL of the resource in Opal.
+#'@examplesIf interactive()
+#'file <- system.file("exercises/sc1.Rmd", package='rqti')
+#' upload2opal(file, "task 1", open_in_browser = FALSE)
+#'@export
+upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
+                        endpoint = NULL, open_in_browser = TRUE,
+                        as_survey = FALSE,
+                        api_user = NULL) {
+    api_user = ifelse(is.null(api_user), NA_character_, api_user)
+    endpoint = ifelse(is.null(endpoint), NA_character_, endpoint)
+    conn <- new("Opal", api_user = api_user, endpoint = endpoint)
+    upload2LMS(conn, test, display_name, access, overwrite)
+
+}
+
+

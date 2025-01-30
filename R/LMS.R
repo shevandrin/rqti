@@ -20,6 +20,7 @@ setClass("LMS", slots = c(name = "character",
 #'   resp_body_json req_method req_body_multipart
 #' @import getPass
 #' @importFrom keyring key_list key_set_with_value has_keyring_support key_delete key_get
+#' @import httr2
 #' @export
 setGeneric("authLMS", function(object, ...) standardGeneric("authLMS"))
 
@@ -130,6 +131,8 @@ setGeneric("getCourseResult", function(object, resource_id, node_id, path_outcom
     standardGeneric("getCourseResult"))
 
 get_password <- function(service_name, api_user = NULL, psw = NULL) {
+
+    api_user <- if (!is.null(api_user) && is.na(api_user)) NULL else api_user
 
     if (!has_keyring_support()) {
         warning("OS does not support key ring storage")
