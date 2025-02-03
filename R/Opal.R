@@ -8,54 +8,6 @@
 setClass("Opal", contains = "LMS",
          prototype = list(name = "Opal"))
 
-setMethod("initialize", "Opal", function(.Object, ...) {
-    .Object <- callNextMethod()
-
-    if (length(.Object@endpoint) == 0) .Object@endpoint <- NA_character_
-    if (is.na(.Object@endpoint)) {
-        endpoint <- Sys.getenv("RQTI_OPAL_API_ENDPOINT")
-        if (endpoint == "") {
-            message("The enviroment variable RQTI_OPAL_API_ENDPOINT was empty, it was assigned the value \"https://bildungsportal.sachsen.de/opal/\"")
-            endpoint <- "https://bildungsportal.sachsen.de/opal/"
-        }
-        .Object@endpoint <- endpoint
-    }
-
-    api_user <- .Object@api_user
-    if (length(.Object@api_user) == 0) api_user <- NULL
-
-    .Object@api_user <- process_init_credentials(.Object, "rqtiopal", .Object@endpoint, api_user)
-
-    validObject(.Object)
-    .Object
-})
-
-#' Authenticate with LMS Opal
-#'
-#' A generic function to handle authentication with LMS Opal.
-#' @param object an instance of the S4 object [Opal]
-#' @docType methods
-#' @rdname authLMS-methods
-#' @export
-setMethod("authLMS", "Opal", function(object, ...) {
-
-        args <- list(...)
-        api_user <- ifelse("api_user" %in% names(args), args$api_user, object@api_user)
-        if (length(api_user) == 0 ) api_user <- NULL
-        api_password <- get_password("rqtiopal", api_user)$api_password
-
-        endpoint <- object@endpoint
-        url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
-        req <- request(url_login)
-        response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
-        if (response$status_code == 200) {
-            parse <- resp_body_xml(response)
-            token <- response$headers$`X-OLAT-TOKEN`
-            Sys.setenv("X-OLAT-TOKEN"=token)
-        }
-    return(response$status_code)
-})
-
 #' Check if User is Logged in LMS Opal
 #'
 #' This method checks whether a user is logged into an LMS Opal by

@@ -8,6 +8,45 @@ setClass("LMS", slots = c(name = "character",
                           api_user = "character",
                           endpoint = "character"))
 
+setMethod("initialize", "LMS", function(.Object, ...) {
+    .Object <- callNextMethod()
+
+    if (length(.Object@endpoint) == 0) .Object@endpoint <- NA_character_
+    if (is.na(.Object@endpoint)) {
+        endpoint <- Sys.getenv("RQTI_API_ENDPOINT")
+        if (endpoint == "") {
+            stop(
+                "The API endpoint is not defined. ",
+                "Please ensure the endpoint is provided either:\n",
+                "1. As an \"endpoint\" slot value in the object, or\n",
+                "2. As an environment variable named 'RQTI_API_ENDPOINT'.\n",
+                "Example: Sys.setenv(RQTI_API_ENDPOINT = 'https://api.example.com')",
+                call. = FALSE)
+        }
+        .Object@endpoint <- endpoint
+    }
+
+    api_user <- .Object@api_user
+    if (length(api_user) == 0) api_user <- NULL
+
+    api_user <- get_password(service_name = paste0("rqti", tolower(.Object@name)),
+                            api_user = api_user)$api_user
+    if (is.null(api_user)) {
+        stop(
+            "The API username is required but not found.\n",
+            "No users for this service exist in the OS credential storage or have been created.")
+    }
+
+    .Object@api_user <- api_user
+    st_code <- authLMS(.Object)
+    if (st_code != 200) {
+        warning("Connector object was created, but the authentication attempt failed with status code ", st_code, ".")
+    }
+
+    validObject(.Object)
+    .Object
+})
+
 #' Authenticate with LMS
 #'
 #' A generic function to handle authentication with a Learning Management System
@@ -20,9 +59,37 @@ setClass("LMS", slots = c(name = "character",
 #'   resp_body_json req_method req_body_multipart
 #' @import getPass
 #' @importFrom keyring key_list key_set_with_value has_keyring_support key_delete key_get
-#' @import httr2
 #' @export
 setGeneric("authLMS", function(object, ...) standardGeneric("authLMS"))
+
+#' Authenticate with LMS
+#'
+#' A generic function to handle authentication with LMS.
+#' @param object an instance of the S4 object [Opal], [LMS]
+#' @docType methods
+#' @rdname authLMS-methods
+#' @export
+setMethod("authLMS", "LMS", function(object, ...) {
+
+    args <- list(...)
+    api_user <- ifelse("api_user" %in% names(args), args$api_user, object@api_user)
+    if (length(api_user) == 0 ) api_user <- NULL
+
+    endpoint <- object@endpoint
+    api_password <- get_password(paste0("rqti", tolower(object@name)),
+                                 api_user)$api_password
+
+    url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
+    req <- request(url_login)
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    if (response$status_code == 200) {
+        parse <- resp_body_xml(response)
+        token <- response$headers$`X-OLAT-TOKEN`
+        Sys.setenv("X-OLAT-TOKEN"=token)
+    }
+    return(response$status_code)
+})
+
 
 #' Check if User is Logged in LMS
 #'
@@ -198,67 +265,6 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
     }
 
     return(list(api_username = api_user, api_password = psw))
-}
-
-#' @importFrom utils menu
-process_init_credentials <- function(object, service_name = "rqtiolat", endpoint = NULL, api_user) {
-
-    creds <- get_password(service_name, api_user)
-    if (is.null(creds)) stop("Failed to retrieve credentials.", call. = FALSE)
-
-    response <- 0
-    max_retries <- 5
-    attempts <- 0
-
-    while (response != 200 && attempts < max_retries) {
-        api_user <- creds$api_username
-        response <- authLMS(object, api_user = api_user, api_password = creds$api_password)
-
-        if (is.null(response)) stop("This method is not implemented yet.")
-
-        if (response != 200) {
-            message("Authorization failed. Status code: ", response)
-
-            if (!interactive()) {
-                stop("Non-interactive session: change credentials in OS credential storage.", call. = FALSE)
-            }
-
-            # Interactive credential update
-            key <- menu(title = "Choose an option:", choices = c("Change password for username",
-                                                                 "Try with other username",
-                                                                 "Try with other username and password",
-                                                                 "Abort"))
-
-            creds <- handle_credential_update(key, api_user, creds, service_name)
-            if (is.null(creds)) stop("Authorization aborted by user.", call. = FALSE)
-        }
-
-        attempts <- attempts + 1
-    }
-
-    if (response != 200) stop("Authorization failed after multiple attempts.", call. = FALSE)
-    return(creds$api_username)
-}
-
-handle_credential_update <- function(key, api_user, creds, service_name) {
-    switch (key,
-        '1' = {# Change password for current username
-            api_password <- getPass("Enter new password: ")
-            },
-        '2' = {# Use a different username
-            api_user <- NULL
-            api_password <- NULL
-            },
-        '3' = {# Use new username and password
-            api_user <- readline("Enter Username: ")
-            api_password <- getPass("Enter Password: ")
-            },
-        '4' = {# Abort
-            return(NULL)
-            }
-    )
-    creds <- get_password(service_name, api_user, api_password)
-    return(creds)
 }
 
 # check if this is a test using the manifest file
