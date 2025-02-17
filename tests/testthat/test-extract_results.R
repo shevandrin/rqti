@@ -39,7 +39,7 @@ test_that("time is correct",
 
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test_result_3.zip")
-    sut <- suppressMessages(extract_results(path1, level = "items",
+    sut <- suppressMessages(extract_results(path1, level = "item",
                                             hide_filename = FALSE))
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
@@ -59,7 +59,7 @@ test_that("Testing function extract_results with zip archive", {
 test_that("Testing function extract_results", {
     path1 <- test_path("file/xml/stab_results.xml")
     sut <- suppressWarnings(suppressMessages(
-                                extract_results(path1, level = "items",
+                                extract_results(path1, level = "item",
                                                 hide_filename = FALSE)[ ,-1]))
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
@@ -84,7 +84,7 @@ test_that("Testing function extract_results", {
 test_that("Testing function extract_results", {
     path1 <- test_path("file/test-extract_result_essay_gap.zip")
     sut <- suppressWarnings(suppressMessages(
-                                       extract_results(path1, level = "items",
+                                       extract_results(path1, level = "item",
                                                        hide_filename = FALSE)))
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
@@ -109,7 +109,7 @@ test_that("Testing function extract_results", {
 })
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test_result.zip")
-    sut <- suppressMessages(extract_results(path1, level = "items",
+    sut <- suppressMessages(extract_results(path1, level = "item",
                                             hide_filename = FALSE))
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
@@ -131,7 +131,7 @@ test_that("Testing function extract_results with zip archive", {
 # The testing function of extract_results() with gaps in the answers
 test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test-extract_result_with_gap_answer.zip")
-    sut <- suppressMessages(extract_results(path1, level = "items",
+    sut <- suppressMessages(extract_results(path1, level = "item",
                                             hide_filename = FALSE))
     sut <- sut[order(sut$date),]
     rownames(sut) <- NULL
@@ -154,7 +154,7 @@ test_that("Testing function extract_results with zip archive", {
     path1 <- test_path("file/test-extract_result_only_gap.zip")
 
     # exclude column of the date stamp
-    sut <- suppressMessages(extract_results(path1, level = "items",
+    sut <- suppressMessages(extract_results(path1, level = "item",
                                             hide_filename = FALSE)[ ,-2])
 
     path2 <- test_path("file/csv/test-extract_result_only_gap.csv")

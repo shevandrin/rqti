@@ -4,12 +4,12 @@
 \alias{extract_results}
 \title{Create data frame with test results}
 \usage{
-extract_results(file, level = "exercises", hide_filename = TRUE)
+extract_results(file, level = "task", hide_filename = TRUE)
 }
 \arguments{
 \item{file}{A string with a path of the xml test result file.}
 
-\item{level}{A string with two possible values: exercises and items.}
+\item{level}{A string with two possible values: task and item.}
 
 \item{hide_filename}{A boolean value, TRUE to hide original file names by
 default.}
@@ -24,7 +24,7 @@ xml file and creates two kinds of data frames (according to parameter
 'level'), see the 'Details' section.
 }
 \note{
-1.With option level = "exercises" data frame consists of columns:
+1.With option level = "task" data frame consists of columns:
 \itemize{
 \item 'file' - name of the xml file with test results (to identify
 candidate)
@@ -39,7 +39,7 @@ otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
 }
 
-2.With option level = "items" data frame consists of columns:
+2.With option level = "item" data frame consists of columns:
 \itemize{
 \item 'file' - name of the xml file with test results (to identify
 candidate)
@@ -62,6 +62,6 @@ otherwise FALSE
 }
 \examples{
 file <- system.file("test_results.zip", package='rqti')
-df <- extract_results(file, level = "items")
+df <- extract_results(file, level = "item")
 
 }

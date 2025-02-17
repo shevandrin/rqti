@@ -4,7 +4,7 @@
 #' xml file and creates two kinds of data frames (according to parameter
 #' 'level'), see the 'Details' section.
 #' @param file A string with a path of the xml test result file.
-#' @param level A string with two possible values: exercises and items.
+#' @param level A string with two possible values: task and item.
 #' @param hide_filename A boolean value, TRUE to hide original file names by
 #'   default.
 #' @import xml2
@@ -12,7 +12,7 @@
 #' @importFrom zip zip_list
 #' @return A dataframe with attribues of the candidates outcomes and result
 #'   variables.
-#' @note 1.With option level = "exercises" data frame consists of columns:
+#' @note 1.With option level = "task" data frame consists of columns:
 #'  * 'file' - name of the xml file with test results (to identify
 #'   candidate)
 #'  * 'date' - date and time of test
@@ -25,7 +25,7 @@
 #'   otherwise FALSE
 #'  * 'title' - the values of attribute 'title' of assessment items
 #'
-#'   2.With option level = "items" data frame consists of columns:
+#'   2.With option level = "item" data frame consists of columns:
 #' * 'file' - name of the xml file with test results (to identify
 #'   candidate)
 #' * 'date' - date and time of test
@@ -45,11 +45,11 @@
 #' * 'title' - the values of attribute 'title' of assessment items
 #' @examples
 #' file <- system.file("test_results.zip", package='rqti')
-#' df <- extract_results(file, level = "items")
+#' df <- extract_results(file, level = "item")
 #'
 #' @import digest
 #' @export
-extract_results <- function(file, level = "exercises", hide_filename = TRUE) {
+extract_results <- function(file, level = "task", hide_filename = TRUE) {
     if (!all(file.exists(file))) stop("One or more files in list do not exist",
                                       call. = FALSE)
 
@@ -97,10 +97,10 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
     for (f in res_files) {
         xml_path <- file.path(tdir, f)
         switch(level,
-            exercises = {
+            task = {
                 df0 <- get_result_attr_answers(xml_path, hide_filename)
             },
-            items = {
+            item = {
                 df0 <- get_result_attr_options(xml_path, hide_filename)
             }
         )
