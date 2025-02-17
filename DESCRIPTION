@@ -38,7 +38,8 @@ Imports:
     keyring,
     zip,
     kableExtra,
-    textutils
+    textutils,
+    lifecycle
 Suggests:
     covr,
     dplyr,

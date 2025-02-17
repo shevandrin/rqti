@@ -207,6 +207,7 @@ setGeneric("publishCourse", function(object, course_id)
 setGeneric("getCourseResult", function(object, resource_id, node_id, path_outcome = ".", ...)
     standardGeneric("getCourseResult"))
 
+#' @importFrom utils menu
 get_password <- function(service_name, api_user = NULL, psw = NULL) {
 
     api_user <- if (!is.null(api_user) && is.na(api_user)) NULL else api_user

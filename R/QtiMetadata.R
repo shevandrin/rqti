@@ -61,11 +61,12 @@ setMethod("initialize", "QtiContributor", function(.Object, ...) {
 #'   assigned.
 #' @examples
 #' creator= qti_contributor("Max Mustermann", "technical validator")
+#' @importFrom lifecycle deprecate_warn
 #' @export
 qti_contributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
                             contribution_date = ifelse(name != "", Sys.Date(), NA_Date_)) {
-    lifecycle::deprecate_warn("0.3.1", "qti_contributor()", "qtiContributor()")
+    deprecate_warn("0.3.1", "qti_contributor()", "qtiContributor()")
     qtiContributor(name, role, contribution_date)
 }
 
@@ -160,7 +161,7 @@ setMethod("initialize", "QtiMetadata", function(.Object, ...) {
 qti_metadata<- function(contributor = list(), description = "",
                         rights = Sys.getenv("RQTI_RIGHTS"),
                         version = NA_character_) {
-    lifecycle::deprecate_warn("0.3.1", "qti_metadata()", "qtiMetadata()")
+    deprecate_warn("0.3.1", "qti_metadata()", "qtiMetadata()")
     obj <- qtiMetadata(contributor, description, rights, version)
     return(obj)
 }
