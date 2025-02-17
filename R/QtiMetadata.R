@@ -65,6 +65,28 @@ setMethod("initialize", "QtiContributor", function(.Object, ...) {
 qti_contributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
                             contribution_date = ifelse(name != "", Sys.Date(), NA_Date_)) {
+    lifecycle::deprecate_warn("0.3.1", "qti_contributor()", "qtiContributor()")
+    qtiContributor(name, role, contribution_date)
+}
+
+#' Constructor function for class QtiContributor
+#'
+#' Creates object of [QtiContributor]-class
+#' @param name A character string representing the name of the author.
+#' @param role A character string kind of contribution. Possible values: author,
+#'   publisher, unknown, initiator, terminator, validator, editor, graphical
+#'   designer, technical implementer, content provider, technical validator,
+#'   educational validator, script writer, instructional designer, subject
+#'   matter expert. Default is "author".
+#' @param contribution_date A character string representing date of the
+#'   contribution. Default is the current system date, when contributor is
+#'   assigned.
+#' @examples
+#' creator= qtiContributor("Max Mustermann", "technical validator")
+#' @export
+qtiContributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
+                            role = "author",
+                            contribution_date = ifelse(name != "", Sys.Date(), NA_Date_)) {
     params <- as.list(environment())
     params$Class <- "QtiContributor"
     if (is.na(params$contribution_date)) params$contribution_date <- Date(0)
@@ -102,7 +124,7 @@ setClass("QtiMetadata", slots = c(contributor = "list",
                                   description = "character",
                                   rights = "character",
                                   version = "character"),
-         prototype = prototype(contributor = list(qti_contributor()),
+         prototype = prototype(contributor = list(qtiContributor()),
                                rights = Sys.getenv("RQTI_RIGHTS"),
                                description = ""),
          validity = check_metadata)
@@ -129,13 +151,40 @@ setMethod("initialize", "QtiMetadata", function(.Object, ...) {
 #' @param version A character string representing the edition/version of this
 #'   learning object.
 #' @examples
-#' creator= qti_metadata(qti_contributor("Max Mustermann"),
+#' creator= qti_metadata(qtiContributor("Max Mustermann"),
 #'                       description = "Task description",
 #'                       rights = "This file is Copyright (C) 2024 Max
 #'                       Mustermann, all rights reserved.",
 #'                       version = "1.0")
 #' @export
 qti_metadata<- function(contributor = list(), description = "",
+                        rights = Sys.getenv("RQTI_RIGHTS"),
+                        version = NA_character_) {
+    lifecycle::deprecate_warn("0.3.1", "qti_metadata()", "qtiMetadata()")
+    obj <- qtiMetadata(contributor, description, rights, version)
+    return(obj)
+}
+
+#' Constructor function for class QtiMetadata
+#'
+#' Creates object of [QtiMetadata]-class
+#' @param contributor A list of objects [QtiContributor]-type that holds
+#'   metadata information about the authors.
+#' @param description A character string providing a textual description of the
+#'   content of this learning object.
+#' @param rights A character string describing the intellectual property rights
+#'   and conditions of use for this learning object. By default it takes value
+#'   from environment variable 'RQTI_RIGHTS'.
+#' @param version A character string representing the edition/version of this
+#'   learning object.
+#' @examples
+#' creator= qtiMetadata(qtiContributor("Max Mustermann"),
+#'                       description = "Task description",
+#'                       rights = "This file is Copyright (C) 2024 Max
+#'                       Mustermann, all rights reserved.",
+#'                       version = "1.0")
+#' @export
+qtiMetadata<- function(contributor = list(), description = "",
                         rights = Sys.getenv("RQTI_RIGHTS"),
                         version = NA_character_) {
     if (!is(contributor, "list")) contributor <- list(contributor)

@@ -123,7 +123,7 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
 #'   candidate's answers from the previous attempt. Default is `FALSE`.
 #'@param metadata An object of class [QtiMetadata] that holds metadata
 #'  information about the test. By default it creates [QtiMetadata] object. See
-#'  [qti_metadata()].
+#'  [qtiMetadata()].
 #'@param points Do not use directly; the maximum number of points for the
 #'  exam/test. It is calculated automatically as a sum of points of included
 #'  tasks.
@@ -147,7 +147,7 @@ assessmentTestOpal <- function(section, identifier = generate_id(type = "test"),
                            allow_comment = TRUE, rebuild_variables = TRUE,
                            show_test_time = TRUE, calculator = NA_character_,
                            mark_items  = TRUE, keep_responses = FALSE,
-                           metadata = qti_metadata(), points = NA_real_) {
+                           metadata = qtiMetadata(), points = NA_real_) {
     params <- as.list(environment())
     params$Class <- "AssessmentTestOpal"
     obj <- do.call("new", params)

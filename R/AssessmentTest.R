@@ -138,7 +138,7 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #'  Default is `TRUE.`
 #'@param metadata An object of class [QtiMetadata] that holds metadata
 #'  information about the test. By default it creates [QtiMetadata] object. See
-#'  [qti_metadata()].
+#'  [qtiMetadata()].
 #'@param points Do not use directly; the maximum number of points for the
 #'  exam/test. It is calculated automatically as a sum of points of included
 #'  tasks.
@@ -160,7 +160,7 @@ assessmentTest <- function(section, identifier = generate_id(type = "test"),
                            navigation_mode = "nonlinear",
                            submission_mode = "individual",
                            allow_comment = TRUE, rebuild_variables = TRUE,
-                           metadata = qti_metadata(), points = NA_real_) {
+                           metadata = qtiMetadata(), points = NA_real_) {
     params <- as.list(environment())
     params$Class <- "AssessmentTest"
     obj <- do.call("new", params)

@@ -401,7 +401,7 @@ test_that("Testing InlineChoice task in case of the entity contains
 test_that("Testing of create_manifest_task() function", {
     sc <- new("SingleChoice",
               identifier = "SingleChoice")
-    sc_metadata = qti_metadata(contributor = qti_contributor(""),
+    sc_metadata = qtiMetadata(contributor = qtiContributor(""),
                                rights = character(0), version = "0.0.9")
     sc@metadata <- sc_metadata
     sut <- toString(create_manifest_task(sc))

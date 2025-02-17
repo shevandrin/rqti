@@ -340,7 +340,7 @@ test4opal <- function(content, identifier = "test_identifier",
 }
 
 add_test_metadata <- function(object, params) {
-    mtdata <- new("QtiMetadata", contributor = list(qti_contributor()),
+    mtdata <- new("QtiMetadata", contributor = list(qtiContributor()),
                   description = params$description,
                   rights = params$rights, version = params$version)
 

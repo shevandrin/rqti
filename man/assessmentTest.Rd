@@ -17,7 +17,7 @@ assessmentTest(
   submission_mode = "individual",
   allow_comment = TRUE,
   rebuild_variables = TRUE,
-  metadata = qti_metadata(),
+  metadata = qtiMetadata(),
   points = NA_real_
 )
 }
@@ -75,7 +75,7 @@ Default is \code{TRUE.}}
 
 \item{metadata}{An object of class \link{QtiMetadata} that holds metadata
 information about the test. By default it creates \link{QtiMetadata} object. See
-\code{\link[=qti_metadata]{qti_metadata()}}.}
+\code{\link[=qtiMetadata]{qtiMetadata()}}.}
 
 \item{points}{Do not use directly; the maximum number of points for the
 exam/test. It is calculated automatically as a sum of points of included

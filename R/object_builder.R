@@ -70,10 +70,10 @@ create_question_object <- function(file) {
     attrs <- yaml_front_matter(file)
     # form value for slot metadata
     mtdata <- attrs$metadata
-    contrs <- lapply(mtdata$contributor, function(x) {do.call(qti_contributor, x)})
-    if (length(contrs) == 0) contrs <- qti_contributor()
+    contrs <- lapply(mtdata$contributor, function(x) {do.call(qtiContributor, x)})
+    if (length(contrs) == 0) contrs <- qtiContributor()
     mtdata$contributor <- contrs
-    mtdata <- do.call(qti_metadata, mtdata)
+    mtdata <- do.call(qtiMetadata, mtdata)
     # ignore parameters that are not related to object creation
     attrs <- attrs[! names(attrs) %in% c("knit", "metadata", "params")]
 

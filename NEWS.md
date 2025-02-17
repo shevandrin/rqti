@@ -22,6 +22,8 @@
 
 * Added a '<div>' tag as a root child within the 'itemBody' element for 'entry' type tasks to ensure compatibility with the LMS OpenOlat.
 
+* The functions qti_metadata() and qti_contributor() have been deprecated. Use qtiMetadata() and qtiContributor() instead.
+
 # rqti 0.3.0
 
 ## Bug fixes
