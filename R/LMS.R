@@ -1,6 +1,16 @@
-#' Class LMS
+#' LMS Class
 #'
-#' Abstract class `LMS` is represents learning management system.
+#' The `LMS` class is an abstract representation of a Learning Management System (LMS).
+#' It provides a foundation for defining LMS-specific implementations.
+#'
+#' @slot name A character string representing the name or identifier of the LMS.
+#' @slot api_user A character string containing the username for authentication.
+#' @slot endpoint A character string specifying the LMS API endpoint. By default,
+#'   this value is retrieved from the environment variable `RQTI_API_ENDPOINT`.
+#'   To set this variable globally, use:
+#'   `Sys.setenv(RQTI_API_ENDPOINT = 'your_endpoint')`,
+#'   or add it to your `.Renviron` file for persistence across sessions.
+#'
 #' @name LMS-class
 #' @rdname LMS-class
 #' @aliases LMS

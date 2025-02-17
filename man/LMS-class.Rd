@@ -4,7 +4,22 @@
 \name{LMS-class}
 \alias{LMS-class}
 \alias{LMS}
-\title{Class LMS}
+\title{LMS Class}
 \description{
-Abstract class \code{LMS} is represents learning management system.
+The \code{LMS} class is an abstract representation of a Learning Management System (LMS).
+It provides a foundation for defining LMS-specific implementations.
 }
+\section{Slots}{
+
+\describe{
+\item{\code{name}}{A character string representing the name or identifier of the LMS.}
+
+\item{\code{api_user}}{A character string containing the username for authentication.}
+
+\item{\code{endpoint}}{A character string specifying the LMS API endpoint. By default,
+this value is retrieved from the environment variable \code{RQTI_API_ENDPOINT}.
+To set this variable globally, use:
+\code{Sys.setenv(RQTI_API_ENDPOINT = 'your_endpoint')},
+or add it to your \code{.Renviron} file for persistence across sessions.}
+}}
+

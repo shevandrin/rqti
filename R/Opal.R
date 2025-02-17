@@ -1,12 +1,42 @@
-#' Class LMS OPAL
+#' Class Opal
 #'
-#' Abstract class `Opal` is represents learning management system.
+#' The `Opal` class represents a specific implementation of a Learning Management
+#' System (LMS) that extends the abstract `LMS` class. This class is designed to
+#' facilitate interactions with the Opal LMS API.
+#'
+#' @slot name A character string representing the name/identifier of the LMS.
+#'   Defaults to `"Opal"`.
+#' @slot api_user A character string specifying the API username for authentication.
+#' @slot endpoint A character string containing the API endpoint of the Opal LMS.
+#'   This can be set using the environment variable `RQTI_API_ENDPOINT` with
+#'   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or placed in the `.Renviron` file.
+#'
+#' @seealso \link{LMS-class} for the parent class.
+#'
 #' @name Opal-class
 #' @rdname Opal-class
 #' @aliases Opal
 #' @include LMS.R
+#' @export
 setClass("Opal", contains = "LMS",
          prototype = list(name = "Opal"))
+
+#' Create an Opal LMS Connection Object
+#'
+#' This helper function initializes an `Opal` object, a subclass of `LMS`,
+#' representing a connection to the Opal Learning Management System (LMS).
+#'
+#' @param api_user A character string specifying the API username.
+#' @param endpoint A character string specifying the API endpoint for the LMS.
+#'
+#' @return An object of class `Opal`, inheriting from `LMS`,
+#'   which can be used to interact with the Opal LMS API.
+#'
+#' @export
+opal <- function(api_user = NA_character_, endpoint = NA_character_) {
+    result <- new("Opal", api_user = api_user, endpoint = endpoint)
+    return(result)
+}
 
 #' Check if User is Logged in LMS Opal
 #'

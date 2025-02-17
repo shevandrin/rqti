@@ -4,7 +4,25 @@
 \name{Opal-class}
 \alias{Opal-class}
 \alias{Opal}
-\title{Class LMS OPAL}
+\title{Class Opal}
 \description{
-Abstract class \code{Opal} is represents learning management system.
+The \code{Opal} class represents a specific implementation of a Learning Management
+System (LMS) that extends the abstract \code{LMS} class. This class is designed to
+facilitate interactions with the Opal LMS API.
+}
+\section{Slots}{
+
+\describe{
+\item{\code{name}}{A character string representing the name/identifier of the LMS.
+Defaults to \code{"Opal"}.}
+
+\item{\code{api_user}}{A character string specifying the API username for authentication.}
+
+\item{\code{endpoint}}{A character string containing the API endpoint of the Opal LMS.
+This can be set using the environment variable \code{RQTI_API_ENDPOINT} with
+\code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or placed in the \code{.Renviron} file.}
+}}
+
+\seealso{
+\link{LMS-class} for the parent class.
 }
