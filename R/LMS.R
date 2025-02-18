@@ -129,6 +129,29 @@ setGeneric("isUserLoggedIn", function(object) standardGeneric("isUserLoggedIn"))
 #' @export
 setGeneric("upload2LMS", function(object, test, ...) standardGeneric("upload2LMS"))
 
+#' Upload content to LMS
+#'
+#' This is a method that handles the process of uploading content to
+#' a Learning Management System (LMS). The content can be in the form of an
+#' `AssessmentTest`, `AssessmentTestOpal`, `AssessmentItem` object, or a file in
+#' Rmd, Markdown, zip or XML format.
+#' @param object An S4 object representing the LMS, such as an instance of the
+#'   [LMS] class.
+#' @param test An [AssessmentTest], [AssessmentTestOpal] or [AssessmentItem]
+#'   objects, or a character string with path to Rmd/md, zip or XML files.
+#' @param ... Additional arguments to be passed to the method, if applicable.
+#' @docType methods
+#' @rdname upload2LMS-methods
+#' @export
+setMethod("upload2LMS", "LMS", function(object, test, ...) {
+    login_status <- authLMS(object)
+    if (login_status != 200) {
+        message("Login failed with status code: ", login_status)
+        message("Unable to log in. Please check your credentials or connection.")
+        return(NULL)
+    }
+})
+
 #' Get records of all current user's resources on LMS
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the

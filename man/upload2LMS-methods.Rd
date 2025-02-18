@@ -3,10 +3,13 @@
 \docType{methods}
 \name{upload2LMS}
 \alias{upload2LMS}
+\alias{upload2LMS,LMS-method}
 \alias{upload2LMS,Opal-method}
 \title{Upload content to LMS}
 \usage{
 upload2LMS(object, test, ...)
+
+\S4method{upload2LMS}{LMS}(object, test, ...)
 
 \S4method{upload2LMS}{Opal}(
   object,
@@ -46,6 +49,11 @@ treated as a survey; if \code{FALSE}, as a test. Default is \code{FALSE}.}
 }
 \description{
 This is a generic function that handles the process of uploading content to
+a Learning Management System (LMS). The content can be in the form of an
+\code{AssessmentTest}, \code{AssessmentTestOpal}, \code{AssessmentItem} object, or a file in
+Rmd, Markdown, zip or XML format.
+
+This is a method that handles the process of uploading content to
 a Learning Management System (LMS). The content can be in the form of an
 \code{AssessmentTest}, \code{AssessmentTestOpal}, \code{AssessmentItem} object, or a file in
 Rmd, Markdown, zip or XML format.

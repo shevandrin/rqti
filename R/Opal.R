@@ -88,11 +88,7 @@ setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
                                          access = 4, overwrite = TRUE,
                                          open_in_browser = TRUE,
                                          as_survey = FALSE) {
-
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    callNextMethod()
 
     file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE)
     if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
