@@ -74,10 +74,11 @@ create_assessment_test <- function(object, folder, verify = FALSE,
     tsov <- tag("setOutcomeValue", list(identifier = "SCORE", tsum))
     # tags for grading system
     tags_grades <- NULL
-    grade_label <- detect_label(object@grade_label)
-    table_label <- detect_label(object@table_label)
-    if (object@academic_grading) {
-        tags_grades <- make_set_conditions_grade(object@points, grade_label,
+    if (!all(is.na(object@academic_grading))) {
+        grade_label <- detect_label(object@grade_label)
+        table_label <- detect_label(object@table_label)
+        tags_grades <- make_set_conditions_grade(object@academic_grading,
+                                                 object@points, grade_label,
                                                  table_label)
     }
     # gather all conditions

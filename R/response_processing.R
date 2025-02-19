@@ -243,22 +243,22 @@ create_resp_cond_grade_feedback <- function(lower_bound, upper_bound,
     return(t_outcomeCondition)
 }
 
-# this function creates set of outcomesConditions according to german grade system
-make_set_conditions_grade <- function(max_points, grade_label, table_label) {
-    grades <- c("5.0", "4.0", "3.7", "3.3", "3.0", "2.7", "2.3", "2.0", "1.7",
-                "1.3", "1.0")
+# this function creates set of outcomesConditions according to the assigned grading
+make_set_conditions_grade <- function(grades_list, max_points, grade_label, table_label) {
+    grades_list <- sort(grades_list)
+    grades <- names(grades_list)
     id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
-    grade_levels <- seq(50, 100, 5) * max_points / 100
-    grade_levels <- grade_levels[-length(grade_levels)]
-    lower_bounds <- c("0.00", sprintf("%.2f", grade_levels))
-    upper_bounds <- c(sprintf("%.2f", grade_levels -0.01), "max")
+    grade_levels <- grades_list * max_points
+    lower_bounds <- sprintf("%.2f", grade_levels)
+    upper_bounds <- c(sprintf("%.2f", grade_levels[-1]), "max")
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,
                       upper_bounds, id_grade_fb)
     conditions <- tagList(conditions, create_resp_cond_grade_table())
     feedbacks <- Map(create_feedback_grade, id_grade_fb, grades, grade_label)
-    upper_bounds[length(upper_bounds)] <- sprintf("%.2f", max_points)
+    upper_labels <- c(sprintf("%.2f", grade_levels[-1] - 0.01),
+                      sprintf("%.2f", max_points))
     df = data.frame(grades = rev(grades), min = rev(lower_bounds),
-                    max = rev(upper_bounds))
+                    max = rev(upper_labels))
     feedback_table <- create_feedback_grade_table(df, table_label)
     feedbacks <- tagList(feedbacks, feedback_table)
     return(list(conditions = conditions, feedbacks = feedbacks))

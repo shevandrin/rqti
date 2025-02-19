@@ -36,6 +36,7 @@ test_that("Testing method createOutcomeDeclaration()
     )
     exam <- new("AssessmentTest",
                 identifier = "id_test",
+                academic_grading = NA_real_,
                 # exclude "title"
                 section = list(exam_section)
                 )
@@ -102,7 +103,6 @@ test_that("Testing method createOutcomeDeclaration() with
                )
                exam <- new("AssessmentTest",
                            identifier = "id_test",
-                           academic_grading = TRUE,
                            section = list(exam_section)
                )
 
@@ -146,7 +146,7 @@ test_that("Testing method createOutcomeDeclaration() with
 					<and>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">2.99</baseValue>
+							<baseValue baseType=\"float\">3.00</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -166,7 +166,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">3.29</baseValue>
+							<baseValue baseType=\"float\">3.30</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -186,7 +186,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">3.59</baseValue>
+							<baseValue baseType=\"float\">3.60</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -206,7 +206,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">3.89</baseValue>
+							<baseValue baseType=\"float\">3.90</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -226,7 +226,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">4.19</baseValue>
+							<baseValue baseType=\"float\">4.20</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -246,7 +246,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">4.49</baseValue>
+							<baseValue baseType=\"float\">4.50</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -266,7 +266,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">4.79</baseValue>
+							<baseValue baseType=\"float\">4.80</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -286,7 +286,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">5.09</baseValue>
+							<baseValue baseType=\"float\">5.10</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -306,7 +306,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">5.39</baseValue>
+							<baseValue baseType=\"float\">5.40</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">
@@ -326,7 +326,7 @@ test_that("Testing method createOutcomeDeclaration() with
 						</gte>
 						<lt>
 							<variable identifier=\"SCORE\"/>
-							<baseValue baseType=\"float\">5.69</baseValue>
+							<baseValue baseType=\"float\">5.70</baseValue>
 						</lt>
 					</and>
 					<setOutcomeValue identifier=\"FEEDBACKMODAL\">

@@ -26,7 +26,6 @@
 #'             section = list(exam_section),
 #'             time_limit = 90,
 #'             max_attempts = 1,
-#'             academic_grading = TRUE,
 #'             grade_label = "Preliminary grade",
 #'             show_test_time = TRUE,
 #'             calculator = "scientific-calculator",
@@ -82,9 +81,10 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
 #'  candidate for the test in minutes. Default is 90 minutes.
 #'@param max_attempts An integer value, optional, indicating the maximum number
 #'  of attempts allowed for the candidate. Default is 1.
-#'@param academic_grading A boolean, optional; enables showing a grade to the
-#'  candidate at the end of the testing according to the 5-point academic grade
-#'  system as feedback. Default is `FALSE.`
+#' @param academic_grading A named numeric vector that defines the grade table shown to the candidate as feedback at the end of the test. The default is the German grading system:
+#' gt <- c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
+#' Each grade corresponds to a minimum percentage score required to achieve it.
+#' To hide the grading table at the end of the test, set this parameter to NA_real_.
 #'@param grade_label A character value, optional; a short message that shows
 #'  with a grade in the final feedback; for multilingual use, it can be a named
 #'  vector with two-letter ISO language codes as names (e.g., c(en="Grade",
@@ -139,7 +139,10 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
 #'@export
 assessmentTestOpal <- function(section, identifier = generate_id(type = "test"),
                            title = identifier, time_limit = 90L,
-                           max_attempts = 1L, academic_grading = FALSE,
+                           max_attempts = 1L,
+                           academic_grading = c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
+                                                "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
+                                                "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0),
                            grade_label = c(en="Grade", de="Note"),
                            table_label = c(en="Grade", de="Note"),
                            navigation_mode = "nonlinear",

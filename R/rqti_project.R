@@ -65,7 +65,6 @@ rqti_project <- function(path, ...) {
         "test_opal <- test4opal(sections, \"test_demo_opal\", time_limit = 90,",
         "                       max_attempts = 1, files = \"attachment.pdf\",",
         "                       calculator = \"scientific-calculator\",",
-        "                       academic_grading = TRUE,",
         "                       grade_label = \"Note\")\n",
         "# Step 4. Render Test using QTIJS server.",
         "# Render test_opal using QTIJS server",

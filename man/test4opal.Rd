@@ -12,7 +12,8 @@ test4opal(
   max_attempts = 1L,
   files = NULL,
   calculator = NULL,
-  academic_grading = FALSE,
+  academic_grading = c(`1.0` = 0.95, `1.3` = 0.9, `1.7` = 0.85, `2.0` = 0.8, `2.3` =
+    0.75, `2.7` = 0.7, `3.0` = 0.65, `3.3` = 0.6, `3.7` = 0.55, `4.0` = 0.5, `5.0` = 0),
   grade_label = c(en = "Grade", de = "Note"),
   table_label = c(en = "Grade", de = "Note"),
   navigation_mode = "nonlinear",
@@ -54,9 +55,10 @@ calculator to the candidate. Possible values:
 Default is \code{NULL}.
 }}
 
-\item{academic_grading}{A boolean, optional; enables to show to candidate at
-the end of the testing a grade according to 5-point academic grade system
-as a feedback; Default is \code{FALSE}.}
+\item{academic_grading}{A named numeric vector that defines the grade table shown to the candidate as feedback at the end of the test. The default is the German grading system:
+gt <- c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
+Each grade corresponds to a minimum percentage score required to achieve it.
+To hide the grading table at the end of the test, set this parameter to NA_real_.}
 
 \item{grade_label}{A character value, optional; a short message that shows
 with a grade in the final feedback; for multilingual use, it can be a named
@@ -122,7 +124,7 @@ Create an AssessmentTestOpal \code{rqti}-object.
 sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
 es <- new("Essay", prompt = "Question")
 s <- section(c(sc, es), title = "Section with nonrandomized tasks")
-t <- test4opal(s, title = "Example of the Exam", academic_grading = TRUE,
+t <- test4opal(s, title = "Example of the Exam",
 show_test_time = FALSE)
 }
 \seealso{
