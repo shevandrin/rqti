@@ -26,6 +26,8 @@
 
 * The functions qti_metadata() and qti_contributor() have been deprecated. Use qtiMetadata() and qtiContributor() instead.
 
+* The 'question_type' column has been removed from the data frame returned by 'extract_result(level = "item")'.
+
 # rqti 0.3.0
 
 ## Bug fixes

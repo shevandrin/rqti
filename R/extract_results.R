@@ -20,7 +20,6 @@
 #'  * 'duration' - time in sec. what candidate spent on this item
 #'  * 'score_candidate' - points that were given to candidate after evaluation
 #'  * 'score_max' - max possible score for this question
-#'  * 'question_type' - the type of question
 #'  * 'is_answer_given' - TRUE if candidate gave the answer on question,
 #'   otherwise FALSE
 #'  * 'title' - the values of attribute 'title' of assessment items
@@ -175,7 +174,6 @@ get_result_attr_answers<- function(file, hide_filename) {
     durations <- Map(get_duration, items_result)
     scores <- Map(get_score, items_result, "SCORE")
     maxes <- Map(get_score, items_result, "MAXSCORE")
-    types <- unlist(lapply(ids_item, identify_question_type))
 
     data <- data.frame(file = rep(file_name, length(ids_item)),
                        date = rep(test_dt, length(ids_item)),
@@ -183,7 +181,6 @@ get_result_attr_answers<- function(file, hide_filename) {
                        duration = as.numeric(durations),
                        score_candidate = as.numeric(scores),
                        score_max = as.numeric(maxes),
-                       question_type = types,
                        is_answer_given = igiven)
     return(data)
 }
@@ -263,8 +260,6 @@ get_result_attr_options <- function(file, hide_filename) {
     items_result <- unique_result_set(doc)
 
     ids_item <- xml2::xml_attr(items_result, attr = "identifier")
-
-    types <- unlist(lapply(ids_item, identify_question_type))
 
     identifier <-  character(0)
     options <- character(0)
@@ -492,16 +487,6 @@ get_value <- function(node) {
     values <- xml2::xml_find_all(node, ".//d1:value")
     value  <- xml2::xml_text(values)
     return(value)
-}
-
-# to detect question type
-identify_question_type <- function(q_id) {
-    types <- c("schoice", "mchoice", "num", "cloze", "essay")
-    result <- "unknown"
-    for (t in types) {
-        if (grepl(t, q_id)) result <- t
-    }
-    return(result)
 }
 
 # returns TRUE if candidate gave an answer

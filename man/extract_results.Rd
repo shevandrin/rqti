@@ -33,7 +33,6 @@ candidate)
 \item 'duration' - time in sec. what candidate spent on this item
 \item 'score_candidate' - points that were given to candidate after evaluation
 \item 'score_max' - max possible score for this question
-\item 'question_type' - the type of question
 \item 'is_answer_given' - TRUE if candidate gave the answer on question,
 otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
