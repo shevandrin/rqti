@@ -8,6 +8,8 @@
 
 * Added new constructor functions assessmentTest(), assessmentTestOpal(), assessmentSection().
 
+* The default values of the academic_grading parameter/slot have been updated in the functions assessmentTest(), assessmentTestOpal(), test(), and in the classes AssessmentTest and AssessmentTestOpal. This parameter/slot is a named numeric vector that defines the grade table shown to candidates as feedback at the end of the test. The updated default follows the German grading system: gt <- c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0), where each grade corresponds to the minimum percentage score required to achieve it. To disable the grading table at the end of the test, set this parameter to NA_real_.
+
 * Generic functions are now exported to allow advanced users to extend the functionality of S4 classes (createItemBody, createResponseDeclaration, createOutcomeDeclaration, createResponseProcessing, createText).
 
 * Added support for the 'preview_feedback' option within 'params' in the YAML section of R Markdown files.
