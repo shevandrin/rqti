@@ -421,3 +421,7 @@ table {
 .rqti-table-head {
     border-bottom: 1px solid #ddd;
 }
+
+.mjx-chtml {
+    font-size: 120% !important;
+}
