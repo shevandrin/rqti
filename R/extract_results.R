@@ -87,7 +87,7 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
     if (length(ai_files) > 0) db <- get_titles(ai_files, tdir)
 
     else {
-        warning("In given archive files with exercises are not found.\n",
+        warning("No task files found in archive.\n",
                 "The \'title\' column will be skipped in the final dataframe",
                 immediate. = TRUE, call. = FALSE)
         db <- NULL
