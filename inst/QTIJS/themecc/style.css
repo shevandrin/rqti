@@ -423,5 +423,6 @@ table {
 }
 
 .mjx-chtml {
-    font-size: 120% !important;
+    font-size: 100% !important;
+    font-weight: normal !important;
 }
