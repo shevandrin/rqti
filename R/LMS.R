@@ -162,6 +162,29 @@ setMethod("upload2LMS", "LMS", function(object, test, ...) {
 #' @export
 setGeneric("getLMSResources", function(object) standardGeneric("getLMSResources"))
 
+
+#' Get records of all current user's resources on LMS
+#'
+#' This function retrieves data about all resources associated with the current user on the Learning Management System (LMS).
+#' If no LMS connection object is provided, it attempts to guess the connection using default settings (e.g., environment variables).
+#' If the connection cannot be established, an error is thrown.
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the
+#'   LMS.
+#' @return A dataframe with attributes of user's resources.
+#' @examplesIf interactive()
+#' df <- getLMSResources()
+#' @export
+setMethod("getLMSResources", signature(object = "missing"), function(object) {
+    connection <- guess_connection()
+
+    if (is.null(connection)) {
+        stop("Failed to create a default LMS connection. Please check your environment variables or provide a connection object.")
+    }
+
+    return(getLMSResources(connection))
+})
+
 #' Get select records about user resources by name.
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the
@@ -175,6 +198,33 @@ setGeneric("getLMSResources", function(object) standardGeneric("getLMSResources"
 #' @export
 setGeneric("getLMSResourcesByName", function(object, display_name, rtype = NULL)
     standardGeneric("getLMSResourcesByName"))
+
+#' Get select records about user resources by name.
+#'
+#' This function retrieves data about a user's resource by its name on Learning Management System (LMS).
+#' If no LMS connection object is provided, it attempts to guess the connection using default settings (e.g., environment variables).
+#' If the connection cannot be established, an error is thrown.
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the
+#'   LMS.
+#' @param display_name A string value withe the name of resource.
+#' @param rtype A string value with the type of resource. Possible values:
+#'   "FileResource.TEST", "FileResource.QUESTION", or "FileResource.SURVEY".
+#' @return A dataframe with attributes of user's resources.
+#' @examplesIf interactive()
+#' df <- getLMSResourcesByName("task_name")
+#' @export
+setMethod("getLMSResourcesByName", signature(object = "missing"),
+          function(object, display_name, rtype = NULL) {
+    connection <- guess_connection()
+
+    if (is.null(connection)) {
+      stop("Failed to create a default LMS connection. Please check your environment variables or provide a connection object.")
+    }
+
+    return(getLMSResourcesByName(connection, display_name = display_name,
+                                 rtype = rtype))
+})
 
 #' Create a URL using the resource's display name in LMS
 #'
@@ -308,4 +358,21 @@ is_test <- function(file) {
     close(zip_con)
     result <- grepl("imsqti_test_xmlv2p1", file_content)
     return(any(result))
+}
+
+# creates LMS object using some traits in env
+guess_connection <- function() {
+    endpoint <- Sys.getenv("RQTI_API_ENDPOINT", unset = NA)
+
+    if (is.na(endpoint) || nchar(endpoint) == 0) {
+        message("No endpoint found in environment variables.")
+        return(NULL)
+    }
+
+    if (!grepl("opal", endpoint, ignore.case = TRUE)) {
+        message("Cannot detect LMS Opal by endpoint: ", endpoint)
+        return(NULL)
+    }
+
+    new("Opal")
 }
