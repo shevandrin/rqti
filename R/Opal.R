@@ -255,6 +255,16 @@ setMethod("getCourseElements", "Opal", function(object, course_id) {
         req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
 
+    if (response$status_code == 404) {
+        message("The course could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
     parsed_response <- resp_body_xml(response)
     rlist <- xml2::as_list(parsed_response)$courseNodeVOes
 
