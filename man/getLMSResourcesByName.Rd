@@ -21,8 +21,3 @@ A dataframe with attributes of user's resources.
 \description{
 Get select records about user resources by name.
 }
-\examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-df <- getLMSResourcesByName()
-\dontshow{\}) # examplesIf}
-}

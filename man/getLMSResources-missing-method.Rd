@@ -14,7 +14,7 @@ LMS.}
 A dataframe with attributes of user's resources.
 }
 \description{
-This function retrieves data about all resources associated with the current user on the Learning Management System (LMS).
+This method retrieves data about all resources associated with the current user on the Learning Management System (LMS).
 If no LMS connection object is provided, it attempts to guess the connection using default settings (e.g., environment variables).
 If the connection cannot be established, an error is thrown.
 }

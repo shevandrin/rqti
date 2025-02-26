@@ -16,8 +16,3 @@ A dataframe with attributes of user's resources.
 \description{
 Get records of all current user's resources on LMS
 }
-\examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-df <- getLMSResources()
-\dontshow{\}) # examplesIf}
-}

@@ -19,5 +19,5 @@ authLMS(object, ...)
 A generic function to handle authentication with a Learning Management System
 (LMS).
 
-A generic function to handle authentication with LMS.
+The method to handle authentication with LMS.
 }
