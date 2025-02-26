@@ -77,12 +77,15 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/getCalculator-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getContributors-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getCourseElements-Opal-method.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getCourseElements-missing-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getCourseElements.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getCourseResult-Opal-method.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getCourseResult-missing-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getCourseResult.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getFiles-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getIdentifier-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getLMSResourceURL-Opal-method.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getLMSResourceURL-missing-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getLMSResourceURL.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getLMSResources-Opal-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getLMSResources-missing-method.html</loc></url>
@@ -109,6 +112,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/prepareQTIJSFiles-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/prepare_renderer.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/publishCourse-Opal-method.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/publishCourse-missing-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/publishCourse.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/qtiContributor.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/qtiMetadata.html</loc></url>
@@ -130,6 +134,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/textGapOpal_doc.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/textGap_doc.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/updateCourseElementResource-Opal-method.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/updateCourseElementResource-missing-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/updateCourseElementResource.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/upload2LMS-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc></url>
