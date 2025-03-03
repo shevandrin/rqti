@@ -156,9 +156,11 @@ setMethod("upload2LMS", "LMS", function(object, test, ...) {
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the
 #'   LMS.
+#' @param ... Additional arguments to be passed to the method, if applicable.
 #' @return A dataframe with attributes of user's resources.
+#' @rdname getLMSResources-methods
 #' @export
-setGeneric("getLMSResources", function(object) standardGeneric("getLMSResources"))
+setGeneric("getLMSResources", function(object, ...) standardGeneric("getLMSResources"))
 
 
 #' Get records of all current user's resources on LMS
@@ -169,9 +171,7 @@ setGeneric("getLMSResources", function(object) standardGeneric("getLMSResources"
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the
 #'   LMS.
-#' @return A dataframe with attributes of user's resources.
-#' @examplesIf interactive()
-#' df <- getLMSResources()
+#' @rdname getLMSResources-methods
 #' @export
 setMethod("getLMSResources", signature(object = "missing"), function(object) {
     connection <- get_default_connetion()
@@ -182,12 +182,11 @@ setMethod("getLMSResources", signature(object = "missing"), function(object) {
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the
 #'   LMS.
-#' @param display_name A string value withe the name of resource.
-#' @param rtype A string value with the type of resource. Possible values:
-#'   "FileResource.TEST", "FileResource.QUESTION", or "FileResource.SURVEY".
+#' @param ... Additional arguments to be passed to the method, if applicable.
 #' @return A dataframe with attributes of user's resources.
+#' @rdname getLMSResourcesByName-methods
 #' @export
-setGeneric("getLMSResourcesByName", function(object, display_name, rtype = NULL)
+setGeneric("getLMSResourcesByName", function(object, ...)
     standardGeneric("getLMSResourcesByName"))
 
 #' Get select records about user resources by name.
@@ -201,9 +200,9 @@ setGeneric("getLMSResourcesByName", function(object, display_name, rtype = NULL)
 #' @param display_name A string value withe the name of resource.
 #' @param rtype A string value with the type of resource. Possible values:
 #'   "FileResource.TEST", "FileResource.QUESTION", or "FileResource.SURVEY".
-#' @return A dataframe with attributes of user's resources.
 #' @examplesIf interactive()
 #' df <- getLMSResourcesByName("task_name")
+#' @rdname getLMSResourcesByName-methods
 #' @export
 setMethod("getLMSResourcesByName", signature(object = "missing"),
           function(object, display_name, rtype = NULL) {
@@ -219,6 +218,7 @@ setMethod("getLMSResourcesByName", signature(object = "missing"),
 #'  it takes file name without extension by default; optional.
 #' @return A string value of URL.
 #' @importFrom utils browseURL
+#' @rdname getLMSResourceURL-methods
 #' @export
 setGeneric("getLMSResourceURL", function(object, display_name)
     standardGeneric("getLMSResourceURL"))
@@ -232,7 +232,7 @@ setGeneric("getLMSResourceURL", function(object, display_name)
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
 #' @param display_name A length one character vector to entitle file in LMS;
 #'  it takes file name without extension by default; optional.
-#' @return A string value of URL.
+#' @rdname getLMSResourceURL-methods
 #' @export
 setMethod("getLMSResourceURL", signature(object = "missing"),
           function(object, display_name) {
@@ -246,6 +246,7 @@ setMethod("getLMSResourceURL", signature(object = "missing"),
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
 #' @param course_id A length one character vector with course id.
 #' @return A dataframe with the elements of the course.
+#' @rdname getCourseElements-methods
 #' @export
 setGeneric("getCourseElements", function(object, course_id)
     standardGeneric("getCourseElements"))
@@ -258,7 +259,7 @@ setGeneric("getCourseElements", function(object, course_id)
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
 #' @param course_id A length one character vector with course id.
-#' @return A dataframe with the elements of the course.
+#' @rdname getCourseElements-methods
 #' @export
 setMethod("getCourseElements", signature(object = "missing"),
           function(object, course_id) {
@@ -327,6 +328,7 @@ setMethod("publishCourse", signature(object = "missing"),
 #'   stored. Default is working directory.
 #' @param ... Additional arguments to be passed to the method, if applicable.
 #' @return It downloads a zip and return a character string with path.
+#' @rdname getCourseResult-methods
 #' @export
 setGeneric("getCourseResult", function(object, resource_id, node_id, path_outcome = ".", ...)
     standardGeneric("getCourseResult"))
@@ -343,9 +345,9 @@ setGeneric("getCourseResult", function(object, resource_id, node_id, path_outcom
 #' @param path_outcome A length one character vector with path, where the zip should be
 #'   stored. Default is working directory.
 #' @param ... Additional arguments to be passed to the method, if applicable.
-#' @return It downloads a zip and return a character string with path.
 #' @examplesIf interactive()
 #' zip_file <- getCourseResult("89068111333293", "1617337826161777006")
+#' @rdname getCourseResult-methods
 #' @export
 setMethod("getCourseResult", signature(object = "missing"),
           function(object, resource_id, node_id, path_outcome = ".", ...) {

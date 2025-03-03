@@ -160,9 +160,7 @@ setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
 #' Get records of all current user's resources on LMS Opal
 #'
 #' @param object An S4 object of class [Opal] that represents a connection to the LMS.
-#' @return A dataframe with attributes of user's resources.
-#' @examplesIf interactive()
-#' df <- getLMSResources()
+#' @rdname getLMSResources-methods
 #' @export
 setMethod("getLMSResources", "Opal", function(object){
 
@@ -188,9 +186,7 @@ setMethod("getLMSResources", "Opal", function(object){
 #' @param display_name A string value withe the name of resource.
 #' @param rtype A string value with the type of resource. Possible values:
 #'   "FileResource.TEST", "FileResource.QUESTION", or "FileResource.SURVEY".
-#' @return A dataframe with attributes of user's resources.
-#' @examplesIf interactive()
-#' df <- getLMSResourcesByName()
+#' @rdname getLMSResourcesByName-methods
 #' @export
 setMethod("getLMSResourcesByName", "Opal", function(object, display_name,
                                                     rtype = NULL){
@@ -213,7 +209,7 @@ setMethod("getLMSResourcesByName", "Opal", function(object, display_name,
 #' @param object An S4 object of class [Opal] that represents a connection to the LMS.
 #' @param display_name A length one character vector to entitle file in OPAL;
 #'  it takes file name without extension by default; optional.
-#' @return A string value of URL.
+#' @rdname getLMSResourceURL-methods
 #' @export
 setMethod("getLMSResourceURL", "Opal", function(object, display_name) {
 
@@ -235,13 +231,11 @@ setMethod("getLMSResourceURL", "Opal", function(object, display_name) {
 
 #' Retrieve Data About Course Elements from LMS Opal
 #'
-#' This function retrieves and returns data about the elements of a specified course
-#' from the LMS Opal system. The data includes information such as the node ID,
-#' short title, short name, and long title of each element.
 #' @param object An S4 object of class [Opal] that represents a connection to the LMS.
 #' @param course_id A length one character vector with course id.
 #' @return A dataframe with the data of the elements of the course (fields: nodeId,
 #' shortTitle, shortName, longTitle) on LMS Opal.
+#' @rdname getCourseElements-methods
 #' @export
 setMethod("getCourseElements", "Opal", function(object, course_id) {
 
@@ -367,8 +361,8 @@ setMethod("publishCourse", "Opal", function(object, course_id) {
 #' @param rename A boolean value; optional; Set `TRUE` value to take the short
 #'   name of the course element for naming zip (results_shortName.zip). `FALSE`
 #'   combines in zip name course id and node id. Default is `TRUE`.
-#' @return It downloads a zip and return a character string with path.
 #' @importFrom tools file_ext
+#' @rdname getCourseResult-methods
 #' @export
 setMethod("getCourseResult", "Opal", function(object, resource_id, node_id,
                                               path_outcome = ".", rename = TRUE){
