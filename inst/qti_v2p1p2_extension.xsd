@@ -73,6 +73,99 @@
         </xs:complexType>
     </xs:redefine>
 
+    <!-- Redefine the OUL.Type (ol) to add the attr type -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="OUL.Type" abstract="false" mixed="false">
+            <xs:complexContent>
+                <xs:extension base="OUL.Type">
+                    <xs:attributeGroup ref="type.OUL.Attr" />
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
+    <!-- Redefine the SetValue.Type to add mapTolResponse tag (Opal specific) -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="SetValue.Type" abstract="false" mixed="false">
+            <xs:complexContent>
+                <xs:extension base="SetValue.Type">
+                    <xs:sequence>
+                    <xs:choice minOccurs="0" maxOccurs="1">
+
+              <xs:element ref="and" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="gt" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="not" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="lt" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="gte" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="lte" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="or" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="sum" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="durationLT" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="durationGTE" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="subtract" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="divide" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="multiple" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="ordered" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="customOperator" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="random" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="numberIncorrect" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="numberCorrect" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="numberPresented" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="numberResponded" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="numberSelected" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="substring" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="equalRounded" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="null" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="delete" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="match" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="index" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="power" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="equal" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="contains" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="containerSize" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="correct" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="default" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="anyN" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="integerDivide" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="integerModulus" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="isNull" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="member" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="product" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="round" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="truncate" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="fieldValue" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="randomInteger" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="randomFloat" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="variable" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="outcomeMinimum" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="outcomeMaximum" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="testVariables" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="integerToFloat" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="inside" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="baseValue" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="patternMatch" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="mapResponsePoint" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="mapResponse" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="stringMatch" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="repeat" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="roundTo" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="lcm" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="gcd" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="min" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="max" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="mathConstant" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="statsOperator" minOccurs="1" maxOccurs="1" />
+              <xs:element ref="mathOperator" minOccurs="1" maxOccurs="1" />
+              <!-- Add the mapTolResponse element here -->
+              <xs:element ref="mapTolResponse" minOccurs="0" maxOccurs="1"/>
+
+                    </xs:choice>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
     <!-- Add new complex type for Details.Type -->
     <xs:complexType name="Details.Type" abstract="false" mixed="true">
         <xs:annotation>
@@ -91,10 +184,23 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!-- Add new complex type for MapTolResponse.Type -->
+    <xs:complexType name="MapTolResponse.Type" abstract="false" mixed="true">
+        <xs:annotation>
+            <xs:documentation source="documentation">
+                The complexType for the Opal mapTolResponse tag, used for tolerance for numeric gap.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="identifier.MapTolResponse.Attr" />
+        <xs:attributeGroup ref="tolerance.MapTolResponse.Attr" />
+        <xs:attributeGroup ref="toleranceMode.MapTolResponse.Attr" />
+    </xs:complexType>
+
     <!-- Define new elements -->
 
     <xs:element name="details" type="Details.Type"/>
     <xs:element name="summary" type="HTMLText.Type"/>
+    <xs:element name="mapTolResponse" type="MapTolResponse.Type" />
 
     <!-- Define new attributes -->
 
@@ -113,5 +219,42 @@
         </xs:attribute>
     </xs:attributeGroup>
 
+    <xs:attributeGroup name="type.OUL.Attr">
+        <xs:attribute name="type" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1" />
+                    <xs:enumeration value="a" />
+                    <xs:enumeration value="A" />
+                    <xs:enumeration value="i" />
+                    <xs:enumeration value="I" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="tolerance.MapTolResponse.Attr">
+        <xs:attribute name="tolerance" use="optional">
+            <xs:simpleType>
+                <xs:list itemType="ToleranceList.Type" />
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="identifier.MapTolResponse.Attr">
+        <xs:attribute name="identifier" use="required" type="Identifier.Type" />
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="toleranceMode.MapTolResponse.Attr">
+        <xs:attribute name="toleranceMode" use="optional" default="exact">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="absolute" />
+                    <xs:enumeration value="exact" />
+                    <xs:enumeration value="relative" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
 
 </xs:schema>
