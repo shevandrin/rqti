@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rqti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.3.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,9 +59,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.0.0" id="rqti-100">rqti 1.0.0<a class="anchor" aria-label="anchor" href="#rqti-100"></a></h2>
 <div class="section level4">
-<h4 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h4>
+<h4 id="new-features-1-0-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-0-0"></a></h4>
 <ul><li><p>Major API Refactor: The API functionality has been refactored to require creating an Opal object for establishing a connection. Methods are now called on this object for interacting with the LMS API, replacing the previous function-based approach.</p></li>
 <li><p>Added a <code><a href="../reference/verify_qti.html">verify_qti()</a></code> function to validate XML documents against the QTI v2.1 schema. Two schema versions are supported: the original IMS Global schema and an extended version that permits additional HTML tags.</p></li>
 <li><p>Added new constructor functions <code><a href="../reference/assessmentTest.html">assessmentTest()</a></code>, <code><a href="../reference/assessmentTestOpal.html">assessmentTestOpal()</a></code>, <code><a href="../reference/assessmentSection.html">assessmentSection()</a></code>.</p></li>
@@ -72,7 +72,7 @@
 <li><p>Renamed the “contributor” slot in <code>QtiContributor</code> to ‘name’.</p></li>
 </ul></div>
 <div class="section level4">
-<h4 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h4>
+<h4 id="improvements-1-0-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-0-0"></a></h4>
 <ul><li><p>QTIJS rendering (<code>DirectedPair</code> type, round Score and Maxscore values).</p></li>
 <li><p>Added a ‘&lt;div&gt;’ tag as a root child within the ‘itemBody’ element for <code>Entry</code> type tasks to ensure compatibility with the LMS OpenOlat.</p></li>
 <li><p>The functions <code><a href="../reference/qti_metadata.html">qti_metadata()</a></code> and <code><a href="../reference/qti_contributor.html">qti_contributor()</a></code> have been deprecated. Use <code><a href="../reference/qtiMetadata.html">qtiMetadata()</a></code> and <code><a href="../reference/qtiContributor.html">qtiContributor()</a></code> instead.</p></li>
