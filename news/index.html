@@ -60,95 +60,89 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
-<div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<div class="section level4">
+<h4 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h4>
 <ul><li><p>Major API Refactor: The API functionality has been refactored to require creating an Opal object for establishing a connection. Methods are now called on this object for interacting with the LMS API, replacing the previous function-based approach.</p></li>
-<li><p>Added a verify_qti() function to validate XML documents against the QTI v2.1 schema. Two schema versions are supported: the original IMS Global schema and an extended version that permits additional HTML tags.</p></li>
-<li><p>Added new constructor functions assessmentTest(), assessmentTestOpal(), assessmentSection().</p></li>
-<li><p>The default values of the academic_grading parameter/slot have been updated in the functions assessmentTest(), assessmentTestOpal(), test(), and in the classes AssessmentTest and AssessmentTestOpal. This parameter/slot is a named numeric vector that defines the grade table shown to candidates as feedback at the end of the test. The updated default follows the German grading system: gt &lt;- c(“1.0” = 0.95, “1.3” = 0.9, “1.7” = 0.85, “2.0” = 0.8, “2.3” = 0.75, “2.7” = 0.7, “3.0” = 0.65, “3.3” = 0.6, “3.7” = 0.55, “4.0” = 0.5, “5.0” = 0), where each grade corresponds to the minimum percentage score required to achieve it. To disable the grading table at the end of the test, set this parameter to NA_real_.</p></li>
-<li><p>Generic functions are now exported to allow advanced users to extend the functionality of S4 classes (createItemBody, createResponseDeclaration, createOutcomeDeclaration, createResponseProcessing, createText).</p></li>
-<li><p>Added support for the ‘preview_feedback’ option within ‘params’ in the YAML section of R Markdown files.</p></li>
+<li><p>Added a <code><a href="../reference/verify_qti.html">verify_qti()</a></code> function to validate XML documents against the QTI v2.1 schema. Two schema versions are supported: the original IMS Global schema and an extended version that permits additional HTML tags.</p></li>
+<li><p>Added new constructor functions <code><a href="../reference/assessmentTest.html">assessmentTest()</a></code>, <code><a href="../reference/assessmentTestOpal.html">assessmentTestOpal()</a></code>, <code><a href="../reference/assessmentSection.html">assessmentSection()</a></code>.</p></li>
+<li><p>The default values of the “academic_grading” parameter/slot have been updated in the functions <code><a href="../reference/assessmentTest.html">assessmentTest()</a></code>, <code><a href="../reference/assessmentTestOpal.html">assessmentTestOpal()</a></code>, <code><a href="../reference/test.html">test()</a></code>, and in the classes <code>AssessmentTest</code> and <code>AssessmentTestOpal</code>. This parameter/slot is a named numeric vector that defines the grade table shown to candidates as feedback at the end of the test. The updated default follows the German grading system: gt &lt;- c(“1.0” = 0.95, “1.3” = 0.9, “1.7” = 0.85, “2.0” = 0.8, “2.3” = 0.75, “2.7” = 0.7, “3.0” = 0.65, “3.3” = 0.6, “3.7” = 0.55, “4.0” = 0.5, “5.0” = 0), where each grade corresponds to the minimum percentage score required to achieve it. To disable the grading table at the end of the test, set this parameter to NA_real_.</p></li>
+<li><p>Generic functions are now exported to allow advanced users to extend the functionality of S4 classes <code>(createItemBody()</code>, <code><a href="../reference/createResponseDeclaration-methods.html">createResponseDeclaration()</a></code>, <code><a href="../reference/createOutcomeDeclaration-methods.html">createOutcomeDeclaration()</a></code>, <code><a href="../reference/createResponseProcessing-methods.html">createResponseProcessing()</a></code>, <code><a href="../reference/createText-methods.html">createText()</a></code>).</p></li>
+<li><p>Added support for the <code>preview_feedback</code> option within ‘params’ in the YAML section of R Markdown files.</p></li>
 <li><p>Renamed the service name in the keyring system credential storage to “rqtiopal”.</p></li>
-<li><p>Renamed the ‘contributor’ slot in QtiContributor to ‘name’.</p></li>
+<li><p>Renamed the “contributor” slot in <code>QtiContributor</code> to ‘name’.</p></li>
 </ul></div>
-<div class="section level3">
-<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
-<ul><li><p>QTIJS rendering (DirectedPair type, round Score and Maxscore values).</p></li>
-<li>
-<p>Added a ’</p>
-<div>
-<p>’ tag as a root child within the ‘itemBody’ element for ‘entry’ type tasks to ensure compatibility with the LMS OpenOlat.</p>
-<li><p>The functions qti_metadata() and qti_contributor() have been deprecated. Use qtiMetadata() and qtiContributor() instead.</p></li>
-<li><p>The ‘question_type’ column has been removed from the data frame returned by ‘extract_result(level = “item”)’.</p></li>
-
+<div class="section level4">
+<h4 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h4>
+<ul><li><p>QTIJS rendering (<code>DirectedPair</code> type, round Score and Maxscore values).</p></li>
+<li><p>Added a ‘&lt;div&gt;’ tag as a root child within the ‘itemBody’ element for <code>Entry</code> type tasks to ensure compatibility with the LMS OpenOlat.</p></li>
+<li><p>The functions <code><a href="../reference/qti_metadata.html">qti_metadata()</a></code> and <code><a href="../reference/qti_contributor.html">qti_contributor()</a></code> have been deprecated. Use <code><a href="../reference/qtiMetadata.html">qtiMetadata()</a></code> and <code><a href="../reference/qtiContributor.html">qtiContributor()</a></code> instead.</p></li>
+<li><p>The ‘question_type’ column has been removed from the data frame returned by <code>extract_result(level = "item")</code>.</p></li>
+</ul></div>
 </div>
-</li>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="rqti-030">rqti 0.3.0<a class="anchor" aria-label="anchor" href="#rqti-030"></a></h2><p class="text-muted">CRAN release: 2024-07-19</p>
+<div class="section level4">
+<h4 id="bug-fixes-0-3-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-3-0"></a></h4>
+<ul><li><p>Fix parsing R Markdown files with tables according the latest pandoc version.</p></li>
+<li><p>Fix <code>extract_results(level="items")</code> for <code>Ordering</code> type, when candidate response is not given.</p></li>
+<li><p>Fix error at <code>createQtitask(obj, zip=TRUE)</code>.</p></li>
 </ul></div>
-<div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-1">rqti 0.3.0<a class="anchor" aria-label="anchor" href="#rqti-development-version-1"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Fix parsing R Markdown files with tables according the latest pandoc version.</li>
-<li>Fix extract_results(level=“items”) for Ordering type, when candidate response is not given</li>
-<li>Fix error at createQtitask(obj, zip=TRUE)</li>
+<div class="section level4">
+<h4 id="new-features-0-3-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h4>
+<ul><li><p>New API OPAL function <code>get_course_elements()</code> returns dataframe with elements of the course by course id.</p></li>
+<li><p>New API OPAL function <code>get_course_results()</code> returns an xml with data about results by course id and node id.</p></li>
+<li><p>New API OPAL function <code>publish_courses()</code> for publishing a course by Resource ID.</p></li>
 </ul></div>
-<div class="section level3">
-<h3 id="new-features-development-version-1">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-1"></a></h3>
-<ul><li><p>New API OPAL function get_course_elements() returns dataframe with elements of the course by course id.</p></li>
-<li><p>New API OPAL function get_course_results() returns an xml with data about results by course id and node id.</p></li>
-<li><p>New API OPAL function publish_courses() for publishing a course by Resource ID.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="improvements-development-version-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version-1"></a></h3>
+<div class="section level4">
+<h4 id="improvements-0-3-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-3-0"></a></h4>
 <ul><li>QTIJS rendering.</li>
 </ul></div>
 </div>
-<div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-2">rqti 0.2.1<a class="anchor" aria-label="anchor" href="#rqti-development-version-2"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-development-version-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-1"></a></h3>
-<ul><li>In metadata default value for the slot contribution date is assigned to Date(0).</li>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.1" id="rqti-021">rqti 0.2.1<a class="anchor" aria-label="anchor" href="#rqti-021"></a></h2><p class="text-muted">CRAN release: 2024-05-26</p>
+<div class="section level4">
+<h4 id="bug-fixes-0-2-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-1"></a></h4>
+<ul><li>In metadata default value for the slot “contribution_date” is assigned to Date(0).</li>
 </ul></div>
-<div class="section level3">
-<h3 id="new-features-development-version-2">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-2"></a></h3>
-<ul><li><p>method createQtiTask() can create XML or zip files, to control this use parameter zip=TRUE.</p></li>
+<div class="section level4">
+<h4 id="new-features-0-2-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-1"></a></h4>
+<ul><li><p>method <code><a href="../reference/createQtiTask-methods.html">createQtiTask()</a></code> can create XML or zip files, to control this use parameter zip=TRUE.</p></li>
 <li><p>QTIJS rendering shows feedback and score for tasks.</p></li>
 </ul></div>
 </div>
-<div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-3">rqti 0.2.0<a class="anchor" aria-label="anchor" href="#rqti-development-version-3"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-development-version-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-2"></a></h3>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.0" id="rqti-020">rqti 0.2.0<a class="anchor" aria-label="anchor" href="#rqti-020"></a></h2><p class="text-muted">CRAN release: 2024-05-08</p>
+<div class="section level4">
+<h4 id="bug-fixes-0-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-2-0"></a></h4>
 <ul><li><p>Handle problem with xsd scheme for xml validation.</p></li>
 <li><p>Handle some problems with html and mathml entities.</p></li>
 </ul></div>
-<div class="section level3">
-<h3 id="new-features-development-version-3">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-3"></a></h3>
+<div class="section level4">
+<h4 id="new-features-0-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-2-0"></a></h4>
 <ul><li><p>Improved the appearance of the tasks in QTIJS viewer.</p></li>
-<li><p>Added constructor functions for task classes: singleChoice(), multipleChoice(), essay(), ordering(), entry(), directedPair(), oneInColTable(), oneInRowTable(), myltipleChoiceTable().</p></li>
-<li><p>Added constructor functions for content of Entry class: numericGap(), textGap(), textGapOpal(), inlineChoice().</p></li>
-<li><p>Added constructor functions for the feedback objects: modalFeedback(), correctFeedback(), wrongFeedback().</p></li>
-<li><p>Added the ability to upload SURVEY resource type to Opal using the API. The upload2opal() function now includes a new parameter, as_survey, which allows you to specify the resource type. Set as_survey = TRUE to upload as a SURVEY resource type.</p></li>
-<li><p>Added the ability to put metadata in the manifest file for tests. To store metadata information AssessmentItem and AssessmentTest use slot <a href="https://github.com/metadata" class="external-link">@metadata</a> that takes QtiMetadata (and QtiContributor inside) classes as type. Two construction functions have been added to create objects: qti_metadata() and qti_contributor().</p></li>
+<li><p>Added constructor functions for task classes: <code><a href="../reference/singleChoice.html">singleChoice()</a></code>, <code><a href="../reference/multipleChoice.html">multipleChoice()</a></code>, <code><a href="../reference/essay.html">essay()</a></code>, <code><a href="../reference/ordering.html">ordering()</a></code>, <code><a href="../reference/entry.html">entry()</a></code>, <code><a href="../reference/directedPair.html">directedPair()</a></code>, <code><a href="../reference/oneInColTable.html">oneInColTable()</a></code>, <code><a href="../reference/oneInRowTable.html">oneInRowTable()</a></code>, <code>myltipleChoiceTable()</code>.</p></li>
+<li><p>Added constructor functions for content of Entry class: <code><a href="../reference/numericGap_doc.html">numericGap()</a></code>, <code><a href="../reference/textGap_doc.html">textGap()</a></code>, <code><a href="../reference/textGapOpal_doc.html">textGapOpal()</a></code>, <code><a href="../reference/inlineChoice.html">inlineChoice()</a></code>.</p></li>
+<li><p>Added constructor functions for the feedback objects: <code><a href="../reference/modalFeedback.html">modalFeedback()</a></code>, <code><a href="../reference/correctFeedback.html">correctFeedback()</a></code>, <code><a href="../reference/wrongFeedback.html">wrongFeedback()</a></code>.</p></li>
+<li><p>Added the ability to upload SURVEY resource type to Opal using the API. The <code><a href="../reference/upload2opal.html">upload2opal()</a></code> function now includes a new parameter, “as_survey”, which allows you to specify the resource type. Set “as_survey = TRUE” to upload as a SURVEY resource type.</p></li>
+<li><p>Added the ability to put metadata in the manifest file for tests. To store metadata information <code>AssessmentItem</code> and <code>AssessmentTest</code> use slot “@metadata” that takes <code>QtiMetadata</code> (and <code>QtiContributor</code> inside) classes as type. Two construction functions have been added to create objects: <code><a href="../reference/qti_metadata.html">qti_metadata()</a></code> and <code><a href="../reference/qti_contributor.html">qti_contributor()</a></code>.</p></li>
 </ul></div>
 </div>
-<div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-4">rqti 0.1.1<a class="anchor" aria-label="anchor" href="#rqti-development-version-4"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-development-version-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version-3"></a></h3>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.1" id="rqti-011">rqti 0.1.1<a class="anchor" aria-label="anchor" href="#rqti-011"></a></h2><p class="text-muted">CRAN release: 2024-03-21</p>
+<div class="section level4">
+<h4 id="bug-fixes-0-1-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-1"></a></h4>
 <ul><li><p>Added the missing qti.js for rendering Rmd-files with tasks.</p></li>
 <li><p>Added processing of the pandoc –embed-resources parameter for pandoc versions &lt; 2.19.</p></li>
 </ul></div>
-<div class="section level3">
-<h3 id="new-features-development-version-4">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version-4"></a></h3>
-<ul><li>Identifiers of AssessmentItem, AssessmentSection and AssessmentTest objects are checked for compliance with QTI requirements.</li>
+<div class="section level4">
+<h4 id="new-features-0-1-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-1-1"></a></h4>
+<ul><li>Identifiers of <code>AssessmentItem</code>, <code>AssessmentSection</code> and <code>AssessmentTest</code> objects are checked for compliance with QTI requirements.</li>
 </ul></div>
 </div>
-<div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version-5">rqti 0.1.0<a class="anchor" aria-label="anchor" href="#rqti-development-version-5"></a></h2>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="rqti-010">rqti 0.1.0<a class="anchor" aria-label="anchor" href="#rqti-010"></a></h2><p class="text-muted">CRAN release: 2024-03-19</p>
 <ul><li>Initial CRAN submission.</li>
 </ul></div>
-</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
