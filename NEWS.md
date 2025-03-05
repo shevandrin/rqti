@@ -1,4 +1,4 @@
-# rqti (development version)
+# rqti 1.0.0
 
 ### New features
 
