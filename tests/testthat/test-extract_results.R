@@ -170,6 +170,9 @@ test_that("Testing function extract_results with zip archive", {
     sut$score_candidate <- as.numeric(sut$score_candidate)
     sut$score_max <- as.numeric(sut$score_max)
 
+    expected$candidate_response <- as.logical(expected$candidate_response)
+    expected$is_response_correct <- as.logical(expected$is_response_correct)
+
     expect_equal(sut,expected)
 })
 test_that("Testing extract_results() throws an error for non-existing file", {
