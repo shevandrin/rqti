@@ -128,8 +128,7 @@ library(rqti)
 The philosophy of the rqti package is &lt;&lt;do one thing and do it well|one for
 all&gt;&gt;.
 
-Under the hood, the rqti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no
-OOP", "R6 OOP"))`.
+Under the hood, the rqti package uses `r dropdown(c("S4 OOP", "S3 OOP", "no OOP", "R6 OOP"))`.
 
 # feedback
 
@@ -194,6 +193,9 @@ title: A meaningful title that can be displayed in the LMS
 
 ```{r echo=F}
 library(rqti)
+dropdown1 &lt;- dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", 
+                        "R6" = "R6 OOP"), solution_index = 2, points = 2, 
+                      response_identifier = "OOP_task")
 ```
 
 # question
@@ -201,9 +203,7 @@ library(rqti)
 The philosophy of the rqti package is &lt;&lt;do one thing and do it well|one for
 all&gt;&gt;.
 
-Under the hood, the rqti package uses `r dropdown(c("no OOP" = "no OOP", "S4" =
-"S4 OOP", "S3" = "S3 OOP", "R6" = "R6 OOP"), solution_index = 2, points = 2,
-response_identifier = "OOP_task")`.
+Under the hood, the rqti package uses `r dropdown1`.
 
 # feedback
 

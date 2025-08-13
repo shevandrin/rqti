@@ -145,9 +145,7 @@ See `?gap_numeric` for more options (e.g. tolerance).
 
 ## text gaps
 
-The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A.
-Binet"))` in the early &lt;&lt;20th&gt;&gt; century with the intention of identifying
-students who might need extra assistance.
+The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A. Binet"))` in the early &lt;&lt;20th&gt;&gt; century with the intention of identifying students who might need extra assistance.
 
 See `?gap_text` for more options (e.g. tolerance).
 
@@ -238,29 +236,17 @@ You conducted an IQ test for 10 persons and found the following values:
 
 What is the mean value of these IQ values? `r gap_numeric(mean(iq))`
 
-The same question, but now with a tolerance of +-5: `r gap_numeric(mean(iq),
-tolerance = 5)`
+The same question, but now with a tolerance of +-5: `r gap_numeric(mean(iq), tolerance = 5)`
 
 The parameter `tolerance_type` determines how the tolerance is calculated.
 
-The same question, but now with a relative tolerance of +-5%: `r
-gap_numeric(mean(iq), tolerance = 5, tolerance_type = "relative")`
+The same question, but now with a relative tolerance of +-5%: `r gap_numeric(mean(iq), tolerance = 5, tolerance_type = "relative")`
 
 ## text gaps
 
-The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A.
-Binet"))` in the early 20th century with the intention of identifying students
-who might need extra assistance. Over the years, IQ tests have evolved, and
-various versions exist today, such as the WAIS, standing for `r
-gap_text("Wechsler", case_sensitive = F, tolerance = 2)` Adult Intelligence
-Scale, and the &lt;&lt;Stanford&gt;&gt;-Binet Intelligence Scales.
+The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A. Binet"))` in the early 20th century with the intention of identifying students who might need extra assistance. Over the years, IQ tests have evolved, and various versions exist today, such as the WAIS, standing for `r gap_text("Wechsler", case_sensitive = F, tolerance = 2)` Adult Intelligence Scale, and the &lt;&lt;Stanford&gt;&gt;-Binet Intelligence Scales.
 
-Please be advised that OPAL has introduced a new attribute for text
-gaps—`tolerance`—which now accommodates considerations for spelling errors. It
-is crucial to restrict the use of this attribute to the OPAL Learning Management
-System (LMS), as it may not be compatible with other Learning Management
-Systems. Furthermore, it is important to note that employing this attribute will
-result in the XML files being rendered invalid according to the QTI standard.
+Please be advised that OPAL has introduced a new attribute for text gaps—`tolerance`—which now accommodates considerations for spelling errors. It is crucial to restrict the use of this attribute to the OPAL Learning Management System (LMS), as it may not be compatible with other Learning Management Systems. Furthermore, it is important to note that employing this attribute will result in the XML files being rendered invalid according to the QTI standard.
 
 # feedback
 
