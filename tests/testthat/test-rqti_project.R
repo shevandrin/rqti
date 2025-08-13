@@ -9,11 +9,9 @@ test_that("Project template creates expected files", {
     lines <- lines[!grepl("render_|upload2", lines)]
     lines <- append(lines, "library(rqti)", 0)
     writeLines(lines, file.path(tmpdir, "main2.R"))
-    wd <- getwd()
-    setwd(tmpdir)
-    source("main2.R")
+    source(file.path(tmpdir, "main2.R"), chdir = TRUE)
 
-    expect_true(file.exists("upload/test_demo.xml"))
-    expect_true(file.exists("upload/test_demo.zip"))
-    setwd(wd)
+    # future improvements: check xml validity or created test
+    expect_true(file.exists(file.path(tmpdir, "upload/test_demo.xml")))
+    expect_true(file.exists(file.path(tmpdir, "upload/test_demo.zip")))
 })
