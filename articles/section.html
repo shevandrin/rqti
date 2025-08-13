@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Sections and Tests • rqti</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -86,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Sections and Tests</h1>
             
-            <h4 data-toc-skip class="date">2025-03-13</h4>
+            <h4 data-toc-skip class="date">2025-08-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/section.Rmd" class="external-link"><code>vignettes/section.Rmd</code></a></small>
       <div class="d-none name"><code>section.Rmd</code></div>
@@ -148,10 +147,10 @@ qtijs you will not see the structure of the test, so we use OPAL for
 demonstration purposes.</p>
 <p>We now have 10 variants of the test, two of which are:</p>
 <div class="float">
-<img src="images%2FAtest1.jpg" style="width:100.0%" alt="Test structure for seed 8833."><div class="figcaption">Test structure for seed 8833.</div>
+<img src="images/Atest1.jpg" style="width:100.0%" alt="Test structure for seed 8833."><div class="figcaption">Test structure for seed 8833.</div>
 </div>
 <div class="float">
-<img src="images%2FBtest1.jpg" style="width:100.0%" alt="Test structure for seed 7829."><div class="figcaption">Test structure for seed 7829.</div>
+<img src="images/Btest1.jpg" style="width:100.0%" alt="Test structure for seed 7829."><div class="figcaption">Test structure for seed 7829.</div>
 </div>
 <p>After the root section you can see the section exam_8833 (image 1)
 and exam_S7829 (image 2). There are actually 8 more (10 in total) and if
@@ -177,11 +176,11 @@ make a test out of this and upload it to OPAL:</p>
 <span><span class="va">repo</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/upload2opal.html">upload2opal</a></span><span class="op">(</span><span class="st">"test2.zip"</span>, <span class="st">"test2"</span>, open_in_browser <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>In OPAL this will create the following structure:</p>
 <div class="float">
-<img src="images%2FAtest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, seed 9808."><div class="figcaption">Test structure with one fixed section, seed
+<img src="images/Atest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, seed 9808."><div class="figcaption">Test structure with one fixed section, seed
 9808.</div>
 </div>
 <div class="float">
-<img src="images%2FBtest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, for seed 8833."><div class="figcaption">Test structure with one fixed section, for seed
+<img src="images/Btest2.jpg" style="width:100.0%" alt="Test structure with one fixed section, for seed 8833."><div class="figcaption">Test structure with one fixed section, for seed
 8833.</div>
 </div>
 <p>As you can see, we still have our variable section with different
@@ -222,7 +221,7 @@ variants of a task by drawing different seeds and creating subsections
 with these seeds. There is also a different approach to introduce
 randomness. Have a look at the following schema:</p>
 <div class="float">
-<img src="images%2Fsectionsscheme.png" style="width:100.0%" alt="Two approaches for structuring parallel versions of tasks"><div class="figcaption">Two approaches for structuring parallel versions
+<img src="images/sectionsscheme.png" style="width:100.0%" alt="Two approaches for structuring parallel versions of tasks"><div class="figcaption">Two approaches for structuring parallel versions
 of tasks</div>
 </div>
 <p>On the left-hand side, three distinct subsections were generated,
@@ -280,7 +279,7 @@ have a good idea, open an issue on our github page: <a href="https://github.com/
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
