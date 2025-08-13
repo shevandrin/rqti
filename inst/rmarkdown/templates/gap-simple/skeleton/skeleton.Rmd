@@ -28,9 +28,7 @@ See `?gap_numeric` for more options (e.g. tolerance).
 
 ## text gaps
 
-The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A.
-Binet"))` in the early <<20th>> century with the intention of identifying
-students who might need extra assistance.
+The original IQ test was developed by `r gap_text(c("Alfred Binet", "Binet", "A. Binet"))` in the early <<20th>> century with the intention of identifying students who might need extra assistance.
 
 See `?gap_text` for more options (e.g. tolerance).
 
