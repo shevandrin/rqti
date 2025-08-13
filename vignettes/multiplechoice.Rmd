@@ -93,7 +93,20 @@ Should the items be displayed in `vertical` or `horizontal` mode? Default is `ve
 
 ### points
 
-How many points are given for the whole task. Default is the number of choices times 0.5. The points $p$ are divided by the number of choices $c$ and then distributed over all choices. A correct choice will get the student +$p/c$, an incorrect choice -$p/c$. Witout such a procedure, a student could always select all answers and get the maximum number of points. See also the section \ref{some-advice-on-multiple-choice-tasks} [Some advice on multiple choice tasks].
+How many points are given for the whole task. Default is the number of choices times 0.5. Note that rqti usess *partial balanced scoring* for multiple choice questions.
+
+In *partial balanced scoring*, the number of correctly selected options is rewarded,
+and the number of incorrectly selected options is penalized in proportion to the
+total number of correct and incorrect options.
+
+For a question with \( n \) total options and \( c \) correct options, the score is
+
+\[
+\text{Score} = \frac{\#\text{correctly selected}}{c}
+               - \frac{\#\text{incorrectly selected}}{n - c}
+\]
+
+This approach ensures that random guessing yields an expected score of zero, while allowing partial credit for partial knowledge and discouraging the selection of options that the examinee is unsure about. We do not offer other scoring schemes as we believe this is the best option.
 
 ## Feedback
 
