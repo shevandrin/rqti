@@ -1,6 +1,6 @@
 
 test_that("Project template creates expected files", {
-    tmpdir <- withr::local_tempdir()
+    tmpdir <- tempdir()
 
     rqti:::rqti_project(tmpdir, templates = "YES", render = "OPAL",
                         start_server = "TRUE")
