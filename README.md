@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 # <img src="man/figures/logo.svg" align="right" width="250" height="100" />
@@ -8,9 +9,10 @@
 [![test-coverage](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/shevandrin/rqti/actions/workflows/test-coverage.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/shevandrin/rqti/branch/main/graph/badge.svg)](https://app.codecov.io/gh/shevandrin/rqti?branch=main)
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Project Status: Inactive - The project has reached a stable, usable
+state but is no longer being actively developed; support/maintenance
+will be provided as time
+allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/rqti)](https://CRAN.R-project.org/package=rqti)
 <!-- badges: end -->
@@ -56,26 +58,55 @@ feature, and submit a pull request. Kindly adhere to the tidyverse style
 and the general package guidelines outlined at <https://r-pkgs.org>.
 Your contributions are greatly appreciated.
 
-<!-- Why do we need another package for creating exams when there is already the `exams`-package? The philosophy of `exams` is **one for all**, whereas `rqti` follows the Unix-philosophy: **do one thing and do it well**. tldr: -->
-<!-- - `rqti` has more (QTI) features (e.g. exercise type) than `exams` -->
-<!-- - `rqti` uses OOP (S4), the system is easy to extend (LMS specific needs) -->
-<!-- - the Rmd-interface is cleaner as it just focues on QTI -->
-<!-- - low-level functions can be used flexibly to create exercises -->
-<!-- - `rqti` puts a premium on testing, with currently over 100 tests -->
-<!-- - rendering of QTI files in the browser (or viewer pane of RStudio) directly from R -->
-<!-- - functions to upload files via REST API to LMS (for us OPAL, but you can implement your own) -->
-<!-- If you just use QTI-exercises, you should check out our package. If you need different formats next to QTI, e.g. print, LMS that do not support QTI stick to `exams`. -->
+## The need for rqti / comparison with exams
+
+Why do we need another package for creating exams when there is already
+the `exams`-package? The philosophy of `exams` is **one for all**,
+whereas `rqti` follows the Unix-philosophy: **do one thing and do it
+well**. tldr:
+
+- **`rqti`** renders QTI files directly in the browser (or the RStudio
+  Viewer pane) from within R, allowing you to *see and interact with the
+  exercise before uploading it* to the LMS.  
+- **`rqti`** supports more QTI-specific features (e.g., exercise types)
+  than **`exams`**.  
+- Built with S4 object-oriented programming, **`rqti`** is easy to
+  extend for LMS-specific needs.  
+- The Rmd interface is cleaner, focusing exclusively on QTI.  
+- Low-level functions can be used flexibly to create exercises —
+  something not possible in **`exams`**.  
+- Includes functions for uploading files to an LMS via REST API
+  (implemented for OPAL, but you can adapt it to your own LMS).
+
+If you work exclusively with QTI exercises, you should try our package.
+If you need additional formats besides QTI — for example, print output
+or LMS platforms without QTI support — **`exams`** remains the better
+choice.
+
 <!-- Just focusing on QTI gives us more time to support great features of the QTI standard that are missing in `exams`. For instance, `rqti` offers dropdown-inputs, ordering-exercises, and match-tables. -->
+
 <!-- ## Installation -->
+
 <!-- ```{r eval=FALSE} -->
+
 <!-- install.packages("librarian") # skip if you have librarian already -->
+
 <!-- librarian::shelf(shevandrin/rqti) -->
+
 <!-- ``` -->
+
 <!-- ##  -->
+
 <!-- ## What is not possible -->
+
 <!-- - Composites (several exercise types in one task) are not implemented because they do not work in our LMS (OPAL); several gaps do work, though -->
+
 <!-- - Associates are not implemented because they does not work in OPAL -->
+
 <!-- ## Comparison between exams and rqti -->
+
 <!-- The `exams` package uses templates and pastes strings together to create rqti files. This has some disadvantages: it is error prone, not easy to maintain and difficult to extend. If for instance, a new exercise type needs to be added, many locations have to be changed. `rqti` is supposed to make life easier by providing some standard functions to create all parts of the QTI xml file. -->
+
 <!-- Extending exams is just a matter of composing the correct `rqti` functions. Testing small `rqti` functions is easy, whereas the main function of `exams` `make_item_body` consists of 736 lines. Indeed, this function has grown substantially over time (todo: provide evidence). -->
+
 <!-- Based on rqti one can also develop new interfaces for creating exercises. -->
