@@ -2,10 +2,16 @@
 % Please edit documentation in R/knit_functions.R
 \name{prepare_renderer}
 \alias{prepare_renderer}
-\title{Prepare QTIJS renderer}
+\title{Prepare qtijs renderer.}
 \usage{
-prepare_renderer()
+prepare_renderer(qtijs_path = qtijs_pkg_path())
+}
+\arguments{
+\item{qtijs_path}{The path to the qtijs renderer (qti.js), which will be
+started with servr::httw and to which xml files will be copied. Default is
+the QTIJS folder in the R package rqti local installation via the helper
+qtijs_pkg_path().}
 }
 \description{
-Starts server for QTIJS, returns path of QTIJS and the url of the server.
+Starts server for qtijs, returns path of qtijs and the url of the server.
 }

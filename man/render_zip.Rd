@@ -2,17 +2,24 @@
 % Please edit documentation in R/knit_functions.R
 \name{render_zip}
 \alias{render_zip}
-\title{Render a zipped qti archive with QTIJS}
+\title{Render a zipped qti archive with qtijs.}
 \usage{
-render_zip(input)
+render_zip(input, qtijs_path = qtijs_pkg_path())
 }
 \arguments{
-\item{input}{input file}
+\item{input}{The path to the input Rmd/md/xml document or an
+\link{AssessmentItem}, \link{AssessmentTest}, \link{AssessmentTestOpal},
+\link{AssessmentSection} object.}
+
+\item{qtijs_path}{The path to the qtijs renderer (qti.js), which will be
+started with servr::httw and to which xml files will be copied. Default is
+the QTIJS folder in the R package rqti local installation via the helper
+qtijs_pkg_path().}
 }
 \value{
 nothing, has side effects
 }
 \description{
-Uses QTIJS to render a zipped qti archive in the RStudio viewer pane with a
+Uses qtijs to render a zipped qti archive in the RStudio viewer pane with a
 local server.
 }

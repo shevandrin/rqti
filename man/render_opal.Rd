@@ -23,7 +23,7 @@ after the word knit \code{knit: rqti::render_opal}.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-file <- system.file("exercises/sc1.Rmd", package='rqti')
-render_opal(file)
+  file <- system.file("exercises/sc1.Rmd", package = 'rqti')
+  render_opal(file)
 \dontshow{\}) # examplesIf}
 }

@@ -2,16 +2,27 @@
 % Please edit documentation in R/knit_functions.R
 \name{render_qtijs}
 \alias{render_qtijs}
-\title{Render an RMD/xml file or rqti-object as qti xml with QTIJS}
+\title{Render an Rmd/md/xml file or rqti-object as qti xml with qtijs.}
 \usage{
-render_qtijs(input, preview_feedback = FALSE, ...)
+render_qtijs(
+  input,
+  preview_feedback = FALSE,
+  qtijs_path = qtijs_pkg_path(),
+  ...
+)
 }
 \arguments{
-\item{input}{(the path to the input Rmd/md/xml document or \link{AssessmentItem},
-\link{AssessmentTest}, \link{AssessmentTestOpal}, \link{AssessmentSection} object)}
+\item{input}{The path to the input Rmd/md/xml document or an
+\link{AssessmentItem}, \link{AssessmentTest}, \link{AssessmentTestOpal},
+\link{AssessmentSection} object.}
 
 \item{preview_feedback}{A boolean value; optional. Set \code{TRUE} value to always
-display a model feedback (for example, as a model answer). Default is \code{FALSE}.}
+display feedback (for example, as a modal answer). Default is \code{FALSE}.}
+
+\item{qtijs_path}{The path to the qtijs renderer (qti.js), which will be
+started with servr::httw and to which xml files will be copied. Default is
+the QTIJS folder in the R package rqti local installation via the helper
+qtijs_pkg_path().}
 
 \item{...}{required for passing arguments when knitting}
 }
@@ -20,25 +31,25 @@ An URL of the corresponding local server to display the rendering
 result.
 }
 \description{
-Generates the qti xml file via rmd2xml. The xml is copied into the QTIJS
-folder of the package which transforms the xml into HTML. Finally, the HTML
-is displayed and the user can have a preview of the exercise or exam.
+Generates the qti xml file via rmd2xml. The xml is copied into the qtijs
+folder which transforms the xml into HTML. Finally, the HTML is displayed and
+the user sees a preview of the exercise or test.
 }
 \details{
-Requires a running QTIJS server, which can be started with start_server().
-When loading the package rqti, a server is started automatically.
+Requires a running qtijs server, which can be started with start_server().
 
-The preview is automatically loaded into the RStudio viewer. Alternatively
-you  can just open the browser in the corresponding local server which is
-displayed when rendering. Since the function is supposed to be called via the
-Knit-Button in RStudio, it defaults to the RStudio viewer pane.
+The preview is automatically loaded into the RStudio viewer pane if run in
+RStudio. Alternatively you  can just open the browser at the corresponding
+local server url which is displayed after rendering is finished. Since the
+function is supposed to be called via the Knit-Button in RStudio, it defaults
+to the RStudio viewer pane.
 
-Customize knit function in the Rmd file using the following YAML
-setting after the word knit \code{knit: rqti::render_qtijs}.
+Customize knit function in the Rmd file using the following YAML setting
+after the word knit \code{knit: rqti::render_qtijs}.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-file <- system.file("exercises/sc1.Rmd", package='rqti')
-render_qtijs(file)
+  file <- system.file("exercises/sc1.Rmd", package = 'rqti')
+  render_qtijs(file)
 \dontshow{\}) # examplesIf}
 }

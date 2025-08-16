@@ -1,36 +1,43 @@
-#' Render an RMD/xml file or rqti-object as qti xml with QTIJS
+#' Render an Rmd/md/xml file or rqti-object as qti xml with qtijs.
 #'
-#' Generates the qti xml file via rmd2xml. The xml is copied into the QTIJS
-#' folder of the package which transforms the xml into HTML. Finally, the HTML
-#' is displayed and the user can have a preview of the exercise or exam.
+#' Generates the qti xml file via rmd2xml. The xml is copied into the qtijs
+#' folder which transforms the xml into HTML. Finally, the HTML is displayed and
+#' the user sees a preview of the exercise or test.
 #'
-#' Requires a running QTIJS server, which can be started with start_server().
-#' When loading the package rqti, a server is started automatically.
+#' Requires a running qtijs server, which can be started with start_server().
 #'
-#' The preview is automatically loaded into the RStudio viewer. Alternatively
-#' you  can just open the browser in the corresponding local server which is
-#' displayed when rendering. Since the function is supposed to be called via the
-#' Knit-Button in RStudio, it defaults to the RStudio viewer pane.
+#' The preview is automatically loaded into the RStudio viewer pane if run in
+#' RStudio. Alternatively you  can just open the browser at the corresponding
+#' local server url which is displayed after rendering is finished. Since the
+#' function is supposed to be called via the Knit-Button in RStudio, it defaults
+#' to the RStudio viewer pane.
 #'
-#' Customize knit function in the Rmd file using the following YAML
-#' setting after the word knit `knit: rqti::render_qtijs`.
+#' Customize knit function in the Rmd file using the following YAML setting
+#' after the word knit `knit: rqti::render_qtijs`.
 #'
-#' @param input (the path to the input Rmd/md/xml document or [AssessmentItem],
-#'   [AssessmentTest], [AssessmentTestOpal], [AssessmentSection] object)
+#' @param input The path to the input Rmd/md/xml document or an
+#'   [AssessmentItem], [AssessmentTest], [AssessmentTestOpal],
+#'   [AssessmentSection] object.
 #' @param preview_feedback A boolean value; optional. Set `TRUE` value to always
-#' display a model feedback (for example, as a model answer). Default is `FALSE`.
+#'   display feedback (for example, as a modal answer). Default is `FALSE`.
+#' @param qtijs_path The path to the qtijs renderer (qti.js), which will be
+#'   started with servr::httw and to which xml files will be copied. Default is
+#'   the QTIJS folder in the R package rqti local installation via the helper
+#'   qtijs_pkg_path().
 #' @param ... required for passing arguments when knitting
+#'
 #' @return An URL of the corresponding local server to display the rendering
 #'   result.
 #'
 #' @examplesIf interactive()
-#' file <- system.file("exercises/sc1.Rmd", package='rqti')
-#' render_qtijs(file)
+#'   file <- system.file("exercises/sc1.Rmd", package = 'rqti')
+#'   render_qtijs(file)
 #'
 #' @importFrom knitr knit_params
 #' @export
-render_qtijs <- function(input, preview_feedback = FALSE, ...) {
-    clean_qtijs()
+render_qtijs <- function(input, preview_feedback = FALSE,
+                         qtijs_path = qtijs_pkg_path(), ...) {
+    clean_qtijs(qtijs_path)
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
     url <- Sys.getenv("RQTI_URL")
@@ -42,7 +49,7 @@ render_qtijs <- function(input, preview_feedback = FALSE, ...) {
             url <- prepare_renderer()
         }
     }
-    preparation <- prepareQTIJSFiles(input, qtijs_path())
+    preparation <- prepareQTIJSFiles(input, qtijs_path)
     if (!is.null(preparation)) preview_feedback <- preparation
     url <- paste0(url, "?mfb=", as.numeric(preview_feedback))
     message("Open browser at: ", url, " for preview")
@@ -54,88 +61,102 @@ render_qtijs <- function(input, preview_feedback = FALSE, ...) {
     return(url)
 }
 
-#' Render a single xml file with QTIJS
+#' Render a single xml file with qtijs.
 #'
-#' Uses QTIJS to render a single xml file in the RStudio viewer pane with a
+#' Uses qtijs to render a single xml file in the RStudio viewer pane with a
 #' local server.
 #'
-#' @param input input file
+#' @inheritParams render_qtijs
 #' @return nothing, has side effects
+#' @examplesIf interactive()
+#'   file <- system.file("exercises/sc1d.xml", package = 'rqti')
+#'   render_qtijs(file)
+#'
 #' @export
-render_xml <- function(input) {
+render_xml <- function(input, qtijs_path = qtijs_pkg_path()) {
     url <- prepare_renderer()
     # use index.xml for a single file
-    file.copy(input, paste0(qtijs_path(), "/index.xml"))
+    file.copy(input, paste0(qtijs_path, "/index.xml"))
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
 }
 
-#' Render a zipped qti archive with QTIJS
+#' Render a zipped qti archive with qtijs.
 #'
-#' Uses QTIJS to render a zipped qti archive in the RStudio viewer pane with a
+#' Uses qtijs to render a zipped qti archive in the RStudio viewer pane with a
 #' local server.
 #'
-#' @param input input file
+#' @inheritParams render_qtijs
 #' @return nothing, has side effects
 #' @export
-render_zip <- function(input) {
+render_zip <- function(input, qtijs_path = qtijs_pkg_path()) {
     url <- prepare_renderer()
-    zip::unzip(input, exdir = qtijs_path())
+    zip::unzip(input, exdir = qtijs_path)
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
 }
 
-#' Start QTIJS on a local server
+#' Start qtijs renderer as a local server.
 #'
-#' This function starts an http server with the QTIJS renderer. The renderer performs the conversion of qti.xml into HTML.
+#' This function starts an http server with the qtijs renderer. The renderer
+#' performs the conversion of qti.xml into HTML.
 #'
-#' The server has to be started manually by the user, otherwise the Knit Button will not work. The Button starts a new session and invoking a server there does not make much sense.
-#'
-#' @return The URL string for QTIJS server.
+#' The server has to be started manually by the user, otherwise the Knit-Button
+#' will not work. The Knit-Button starts a new session and invoking a server
+#' there does not work. You can automatically start the server via an .RProfile
+#' file on start up.
+#' @param daemon This parameter is forwarded to `servr::httw` and should always be
+#'   TRUE (the default). FALSE is only used for testing purposes when called via
+#'   `callr::bg()`
+#' @inheritParams render_qtijs
+#' @return The URL string of the qtijs server.
 #' @examples
 #' \dontrun{
-#' # Initiated server in qtiViewer folder
 #' start_server()
-#' # Initiated server in a specific folder provided by the user. This folder
-#' # contains the QTI renderer
-#' start_server("/pathToTheQtiRenderer/")
 #' }
 #' @export
-start_server <- function() {
-    path = qtijs_path()
+start_server <- function(qtijs_path = qtijs_pkg_path(),
+                         daemon = T) {
     # this will kill all servers that were started via
     # servr in the session; maybe this is not necessary
     servr::daemon_stop(which = servr::daemon_list())
-    server_info <- servr::httw(dir = path, verbose = F, browser = F)
-    message("To stop the server, run stop_server(). If you restart the R session, the server is restarted, too. Call start_server() to manually (re)start the server.\nServing the directory ", path, " at ", server_info$url)
+    server_info <- servr::httw(dir = qtijs_path, verbose = F, browser = F,
+                               daemon = daemon)
+    message("To stop the server, run stop_server(). If you restart the R session, the server is restarted, too. Call start_server() to manually (re)start the server.\nServing the directory ", qtijs_path, " at ", server_info$url)
     # only way to get the url when using Knit Button
     Sys.setenv("RQTI_URL" = server_info$url)
     return(server_info$url)
 }
 
-#' shortcut for the correct QTIJS path
-qtijs_path <- function() {
+#' Shortcut for the qtijs path of the rqti package local installation.
+#' @examples
+#'   qtijs_pkg_path()
+#' @export
+qtijs_pkg_path <- function() {
     fs::path_package("rqti", "QTIJS")
 }
 
-#' Prepare QTIJS renderer
+#' Prepare qtijs renderer.
 #'
-#' Starts server for QTIJS, returns path of QTIJS and the url of the server.
-prepare_renderer <- function() {
-    path <- qtijs_path()
-    # start a server if none are there or there is no server url
+#' Starts server for qtijs, returns path of qtijs and the url of the server.
+#' @inheritParams render_qtijs
+prepare_renderer <- function(qtijs_path = qtijs_pkg_path()) {
+    # start a server there is no server url yet
     if (Sys.getenv("RQTI_URL") == "") {
-        start_server()
+        start_server(qtijs_path)
     }
     # clean up
-    clean_qtijs()
+    clean_qtijs(qtijs_path)
     Sys.getenv("RQTI_URL")
 }
 
-clean_qtijs <- function() {
-    unlink(paste(qtijs_path(), "*.xml", sep = "/"))
+#' Remove all xml files from qtijs renderer folder.
+#'
+#' @inheritParams render_qtijs
+clean_qtijs <- function(qtijs_path = qtijs_pkg_path()) {
+    unlink(paste(qtijs_path, "*.xml", sep = "/"))
 }
 
 #' Stop QTIJS local server
@@ -156,8 +177,8 @@ stop_server <- function() {
 #' @param ... required for passing arguments when knitting
 #' @return A list with the key, display name, and URL of the resource in Opal.
 #' @examplesIf interactive()
-#' file <- system.file("exercises/sc1.Rmd", package='rqti')
-#' render_opal(file)
+#'   file <- system.file("exercises/sc1.Rmd", package = 'rqti')
+#'   render_opal(file)
 #' @export
 render_opal <- function(input, ...) {
     knit_test <- rmd2zip(input)

@@ -2,17 +2,30 @@
 % Please edit documentation in R/knit_functions.R
 \name{render_xml}
 \alias{render_xml}
-\title{Render a single xml file with QTIJS}
+\title{Render a single xml file with qtijs.}
 \usage{
-render_xml(input)
+render_xml(input, qtijs_path = qtijs_pkg_path())
 }
 \arguments{
-\item{input}{input file}
+\item{input}{The path to the input Rmd/md/xml document or an
+\link{AssessmentItem}, \link{AssessmentTest}, \link{AssessmentTestOpal},
+\link{AssessmentSection} object.}
+
+\item{qtijs_path}{The path to the qtijs renderer (qti.js), which will be
+started with servr::httw and to which xml files will be copied. Default is
+the QTIJS folder in the R package rqti local installation via the helper
+qtijs_pkg_path().}
 }
 \value{
 nothing, has side effects
 }
 \description{
-Uses QTIJS to render a single xml file in the RStudio viewer pane with a
+Uses qtijs to render a single xml file in the RStudio viewer pane with a
 local server.
+}
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+  file <- system.file("exercises/sc1d.xml", package = 'rqti')
+  render_qtijs(file)
+\dontshow{\}) # examplesIf}
 }
