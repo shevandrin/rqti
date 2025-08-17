@@ -53,7 +53,7 @@ test_that("servr responds", {
       var el = document.querySelector('title');
       return el ? el.textContent : null;
     })();
-  "
+    "
 
     found_text <- b$Runtime$evaluate(js)$result$value
     expect_equal(found_text, "sc1d")
