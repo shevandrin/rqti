@@ -47,8 +47,14 @@ test_that("servr responds", {
 
     b$go_to(url)
 
-    # wait until the title is exactly "sc1d" (instead of fixed sleep)
-    js <- "document.title;"
+    # wait until the title is exactly "sc1d" or 10s are over
+    js <- "
+    (function() {
+    var el = document.querySelector('title');
+    return el ? el.textContent : null;
+    })();
+    "
+
     found_text <- NULL
     deadline <- Sys.time() + 10
     repeat {
