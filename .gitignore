@@ -31,3 +31,7 @@ BOOK/*.fdb_latexmk
 cover/
 BOOK/_book/
 BOOK/*.pdf
+BOOKS/images
+BOOK/images/
+BOOK/imported_packages.csv
+BOOK/setup.R
