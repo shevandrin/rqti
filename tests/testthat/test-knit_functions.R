@@ -1,6 +1,7 @@
 # test-servr.R
 library(testthat)
 library(callr)
+library(chromote)
 
 test_that("servr responds", {
   testthat::skip_on_cran()
@@ -38,11 +39,8 @@ test_that("servr responds", {
     Sys.setenv(RQTI_URL="http://127.0.0.1:4321")
     rqti::render_qtijs(fs::path_package("exercises", "sc1d.Rmd", package = "rqti"),
                  qtijs_path = qtijs_path)
-    #file.copy(fs::path_package("exercises", "sc1d.xml", package = "rqti"),
-    #          paste0(tempdir, "index.xml"))
 
-    # maybe now we can actually use chromote?
-    library(chromote)
+    # now we can simply use chromote
     b <- ChromoteSession$new()
     on.exit(b$close(), add = TRUE)
 
@@ -58,11 +56,6 @@ test_that("servr responds", {
   "
 
     found_text <- b$Runtime$evaluate(js)$result$value
-
     expect_equal(found_text, "sc1d")
-
-    #res <- httr::GET("http://127.0.0.1:4321/index.html")
-    #expect_equal(status_code(res), 200)
-
     p$kill()
 })
