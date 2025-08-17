@@ -152,9 +152,7 @@ prepare_renderer <- function(qtijs_path = qtijs_pkg_path()) {
     Sys.getenv("RQTI_URL")
 }
 
-#' Remove all xml files from qtijs renderer folder.
-#'
-#' @inheritParams render_qtijs
+#Remove all xml files from qtijs renderer folder.
 clean_qtijs <- function(qtijs_path = qtijs_pkg_path()) {
     unlink(paste(qtijs_path, "*.xml", sep = "/"))
 }
