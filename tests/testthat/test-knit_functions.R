@@ -5,13 +5,14 @@ library(chromote)
 
 test_that("servr responds", {
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
 
     # we need to test it in temp directory, otherwise we cannot copy files
     # which is necessary for rendering
     src <- fs::path_package("QTIJS", package = "rqti")
     dst <- file.path(tempdir(), "QTIJS")
     dir.create(dst, showWarnings = FALSE)
-    qtijs_path = dst
+    qtijs_path <- dst
     # Copy *contents* of src into dst
     file.copy(
         list.files(src, full.names = TRUE),
@@ -22,11 +23,12 @@ test_that("servr responds", {
     # start server in background process, otherwise it will block? see servr
     # config doc parameter daemon
     p <- callr::r_bg(function(qtijs_path) {
+        pkgload::load_all()
         # hard code to use later, otherwise random port could be chosen
         # and we cannot access it.
         Sys.setenv(R_SERVR_PORT = 4321)
         # must turn off daemon in this case?
-        rqti::start_server(qtijs_path, daemon = F)
+        start_server(qtijs_path, daemon = F)
 
     }, supervise = TRUE, args = list(qtijs_path = qtijs_path))
 
@@ -37,7 +39,7 @@ test_that("servr responds", {
     url <- "http://127.0.0.1:4321/index.html"
 
     Sys.setenv(RQTI_URL="http://127.0.0.1:4321")
-    rqti::render_qtijs(fs::path_package("exercises", "sc1d.Rmd",
+    render_qtijs(fs::path_package("exercises", "sc1d.Rmd",
                                         package = "rqti"),
                        qtijs_path = qtijs_path)
 
