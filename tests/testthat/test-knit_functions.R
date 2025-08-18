@@ -22,14 +22,20 @@ test_that("servr responds", {
 
     # start server in background process, otherwise it will block? see servr
     # config doc parameter daemon
-    p <- callr::r_bg(function(qtijs_path) {
-        pkgload::load_all()
-        # hard code to use later, otherwise random port could be chosen
-        # and we cannot access it.
+    p <- callr::r_bg(function(qtijs_path,
+                              running_check = nzchar(Sys.getenv("_R_CHECK_PACKAGE_NAME_"))) {
         Sys.setenv(R_SERVR_PORT = 4321)
-        # must turn off daemon in this case?
-        start_server(qtijs_path, daemon = F)
+        # for dev version
+        if (!running_check) {
+            pkgload::load_all()
+            # hard code to use later, otherwise random port could be chosen
+            # and we cannot access it.
+            # must turn off daemon in this case?
+            start_server(qtijs_path, daemon = F)
+        } else { # for non-dev version
 
+            rqti::start_server(qtijs_path, daemon = F)
+        }
     }, supervise = TRUE, args = list(qtijs_path = qtijs_path))
 
     # ensure cleanup even if later on.exit() calls are added
@@ -40,8 +46,8 @@ test_that("servr responds", {
 
     Sys.setenv(RQTI_URL="http://127.0.0.1:4321")
     render_qtijs(fs::path_package("exercises", "sc1d.Rmd",
-                                        package = "rqti"),
-                       qtijs_path = qtijs_path)
+                                  package = "rqti"),
+                 qtijs_path = qtijs_path)
 
     # now we can simply use chromote
     b <- ChromoteSession$new()
