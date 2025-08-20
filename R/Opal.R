@@ -491,8 +491,9 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
     api_user = ifelse(is.null(api_user), NA_character_, api_user)
     endpoint = ifelse(is.null(endpoint), NA_character_, endpoint)
     conn <- new("Opal", api_user = api_user, endpoint = endpoint)
-    upload2LMS(conn, test, display_name, access, overwrite)
-
+    upload2LMS(conn, test, display_name, access, overwrite,
+               open_in_browser = open_in_browser,
+               as_survey = as_survey)
 }
 
 
