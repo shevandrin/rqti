@@ -41,7 +41,9 @@ documentation, can be accessed at the following link:
 ## Testing
 
 Our commitment to robustness is reflected in our pursuit of high test
-coverage through automated tests, located in the “tests” folder.
+coverage through automated tests, located in the “tests” folder. Note
+that the qtijs-server and the Opal API cannot be tested with github
+actions (continuous integration); local test coverage is around 90%.
 
 ## Support and Bug Reports
 
