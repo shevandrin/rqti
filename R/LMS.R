@@ -358,8 +358,9 @@ setMethod("getCourseResult", signature(object = "missing"),
 
 #' @importFrom utils menu
 get_password <- function(service_name, api_user = NULL, psw = NULL) {
-
+    env_api_user <- Sys.getenv("RQTI_API_USER")
     api_user <- if (!is.null(api_user) && is.na(api_user)) NULL else api_user
+    if (is.null(api_user) & env_api_user != "") api_user <- env_api_user
 
     if (!has_keyring_support()) {
         warning("OS does not support key ring storage")
