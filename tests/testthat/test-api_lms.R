@@ -1,11 +1,8 @@
 
-con <- opal()
-
 test_that("LMS object can be created for OPAL", {
-    con <- new("Opal",
-               endpoint = "https://bildungsportal.sachsen.de/opal/")
     skip_on_cran()
     skip_on_ci()
+    con <- opal()
     expect_equal(exists("con"), TRUE)
     logged_in <- isUserLoggedIn(con)
     expect_true(logged_in)
@@ -15,6 +12,7 @@ test_that("LMS object can be created for OPAL", {
 test_that("LMS OPAL handles missing parameters correctly", {
     skip_on_cran()
     skip_on_ci()
+    con <- opal()
     #expect_error(con <- new("Opal", api_user = "fakeEmptyUser"),
     #             "Username not found in credential storage")
     # expect_error(con <- new("Opal", api_user = "fakeEmptyUser"),
@@ -29,6 +27,7 @@ test_that("LMS OPAL handles missing parameters correctly", {
 test_that("upload2opal works directly", {
     skip_on_cran()
     skip_on_ci()
+    con <- opal()
     # create resource from object
     es <- suppressWarnings(essay(identifier = "ForTestAPI"))
     res <- upload2opal(es, display_name = "test_ForTestAPI", open_in_browser = F)
@@ -42,6 +41,7 @@ test_that("upload2opal works directly", {
 test_that("Create a resource on Opal, test getting resource, inc. get by name", {
     skip_on_cran()
     skip_on_ci()
+    con <- opal()
     # create resource from object
     es <- suppressWarnings(essay(identifier = "ForTestAPI"))
     res <- suppressMessages(upload2LMS(con, es, open_in_browser = FALSE))
@@ -56,7 +56,8 @@ test_that("Create a resource on Opal, test getting resource, inc. get by name", 
 test_that("Get URL", {
     skip_on_cran()
     skip_on_ci()
-    sut = getLMSResourceURL(con, "test_ForTestAPI")
+    con <- opal()
+    sut <- getLMSResourceURL(con, "test_ForTestAPI")
     expect_true(grepl("https?://[^\\s]+", sut))
 })
 
