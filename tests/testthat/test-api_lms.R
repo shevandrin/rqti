@@ -7,7 +7,8 @@ test_that("LMS object can be created for OPAL", {
     skip_on_cran()
     skip_on_ci()
     expect_equal(exists("con"), TRUE)
-    expect_true(isUserLoggedIn(con))
+    logged_in <- isUserLoggedIn(con)
+    expect_true(logged_in)
 })
 
 
@@ -25,6 +26,18 @@ test_that("LMS OPAL handles missing parameters correctly", {
     Sys.setenv("RQTI_API_ENDPOINT" = env_endpoint)
 })
 
+test_that("upload2opal works directly", {
+    skip_on_cran()
+    skip_on_ci()
+    # create resource from object
+    es <- suppressWarnings(essay(identifier = "ForTestAPI"))
+    res <- upload2opal(es, display_name = "test_ForTestAPI", open_in_browser = F)
+    df <- getLMSResourcesByName(con, display_name = "test_ForTestAPI")
+    url <- getLMSResourceURL(con, display_name = "test_ForTestAPI")
+    df3 <- getLMSResources()
+    expect_equal(nrow(df), 1)
+    expect_equal(url, res$url)
+})
 
 test_that("Create a resource on Opal, test getting resource, inc. get by name", {
     skip_on_cran()
@@ -55,7 +68,6 @@ test_that("qti tests are detected correctly", {
     es <- suppressWarnings(essay(identifier = "ForTestAPI"))
     temp <- tempdir()
     exam <- test(section(es))
-    render_qtijs(exam)
     path <- createQtiTest(exam, dir = temp)
     expect_true(is_test(path))
 })
