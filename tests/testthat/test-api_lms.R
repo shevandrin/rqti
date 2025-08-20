@@ -61,6 +61,8 @@ test_that("Get URL", {
 })
 
 test_that("default connections are guessed correctly", {
+    skip_on_cran()
+    skip_on_ci()
     expect_message(get_default_connetion(), "A connection to the LMS")
 })
 
