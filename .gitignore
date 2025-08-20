@@ -21,7 +21,6 @@ engine.bin
 vignettes/*.zip
 vignettes/*.xml
 inst/QTIJS/index.xml
-tests/testthat/test-api_lms.R
 BOOK/*.Rmd
 !BOOK/title.Rmd
 BOOK/*.log
