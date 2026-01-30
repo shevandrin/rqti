@@ -1,0 +1,27 @@
+# Imported Packages
+
+## Imported and suggested packages
+
+| package    | usage                                                                                                        | priority                       |
+|:-----------|:-------------------------------------------------------------------------------------------------------------|:-------------------------------|
+| htmltools  | Facilitates working with HTML content.                                                                       | high                           |
+| xml2       | Handles reading, writing, and verification of XML files.                                                     | high                           |
+| yaml       | Manages YAML objects within Rmd files.                                                                       | high                           |
+| rmarkdown  | Processes Markdown documents, extracts YAML objects, and calls Pandoc functions.                             | high                           |
+| servr      | Provides a simple HTTP server.                                                                               | high                           |
+| rstudioapi | Accesses RStudio session details, manages files and projects, and controls RStudio IDE behavior (Viewer).    | high                           |
+| fs         | Offers tools for file system operations.                                                                     | moderate                       |
+| stringr    | Provides functions for string manipulation.                                                                  | moderate (but frequent in use) |
+| methods    | Displays methods for a generic function and checks available methods for a specific function.                | high                           |
+| lubridate  | Converts datestamps to date-time objects (in extract_results.R).                                             | low                            |
+| magrittr   | Introduces the %\>% operator for piping.                                                                     | moderate                       |
+| httr2      | Facilitates working with HTTP requests.                                                                      | high                           |
+| curl       | Transfers data with URLs, enabling file inclusion in HTTP requests.                                          | high                           |
+| digest     | Generates file name hashes using the SHA-1 algorithm (in extract_results.R) to handle sensitive information. | moderate                       |
+| knitr      | Creates HTML and compiles dynamic documents written in R Markdown with embedded R code.                      | high                           |
+| getPass    | Hides user passwords (in API).                                                                               | high                           |
+| keyring    | Securely stores and retrieves sensitive authentication data.                                                 | high                           |
+| zip        | Manipulates ZIP archives.                                                                                    | high                           |
+| kableExtra | Formats grading tables.                                                                                      | low                            |
+| textutils  | Decodes HTML entities.                                                                                       | high                           |
+| lifecycle  | Deliver warnings about depricated functionality                                                              | high                           |

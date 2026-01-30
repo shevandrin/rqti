@@ -1,0 +1,178 @@
+# Working with the OPAL API
+
+The `rqti` package facilitates seamless content uploads to the OPAL
+learning management system through its `upload2opal` function,
+leveraging the OPAL API. In addition, there are useful functions to get
+a list of resources and exchanging existing resources in courses.
+
+## Prerequisites
+
+To leverage the functionality of the OPAL API, it is essential for OPAL
+users to possess the requisite permissions. Access to the system
+necessitates logging in with a username and password. Please note that
+utilizing the API through Shibboleth authorization is not supported.
+
+If you currently lack a password-based login, kindly submit a request
+for one through your IT department. For users affiliated with **TU
+Chemnitz**, you can expedite this process by sending an email to
+<e-learning@tu-chemnitz.de>. In your email, explicitly state your need
+for a password-based login to facilitate API usage, and include your
+username for reference. You should also state the purpose of API usage.
+Please be aware that students typically do not possess author rights by
+default and are required to request such privileges before utilizing the
+API. To facilitate this process, it is advisable to reach out to your IT
+and/or OPAL provider for assistance.
+
+To store the username and password, `rqti` uses the keyring system
+credential storage. The first time authentication is attempted, it asks
+for a username and a password and saves them in a key with service name
+“rqtiopal”. Once the key is created, it is automatically used in further
+sessions. It is not recommended to create additional keys unless you
+have a more complex setup (e.g. using multiple learning management
+systems).
+
+Some universities only allow to use the OPAL API in the network of the
+university. Before calling
+[`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
+set up a VPN client accordingly. For TU Chemnitz see the instructions
+here: <https://www.tu-chemnitz.de/urz/network/access/vpn.html>
+
+## Uploading tasks and tests to OPAL
+
+You can either set the `knit: rqti::render_opal` parameter in the
+yaml-section of your Rmd file or just call
+[`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
+with the file as the first parameter:
+
+``` r
+file <- "my_zip_file.zip" # or "task.Rmd" or "task.xml"
+result <- upload2opal(file)
+```
+
+Note that rqti-Rmd files as well as QTI compliant zip archives and xml
+files are supported.
+
+If you set up OPAL correctly you can expect the following outcome after
+running the above command:
+
+1.  A web browser will open automatically, displaying the OPAL page with
+    your uploaded test or task.
+2.  In your R console, you will receive a status code 200. This status
+    code indicates that the request to upload the content to OPAL was
+    successful.
+3.  The result variable will contain a list with the following data:
+    - \$key: An identifier for this resource on OPAL, which you can use
+      for reference.
+    - \$display_name: The title of the resource as it appears in the
+      browser on OPAL.
+    - \$url: A permanent link to access this resource on OPAL.
+
+[`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
+always checks the uniqueness of the `display_name` in your personal
+repository of resources on OPAL. If a resource with the same name is
+found, `rqti` will overwrite it by default. This is useful for
+incrementally improving and previewing/testing the task. It avoids
+cluttering your OPAL repo with dozens of versions of the same task. If
+there are several resources with the same name, `upload2opal` will ask
+you what to do.
+
+By default
+[`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
+uses the file name as the `display_name`. But you can define your own as
+the second parameter:
+
+``` r
+result <- upload2opal(file, display_name = "Exam123")
+```
+
+Currently, there is no option to delete tasks via the API. But you can
+display the URL of a task via:
+
+``` r
+get_resource_url(display_name = "Exam123")
+```
+
+Or return all resources as a dataframe via:
+
+``` r
+get_resources()
+```
+
+If you want to have more fine-grained control for uploading, check out
+the documentation
+[`?upload2opal`](https://shevandrin.github.io/rqti/reference/upload2opal.md).
+
+## Access rights
+
+Note that the access rights of the resource are set to public by
+default. This might appear unusual, but for creating tasks incrementally
+this is the best option. If you use any other access rights, you need to
+login to OPAL via your browser to see the web page, which will log you
+out via the API. Currently, there is not better solution for this
+procedure. Take this into account if you upload sensitive content! For
+instance, tasks that will be used in an upcoming exam. You can set the
+access rights via
+
+``` r
+uplod2opal(..., access = ?)
+```
+
+- 1: only the persons responsible for this learning resource
+- 2: responsible and other authors
+- 3: all registered users
+- 4: public, default value
+
+## Endpoint
+
+We are using the OPAL instance **E-Learning-Informationsportal für
+Sächsische Hochschulen**, so our package sets the endpoint for
+`upload2opal` to *<https://bildungsportal.sachsen.de/opal/>*. If you use
+a different OPAL instance, you can either pass this to the `endpoint`
+parameter of `upload2opal` or just set it in .Rprofile:
+`Sys.setenv(RQTI_API_ENDPOINT = "yoururl")`. When initiating an `rqti`
+project in RStudio through *New Project*, you have the option to
+configure the API endpoint at that stage. This configuration is also
+just written to the .Rprofile file.
+
+## Error Handling
+
+Various issues can occur with the API. While some problems can be
+resolved quickly, you may often need to contact your IT department for
+proper API setup. The most common issues include:
+
+**403** - Authorization failed. Some universities allow the use of the
+API only within the university network. You may need to run a VPN client
+to use the API. For TU Chemnitz see here:
+<https://www.tu-chemnitz.de/urz/network/access/vpn.html>
+
+If you already run a VPN client, please check with your IT and/or OPAL
+provider, whether the API can be used and what configuration you need.
+
+**401** - Unauthorized. Your RQTI_API_USER or RQTI_API_PASSWORD are
+wrong or your credentials are not sufficient to work with the API.
+Please be aware that students typically do not possess author rights by
+default and are required to request such privileges before utilizing the
+API. To facilitate this process, it is advisable to reach out to your IT
+and/or OPAL provider for assistance.
+
+## OPAL specific yaml attributes
+
+There are several opal-specific yaml attributes, which are explicitly
+explained in the articles on the task types. Two of them apply on the
+test level:
+
+### calculator
+
+If a calculator is required for this task, you need to assign the
+‘calculator’ attribute the type ‘simple’ or ‘scientific’.
+
+### files
+
+If additional files are required to complete this task, you need to
+assign the ‘files’ attribute a single file path or a list of paths to
+these files.
+
+Note that setting these two attributes in the Rmd file directly is
+mainly useful if you work on a single task. For collections of tasks
+(tests) it is better to set these attributes when creating the test
+intead of in the Rmd-file.
