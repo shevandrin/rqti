@@ -11,6 +11,7 @@ essay <- new("Essay",
              prompt = "Write at least 250 words.",
              expected_length = 250)
 
+testthat::skip_if_not_installed("XML")
 test_that("Test createItemBody for the Essay class", {
 
   example <- '
@@ -26,6 +27,7 @@ test_that("Test createItemBody for the Essay class", {
   equal_xml(sut, expected)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("Test values of attributes in extendedTextInteraction for Essay class", {
 
   essay@expected_length <- 100

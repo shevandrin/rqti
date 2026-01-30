@@ -24,6 +24,7 @@ test_that("test rmd2xml", {
     unlink("to_delete", recursive = TRUE)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("test abbreviate for rmd2xml() in OneInRowTable class", {
     file_sut <- test_path("file/rmd/OneInRowTable_abbr_example.Rmd")
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
@@ -33,6 +34,7 @@ test_that("test abbreviate for rmd2xml() in OneInRowTable class", {
     equal_xml(sut, expected)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("test abbreviate for rmd2xml() in OneInColTable class", {
     file_sut <- test_path("file/rmd/OnInColTable_abbr_example.Rmd")
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
@@ -42,6 +44,7 @@ test_that("test abbreviate for rmd2xml() in OneInColTable class", {
     equal_xml(sut, expected)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("test abbreviate for rmd2xml() in MultipleChoiceTable class", {
     file_sut <- test_path("file/rmd/MultipleChoiceTable_abbr_example.Rmd")
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
@@ -51,6 +54,7 @@ test_that("test abbreviate for rmd2xml() in MultipleChoiceTable class", {
     equal_xml(sut, expected)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("test abbreviate for rmd2xml() in DirectPair class", {
     file_sut <- test_path("file/rmd/directedPair_abbr_example.Rmd")
     sut <- suppressMessages(rmd2xml(file_sut, "to_delete/index.xml"))
