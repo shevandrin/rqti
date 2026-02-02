@@ -120,9 +120,6 @@ clean_yaml_str <- function(params, solution, type){
         }
 
         if (is.numeric(v)) {
-            # if (isTRUE(all.equal(v, round(v)))) {
-            #     return(as.character(as.integer(round(v))))
-            # }
             return(as.character(v))
         }
 
