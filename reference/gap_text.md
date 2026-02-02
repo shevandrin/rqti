@@ -66,5 +66,5 @@ A character string mapped as yaml.
 
 ``` r
 gap_text(c("Solution", "Solutions"), tolerance = 2)
-#> [1] "<gap>{solution: [Solution,Solutions], tolerance: 2.0, case_sensitive: no, points: 1.0, expected_length: 7.0, type: text_opal}</gap>"
+#> [1] "<gap>{solution: [Solution,Solutions], tolerance: 2, case_sensitive: no, points: 1, expected_length: 7, type: text_opal}</gap>"
 ```

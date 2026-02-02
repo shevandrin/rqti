@@ -174,7 +174,7 @@ choices <- c("s4" = "S4 OOP", "s3" = "S3 OOP", "none" = "no OOP", "r6" = "R6 OOP
 oop_task <- dropdown(choices = choices, solution = "S4 OOP",
                      response_identifier = "OOP_task")
 oop_task
-#> [1] "<gap>{choices: [S4 OOP,S3 OOP,no OOP,R6 OOP], solution_index: S4 OOP, points: 1.0, shuffle: yes, response_identifier: OOP_task, choices_identifiers: [s4,s3,none,r6], type: InlineChoice}</gap>"
+#> [1] "<gap>{choices: [S4 OOP,S3 OOP,no OOP,R6 OOP], solution_index: S4 OOP, points: 1, shuffle: yes, response_identifier: OOP_task, choices_identifiers: [s4,s3,none,r6], type: InlineChoice}</gap>"
 ```
 
 The arguments of the `dropdown` function are:

@@ -77,5 +77,5 @@ A character string mapped as yaml.
 
 ``` r
 gap_numeric(5.0, tolerance = 10, tolerance_type = "relative")
-#> [1] "<gap>{solution: [5], tolerance: 10.0, tolerance_type: relative, points: 1.0, include_lower_bound: yes, include_upper_bound: yes, expected_length: 1.0, type: numeric}</gap>"
+#> [1] "<gap>{solution: 5, tolerance: 10, tolerance_type: relative, points: 1, include_lower_bound: yes, include_upper_bound: yes, expected_length: 1, type: numeric}</gap>"
 ```

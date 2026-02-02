@@ -55,5 +55,5 @@ A character string mapped as yaml.
 
 ``` r
 dropdown(c("Option A", "Option B"), response_identifier = "task_dd_list")
-#> [1] "<gap>{choices: [Option A,Option B], solution_index: 1.0, points: 1.0, shuffle: yes, response_identifier: task_dd_list, type: InlineChoice}</gap>"
+#> [1] "<gap>{choices: [Option A,Option B], solution_index: 1, points: 1, shuffle: yes, response_identifier: task_dd_list, type: InlineChoice}</gap>"
 ```
