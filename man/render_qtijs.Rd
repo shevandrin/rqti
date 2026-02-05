@@ -48,7 +48,7 @@ Customize knit function in the Rmd file using the following YAML setting
 after the word knit \code{knit: rqti::render_qtijs}.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
   file <- system.file("exercises/sc1.Rmd", package = 'rqti')
   render_qtijs(file)
 \dontshow{\}) # examplesIf}

@@ -43,7 +43,7 @@ If no LMS connection object is provided, it attempts to guess the connection usi
 If the connection cannot be established, an error is thrown.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 zip_file <- getCourseResult("89068111333293", "1617337826161777006")
 \dontshow{\}) # examplesIf}
 }

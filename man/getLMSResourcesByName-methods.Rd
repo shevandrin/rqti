@@ -32,7 +32,7 @@ If no LMS connection object is provided, it attempts to guess the connection usi
 If the connection cannot be established, an error is thrown.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 df <- getLMSResourcesByName("task_name")
 \dontshow{\}) # examplesIf}
 }
