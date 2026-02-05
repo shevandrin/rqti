@@ -54,9 +54,10 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
     # check identifiers
     ids <- sapply(.Object@assessment_item, getIdentifier)
     if (length(ids) != length(unique(ids))) {
-        ids <- paste(ids, collapse = ", ")
         stop("Items of section id:", .Object@identifier,
-             " contain non-unique values: ", ids, call. = FALSE)
+             " contain non-unique values: ",
+             paste(unique(ids[duplicated(ids)]), collapse = ", "),
+             call. = FALSE)
     }
     check_identifier(.Object@identifier)
 

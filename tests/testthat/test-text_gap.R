@@ -395,7 +395,7 @@ test_that("Testing warning message in the case Identifiers of objects
                            'than the speed of sound')))
         entry <- initialize(sut)
     sut_warning <- (
-        "Identifiers of objects in content-slot are non-unique : RESPONSE_1, RESPONSE_1, RESPONSE_1")
+        "Identifiers of objects in content-slot are non-unique: RESPONSE_1")
     },
     warning = function(w) {
         warning_message <<- w$message

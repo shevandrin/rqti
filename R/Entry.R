@@ -50,9 +50,9 @@ setMethod("initialize", "Entry", function(.Object, ...) {
     objs <- .Object@content[is_gap]
     ids <- sapply(objs, getIdentifier)
     if (length(ids) != length(unique(ids))) {
-        ids <- paste(ids, collapse = ", ")
-        warning("Identifiers of objects in content-slot are non-unique : ",
-                ids, call. = FALSE)
+        warning("Identifiers of objects in content-slot are non-unique: ",
+                paste(unique(ids[duplicated(ids)]), collapse = ", "),
+                call. = FALSE)
     }
 
     validObject(.Object)

@@ -77,8 +77,8 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     # check identifiers
     ids <- unlist(lapply(.Object@section, getIdentifier))
     if (length(ids) != length(unique(ids))) {
-        ids <- paste(ids, collapse = ", ")
-        warning("Identifiers of test sections contain non-unique values: ", ids,
+        warning("Identifiers of test sections contain non-unique values: ",
+                paste(unique(ids[duplicated(ids)]), collapse = ", "),
                 call. = FALSE)
     }
 
