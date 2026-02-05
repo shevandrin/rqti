@@ -100,27 +100,45 @@ dropdown <- function(choices, solution_index = 1, points = 1, shuffle = TRUE,
     return(result)
 }
 
-#' @importFrom yaml as.yaml
 clean_yaml_str <- function(params, solution, type){
-    solution <- paste(solution, collapse = ",")
-    if (type == "InlineChoice") {
-        params$choices <- paste0("[", solution, "]")
-    } else {
-        params$solution <- paste0("[", solution, "]")
-    }
+    x <- c(params, list(type = type))
 
-    if (!is.null(params$choices_identifiers)) {
-        choices_identifiers <- paste(params$choices_identifiers, collapse = ",")
-        params$choices_identifiers <- paste0("[", choices_identifiers, "]")
-    }
+    fmt_value <- function(v) {
+        if (length(v) > 1) {
+            v <- as.character(v)
+            v <- gsub("'", "", v, fixed = TRUE)
+            v <- trimws(v)
+            return(paste0("[", paste(v, collapse = ","), "]"))
+        }
 
-    result <- as.yaml(c(params, type = type), line.sep = "\r")
-    result <- gsub("\r", ", ", result)
-    result <- gsub(", $", "", result)
-    result <- gsub("'", "", result)
-    result <- paste0("<gap>{", result, "}</gap>")
-    return(result)
+        if (is.logical(v)) {
+            return(ifelse(isTRUE(v), "yes", "no"))
+        }
+
+        if (is.integer(v)) {
+            return(as.character(v))
+        }
+
+        if (is.numeric(v)) {
+            return(as.character(v))
+        }
+
+        v <- as.character(v)
+        v <- gsub("\r|\n", " ", v)
+        v <- gsub("\\s+", " ", v)
+        v <- gsub("'", "", v, fixed = TRUE)
+        trimws(v)
+    }
+    parts <- mapply(
+        FUN = function(k, v) paste0(k, ": ", fmt_value(v)),
+        k = names(x),
+        v = x,
+        SIMPLIFY = TRUE,
+        USE.NAMES = FALSE
+    )
+    return(paste0("<gap>{", paste(parts, collapse = ", "), "}</gap>"))
 }
+
 
 #' Create a markdown list for answer options
 #'

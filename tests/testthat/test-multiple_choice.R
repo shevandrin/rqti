@@ -10,6 +10,7 @@ mc <- new("MultipleChoice",
           prompt = paste0("Which of the following elements ",
                           "are used to form water?"))
 
+testthat::skip_if_not_installed("XML")
 test_that("Test createItemBody for MultipleChoice class", {
 
     example <- '<itemBody>
@@ -30,7 +31,7 @@ orientation="vertical">
     equal_xml(sut, expected)
 })
 
-
+testthat::skip_if_not_installed("XML")
 test_that("Test createResponseDeclaration for MultipleChoice class",{
     mc <- new("MultipleChoice",
               content = list(""),
@@ -69,6 +70,7 @@ test_that("Test getPoints for MultipleChoice class", {
     expect_equal(sut, 2)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("Test createOutcomeDeclaration() for Multiple Choice",{
 
     example <- '

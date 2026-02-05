@@ -13,6 +13,7 @@ sc <- new("SingleChoice",
           feedback = list(new("ModalFeedback", title = "common",
                               content = list("general feedback"))))
 
+testthat::skip_if_not_installed("XML")
 test_that("Test createItemBody() for SingleChoice class", {
   example <- paste0("<itemBody>",
                     "<p>Look at the text in the picture.</p>",
@@ -38,6 +39,7 @@ test_that("Test createItemBody() for SingleChoice class", {
   equal_xml(sut, expected)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("Test createResponseDeclaration()
           for SingleChoice class:solution = 2", {
   sc@solution <- 2
@@ -66,6 +68,7 @@ test_that("Test outcomeDeclaration() for SingleChoice class", {
   expect_equal(sut, expected)
 })
 
+testthat::skip_if_not_installed("XML")
 test_that("Test createItemBody() for SingleChoice class:
           orientation = horizontal", {
   sc@orientation <- "horizontal"
@@ -94,8 +97,9 @@ test_that("Test createItemBody() for SingleChoice class:
   sut <- xml2::read_xml(toString(createItemBody(sc)))
   expected <- xml2::read_xml(example)
   equal_xml(sut, expected)
-          })
+})
 
+testthat::skip_if_not_installed("XML")
 test_that("Test createResponseProcessing() for SingleChoice class", {
   example <- '
 <responseProcessing>
