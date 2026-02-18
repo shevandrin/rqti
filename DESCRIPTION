@@ -39,7 +39,8 @@ Imports:
     zip,
     kableExtra,
     textutils,
-    lifecycle
+    lifecycle,
+    rlang
 Suggests:
     covr,
     dplyr,
@@ -90,6 +91,7 @@ Collate:
     'qti_task.R'
     'qti_test.R'
     'response_processing.R'
+    'rqti-package.R'
     'rqti_project.R'
     'section_builder.R'
     'utils-pipe.R'
