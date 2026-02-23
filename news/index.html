@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rqti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,24 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="rqti-110">rqti 1.1.0<a class="anchor" aria-label="anchor" href="#rqti-110"></a></h2>
+<div class="section level3">
+<h3 id="new-features-1-1-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h3>
+<ul><li>Added support for the <code>RQTI_API_USER</code> environment variable. If <code>api_user</code> is not provided explicitly, its value is now read from the environment.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0"></a></h3>
+<ul><li><p>Fixed an issue in <code><a href="../reference/upload2opal.html">upload2opal()</a></code> where arguments <code>open_in_browser</code> and <code>as_survey</code> were not forwarded to <code><a href="../reference/upload2LMS-methods.html">upload2LMS()</a></code>.</p></li>
+<li><p>Fixed problems in auto-generated scripts via RStudio template.</p></li>
+<li><p>Fixed parameter serialization in <code><a href="../reference/dropdown.html">dropdown()</a></code> to preserve long values, normalize numeric and logical formatting, and ensure stable, test-consistent gap interaction output.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-1-1-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-1-0"></a></h3>
+<ul><li><p>Rendering functions (<code><a href="../reference/render_qtijs.html">render_qtijs()</a></code>, <code><a href="../reference/render_xml.html">render_xml()</a></code>, and <code><a href="../reference/render_zip.html">render_zip()</a></code>) now accept a <code>qtijs_path</code> argument (defaulting to <code><a href="../reference/qtijs_pkg_path.html">qtijs_pkg_path()</a></code>), allowing explicit control over the qtijs installation path.</p></li>
+<li><p>Added a <code>daemon</code> argument to <code><a href="../reference/start_server.html">start_server()</a></code> for improved server control.</p></li>
+<li><p>Exported the <code><a href="../reference/qtijs_pkg_path.html">qtijs_pkg_path()</a></code> helper function for accessing the qtijs installation path.</p></li>
+<li><p>Improved error and warning messages for duplicate identifiers.</p></li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="rqti-100">rqti 1.0.0<a class="anchor" aria-label="anchor" href="#rqti-100"></a></h2><p class="text-muted">CRAN release: 2025-03-05</p>

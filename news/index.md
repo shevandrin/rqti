@@ -1,6 +1,48 @@
 # Changelog
 
-## rqti (development version)
+## rqti 1.1.0
+
+### New features
+
+- Added support for the `RQTI_API_USER` environment variable. If
+  `api_user` is not provided explicitly, its value is now read from the
+  environment.
+
+### Bug fixes
+
+- Fixed an issue in
+  [`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
+  where arguments `open_in_browser` and `as_survey` were not forwarded
+  to
+  [`upload2LMS()`](https://shevandrin.github.io/rqti/reference/upload2LMS-methods.md).
+
+- Fixed problems in auto-generated scripts via RStudio template.
+
+- Fixed parameter serialization in
+  [`dropdown()`](https://shevandrin.github.io/rqti/reference/dropdown.md)
+  to preserve long values, normalize numeric and logical formatting, and
+  ensure stable, test-consistent gap interaction output.
+
+### Improvements
+
+- Rendering functions
+  ([`render_qtijs()`](https://shevandrin.github.io/rqti/reference/render_qtijs.md),
+  [`render_xml()`](https://shevandrin.github.io/rqti/reference/render_xml.md),
+  and
+  [`render_zip()`](https://shevandrin.github.io/rqti/reference/render_zip.md))
+  now accept a `qtijs_path` argument (defaulting to
+  [`qtijs_pkg_path()`](https://shevandrin.github.io/rqti/reference/qtijs_pkg_path.md)),
+  allowing explicit control over the qtijs installation path.
+
+- Added a `daemon` argument to
+  [`start_server()`](https://shevandrin.github.io/rqti/reference/start_server.md)
+  for improved server control.
+
+- Exported the
+  [`qtijs_pkg_path()`](https://shevandrin.github.io/rqti/reference/qtijs_pkg_path.md)
+  helper function for accessing the qtijs installation path.
+
+- Improved error and warning messages for duplicate identifiers.
 
 ## rqti 1.0.0
 

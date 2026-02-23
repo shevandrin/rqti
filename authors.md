@@ -24,13 +24,13 @@ Source:
 [`DESCRIPTION`](https://github.com/shevandrin/rqti/blob/main/DESCRIPTION)
 
 Shevandrin A, Titz J (2026). *rqti: Create Tests According to QTI 2.1
-Standard*. R package version 1.0.0.9000,
+Standard*. R package version 1.1.0,
 <https://github.com/shevandrin/rqti>.
 
     @Manual{,
       title = {rqti: Create Tests According to QTI 2.1 Standard},
       author = {Andrey Shevandrin and Johannes Titz},
       year = {2026},
-      note = {R package version 1.0.0.9000},
+      note = {R package version 1.1.0},
       url = {https://github.com/shevandrin/rqti},
     }
