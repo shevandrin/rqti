@@ -88,7 +88,8 @@ variables.
 ## Examples
 
 ``` r
-file <- system.file("test_results.zip", package='rqti')
+# \donttest{
+file <- system.file("test_results.zip", package = "rqti")
 df <- extract_results(file, level = "item")
 #> 100 - files with result
 #> 0 - test file(s)
@@ -96,4 +97,5 @@ df <- extract_results(file, level = "item")
 #> 0 - files with assessment items
 #> Warning: No task files found in archive.
 #> The 'title' column will be skipped in the final dataframe
+# }
 ```
