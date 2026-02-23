@@ -60,7 +60,9 @@ otherwise FALSE
 }
 }
 \examples{
-file <- system.file("test_results.zip", package='rqti')
+\donttest{
+file <- system.file("test_results.zip", package = "rqti")
 df <- extract_results(file, level = "item")
+}
 
 }
