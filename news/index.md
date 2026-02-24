@@ -2,6 +2,8 @@
 
 ## rqti 1.1.0
 
+CRAN release: 2026-02-23
+
 ### New features
 
 - Added support for the `RQTI_API_USER` environment variable. If

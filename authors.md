@@ -21,7 +21,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/shevandrin/rqti/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/shevandrin/rqti/blob/v1.1.0/DESCRIPTION)
 
 Shevandrin A, Titz J (2026). *rqti: Create Tests According to QTI 2.1
 Standard*. R package version 1.1.0,
