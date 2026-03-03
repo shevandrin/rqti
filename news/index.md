@@ -2,6 +2,11 @@
 
 ## rqti (development version)
 
+### Improvements
+
+- `extract_results(level = "task")` now includes an additional column
+  containing `scorerComment` for manually scored item results.
+
 ## rqti 1.1.0
 
 CRAN release: 2026-02-23
