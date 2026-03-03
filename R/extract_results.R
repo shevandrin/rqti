@@ -217,9 +217,8 @@ unique_result_set <- function(doc) {
 # check scored attribute
 check_scored <- function(node) {
     outcome_var <- xml_find_all(node, ".//d1:outcomeVariable")
-    # TODO use manualScored=True as a condition
-    is_tutor <- xml_has_attr(outcome_var, "scorer")
-    result <- any(is_tutor)
+    manual_attr <- xml_attr(outcome_var, "manualScored")
+    result <- any(!is.na(manual_attr) & manual_attr == "true")
     return(result)
 }
 # take itemResult and return duration or NA
