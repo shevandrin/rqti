@@ -176,6 +176,7 @@ get_result_attr_answers<- function(file, hide_filename) {
     durations <- Map(get_duration, items_result)
     scores <- Map(get_score, items_result, "SCORE")
     maxes <- Map(get_score, items_result, "MAXSCORE")
+    scomments <- sapply(items_result, get_scorer_comment)
 
     data <- data.frame(file = rep(file_name, length(ids_item)),
                        date = rep(test_dt, length(ids_item)),
@@ -183,7 +184,8 @@ get_result_attr_answers<- function(file, hide_filename) {
                        duration = as.numeric(durations),
                        score_candidate = as.numeric(scores),
                        score_max = as.numeric(maxes),
-                       is_answer_given = igiven)
+                       is_answer_given = igiven,
+                       scorer_comment = scomments)
     return(data)
 }
 
@@ -233,6 +235,15 @@ get_score <- function(node, type) {
     score_node <- xml2::xml_find_all(node, pattern)
     score <- ifelse (length(score_node) == 0, NA, xml2::xml_text(score_node))
     return(score)
+}
+
+get_scorer_comment <- function(node) {
+    comment_node <- xml_find_first(node, ".//d1:scorerComment")
+    if (is.na(comment_node)) return(NA_character_)
+
+    comment_text <- xml_text(comment_node)
+    if (comment_text == "") return(NA_character_)
+    return(comment_text)
 }
 
 clean_name <- function(file) {
