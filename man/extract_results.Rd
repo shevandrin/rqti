@@ -36,6 +36,7 @@ candidate)
 \item 'is_answer_given' - TRUE if candidate gave the answer on question,
 otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
+\item 'scorer_comment' - scorer's comment for manually scored items (if available).
 }
 
 2.With option level = "item" data frame consists of columns:
