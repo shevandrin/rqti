@@ -52,6 +52,9 @@ variables.
 
 - 'title' - the values of attribute 'title' of assessment items
 
+- 'scorer_comment' - scorer's comment for manually scored items (if
+  available).
+
 2.With option level = "item" data frame consists of columns:
 
 - 'file' - name of the xml file with test results (to identify
