@@ -24,7 +24,7 @@ Uses qtijs to render a single xml file in the RStudio viewer pane with a
 local server.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
   file <- system.file("exercises/sc1d.xml", package = 'rqti')
   render_qtijs(file)
 \dontshow{\}) # examplesIf}

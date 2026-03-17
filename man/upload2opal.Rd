@@ -53,7 +53,7 @@ Function \code{upload2opal()} takes full prepared zip archive of QTI-test or
 QTI-task and uploads it to the OPAL.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 file <- system.file("exercises/sc1.Rmd", package='rqti')
 upload2opal(file, "task 1", open_in_browser = FALSE)
 \dontshow{\}) # examplesIf}

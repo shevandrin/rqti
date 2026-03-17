@@ -20,7 +20,7 @@ Generates an rqti S4 AssessmentItem object (\link{SingleChoice}, \link{MultipleC
 \link{MultipleChoiceTable}, \link{DirectedPair}) from an Rmd file.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 create_question_object("file.Rmd")
 \dontshow{\}) # examplesIf}
 }
