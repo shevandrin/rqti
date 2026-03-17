@@ -23,6 +23,7 @@
 #'  * 'is_answer_given' - TRUE if candidate gave the answer on question,
 #'   otherwise FALSE
 #'  * 'title' - the values of attribute 'title' of assessment items
+#'  * 'scorer_comment' - scorer's comment for manually scored items (if available).
 #'
 #'   2.With option level = "item" data frame consists of columns:
 #' * 'file' - name of the xml file with test results (to identify
@@ -43,8 +44,10 @@
 #'   otherwise FALSE
 #' * 'title' - the values of attribute 'title' of assessment items
 #' @examples
-#' file <- system.file("test_results.zip", package='rqti')
+#' \donttest{
+#' file <- system.file("test_results.zip", package = "rqti")
 #' df <- extract_results(file, level = "item")
+#' }
 #'
 #' @import digest
 #' @export
@@ -174,6 +177,7 @@ get_result_attr_answers<- function(file, hide_filename) {
     durations <- Map(get_duration, items_result)
     scores <- Map(get_score, items_result, "SCORE")
     maxes <- Map(get_score, items_result, "MAXSCORE")
+    scomments <- sapply(items_result, get_scorer_comment)
 
     data <- data.frame(file = rep(file_name, length(ids_item)),
                        date = rep(test_dt, length(ids_item)),
@@ -181,7 +185,8 @@ get_result_attr_answers<- function(file, hide_filename) {
                        duration = as.numeric(durations),
                        score_candidate = as.numeric(scores),
                        score_max = as.numeric(maxes),
-                       is_answer_given = igiven)
+                       is_answer_given = igiven,
+                       scorer_comment = scomments)
     return(data)
 }
 
@@ -215,9 +220,8 @@ unique_result_set <- function(doc) {
 # check scored attribute
 check_scored <- function(node) {
     outcome_var <- xml_find_all(node, ".//d1:outcomeVariable")
-    # TODO use manualScored=True as a condition
-    is_tutor <- xml_has_attr(outcome_var, "scorer")
-    result <- any(is_tutor)
+    manual_attr <- xml_attr(outcome_var, "manualScored")
+    result <- any(!is.na(manual_attr) & manual_attr == "true")
     return(result)
 }
 # take itemResult and return duration or NA
@@ -232,6 +236,15 @@ get_score <- function(node, type) {
     score_node <- xml2::xml_find_all(node, pattern)
     score <- ifelse (length(score_node) == 0, NA, xml2::xml_text(score_node))
     return(score)
+}
+
+get_scorer_comment <- function(node) {
+    comment_node <- xml_find_first(node, ".//d1:scorerComment")
+    if (is.na(comment_node)) return(NA_character_)
+
+    comment_text <- xml_text(comment_node)
+    if (comment_text == "") return(NA_character_)
+    return(comment_text)
 }
 
 clean_name <- function(file) {

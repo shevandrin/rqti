@@ -61,6 +61,12 @@ to leave comments in each question.}
 \item{\code{rebuild_variables}}{A boolean value, optional, enabling to recalculate
 variables and reshuffle the order of choices for each item-attempt.}
 
+\item{\code{use_generic_titles}}{A logical value, optional, controlling whether section
+and item titles are replaced with generic labels (e.g., "Section 1",
+"Task 1") instead of being derived from filenames. If a title is explicitly
+provided by the user, it is always used, regardless of the value of
+\code{use_generic_titles}.Default is \code{TRUE}.}
+
 \item{\code{academic_grading}}{A named numeric vector that defines the grade table shown to the candidate as feedback at the end of the test. The default is the German grading system:
 gt <- c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
 Each grade corresponds to a minimum percentage score required to achieve it.
