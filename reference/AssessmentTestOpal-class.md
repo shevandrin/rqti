@@ -78,6 +78,14 @@ questions/tasks and/or one or more sub sections.
   A boolean value, optional, enabling to recalculate variables and
   reshuffle the order of choices for each item-attempt.
 
+- `use_generic_titles`:
+
+  A logical value, optional, controlling whether section and item titles
+  are replaced with generic labels (e.g., "Section 1", "Task 1") instead
+  of being derived from filenames. If a title is explicitly provided by
+  the user, it is always used, regardless of the value of
+  `use_generic_titles`.Default is `TRUE`.
+
 - `academic_grading`:
 
   A named numeric vector that defines the grade table shown to the
