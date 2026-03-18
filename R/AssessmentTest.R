@@ -40,7 +40,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      max_attempts = "numeric",
                                      allow_comment = "logical",
                                      rebuild_variables = "logical",
-                                     use_generic_titles = "logical",
+                                     fallback_titles = "character",
                                      academic_grading = "numeric",
                                      grade_label = "character",
                                      table_label = "character",
@@ -52,7 +52,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                           max_attempts = NA_integer_,
                           allow_comment = TRUE,
                           rebuild_variables = NA,
-                          use_generic_titles = TRUE,
+                          fallback_titles = "generic",
                           academic_grading = c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
                                                "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
                                                "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0),
@@ -63,6 +63,9 @@ setClass("AssessmentTest", slots = c(identifier = "character",
 
 setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object <- callNextMethod()
+
+    .Object@fallback_titles <- match.arg(.Object@fallback_titles,
+                                         c("filename", "generic"))
 
     if (length(.Object@identifier) == 0) {
         .Object@identifier <- generate_id(type = "test")
@@ -110,11 +113,11 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #'  candidate for the test in minutes. Default is 90 minutes.
 #'@param max_attempts An integer value, optional, indicating the maximum number
 #'  of attempts allowed for the candidate. Default is 1.
-#' @param use_generic_titles A logical value, optional, controlling whether section
-#'   and item titles are replaced with generic labels (e.g., "Section 1",
-#'   "Task 1") instead of being derived from filenames. If a title is explicitly
-#' provided by the user, it is always used, regardless of the value of
-#' `use_generic_titles`.Default is `TRUE`.
+#' @param fallback_titles A character value, optional, controlling how titles
+#'   are assigned when no explicit title is provided. Possible values are
+#'   "filename" (use filenames as titles) and "generic" (use generic labels
+#'   such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
+#'   "generic".
 #' @param academic_grading A named numeric vector that defines the grade table shown to the candidate as feedback at the end of the test. The default is the German grading system:
 #' gt <- c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
 #' Each grade corresponds to a minimum percentage score required to achieve it.
@@ -164,7 +167,7 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 assessmentTest <- function(section, identifier = generate_id(type = "test"),
                            title = identifier, time_limit = 90L,
                            max_attempts = 1L,
-                           use_generic_titles = TRUE,
+                           fallback_titles = "generic",
                            academic_grading = c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
                                                 "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
                                                 "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0),
