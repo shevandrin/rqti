@@ -78,13 +78,12 @@ questions/tasks and/or one or more sub sections.
   A boolean value, optional, enabling to recalculate variables and
   reshuffle the order of choices for each item-attempt.
 
-- `use_generic_titles`:
+- `fallback_titles`:
 
-  A logical value, optional, controlling whether section and item titles
-  are replaced with generic labels (e.g., "Section 1", "Task 1") instead
-  of being derived from filenames. If a title is explicitly provided by
-  the user, it is always used, regardless of the value of
-  `use_generic_titles`.Default is `TRUE`.
+  A character value, optional, controlling how titles are assigned when
+  no explicit title is provided. Possible values are "filename" (use
+  filenames as titles) and "generic" (use generic labels such as
+  "Section 1", "Section 1.2", or "Task 1.2.1"). Default is "generic".
 
 - `academic_grading`:
 

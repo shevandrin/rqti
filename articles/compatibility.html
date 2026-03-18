@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Compatibility with Learning Management Systems</h1>
             
-            <h4 data-toc-skip class="date">2026-03-17</h4>
+            <h4 data-toc-skip class="date">2026-03-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
       <div class="d-none name"><code>compatibility.Rmd</code></div>
@@ -127,23 +127,52 @@ actively investigating this issue.
 <div class="section level2">
 <h2 id="canvas">Canvas<a class="anchor" aria-label="anchor" href="#canvas"></a>
 </h2>
-<p>The following functionalities encounter issues when used on
+<p>Note that Canvas exports to the fairly old QTI 1.2 version, which
+makes it difficult to understand what is happening internally and to
+diagnose or resolve these issues.</p>
+<p>The following functionalities encounter problems when used with
 Canvas:</p>
 <ul>
-<li>The <code>order</code> task type is not supported.</li>
-<li>Feedback messages intended to be displayed regardless of answer
-correctness (modal feedback), do not appear. The investigation is
-challenging because Canvas seems to export files in QTI 1.2, not
-2.1.</li>
-<li>All feedback types for the <code>essay</code> task type are
-non-functional.</li>
-<li>Customization of tolerance for numeric gaps does not work.</li>
-<li>Management of text input length and placeholders is not
-operational.</li>
-<li>All tables are converted to the <code>match</code> type, rendering
-only tables with a single possible answer in each row meaningful
-(one-in-row-table).</li>
+<li>The <code>inlineChoice</code> task type does not appear to be
+supported.</li>
+<li>Feedback information seems to be ignored during import.
+<!-- - Feedback messages intended to be displayed regardless of answer correctness (modal feedback), do not appear.  -->
+<!-- - All feedback types for the `essay` task type are non-functional. -->
+</li>
+<li>
+<code>textEntryInteraction</code> elements are incorrectly imported
+as essay questions, rendering both numeric and text gap items
+non-functional.
+<!-- - Customization of tolerance for numeric gaps does not work. -->
+</li>
+<li>Handling of text input length and placeholders is not supported.
+<!-- todo: for essay? -->
+</li>
+<li>Tables are converted to either <code>match</code> or
+<code>categorization</code> interactions, which leads to several issues:
+<ul>
+<li>One-in-row tables lose distractors (i.e., options that are not
+mapped to any row); one-in-column tables have not yet been tested.
+Directed pairs work correctly; MPC tables have not yet been tested.</li>
 </ul>
+</li>
+</ul>
+<!-- todo: directedpairs work just fine, which makes sense because source and target are completely used, no distractors; multiplechoice table has to be checked still; what i do not quite get is when categorization (dragging) is used and when matching is used? format seems to be the same, namely one-in-row table...--><!-- - rendering only tables with a single possible answer in each row meaningful (one-in-row-table). --><!-- - The `order` task type is not supported. This is now possible 2026-03-17-->
+</div>
+<div class="section level2">
+<h2 id="test-files">Test files<a class="anchor" aria-label="anchor" href="#test-files"></a>
+</h2>
+<p>Official conformance test files for QTI v2.1:</p>
+<p><a href="https://www.imsglobal.org/developers/apipalliance/conformance/QTIconformanceresources.cfm" class="external-link uri">https://www.imsglobal.org/developers/apipalliance/conformance/QTIconformanceresources.cfm</a></p>
+<p>These resources are incomplete. In particular, they do not include
+<code>textEntryInteraction</code> items with a
+<code>responseDeclaration</code> of <code>baseType="float"</code> (i.e.,
+numeric gap questions), and only a single variant of
+<code>matchInteraction</code> is provided. Several other interaction
+types are also missing.</p>
+<p>Additional examples can be obtained from the implementation
+guide:</p>
+<p><a href="https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html" class="external-link uri">https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html</a></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

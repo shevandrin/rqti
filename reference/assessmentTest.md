@@ -11,7 +11,7 @@ assessmentTest(
   title = identifier,
   time_limit = 90L,
   max_attempts = 1L,
-  use_generic_titles = TRUE,
+  fallback_titles = "generic",
   academic_grading = c(`1.0` = 0.95, `1.3` = 0.9, `1.7` = 0.85, `2.0` = 0.8, `2.3` =
     0.75, `2.7` = 0.7, `3.0` = 0.65, `3.3` = 0.6, `3.7` = 0.55, `4.0` = 0.5, `5.0` = 0),
   grade_label = c(en = "Grade", de = "Note"),
@@ -54,13 +54,12 @@ assessmentTest(
   An integer value, optional, indicating the maximum number of attempts
   allowed for the candidate. Default is 1.
 
-- use_generic_titles:
+- fallback_titles:
 
-  A logical value, optional, controlling whether section and item titles
-  are replaced with generic labels (e.g., "Section 1", "Task 1") instead
-  of being derived from filenames. If a title is explicitly provided by
-  the user, it is always used, regardless of the value of
-  `use_generic_titles`.Default is `TRUE`.
+  A character value, optional, controlling how titles are assigned when
+  no explicit title is provided. Possible values are "filename" (use
+  filenames as titles) and "generic" (use generic labels such as
+  "Section 1", "Section 1.2", or "Task 1.2.1"). Default is "generic".
 
 - academic_grading:
 

@@ -30,15 +30,35 @@ The following functionalities are currently non-functional on OpenOlat:
 
 ## Canvas
 
-The following functionalities encounter issues when used on Canvas:
+Note that Canvas exports to the fairly old QTI 1.2 version, which makes
+it difficult to understand what is happening internally and to diagnose
+or resolve these issues.
 
-- The `order` task type is not supported.
-- Feedback messages intended to be displayed regardless of answer
-  correctness (modal feedback), do not appear. The investigation is
-  challenging because Canvas seems to export files in QTI 1.2, not 2.1.
-- All feedback types for the `essay` task type are non-functional.
-- Customization of tolerance for numeric gaps does not work.
-- Management of text input length and placeholders is not operational.
-- All tables are converted to the `match` type, rendering only tables
-  with a single possible answer in each row meaningful
-  (one-in-row-table).
+The following functionalities encounter problems when used with Canvas:
+
+- The `inlineChoice` task type does not appear to be supported.
+- Feedback information seems to be ignored during import.
+- `textEntryInteraction` elements are incorrectly imported as essay
+  questions, rendering both numeric and text gap items non-functional.
+- Handling of text input length and placeholders is not supported.
+- Tables are converted to either `match` or `categorization`
+  interactions, which leads to several issues:
+  - One-in-row tables lose distractors (i.e., options that are not
+    mapped to any row); one-in-column tables have not yet been tested.
+    Directed pairs work correctly; MPC tables have not yet been tested.
+
+## Test files
+
+Official conformance test files for QTI v2.1:
+
+<https://www.imsglobal.org/developers/apipalliance/conformance/QTIconformanceresources.cfm>
+
+These resources are incomplete. In particular, they do not include
+`textEntryInteraction` items with a `responseDeclaration` of
+`baseType="float"` (i.e., numeric gap questions), and only a single
+variant of `matchInteraction` is provided. Several other interaction
+types are also missing.
+
+Additional examples can be obtained from the implementation guide:
+
+<https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html>
