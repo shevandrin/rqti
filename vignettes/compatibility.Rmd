@@ -29,11 +29,52 @@ We have conducted compatibility tests by uploading `rqti` zip archives to LMS pl
 
 If you use a different LMS and encounter problems, please open an issue on GitHub: https://github.com/shevandrin/rqti/issues
 
+## OPAL
+
+As mentioned earlier, our files are fully compatible with OPAL, and we even support certain non-QTI features. What remains problematic, however, is the way these features are implemented.
+
+In particular, functionalities such as downloadable files and the use of a calculator are supported in OPAL, but their current implementation is not compatible with the QTI standard.
+
+### Extra `assessmentTest` Attributes
+
+Specifically, this functionality relies on custom attributes within the `assessmentTest` element:
+
+```xml
+<assessmentTest
+  ...
+  data-downloads="file://downloads/;"
+  data-features="scientific-calculator;mark-items;show-test-time;">
+```
+
+We consider this approach suboptimal, as such information should not be embedded as custom attributes in the QTI XML test file.
+
+For additional files, a more standard-compliant solution would be to include them directly in the content package (e.g., via a dedicated `downloads` folder referenced in the manifest). A more critical issue arises in exam contexts, where file downloads may be restricted (e.g., by Safe Exam Browser). In such cases, files should be explicitly managed as downloadable resources at the LMS level rather than encoded in the test definition.
+
+Regarding the calculator, this is better understood as a feature of the LMS rather than of the test itself. Consequently, it should be configured at the LMS or test-delivery level, not within the QTI test definition. The same applies to other `data-features` such as `mark-items` and `show-test-time`.
+
+### Tolerance for Text Gaps
+
+Tolerance handling for text-entry questions is currently implemented in an OPAL-specific way. In this case, we do see a legitimate need for extending the QTI standard, as tolerance is an important feature for text response processing and is not adequately supported in the base specification.
+
+Example:
+
+```{xml}
+<setOutcomeValue identifier="SCORE_codieren">
+          <mapTolResponse xmlns="http://bps-system.de/xsd/imsqti_ext_maptolresponse" identifier="codieren" tolerance="2" toleranceMode="absolute"/>
+        </setOutcomeValue>
+```
+
+### Allow Pasting in Essay Questions
+
+The attribute `data-allowPaste` in `extendedTextInteraction` is also not QTI-compliant. However, this functionality can typically be handled at the system level (e.g., via Safe Exam Browser), and therefore does not need to be part of the QTI test definition.
+
 ## OpenOlat
 
 The following functionalities are currently non-functional on OpenOlat:
 
 - The parameters `include_lower_bound` and `include_upper_bound` in the tolerance customization of numeric gaps are ignored. This is a minor problem since it is usually irrelevant whether the bounds are included or not. Still, we are actively investigating this issue.
+<!-- - mathjax does not work properly -->
+<!-- - allowPaste is same as for OPAL -->
 <!-- - The parameter `data_allow_paste` in essays currently does not work because it is implemented differently to OPAL. This will be fixed soon. Note that this attribute is not compatible with QTI 2.1. -->
 
 <!-- - Test upload is not operational due to OpenOlat utilizing a custom test structure that is not entirely compatible with QTI. Uploading a QTI test will extract individual tasks, displaying them in Olat, but the overall test disappears. This also happens with the official IMS QTI examples. In the future we will provide a custom class to handle this. -->
@@ -53,7 +94,7 @@ The following functionalities encounter problems when used with Canvas:
 * Handling of text input length and placeholders is not supported.
   <!-- todo: for essay? -->
 * Tables are converted to either `match` or `categorization` interactions, which leads to several issues:
-  * One-in-row tables lose distractors (i.e., options that are not mapped to any row); one-in-column tables have not yet been tested. Directed pairs work correctly; MPC tables have not yet been tested.
+  * One-in-row tables lose distractors (i.e., options that are not mapped to any row); one-in-column tables have not yet been tested. Directed pairs work correctly (since there are no distractors); MPC tables have not yet been tested.
 
 <!-- todo: directedpairs work just fine, which makes sense because source and target are completely used, no distractors; multiplechoice table has to be checked still; what i do not quite get is when categorization (dragging) is used and when matching is used? format seems to be the same, namely one-in-row table...-->
 
