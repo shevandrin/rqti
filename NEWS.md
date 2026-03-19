@@ -1,5 +1,12 @@
 # rqti (development version)
 
+## New features
+
+* Added `fallback_titles` argument to `test()` and `test4opal()` to control how
+section and item titles are assigned when not explicitly provided. Supported
+values are "filename" and "generic". The `AssessmentTest` class now includes a
+`fallback_titles` slot.
+
 ## Improvements
 
 * `extract_results(level = "task")` now includes an additional column containing `scorerComment` for manually scored item results.
