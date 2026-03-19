@@ -14,8 +14,8 @@ test_that("Testing createQtiTest() method for the object of character
         path_1 <- test_path("file/xml/Order.xml")
         path_2 <- test_path("file/rmd/OneInRowTable_example.Rmd")
 
-        sut_1 <- createQtiTest(path_1)
-        sut_2 <- createQtiTest(path_2)
+        sut_1 <- suppressMessages(createQtiTest(path_1))
+        sut_2 <- suppressMessages(createQtiTest(path_2))
 
         expected_path_1 <- file.path(getwd(),"Preview.zip")
         expected_path_2 <- file.path(getwd(),"test_OneInRowTable_example.zip")

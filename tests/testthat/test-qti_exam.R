@@ -64,7 +64,7 @@ test_that("Testing of counting points in the test if all tasks
 test_that("Testing of counting points in the test that had
           the complex hierarchical structure", {
 
-              test <- suppressMessages(test(root_section, "test1"))
+              test <- suppressMessages(test(root_section, "test1", fallback_titles = "filename"))
               expect_equal(test@points, 22)
 })
 
@@ -97,9 +97,9 @@ test_that("Testing createQtiTest method", {
               path_2 <- test_path("file/md/sc_example2.md")
               path_3 <- test_path("file/xml/MultipleChoice.xml")
 
-              sut_1 <- createQtiTest(path_1)
-              sut_2 <- createQtiTest(path_2)
-              sut_3 <- createQtiTest(path_3)
+              sut_1 <- suppressMessages(createQtiTest(path_1))
+              sut_2 <- suppressMessages(createQtiTest(path_2))
+              sut_3 <- suppressMessages(createQtiTest(path_3))
 
               expect_no_error(sut_1)
               expect_no_error(sut_2)
@@ -126,4 +126,3 @@ test_that("Testing createQtiTest method for AssessmentItem object", {
 
     unlink("exam_folder", recursive = TRUE)
 })
-

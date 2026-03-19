@@ -103,6 +103,7 @@ test_that("Testing method createOutcomeDeclaration() with
                )
                exam <- new("AssessmentTest",
                            identifier = "id_test",
+                           fallback_titles = "filename",
                            section = list(exam_section)
                )
 
