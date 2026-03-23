@@ -1,0 +1,27 @@
+table.rqti-grade-table {
+  width: auto;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+}
+
+table.rqti-grade-table th,
+table.rqti-grade-table td {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid #bfbfbf;
+  text-align: left;
+  vertical-align: middle;
+}
+
+table.rqti-grade-table thead th {
+  font-weight: 600;
+  background-color: #f5f5f5;
+}
+
+table.rqti-grade-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+table.rqti-grade-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
