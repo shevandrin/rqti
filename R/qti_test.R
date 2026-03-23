@@ -90,6 +90,7 @@ create_assessment_test <- function(object, folder, verify = FALSE,
     # gather all conditions
     out_proc <- tag("outcomeProcessing", list(tsov, tags_grades$conditions))
 
+    # add default and user's stylesheets
     stylesheets <- list()
 
     if (length(object@academic_grading) > 0) {
@@ -97,6 +98,16 @@ create_assessment_test <- function(object, folder, verify = FALSE,
             stylesheets,
             list(tag("stylesheet", list(
                 href = "styles/rqti.css",
+                type = "text/css"
+            )))
+        )
+    }
+
+    if (!is.null(object@stylesheet_path)) {
+        stylesheets <- c(
+            stylesheets,
+            list(tag("stylesheet", list(
+                href = paste0("styles/", basename(object@stylesheet_path)),
                 type = "text/css"
             )))
         )

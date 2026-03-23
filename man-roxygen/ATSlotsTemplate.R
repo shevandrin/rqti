@@ -58,6 +58,12 @@
 #'   language codes as names (e.g., c(en="Grade", de="Note")); during test
 #'   creation, it takes the value for the language of the operating system.
 #'   Default is c(en="Grade", de="Note").
+#' @slot stylesheet_path A character value, optional, specifying the path to a
+#'   custom CSS stylesheet. If provided, the stylesheet is included at the
+#'   assessment test level and applied during rendering. When
+#'   \code{academic_grading} is set, the default stylesheet
+#'   \code{styles/rqti.css} is included automatically; a user-defined stylesheet
+#'   is added in addition and may override default styles.
 #' @slot metadata An object of class [QtiMetadata] that holds metadata information
 #' about the test.
 

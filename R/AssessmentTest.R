@@ -1,4 +1,5 @@
-    setClassUnion("NumericOrNull", c("numeric", "NULL"))
+setClassUnion("NumericOrNull", c("numeric", "NULL"))
+setClassUnion("CharacterOrNull", c("character", "NULL"))
 
 #' Class "AssessmentTest"
 #'
@@ -46,6 +47,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                                      academic_grading = "NumericOrNull",
                                      grade_label = "character",
                                      table_label = "character",
+                                     stylesheet_path = "CharacterOrNull",
                                      metadata = "QtiMetadata"),
     prototype = prototype(navigation_mode = "nonlinear",
                           submission_mode = "individual",
@@ -57,7 +59,8 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                           fallback_titles = "generic",
                           academic_grading = NULL,
                           grade_label = c(en="Grade", de="Note"),
-                          table_label = c(en="Grade", de="Note"))
+                          table_label = c(en="Grade", de="Note"),
+                          stylesheet_path = NULL)
 )
 
 
