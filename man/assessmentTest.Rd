@@ -19,6 +19,7 @@ assessmentTest(
   allow_comment = TRUE,
   rebuild_variables = TRUE,
   metadata = qtiMetadata(),
+  stylesheet_path = NULL,
   points = NA_real_
 )
 }
@@ -94,6 +95,13 @@ Default is \code{TRUE.}}
 \item{metadata}{An object of class \link{QtiMetadata} that holds metadata
 information about the test. By default it creates \link{QtiMetadata} object. See
 \code{\link[=qtiMetadata]{qtiMetadata()}}.}
+
+\item{stylesheet_path}{A character value, optional, specifying the path to a
+custom CSS stylesheet. If provided, the stylesheet is included at the
+assessment test level and applied during rendering. When
+\code{academic_grading} is set, the default stylesheet
+\code{styles/rqti.css} is included automatically; a user-defined stylesheet
+is added in addition and may override default styles.}
 
 \item{points}{Do not use directly; the maximum number of points for the
 exam/test. It is calculated automatically as a sum of points of included

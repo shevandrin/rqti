@@ -166,6 +166,12 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #'@param rebuild_variables A boolean, optional, enabling the recalculation of
 #'  variables and reshuffling the order of choices for each item-attempt.
 #'  Default is `TRUE.`
+#'@param stylesheet_path A character value, optional, specifying the path to a
+#'   custom CSS stylesheet. If provided, the stylesheet is included at the
+#'   assessment test level and applied during rendering. When
+#'   \code{academic_grading} is set, the default stylesheet
+#'   \code{styles/rqti.css} is included automatically; a user-defined stylesheet
+#'   is added in addition and may override default styles.
 #'@param metadata An object of class [QtiMetadata] that holds metadata
 #'  information about the test. By default it creates [QtiMetadata] object. See
 #'  [qtiMetadata()].
@@ -192,7 +198,8 @@ assessmentTest <- function(section, identifier = generate_id(type = "test"),
                            navigation_mode = "nonlinear",
                            submission_mode = "individual",
                            allow_comment = TRUE, rebuild_variables = TRUE,
-                           metadata = qtiMetadata(), points = NA_real_) {
+                           metadata = qtiMetadata(),
+                           stylesheet_path = NULL, points = NA_real_) {
     params <- as.list(environment())
     params$Class <- "AssessmentTest"
     obj <- do.call("new", params)

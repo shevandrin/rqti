@@ -18,6 +18,7 @@ test(
   submission_mode = "individual",
   allow_comment = TRUE,
   rebuild_variables = TRUE,
+  stylesheet_path = NULL,
   contributor = list(),
   description = "",
   rights = Sys.getenv("RQTI_RIGHTS"),
@@ -91,6 +92,13 @@ comments in each question. Default is \code{TRUE.}}
 \item{rebuild_variables}{A boolean, optional, enabling the recalculation of
 variables and reshuffling the order of choices for each item-attempt.
 Default is \code{TRUE.}}
+
+\item{stylesheet_path}{A character value, optional, specifying the path to a
+custom CSS stylesheet. If provided, the stylesheet is included at the
+assessment test level and applied during rendering. When
+\code{academic_grading} is set, the default stylesheet
+\code{styles/rqti.css} is included automatically; a user-defined stylesheet
+is added in addition and may override default styles.}
 
 \item{contributor}{A list of objects \link{QtiContributor}-type that holds
 metadata information about the authors.}
