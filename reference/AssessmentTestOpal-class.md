@@ -120,6 +120,15 @@ questions/tasks and/or one or more sub sections.
   creation, it takes the value for the language of the operating system.
   Default is c(en="Grade", de="Note").
 
+- `stylesheet_path`:
+
+  A character value, optional, specifying the path to a custom CSS
+  stylesheet. If provided, the stylesheet is included at the assessment
+  test level and applied during rendering. When `academic_grading` is
+  set, the default stylesheet `styles/rqti.css` is included
+  automatically; a user-defined stylesheet is added in addition and may
+  override default styles.
+
 - `metadata`:
 
   An object of class
