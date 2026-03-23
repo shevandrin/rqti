@@ -22,6 +22,5 @@
 | getPass    | Hides user passwords (in API).                                                                               | high                           |
 | keyring    | Securely stores and retrieves sensitive authentication data.                                                 | high                           |
 | zip        | Manipulates ZIP archives.                                                                                    | high                           |
-| kableExtra | Formats grading tables.                                                                                      | low                            |
 | textutils  | Decodes HTML entities.                                                                                       | high                           |
 | lifecycle  | Deliver warnings about depricated functionality                                                              | high                           |

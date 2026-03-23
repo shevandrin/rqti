@@ -88,12 +88,19 @@ questions/tasks and/or one or more sub sections.
 - `academic_grading`:
 
   A named numeric vector that defines the grade table shown to the
-  candidate as feedback at the end of the test. The default is the
-  German grading system: gt \<- c("1.0" = 0.95, "1.3" = 0.9, "1.7" =
-  0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" =
-  0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0) Each grade corresponds to a
-  minimum percentage score required to achieve it. To hide the grading
-  table at the end of the test, set this parameter to NA_real\_.
+  candidate as feedback at the end of the test.
+
+  Each grade corresponds to the minimum percentage score required to
+  achieve it. For example:
+
+        c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
+          "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
+          "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
+        
+
+  The default is `NULL`, which means that no grading table is shown. To
+  display a grading table, provide a named numeric vector such as the
+  German grading system shown above.
 
 - `grade_label`:
 
