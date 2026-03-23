@@ -24,6 +24,7 @@ test4opal(
   show_test_time = TRUE,
   mark_items = TRUE,
   keep_responses = FALSE,
+  stylesheet_path = NULL,
   contributor = list(),
   description = "",
   rights = Sys.getenv("RQTI_RIGHTS"),
@@ -154,6 +155,15 @@ test4opal(
 
   A boolean, optional, determining whether to save the candidate's
   answers from the previous attempt. Default is `FALSE`.
+
+- stylesheet_path:
+
+  A character value, optional, specifying the path to a custom CSS
+  stylesheet. If provided, the stylesheet is included at the assessment
+  test level and applied during rendering. When `academic_grading` is
+  set, the default stylesheet `styles/rqti.css` is included
+  automatically; a user-defined stylesheet is added in addition and may
+  override default styles.
 
 - contributor:
 

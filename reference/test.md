@@ -19,6 +19,7 @@ test(
   submission_mode = "individual",
   allow_comment = TRUE,
   rebuild_variables = TRUE,
+  stylesheet_path = NULL,
   contributor = list(),
   description = "",
   rights = Sys.getenv("RQTI_RIGHTS"),
@@ -120,6 +121,15 @@ test(
   A boolean, optional, enabling the recalculation of variables and
   reshuffling the order of choices for each item-attempt. Default is
   `TRUE.`
+
+- stylesheet_path:
+
+  A character value, optional, specifying the path to a custom CSS
+  stylesheet. If provided, the stylesheet is included at the assessment
+  test level and applied during rendering. When `academic_grading` is
+  set, the default stylesheet `styles/rqti.css` is included
+  automatically; a user-defined stylesheet is added in addition and may
+  override default styles.
 
 - contributor:
 

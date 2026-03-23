@@ -84,6 +84,7 @@
 <span>  show_test_time <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  mark_items <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  keep_responses <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  stylesheet_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  contributor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  description <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  rights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RQTI_RIGHTS"</span><span class="op">)</span>,</span>
@@ -212,6 +213,15 @@ marking of questions. Default is <code>TRUE</code>.</p></dd>
 <dt id="arg-keep-responses">keep_responses<a class="anchor" aria-label="anchor" href="#arg-keep-responses"></a></dt>
 <dd><p>A boolean, optional, determining whether to save the
 candidate's answers from the previous attempt. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-stylesheet-path">stylesheet_path<a class="anchor" aria-label="anchor" href="#arg-stylesheet-path"></a></dt>
+<dd><p>A character value, optional, specifying the path to a
+custom CSS stylesheet. If provided, the stylesheet is included at the
+assessment test level and applied during rendering. When
+<code>academic_grading</code> is set, the default stylesheet
+<code>styles/rqti.css</code> is included automatically; a user-defined stylesheet
+is added in addition and may override default styles.</p></dd>
 
 
 <dt id="arg-contributor">contributor<a class="anchor" aria-label="anchor" href="#arg-contributor"></a></dt>

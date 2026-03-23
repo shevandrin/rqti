@@ -20,6 +20,7 @@ assessmentTest(
   allow_comment = TRUE,
   rebuild_variables = TRUE,
   metadata = qtiMetadata(),
+  stylesheet_path = NULL,
   points = NA_real_
 )
 ```
@@ -128,6 +129,15 @@ assessmentTest(
   [QtiMetadata](https://shevandrin.github.io/rqti/reference/QtiMetadata-class.md)
   object. See
   [`qtiMetadata()`](https://shevandrin.github.io/rqti/reference/qtiMetadata.md).
+
+- stylesheet_path:
+
+  A character value, optional, specifying the path to a custom CSS
+  stylesheet. If provided, the stylesheet is included at the assessment
+  test level and applied during rendering. When `academic_grading` is
+  set, the default stylesheet `styles/rqti.css` is included
+  automatically; a user-defined stylesheet is added in addition and may
+  override default styles.
 
 - points:
 
