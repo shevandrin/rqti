@@ -37,7 +37,6 @@ Imports:
     getPass,
     keyring,
     zip,
-    kableExtra,
     textutils,
     lifecycle,
     rlang
