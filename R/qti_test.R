@@ -44,6 +44,12 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
         file.copy(from = cssfile, to = file.path(tdir, "styles", "rqti.css"))
     }
 
+    if (length(object@stylesheet_path) != 0) {
+        file.copy(from = object@stylesheet_path,
+                  to = file.path(tdir, "styles",
+                                 basename(object@stylesheet_path)))
+    }
+
     path <- createZip(object, tdir, dir, file_name, zip_only)
     return(path)
 }
