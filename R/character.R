@@ -116,7 +116,7 @@ setMethod("createQtiTest", signature(object = "character"),
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,character
 setMethod("createQtiTask", signature(object = "character"),
-          function(object, dir = getwd()) {
+          function(object, dir = getwd(), zip = FALSE) {
 
               file <- object
               if (length(file) > 1) {
@@ -131,7 +131,7 @@ setMethod("createQtiTask", signature(object = "character"),
               if (ext != "zip") {
                   if (ext %in% c("Rmd", "md")) {
                       obj <- create_question_object(file)
-                      file <- createQtiTask(obj, dir = dir, zip = TRUE)
+                      file <- createQtiTask(obj, dir = dir, zip = zip)
                   }
               }
               return(file)
