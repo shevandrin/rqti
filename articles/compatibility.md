@@ -19,6 +19,98 @@ tests for all task types), issues typically arise from the LMS side.
 If you use a different LMS and encounter problems, please open an issue
 on GitHub: <https://github.com/shevandrin/rqti/issues>
 
+## OPAL
+
+As noted above, our files are fully compatible with OPAL, and we even
+support selected QTI 2.2 features.
+
+In particular, downloadable files and calculator support are available
+in OPAL, but only in connection with QTI 2.2.
+
+### Extra `assessmentTest` Attributes
+
+Concretely, this functionality is currently based on custom attributes
+in the `assessmentTest` element:
+
+``` xml
+<assessmentTest
+  ...
+  data-downloads="file://downloads/;"
+  data-features="scientific-calculator;mark-items;show-test-time;">
+```
+
+Under QTI 2.2, this is permissible, although it should be clearly
+documented.
+
+A simpler alternative would be to include such files directly in the
+content package, for example through a dedicated `downloads` folder
+referenced in the manifest. However, this raises an important issue in
+exam settings, where file downloads may be restricted, for example by
+Safe Exam Browser. In such cases, files should be managed explicitly as
+downloadable LMS resources rather than being encoded in the test
+definition itself. This would be possible without relying on custom
+`data-` attributes.
+
+More generally, we believe such attributes should be avoided whenever
+possible, because they weaken the idea of a common standard.
+
+With regard to the calculator, this may be better understood as a
+feature of the LMS rather than of the test itself. Accordingly, it could
+be configured at the LMS or test-delivery level rather than within the
+QTI test definition. The same consideration applies to other
+`data-features` such as `mark-items` and `show-test-time`. More broadly,
+the additional flexibility introduced in QTI 2.2 is not necessarily
+problematic; it may also indicate where the standard itself still lacks
+useful features.
+
+### Tolerance for Text Gaps
+
+Tolerance handling for text-entry questions is currently implemented via
+extra tags, that are not compatible with QTI. In this case, however, we
+do see a legitimate need for extending the QTI standard, because
+tolerance is an important feature for text-response processing and is
+not adequately supported by the base specification.
+
+Example:
+
+``` xml
+<setOutcomeValue identifier="SCORE_codieren">
+  <mapTolResponse xmlns="http://bps-system.de/xsd/imsqti_ext_maptolresponse"
+                  identifier="codieren"
+                  tolerance="2"
+                  toleranceMode="absolute"/>
+</setOutcomeValue>
+```
+
+### Allow Pasting in Essay Questions
+
+The attribute `data-allowPaste` in `extendedTextInteraction` is fine in
+QTI 2.2. However, this functionality can usually be handled at the
+system level, for example through Safe Exam Browser, and therefore does
+not need to be encoded in the QTI test definition itself.
+
+### MathML
+
+A custom namespace prefix for MathML is ignored. For example, the
+following does not work:
+
+``` xml
+xmlns:m="http://www.w3.org/1998/Math/MathML"
+...
+<m:math>
+  ...
+</m:math>
+```
+
+By contrast, using the MathML namespace directly on the `math` element
+works:
+
+``` xml
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  ...
+</math>
+```
+
 ## OpenOlat
 
 The following functionalities are currently non-functional on OpenOlat:
@@ -45,7 +137,8 @@ The following functionalities encounter problems when used with Canvas:
   interactions, which leads to several issues:
   - One-in-row tables lose distractors (i.e., options that are not
     mapped to any row); one-in-column tables have not yet been tested.
-    Directed pairs work correctly; MPC tables have not yet been tested.
+    Directed pairs work correctly (since there are no distractors); MPC
+    tables have not yet been tested.
 
 ## Test files
 

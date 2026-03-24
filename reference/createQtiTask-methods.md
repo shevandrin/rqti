@@ -11,7 +11,7 @@ createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
 createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
 
 # S4 method for class 'character'
-createQtiTask(object, dir = getwd())
+createQtiTask(object, dir = getwd(), verification = FALSE, zip = FALSE)
 ```
 
 ## Arguments

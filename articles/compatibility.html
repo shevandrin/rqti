@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Compatibility with Learning Management Systems</h1>
             
-            <h4 data-toc-skip class="date">2026-03-23</h4>
+            <h4 data-toc-skip class="date">2026-03-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
       <div class="d-none name"><code>compatibility.Rmd</code></div>
@@ -109,6 +109,85 @@ issues typically arise from the LMS side.</p>
 <p>If you use a different LMS and encounter problems, please open an
 issue on GitHub: <a href="https://github.com/shevandrin/rqti/issues" class="external-link uri">https://github.com/shevandrin/rqti/issues</a></p>
 <div class="section level2">
+<h2 id="opal">OPAL<a class="anchor" aria-label="anchor" href="#opal"></a>
+</h2>
+<p>As noted above, our files are fully compatible with OPAL, and we even
+support selected QTI 2.2 features.</p>
+<p>In particular, downloadable files and calculator support are
+available in OPAL, but only in connection with QTI 2.2.</p>
+<div class="section level3">
+<h3 id="extra-assessmenttest-attributes">Extra <code>assessmentTest</code> Attributes<a class="anchor" aria-label="anchor" href="#extra-assessmenttest-attributes"></a>
+</h3>
+<p>Concretely, this functionality is currently based on custom
+attributes in the <code>assessmentTest</code> element:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>&lt;<span class="kw">assessmentTest</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="er">...</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ot">  data-downloads=</span><span class="st">"file://downloads/;"</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="ot">  data-features=</span><span class="st">"scientific-calculator;mark-items;show-test-time;"</span>&gt;</span></code></pre></div>
+<p>Under QTI 2.2, this is permissible, although it should be clearly
+documented.</p>
+<p>A simpler alternative would be to include such files directly in the
+content package, for example through a dedicated <code>downloads</code>
+folder referenced in the manifest. However, this raises an important
+issue in exam settings, where file downloads may be restricted, for
+example by Safe Exam Browser. In such cases, files should be managed
+explicitly as downloadable LMS resources rather than being encoded in
+the test definition itself. This would be possible without relying on
+custom <code>data-</code> attributes.</p>
+<p>More generally, we believe such attributes should be avoided whenever
+possible, because they weaken the idea of a common standard.</p>
+<p>With regard to the calculator, this may be better understood as a
+feature of the LMS rather than of the test itself. Accordingly, it could
+be configured at the LMS or test-delivery level rather than within the
+QTI test definition. The same consideration applies to other
+<code>data-features</code> such as <code>mark-items</code> and
+<code>show-test-time</code>. More broadly, the additional flexibility
+introduced in QTI 2.2 is not necessarily problematic; it may also
+indicate where the standard itself still lacks useful features.</p>
+</div>
+<div class="section level3">
+<h3 id="tolerance-for-text-gaps">Tolerance for Text Gaps<a class="anchor" aria-label="anchor" href="#tolerance-for-text-gaps"></a>
+</h3>
+<p>Tolerance handling for text-entry questions is currently implemented
+via extra tags, that are not compatible with QTI. In this case, however,
+we do see a legitimate need for extending the QTI standard, because
+tolerance is an important feature for text-response processing and is
+not adequately supported by the base specification.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>&lt;<span class="kw">setOutcomeValue</span><span class="ot"> identifier=</span><span class="st">"SCORE_codieren"</span>&gt;</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  &lt;<span class="kw">mapTolResponse</span><span class="ot"> xmlns=</span><span class="st">"http://bps-system.de/xsd/imsqti_ext_maptolresponse"</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ot">                  identifier=</span><span class="st">"codieren"</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="ot">                  tolerance=</span><span class="st">"2"</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="ot">                  toleranceMode=</span><span class="st">"absolute"</span>/&gt;</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>&lt;/<span class="kw">setOutcomeValue</span>&gt;</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="allow-pasting-in-essay-questions">Allow Pasting in Essay Questions<a class="anchor" aria-label="anchor" href="#allow-pasting-in-essay-questions"></a>
+</h3>
+<p>The attribute <code>data-allowPaste</code> in
+<code>extendedTextInteraction</code> is fine in QTI 2.2. However, this
+functionality can usually be handled at the system level, for example
+through Safe Exam Browser, and therefore does not need to be encoded in
+the QTI test definition itself.</p>
+</div>
+<div class="section level3">
+<h3 id="mathml">MathML<a class="anchor" aria-label="anchor" href="#mathml"></a>
+</h3>
+<p>A custom namespace prefix for MathML is ignored. For example, the
+following does not work:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>xmlns:m="http://www.w3.org/1998/Math/MathML"</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>...</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>&lt;<span class="kw">m:math</span>&gt;</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  ...</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>&lt;/<span class="kw">m:math</span>&gt;</span></code></pre></div>
+<p>By contrast, using the MathML namespace directly on the
+<code>math</code> element works:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>&lt;<span class="kw">math</span><span class="ot"> xmlns=</span><span class="st">"http://www.w3.org/1998/Math/MathML"</span>&gt;</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  ...</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>&lt;/<span class="kw">math</span>&gt;</span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="openolat">OpenOlat<a class="anchor" aria-label="anchor" href="#openolat"></a>
 </h2>
 <p>The following functionalities are currently non-functional on
@@ -119,6 +198,8 @@ OpenOlat:</p>
 numeric gaps are ignored. This is a minor problem since it is usually
 irrelevant whether the bounds are included or not. Still, we are
 actively investigating this issue.
+<!-- - mathjax does not work properly -->
+<!-- - allowPaste is same as for OPAL -->
 <!-- - The parameter `data_allow_paste` in essays currently does not work because it is implemented differently to OPAL. This will be fixed soon. Note that this attribute is not compatible with QTI 2.1. -->
 </li>
 </ul>
@@ -153,7 +234,8 @@ non-functional.
 <ul>
 <li>One-in-row tables lose distractors (i.e., options that are not
 mapped to any row); one-in-column tables have not yet been tested.
-Directed pairs work correctly; MPC tables have not yet been tested.</li>
+Directed pairs work correctly (since there are no distractors); MPC
+tables have not yet been tested.</li>
 </ul>
 </li>
 </ul>
