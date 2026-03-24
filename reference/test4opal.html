@@ -145,15 +145,11 @@ such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
 <dd><p>A named numeric vector that defines the grade table
 shown to the candidate as feedback at the end of the test.</p>
 <p>Each grade corresponds to the minimum percentage score required to achieve it.
-For example:</p><div class="sourceCode"><pre><code><span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1.0"</span> <span class="op">=</span> <span class="fl">0.95</span>, <span class="st">"1.3"</span> <span class="op">=</span> <span class="fl">0.9</span>, <span class="st">"1.7"</span> <span class="op">=</span> <span class="fl">0.85</span>, <span class="st">"2.0"</span> <span class="op">=</span> <span class="fl">0.8</span>,</span>
-<span>    <span class="st">"2.3"</span> <span class="op">=</span> <span class="fl">0.75</span>, <span class="st">"2.7"</span> <span class="op">=</span> <span class="fl">0.7</span>, <span class="st">"3.0"</span> <span class="op">=</span> <span class="fl">0.65</span>, <span class="st">"3.3"</span> <span class="op">=</span> <span class="fl">0.6</span>,</span>
-<span>    <span class="st">"3.7"</span> <span class="op">=</span> <span class="fl">0.55</span>, <span class="st">"4.0"</span> <span class="op">=</span> <span class="fl">0.5</span>, <span class="st">"5.0"</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
-<span>  </span></code></pre></div>
-
+A helper function <code><a href="german_grading.html">german_grading()</a></code> is available to generate a common
+German grading scheme.</p>
 <p>The default is <code>NULL</code>, which means that no grading table is shown.
-To display a grading table, provide a named numeric vector such as the
-German grading system shown above.</p></dd>
+To display a grading table, provide a named numeric vector or use
+<code><a href="german_grading.html">german_grading()</a></code>.</p></dd>
 
 
 <dt id="arg-grade-label">grade_label<a class="anchor" aria-label="anchor" href="#arg-grade-label"></a></dt>

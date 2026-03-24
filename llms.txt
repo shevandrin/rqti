@@ -276,6 +276,8 @@ for new features provided as time permits.
   : Create YAML string for NumericGap object
 - [`gap_text()`](https://shevandrin.github.io/rqti/reference/gap_text.md)
   : Create YAML string for TextGap object
+- [`german_grading()`](https://shevandrin.github.io/rqti/reference/german_grading.md)
+  : German grading scale
 - [`getAssessmentItems()`](https://shevandrin.github.io/rqti/reference/getAssessmentItems-methods.md)
   : Get list of AssessmentItems for AssessmentSection
 - [`getCalculator()`](https://shevandrin.github.io/rqti/reference/getCalculator-methods.md)
