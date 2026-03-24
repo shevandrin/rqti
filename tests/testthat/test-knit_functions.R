@@ -45,9 +45,9 @@ test_that("servr responds", {
     url <- "http://127.0.0.1:4321/index.html"
 
     Sys.setenv(RQTI_URL="http://127.0.0.1:4321")
-    render_qtijs(fs::path_package("exercises", "sc1d.Rmd",
+    suppressMessages(render_qtijs(fs::path_package("exercises", "sc1d.Rmd",
                                   package = "rqti"),
-                 qtijs_path = qtijs_path)
+                 qtijs_path = qtijs_path))
 
     # now we can simply use chromote
     b <- ChromoteSession$new()

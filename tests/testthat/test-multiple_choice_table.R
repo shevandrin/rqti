@@ -116,14 +116,14 @@ test_that("Testing outcomeDeclaration MultipleChoiceTable",{
 
 })
 test_that("Testing the constructor for MultipleChoiceTable class", {
-    sut <- multipleChoiceTable(content = list("<p>\"Multiple choice table\" task</p>"),
+    sut <- suppressMessages(multipleChoiceTable(content = list("<p>\"Multiple choice table\" task</p>"),
                                rows = c("alfa", "beta", "gamma", "alpha"),
                                rows_identifiers = c("a", "b", "g", "aa"),
                                cols = c("A", "B", "G", "a"),
                                cols_identifiers = c("as", "bs", "gs", "aas"),
                                answers_identifiers = c("a as", "b bs", "g gs",
                                                        "aa as", "a aas",
-                                                       "aa aas"))
+                                                       "aa aas")))
 
     xml_sut <- create_assessment_item(sut)
 

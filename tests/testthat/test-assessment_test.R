@@ -103,11 +103,16 @@ test_that("Testing method createOutcomeDeclaration() with
                )
                exam <- new("AssessmentTest",
                            identifier = "id_test",
+                           fallback_titles = "filename",
+                           academic_grading = c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
+                                                "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
+                                                "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0),
                            section = list(exam_section)
                )
 
                example <- "<additionalTag>
 <assessmentTest xmlns=\"http://www.imsglobal.org/xsd/imsqti_v2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd\" identifier=\"id_test\" title=\"id_test\">
+		<stylesheet href=\"styles/rqti.css\" type=\"text/css\"/>
 		<outcomeDeclaration identifier=\"SCORE\" cardinality=\"single\" baseType=\"float\">
 			<defaultValue>
 				<value>0</value>
@@ -400,69 +405,69 @@ test_that("Testing method createOutcomeDeclaration() with
 			<p>Grade 1.0</p>
 		</testFeedback>
 		<testFeedback identifier=\"feedback_grade_table\" outcomeIdentifier=\"FEEDBACKTABLE\" showHide=\"show\" access=\"atEnd\">
-    <table class=\"table\" style=\"width: auto !important; \">
+    <table class=\"rqti-grade-table\">
       <thead>
         <tr>
-          <th style=\"text-align:left;\"> Grade </th>
-          <th style=\"text-align:left;\"> Min </th>
-          <th style=\"text-align:left;\"> Max </th>
+          <th>Grade</th>
+          <th>Min</th>
+          <th>Max</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td  style=\"text-align:left;\"> 1.0 </td>
-          <td  style=\"text-align:left;\"> 5.70 </td>
-          <td  style=\"text-align:left;\"> 6.00 </td>
+          <td>1.0</td>
+          <td>5.70</td>
+          <td>6.00</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 1.3 </td>
-          <td  style=\"text-align:left;\"> 5.40 </td>
-          <td  style=\"text-align:left;\"> 5.69 </td>
+          <td>1.3</td>
+          <td>5.40</td>
+          <td>5.69</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 1.7 </td>
-          <td  style=\"text-align:left;\"> 5.10 </td>
-          <td  style=\"text-align:left;\"> 5.39 </td>
+          <td>1.7</td>
+          <td>5.10</td>
+          <td>5.39</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 2.0 </td>
-          <td  style=\"text-align:left;\"> 4.80 </td>
-          <td  style=\"text-align:left;\"> 5.09 </td>
+          <td>2.0</td>
+          <td>4.80</td>
+          <td>5.09</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 2.3 </td>
-          <td  style=\"text-align:left;\"> 4.50 </td>
-          <td  style=\"text-align:left;\"> 4.79 </td>
+          <td>2.3</td>
+          <td>4.50</td>
+          <td>4.79</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 2.7 </td>
-          <td  style=\"text-align:left;\"> 4.20 </td>
-          <td  style=\"text-align:left;\"> 4.49 </td>
+          <td>2.7</td>
+          <td>4.20</td>
+          <td>4.49</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 3.0 </td>
-          <td  style=\"text-align:left;\"> 3.90 </td>
-          <td  style=\"text-align:left;\"> 4.19 </td>
+          <td>3.0</td>
+          <td>3.90</td>
+          <td>4.19</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 3.3 </td>
-          <td  style=\"text-align:left;\"> 3.60 </td>
-          <td  style=\"text-align:left;\"> 3.89 </td>
+          <td>3.3</td>
+          <td>3.60</td>
+          <td>3.89</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 3.7 </td>
-          <td  style=\"text-align:left;\"> 3.30 </td>
-          <td  style=\"text-align:left;\"> 3.59 </td>
+          <td>3.7</td>
+          <td>3.30</td>
+          <td>3.59</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 4.0 </td>
-          <td  style=\"text-align:left;\"> 3.00 </td>
-          <td  style=\"text-align:left;\"> 3.29 </td>
+          <td>4.0</td>
+          <td>3.00</td>
+          <td>3.29</td>
         </tr>
         <tr>
-          <td  style=\"text-align:left;\"> 5.0 </td>
-          <td  style=\"text-align:left;\"> 0.00 </td>
-          <td  style=\"text-align:left;\"> 2.99 </td>
+          <td>5.0</td>
+          <td>0.00</td>
+          <td>2.99</td>
         </tr>
       </tbody>
     </table>
@@ -736,7 +741,10 @@ test_that("Test assessmentTestOpal function that return an object
                               title = "Example of the Exam",
                               section = list(s),
                               time_limit = 90,
-                              max_attempts = 1)
+                              max_attempts = 1,
+                              academic_grading = c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
+                                                   "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
+                                                   "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0))
 
               expected@identifier <- sut@identifier
               expected@metadata <- sut@metadata

@@ -37,6 +37,9 @@ gte <- create_tag("gte")
 tr <- create_tag("tr")
 td <- create_tag("td")
 th <- create_tag("th")
+tbl <- create_tag("table")
+thead <- create_tag("thead")
+tbody <- create_tag("tbody")
 
 # process modalfeedback for all match types and mc
 create_default_resp_processing <- function(object) {
@@ -273,18 +276,39 @@ create_feedback_grade <- function(id, grade, label) {
                              tag("p", message)))
 }
 
-#' @importFrom knitr kable
-#' @importFrom kableExtra kable_styling
-create_feedback_grade_table <- function(df, table_label) {
-    col_nms <- c(table_label, "Min", "Max")
-    cont <- kable(df, format = "html", col.names = col_nms, digits = 2)
-    cont <- kable_styling(cont, position = "left", full_width = F)
-    grade_table <- htmltools::HTML(cont)
+
+create_feedback_grade_table <- function(df, table_label,
+                                        table_class = "rqti-grade-table") {
+    stopifnot(is.data.frame(df))
+    stopifnot(ncol(df) == 3)
+
+    header_row <- thead(
+        tr(
+            tagList(th(table_label), th("Min"), th("Max"))
+            )
+        )
+
+    body_rows <- lapply(seq_len(nrow(df)), function(i) {
+        tr(tagList(
+                td(as.character(df[i, 1])),
+                td(as.character(df[i, 2])),
+                td(as.character(df[i, 3]))
+            )
+        )
+    })
+
+    tbl_body <- tbody(body_rows)
+
+    grade_table <- tbl(list(class = table_class))
+
+    grade_table <- tagAppendChildren(grade_table, header_row, tbl_body)
+
     tag("testFeedback", list(identifier = "feedback_grade_table",
                              outcomeIdentifier = "FEEDBACKTABLE",
                              showHide = "show", access = "atEnd",
                              grade_table))
 }
+
 
 # this function makes condition to show grading table in feedback
 create_resp_cond_grade_table <- function() {

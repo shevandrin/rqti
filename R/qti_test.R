@@ -38,6 +38,18 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
     path_manifest <- paste0(tdir, "/imsmanifest.xml")
     xml2::write_xml(doc_manifest, path_manifest)
 
+    if (!is.null(object@academic_grading)) {
+        cssfile <- system.file("styles/rqti.css", package = "rqti")
+        dir.create(file.path(tdir, "styles"), showWarnings = FALSE)
+        file.copy(from = cssfile, to = file.path(tdir, "styles", "rqti.css"))
+    }
+
+    if (length(object@stylesheet_path) != 0) {
+        file.copy(from = object@stylesheet_path,
+                  to = file.path(tdir, "styles",
+                                 basename(object@stylesheet_path)))
+    }
+
     path <- createZip(object, tdir, dir, file_name, zip_only)
     return(path)
 }
@@ -84,7 +96,31 @@ create_assessment_test <- function(object, folder, verify = FALSE,
     # gather all conditions
     out_proc <- tag("outcomeProcessing", list(tsov, tags_grades$conditions))
 
+    # add default and user's stylesheets
+    stylesheets <- list()
+
+    if (length(object@academic_grading) > 0) {
+        stylesheets <- c(
+            stylesheets,
+            list(tag("stylesheet", list(
+                href = "styles/rqti.css",
+                type = "text/css"
+            )))
+        )
+    }
+
+    if (!is.null(object@stylesheet_path)) {
+        stylesheets <- c(
+            stylesheets,
+            list(tag("stylesheet", list(
+                href = paste0("styles/", basename(object@stylesheet_path)),
+                type = "text/css"
+            )))
+        )
+    }
+
     tagAppendChildren(assesment_test,
+                      stylesheets,
                       createOutcomeDeclaration(object),
                       time_limit,
                       test_part,

@@ -185,6 +185,7 @@ test_that("Testing AssessmentTestOpal class: create tasks with upload
     example_exam <- new("AssessmentTestOpal",
                 identifier = "id_test",
                 title = "Mock test",
+                fallback_titles = "filename",
                 section = list(example_exam_section))
     suppressWarnings(suppressMessages(createQtiTest(example_exam,
                                                     "test_exam_folder", FALSE)))

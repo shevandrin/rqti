@@ -164,15 +164,25 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   candidate for the test in minutes. Default is 90 minutes.
 #' @param max_attempts An integer value, optional, indicating the maximum number
 #'   of attempts allowed for the candidate. Default is 1.
-#' @param use_generic_titles A logical value, optional, controlling whether section
-#'   and item titles are replaced with generic labels (e.g., "Section 1",
-#'   "Task 1") instead of being derived from filenames. If a title is explicitly
-#' provided by the user, it is always used, regardless of the value of
-#' `use_generic_titles`.Default is `TRUE`.
-#' @param academic_grading A named numeric vector that defines the grade table shown to the candidate as feedback at the end of the test. The default is the German grading system:
-#' gt <- c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
-#' Each grade corresponds to a minimum percentage score required to achieve it.
-#' To hide the grading table at the end of the test, set this parameter to NA_real_.
+#' @param fallback_titles A character value, optional, controlling how titles
+#'   are assigned when no explicit title is provided. Possible values are
+#'   "filename" (use filenames as titles) and "generic" (use generic labels
+#'   such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
+#'   "generic".
+#' @param academic_grading A named numeric vector that defines the grade table
+#'   shown to the candidate as feedback at the end of the test.
+#'
+#'   Each grade corresponds to the minimum percentage score required to achieve it.
+#'   For example:
+#'   \preformatted{
+#'   c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
+#'     "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
+#'     "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
+#'   }
+#'
+#'   The default is `NULL`, which means that no grading table is shown.
+#'   To display a grading table, provide a named numeric vector such as the
+#'   German grading system shown above.
 #' @param grade_label A character value, optional; a short message that shows
 #'   with a grade in the final feedback; for multilingual use, it can be a named
 #'   vector with two-letter ISO language codes as names (e.g., c(en="Grade",
@@ -199,6 +209,12 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' @param rebuild_variables A boolean, optional, enabling the recalculation of
 #'   variables and reshuffling the order of choices for each item-attempt.
 #'   Default is `TRUE.`
+#' @param stylesheet_path A character value, optional, specifying the path to a
+#'   custom CSS stylesheet. If provided, the stylesheet is included at the
+#'   assessment test level and applied during rendering. When
+#'   \code{academic_grading} is set, the default stylesheet
+#'   \code{styles/rqti.css} is included automatically; a user-defined stylesheet
+#'   is added in addition and may override default styles.
 #' @param contributor A list of objects [QtiContributor]-type that holds
 #'   metadata information about the authors.
 #' @param description A character string providing a textual description of the
@@ -219,14 +235,13 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'@export
 test <- function(content, identifier = "test_identifier", title = "Test Title",
                  time_limit = 90L, max_attempts = 1L,
-                 use_generic_titles = TRUE,
-                 academic_grading = c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
-                                      "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
-                                      "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0),
+                 fallback_titles = "generic",
+                 academic_grading = NULL,
                  grade_label = c(en="Grade", de="Note"),
                  table_label = c(en="Grade", de="Note"),
                  navigation_mode = "nonlinear", submission_mode = "individual",
                  allow_comment = TRUE, rebuild_variables = TRUE,
+                 stylesheet_path = NULL,
                  contributor = list(), description = "",
                  rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
 
@@ -266,15 +281,25 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   - 'simple'
 #'   - 'scientific'.
 #'   Default is `NULL`.
-#' @param use_generic_titles A logical value, optional, controlling whether section
-#'   and item titles are replaced with generic labels (e.g., "Section 1",
-#'   "Task 1") instead of being derived from filenames. If a title is explicitly
-#' provided by the user, it is always used, regardless of the value of
-#' `use_generic_titles`.Default is `TRUE`.
-#' @param academic_grading A named numeric vector that defines the grade table shown to the candidate as feedback at the end of the test. The default is the German grading system:
-#' gt <- c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8, "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6, "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
-#' Each grade corresponds to a minimum percentage score required to achieve it.
-#' To hide the grading table at the end of the test, set this parameter to NA_real_.
+#' @param fallback_titles A character value, optional, controlling how titles
+#'   are assigned when no explicit title is provided. Possible values are
+#'   "filename" (use filenames as titles) and "generic" (use generic labels
+#'   such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
+#'   "generic".
+#' @param academic_grading A named numeric vector that defines the grade table
+#'   shown to the candidate as feedback at the end of the test.
+#'
+#'   Each grade corresponds to the minimum percentage score required to achieve it.
+#'   For example:
+#'   \preformatted{
+#'   c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
+#'     "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
+#'     "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0)
+#'   }
+#'
+#'   The default is `NULL`, which means that no grading table is shown.
+#'   To display a grading table, provide a named numeric vector such as the
+#'   German grading system shown above.
 #' @param grade_label A character value, optional; a short message that shows
 #'   with a grade in the final feedback; for multilingual use, it can be a named
 #'   vector with two-letter ISO language codes as names (e.g., c(en="Grade",
@@ -307,6 +332,12 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   marking of questions. Default is `TRUE`.
 #' @param keep_responses A boolean, optional, determining whether to save the
 #'   candidate's answers from the previous attempt. Default is `FALSE`.
+#' @param stylesheet_path A character value, optional, specifying the path to a
+#'   custom CSS stylesheet. If provided, the stylesheet is included at the
+#'   assessment test level and applied during rendering. When
+#'   \code{academic_grading} is set, the default stylesheet
+#'   \code{styles/rqti.css} is included automatically; a user-defined stylesheet
+#'   is added in addition and may override default styles.
 #' @param contributor A list of objects [QtiContributor]-type that holds
 #'   metadata information about the authors.
 #' @param description A character string providing a textual description of the
@@ -329,16 +360,15 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 test4opal <- function(content, identifier = "test_identifier",
                       title = "Test Title", time_limit = 90L, max_attempts = 1L,
                       files = NULL, calculator = NULL,
-                      use_generic_titles = TRUE,
-                      academic_grading = c("1.0" = 0.95, "1.3" = 0.9, "1.7" = 0.85, "2.0" = 0.8,
-                                           "2.3" = 0.75, "2.7" = 0.7, "3.0" = 0.65, "3.3" = 0.6,
-                                           "3.7" = 0.55, "4.0" = 0.5, "5.0" = 0),
+                      fallback_titles = "generic",
+                      academic_grading = NULL,
                       grade_label = c(en="Grade", de="Note"),
                       table_label = c(en="Grade", de="Note"),
                       navigation_mode = "nonlinear",
                       submission_mode = "individual", allow_comment = TRUE,
                       rebuild_variables = TRUE, show_test_time = TRUE,
                       mark_items  = TRUE, keep_responses = FALSE,
+                      stylesheet_path = NULL,
                       contributor = list(), description = "",
                       rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
 
