@@ -325,3 +325,27 @@ create_resp_cond_grade_table <- function() {
     t_outcomeCondition <- outcomeCondition(list(t_outcomeIf))
     return(t_outcomeCondition)
 }
+
+#' German grading scale
+#'
+#' A helper function that returns a named numeric vector representing
+#' a common German grading scheme. The names correspond to grades and
+#' the values define the minimum proportion of points required to
+#' achieve the respective grade.
+#'
+#' @return A named numeric vector with grades as names and minimum
+#'   score proportions as values.
+#'
+#' @examples
+#' german_grading()
+#'
+#'
+#' @export
+german_grading <- function() {
+    c(
+        "1.0" = 0.95, "1.3" = 0.9,  "1.7" = 0.85,
+        "2.0" = 0.8,  "2.3" = 0.75, "2.7" = 0.7,
+        "3.0" = 0.65, "3.3" = 0.6,  "3.7" = 0.55,
+        "4.0" = 0.5,  "5.0" = 0
+    )
+}
