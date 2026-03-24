@@ -8,7 +8,6 @@ code_notes/**
 s4_*
 .Rprofile
 .Renviron
-inst/doc
 docs
 TODO.Rmd
 PUTrequest.txt
@@ -20,7 +19,11 @@ vignettes/images/xml/*.xml
 engine.bin
 vignettes/*.zip
 vignettes/*.xml
+inst/doc
+inst/QTIJS/__MACOSX/
 inst/QTIJS/index.xml
+inst/QTIJS/styles/
+inst/QTIJS/shared/
 BOOK/*.Rmd
 !BOOK/title.Rmd
 BOOK/*.log
