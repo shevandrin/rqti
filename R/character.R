@@ -116,7 +116,8 @@ setMethod("createQtiTest", signature(object = "character"),
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,character
 setMethod("createQtiTask", signature(object = "character"),
-          function(object, dir = getwd(), zip = FALSE) {
+          function(object, dir = getwd(),
+                   verification = FALSE, zip = FALSE) {
 
               file <- object
               if (length(file) > 1) {

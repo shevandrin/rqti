@@ -14,7 +14,7 @@ createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
 
 \S4method{createQtiTask}{AssessmentItem}(object, dir = ".", verification = FALSE, zip = FALSE)
 
-\S4method{createQtiTask}{character}(object, dir = getwd())
+\S4method{createQtiTask}{character}(object, dir = getwd(), verification = FALSE, zip = FALSE)
 }
 \arguments{
 \item{object}{An instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
