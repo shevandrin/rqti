@@ -1,3 +1,9 @@
+simplemath <- function(number) {
+    out <- htmltools::tag("math", list(xmlns = "http://www.w3.org/1998/Math/MathML", display = "inline", htmltools::tag("semantics", list(htmltools::tag("mn", number), htmltools::tag("annotation", list("encoding" = "application/x-tex", number))))))
+    out <- gsub("\n[ ]*", "", as.character(out))
+    out
+}
+
 test_that("Testing SingleChoice where answer is $nummer", {
     path <- test_path("file/md/sc_example3.md")
     sut <- create_question_object(path)
@@ -7,10 +13,7 @@ test_that("Testing SingleChoice where answer is $nummer", {
                     content = list(content),
                     identifier = "eco",
                     title = "Physic",
-                    choices = c("<span class=\"math inline\">\\(299\\)</span>",
-                                "<span class=\"math inline\">\\(300\\)</span>",
-                                "<span class=\"math inline\">\\(199\\)</span>",
-                                "<span class=\"math inline\">\\(99\\)</span>"),
+                    choices = sapply(c(299, 300, 199, 99), simplemath),
                     shuffle = TRUE,
                     prompt = "",
                     choice_identifiers = c("ChoiceA",

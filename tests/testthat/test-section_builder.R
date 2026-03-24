@@ -1,12 +1,16 @@
+content <- "<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\"><semantics><mrow><mi>x</mi><mo>−</mo><mn>1</mn><mo>=</mo><mi>y</mi></mrow><annotation encoding=\"application/x-tex\">x-1=y</annotation></semantics></math></p>"
+
 mc <- new("MultipleChoice", identifier = "test_2", title = "Economics",
-          content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
+          content = list(content),
           choices = c("scarcity vs resources",
                       "wages vs prices",
                       "wants vs needs",
                       "consumers vs producers"),
-          points = c(0.5, 0.5, 0, 0))
+          points = c(0.5, 0.5, 0, 0)
+)
+
 mc2 <- new("MultipleChoice", identifier = "Test_2_duplication", title = "Economics",
-          content = list("<p>When deciding between renovating a water treatment plant or building a new community pool, what is the government most likely to consider? This is a multiline formula: <span class=\"math display\">\\[x-1=y\\]</span></p>"),
+          content = list(content),
           choices = c("scarcity vs resources",
                       "wages vs prices",
                       "wants vs needs",

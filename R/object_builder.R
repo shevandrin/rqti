@@ -357,7 +357,7 @@ change_symbols <- function(cont) {
         cont <- gsub("<br>", "<br/>", cont)
         cont <- gsub("\r", "", cont)
         cont <- gsub("^\\n|\\n$", "", cont)
-        cont <- gsub(">\n<", "><", cont)
+        cont <- gsub(">\\s+<", "><", cont)
         cont <- gsub("\n", " ", cont)
         cont <- gsub("<br/> ", "<br/>", cont)
         cont <- gsub("   ", "", cont)
@@ -552,8 +552,8 @@ rmd_detect_type <- function(file) {
 pandoc_html_convert <- function(input_file, output_file_name, dir_name) {
     pnd_v <- numeric_version("2.19")
     emb <- ifelse(rmarkdown::pandoc_version() > pnd_v, "--embed-resources", "")
-    options <- c("-o", output_file_name, "-f", "markdown", "-t", "html5",
-                 "--mathjax",
+    options <- c("-o", output_file_name, "-f", "markdown+tex_math_dollars", "-t", "html5",
+                 "--mathml",
                  emb,
                  "--section-divs",
                  "--no-highlight",
