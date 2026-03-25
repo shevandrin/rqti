@@ -149,7 +149,7 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
 #'
 #'@export
 assessmentTestOpal <- function(section, identifier = generate_id(type = "test"),
-                           title = identifier, time_limit = 90L,
+                           title = identifier, time_limit = NULL,
                            max_attempts = 1L,
                            fallback_titles = "generic",
                            academic_grading = NULL,
@@ -163,6 +163,7 @@ assessmentTestOpal <- function(section, identifier = generate_id(type = "test"),
                            metadata = qtiMetadata(), points = NA_real_) {
     params <- as.list(environment())
     params$Class <- "AssessmentTestOpal"
+    params$time_limit <- ifelse(is.null(time_limit), NA_integer_, time_limit)
     obj <- do.call("new", params)
     return(obj)
 }

@@ -230,7 +230,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'
 #'@export
 test <- function(content, identifier = "test_identifier", title = "Test Title",
-                 time_limit = 90L, max_attempts = 1L,
+                 time_limit = NULL, max_attempts = 1L,
                  fallback_titles = "generic",
                  academic_grading = NULL,
                  grade_label = c(en="Grade", de="Note"),
@@ -350,7 +350,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #' show_test_time = FALSE)
 #' @export
 test4opal <- function(content, identifier = "test_identifier",
-                      title = "Test Title", time_limit = 90L, max_attempts = 1L,
+                      title = "Test Title", time_limit = NULL, max_attempts = 1L,
                       files = NULL, calculator = NULL,
                       fallback_titles = "generic",
                       academic_grading = NULL,

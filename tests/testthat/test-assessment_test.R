@@ -708,7 +708,8 @@ test_that("Test assessmentTest function that return an object
               es <- new("Essay", prompt = "Question")
               s <- section(c(sc, es), title = "Section with nonrandomized tasks")
 
-              sut <- assessmentTest(list(s), title = "Example of the Exam")
+              sut <- assessmentTest(list(s), title = "Example of the Exam",
+                                    time_limit = 90)
 
               expected <- new("AssessmentTest",
                               title = "Example of the Exam",
@@ -735,7 +736,8 @@ test_that("Test assessmentTestOpal function that return an object
               es <- new("Essay", prompt = "Question")
               s <- section(c(sc, es), title = "Section with nonrandomized tasks")
 
-              sut <- assessmentTestOpal(list(s), title = "Example of the Exam" )
+              sut <- assessmentTestOpal(list(s), title = "Example of the Exam",
+                                        time_limit = 90)
 
               expected <- new("AssessmentTestOpal",
                               title = "Example of the Exam",
