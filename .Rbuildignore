@@ -26,3 +26,4 @@ s4_example.R
 ^BOOK$
 ^cover$
 ^_main\.Rmd$
+^openolat-docker$

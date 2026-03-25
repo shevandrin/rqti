@@ -1,0 +1,12 @@
+db.source=jndi
+db.jndi=java:comp/env/jdbc/openolatDS
+db.vendor=postgresql
+installation.dir=${OPENOLAT_HOME}
+log.dir=${OPENOLAT_HOME}/logs
+server.contextpath=/openolat
+server.domainname=${SERVER_DOMAINNAME}
+server.port=${SERVER_PORT}
+server.port.ssl=${SERVER_PORT_SSL}
+smtp.host=${SMTP_HOST}
+tomcat.id=${TOMCAT_ID}
+userdata.dir=${OPENOLAT_HOME}/olatdata

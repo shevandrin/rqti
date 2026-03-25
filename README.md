@@ -85,6 +85,12 @@ If you need additional formats besides QTI — for example, print output
 or LMS platforms without QTI support — **`exams`** remains the better
 choice.
 
+## OpenOlat Docker
+
+For testing purposes, we have set up a Docker container for OpenOlat.
+Instructions for running it can be found in the `openolat-docker`
+folder.
+
 <!-- Just focusing on QTI gives us more time to support great features of the QTI standard that are missing in `exams`. For instance, `rqti` offers dropdown-inputs, ordering-exercises, and match-tables. -->
 
 <!-- ## Installation -->

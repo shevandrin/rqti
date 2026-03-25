@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16
+    container_name: openolat-db
+    environment:
+      POSTGRES_DB: oodb
+      POSTGRES_USER: oodbu
+      POSTGRES_PASSWORD: oodbpasswd
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U oodbu -d oodb"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  openolat:
+    build:
+      context: .
+      args:
+        OPENOLAT_WAR_URL: ${OPENOLAT_WAR_URL}
+        TOMCAT_VERSION: ${TOMCAT_VERSION:-10.1.43}
+    container_name: openolat
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: oodb
+      DB_USER: oodbu
+      DB_PASSWORD: oodbpasswd
+      SERVER_DOMAINNAME: localhost
+      SERVER_PORT: 8080
+      SERVER_PORT_SSL: 0
+      OPENOLAT_TIMEZONE: Europe/Berlin
+      AUTO_INIT_DB: "true"
+    ports:
+      - "8080:8080"
+    volumes:
+      - openolat_data:/opt/openolat/olatdata
+      - openolat_logs:/opt/openolat/logs
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  openolat_data:
+  openolat_logs:
