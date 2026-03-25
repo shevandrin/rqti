@@ -9,7 +9,7 @@ test4opal(
   content,
   identifier = "test_identifier",
   title = "Test Title",
-  time_limit = 90L,
+  time_limit = NULL,
   max_attempts = 1L,
   files = NULL,
   calculator = NULL,

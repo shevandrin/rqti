@@ -9,7 +9,7 @@ assessmentTest(
   section,
   identifier = generate_id(type = "test"),
   title = identifier,
-  time_limit = 90L,
+  time_limit = NULL,
   max_attempts = 1L,
   fallback_titles = "generic",
   academic_grading = NULL,

@@ -9,7 +9,7 @@ test(
   content,
   identifier = "test_identifier",
   title = "Test Title",
-  time_limit = 90L,
+  time_limit = NULL,
   max_attempts = 1L,
   fallback_titles = "generic",
   academic_grading = NULL,
