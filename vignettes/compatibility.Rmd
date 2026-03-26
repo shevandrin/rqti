@@ -77,6 +77,10 @@ The attribute `data-allowPaste` in `extendedTextInteraction` is fine in QTI 2.2.
 
 A custom namespace prefix for MathML is ignored. For example, the following does not work:
 
+### Referencing files
+
+You cannot reference files or images (e.g. via `<a href=...>`). They must be embedded directly in the file via base64 encoding.
+
 ```xml
 xmlns:m="http://www.w3.org/1998/Math/MathML"
 ...
