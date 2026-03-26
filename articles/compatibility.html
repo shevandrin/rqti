@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Compatibility with Learning Management Systems</h1>
             
-            <h4 data-toc-skip class="date">2026-03-25</h4>
+            <h4 data-toc-skip class="date">2026-03-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
       <div class="d-none name"><code>compatibility.Rmd</code></div>
@@ -175,6 +175,13 @@ the QTI test definition itself.</p>
 </h3>
 <p>A custom namespace prefix for MathML is ignored. For example, the
 following does not work:</p>
+</div>
+<div class="section level3">
+<h3 id="referencing-files">Referencing files<a class="anchor" aria-label="anchor" href="#referencing-files"></a>
+</h3>
+<p>You cannot reference files or images (e.g. via
+<code>&lt;a href=...&gt;</code>). They must be embedded directly in the
+file via base64 encoding.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>xmlns:m="http://www.w3.org/1998/Math/MathML"</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>...</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>&lt;<span class="kw">m:math</span>&gt;</span>
@@ -255,6 +262,28 @@ types are also missing.</p>
 <p>Additional examples can be obtained from the implementation
 guide:</p>
 <p><a href="https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html" class="external-link uri">https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html</a></p>
+</div>
+<div class="section level2">
+<h2 id="apis">APIs<a class="anchor" aria-label="anchor" href="#apis"></a>
+</h2>
+<p>OPAL provides a strong API that supports direct upload of QTI
+files.</p>
+<p>OpenOlat also offers an API, but it is currently unclear whether QTI
+files can be uploaded directly. The API documentation can be accessed at
+<a href="http://localhost:8080/restapi/api-docs/" class="external-link uri">http://localhost:8080/restapi/api-docs/</a> for a local
+installation, although a server URL can of course be used as well.
+Potentially relevant endpoints include <code>/repo/entries</code>
+(<code>PUT</code>) and <code>/qpool/items</code> (<code>POST</code>,
+<code>PUT</code>). However, we have not yet tested these endpoints.</p>
+<p>Blackboard provides an API as well: <a href="https://developer.blackboard.com/portal/displayApi" class="external-link uri">https://developer.blackboard.com/portal/displayApi</a>. At
+present, it is unclear whether this API supports QTI upload, and we have
+not yet tested it. Based on the available documentation, this currently
+seems unlikely.</p>
+<p>Canvas provides an API that appears to support both uploading and
+migrating QTI files, although we have not yet tested this functionality:
+<a href="https://mitt.uib.no/doc/api/all_resources.html" class="external-link uri">https://mitt.uib.no/doc/api/all_resources.html</a>, see
+endpoint
+<code>/api/v1/accounts/:account_id/content_migrations</code></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

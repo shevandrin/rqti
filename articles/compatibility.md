@@ -94,6 +94,11 @@ not need to be encoded in the QTI test definition itself.
 A custom namespace prefix for MathML is ignored. For example, the
 following does not work:
 
+### Referencing files
+
+You cannot reference files or images (e.g. via `<a href=...>`). They
+must be embedded directly in the file via base64 encoding.
+
 ``` xml
 xmlns:m="http://www.w3.org/1998/Math/MathML"
 ...
@@ -155,3 +160,24 @@ types are also missing.
 Additional examples can be obtained from the implementation guide:
 
 <https://www.imsglobal.org/question/qtiv2p1/imsqti_implv2p1.html>
+
+## APIs
+
+OPAL provides a strong API that supports direct upload of QTI files.
+
+OpenOlat also offers an API, but it is currently unclear whether QTI
+files can be uploaded directly. The API documentation can be accessed at
+<http://localhost:8080/restapi/api-docs/> for a local installation,
+although a server URL can of course be used as well. Potentially
+relevant endpoints include `/repo/entries` (`PUT`) and `/qpool/items`
+(`POST`, `PUT`). However, we have not yet tested these endpoints.
+
+Blackboard provides an API as well:
+<https://developer.blackboard.com/portal/displayApi>. At present, it is
+unclear whether this API supports QTI upload, and we have not yet tested
+it. Based on the available documentation, this currently seems unlikely.
+
+Canvas provides an API that appears to support both uploading and
+migrating QTI files, although we have not yet tested this functionality:
+<https://mitt.uib.no/doc/api/all_resources.html>, see endpoint
+`/api/v1/accounts/:account_id/content_migrations`
