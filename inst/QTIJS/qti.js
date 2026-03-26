@@ -5688,7 +5688,7 @@ window.addEventListener("load",function() {
     document.title = QTI.ROOT.getAttribute("title");
 
     // If no "stylesheet" tag at assessmentTest level, add one.
-    if (!QTI.ROOT.querySelector(STYLESHEET_SEL))
+    //if (!QTI.ROOT.querySelector(STYLESHEET_SEL))
       addStylesheet(QTI.ROOT,`${theme}/style.css`, indexUri);
 
     if (QTI.ROOT.tagName=="assessmentItem") {
