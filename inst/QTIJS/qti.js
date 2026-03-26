@@ -414,7 +414,23 @@ const EXECUTORS = {
   divide:                      elem => op2(elem, (a,b)=>a / b),
   durationGTE:                 elem => op2(elem, (a,b)=>a >= b),
   durationLT:                  elem => op2(elem, (a,b)=>a < b),
-  equal:                       elem => op2(elem, match),
+  // Inside the equal operator in EXECUTORS
+  equal: elem => {
+    let toleranceMode = elem.getAttribute("toleranceMode") || "exact";
+    let tolerance = elem.getAttribute("tolerance");      // "2 2" or "2"
+    let includeLowerBound = elem.getAttribute("includeLowerBound") !== "false";
+    let includeUpperBound = elem.getAttribute("includeUpperBound") !== "false";
+
+    return op2(elem, (a, b) => {
+      if (toleranceMode === "exact" || !tolerance) {
+        return match(a, b);
+      }
+
+      // Apply tolerance logic
+      return checkWithTolerance(a, b, tolerance, toleranceMode,
+                                includeLowerBound, includeUpperBound);
+    });
+  },
   equalRounded:                elem => equalRounded,
   fieldValue:                  elem => op(elem, a => a[fieldIdentifier(elem)]),
   gcd:                         elem => gcd(opN(elem,flatten)),
@@ -3865,7 +3881,7 @@ function updateResultIcons(item) {
             let resp_user_flt = item.declarations[resp_id_flt].value;
             if (resp_user_flt !== null && resp_user_flt !== "") {
                 let resp_corr = item.declarations[resp_id_flt].correctResponse;
-                add_span_icon(resp_corr === Number(resp_user_flt), el, false);
+                add_span_icon(isResponseCorrectWithTolerance(item, resp_id_flt), el, false);
             } else {
                 el.removeAttribute("class");
             };
@@ -5906,3 +5922,161 @@ window.addEventListener("load",function() {
   }
 });
 
+/* functions for checking user responses with tolerance.  This is used by the "equal" response processing rule when toleranceMode and tolerance attributes are present.  The "equal" rule is used for numeric responses, and the tolerance attributes allow for a range of acceptable answers around the correct answer, which can be defined in absolute terms, or relative to the correct answer. The includeLowerBound and includeUpperBound attributes determine whether the bounds of the acceptable range are inclusive or exclusive.
+*/
+function checkWithTolerance(userResponse, correctResponse,
+                            toleranceStr, mode, lowerBound, upperBound) {
+  // Parse tolerance (can be "2" or "2 2" for asymmetric)
+  let tolerances = toleranceStr.split(/\s+/).map(Number);
+  let tol = tolerances[0];
+  let tolUpper = tolerances.length > 1 ? tolerances[1] : tol;
+
+  let user = Number(userResponse);
+  let correct = Number(correctResponse);
+
+  if (isNaN(user) || isNaN(correct))
+    return false;
+
+  let diff = user - correct;
+
+  switch(mode) {
+    case "absolute":
+      let minBound = lowerBound ? -tol : -(tol + Number.EPSILON);
+      let maxBound = upperBound ? tolUpper : (tolUpper + Number.EPSILON);
+      return diff >= minBound && diff <= maxBound;
+
+    case "relative":
+      let minPct = lowerBound ? -(tol / 100) * correct : -((tol / 100) * correct + Number.EPSILON);
+      let maxPct = upperBound ? (tolUpper / 100) * correct : ((tolUpper / 100) * correct + Number.EPSILON);
+      return diff >= minPct && diff <= maxPct;
+
+    case "exact":
+    default:
+      return user === correct;
+  }
+}
+
+
+/**
+ * Extract tolerance info from an equal element
+ * E.g., <equal toleranceMode="absolute" tolerance="1 1"
+ *              includeLowerBound="true" includeUpperBound="true">
+ */
+function getToleranceFromEqual(equalElem) {
+  return {
+    mode: equalElem.getAttribute('toleranceMode') || 'exact',
+    tolerance: equalElem.getAttribute('tolerance'),  // "1 1" or "1"
+    includeLowerBound: equalElem.getAttribute('includeLowerBound') !== 'false',
+    includeUpperBound: equalElem.getAttribute('includeUpperBound') !== 'false'
+  };
+}
+
+/**
+ * Parse tolerance string "1 1" or "1" into [lower, upper]
+ */
+function parseToleranceValues(toleranceStr) {
+  if (!toleranceStr) return [0, 0];
+
+  const parts = toleranceStr.trim().split(/\s+/).map(Number);
+  const lowerTol = parts[0] || 0;
+  const upperTol = parts.length > 1 ? parts[1] : lowerTol;
+
+  return [lowerTol, upperTol];
+}
+
+/**
+ * Compare two values with tolerance
+ */
+function compareWithTolerance(userValue, correctValue, toleranceInfo) {
+  const user = Number(userValue);
+  const correct = Number(correctValue);
+
+  if (isNaN(user) || isNaN(correct)) return false;
+
+  if (toleranceInfo.mode === 'exact' || !toleranceInfo.tolerance) {
+    return user === correct;
+  }
+
+  const [lowerTol, upperTol] = parseToleranceValues(toleranceInfo.tolerance);
+  const diff = user - correct;
+
+  switch(toleranceInfo.mode) {
+    case 'absolute':
+      const minAbsolute = toleranceInfo.includeLowerBound ? -lowerTol : -(lowerTol + Number.EPSILON);
+      const maxAbsolute = toleranceInfo.includeUpperBound ? upperTol : (upperTol + Number.EPSILON);
+      return diff >= minAbsolute && diff <= maxAbsolute;
+
+    case 'relative':
+      const minPercent = toleranceInfo.includeLowerBound ? -(lowerTol / 100) * correct : -((lowerTol / 100) * correct + Number.EPSILON);
+      const maxPercent = toleranceInfo.includeUpperBound ? (upperTol / 100) * correct : ((upperTol / 100) * correct + Number.EPSILON);
+      return diff >= minPercent && diff <= maxPercent;
+
+    default:
+      return user === correct;
+  }
+}
+
+/**
+ * Find the equal element for a specific response identifier
+ */
+function findEqualElementForResponse(item, responseId) {
+  const responseProcessing = item.querySelector('responseProcessing');
+  if (!responseProcessing) return null;
+
+  const equalElems = [...responseProcessing.querySelectorAll('equal')];
+
+  for (let equal of equalElems) {
+    const variables = [...equal.querySelectorAll('variable')];
+    const referencesThisResponse = variables.some(v =>
+      v.getAttribute('identifier') === responseId
+    );
+
+    if (referencesThisResponse) {
+      return equal;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Get correct response value for a response identifier
+ */
+function getCorrectResponseValue(item, responseId) {
+  const responseDecl = item.querySelector(`responseDeclaration[identifier="${responseId}"]`);
+  if (!responseDecl) return null;
+
+  const correctResponse = responseDecl.querySelector('correctResponse');
+  if (!correctResponse) return null;
+
+  const value = correctResponse.querySelector('value');
+  return value ? value.textContent.trim() : null;
+}
+
+/**
+ * Check if a response is correct WITH TOLERANCE
+ */
+function isResponseCorrectWithTolerance(item, responseId) {
+  // Get the user's response value
+  const responseDecl = item.declarations[responseId];
+  if (!responseDecl) return null;
+
+  const userValue = responseDecl.value;
+  if (userValue === null || userValue === undefined) return false;  // No response given
+
+  // Get the correct response value
+  const correctValue = getCorrectResponseValue(item, responseId);
+  if (correctValue === null) return null;
+
+  // Get the tolerance settings
+  const equalElem = findEqualElementForResponse(item, responseId);
+  if (!equalElem) {
+    // No tolerance defined, do exact match
+    return userValue == correctValue;
+  }
+
+  const toleranceInfo = getToleranceFromEqual(equalElem);
+
+  // Compare with tolerance
+  return compareWithTolerance(userValue, correctValue, toleranceInfo);
+}
