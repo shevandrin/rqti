@@ -131,7 +131,14 @@ verify_qti <- function(doc,
     extract_element <- function(msg) {
         m <- regexec("Element '([^']+)'", msg, perl = TRUE)
         r <- regmatches(msg, m)[[1]]
-        if (length(r) >= 2) r[2] else NA_character_
+        if (length(r) >= 2) {
+            elem <- r[2]
+            # Strip namespace prefix if present
+            elem <- sub(".*}", "", elem)  # Removes everything up to and including the last }
+            elem
+        } else {
+            NA_character_
+        }
     }
 
     extract_allowed <- function(msg) {
