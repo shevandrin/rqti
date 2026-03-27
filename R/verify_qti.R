@@ -58,13 +58,32 @@ verify_qti <- function(doc,
                        print = TRUE) {
     engine <- match.arg(engine)
 
+    # Handle non-file inputs for potential xmllint use
+    if (!is.character(doc) || !file.exists(doc)) {
+        # Check if xmllint might be used
+        will_use_xmllint <- (
+            (engine == "xmllint") ||
+                (engine == "auto" && .Platform$OS.type != "windows" && nzchar(Sys.which("xmllint")))
+        )
+
+        if (will_use_xmllint) {
+            # Write XML document to temporary file for xmllint
+            tmp_file <- tempfile(fileext = ".xml")
+
+            if (inherits(doc, "xml_document")) {
+                xml2::write_xml(doc, tmp_file)
+            } else {
+                # doc is a character string, write directly
+                writeLines(doc, tmp_file, useBytes = TRUE)
+            }
+
+            doc <- tmp_file  # Assign to doc so it's treated as a path
+            on.exit(unlink(tmp_file), add = TRUE)
+        }
+    }
+
     # read XML / path handling
     doc_is_path <- is.character(doc) && length(doc) == 1 && file.exists(doc)
-
-    if (!doc_is_path && engine == "xmllint") {
-        warning("`xmllint` requires `doc` to be a file path; falling back to `xml2`.")
-        engine <- "xml2"
-    }
 
     if (doc_is_path) {
         file_in <- normalizePath(doc, mustWork = TRUE)
