@@ -81,7 +81,7 @@ S4 generic for validating QTI documents in various formats.
 }
 \section{Functions}{
 \itemize{
-\item \code{verify_qti(character)}: Validate from file path or character string
+\item \code{verify_qti(character)}: Validate Rmd files (converted to XML)
 
 \item \code{verify_qti(xml_document)}: Validate xml_document objects
 
