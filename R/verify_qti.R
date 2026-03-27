@@ -474,42 +474,45 @@ setGeneric("verify_qti", function(doc, extended_schema = FALSE, ctx = 40, color 
     standardGeneric("verify_qti")
 })
 
-#' @describeIn verify_qti Validate Rmd files (converted to XML)
+#' @describeIn verify_qti Validate character input (file path or XML string)
 setMethod("verify_qti", signature(doc = "character"),
           function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
                    engine = c("auto", "xml2", "xmllint"),
                    ignore_import = TRUE, print = TRUE) {
               engine <- match.arg(engine)
 
-              # Check if it's an Rmd file
-              if (grepl("\\.Rmd$", doc, ignore.case = TRUE)) {
-                  if (!file.exists(doc)) {
-                      stop("Rmd file not found: ", doc)
+              # Check if it's a file path
+              if (file.exists(doc)) {
+                  # Check if it's an Rmd file
+                  if (grepl("\\.Rmd$", doc, ignore.case = TRUE)) {
+                      # Create temp XML file
+                      tmp_xml <- tempfile(fileext = ".xml")
+                      on.exit(unlink(tmp_xml))
+
+                      # Render Rmd to XML
+                      tryCatch({
+                          rmd2xml(doc, tmp_xml)
+
+                          # Verify the resulting XML
+                          verify_qti_impl(tmp_xml, extended_schema, ctx, color, engine, ignore_import, print)
+
+                      }, error = function(e) {
+                          stop("Failed to render Rmd file: ", doc, "\nError: ", e$message)
+                      })
+
+                  } else {
+                      # Handle XML or other file paths
+                      verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print)
                   }
 
-                  # Create temp XML file
-                  tmp_xml <- tempfile(fileext = ".xml")
-                  on.exit(unlink(tmp_xml))
-
-                  # Render Rmd to XML
-                  tryCatch({
-                      rmd2xml(doc, tmp_xml)
-
-                      # Verify the resulting XML
-                      verify_qti_impl(tmp_xml, extended_schema, ctx, color, engine, ignore_import, print)
-
-                  }, error = function(e) {
-                      stop("Failed to render Rmd file: ", doc, "\nError: ", e$message)
-                  })
-
-              } else if (grepl("\\.xml$", doc, ignore.case = TRUE)) {
-                  # Handle XML files
-                  verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print)
-              } else if (file.exists(doc)) {
-                  # Handle file paths (assume XML)
-                  verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print)
               } else {
-                  # Handle character string containing XML
+                  # Not a file path, treat as XML string content
+                  # First validate that it looks like XML
+                  doc_trimmed <- trimws(doc)
+                  if (!grepl("^<", doc_trimmed)) {
+                      stop("Input is not a valid file path or XML string (must start with '<')")
+                  }
+
                   verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print)
               }
           }
