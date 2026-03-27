@@ -30,3 +30,49 @@ test_that("verify_qti works with explicit xml2 engine", {
 
     expect_true(verify_qti(f, engine = "xml2", print = F)$valid)
 })
+
+test_that("verify_qti validates Rmd file", {
+    # Use a vignette Rmd as example
+    rmd_file <- system.file("exercises", "sc1.Rmd", package = "rqti")
+    expect_true(nzchar(rmd_file))
+
+    res <- verify_qti(rmd_file, print = F)
+    expect_s3_class(res, "qti_validation_result")
+    expect_true(res$valid)
+})
+
+test_that("verify_qti validates AssessmentItem object", {
+    # Create an AssessmentItem from Rmd
+    rmd_file <- system.file("exercises", "sc1.Rmd", package = "rqti")
+    expect_true(nzchar(rmd_file))
+
+    item <- create_question_object(rmd_file)
+    res <- verify_qti(item, print = F)
+
+    expect_s3_class(res, "qti_validation_result")
+    expect_true(res$valid)
+})
+
+test_that("verify_qti validates AssessmentTest object", {
+    # Create two AssessmentItem objects from Rmd
+    rmd_file1 <- system.file("exercises", "sc1.Rmd", package = "rqti")
+    rmd_file2 <- system.file("exercises", "gap1.Rmd", package = "rqti")
+
+    expect_true(nzchar(rmd_file1))
+    expect_true(nzchar(rmd_file2))
+
+    item1 <- create_question_object(rmd_file1)
+    item2 <- create_question_object(rmd_file2)
+
+    # Create an AssessmentTest with the items
+    section <- new("AssessmentSection", assessment_item = list(item1, item2))
+    test <- new("AssessmentTest",
+                identifier = "test_001",
+                title = "Test for verify_qti",
+                section = list(section))
+
+    res <- verify_qti(test, print = F)
+
+    expect_s3_class(res, "qti_validation_results_list")
+    expect_true(length(res) >= 2)
+})
