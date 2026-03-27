@@ -115,10 +115,6 @@ clean_yaml_str <- function(params, solution, type){
             return(ifelse(isTRUE(v), "yes", "no"))
         }
 
-        if (is.integer(v)) {
-            return(as.character(v))
-        }
-
         if (is.numeric(v)) {
             return(as.character(v))
         }
