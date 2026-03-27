@@ -2,7 +2,11 @@
 % Please edit documentation in R/verify_qti.R
 \name{verify_qti}
 \alias{verify_qti}
-\title{Validate an XML document against the QTI schema}
+\alias{verify_qti,character-method}
+\alias{verify_qti,xml_document-method}
+\alias{verify_qti,AssessmentItem-method}
+\alias{verify_qti,AssessmentTest-method}
+\title{Validate QTI XML}
 \usage{
 verify_qti(
   doc,
@@ -13,63 +17,76 @@ verify_qti(
   ignore_import = TRUE,
   print = TRUE
 )
+
+\S4method{verify_qti}{character}(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
+
+\S4method{verify_qti}{xml_document}(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
+
+\S4method{verify_qti}{AssessmentItem}(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
+
+\S4method{verify_qti}{AssessmentTest}(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
 }
 \arguments{
-\item{doc}{A QTI XML document. This can be a file path, a character string
-containing XML, or an \code{xml2::xml_document}.}
+\item{doc}{A QTI document (file path, character string, xml_document, or S4 object)}
 
-\item{extended_schema}{Logical. Should the extended rqti schema be used?
-Defaults to \code{FALSE}.}
+\item{extended_schema}{Logical. Use extended rqti schema?}
 
-\item{ctx}{Integer. Number of characters of context shown before and after
-the offending XML element in printed snippets. Defaults to \code{40}.}
+\item{ctx}{Integer. Context characters for error snippets.}
 
-\item{color}{Logical. Should ANSI colors be used in printed output? Defaults
-to \code{TRUE}.}
+\item{color}{Logical. Use ANSI colors?}
 
-\item{engine}{Character string specifying the validation backend. One of
-\code{"auto"}, \code{"xml2"}, or \code{"xmllint"}. Defaults to \code{"auto"}.}
+\item{engine}{Character. Validation backend ("auto", "xml2", "xmllint").}
 
-\item{ignore_import}{Logical. If \code{TRUE}, warnings related to \verb{<import>}
-statements in the schema are ignored. Default is \code{TRUE} because rqti uses a
-locally saved schema instead of downloading from the internet.}
+\item{ignore_import}{Logical. Ignore import warnings?}
 
-\item{print}{Logical. Should the validation result be printed before it is
-returned? Defaults to \code{TRUE}.}
+\item{print}{Logical. Print results?}
 }
 \value{
-An object of class \code{"qti_validation_result"} with components:
-\describe{
-\item{valid}{Logical scalar.}
-\item{errors}{A list of parsed validation errors.}
-\item{engine}{The backend used for validation.}
-}
+A \code{qti_validation_result} or \code{qti_validation_results_list} object.
 }
 \description{
-Validates an XML document against the QTI schema or the extended rqti QTI
-schema. Input can be either a file path, a character string containing XML,
-or an \code{xml2::xml_document}.
+S4 generic for validating QTI documents in various formats.
 }
-\details{
-By default, the function chooses a validation backend automatically. If
-\code{xmllint} is available, the input is a file path, and the platform is not
-Windows, the \code{xmllint} backend is used. Otherwise, validation falls back to
-\code{xml2}.
+\section{Functions}{
+\itemize{
+\item \code{verify_qti(character)}: Validate from file path or character string
 
-The function returns an object of class \code{"qti_validation_result"}. By
-default, that object is also printed in a human-readable form.
-}
-\examples{
-\dontrun{
-f <- system.file("exercises", "sc1d.xml", package = "rqti")
+\item \code{verify_qti(xml_document)}: Validate xml_document objects
 
-res <- verify_qti(f)
-res$valid
+\item \code{verify_qti(AssessmentItem)}: Validate assessmentItem objects
 
-x <- xml2::read_xml(f)
-res2 <- verify_qti(x)
+\item \code{verify_qti(AssessmentTest)}: Validate assessmentTest objects
 
-summary(res2)
-}
-
-}
+}}

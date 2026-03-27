@@ -48,14 +48,13 @@
 #' summary(res2)
 #' }
 #'
-#' @export
-verify_qti <- function(doc,
-                       extended_schema = FALSE,
-                       ctx = 40,
-                       color = TRUE,
-                       engine = c("auto", "xml2", "xmllint"),
-                       ignore_import = TRUE,
-                       print = TRUE) {
+verify_qti_impl <- function(doc,
+                            extended_schema = FALSE,
+                            ctx = 40,
+                            color = TRUE,
+                            engine = c("auto", "xml2", "xmllint"),
+                            ignore_import = TRUE,
+                            print = TRUE) {
     engine <- match.arg(engine)
 
     # Handle non-file inputs for potential xmllint use
@@ -426,5 +425,99 @@ print.qti_validation_result <- function(x, ...) {
         cat("\n")
     }
 
+    invisible(x)
+}
+
+#' Validate QTI XML
+#'
+#' S4 generic for validating QTI documents in various formats.
+#'
+#' @param doc A QTI document (file path, character string, xml_document, or S4 object)
+#' @param extended_schema Logical. Use extended rqti schema?
+#' @param ctx Integer. Context characters for error snippets.
+#' @param color Logical. Use ANSI colors?
+#' @param engine Character. Validation backend ("auto", "xml2", "xmllint").
+#' @param ignore_import Logical. Ignore import warnings?
+#' @param print Logical. Print results?
+#'
+#' @return A `qti_validation_result` or `qti_validation_results_list` object.
+#' @export
+setGeneric("verify_qti", function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
+                                  engine = c("auto", "xml2", "xmllint"),
+                                  ignore_import = TRUE, print = TRUE) {
+    standardGeneric("verify_qti")
+})
+
+#' @describeIn verify_qti Validate from file path or character string
+setMethod("verify_qti", signature(doc = "character"),
+          function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
+                   engine = c("auto", "xml2", "xmllint"),
+                   ignore_import = TRUE, print = TRUE) {
+              # Original verify_qti implementation for character/paths
+              verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print)
+          }
+)
+
+#' @describeIn verify_qti Validate xml_document objects
+setMethod("verify_qti", signature(doc = "xml_document"),
+          function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
+                   engine = c("auto", "xml2", "xmllint"),
+                   ignore_import = TRUE, print = TRUE) {
+              # Handle xml_document - convert to character
+              verify_qti_impl(as.character(doc), extended_schema, ctx, color, engine, ignore_import, print)
+          }
+)
+
+#' @describeIn verify_qti Validate assessmentItem objects
+setMethod("verify_qti", signature(doc = "AssessmentItem"),
+          function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
+                   engine = c("auto", "xml2", "xmllint"),
+                   ignore_import = TRUE, print = TRUE) {
+              engine <- match.arg(engine)
+              tmp_file <- tempfile(fileext = ".xml")
+              on.exit(unlink(tmp_file))
+
+              createQtiTask(doc, tmp_file)
+              verify_qti(tmp_file, extended_schema, ctx, color, engine, ignore_import, print)
+          }
+)
+
+#' @describeIn verify_qti Validate assessmentTest objects
+setMethod("verify_qti", signature(doc = "AssessmentTest"),
+          function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
+                   engine = c("auto", "xml2", "xmllint"),
+                   ignore_import = TRUE, print = TRUE) {
+              engine <- match.arg(engine)
+              tmp_dir <- tempfile(pattern = "test_")
+              dir.create(tmp_dir)
+              on.exit(unlink(tmp_dir, recursive = TRUE))
+
+              createQtiTest(doc, tmp_dir)
+              xml_files <- list.files(tmp_dir, pattern = "\\.xml$", full.names = TRUE, recursive = TRUE)
+
+              results <- lapply(xml_files, function(f) {
+                  verify_qti(f, extended_schema, ctx, color, engine, ignore_import, print = FALSE)
+              })
+
+              names(results) <- basename(xml_files)
+
+              if (isTRUE(print)) {
+                  cat("QTI Validation Results - Assessment Test\n")
+                  cat("Files:", length(results), "\n")
+                  cat("Valid:", sum(sapply(results, function(x) isTRUE(x$valid))), "\n\n")
+                  for (i in seq_along(results)) {
+                      cat("===", names(results)[i], "===\n")
+                      print(results[[i]])
+                      cat("\n")
+                  }
+              }
+
+              invisible(structure(results, class = c("qti_validation_results_list", "list")))
+          }
+)
+
+#' Print validation results list
+#' @keywords internal
+print.qti_validation_results_list <- function(x, ...) {
     invisible(x)
 }
