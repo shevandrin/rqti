@@ -151,9 +151,8 @@ test_that("Testing OneInColTable task in case of the entity contains
           the math signs - less, more", {
     path <- test_path("file/xml/OneInColTable_sign_more_less.xml")
     expected <- readLines(path)
-    oneInColTable <- new("OneInColTable",
-                         content = list("<p>\"One in col\" table task</p>",
-                                        "<i>table description</i>"),
+    oneInColTable <- oneInColTable(
+                         content = "<p>\"One in col\" table task</p><i>table description</i>",
                          identifier = "new",
                          title = "OneInColTable",
                          prompt = "Choose the correct order in the multiplication table",
@@ -197,9 +196,8 @@ test_that("Testing OneInRowTable task in case of the entity contains
           the math signs - less, more", {
     path <- test_path("file/xml/OneInRowTable_sign_more_less.xml")
     expected <- readLines(path)
-    OneInRowTable <- new("OneInRowTable",
-                         content = list("<p>\"One in row\" table task</p>",
-                                        "<i>table description</i>"),
+    OneInRowTable <- oneInRowTable(
+                         content = "<p>\"One in row\" table task</p><i>table description</i>",
                          identifier = "new",
                          title = "OneInColTable",
                          prompt = "Choose the correct order in the multiplication table",
@@ -245,9 +243,8 @@ test_that("Testing MultipleChoiceTable task in case of the entity contains
     path <- test_path("file/xml/MultipleChoiceTable_sign_more_less.xml")
     expected <- readLines(path)
 
-    MultipleChoiceTable <- new("MultipleChoiceTable",
-                               content = list("<p>\"One in col\" table task</p>",
-                                              "<i>table description</i>"),
+    MultipleChoiceTable <- multipleChoiceTable(
+                               content = "<p>\"One in col\" table task</p><i>table description</i>",
                                identifier = "new",
                                title = "MultipleChoiceTable",
                                prompt = "Choose the correct order in the multiplication table",
@@ -289,8 +286,8 @@ test_that("Testing DirectedPair task in case of the entity contains
           the math signs - less, more", {
     path <- test_path("file/xml/DirectedPair_sign_more_less.xml")
     expected <- readLines(path)
-    DirectedPair <- new("DirectedPair",
-                        content = list("<p>\"Directed pairs\" task</p>"),
+    DirectedPair <- directedPair(
+                        content = "<p>\"Directed pairs\" task</p>",
                         identifier = "dpr",
                         title = "Directed pairs",
                         rows = c("<50", "=2", ">49"),

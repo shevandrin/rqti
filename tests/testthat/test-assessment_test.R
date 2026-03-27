@@ -87,10 +87,11 @@ test_that("Testing method createOutcomeDeclaration() with
                           choice_identifiers = c("1", "2", "3", "4"),
                           points = c(1, 0, 0, 1)
                )
-               order1 <- new("Ordering",
+               order1 <- ordering(
                              identifier = "q4",
                              title = "Order",
                              prompt = "Choose the correct order",
+                             content = "Question",
                              choices = c("Data collection", "Data cleansing",
                                          "Data marking", "Verification and visualization"),
                              choices_identifiers = c("1", "2", "3", "4"),
@@ -622,12 +623,13 @@ test_that("Testing of AssessmentTest class that contains non-unique identifiers
     }, "Identifiers of test sections contain non-unique values: sec_id, theSame")
 })
 test_that("Testing of time_limits in AssessmentTest class", {
-              mc1 <- new("MultipleChoice",
+              mc1 <- multipleChoice(
                          identifier = "theSame", prompt = "What does 3/4 + 1/4 = ?",
                          title = "MultipleChoice",
                          choices = c("1", "4/8", "8/4", "4/4"),
                          choice_identifiers = c("1", "2", "3", "4"),
-                         points = c(1, 0, 0, 1))
+                         points = c(1, 0, 0, 1),
+                         content = "<p>What is 3/4 + 1/4 = ?</p>")
               section <- new("AssessmentSection",
                               identifier = "sec_id",
                               title = "section",
@@ -704,8 +706,9 @@ test_that("Test assessmentSection function that return an object
 test_that("Test assessmentTest function that return an object
           of class AssessmentTest", {
 
-              sc <- singleChoice(prompt = "Question", choices = c("A", "B", "C"))
-              es <- new("Essay", prompt = "Question")
+              sc <- singleChoice(prompt = "Question", choices = c("A", "B", "C"),
+                                 content = "<p>Question</p>")
+              es <- essay(prompt = "Question", content = "<p>Question</p>")
               s <- section(c(sc, es), title = "Section with nonrandomized tasks")
 
               sut <- assessmentTest(list(s), title = "Example of the Exam",
