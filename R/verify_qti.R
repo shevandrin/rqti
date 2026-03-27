@@ -1,0 +1,404 @@
+#' Validate an XML document against the QTI schema
+#'
+#' Validates an XML document against the QTI schema or the extended rqti QTI
+#' schema. Input can be either a file path, a character string containing XML,
+#' or an `xml2::xml_document`.
+#'
+#' By default, the function chooses a validation backend automatically. If
+#' `xmllint` is available, the input is a file path, and the platform is not
+#' Windows, the `xmllint` backend is used. Otherwise, validation falls back to
+#' `xml2`.
+#'
+#' The function returns an object of class `"qti_validation_result"`. By
+#' default, that object is also printed in a human-readable form.
+#'
+#' @param doc A QTI XML document. This can be a file path, a character string
+#'   containing XML, or an `xml2::xml_document`.
+#' @param extended_schema Logical. Should the extended rqti schema be used?
+#'   Defaults to `FALSE`.
+#' @param ctx Integer. Number of characters of context shown before and after
+#'   the offending XML element in printed snippets. Defaults to `40`.
+#' @param color Logical. Should ANSI colors be used in printed output? Defaults
+#'   to `TRUE`.
+#' @param engine Character string specifying the validation backend. One of
+#'   `"auto"`, `"xml2"`, or `"xmllint"`. Defaults to `"auto"`.
+#' @param ignore_import Logical. If `TRUE`, warnings related to `<import>`
+#'   statements in the schema are ignored. Default is `TRUE` because rqti uses a
+#'   locally saved schema instead of downloading from the internet.
+#' @param print Logical. Should the validation result be printed before it is
+#'   returned? Defaults to `TRUE`.
+#'
+#' @return An object of class `"qti_validation_result"` with components:
+#'   \describe{
+#'     \item{valid}{Logical scalar.}
+#'     \item{errors}{A list of parsed validation errors.}
+#'     \item{engine}{The backend used for validation.}
+#'   }
+#'
+#' @examples
+#' \dontrun{
+#' f <- system.file("exercises", "sc1d.xml", package = "rqti")
+#'
+#' res <- verify_qti(f)
+#' res$valid
+#'
+#' x <- xml2::read_xml(f)
+#' res2 <- verify_qti(x)
+#'
+#' summary(res2)
+#' }
+#'
+#' @export
+verify_qti <- function(doc,
+                       extended_schema = FALSE,
+                       ctx = 40,
+                       color = TRUE,
+                       engine = c("auto", "xml2", "xmllint"),
+                       ignore_import = TRUE,
+                       print = TRUE) {
+    engine <- match.arg(engine)
+
+    # read XML / path handling
+    doc_is_path <- is.character(doc) && length(doc) == 1 && file.exists(doc)
+
+    if (!doc_is_path && engine == "xmllint") {
+        warning("`xmllint` requires `doc` to be a file path; falling back to `xml2`.")
+        engine <- "xml2"
+    }
+
+    if (doc_is_path) {
+        file_in <- normalizePath(doc, mustWork = TRUE)
+        xml_lines <- readLines(file_in, warn = FALSE, encoding = "UTF-8")
+    } else {
+        file_in <- "<xml_document>"
+        xml_doc_tmp <- if (inherits(doc, "xml_document")) doc else xml2::read_xml(doc)
+        xml_txt <- as.character(xml_doc_tmp)
+        xml_lines <- strsplit(xml_txt, "\n", fixed = TRUE)[[1]]
+    }
+
+    # schema
+    schema_name <- if (extended_schema) "qti_v2p1p2_extension.xsd" else "imsqti_v2p1p2.xsd"
+    schema_file <- file.path(system.file(package = "rqti"), schema_name)
+
+    if (!nzchar(schema_file) || !file.exists(schema_file)) {
+        stop("Could not find schema file: ", schema_name)
+    }
+
+    # colors
+    red <- if (isTRUE(color)) "\033[31m" else ""
+    blue <- if (isTRUE(color)) "\033[34m" else ""
+    reset <- if (isTRUE(color)) "\033[0m" else ""
+
+    # helpers ---------------------------------------------------------------
+
+    extract_line <- function(msg) {
+        pats <- c(
+            ":(\\d+):",
+            "^[^:]+:(\\d+):",
+            "^(\\d+):"
+        )
+
+        for (p in pats) {
+            m <- regexec(p, msg, perl = TRUE)
+            r <- regmatches(msg, m)[[1]]
+            if (length(r) >= 2) {
+                return(as.integer(r[2]))
+            }
+        }
+
+        NA_integer_
+    }
+
+    extract_element <- function(msg) {
+        m <- regexec("Element '([^']+)'", msg, perl = TRUE)
+        r <- regmatches(msg, m)[[1]]
+        if (length(r) >= 2) r[2] else NA_character_
+    }
+
+    extract_allowed <- function(msg) {
+        allowed <- character(0)
+
+        m1 <- regexec("Expected is one of \\(([^)]*)\\)", msg, perl = TRUE)
+        r1 <- regmatches(msg, m1)[[1]]
+        if (length(r1) >= 2) {
+            allowed <- trimws(strsplit(r1[2], ",", fixed = TRUE)[[1]])
+        }
+
+        if (!length(allowed)) {
+            m2 <- regexec("Expected is \\(([^)]*)\\)", msg, perl = TRUE)
+            r2 <- regmatches(msg, m2)[[1]]
+            if (length(r2) >= 2) {
+                allowed <- trimws(strsplit(r2[2], ",", fixed = TRUE)[[1]])
+            }
+        }
+
+        if (!length(allowed)) {
+            m3 <- regexec("Expected:?\\s*(.*)$", msg, perl = TRUE)
+            r3 <- regmatches(msg, m3)[[1]]
+            if (length(r3) >= 2) {
+                tmp <- gsub("[().]", "", r3[2])
+                allowed <- trimws(strsplit(tmp, ",", fixed = TRUE)[[1]])
+            }
+        }
+
+        allowed <- gsub("^.*:", "", allowed)
+        allowed <- trimws(allowed)
+        allowed[nzchar(allowed)]
+    }
+
+    clean_message <- function(msg) {
+        msg <- gsub("\\{[^}]+\\}", "", msg)
+        msg <- sub(".*Schemas validity error ?: ?", "", msg)
+        msg <- sub("This element is not expected\\.", "not expected.", msg)
+        msg <- sub("\\s*Expected is one of \\([^)]*\\)\\.?", "", msg)
+        msg <- sub("\\s*Expected is \\([^)]*\\)\\.?", "", msg)
+        msg <- sub("\\s*Expected:.*$", "", msg)
+        trimws(msg)
+    }
+
+    make_snippet <- function(xml_lines, line, elem, ctx, red, reset) {
+        snippet <- NA_character_
+
+        if (!is.na(line) && line >= 1 && line <= length(xml_lines)) {
+            line_text <- xml_lines[line]
+
+            if (!is.na(elem) && nzchar(elem)) {
+                pos <- regexpr(elem, line_text, fixed = TRUE)[1]
+
+                if (pos > 0) {
+                    start <- max(1, pos - ctx)
+                    end <- min(nchar(line_text), pos + nchar(elem) + ctx - 1)
+                    snippet <- substr(line_text, start, end)
+                } else {
+                    snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
+                }
+
+                if (!is.na(snippet) && grepl(elem, snippet, fixed = TRUE)) {
+                    snippet <- gsub(elem, paste0(red, elem, reset), snippet, fixed = TRUE)
+                }
+            } else {
+                snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
+            }
+        }
+
+        snippet
+    }
+
+    make_result <- function(valid, errors, engine, color) {
+        structure(
+            list(
+                valid = valid,
+                errors = errors,
+                engine = engine,
+                color = isTRUE(color)
+            ),
+            class = "qti_validation_result"
+        )
+    }
+
+    parse_errors <- function(raw_errors, xml_lines, file_in, ctx, red, reset) {
+        lapply(raw_errors, function(msg) {
+            line <- extract_line(msg)
+            elem <- extract_element(msg)
+            allowed <- extract_allowed(gsub("\\{[^}]+\\}", "", msg))
+            message <- clean_message(msg)
+            snippet <- make_snippet(xml_lines, line, elem, ctx, red, reset)
+
+            list(
+                file = file_in,
+                line = line,
+                element = elem,
+                message = message,
+                allowed = allowed,
+                snippet = snippet,
+                raw_message = msg
+            )
+        })
+    }
+
+    # choose engine ---------------------------------------------------------
+
+    xmllint_available <- nzchar(Sys.which("xmllint"))
+    if (engine == "auto") {
+        engine <- if (.Platform$OS.type != "windows" && xmllint_available && doc_is_path) {
+            "xmllint"
+        } else {
+            "xml2"
+        }
+    }
+
+    # xmllint backend -------------------------------------------------------
+
+    if (engine == "xmllint") {
+        if (.Platform$OS.type == "windows") {
+            warning("`xmllint` backend requested on Windows; falling back to `xml2`.")
+            engine <- "xml2"
+        } else if (!xmllint_available) {
+            warning("`xmllint` not found; falling back to `xml2`.")
+            engine <- "xml2"
+        } else {
+            out <- suppressWarnings(system2(
+                "xmllint",
+                args = c("--noout", "--schema", schema_file, file_in),
+                stdout = TRUE,
+                stderr = TRUE
+            ))
+
+            status <- attr(out, "status")
+            has_schema_errors <- any(grepl("Schemas validity error", out, fixed = TRUE))
+
+            if ((is.null(status) || identical(status, 0L)) && !has_schema_errors) {
+                res <- make_result(
+                    valid = TRUE,
+                    errors = list(),
+                    engine = "xmllint",
+                    color = color
+                )
+                if (isTRUE(print)) print(res)
+                return(invisible(res))
+            }
+
+            err_lines <- out[grepl("Schemas validity error", out, fixed = TRUE)]
+
+            if (!length(err_lines)) {
+                parsed <- list(list(
+                    file = file_in,
+                    line = NA_integer_,
+                    element = NA_character_,
+                    message = paste(out, collapse = " "),
+                    allowed = character(0),
+                    snippet = NA_character_,
+                    raw_message = out
+                ))
+            } else {
+                parsed <- parse_errors(
+                    raw_errors = err_lines,
+                    xml_lines = xml_lines,
+                    file_in = file_in,
+                    ctx = ctx,
+                    red = red,
+                    reset = reset
+                )
+            }
+
+            if (ignore_import) {
+                parsed <- Filter(
+                    function(x) !(isTRUE(x$element == "{http://www.w3.org/2001/XMLSchema}import")),
+                    parsed
+                )
+            }
+
+            res <- make_result(
+                valid = !length(parsed),
+                errors = parsed,
+                engine = "xmllint",
+                color = color
+            )
+
+            if (isTRUE(print)) print(res)
+            return(invisible(res))
+        }
+    }
+
+    # xml2 backend ----------------------------------------------------------
+
+    if (doc_is_path) {
+        xml_doc <- xml2::read_xml(file_in)
+    } else {
+        xml_doc <- if (inherits(doc, "xml_document")) doc else xml2::read_xml(doc)
+    }
+
+    schema <- xml2::read_xml(schema_file)
+    validation <- xml2::xml_validate(xml_doc, schema)
+
+    if (isTRUE(validation)) {
+        res <- make_result(
+            valid = TRUE,
+            errors = list(),
+            engine = "xml2",
+            color = color
+        )
+        if (isTRUE(print)) print(res)
+        return(invisible(res))
+    }
+
+    raw_errors <- attr(validation, "errors")
+    if (is.null(raw_errors)) {
+        raw_errors <- as.character(validation)
+    }
+    raw_errors <- as.character(raw_errors)
+
+    parsed <- parse_errors(
+        raw_errors = raw_errors,
+        xml_lines = xml_lines,
+        file_in = file_in,
+        ctx = ctx,
+        red = red,
+        reset = reset
+    )
+
+    if (ignore_import) {
+        parsed <- Filter(
+            function(x) !(isTRUE(x$element == "{http://www.w3.org/2001/XMLSchema}import")),
+            parsed
+        )
+    }
+
+    res <- make_result(
+        valid = !length(parsed),
+        errors = parsed,
+        engine = "xml2",
+        color = color
+    )
+
+    if (isTRUE(print)) print(res)
+    invisible(res)
+}
+
+
+#' Print a QTI validation result
+#'
+#' @param x A `qti_validation_result` object.
+#' @param ... Unused.
+#'
+#' @return The input object, invisibly.
+#' @export
+#' @method print qti_validation_result
+print.qti_validation_result <- function(x, ...) {
+    stopifnot(inherits(x, "qti_validation_result"))
+
+    blue <- if (isTRUE(x$color)) "\033[34m" else ""
+    reset <- if (isTRUE(x$color)) "\033[0m" else ""
+
+    if (isTRUE(x$valid)) {
+        cat("QTI validation: valid")
+        if (!is.null(x$engine) && nzchar(x$engine)) {
+            cat(" [engine: ", x$engine, "]", sep = "")
+        }
+        cat("\n")
+        return(invisible(x))
+    }
+
+    cat("QTI validation: invalid")
+    if (!is.null(x$engine) && nzchar(x$engine)) {
+        cat(" [engine: ", x$engine, "]", sep = "")
+    }
+    cat("\n\n")
+
+    for (err in x$errors) {
+        loc <- if (!is.na(err$line)) paste0(err$file, ":", err$line) else err$file
+        cat(loc, ": ", err$message, "\n", sep = "")
+
+        if (!is.na(err$snippet) && nzchar(err$snippet)) {
+            cat("  -> ", err$snippet, "\n", sep = "")
+        }
+
+        if (length(err$allowed)) {
+            cat("  ", blue, "Allowed tags: ", reset, paste(err$allowed, collapse = ", "), "\n", sep = "")
+        }
+
+        cat("\n")
+    }
+
+    invisible(x)
+}

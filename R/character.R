@@ -9,7 +9,7 @@ setMethod("buildAssessmentSection", signature(object = "character"),
                   doc <- xml2::read_xml(f_path)
                   if (verify) {
                       valid <- verify_qti(doc)
-                      if (!valid) warning("xml file \'", object, "\' is not valid")
+                      if (!valid$valid) warning("xml file \'", object, "\' is not valid")
                   }
 
                   id <- xml2::xml_attr(doc, "identifier")

@@ -222,8 +222,8 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     }
     if (verification) {
         ver <- verify_qti(doc)
-        if (!ver) {
-            stop("Xml file is not valid. \n", attributes(ver), call. = FALSE)
+        if (!ver$valid) {
+            stop("xml file is not valid, see above.", call. = FALSE)
         }
     }
     if (is.null(dir)) dir <- getwd()
@@ -240,34 +240,6 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     xml2::write_xml(doc, path_task)
     if (interactive()) message("see assessment item: ", path_task)
     return(stringr::str_remove(path_task, getwd()))
-}
-
-#' Verify QTI XML against XSD Schema QTI v2.1
-#'
-#' This function validates a QTI XML document against the IMS QTI v2.1.2 XSD
-#' schema.
-#'
-#' @param doc A character string representing the path to the XML file or an
-#'   `xml2` document object.
-#' @param extended_scheme A boolean value that controls the version of the XSD
-#'   schema used for validation. If `TRUE`, the extended version is used,
-#'   allowing additional tags in the XML (e.g., `details`). Default is `FALSE`.
-#' @return A logical value indicating whether the XML document is valid
-#'   according to the schema. If invalid, returns an object detailing the
-#'   validation errors.
-#' @examples
-#' \dontrun{
-#' # Validate an XML file
-#' result <- verify_qti("path/to/your/qti.xml")
-#' }
-#' @export
-verify_qti <- function(doc, extended_scheme = FALSE) {
-    if (is.character(doc)) doc <- xml2::read_xml(doc)
-    schema_name <- ifelse(extended_scheme, "qti_v2p1p2_extension.xsd", "imsqti_v2p1p2.xsd")
-    file <- file.path(system.file(package = "rqti"), schema_name)
-    schema <- xml2::read_xml(file)
-    validation <- xml2::xml_validate(doc, schema)
-    ifelse(validation[1], return(validation[1]), return(validation))
 }
 
 # returns manifest for task
