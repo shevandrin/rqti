@@ -14,8 +14,9 @@ test_that("verify_qti returns structured result for invalid QTI", {
     f <- system.file("exercises", "sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
 
-    # introduce an error (e.g., remove a required node)
-    xml2::xml_remove(xml2::xml_find_first(x, "//*"))
+    # introduce a schema error (add an invalid tag to itemBody)
+    item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
+    xml2::xml_add_child(item_body, "details", .where = 0)
 
     res <- verify_qti(x, print = F)
 
