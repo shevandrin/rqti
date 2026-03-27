@@ -181,25 +181,49 @@ verify_qti_impl <- function(doc,
         trimws(msg)
     }
 
-    make_snippet <- function(xml_lines, line, elem, ctx, red, reset) {
+    make_snippet <- function(xml_lines, line, elem, attr, ctx, red, reset) {
         snippet <- NA_character_
 
         if (!is.na(line) && line >= 1 && line <= length(xml_lines)) {
             line_text <- xml_lines[line]
 
-            if (!is.na(elem) && nzchar(elem)) {
-                pos <- regexpr(elem, line_text, fixed = TRUE)[1]
+            # Determine what to search for: attribute or element
+            search_target <- if (!is.na(attr) && nzchar(attr)) attr else elem
+
+            if (!is.na(search_target) && nzchar(search_target)) {
+                # Search for the target in the line
+                pos <- regexpr(search_target, line_text, fixed = TRUE)[1]
 
                 if (pos > 0) {
                     start <- max(1, pos - ctx)
-                    end <- min(nchar(line_text), pos + nchar(elem) + ctx - 1)
+                    end <- min(nchar(line_text), pos + nchar(search_target) + ctx + 10)
                     snippet <- substr(line_text, start, end)
                 } else {
                     snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
                 }
 
-                if (!is.na(snippet) && grepl(elem, snippet, fixed = TRUE)) {
-                    snippet <- gsub(elem, paste0(red, elem, reset), snippet, fixed = TRUE)
+                # Highlight the target with red
+                if (!is.na(snippet) && nzchar(snippet)) {
+                    # For attributes, we want to highlight just the attribute name
+                    # Pattern: attributeName= or attributeName =
+                    if (!is.na(attr) && nzchar(attr)) {
+                        attr_pattern <- paste0(attr, "\\s*=")
+                        snippet <- gsub(
+                            attr_pattern,
+                            paste0(red, attr, reset, "="),
+                            snippet,
+                            perl = TRUE
+                        )
+                    } else if (!is.na(elem) && nzchar(elem)) {
+                        # For elements, highlight the tag name
+                        tag_pattern <- paste0("<", elem, "(\\s|/|>)")
+                        snippet <- gsub(
+                            tag_pattern,
+                            paste0(red, "<", elem, reset, "\\1"),
+                            snippet,
+                            perl = TRUE
+                        )
+                    }
                 }
             } else {
                 snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
@@ -225,14 +249,16 @@ verify_qti_impl <- function(doc,
         lapply(raw_errors, function(msg) {
             line <- extract_line(msg)
             elem <- extract_element(msg)
+            attr <- extract_attribute(msg)  # Add this
             allowed <- extract_allowed(gsub("\\{[^}]+\\}", "", msg))
             message <- clean_message(msg)
-            snippet <- make_snippet(xml_lines, line, elem, ctx, red, reset)
+            snippet <- make_snippet(xml_lines, line, elem, attr, ctx, red, reset)
 
             list(
                 file = file_in,
                 line = line,
                 element = elem,
+                attribute = attr,  # Add this
                 message = message,
                 allowed = allowed,
                 snippet = snippet,
@@ -521,4 +547,17 @@ setMethod("verify_qti", signature(doc = "AssessmentTest"),
 #' @keywords internal
 print.qti_validation_results_list <- function(x, ...) {
     invisible(x)
+}
+
+extract_attribute <- function(msg) {
+    m <- regexec("attribute '([^']+)'", msg, perl = TRUE)
+    r <- regmatches(msg, m)[[1]]
+    if (length(r) >= 2) {
+        attr <- r[2]
+        # Strip namespace prefix if present
+        attr <- sub(".*}", "", attr)
+        attr
+    } else {
+        NA_character_
+    }
 }
