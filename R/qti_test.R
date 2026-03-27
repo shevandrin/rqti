@@ -120,9 +120,9 @@ create_assessment_test <- function(object, folder, verify = FALSE,
     }
 
     tagAppendChildren(assesment_test,
-                      stylesheets,
                       createOutcomeDeclaration(object),
                       time_limit,
+                      stylesheets,
                       test_part,
                       out_proc,
                       tags_grades$feedbacks)
