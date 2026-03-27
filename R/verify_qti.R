@@ -494,6 +494,7 @@ setMethod("verify_qti", signature(doc = "AssessmentTest"),
 
               createQtiTest(doc, tmp_dir)
               xml_files <- list.files(tmp_dir, pattern = "\\.xml$", full.names = TRUE, recursive = TRUE)
+              xml_files <- xml_files[!grepl("manifest\\.xml$", xml_files, ignore.case = TRUE)]
 
               results <- lapply(xml_files, function(f) {
                   verify_qti(f, extended_schema, ctx, color, engine, ignore_import, print = FALSE)
