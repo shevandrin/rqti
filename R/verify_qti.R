@@ -68,13 +68,8 @@ verify_qti_impl <- function(doc,
         if (will_use_xmllint) {
             # Write XML document to temporary file for xmllint
             tmp_file <- tempfile(fileext = ".xml")
-
-            if (inherits(doc, "xml_document")) {
-                xml2::write_xml(doc, tmp_file)
-            } else {
-                # doc is a character string, write directly
-                writeLines(doc, tmp_file, useBytes = TRUE)
-            }
+            # doc is a character string, write directly
+            writeLines(doc, tmp_file, useBytes = TRUE)
 
             doc <- tmp_file  # Assign to doc so it's treated as a path
             on.exit(unlink(tmp_file), add = TRUE)
@@ -107,165 +102,7 @@ verify_qti_impl <- function(doc,
     blue <- if (isTRUE(color)) "\033[34m" else ""
     reset <- if (isTRUE(color)) "\033[0m" else ""
 
-    # helpers ---------------------------------------------------------------
 
-    extract_line <- function(msg) {
-        pats <- c(
-            ":(\\d+):",
-            "^[^:]+:(\\d+):",
-            "^(\\d+):"
-        )
-
-        for (p in pats) {
-            m <- regexec(p, msg, perl = TRUE)
-            r <- regmatches(msg, m)[[1]]
-            if (length(r) >= 2) {
-                return(as.integer(r[2]))
-            }
-        }
-
-        NA_integer_
-    }
-
-    extract_element <- function(msg) {
-        m <- regexec("Element '([^']+)'", msg, perl = TRUE)
-        r <- regmatches(msg, m)[[1]]
-        if (length(r) >= 2) {
-            elem <- r[2]
-            # Strip namespace prefix if present
-            elem <- sub(".*}", "", elem)  # Removes everything up to and including the last }
-            elem
-        } else {
-            NA_character_
-        }
-    }
-
-    extract_allowed <- function(msg) {
-        allowed <- character(0)
-
-        m1 <- regexec("Expected is one of \\(([^)]*)\\)", msg, perl = TRUE)
-        r1 <- regmatches(msg, m1)[[1]]
-        if (length(r1) >= 2) {
-            allowed <- trimws(strsplit(r1[2], ",", fixed = TRUE)[[1]])
-        }
-
-        if (!length(allowed)) {
-            m2 <- regexec("Expected is \\(([^)]*)\\)", msg, perl = TRUE)
-            r2 <- regmatches(msg, m2)[[1]]
-            if (length(r2) >= 2) {
-                allowed <- trimws(strsplit(r2[2], ",", fixed = TRUE)[[1]])
-            }
-        }
-
-        if (!length(allowed)) {
-            m3 <- regexec("Expected:?\\s*(.*)$", msg, perl = TRUE)
-            r3 <- regmatches(msg, m3)[[1]]
-            if (length(r3) >= 2) {
-                tmp <- gsub("[().]", "", r3[2])
-                allowed <- trimws(strsplit(tmp, ",", fixed = TRUE)[[1]])
-            }
-        }
-
-        allowed <- gsub("^.*:", "", allowed)
-        allowed <- trimws(allowed)
-        allowed[nzchar(allowed)]
-    }
-
-    clean_message <- function(msg) {
-        msg <- gsub("\\{[^}]+\\}", "", msg)
-        msg <- sub(".*Schemas validity error ?: ?", "", msg)
-        msg <- sub("This element is not expected\\.", "not expected.", msg)
-        msg <- sub("\\s*Expected is one of \\([^)]*\\)\\.?", "", msg)
-        msg <- sub("\\s*Expected is \\([^)]*\\)\\.?", "", msg)
-        msg <- sub("\\s*Expected:.*$", "", msg)
-        trimws(msg)
-    }
-
-    make_snippet <- function(xml_lines, line, elem, attr, ctx, red, reset) {
-        snippet <- NA_character_
-
-        if (!is.na(line) && line >= 1 && line <= length(xml_lines)) {
-            line_text <- xml_lines[line]
-
-            # Determine what to search for: attribute or element
-            search_target <- if (!is.na(attr) && nzchar(attr)) attr else elem
-
-            if (!is.na(search_target) && nzchar(search_target)) {
-                # Search for the target in the line
-                pos <- regexpr(search_target, line_text, fixed = TRUE)[1]
-
-                if (pos > 0) {
-                    start <- max(1, pos - ctx)
-                    end <- min(nchar(line_text), pos + nchar(search_target) + ctx + 10)
-                    snippet <- substr(line_text, start, end)
-                } else {
-                    snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
-                }
-
-                # Highlight the target with red
-                if (!is.na(snippet) && nzchar(snippet)) {
-                    # For attributes, we want to highlight just the attribute name
-                    # Pattern: attributeName= or attributeName =
-                    if (!is.na(attr) && nzchar(attr)) {
-                        attr_pattern <- paste0(attr, "\\s*=")
-                        snippet <- gsub(
-                            attr_pattern,
-                            paste0(red, attr, reset, "="),
-                            snippet,
-                            perl = TRUE
-                        )
-                    } else if (!is.na(elem) && nzchar(elem)) {
-                        # For elements, highlight the tag name
-                        tag_pattern <- paste0("<", elem, "(\\s|/|>)")
-                        snippet <- gsub(
-                            tag_pattern,
-                            paste0(red, "<", elem, reset, "\\1"),
-                            snippet,
-                            perl = TRUE
-                        )
-                    }
-                }
-            } else {
-                snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
-            }
-        }
-
-        snippet
-    }
-
-    make_result <- function(valid, errors, engine, color) {
-        structure(
-            list(
-                valid = valid,
-                errors = errors,
-                engine = engine,
-                color = isTRUE(color)
-            ),
-            class = "qti_validation_result"
-        )
-    }
-
-    parse_errors <- function(raw_errors, xml_lines, file_in, ctx, red, reset) {
-        lapply(raw_errors, function(msg) {
-            line <- extract_line(msg)
-            elem <- extract_element(msg)
-            attr <- extract_attribute(msg)  # Add this
-            allowed <- extract_allowed(gsub("\\{[^}]+\\}", "", msg))
-            message <- clean_message(msg)
-            snippet <- make_snippet(xml_lines, line, elem, attr, ctx, red, reset)
-
-            list(
-                file = file_in,
-                line = line,
-                element = elem,
-                attribute = attr,  # Add this
-                message = message,
-                allowed = allowed,
-                snippet = snippet,
-                raw_message = msg
-            )
-        })
-    }
 
     # choose engine ---------------------------------------------------------
 
@@ -594,4 +431,147 @@ extract_attribute <- function(msg) {
     } else {
         NA_character_
     }
+}
+
+# helpers ---------------------------------------------------------------
+
+extract_line <- function(msg) {
+    pats <- c(
+        ":(\\d+):",
+        "^[^:]+:(\\d+):",
+        "^(\\d+):"
+    )
+
+    for (p in pats) {
+        m <- regexec(p, msg, perl = TRUE)
+        r <- regmatches(msg, m)[[1]]
+        if (length(r) >= 2) {
+            return(as.integer(r[2]))
+        }
+    }
+
+    NA_integer_
+}
+
+extract_element <- function(msg) {
+    m <- regexec("Element '([^']+)'", msg, perl = TRUE)
+    r <- regmatches(msg, m)[[1]]
+    if (length(r) >= 2) {
+        elem <- r[2]
+        # Strip namespace prefix if present
+        elem <- sub(".*}", "", elem)  # Removes everything up to and including the last }
+        elem
+    } else {
+        NA_character_
+    }
+}
+
+extract_allowed <- function(msg) {
+    allowed <- character(0)
+
+    m1 <- regexec("Expected is one of \\(([^)]*)\\)", msg, perl = TRUE)
+    r1 <- regmatches(msg, m1)[[1]]
+    if (length(r1) >= 2) {
+        allowed <- trimws(strsplit(r1[2], ",", fixed = TRUE)[[1]])
+    }
+
+    allowed <- gsub("^.*:", "", allowed)
+    allowed <- trimws(allowed)
+    allowed[nzchar(allowed)]
+}
+
+clean_message <- function(msg) {
+    msg <- gsub("\\{[^}]+\\}", "", msg)
+    msg <- sub(".*Schemas validity error ?: ?", "", msg)
+    msg <- sub("This element is not expected\\.", "not expected.", msg)
+    msg <- sub("\\s*Expected is one of \\([^)]*\\)\\.?", "", msg)
+    msg <- sub("\\s*Expected is \\([^)]*\\)\\.?", "", msg)
+    msg <- sub("\\s*Expected:.*$", "", msg)
+    trimws(msg)
+}
+
+make_snippet <- function(xml_lines, line, elem, attr, ctx, red, reset) {
+    snippet <- NA_character_
+
+    if (!is.na(line) && line >= 1 && line <= length(xml_lines)) {
+        line_text <- xml_lines[line]
+
+        # Determine what to search for: attribute or element
+        search_target <- if (!is.na(attr) && nzchar(attr)) attr else elem
+
+        if (!is.na(search_target) && nzchar(search_target)) {
+            # Search for the target in the line
+            pos <- regexpr(search_target, line_text, fixed = TRUE)[1]
+
+            if (pos > 0) {
+                start <- max(1, pos - ctx)
+                end <- min(nchar(line_text), pos + nchar(search_target) + ctx + 10)
+                snippet <- substr(line_text, start, end)
+            } else {
+                snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
+            }
+
+            # Highlight the target with red
+            if (!is.na(snippet) && nzchar(snippet)) {
+                # For attributes, we want to highlight just the attribute name
+                # Pattern: attributeName= or attributeName =
+                if (!is.na(attr) && nzchar(attr)) {
+                    attr_pattern <- paste0(attr, "\\s*=")
+                    snippet <- gsub(
+                        attr_pattern,
+                        paste0(red, attr, reset, "="),
+                        snippet,
+                        perl = TRUE
+                    )
+                } else if (!is.na(elem) && nzchar(elem)) {
+                    # For elements, highlight the tag name
+                    tag_pattern <- paste0("<", elem, "(\\s|/|>)")
+                    snippet <- gsub(
+                        tag_pattern,
+                        paste0(red, "<", elem, reset, "\\1"),
+                        snippet,
+                        perl = TRUE
+                    )
+                }
+            }
+        } else {
+            snippet <- substr(line_text, 1, min(nchar(line_text), 2 * ctx + 40))
+        }
+    }
+
+    snippet
+}
+
+make_result <- function(valid, errors, engine, color) {
+    structure(
+        list(
+            valid = valid,
+            errors = errors,
+            engine = engine,
+            color = isTRUE(color)
+        ),
+        class = "qti_validation_result"
+    )
+}
+
+parse_errors <- function(raw_errors, xml_lines, file_in, ctx, red, reset) {
+    lapply(raw_errors, function(msg) {
+        line <- extract_line(msg)
+        elem <- extract_element(msg)
+        attr <- extract_attribute(msg)  # Add this
+        allowed <- extract_allowed(gsub("\\{[^}]+\\}", "", msg))
+        message <- clean_message(msg)
+        snippet <- make_snippet(xml_lines, line, elem, attr, ctx, red, reset)
+
+        list(
+            file = file_in,
+            line = line,
+            element = elem,
+            attribute = attr,  # Add this
+            message = message,
+            allowed = allowed,
+            snippet = snippet,
+            raw_message = msg
+        )
+    })
 }

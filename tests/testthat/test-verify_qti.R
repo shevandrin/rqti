@@ -8,6 +8,7 @@ test_that("verify_qti validates a correct QTI document", {
     # xml_document input
     x <- xml2::read_xml(f)
     expect_true(verify_qti(x, print = F)$valid)
+    expect_true(verify_qti(x, print = F, engine = "xml2")$valid)
 })
 
 test_that("verify_qti returns structured result for invalid QTI", {
@@ -19,16 +20,10 @@ test_that("verify_qti returns structured result for invalid QTI", {
     xml2::xml_add_child(item_body, "details", .where = 0)
 
     res <- verify_qti(x, print = F)
-
     expect_s3_class(res, "qti_validation_result")
     expect_false(res$valid)
     expect_true(length(res$errors) >= 1)
-})
-
-test_that("verify_qti works with explicit xml2 engine", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
-
-    expect_true(verify_qti(f, engine = "xml2", print = F)$valid)
+    expect_false(verify_qti(x, print = F, engine = "xml2")$valid)
 })
 
 test_that("verify_qti validates Rmd file", {
@@ -70,9 +65,15 @@ test_that("verify_qti validates AssessmentTest object", {
                 identifier = "test_001",
                 title = "Test for verify_qti",
                 section = list(section))
+    test_opal <- new("AssessmentTestOpal",
+                     identifier = "test_001",
+                     title = "Test for verify_qti",
+                     section = list(section))
 
     res <- verify_qti(test, print = F)
-
     expect_s3_class(res, "qti_validation_results_list")
     expect_true(length(res) >= 2)
+
+    res_opal <- verify_qti(test_opal, print = F)
+    expect_false(res_opal$test$valid) # OPAL test should fail due to OPAL-specific constraints
 })
