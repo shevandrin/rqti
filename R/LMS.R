@@ -371,7 +371,11 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
     }
 
     if (!is.null(api_user)) {
-        user_exist <- any(key_list(service_name)$username == api_user)
+        # Instead of checking with key_list(), try retrieving directly
+        user_exist <- !inherits(
+            try(key_get(service_name, api_user), silent = TRUE),
+            "try-error"
+        )
 
         if (!user_exist) {
             if (interactive()) {
@@ -390,7 +394,7 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
         }
 
         if (is.null(psw)) {
-            psw = key_get(service_name, api_user)
+            psw <- key_get(service_name, api_user)
         } else {
             key_set_with_value(service_name, api_user, psw)
         }
