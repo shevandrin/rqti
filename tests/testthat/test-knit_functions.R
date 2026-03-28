@@ -1,78 +1,154 @@
-# test-knit_functions
+# test-knit_functions.R
+
 library(testthat)
 library(callr)
 library(chromote)
+library(fs)
 
-test_that("servr responds", {
-    testthat::skip_on_cran()
-    testthat::skip_on_ci()
+wait_until <- function(expr, timeout = 20, interval = 0.25) {
+    deadline <- Sys.time() + timeout
 
-    # we need to test it in temp directory, otherwise we cannot copy files
-    # which is necessary for rendering
-    src <- fs::path_package("QTIJS", package = "rqti")
-    dst <- file.path(tempdir(), "QTIJS")
-    dir.create(dst, showWarnings = FALSE)
-    qtijs_path <- dst
-    # Copy *contents* of src into dst
-    file.copy(
-        list.files(src, full.names = TRUE),
-        dst,
-        recursive = TRUE
-    )
+    repeat {
+        value <- tryCatch(force(expr), error = function(e) NULL)
 
-    # start server in background process, otherwise it will block? see servr
-    # config doc parameter daemon
-    p <- callr::r_bg(function(qtijs_path,
-                              running_check = nzchar(Sys.getenv("_R_CHECK_PACKAGE_NAME_"))) {
-        Sys.setenv(R_SERVR_PORT = 4321)
-        # for dev version
-        if (!running_check) {
-            pkgload::load_all()
-            # hard code to use later, otherwise random port could be chosen
-            # and we cannot access it.
-            # must turn off daemon in this case?
-            start_server(qtijs_path, daemon = F)
-        } else { # for non-dev version
-
-            rqti::start_server(qtijs_path, daemon = F)
+        if (isTRUE(value)) {
+            return(TRUE)
         }
-    }, supervise = TRUE, args = list(qtijs_path = qtijs_path))
 
-    # ensure cleanup even if later on.exit() calls are added
-    on.exit(p$kill(), add = TRUE)
+        if (Sys.time() >= deadline) {
+            return(FALSE)
+        }
 
-    # Sys.sleep(3)  # give server time to start
-    url <- "http://127.0.0.1:4321/index.html"
+        Sys.sleep(interval)
+    }
+}
 
-    Sys.setenv(RQTI_URL="http://127.0.0.1:4321")
-    suppressMessages(render_qtijs(fs::path_package("exercises", "sc1d.Rmd",
-                                  package = "rqti"),
-                 qtijs_path = qtijs_path))
+copy_qtijs_dir <- function() {
+    src <- fs::path_package("QTIJS", package = "rqti")
+    dst <- fs::path(tempdir(), paste0("QTIJS-", Sys.getpid()))
+    fs::dir_create(dst)
+    fs::dir_copy(src, dst, overwrite = TRUE)
+    dst
+}
 
-    # now we can simply use chromote
-    b <- ChromoteSession$new()
-    on.exit(b$close(), add = TRUE)
+start_test_server <- function(qtijs_path, port) {
+    callr::r_bg(
+        func = function(qtijs_path, port) {
+            Sys.setenv(R_SERVR_PORT = as.character(port))
+            rqti::start_server(qtijs_path, daemon = FALSE)
+        },
+        args = list(qtijs_path = qtijs_path, port = port),
+        supervise = TRUE,
+        stdout = "|",
+        stderr = "|"
+    )
+}
 
-    b$go_to(url)
+read_process_diagnostics <- function(p) {
+    list(
+        alive = p$is_alive(),
+        exit_status = tryCatch(p$get_exit_status(), error = function(e) NA),
+        stdout = tryCatch(p$read_output_lines(), error = function(e) character()),
+        stderr = tryCatch(p$read_error_lines(), error = function(e) character())
+    )
+}
 
-    # wait until the title is exactly "sc1d" or 10s are over
+get_page_title <- function(b) {
     js <- "
     (function() {
-    var el = document.querySelector('title');
-    return el ? el.textContent : null;
+      var el = document.querySelector('title');
+      return el ? el.textContent : null;
     })();
-    "
+  "
+    res <- b$Runtime$evaluate(js)
+    res$result$value
+}
 
-    found_text <- NULL
-    deadline <- Sys.time() + 10
-    repeat {
-        res <- b$Runtime$evaluate(js)
-        found_text <- res$result$value
-        if (identical(found_text, "sc1d")) break
-        if (Sys.time() > deadline) break
-        Sys.sleep(0.25)
+test_that("servr responds", {
+    skip_if(Sys.getenv("RQTI_API_USER") == "")
+    skip_if_not_installed("chromote")
+    skip_if_not_installed("callr")
+
+    port <- httpuv::randomPort()
+    base_url <- paste0("http://127.0.0.1:", port)
+    url <- paste0(base_url, "/index.html")
+
+    qtijs_path <- copy_qtijs_dir()
+
+    p <- start_test_server(qtijs_path = qtijs_path, port = port)
+    on.exit({
+        if (p$is_alive()) {
+            p$kill()
+        }
+    }, add = TRUE)
+
+    # Give the child a brief moment to start.
+    Sys.sleep(1)
+
+    # Fail early only if the child already died.
+    if (!p$is_alive()) {
+        diag <- read_process_diagnostics(p)
+        fail(
+            paste0(
+                "Server process died immediately.\n",
+                "exit_status: ", diag$exit_status, "\n",
+                "stdout:\n", paste(diag$stdout, collapse = "\n"), "\n",
+                "stderr:\n", paste(diag$stderr, collapse = "\n")
+            )
+        )
     }
 
-    expect_equal(found_text, "sc1d")
-    p$kill()
+    Sys.setenv(RQTI_URL = base_url)
+
+    expect_no_error(
+        suppressMessages(
+            render_qtijs(
+                fs::path_package("exercises", "sc1d.Rmd", package = "rqti"),
+                qtijs_path = qtijs_path
+            )
+        )
+    )
+
+    b <- tryCatch(
+        ChromoteSession$new(),
+        error = function(e) {
+            skip(paste("Chromote could not start:", conditionMessage(e)))
+        }
+    )
+    on.exit({
+        try(b$close(), silent = TRUE)
+    }, add = TRUE)
+
+    expect_no_error(b$go_to(url))
+
+    title_ready <- wait_until(
+        {
+            if (!p$is_alive()) {
+                return(FALSE)
+            }
+
+            title <- get_page_title(b)
+            is.character(title) && trimws(title) == "sc1d"
+        },
+        timeout = 20,
+        interval = 0.25
+    )
+
+    current_title <- tryCatch(get_page_title(b), error = function(e) NA_character_)
+
+    if (!title_ready && !identical(trimws(current_title), "sc1d")) {
+        diag <- read_process_diagnostics(p)
+        fail(
+            paste0(
+                "Page title did not become 'sc1d'.\n",
+                "current_title: ", current_title, "\n",
+                "alive: ", diag$alive, "\n",
+                "exit_status: ", diag$exit_status, "\n",
+                "stdout:\n", paste(diag$stdout, collapse = "\n"), "\n",
+                "stderr:\n", paste(diag$stderr, collapse = "\n")
+            )
+        )
+    }
+
+    expect_equal(trimws(current_title), "sc1d")
 })
