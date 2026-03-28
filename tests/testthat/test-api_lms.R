@@ -1,7 +1,6 @@
 
 test_that("LMS object can be created for OPAL", {
-    skip_on_cran()
-    skip_on_ci()
+    skip_if(Sys.getenv("RQTI_API_USER") == "")
     con <- opal()
     expect_equal(exists("con"), TRUE)
     logged_in <- isUserLoggedIn(con)
@@ -10,8 +9,7 @@ test_that("LMS object can be created for OPAL", {
 
 
 test_that("LMS OPAL handles missing parameters correctly", {
-    skip_on_cran()
-    skip_on_ci()
+    skip_if(Sys.getenv("RQTI_API_USER") == "")
     con <- opal()
     #expect_error(con <- new("Opal", api_user = "fakeEmptyUser"),
     #             "Username not found in credential storage")
@@ -25,8 +23,7 @@ test_that("LMS OPAL handles missing parameters correctly", {
 })
 
 test_that("upload2opal works directly", {
-    skip_on_cran()
-    skip_on_ci()
+    skip_if(Sys.getenv("RQTI_API_USER") == "")
     con <- opal()
     # create resource from object
     es <- suppressWarnings(essay(identifier = "ForTestAPI"))
@@ -39,8 +36,7 @@ test_that("upload2opal works directly", {
 })
 
 test_that("Create a resource on Opal, test getting resource, inc. get by name", {
-    skip_on_cran()
-    skip_on_ci()
+    skip_if(Sys.getenv("RQTI_API_USER") == "")
     con <- opal()
     # create resource from object
     es <- suppressWarnings(essay(identifier = "ForTestAPI"))
@@ -54,16 +50,14 @@ test_that("Create a resource on Opal, test getting resource, inc. get by name", 
 })
 
 test_that("Get URL", {
-    skip_on_cran()
-    skip_on_ci()
+    skip_if(Sys.getenv("RQTI_API_USER") == "")
     con <- opal()
     sut <- getLMSResourceURL(con, "test_ForTestAPI")
     expect_true(grepl("https?://[^\\s]+", sut))
 })
 
 test_that("default connections are guessed correctly", {
-    skip_on_cran()
-    skip_on_ci()
+    skip_if(Sys.getenv("RQTI_API_USER") == "")
     expect_message(get_default_connetion(), "A connection to the LMS")
 })
 
