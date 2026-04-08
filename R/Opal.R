@@ -422,6 +422,105 @@ setMethod("getCourseResult", "Opal", function(object, resource_id, node_id,
     }
 })
 
+#' Get groups from a course on LMS Opal
+#'
+#' This method retrieves groups from a course on LMS Opal by its course id.
+#' The groups are returned as a data frame with all accessible attributes,
+#' such as group id, name, description, participant limits, and group settings.
+#' If no Opal connection object is provided, it attempts to guess the connection
+#' using default settings (e.g., environment variables). If the connection cannot
+#' be established, an error is thrown.
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to the LMS.
+#' @param course_id A length one character vector specifying the course id.
+#' @return A data frame with course groups and their attributes.
+#' @examplesIf interactive()
+#' groups <- getCourseGroups("89068111333293")
+#' @rdname getCourseGroups-methods
+#' @export
+setMethod("getCourseGroups", "Opal", function(object, course_id) {
+
+    if (!isUserLoggedIn(object)) {
+        login_status <- authLMS(object)
+        if (login_status != 200) return(NULL)
+    }
+
+    url_res_group <- paste0(object@endpoint, "restapi/repo/courses/", course_id, "/groups")
+    req <- request(url_res_group) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("GET")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+
+    if (response$status_code == 404) {
+        message("The course could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    parsed_response <- resp_body_xml(response)
+    groups <- xml2::as_list(parsed_response)$groupVOes
+
+    get_first_chr <- function(x) {
+        if (!is.null(x) && length(x) > 0) as.character(x[[1]]) else NA_character_
+    }
+
+    get_first_num <- function(x) {
+        if (!is.null(x) && length(x) > 0) as.numeric(x[[1]]) else NA_real_
+    }
+
+    get_first_lgl <- function(x) {
+        if (!is.null(x) && length(x) > 0) as.logical(x[[1]]) else NA
+    }
+
+    groups_df <- data.frame(
+        key = vapply(groups, function(g) get_first_chr(g$key), character(1)),
+        name = vapply(groups, function(g) get_first_chr(g$name), character(1)),
+        description = vapply(groups, function(g) get_first_chr(g$description), character(1)),
+        minParticipants = vapply(groups, function(g) get_first_num(g$minParticipants), numeric(1)),
+        maxParticipants = vapply(groups, function(g) get_first_num(g$maxParticipants), numeric(1)),
+        invitationEnabled = vapply(groups, function(g) get_first_lgl(g$invitationEnabled), logical(1)),
+        signoutEnabled = vapply(groups, function(g) get_first_lgl(g$signoutEnabled), logical(1)),
+        stringsAsFactors = FALSE
+    )
+    return(groups_df)
+})
+
+
+get_list_users <- function(object, group_id) {
+    url_res <- paste0(object@endpoint, "restapi/groups", group_id, "/participants")
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("GET")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+
+    if (response$status_code == 404) {
+        message("The course could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    parsed_response <- resp_body_xml(response)
+    rlist <- xml2::as_list(parsed_response)$userVOes
+
+    users_df <- data.frame(
+        user_id = sapply(rlist, function(g) g$key[[1]]),
+        user_login = sapply(rlist, function(g) g$login[[1]]),
+        user_first_name = sapply(rlist, function(g) g$first_name[[1]]),
+        user_last_name = sapply(rlit, function(g) g$last_name[[1]]),
+        user_email = sapply(rlist, function(g) g$email[[1]]),
+        stringsAsFactors = FALSE
+    )
+    return(users_df)
+
+}
+
+
 #' @importFrom curl form_file
 upload_resource <- function(file, display_name, rtype, access,
                             endpoint = NULL) {

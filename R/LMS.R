@@ -356,35 +356,45 @@ setMethod("getCourseResult", signature(object = "missing"),
                            node_id = node_id, path_outcome = path_outcome, ...))
 })
 
-#' Get users from a course
+#' Get groups from a course
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
 #' @param course_id A length one character vector with course id.
-#' @return A data frame with course participants. Each row represents a participant,
-#'   including an additional column indicating the corresponding group.
-#' @rdname getCourseUsers-methods
+#' @return A data frame with all accessible attributes of the course groups.
+#' @rdname getCourseGroups-methods
 #' @export
-setGeneric("getCourseUsers", function(object, course_id)
-    standardGeneric("getCourseUsers"))
+setGeneric("getCourseGroups", function(object, course_id)
+    standardGeneric("getCourseGroups"))
 
-#' Get users from a course
+#' Get groups from a course
 #'
-#' This method retrieves users from a course on the Learning Management System (LMS)
-#' by its course id. The users are collected from all groups within the course and
-#' returned as a single data frame. If no LMS connection object is provided, it attempts
-#' to guess the connection using default settings (e.g., environment variables).
-#' If the connection cannot be established, an error is thrown.
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param course_id A length one character vector with course id.
+#' @return A data frame with all accessible attributes of the course groups.
+#' @rdname getCourseGroups-methods
+#' @export
+setGeneric("getCourseGroups", function(object, course_id)
+    standardGeneric("getCourseGroups"))
+
+#' Get groups from a course
+#'
+#' This method retrieves groups from a course on the Learning Management System (LMS)
+#' by its course id. It returns a data frame with all accessible attributes of the
+#' groups, such as group id, name, description, participant limits, and group settings.
+#' If no LMS connection object is provided, it attempts to guess the connection using
+#' default settings (e.g., environment variables). If the connection cannot be
+#' established, an error is thrown.
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
 #' @param course_id A length one character vector with course id.
 #' @examplesIf interactive()
-#' users <- getCourseUsers("89068111333293")
-#' @rdname getCourseUsers-methods
+#' groups <- getCourseGroups("89068111333293")
+#' @rdname getCourseGroups-methods
 #' @export
-setMethod("getCourseUsers", signature(object = "missing"),
+setMethod("getCourseGroups", signature(object = "missing"),
           function(object, course_id) {
               connection <- get_default_connetion()
-              return(getCourseUsers(connection, course_id = course_id))
+              return(getCourseGroups(connection, course_id = course_id))
           })
 
 #' @importFrom utils menu
