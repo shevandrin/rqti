@@ -8,8 +8,6 @@
 \usage{
 getCourseGroups(object, course_id)
 
-getCourseGroups(object, course_id)
-
 \S4method{getCourseGroups}{missing}(object, course_id)
 
 \S4method{getCourseGroups}{Opal}(object, course_id)
@@ -22,14 +20,12 @@ getCourseGroups(object, course_id)
 \value{
 A data frame with all accessible attributes of the course groups.
 
-A data frame with all accessible attributes of the course groups.
-
 A data frame with course groups and their attributes.
 }
 \description{
 This method retrieves groups from a course on the Learning Management System (LMS)
 by its course id. It returns a data frame with all accessible attributes of the
-groups, such as group id, name, description, participant limits, and group settings.
+groups.
 If no LMS connection object is provided, it attempts to guess the connection using
 default settings (e.g., environment variables). If the connection cannot be
 established, an error is thrown.

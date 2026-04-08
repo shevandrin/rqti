@@ -474,7 +474,6 @@ setMethod("getCourseGroups", "Opal", function(object, course_id) {
     get_first_lgl <- function(x) {
         if (!is.null(x) && length(x) > 0) as.logical(x[[1]]) else NA
     }
-
     groups_df <- data.frame(
         key = vapply(groups, function(g) get_first_chr(g$key), character(1)),
         name = vapply(groups, function(g) get_first_chr(g$name), character(1)),
@@ -489,36 +488,113 @@ setMethod("getCourseGroups", "Opal", function(object, course_id) {
 })
 
 
-get_list_users <- function(object, group_id) {
-    url_res <- paste0(object@endpoint, "restapi/groups", group_id, "/participants")
-    req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("GET")
-    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+#' Get users from a group on LMS Opal
+#'
+#' This method retrieves users from a group on LMS Opal by its group id.
+#' It returns a data frame with user attributes obtained from the LMS,
+#' including user id, login, first name, last name, email, and additional
+#' properties (e.g., status).
+#' If no Opal connection object is provided, it attempts to guess the
+#' connection using default settings (e.g., environment variables).
+#' If the connection cannot be established, an error is thrown.
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to the LMS.
+#' @param group_id A character vector specifying the group id.
+#' @return A data frame with group users and their attributes. Each row represents
+#'   a user and may include the following columns:
+#'   \describe{
+#'     \item{key}{Unique user id.}
+#'     \item{login}{User login name.}
+#'     \item{firstName}{User first name.}
+#'     \item{lastName}{User last name.}
+#'     \item{email}{User email address.}
+#'     \item{status}{User status (e.g., \code{STATUS_ACTIVE}).}
+#'   }
+#' @examplesIf interactive()
+#' users <- getGroupUsers("89068111333293")
+#' @rdname getGroupUsers-methods
+#' @export
+setMethod("getGroupUsers", "Opal", function(object, group_id) {
 
-    if (response$status_code == 404) {
-        message("The course could not be found.")
-        return(NULL)
+    get_first_chr <- function(x) {
+        if (!is.null(x) && length(x) > 0) {
+            as.character(x[[1]])
+        } else {
+            NA_character_
+        }
     }
 
-    if (response$status_code != 200) {
-        message("Request failed with status code ", response$status_code, ".")
-        return(NULL)
+    all_users <- vector("list", length(group_id))
+
+    for (i in seq_along(group_id)) {
+        gid <- group_id[i]
+
+        url_res <- paste0(object@endpoint, "restapi/groups/", gid, "/participants")
+
+        req <- request(url_res) %>%
+            req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN")) %>%
+            req_method("GET")
+
+        response <- req %>%
+            req_error(is_error = ~ FALSE) %>%
+            req_perform()
+
+        print(response$status_code)
+
+        if (response$status_code == 404) {
+            message("The group ", gid, " could not be found.")
+            next
+        }
+
+        if (response$status_code == 401) {
+            message("Status Code: 401 Unauthorized for group ", gid, ".")
+            message("Über die notwendigen Berechtigungen verfügen beispielsweise Kursbesitzer/Kursverantwortlichen oder Nutzern von Rechtegruppen mit Berechtigungen für das Bewertungswerkzeug.")
+            next
+        }
+
+        if (response$status_code != 200) {
+            message("Request for group ", gid, " failed with status code ", response$status_code, ".")
+            next
+        }
+
+        parsed_response <- resp_body_xml(response)
+        rlist <- xml2::as_list(parsed_response)$userVO
+
+        if (is.null(rlist) || length(rlist) == 0) {
+            next
+        }
+
+        users_df <- data.frame(
+            group_id = rep(gid, length(rlist)),
+            user_id = sapply(rlist, function(g) get_first_chr(g$key)),
+            user_login = sapply(rlist, function(g) get_first_chr(g$login)),
+            user_first_name = sapply(rlist, function(g) get_first_chr(g$firstName)),
+            user_last_name = sapply(rlist, function(g) get_first_chr(g$lastName)),
+            user_email = sapply(rlist, function(g) get_first_chr(g$email)),
+            stringsAsFactors = FALSE
+        )
+
+        all_users[[i]] <- users_df
     }
 
-    parsed_response <- resp_body_xml(response)
-    rlist <- xml2::as_list(parsed_response)$userVOes
+    all_users <- Filter(Negate(is.null), all_users)
 
-    users_df <- data.frame(
-        user_id = sapply(rlist, function(g) g$key[[1]]),
-        user_login = sapply(rlist, function(g) g$login[[1]]),
-        user_first_name = sapply(rlist, function(g) g$first_name[[1]]),
-        user_last_name = sapply(rlit, function(g) g$last_name[[1]]),
-        user_email = sapply(rlist, function(g) g$email[[1]]),
-        stringsAsFactors = FALSE
-    )
-    return(users_df)
+    if (length(all_users) == 0) {
+        return(data.frame(
+            group_id = character(),
+            user_id = character(),
+            user_login = character(),
+            user_first_name = character(),
+            user_last_name = character(),
+            user_email = character(),
+            stringsAsFactors = FALSE
+        ))
+    }
 
-}
+    out <- do.call(rbind, all_users)
+    rownames(out) <- NULL
+    return(out)
+})
 
 
 #' @importFrom curl form_file

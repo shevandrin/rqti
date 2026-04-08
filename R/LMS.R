@@ -356,15 +356,6 @@ setMethod("getCourseResult", signature(object = "missing"),
                            node_id = node_id, path_outcome = path_outcome, ...))
 })
 
-#' Get groups from a course
-#'
-#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
-#' @param course_id A length one character vector with course id.
-#' @return A data frame with all accessible attributes of the course groups.
-#' @rdname getCourseGroups-methods
-#' @export
-setGeneric("getCourseGroups", function(object, course_id)
-    standardGeneric("getCourseGroups"))
 
 #' Get groups from a course
 #'
@@ -380,7 +371,7 @@ setGeneric("getCourseGroups", function(object, course_id)
 #'
 #' This method retrieves groups from a course on the Learning Management System (LMS)
 #' by its course id. It returns a data frame with all accessible attributes of the
-#' groups, such as group id, name, description, participant limits, and group settings.
+#' groups.
 #' If no LMS connection object is provided, it attempts to guess the connection using
 #' default settings (e.g., environment variables). If the connection cannot be
 #' established, an error is thrown.
@@ -396,6 +387,38 @@ setMethod("getCourseGroups", signature(object = "missing"),
               connection <- get_default_connetion()
               return(getCourseGroups(connection, course_id = course_id))
           })
+
+
+#' Get users from a group
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param group_id A length one character vector with group id.
+#' @return A data frame with all accessible attributes of the group members.
+#' @rdname getGroupUsers-methods
+#' @export
+setGeneric("getGroupUsers", function(object, group_id)
+    standardGeneric("getGroupUsers"))
+
+#'  Get users from a group
+#'
+#' This method retrieves users from a group on the Learning Management System (LMS)
+#' by its group id. It returns a data frame with all accessible attributes of the
+#' group members. If no LMS connection object is provided, it attempts to guess
+#' the connection using default settings (e.g., environment variables). If the
+#' connection cannot be established, an error is thrown.
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param group_id A length one character vector with group id.
+#' @examplesIf interactive()
+#' groups <- getGroupUsers("89068111333293")
+#' @rdname getGroupUsers-methods
+#' @export
+setMethod("getGroupUsers", signature(object = "missing"),
+          function(object, group_id) {
+              connection <- get_default_connetion()
+              return(getGroupUsers(connection, group_id = group_id))
+          })
+
 
 #' @importFrom utils menu
 get_password <- function(service_name, api_user = NULL, psw = NULL) {
