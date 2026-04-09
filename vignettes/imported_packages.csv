@@ -8,7 +8,6 @@ rstudioapi,"Accesses RStudio session details, manages files and projects, and co
 fs,"Offers tools for file system operations.",moderate
 stringr,"Provides functions for string manipulation.",moderate (but frequent in use)
 methods,"Displays methods for a generic function and checks available methods for a specific function.",high
-lubridate,"Converts datestamps to date-time objects (in extract_results.R).",low
 magrittr,"Introduces the %>% operator for piping.",moderate
 httr2,"Facilitates working with HTTP requests.",high
 curl,"Transfers data with URLs, enabling file inclusion in HTTP requests.",high

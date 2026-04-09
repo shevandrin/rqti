@@ -28,7 +28,6 @@ Imports:
     fs,
     stringr,
     methods,
-    lubridate,
     magrittr,
     httr2,
     curl,

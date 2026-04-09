@@ -8,7 +8,6 @@
 #' @param hide_filename A boolean value, TRUE to hide original file names by
 #'   default.
 #' @import xml2
-#' @import lubridate
 #' @importFrom zip zip_list
 #' @return A dataframe with attribues of the candidates outcomes and result
 #'   variables.
@@ -168,7 +167,7 @@ get_result_attr_answers<- function(file, hide_filename) {
     doc <- xml2::read_xml(file)
     node_dt <- xml2::xml_find_first(doc, ".//d1:testResult")
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
-    test_dt <- lubridate::ymd_hms(test_dt)
+    test_dt <- as.POSIXct(strptime(test_dt, "%Y-%m-%d%H:%M:%S", tz = "UTC"))
 
     items_result <- unique_result_set(doc)
 
@@ -268,7 +267,7 @@ get_result_attr_options <- function(file, hide_filename) {
     doc <- xml2::read_xml(file)
     node_dt <- xml2::xml_find_first(doc, ".//d1:testResult")
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
-    test_dt <- lubridate::ymd_hms(test_dt)
+    test_dt <- as.POSIXct(test_dt, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
 
     items_result <- unique_result_set(doc)
 
