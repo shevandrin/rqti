@@ -7,6 +7,8 @@ section and item titles are assigned when not explicitly provided. Supported
 values are "filename" and "generic". The `AssessmentTest` class now includes a
 `fallback_titles` slot.
 
+* Enhanced LMS Opal API with new functions `getCourseGroups()` and `getGroupUsers()` for retrieving course groups and group users as data frames.
+
 ## Improvements
 
 * `extract_results(level = "task")` now includes an additional column containing `scorerComment` for manually scored item results.
