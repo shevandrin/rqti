@@ -548,7 +548,7 @@ setMethod("getGroupUsers", "Opal", function(object, group_id) {
 
         if (response$status_code == 401) {
             message("Status Code: 401 Unauthorized for group ", gid, ".")
-            message("Über die notwendigen Berechtigungen verfügen beispielsweise Kursbesitzer/Kursverantwortlichen oder Nutzern von Rechtegruppen mit Berechtigungen für das Bewertungswerkzeug.")
+            message("The required permissions are typically granted to course owners, course administrators, or users in roles with access to the assessment tool.")
             next
         }
 
