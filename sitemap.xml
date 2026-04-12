@@ -78,8 +78,10 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/getCalculator-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getContributors-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getCourseElements-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getCourseGroups-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getCourseResult-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getFiles-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/getGroupUsers-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getIdentifier-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getLMSResourceURL-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getLMSResources-methods.html</loc></url>
@@ -102,6 +104,8 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/pipe.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/prepareQTIJSFiles-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/prepare_renderer.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/print.qti_validation_result.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/print.qti_validation_results_list.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/publishCourse-Opal-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/publishCourse-missing-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/publishCourse.html</loc></url>
@@ -131,6 +135,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/upload2LMS-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/verify_qti.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/verify_qti_impl.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/wrongFeedback.html</loc></url>
 </urlset>
 

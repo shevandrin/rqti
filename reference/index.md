@@ -148,10 +148,14 @@
   : Get list of contributors values
 - [`getCourseElements()`](https://shevandrin.github.io/rqti/reference/getCourseElements-methods.md)
   : Get elements of the course by courseId from LMS
+- [`getCourseGroups()`](https://shevandrin.github.io/rqti/reference/getCourseGroups-methods.md)
+  : Get groups from a course
 - [`getCourseResult()`](https://shevandrin.github.io/rqti/reference/getCourseResult-methods.md)
   : Get zip with course results by resource id and node id
 - [`getFiles()`](https://shevandrin.github.io/rqti/reference/getFiles-methods.md)
   : Get file paths for attachment of test
+- [`getGroupUsers()`](https://shevandrin.github.io/rqti/reference/getGroupUsers-methods.md)
+  : Get users from a group
 - [`getIdentifier()`](https://shevandrin.github.io/rqti/reference/getIdentifier-methods.md)
   : Get identifier
 - [`getLMSResourceURL()`](https://shevandrin.github.io/rqti/reference/getLMSResourceURL-methods.md)
@@ -193,6 +197,8 @@
   : Prepare files to render them with QTIJS
 - [`prepare_renderer()`](https://shevandrin.github.io/rqti/reference/prepare_renderer.md)
   : Prepare qtijs renderer.
+- [`print(`*`<qti_validation_result>`*`)`](https://shevandrin.github.io/rqti/reference/print.qti_validation_result.md)
+  : Print a QTI validation result
 - [`publishCourse(`*`<Opal>`*`)`](https://shevandrin.github.io/rqti/reference/publishCourse-Opal-method.md)
   : Publish a course on LMS Opal
 - [`publishCourse(`*`<missing>`*`)`](https://shevandrin.github.io/rqti/reference/publishCourse-missing-method.md)
@@ -254,6 +260,8 @@
 - [`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
   : Upload a resource on OPAL
 - [`verify_qti()`](https://shevandrin.github.io/rqti/reference/verify_qti.md)
-  : Verify QTI XML against XSD Schema QTI v2.1
+  : Validate QTI XML
+- [`verify_qti_impl()`](https://shevandrin.github.io/rqti/reference/verify_qti_impl.md)
+  : Validate an XML document against the QTI schema
 - [`wrongFeedback()`](https://shevandrin.github.io/rqti/reference/wrongFeedback.md)
   : Create object WrongFeedback

@@ -1,38 +1,107 @@
-# Verify QTI XML against XSD Schema QTI v2.1
+# Validate QTI XML
 
-This function validates a QTI XML document against the IMS QTI v2.1.2
-XSD schema.
+S4 generic for validating QTI documents in various formats.
 
 ## Usage
 
 ``` r
-verify_qti(doc, extended_scheme = FALSE)
+verify_qti(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
+
+# S4 method for class 'character'
+verify_qti(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
+
+# S4 method for class 'xml_document'
+verify_qti(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
+
+# S4 method for class 'AssessmentItem'
+verify_qti(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
+
+# S4 method for class 'AssessmentTest'
+verify_qti(
+  doc,
+  extended_schema = FALSE,
+  ctx = 40,
+  color = TRUE,
+  engine = c("auto", "xml2", "xmllint"),
+  ignore_import = TRUE,
+  print = TRUE
+)
 ```
 
 ## Arguments
 
 - doc:
 
-  A character string representing the path to the XML file or an `xml2`
-  document object.
+  A QTI document (file path, character string, xml_document, or S4
+  object)
 
-- extended_scheme:
+- extended_schema:
 
-  A boolean value that controls the version of the XSD schema used for
-  validation. If `TRUE`, the extended version is used, allowing
-  additional tags in the XML (e.g., `details`). Default is `FALSE`.
+  Logical. Use extended rqti schema?
+
+- ctx:
+
+  Integer. Context characters for error snippets.
+
+- color:
+
+  Logical. Use ANSI colors?
+
+- engine:
+
+  Character. Validation backend ("auto", "xml2", "xmllint").
+
+- ignore_import:
+
+  Logical. Ignore import warnings?
+
+- print:
+
+  Logical. Print results?
 
 ## Value
 
-A logical value indicating whether the XML document is valid according
-to the schema. If invalid, returns an object detailing the validation
-errors.
+A `qti_validation_result` or `qti_validation_results_list` object.
 
-## Examples
+## Functions
 
-``` r
-if (FALSE) { # \dontrun{
-# Validate an XML file
-result <- verify_qti("path/to/your/qti.xml")
-} # }
-```
+- `verify_qti(character)`: Validate character input (file path or XML
+  string)
+
+- `verify_qti(xml_document)`: Validate xml_document objects
+
+- `verify_qti(AssessmentItem)`: Validate assessmentItem objects
+
+- `verify_qti(AssessmentTest)`: Validate assessmentTest objects

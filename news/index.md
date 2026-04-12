@@ -11,6 +11,12 @@
   explicitly provided. Supported values are “filename” and “generic”.
   The `AssessmentTest` class now includes a `fallback_titles` slot.
 
+- Enhanced LMS Opal API with new functions
+  [`getCourseGroups()`](https://shevandrin.github.io/rqti/reference/getCourseGroups-methods.md)
+  and
+  [`getGroupUsers()`](https://shevandrin.github.io/rqti/reference/getGroupUsers-methods.md)
+  for retrieving course groups and group users as data frames.
+
 ### Improvements
 
 - `extract_results(level = "task")` now includes an additional column

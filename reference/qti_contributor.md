@@ -9,7 +9,7 @@ Creates object of
 qti_contributor(
   name = Sys.getenv("RQTI_AUTHOR"),
   role = "author",
-  contribution_date = ifelse(name != "", Sys.Date(), NA_Date_)
+  contribution_date = ifelse(name != "", Sys.Date(), as.Date(NA))
 )
 ```
 
