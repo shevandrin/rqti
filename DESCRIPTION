@@ -25,7 +25,6 @@ Imports:
     rmarkdown,
     servr,
     rstudioapi,
-    fs,
     stringr,
     methods,
     magrittr,

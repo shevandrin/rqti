@@ -30,7 +30,7 @@ In this type of task, the student is given two sets of items, which need to be m
 The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
 
 ```{r comment='', echo = F}
-path <- fs::path_package("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "rqti")
+path <- system.file("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "rqti")
 cat(readLines(path), sep = '\n')
 ```
 
@@ -54,7 +54,7 @@ which will handle the preview. Clicking the Knit button in RStudio renders the f
 If you want to have more fine-grained control, consider the RMD template ` directedpair (complex)`, wich uses more yaml attributes.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 In OPAL this renders as `r ltx("shown in Figure \\ref{dp2opal}.", "shown in the next image.")` The viewport is a bit too small to capture the entire task.

@@ -5,7 +5,6 @@ yaml,"Manages YAML objects within Rmd files.",high
 rmarkdown,"Processes Markdown documents, extracts YAML objects, and calls Pandoc functions.",high
 servr,"Provides a simple HTTP server.",high
 rstudioapi,"Accesses RStudio session details, manages files and projects, and controls RStudio IDE behavior (Viewer).",high
-fs,"Offers tools for file system operations.",moderate
 stringr,"Provides functions for string manipulation.",moderate (but frequent in use)
 methods,"Displays methods for a generic function and checks available methods for a specific function.",high
 magrittr,"Introduces the %>% operator for piping.",moderate

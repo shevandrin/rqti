@@ -33,7 +33,7 @@ A minimum template is automatically created when you initiate an rqti project th
 The minimum you need to provide is the `type: gap` (or the equivalent `type: cloze`) in the yaml-section and some text, where at least one gap is used, in a section called  **\#question**. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/gap-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/gap-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Clicking on the Knit-button will produce`r ltx(" the output in Figure \\ref{gap1qtijs}.", ":")`
@@ -89,7 +89,7 @@ By clicking on the arrows, the details will unfold.
 If you want to have more fine-grained control, consider the RMD template ` gap (complex)`, which uses more yaml attributes and more complex calls of the helper functions.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/gap-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/gap-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 In OPAL this renders as `r ltx("shown in Figure \\ref{gap2opal}.", ":")`

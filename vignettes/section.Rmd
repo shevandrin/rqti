@@ -38,12 +38,12 @@ Although it is possible to feed a test with tasks directly, we suggest to always
 We designed a simple wrapper for sections. Here we load some files from our package and use the function `section` to create the section. Note that we request 10 different variants of all tasks.
 
 ```{r ghost, include=FALSE}
-path <- fs::path_package("exercises", package = "rqti")
+path <- system.file("exercises", package = "rqti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 ```
 
 ```{r section1, eval=F}
-path <- fs::path_package("exercises", package = "rqti")
+path <- system.file("exercises", package = "rqti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 root_section <- section(content = files, n_variants = 10)
 ```

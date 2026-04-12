@@ -31,7 +31,7 @@ A minimum template is automatically created when you initiate an rqti project th
 The minimum you need to provide is the `type: essay` in the yaml-section and some text as a task description in a section called **\#question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/essay-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/essay-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Figure \\ref{essay1qtijs}.", ":")`
@@ -49,7 +49,7 @@ Note that in this example, a feedback section was also provided. Since an open q
 If you want to have more fine-grained control, consider the RMD template `essay (complex)`, which uses more yaml attributes.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/essay-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which, in OPAL, renders as `r ltx("shown in Figure \\ref{essay2opal}.", ":")`
