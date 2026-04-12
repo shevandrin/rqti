@@ -133,6 +133,41 @@ setMethod("initialize", "AssessmentTestOpenOlat", function(.Object, ...) {
 #'@param points Do not use directly; the maximum number of points for the
 #'  exam/test. It is calculated automatically as a sum of points of included
 #'  tasks.
+#'@param points Do not use directly; the maximum number of points for the
+#'  exam/test. It is calculated automatically as a sum of points of included
+#'  tasks.
+#'@param cancel A logical value, optional, indicating whether participants are
+#'  allowed to cancel an exam after starting it. Default is `FALSE`.
+#'@param suspend A logical value, optional, indicating whether participants are
+#'  allowed to suspend an exam after starting it and continue later. Default is
+#'  `FALSE`.
+#'@param scoreprogress A logical value, optional, indicating whether the
+#'  progress of the score achieved so far should be displayed during the exam.
+#'  Default is `FALSE`.
+#'@param questionprogress A logical value, optional, indicating whether the
+#'  number of solved questions should be displayed during the exam. Default is
+#'  `FALSE`.
+#'@param maxscoreitem A logical value, optional, indicating whether the maximum
+#'  score of an item should be displayed. Default is `TRUE`.
+#'@param menu A logical value, optional, indicating whether the menu should be
+#'  displayed during the exam. Default is `TRUE`.
+#'@param titles A logical value, optional, indicating whether question titles
+#'  should be displayed during the exam. Default is `TRUE`.
+#'@param notes A logical value, optional, indicating whether participants can
+#'  take notes in OpenOlat during the exam. Default is `FALSE`.
+#'@param hidelms A logical value, optional, indicating whether access to the
+#'  OpenOlat learning management system should be hidden during the exam.
+#'  Default is `TRUE`.
+#'@param hidefeedbacks A logical value, optional, indicating whether feedback
+#'  should be hidden. Default is `FALSE`.
+#'@param blockaftersuccess A logical value, optional, indicating whether the
+#'  exam should be blocked after successful completion. Default is `FALSE`.
+#'@param attempts An integer value, optional, indicating how many attempts are
+#'  allowed for the exam as a whole. Default is `1`.
+#'@param anonym A logical value, optional, indicating whether anonymous users
+#'  are allowed to take the exam. Default is `FALSE`.
+#'@param manualcorrect A logical value, optional, indicating whether points and
+#'  pass/fail status should be evaluated manually. Default is `FALSE`.
 #'@return An [AssessmentTestOpenOlat] object.
 #'@seealso [test()], [section()], [assessmentTest()], [AssessmentTest],
 #'  [AssessmentSection]
@@ -143,17 +178,35 @@ setMethod("initialize", "AssessmentTestOpenOlat", function(.Object, ...) {
 #' t <- assessmentTestOpenOlat(list(s), title = "Example of the Exam")
 #'
 #'@export
-assessmentTestOpenOlat <- function(section, identifier = generate_id(type = "test"),
-                               title = identifier, time_limit = NULL,
-                               max_attempts = 1L,
-                               fallback_titles = "generic",
-                               academic_grading = NULL,
-                               grade_label = c(en="Grade", de="Note"),
-                               table_label = c(en="Grade", de="Note"),
-                               navigation_mode = "nonlinear",
-                               submission_mode = "individual",
-                               allow_comment = TRUE, rebuild_variables = TRUE,
-                               metadata = qtiMetadata(), points = NA_real_) {
+assessmentTestOpenOlat <- function(section,
+                                   identifier = generate_id(type = "test"),
+                                   title = identifier,
+                                   time_limit = NULL,
+                                   max_attempts = 1L,
+                                   fallback_titles = "generic",
+                                   academic_grading = NULL,
+                                   grade_label = c(en = "Grade", de = "Note"),
+                                   table_label = c(en = "Grade", de = "Note"),
+                                   navigation_mode = "nonlinear",
+                                   submission_mode = "individual",
+                                   allow_comment = TRUE,
+                                   rebuild_variables = TRUE,
+                                   metadata = qtiMetadata(),
+                                   points = NA_real_,
+                                   cancel = FALSE,
+                                   suspend = FALSE,
+                                   scoreprogress = FALSE,
+                                   questionprogress = FALSE,
+                                   maxscoreitem = TRUE,
+                                   menu = TRUE,
+                                   titles = TRUE,
+                                   notes = FALSE,
+                                   hidelms = TRUE,
+                                   hidefeedbacks = FALSE,
+                                   blockaftersuccess = FALSE,
+                                   attempts = 1L,
+                                   anonym = FALSE,
+                                   manualcorrect = FALSE) {
     params <- as.list(environment())
     params$Class <- "AssessmentTestOpenOlat"
     params$time_limit <- ifelse(is.null(time_limit), NA_integer_, time_limit)
