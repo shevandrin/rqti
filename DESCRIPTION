@@ -59,6 +59,7 @@ Collate:
     'AssessmentSection.R'
     'AssessmentTest.R'
     'AssessmentTestOpal.R'
+    'AssessmentTestOpenOlat.R'
     'Choice.R'
     'CorrectFeedback.R'
     'MatchTable.R'
