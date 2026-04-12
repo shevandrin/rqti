@@ -20,7 +20,21 @@ assessmentTestOpenOlat(
   allow_comment = TRUE,
   rebuild_variables = TRUE,
   metadata = qtiMetadata(),
-  points = NA_real_
+  points = NA_real_,
+  cancel = FALSE,
+  suspend = FALSE,
+  scoreprogress = FALSE,
+  questionprogress = FALSE,
+  maxscoreitem = TRUE,
+  menu = TRUE,
+  titles = TRUE,
+  notes = FALSE,
+  hidelms = TRUE,
+  hidefeedbacks = FALSE,
+  blockaftersuccess = FALSE,
+  attempts = 1L,
+  anonym = FALSE,
+  manualcorrect = FALSE
 )
 ```
 
@@ -130,6 +144,79 @@ assessmentTestOpenOlat(
 
   Do not use directly; the maximum number of points for the exam/test.
   It is calculated automatically as a sum of points of included tasks.
+
+- cancel:
+
+  A logical value, optional, indicating whether participants are allowed
+  to cancel an exam after starting it. Default is `FALSE`.
+
+- suspend:
+
+  A logical value, optional, indicating whether participants are allowed
+  to suspend an exam after starting it and continue later. Default is
+  `FALSE`.
+
+- scoreprogress:
+
+  A logical value, optional, indicating whether the progress of the
+  score achieved so far should be displayed during the exam. Default is
+  `FALSE`.
+
+- questionprogress:
+
+  A logical value, optional, indicating whether the number of solved
+  questions should be displayed during the exam. Default is `FALSE`.
+
+- maxscoreitem:
+
+  A logical value, optional, indicating whether the maximum score of an
+  item should be displayed. Default is `TRUE`.
+
+- menu:
+
+  A logical value, optional, indicating whether the menu should be
+  displayed during the exam. Default is `TRUE`.
+
+- titles:
+
+  A logical value, optional, indicating whether question titles should
+  be displayed during the exam. Default is `TRUE`.
+
+- notes:
+
+  A logical value, optional, indicating whether participants can take
+  notes in OpenOlat during the exam. Default is `FALSE`.
+
+- hidelms:
+
+  A logical value, optional, indicating whether access to the OpenOlat
+  learning management system should be hidden during the exam. Default
+  is `TRUE`.
+
+- hidefeedbacks:
+
+  A logical value, optional, indicating whether feedback should be
+  hidden. Default is `FALSE`.
+
+- blockaftersuccess:
+
+  A logical value, optional, indicating whether the exam should be
+  blocked after successful completion. Default is `FALSE`.
+
+- attempts:
+
+  An integer value, optional, indicating how many attempts are allowed
+  for the exam as a whole. Default is `1`.
+
+- anonym:
+
+  A logical value, optional, indicating whether anonymous users are
+  allowed to take the exam. Default is `FALSE`.
+
+- manualcorrect:
+
+  A logical value, optional, indicating whether points and pass/fail
+  status should be evaluated manually. Default is `FALSE`.
 
 ## Value
 

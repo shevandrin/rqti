@@ -80,7 +80,21 @@
 <span>  allow_comment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  rebuild_variables <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  metadata <span class="op">=</span> <span class="fu"><a href="qtiMetadata.html">qtiMetadata</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  points <span class="op">=</span> <span class="cn">NA_real_</span></span>
+<span>  points <span class="op">=</span> <span class="cn">NA_real_</span>,</span>
+<span>  cancel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  suspend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  scoreprogress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  questionprogress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  maxscoreitem <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  menu <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  titles <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  notes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  hidelms <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  hidefeedbacks <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  blockaftersuccess <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  attempts <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  anonym <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  manualcorrect <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -186,6 +200,80 @@ information about the test. By default it creates <a href="QtiMetadata-class.htm
 <dd><p>Do not use directly; the maximum number of points for the
 exam/test. It is calculated automatically as a sum of points of included
 tasks.</p></dd>
+
+
+<dt id="arg-cancel">cancel<a class="anchor" aria-label="anchor" href="#arg-cancel"></a></dt>
+<dd><p>A logical value, optional, indicating whether participants are
+allowed to cancel an exam after starting it. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-suspend">suspend<a class="anchor" aria-label="anchor" href="#arg-suspend"></a></dt>
+<dd><p>A logical value, optional, indicating whether participants are
+allowed to suspend an exam after starting it and continue later. Default is
+<code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-scoreprogress">scoreprogress<a class="anchor" aria-label="anchor" href="#arg-scoreprogress"></a></dt>
+<dd><p>A logical value, optional, indicating whether the
+progress of the score achieved so far should be displayed during the exam.
+Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-questionprogress">questionprogress<a class="anchor" aria-label="anchor" href="#arg-questionprogress"></a></dt>
+<dd><p>A logical value, optional, indicating whether the
+number of solved questions should be displayed during the exam. Default is
+<code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-maxscoreitem">maxscoreitem<a class="anchor" aria-label="anchor" href="#arg-maxscoreitem"></a></dt>
+<dd><p>A logical value, optional, indicating whether the maximum
+score of an item should be displayed. Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-menu">menu<a class="anchor" aria-label="anchor" href="#arg-menu"></a></dt>
+<dd><p>A logical value, optional, indicating whether the menu should be
+displayed during the exam. Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-titles">titles<a class="anchor" aria-label="anchor" href="#arg-titles"></a></dt>
+<dd><p>A logical value, optional, indicating whether question titles
+should be displayed during the exam. Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-notes">notes<a class="anchor" aria-label="anchor" href="#arg-notes"></a></dt>
+<dd><p>A logical value, optional, indicating whether participants can
+take notes in OpenOlat during the exam. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-hidelms">hidelms<a class="anchor" aria-label="anchor" href="#arg-hidelms"></a></dt>
+<dd><p>A logical value, optional, indicating whether access to the
+OpenOlat learning management system should be hidden during the exam.
+Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-hidefeedbacks">hidefeedbacks<a class="anchor" aria-label="anchor" href="#arg-hidefeedbacks"></a></dt>
+<dd><p>A logical value, optional, indicating whether feedback
+should be hidden. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-blockaftersuccess">blockaftersuccess<a class="anchor" aria-label="anchor" href="#arg-blockaftersuccess"></a></dt>
+<dd><p>A logical value, optional, indicating whether the
+exam should be blocked after successful completion. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-attempts">attempts<a class="anchor" aria-label="anchor" href="#arg-attempts"></a></dt>
+<dd><p>An integer value, optional, indicating how many attempts are
+allowed for the exam as a whole. Default is <code>1</code>.</p></dd>
+
+
+<dt id="arg-anonym">anonym<a class="anchor" aria-label="anchor" href="#arg-anonym"></a></dt>
+<dd><p>A logical value, optional, indicating whether anonymous users
+are allowed to take the exam. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-manualcorrect">manualcorrect<a class="anchor" aria-label="anchor" href="#arg-manualcorrect"></a></dt>
+<dd><p>A logical value, optional, indicating whether points and
+pass/fail status should be evaluated manually. Default is <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
