@@ -221,7 +221,28 @@ assessmentTestOpenOlat <- function(section,
 #' @importFrom exams openolat_config
 setMethod("createConfigurationFile", signature(object = "AssessmentTestOpenOlat"),
           function(object, output) {
-              cfg <- exams::openolat_config()[["QTI21PackageConfig.xml"]]
+
+              args <- list(
+                  cancel = object@cancel,
+                  suspend = object@suspend,
+                  scoreprogress = object@scoreprogress,
+                  questionprogress = object@questionprogress,
+                  maxscoreitem = object@maxscoreitem,
+                  menu = object@menu,
+                  titles = object@titles,
+                  notes = object@notes,
+                  hidelms = object@hidelms,
+                  hidefeedbacks = object@hidefeedbacks,
+                  blockaftersuccess = object@blockaftersuccess,
+                  attempts = object@attempts,
+                  anonym = object@anonym,
+                  manualcorrect = object@manualcorrect
+              )
+              cfg <- do.call(exams::openolat_config, args)[["QTI21PackageConfig.xml"]]
+              if (is.null(cfg)) {
+                  warning("exams::openolat_config() did not return 'QTI21PackageConfig.xml'.",
+                       call. = FALSE)
+              }
               xml_string <- paste(cfg, collapse = "\n")
               dir.create(output, recursive = TRUE, showWarnings = FALSE)
               writeLines(
