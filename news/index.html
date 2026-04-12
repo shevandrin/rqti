@@ -62,7 +62,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Added <code>fallback_titles</code> argument to <code><a href="../reference/test.html">test()</a></code> and <code><a href="../reference/test4opal.html">test4opal()</a></code> to control how section and item titles are assigned when not explicitly provided. Supported values are “filename” and “generic”. The <code>AssessmentTest</code> class now includes a <code>fallback_titles</code> slot.</p></li>
+<ul><li><p>Added support for OpenOlat via a new class AssessmentTestOpenOlat.It introduced OpenOlat-specific configuration options (e.g., navigation behavior, visibility settings, number of attempts) as slots and corresponding arguments in assessmentTestOpenOlat().</p></li>
+<li><p>Added <code>fallback_titles</code> argument to <code><a href="../reference/test.html">test()</a></code> and <code><a href="../reference/test4opal.html">test4opal()</a></code> to control how section and item titles are assigned when not explicitly provided. Supported values are “filename” and “generic”. The <code>AssessmentTest</code> class now includes a <code>fallback_titles</code> slot.</p></li>
 <li><p>Enhanced LMS Opal API with new functions <code><a href="../reference/getCourseGroups-methods.html">getCourseGroups()</a></code> and <code><a href="../reference/getGroupUsers-methods.html">getGroupUsers()</a></code> for retrieving course groups and group users as data frames.</p></li>
 </ul></div>
 <div class="section level3">

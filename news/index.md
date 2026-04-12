@@ -4,6 +4,11 @@
 
 ### New features
 
+- Added support for OpenOlat via a new class AssessmentTestOpenOlat.It
+  introduced OpenOlat-specific configuration options (e.g., navigation
+  behavior, visibility settings, number of attempts) as slots and
+  corresponding arguments in assessmentTestOpenOlat().
+
 - Added `fallback_titles` argument to
   [`test()`](https://shevandrin.github.io/rqti/reference/test.md) and
   [`test4opal()`](https://shevandrin.github.io/rqti/reference/test4opal.md)
