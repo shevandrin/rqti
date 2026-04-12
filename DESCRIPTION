@@ -35,7 +35,8 @@ Imports:
     keyring,
     zip,
     textutils,
-    lifecycle
+    lifecycle,
+    exams
 Suggests:
     covr,
     dplyr,

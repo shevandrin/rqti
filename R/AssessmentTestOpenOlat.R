@@ -24,7 +24,7 @@
 #'             section = list(exam_section),
 #'             time_limit = 90,
 #'             max_attempts = 1,
-#'             grade_label = "Preliminary grade"
+#'             grade_label = "Preliminary grade")
 #' @name AssessmentTestOpenOlat-class
 #' @rdname AssessmentTestOpenOlat-class
 #' @aliases AssessmentTestOpenOlat
@@ -128,3 +128,18 @@ assessmentTestOpenOlat <- function(section, identifier = generate_id(type = "tes
     return(obj)
 }
 
+
+
+#' @rdname createConfigurationFile-methods
+#' @aliases createConfigurationFile,AssessmentTestOpenOlat
+#' @importFrom exams openolat_config
+setMethod("createConfigurationFile", signature(object = "AssessmentTestOpenOlat"),
+          function(object, output) {
+              cfg <- exams::openolat_config()[["QTI21PackageConfig.xml"]]
+              xml_string <- paste(cfg, collapse = "\n")
+              dir.create(output, recursive = TRUE, showWarnings = FALSE)
+              writeLines(
+                  xml_string,
+                  con = file.path(output, "QTI21PackageConfig.xml")
+              )
+          })

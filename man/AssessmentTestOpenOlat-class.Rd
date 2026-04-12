@@ -119,7 +119,7 @@ exam <- new("AssessmentTestOpenOlat",
             section = list(exam_section),
             time_limit = 90,
             max_attempts = 1,
-            grade_label = "Preliminary grade"
+            grade_label = "Preliminary grade")
 }
 \seealso{
 \link{AssessmentSection}, \link{AssessmentTest}, \code{\link[=section]{section()}}.
