@@ -30,7 +30,6 @@ Imports:
     magrittr,
     httr2,
     curl,
-    digest,
     knitr,
     getPass,
     keyring,

@@ -10,7 +10,6 @@ methods,"Displays methods for a generic function and checks available methods fo
 magrittr,"Introduces the %>% operator for piping.",moderate
 httr2,"Facilitates working with HTTP requests.",high
 curl,"Transfers data with URLs, enabling file inclusion in HTTP requests.",high
-digest,"Generates file name hashes using the SHA-1 algorithm (in extract_results.R) to handle sensitive information.",moderate
 knitr,"Creates HTML and compiles dynamic documents written in R Markdown with embedded R code.",high
 getPass,"Hides user passwords (in API).",high
 keyring,"Securely stores and retrieves sensitive authentication data.",high
