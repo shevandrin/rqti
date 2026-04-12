@@ -14,6 +14,9 @@
 - [`AssessmentTestOpal-class`](https://shevandrin.github.io/rqti/reference/AssessmentTestOpal-class.md)
   [`AssessmentTestOpal`](https://shevandrin.github.io/rqti/reference/AssessmentTestOpal-class.md)
   : Class "AssessmentTestOpal"
+- [`AssessmentTestOpenOlat-class`](https://shevandrin.github.io/rqti/reference/AssessmentTestOpenOlat-class.md)
+  [`AssessmentTestOpenOlat`](https://shevandrin.github.io/rqti/reference/AssessmentTestOpenOlat-class.md)
+  : Class "AssessmentTestOpenOlat"
 - [`Choice-class`](https://shevandrin.github.io/rqti/reference/Choice-class.md)
   [`Choice`](https://shevandrin.github.io/rqti/reference/Choice-class.md)
   : Class "Choice"
@@ -89,6 +92,8 @@
   : Create an object AssessmentTest
 - [`assessmentTestOpal()`](https://shevandrin.github.io/rqti/reference/assessmentTestOpal.md)
   : Create an object AssessmentTestOpal
+- [`assessmentTestOpenOlat()`](https://shevandrin.github.io/rqti/reference/assessmentTestOpenOlat.md)
+  : Create an object AssessmentTestOpenOlat
 - [`authLMS()`](https://shevandrin.github.io/rqti/reference/authLMS-methods.md)
   : Authenticate with LMS
 - [`buildAssessmentSection()`](https://shevandrin.github.io/rqti/reference/buildAssessmentSection-methods.md)
