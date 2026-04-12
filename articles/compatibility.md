@@ -122,6 +122,15 @@ works:
 
 ## OpenOlat
 
+For OpenOlat, a dedicated class AssessmentTestOpenOlat is available.
+Compared to the standard AssessmentTest, it allows specifying
+OpenOlat-specific settings (e.g., navigation behavior, visibility of
+elements, number of attempts).
+
+When creating a test via createQtiTest(), the corresponding
+configuration file (QTI21PackageConfig.xml) is automatically generated
+and included in the package.
+
 The following functionalities are currently non-functional on OpenOlat:
 
 - The parameters `include_lower_bound` and `include_upper_bound` in the

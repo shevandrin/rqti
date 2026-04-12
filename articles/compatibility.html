@@ -200,6 +200,13 @@ file via base64 encoding.</p>
 <div class="section level2">
 <h2 id="openolat">OpenOlat<a class="anchor" aria-label="anchor" href="#openolat"></a>
 </h2>
+<p>For OpenOlat, a dedicated class AssessmentTestOpenOlat is available.
+Compared to the standard AssessmentTest, it allows specifying
+OpenOlat-specific settings (e.g., navigation behavior, visibility of
+elements, number of attempts).</p>
+<p>When creating a test via createQtiTest(), the corresponding
+configuration file (QTI21PackageConfig.xml) is automatically generated
+and included in the package.</p>
 <p>The following functionalities are currently non-functional on
 OpenOlat:</p>
 <ul>
