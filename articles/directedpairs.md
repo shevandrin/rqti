@@ -1,5 +1,9 @@
 # Directed Pair tasks
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 ## Minimum version
 
 In this type of task, the student is given two sets of items, which need

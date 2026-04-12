@@ -1,5 +1,9 @@
 # Order tasks
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 In this type of task, the candidate has to bring a list of items in the
 correct order.
 

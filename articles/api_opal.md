@@ -1,5 +1,9 @@
 # Working with the OPAL API
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 The `rqti` package facilitates seamless content uploads to the OPAL
 learning management system through its `upload2opal` function,
 leveraging the OPAL API. In addition, there are useful functions to get

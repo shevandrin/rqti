@@ -1,5 +1,9 @@
 # Adding metadata
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 Metadata—including details about creators, rights, and descriptions—is
 essential for ensuring accountability, legal compliance, and clarity in
 the management and use of assessment items and tests. This information

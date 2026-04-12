@@ -102,6 +102,8 @@
   : Create object CorrectFeedback
 - [`createAssessmentTest()`](https://shevandrin.github.io/rqti/reference/createAssessmentTest-methods.md)
   : Create an element assessmentTest of a qti-xml document for test
+- [`createConfigurationFile()`](https://shevandrin.github.io/rqti/reference/createConfigurationFile-methods.md)
+  : Create a configuration file for QTI test
 - [`createItemBody()`](https://shevandrin.github.io/rqti/reference/createItemBody-methods.md)
   : Create an element itemBody of a qti-xml document
 - [`createMetadata()`](https://shevandrin.github.io/rqti/reference/createMetadata-methods.md)

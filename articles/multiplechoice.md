@@ -1,5 +1,9 @@
 # Multiple Choice tasks
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 This is just a normal multiple choice task.
 
 ## Minimum version

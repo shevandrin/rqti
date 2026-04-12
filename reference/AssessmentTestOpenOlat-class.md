@@ -139,3 +139,23 @@ questions/tasks and/or one or more sub sections.
 [`section()`](https://shevandrin.github.io/rqti/reference/section.md).
 
 ## Examples
+
+``` r
+# This example creates test 'exam' with one section 'exam_section' which
+# consists of two questions/tasks: essay and single choice types
+task1 <- new("Essay", prompt = "Test task", title = "Essay",
+             identifier = "q1")
+task2 <- new("SingleChoice", prompt = "Test task", title = "SingleChoice",
+             choices = c("A", "B", "C"), identifier = "q2")
+exam_section <- new("AssessmentSection", identifier = "sec_id",
+                    title = "section", assessment_item = list(task1, task2))
+exam <- new("AssessmentTestOpenOlat",
+            identifier = "id_test_1234",
+            title = "Example of Exam",
+            navigation_mode = "linear",
+            submission_mode = "individual",
+            section = list(exam_section),
+            time_limit = 90,
+            max_attempts = 1,
+            grade_label = "Preliminary grade")
+```

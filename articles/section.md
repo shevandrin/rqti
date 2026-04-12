@@ -1,5 +1,9 @@
 # Sections and Tests
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 Creating single tasks is not particularly useful as one usually wants to
 combine different tasks into a test. A test in the QTI standard
 typically consists of one or more sections. Each Section can contain a

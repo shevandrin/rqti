@@ -1,5 +1,9 @@
 # Table tasks
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 In this type of task, the candidate matches rows with columns in a
 table. This format is often used when multiple questions need to be
 displayed concisely. Table tasks are highly versatile and are ideal for

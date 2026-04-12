@@ -1,5 +1,9 @@
 # Gap tasks
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 In this task format, candidates are required to fill in one or more
 gaps. We believe this method is one of the most effective ways to assess
 students’ abilities, as it reduces the likelihood of guessing compared

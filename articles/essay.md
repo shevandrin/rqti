@@ -1,5 +1,9 @@
 # Essay tasks
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 This is a standard essay task with an open field for students to write a
 comprehensive response.
 

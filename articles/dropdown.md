@@ -1,5 +1,9 @@
 # Dropdown tasks
 
+    #> Registered S3 method overwritten by 'textutils':
+    #>   method             from 
+    #>   toLatex.data.frame exams
+
 In this type of task, the candidate has to select an element form a
 dropdown-list. Note that our package implements dropdowns as
 *entry*-objects because this is essentially what dropwdowns are. Several
