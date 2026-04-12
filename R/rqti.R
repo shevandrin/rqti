@@ -5,14 +5,24 @@ generate_id <- function(prefix = "id_", type = "task", digits = 4L) {
 }
 
 check_identifier <- function(id, quiet = FALSE) {
-    checker = grepl("^[A-Za-z]", id)
-    checker <- checker & !grepl("[\u00C4\u00E4\u00DF\u00D6\u00F6\u00DC\u00FC]", id)
+    if (!is.character(id) || length(id) != 1) {
+        stop("Identifier must be a single character string.", call. = FALSE)
+    }
+
+    checker <- grepl("^[A-Za-z_][A-Za-z0-9_\\-\\.]*$", id)
+    checker <- checker & !grepl(":", id)
     checker <- checker & !grepl("\\s", id)
+    checker <- checker & !grepl("[\u00C4\u00E4\u00DF\u00D6\u00F6\u00DC\u00FC]", id)
 
     if (!checker && !quiet) {
-        stop("The identifier must start with a letter and not contain spaces",
-        " or umlauts. Error value: ", id, call. = FALSE)
+        stop(
+            "Invalid identifier '", id,
+            "'. Must start with a letter or '_' and contain only letters, digits, '_', '-', '.'. ",
+            "No spaces or ':' allowed.",
+            call. = FALSE
+        )
     }
+
     return(checker)
 }
 
