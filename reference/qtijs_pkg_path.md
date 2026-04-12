@@ -12,5 +12,5 @@ qtijs_pkg_path()
 
 ``` r
   qtijs_pkg_path()
-#> /home/runner/work/_temp/Library/rqti/QTIJS
+#> [1] ""
 ```

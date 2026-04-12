@@ -32,7 +32,7 @@ our package and use the function `section` to create the section. Note
 that we request 10 different variants of all tasks.
 
 ``` r
-path <- fs::path_package("exercises", package = "rqti")
+path <- system.file("exercises", package = "rqti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 root_section <- section(content = files, n_variants = 10)
 ```

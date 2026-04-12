@@ -211,7 +211,7 @@ sections:</p>
 <p>First, it is important to know that you can create an object directly
 from Rmd files:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">scpath</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">path_package</a></span><span class="op">(</span><span class="st">"rmarkdown/templates/singlechoice-simple/skeleton"</span>, </span>
+<code class="sourceCode R"><span><span class="va">scpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"rmarkdown/templates/singlechoice-simple/skeleton"</span>, </span>
 <span>                           <span class="st">"skeleton.Rmd"</span>, package <span class="op">=</span> <span class="st">"rqti"</span><span class="op">)</span></span>
 <span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">:::</span><span class="fu"><a href="../reference/create_question_object.html">create_question_object</a></span><span class="op">(</span><span class="va">scpath</span><span class="op">)</span></span>
 <span><span class="va">sc</span></span>

@@ -105,7 +105,7 @@ First, it is important to know that you can create an object directly
 from Rmd files:
 
 ``` r
-scpath <- fs::path_package("rmarkdown/templates/singlechoice-simple/skeleton", 
+scpath <- system.file("rmarkdown/templates/singlechoice-simple/skeleton", 
                            "skeleton.Rmd", package = "rqti")
 sc <- rqti:::create_question_object(scpath)
 sc
