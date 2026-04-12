@@ -16,4 +16,5 @@ keyring,"Securely stores and retrieves sensitive authentication data.",high
 zip,"Manipulates ZIP archives.",high
 textutils,"Decodes HTML entities.",high
 lifecycle, "Deliver warnings about depricated functionality", high
+exams, "Integration with exams package", high
 
