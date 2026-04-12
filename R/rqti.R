@@ -4,6 +4,7 @@ generate_id <- function(prefix = "id_", type = "task", digits = 4L) {
     return(id)
 }
 
+
 check_identifier <- function(id, quiet = FALSE) {
     if (!is.character(id) || length(id) != 1) {
         stop("Identifier must be a single character string.", call. = FALSE)
@@ -25,6 +26,16 @@ check_identifier <- function(id, quiet = FALSE) {
 
     return(checker)
 }
+
+
+repair_identifier <- function(id) {
+    if (!is.character(id) || length(id) != 1) {
+        stop("Identifier must be a single character string.", call. = FALSE)
+    }
+
+    gsub("\\s+", "_", id)
+}
+
 
 # helper to put default value into slots of classes without na values
 replace_na <- function(input) {
