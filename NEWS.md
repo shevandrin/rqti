@@ -2,6 +2,8 @@
 
 ## New features
 
+* Added support for OpenOlat via a new class AssessmentTestOpenOlat.It introduced OpenOlat-specific configuration options (e.g., navigation behavior, visibility settings, number of attempts) as slots and corresponding arguments in assessmentTestOpenOlat().
+
 * Added `fallback_titles` argument to `test()` and `test4opal()` to control how
 section and item titles are assigned when not explicitly provided. Supported
 values are "filename" and "generic". The `AssessmentTest` class now includes a
