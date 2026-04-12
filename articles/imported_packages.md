@@ -21,5 +21,6 @@
 |    15 | zip        | Manipulates ZIP archives.                                                                                 | high                           |
 |    16 | textutils  | Decodes HTML entities.                                                                                    | high                           |
 |    17 | lifecycle  | Deliver warnings about depricated functionality                                                           | high                           |
+|    18 | exams      | Integration with exams package                                                                            | high                           |
 
 Imported and suggested packages
