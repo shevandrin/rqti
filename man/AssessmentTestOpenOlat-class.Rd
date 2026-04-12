@@ -100,6 +100,52 @@ is added in addition and may override default styles.}
 
 \item{\code{metadata}}{An object of class \link{QtiMetadata} that holds metadata information
 about the test.}
+
+\item{\code{cancel}}{A logical value, optional, indicating whether participants are
+allowed to cancel an exam after starting it. Default is \code{FALSE}.}
+
+\item{\code{suspend}}{A logical value, optional, indicating whether participants are
+allowed to suspend an exam after starting it and continue later.
+Default is \code{FALSE}.}
+
+\item{\code{scoreprogress}}{A logical value, optional, indicating whether the
+progress of the score achieved so far should be displayed during the exam.
+Default is \code{FALSE}.}
+
+\item{\code{questionprogress}}{A logical value, optional, indicating whether the
+number of solved questions should be displayed during the exam.
+Default is \code{FALSE}.}
+
+\item{\code{maxscoreitem}}{A logical value, optional, indicating whether the maximum
+score of an item should be displayed. Default is \code{TRUE}.}
+
+\item{\code{menu}}{A logical value, optional, indicating whether the menu should be
+displayed during the exam. Default is \code{TRUE}.}
+
+\item{\code{titles}}{A logical value, optional, indicating whether question titles
+should be displayed during the exam. Default is \code{TRUE}.}
+
+\item{\code{notes}}{A logical value, optional, indicating whether participants can
+take notes in OpenOlat during the exam. Default is \code{FALSE}.}
+
+\item{\code{hidelms}}{A logical value, optional, indicating whether access to the
+OpenOlat learning management system should be hidden during the exam.
+Default is \code{TRUE}.}
+
+\item{\code{hidefeedbacks}}{A logical value, optional, indicating whether feedback
+should be hidden. Default is \code{FALSE}.}
+
+\item{\code{blockaftersuccess}}{A logical value, optional, indicating whether the
+exam should be blocked after successful completion. Default is \code{FALSE}.}
+
+\item{\code{attempts}}{An integer value, optional, indicating how many attempts are
+allowed for the exam as a whole. Default is \code{1}.}
+
+\item{\code{anonym}}{A logical value, optional, indicating whether anonymous users
+are allowed to take the exam. Default is \code{FALSE}.}
+
+\item{\code{manualcorrect}}{A logical value, optional, indicating whether points and
+pass/fail status should be evaluated manually. Default is \code{FALSE}.}
 }}
 
 \examples{

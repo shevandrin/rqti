@@ -6,6 +6,7 @@
 #' Test consists of one or more sections. Each section can have one or more
 #'  questions/tasks and/or one or more sub sections.
 #' @template ATSlotsTemplate
+#' @template ATOOSlotsTemplate
 #' @seealso [AssessmentSection], [AssessmentTest], [section()].
 #' @examples
 #' # This example creates test 'exam' with one section 'exam_section' which
@@ -30,7 +31,39 @@
 #' @aliases AssessmentTestOpenOlat
 #' @exportClass AssessmentTestOpenOlat
 #' @include AssessmentTest.R
-setClass("AssessmentTestOpenOlat", contains = "AssessmentTest")
+setClass("AssessmentTestOpenOlat", contains = "AssessmentTest",
+         slots = c(
+             cancel = "logical",
+             suspend = "logical",
+             scoreprogress = "logical",
+             questionprogress = "logical",
+             maxscoreitem = "logical",
+             menu = "logical",
+             titles = "logical",
+             notes = "logical",
+             hidelms = "logical",
+             hidefeedbacks = "logical",
+             blockaftersuccess = "logical",
+             attempts = "integer",
+             anonym = "logical",
+             manualcorrect = "logical"
+         ),
+         prototype = list(
+             cancel = FALSE,
+             suspend = FALSE,
+             scoreprogress = FALSE,
+             questionprogress = FALSE,
+             maxscoreitem = TRUE,
+             menu = TRUE,
+             titles = TRUE,
+             notes = FALSE,
+             hidelms = TRUE,
+             hidefeedbacks = FALSE,
+             blockaftersuccess = FALSE,
+             attempts = 1L,
+             anonym = FALSE,
+             manualcorrect = FALSE
+         ))
 
 setMethod("initialize", "AssessmentTestOpenOlat", function(.Object, ...) {
     .Object <- callNextMethod()
