@@ -242,11 +242,11 @@ setMethod("createConfigurationFile", signature(object = "AssessmentTestOpenOlat"
               if (is.null(cfg)) {
                   warning("exams::openolat_config() did not return 'QTI21PackageConfig.xml'.",
                        call. = FALSE)
+                  return(invisible(NULL))
               }
-              xml_string <- paste(cfg, collapse = "\n")
               dir.create(output, recursive = TRUE, showWarnings = FALSE)
               writeLines(
-                  xml_string,
+                  cfg,
                   con = file.path(output, "QTI21PackageConfig.xml")
               )
           })
