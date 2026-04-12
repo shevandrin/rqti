@@ -70,3 +70,15 @@ lines_expected <- function(input) {
         return(NA_integer_)
     }
 }
+
+# helper to show warning once for recurrent warning messages
+warn_once <- local({
+    warned <- new.env(parent = emptyenv())
+
+    function(msg, id) {
+        if (!exists(id, envir = warned)) {
+            assign(id, TRUE, envir = warned)
+            warning(msg, call. = FALSE)
+        }
+    }
+})
