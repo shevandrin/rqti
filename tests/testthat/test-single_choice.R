@@ -118,6 +118,11 @@ test_that("Test createResponseProcessing() for SingleChoice class", {
           <variable identifier="MAXSCORE"></variable>
       </setOutcomeValue>
     </responseElseIf>
+    <responseElse>
+      <setOutcomeValue identifier="SCORE">
+        <variable identifier="MINSCORE"></variable>
+      </setOutcomeValue>
+    </responseElse>
   </responseCondition>
   <responseCondition>
     <responseIf>

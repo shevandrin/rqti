@@ -80,7 +80,8 @@ make_first_cond_sc_order <- function() {
     match_tag <- match(list(variable("RESPONSE"), correct("RESPONSE")))
     set_ov_tag <- setOutcomeValue(list(identifier = "SCORE", variable("MAXSCORE")))
     response_elseif <- responseElseIf(list(match_tag, set_ov_tag))
-    resp_cond1 <- responseCondition(list(response_if, response_elseif))
+    response_else <- responseElse(list(setOutcomeValue(list(identifier = "SCORE", variable("MINSCORE")))))
+    resp_cond1 <- responseCondition(list(response_if, response_elseif, response_else))
     return(resp_cond1)
 }
 
