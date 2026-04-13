@@ -28,7 +28,22 @@
 #' @exportClass SingleChoice
 #' @include AssessmentItem.R Choice.R
 setClass("SingleChoice", contains = "Choice",
-         slots = list(solution = "numeric"), prototype = list(solution = 1))
+         slots = list(solution = "numeric",
+                      scoring_scheme = "character"),
+         prototype = list(solution = 1,
+                          scoring_scheme = "standard"),
+         validity = function(object) {
+             if (length(object@scoring_scheme) != 1 ||
+                 !object@scoring_scheme %in% c("standard", "penalty")) {
+                 return("Slot 'scoring_scheme' must be either 'standard' or 'penalty'.")
+             }
+             TRUE
+             })
+setMethod("initialize", "SingleChoice", function(.Object, ...) {
+    .Object <- callNextMethod()
+    validObject(.Object)
+    .Object
+})
 
 #' Create object [SingleChoice]
 #'
@@ -69,6 +84,13 @@ setClass("SingleChoice", contains = "Choice",
 #'   * "scientific".
 #' @param files A character vector, optional, containing paths to files that
 #'   will be accessible to the candidate during the test/exam.
+#' @param scoring_scheme A character value, optional, defining how response
+#'   options are scored. Possible values:
+#'   * "standard" - the correct answer receives full points and incorrect
+#'   answers receive 0. This is used by default.
+#'   * "penalty" - the correct answer receives full points and incorrect
+#'   answers receive a negative score of -1/(k-1), where k is the number of
+#'   response options.
 #' @return An object of class [SingleChoice]
 #' @examples
 #' sc_min <- singleChoice(prompt = "Question?",
@@ -102,7 +124,8 @@ singleChoice <- function(identifier = generate_id(),
                          orientation = "vertical",
                          shuffle = TRUE,
                          calculator = NA_character_,
-                         files = NA_character_) {
+                         files = NA_character_,
+                         scoring_scheme = "standard") {
     params <- as.list(environment())
     if (is.character(params$content)) params$content <- list(params$content)
     params$Class <- "SingleChoice"
