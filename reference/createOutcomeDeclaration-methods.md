@@ -19,6 +19,9 @@ createOutcomeDeclaration(object)
 
 # S4 method for class 'Gap'
 createOutcomeDeclaration(object)
+
+# S4 method for class 'SingleChoice'
+createOutcomeDeclaration(object)
 ```
 
 ## Arguments
