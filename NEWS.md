@@ -2,12 +2,15 @@
 
 ## New features
 
-* Added support for OpenOlat via a new class AssessmentTestOpenOlat.It introduced OpenOlat-specific configuration options (e.g., navigation behavior, visibility settings, number of attempts) as slots and corresponding arguments in assessmentTestOpenOlat().
+* Added support for OpenOlat via a new class `AssessmentTestOpenOlat`.It introduced OpenOlat-specific configuration options (e.g., navigation behavior, visibility settings, number of attempts) as slots and corresponding arguments in `assessmentTestOpenOlat()`.
 
 * Added `fallback_titles` argument to `test()` and `test4opal()` to control how
 section and item titles are assigned when not explicitly provided. Supported
 values are "filename" and "generic". The `AssessmentTest` class now includes a
 `fallback_titles` slot.
+
+* Added a new slot `scoring_scheme` to the `SingleChoice` class to control how response options are scored. Supported values are "standard" (default) and "penalty".
+Introduced penalty-based scoring for single-choice tasks. When `scoring_scheme = "penalty"`, incorrect answers receive a negative score of -points/(k-1), where k is the number of response options. This ensures that random guessing yields an expected score of zero.
 
 * Enhanced LMS Opal API with new functions `getCourseGroups()` and `getGroupUsers()` for retrieving course groups and group users as data frames.
 
