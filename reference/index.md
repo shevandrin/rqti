@@ -206,6 +206,8 @@
   : Prepare qtijs renderer.
 - [`print(`*`<qti_validation_result>`*`)`](https://shevandrin.github.io/rqti/reference/print.qti_validation_result.md)
   : Print a QTI validation result
+- [`provide_file()`](https://shevandrin.github.io/rqti/reference/provide_file.md)
+  : Embed a local file as a downloadable hyperlink in R Markdown
 - [`publishCourse(`*`<Opal>`*`)`](https://shevandrin.github.io/rqti/reference/publishCourse-Opal-method.md)
   : Publish a course on LMS Opal
 - [`publishCourse(`*`<missing>`*`)`](https://shevandrin.github.io/rqti/reference/publishCourse-missing-method.md)
