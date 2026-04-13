@@ -113,6 +113,9 @@ sc
 #> Slot "solution":
 #> [1] 1
 #> 
+#> Slot "scoring_scheme":
+#> [1] "standard"
+#> 
 #> Slot "choices":
 #> [1] "There is a 5% probability that you will mistakenly reject the null hypothesis, when it is actually correct. "
 #> [2] "There is a 5% probability that the null hypothesis is correct."                                              

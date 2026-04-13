@@ -78,7 +78,8 @@
 <span>  orientation <span class="op">=</span> <span class="st">"vertical"</span>,</span>
 <span>  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  calculator <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  files <span class="op">=</span> <span class="cn">NA_character_</span></span>
+<span>  files <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
+<span>  scoring_scheme <span class="op">=</span> <span class="st">"standard"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -160,6 +161,16 @@ calculator to the candidate. Possible values:</p><ul><li><p>"simple"</p></li>
 <dt id="arg-files">files<a class="anchor" aria-label="anchor" href="#arg-files"></a></dt>
 <dd><p>A character vector, optional, containing paths to files that
 will be accessible to the candidate during the test/exam.</p></dd>
+
+
+<dt id="arg-scoring-scheme">scoring_scheme<a class="anchor" aria-label="anchor" href="#arg-scoring-scheme"></a></dt>
+<dd><p>A character value, optional, defining how response
+options are scored. Possible values:</p><ul><li><p>"standard" - the correct answer receives full points and incorrect
+answers receive 0. This is used by default.</p></li>
+<li><p>"penalty" - the correct answer receives full points and incorrect
+answers receive a negative score of -1/(k-1), where k is the number of
+response options.</p></li>
+</ul></dd>
 
 </dl></div>
     <div class="section level2">

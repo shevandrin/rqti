@@ -19,7 +19,8 @@ singleChoice(
   orientation = "vertical",
   shuffle = TRUE,
   calculator = NA_character_,
-  files = NA_character_
+  files = NA_character_,
+  scoring_scheme = "standard"
 )
 ```
 
@@ -106,6 +107,18 @@ singleChoice(
 
   A character vector, optional, containing paths to files that will be
   accessible to the candidate during the test/exam.
+
+- scoring_scheme:
+
+  A character value, optional, defining how response options are scored.
+  Possible values:
+
+  - "standard" - the correct answer receives full points and incorrect
+    answers receive 0. This is used by default.
+
+  - "penalty" - the correct answer receives full points and incorrect
+    answers receive a negative score of -1/(k-1), where k is the number
+    of response options.
 
 ## Value
 
