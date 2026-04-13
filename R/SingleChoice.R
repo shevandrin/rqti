@@ -154,6 +154,35 @@ setMethod("createResponseProcessing", signature(object = "SingleChoice"),
               create_default_resp_processing_sc(object)
           })
 
+
+#' @rdname createOutcomeDeclaration-methods
+#' @aliases createOutcomeDeclaration,SingleChoice
+setMethod("createOutcomeDeclaration", signature(object = "SingleChoice"),
+          function(object) {
+              feedbacks <- NULL
+              if (length(object@feedback) > 0) {
+                  feedbacks <- tagList(make_outcome_declaration("FEEDBACKBASIC",
+                                                                value = "empty",
+                                                                base_type = "identifier"),
+                                       make_outcome_declaration("FEEDBACKMODAL",
+                                                                cardinality = "multiple",
+                                                                value = NULL,
+                                                                base_type = "identifier"))
+              }
+              points <- object@points
+              if (object@scoring_scheme == "penalty") {
+                  min_score <- - points / (length(object@choices) - 1)
+              } else {
+                  min_score <- 0
+              }
+              tagList(make_outcome_declaration("SCORE", value = 0),
+                      make_outcome_declaration("MAXSCORE",
+                                               value = points),
+                      make_outcome_declaration("MINSCORE", value = min_score),
+                      feedbacks)
+          })
+
+
 # actual functions
 create_item_body_single_choice <- function(object) {
     create_item_body_choice(object, max_choices = 1)
