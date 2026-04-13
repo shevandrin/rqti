@@ -177,3 +177,112 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
     md_list <- paste0("- ", vect, gaps, collapse = "\n")
     return(md_list)
 }
+
+
+#' Embed a local file as a downloadable hyperlink in R Markdown
+#'
+#' Designed for inline use in R Markdown, e.g.
+#' `r provide_file("attachment.pdf")`
+#'
+#' The function reads a local file, encodes it as Base64, and returns an
+#' <a> tag with a data: URI. This allows the file to be embedded directly
+#' into the rendered output instead of being referenced externally.
+#'
+#' @param path Path to the local file.
+#' @param label Text shown to the user. Defaults to the file name.
+#' @param mime MIME type. If NULL, it is guessed from the extension.
+#' @param download Logical. If TRUE, adds the HTML download attribute.
+#' @param warn_size_mb Warn if file is larger than this many MB.
+#'
+#' @return knitr_asis object with an HTML hyperlink.
+#' @export
+provide_file <- function(path,
+                         label = basename(path),
+                         mime = NULL,
+                         download = TRUE,
+                         warn_size_mb = 5) {
+    if (!is.character(path) || length(path) != 1 || !nzchar(path)) {
+        stop("`path` must be a non-empty character string.", call. = FALSE)
+    }
+
+    if (!file.exists(path)) {
+        stop("File does not exist: ", path, call. = FALSE)
+    }
+
+    size <- file.info(path)$size
+
+    if (!is.null(warn_size_mb)) {
+        size_mb <- size / 1024^2
+        if (is.finite(size_mb) && size_mb > warn_size_mb) {
+            warning(
+                sprintf(
+                    "File '%s' is %.2f MB. Embedding it will increase the size of the generated XML/HTML.",
+                    basename(path), size_mb
+                ),
+                call. = FALSE
+            )
+        }
+    }
+
+    if (is.null(mime)) {
+        mime <- guess_mime_type(path)
+    }
+
+    raw  <- readBin(path, "raw", size)
+    encoded <- curl::base64_encode(raw)
+    href <- paste0("data:", mime, ";base64,", encoded)
+
+    html <- paste0(
+        '<a href="', html_escape(href), '"',
+        if (isTRUE(download)) {
+            paste0(' download="', html_escape(basename(path)), '"')
+        } else {
+            ""
+        },
+        '>',
+        html_escape(label),
+        '</a>'
+    )
+
+    knitr::asis_output(html)
+}
+
+guess_mime_type <- function(path) {
+    ext <- tolower(tools::file_ext(path))
+
+    types <- c(
+        pdf  = "application/pdf",
+        txt  = "text/plain",
+        csv  = "text/csv",
+        tsv  = "text/tab-separated-values",
+        html = "text/html",
+        htm  = "text/html",
+        xml  = "application/xml",
+        json = "application/json",
+        zip  = "application/zip",
+        r    = "text/plain",
+        rmd  = "text/markdown",
+        md   = "text/markdown",
+        png  = "image/png",
+        jpg  = "image/jpeg",
+        jpeg = "image/jpeg",
+        gif  = "image/gif",
+        svg  = "image/svg+xml",
+        mp3  = "audio/mpeg",
+        mp4  = "video/mp4"
+    )
+
+    if (ext %in% names(types)) {
+        types[[ext]]
+    } else {
+        "application/octet-stream"
+    }
+}
+
+html_escape <- function(x) {
+    x <- gsub("&", "&amp;", x, fixed = TRUE)
+    x <- gsub("<", "&lt;", x, fixed = TRUE)
+    x <- gsub(">", "&gt;", x, fixed = TRUE)
+    x <- gsub('"', "&quot;", x, fixed = TRUE)
+    x
+}
