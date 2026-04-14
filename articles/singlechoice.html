@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Single Choice tasks</h1>
             
-            <h4 data-toc-skip class="date">2026-04-13</h4>
+            <h4 data-toc-skip class="date">2026-04-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/singlechoice.Rmd" class="external-link"><code>vignettes/singlechoice.Rmd</code></a></small>
       <div class="d-none name"><code>singlechoice.Rmd</code></div>
@@ -357,6 +357,24 @@ works on OPAL.</p>
 assign the ‘files’ attribute a single file path or a list of paths to
 these files. Keep these additional files in the same folder with Rmd.
 This only works on OPAL.</p>
+</div>
+<div class="section level3">
+<h3 id="scoring_scheme">scoring_scheme<a class="anchor" aria-label="anchor" href="#scoring_scheme"></a>
+</h3>
+<p>Two scoring schemes are available:</p>
+<ul>
+<li><p>“standard” (the default): The respondent receives full points for
+a correct answer and 0 points for an incorrect answer.</p></li>
+<li><p>“penalty”: The respondent receives full points for a correct
+answer. For an incorrect answer, a penalty of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mfrac><mtext mathvariant="normal">points</mtext><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">-\frac{\text{points}}{k - 1}</annotation></semantics></math>
+is applied, where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
+is the number of answer options. This approach is often referred to as
+<em>formula scoring</em>, although the term is used inconsistently in
+the literature. Note that in Germany, the use of penalty scoring raises
+legal considerations; see, for example: <a href="https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html" class="external-link uri">https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html</a></p></li>
+</ul>
 </div>
 </div>
 <div class="section level2">

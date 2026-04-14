@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Compatibility with Learning Management Systems</h1>
             
-            <h4 data-toc-skip class="date">2026-04-13</h4>
+            <h4 data-toc-skip class="date">2026-04-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
       <div class="d-none name"><code>compatibility.Rmd</code></div>
@@ -228,9 +228,13 @@ actively investigating this issue.
 <p>Note that Canvas exports to the fairly old QTI 1.2 version, which
 makes it difficult to understand what is happening internally and to
 diagnose or resolve these issues.</p>
+<p>Canvas is transitioning to a new quizzes interface, so maybe this one
+will work better.</p>
 <p>The following functionalities encounter problems when used with
 Canvas:</p>
 <ul>
+<li>Sometimes items are imported without error message but are not
+displayed.</li>
 <li>The <code>inlineChoice</code> task type does not appear to be
 supported.</li>
 <li>Feedback information seems to be ignored during import.
@@ -257,6 +261,33 @@ tables have not yet been tested.</li>
 </li>
 </ul>
 <!-- todo: directedpairs work just fine, which makes sense because source and target are completely used, no distractors; multiplechoice table has to be checked still; what i do not quite get is when categorization (dragging) is used and when matching is used? format seems to be the same, namely one-in-row table...--><!-- - rendering only tables with a single possible answer in each row meaningful (one-in-row-table). --><!-- - The `order` task type is not supported. This is now possible 2026-03-17-->
+</div>
+<div class="section level2">
+<h2 id="ilias">ILIAS<a class="anchor" aria-label="anchor" href="#ilias"></a>
+</h2>
+<p>ILIAS does not explicitly state which version of QTI it supports.
+However, it seems to rely on QTI 1.2.</p>
+<p>As a consequence, files generated with modern tools targeting QTI 2.1
+(such as <em>rqti</em>) are not compatible with ILIAS. Given that QTI
+1.x is deprecated and no longer aligns with current specifications, we
+do not plan to support it going forward.</p>
+</div>
+<div class="section level2">
+<h2 id="blackboard">Blackboard<a class="anchor" aria-label="anchor" href="#blackboard"></a>
+</h2>
+<p>Blackboard supports QTI 2.1, but with a significant limitation:</p>
+<blockquote>
+<p>“Questions using the optional QTI response processing are skipped and
+not imported.” (<a href="https://help.anthology.com/blackboard/instructor/en/assessments/questions/reuse-questions/qti-packages.html" class="external-link uri">https://help.anthology.com/blackboard/instructor/en/assessments/questions/reuse-questions/qti-packages.html</a>)</p>
+</blockquote>
+<p>In practice, this restriction is critical. QTI response processing
+defines how answers are evaluated and scored. If such questions are
+omitted during import, essential parts of the assessment logic are
+lost.</p>
+<p>From our perspective, importing questions without their associated
+response processing undermines the integrity of the assessment.
+Consequently, this limitation substantially reduces the usefulness of
+QTI 2.1 imports in Blackboard.</p>
 </div>
 <div class="section level2">
 <h2 id="test-files">Test files<a class="anchor" aria-label="anchor" href="#test-files"></a>
@@ -292,8 +323,10 @@ seems unlikely.</p>
 <p>Canvas provides an API that appears to support both uploading and
 migrating QTI files, although we have not yet tested this functionality:
 <a href="https://mitt.uib.no/doc/api/all_resources.html" class="external-link uri">https://mitt.uib.no/doc/api/all_resources.html</a>, see
-endpoint
-<code>/api/v1/accounts/:account_id/content_migrations</code></p>
+endpoint <code>/api/v1/accounts/:account_id/content_migrations</code>.
+Also see: <a href="https://community.instructure.com/en/kb/articles/658474-classic-quizzes-vs-new-quizzes-feature-comparison" class="external-link uri">https://community.instructure.com/en/kb/articles/658474-classic-quizzes-vs-new-quizzes-feature-comparison</a>
+and <a href="https://developerdocs.instructure.com/services/new-quizzes/public/api-endpoints/new_quizzes" class="external-link uri">https://developerdocs.instructure.com/services/new-quizzes/public/api-endpoints/new_quizzes</a>
+as well as <a href="https://community.instructure.com/en/kb/articles/661050-how-do-i-import-a-quiz-from-a-qti-package-in-new-quizzes" class="external-link uri">https://community.instructure.com/en/kb/articles/661050-how-do-i-import-a-quiz-from-a-qti-package-in-new-quizzes</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

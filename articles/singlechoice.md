@@ -276,6 +276,21 @@ assign the ‘files’ attribute a single file path or a list of paths to
 these files. Keep these additional files in the same folder with Rmd.
 This only works on OPAL.
 
+### scoring_scheme
+
+Two scoring schemes are available:
+
+- “standard” (the default): The respondent receives full points for a
+  correct answer and 0 points for an incorrect answer.
+
+- “penalty”: The respondent receives full points for a correct answer.
+  For an incorrect answer, a penalty of $- \frac{\text{points}}{k - 1}$
+  is applied, where $k$ is the number of answer options. This approach
+  is often referred to as *formula scoring*, although the term is used
+  inconsistently in the literature. Note that in Germany, the use of
+  penalty scoring raises legal considerations; see, for example:
+  <https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html>
+
 ## Feedback
 
 Feedback can be provided with the section

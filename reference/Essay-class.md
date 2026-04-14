@@ -115,7 +115,8 @@ according to QTI 2.1.
 - `data_allow_paste`:
 
   A logical, optional. Determines whether it is possible for a candidate
-  to copy text into the text input field. Default is `FALSE`.
+  to copy text into the text input field. Default is `TRUE`. Only works
+  on OPAL and OpenOlat.
 
 ## Note
 

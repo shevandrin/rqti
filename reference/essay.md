@@ -17,7 +17,7 @@ essay(
   expected_lines = lines_expected(feedback),
   words_max = max_words(feedback),
   words_min = NA_integer_,
-  data_allow_paste = FALSE,
+  data_allow_paste = TRUE,
   calculator = NA_character_,
   files = NA_character_
 )
@@ -87,7 +87,8 @@ essay(
 - data_allow_paste:
 
   A boolean, optional. Determines whether it is possible for a candidate
-  to copy text into the text input field. Default is FALSE.
+  to copy text into the text input field. Default is TRUE. Only works on
+  OPAL and OpenOlat.
 
 - calculator:
 
