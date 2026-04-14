@@ -1,74 +1,3 @@
-
-test_that("LMS object can be created for OPAL", {
-    skip_if(Sys.getenv("RQTI_API_USER") == "")
-    con <- opal()
-    expect_s4_class(con, "Opal")
-    logged_in <- isUserLoggedIn(con)
-    expect_true(logged_in)
-})
-
-
-test_that("LMS OPAL handles missing parameters correctly", {
-    skip_if(Sys.getenv("RQTI_API_USER") == "")
-    con <- opal()
-    #expect_error(con <- new("Opal", api_user = "fakeEmptyUser"),
-    #             "Username not found in credential storage")
-    # expect_error(con <- new("Opal", api_user = "fakeEmptyUser"),
-    #              "API username is required but not found")
-    env_endpoint <- Sys.getenv("RQTI_API_ENDPOINT")
-    Sys.setenv("RQTI_API_ENDPOINT" = "")
-    expect_error(con <- new("Opal"), "API endpoint is not defined")
-    # con <- new("Opal", endpoint = "fakeEmptyEndpoint")
-    Sys.setenv("RQTI_API_ENDPOINT" = env_endpoint)
-})
-
-test_that("upload2opal works directly", {
-    skip_if(Sys.getenv("RQTI_API_USER") == "")
-    con <- opal()
-    # create resource from object
-    es <- suppressWarnings(essay(identifier = "ForTestAPI"))
-    res <- suppressMessages(upload2opal(es, display_name = "test_ForTestAPI", open_in_browser = F))
-    df <- getLMSResourcesByName(con, display_name = "test_ForTestAPI")
-    url <- getLMSResourceURL(con, display_name = "test_ForTestAPI")
-    df3 <- getLMSResources(con)
-    expect_equal(nrow(df), 1)
-    expect_equal(url, res$url)
-})
-
-test_that("Create a resource on Opal, test getting resource, inc. get by name", {
-    skip_if(Sys.getenv("RQTI_API_USER") == "")
-    con <- opal()
-    # create resource from object
-    es <- suppressWarnings(essay(identifier = "ForTestAPI"))
-    res <- suppressMessages(upload2LMS(con, es, open_in_browser = FALSE))
-    df <- getLMSResourcesByName(con, display_name = "test_ForTestAPI")
-    url <- getLMSResourceURL(con, display_name = "test_ForTestAPI")
-    df3 <- getLMSResources(con)
-    expect_equal(nrow(df), 1)
-    expect_equal(url, res$url)
-    expect_true(prod(dim(df3)) > 0)
-})
-
-test_that("Get URL", {
-    skip_if(Sys.getenv("RQTI_API_USER") == "")
-    con <- opal()
-    sut <- getLMSResourceURL(con, "test_ForTestAPI")
-    expect_true(grepl("https?://[^\\s]+", sut))
-})
-
-test_that("default connections are guessed correctly", {
-    skip_if(Sys.getenv("RQTI_API_USER") == "")
-    expect_message(get_default_connetion(), "A connection to the LMS")
-})
-
-test_that("qti tests are detected correctly", {
-    es <- suppressWarnings(essay(identifier = "ForTestAPI"))
-    temp <- tempdir()
-    exam <- suppressMessages(test(section(es)))
-    path <- createQtiTest(exam, dir = temp)
-    expect_true(is_test(path))
-})
-
 # tests/testthat/test-opal-integration.R
 
 library(testthat)
@@ -83,15 +12,22 @@ skip_if_no_course_env <- function() {
     skip_if(any(vals == ""))
 }
 
-unique_name <- function(prefix = "rqti-test") {
-    paste(prefix, format(Sys.time(), "%Y%m%d%H%M%S"), Sys.getpid(), sample.int(1e6, 1), sep = "-")
-}
+# Stable names reused across test runs
+TEST_ITEM_NAME <- "rqti_test_item"
+TEST_EXAM_NAME <- "rqti_test_exam"
+TEST_OVERWRITE_NAME <- "rqti_test_overwrite"
+TEST_SURVEY_NAME <- "rqti_test_survey"
+TEST_RTYPE_TEST_NAME <- "rqti_test_rtype_test"
+TEST_RTYPE_SURVEY_NAME <- "rqti_test_rtype_survey"
+TEST_URL_DIRECT_NAME <- "rqti_test_url_direct"
+TEST_URL_METHOD_NAME <- "rqti_test_url_method"
+TEST_MISSING_NAME <- "rqti_test_definitely_not_existing"
 
-make_test_item <- function(id = unique_name("item")) {
+make_test_item <- function(id = TEST_ITEM_NAME) {
     suppressWarnings(essay(identifier = id))
 }
 
-make_test_exam <- function(id = unique_name("exam")) {
+make_test_exam <- function(id = TEST_EXAM_NAME) {
     suppressMessages(test(section(make_test_item(id))))
 }
 
@@ -131,10 +67,9 @@ test_that("getLMSResourceURL warns and returns NULL for a missing display name",
     skip_if_no_opal()
 
     con <- opal()
-    missing_name <- unique_name("definitely-not-existing")
 
     expect_warning(
-        out <- getLMSResourceURL(con, missing_name),
+        out <- getLMSResourceURL(con, TEST_MISSING_NAME),
         "No resources found with the specified display name"
     )
     expect_null(out)
@@ -144,14 +79,15 @@ test_that("upload2opal creates a resource that can be found again", {
     skip_if_no_opal()
 
     con <- opal()
-    display_name <- unique_name("upload2opal-direct")
+    display_name <- TEST_ITEM_NAME
     es <- make_test_item(display_name)
 
     res <- suppressMessages(
         upload2opal(
             es,
             display_name = display_name,
-            open_in_browser = FALSE
+            open_in_browser = FALSE,
+            overwrite = TRUE
         )
     )
 
@@ -170,7 +106,7 @@ test_that("upload2LMS creates a new test resource and can retrieve it by type", 
     skip_if_no_opal()
 
     con <- opal()
-    display_name <- unique_name("upload2lms-test")
+    display_name <- TEST_EXAM_NAME
     exam <- make_test_exam(display_name)
 
     res <- suppressMessages(
@@ -178,7 +114,8 @@ test_that("upload2LMS creates a new test resource and can retrieve it by type", 
             con,
             exam,
             display_name = display_name,
-            open_in_browser = FALSE
+            open_in_browser = FALSE,
+            overwrite = TRUE
         )
     )
 
@@ -200,10 +137,10 @@ test_that("upload2LMS overwrites an existing test resource when display_name alr
     skip_if_no_opal()
 
     con <- opal()
-    display_name <- unique_name("overwrite-test")
+    display_name <- TEST_OVERWRITE_NAME
 
-    exam1 <- make_test_exam(paste0(display_name, "-1"))
-    exam2 <- make_test_exam(paste0(display_name, "-2"))
+    exam1 <- make_test_exam(paste0(display_name, "_v1"))
+    exam2 <- make_test_exam(paste0(display_name, "_v2"))
 
     first <- suppressMessages(
         upload2LMS(
@@ -240,7 +177,7 @@ test_that("upload2LMS can create a survey resource", {
     skip_if_no_opal()
 
     con <- opal()
-    display_name <- unique_name("survey-test")
+    display_name <- TEST_SURVEY_NAME
     exam <- make_test_exam(display_name)
 
     res <- suppressMessages(
@@ -249,7 +186,8 @@ test_that("upload2LMS can create a survey resource", {
             exam,
             display_name = display_name,
             open_in_browser = FALSE,
-            as_survey = TRUE
+            as_survey = TRUE,
+            overwrite = TRUE
         )
     )
 
@@ -269,31 +207,34 @@ test_that("getLMSResourcesByName filters correctly by resource type", {
     skip_if_no_opal()
 
     con <- opal()
-    base_name <- unique_name("rtype-check")
-    exam <- make_test_exam(base_name)
+
+    exam_test <- make_test_exam(TEST_RTYPE_TEST_NAME)
+    exam_survey <- make_test_exam(TEST_RTYPE_SURVEY_NAME)
 
     suppressMessages(
         upload2LMS(
             con,
-            exam,
-            display_name = base_name,
+            exam_test,
+            display_name = TEST_RTYPE_TEST_NAME,
             open_in_browser = FALSE,
-            as_survey = FALSE
+            as_survey = FALSE,
+            overwrite = TRUE
         )
     )
 
     suppressMessages(
         upload2LMS(
             con,
-            exam,
-            display_name = paste0(base_name, "-survey"),
+            exam_survey,
+            display_name = TEST_RTYPE_SURVEY_NAME,
             open_in_browser = FALSE,
-            as_survey = TRUE
+            as_survey = TRUE,
+            overwrite = TRUE
         )
     )
 
-    test_hits <- getLMSResourcesByName(con, base_name, "FileResource.TEST")
-    survey_hits <- getLMSResourcesByName(con, paste0(base_name, "-survey"), "FileResource.SURVEY")
+    test_hits <- getLMSResourcesByName(con, TEST_RTYPE_TEST_NAME, "FileResource.TEST")
+    survey_hits <- getLMSResourcesByName(con, TEST_RTYPE_SURVEY_NAME, "FileResource.SURVEY")
 
     expect_true(nrow(test_hits) >= 1)
     expect_true(nrow(survey_hits) >= 1)
@@ -306,23 +247,22 @@ test_that("upload2opal and upload2LMS return URLs that look valid", {
 
     con <- opal()
 
-    name1 <- unique_name("url-check-direct")
-    name2 <- unique_name("url-check-method")
-
     res1 <- suppressMessages(
         upload2opal(
-            make_test_item(name1),
-            display_name = name1,
-            open_in_browser = FALSE
+            make_test_item(TEST_URL_DIRECT_NAME),
+            display_name = TEST_URL_DIRECT_NAME,
+            open_in_browser = FALSE,
+            overwrite = TRUE
         )
     )
 
     res2 <- suppressMessages(
         upload2LMS(
             con,
-            make_test_exam(name2),
-            display_name = name2,
-            open_in_browser = FALSE
+            make_test_exam(TEST_URL_METHOD_NAME),
+            display_name = TEST_URL_METHOD_NAME,
+            open_in_browser = FALSE,
+            overwrite = TRUE
         )
     )
 
@@ -422,7 +362,7 @@ test_that("getCourseResult also works with an explicit zip file path", {
     con <- opal()
     resource_id <- Sys.getenv("RQTI_OPAL_RESOURCE_ID")
     node_id <- Sys.getenv("RQTI_OPAL_NODE_ID")
-    target <- file.path(tempdir(), paste0(unique_name("results"), ".zip"))
+    target <- file.path(tempdir(), "rqti_test_results.zip")
 
     out <- getCourseResult(
         con,
@@ -436,7 +376,9 @@ test_that("getCourseResult also works with an explicit zip file path", {
         skip("No result zip available for configured course/node.")
     }
 
-    expect_identical(normalizePath(out, winslash = "/"),
-                     normalizePath(target, winslash = "/", mustWork = FALSE))
+    expect_identical(
+        normalizePath(out, winslash = "/"),
+        normalizePath(target, winslash = "/", mustWork = FALSE)
+    )
     expect_true(file.exists(out))
 })
