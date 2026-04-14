@@ -89,7 +89,7 @@ setMethod("initialize", "SingleChoice", function(.Object, ...) {
 #'   * "standard" - the correct answer receives full points and incorrect
 #'   answers receive 0. This is used by default.
 #'   * "penalty" - the correct answer receives full points and incorrect
-#'   answers receive a negative score of -1/(k-1), where k is the number of
+#'   answers receive a negative score of -points/(k-1), where k is the number of
 #'   response options.
 #' @return An object of class [SingleChoice]
 #' @examples
