@@ -112,8 +112,11 @@ The following functionalities are currently non-functional on OpenOlat:
 
 Note that Canvas exports to the fairly old QTI 1.2 version, which makes it difficult to understand what is happening internally and to diagnose or resolve these issues.
 
+Canvas is transitioning to a new quizzes interface, so maybe this one will work better.
+
 The following functionalities encounter problems when used with Canvas:
 
+* Sometimes items are imported without error message but are not displayed.
 * The `inlineChoice` task type does not appear to be supported.
 * Feedback information seems to be ignored during import.
 <!-- - Feedback messages intended to be displayed regardless of answer correctness (modal feedback), do not appear.  -->
@@ -130,6 +133,23 @@ The following functionalities encounter problems when used with Canvas:
 <!-- - rendering only tables with a single possible answer in each row meaningful (one-in-row-table). -->
 
 <!-- - The `order` task type is not supported. This is now possible 2026-03-17-->
+
+## ILIAS
+
+ILIAS does not explicitly state which version of QTI it supports. However, it seems to rely on QTI 1.2.
+
+As a consequence, files generated with modern tools targeting QTI 2.1 (such as *rqti*) are not compatible with ILIAS. Given that QTI 1.x is deprecated and no longer aligns with current specifications, we do not plan to support it going forward.
+
+## Blackboard
+
+Blackboard supports QTI 2.1, but with a significant limitation:
+
+> “Questions using the optional QTI response processing are skipped and not imported.” (https://help.anthology.com/blackboard/instructor/en/assessments/questions/reuse-questions/qti-packages.html)
+
+In practice, this restriction is critical. QTI response processing defines how answers are evaluated and scored. If such questions are omitted during import, essential parts of the assessment logic are lost.
+
+From our perspective, importing questions without their associated response processing undermines the integrity of the assessment. Consequently, this limitation substantially reduces the usefulness of QTI 2.1 imports in Blackboard.
+
 ## Test files
 
 Official conformance test files for QTI v2.1:
@@ -150,5 +170,4 @@ OpenOlat also offers an API, but it is currently unclear whether QTI files can b
 
 Blackboard provides an API as well: https://developer.blackboard.com/portal/displayApi. At present, it is unclear whether this API supports QTI upload, and we have not yet tested it. Based on the available documentation, this currently seems unlikely.
 
-Canvas provides an API that appears to support both uploading and migrating QTI files, although we have not yet tested this functionality: https://mitt.uib.no/doc/api/all_resources.html, see endpoint `/api/v1/accounts/:account_id/content_migrations`
-
+Canvas provides an API that appears to support both uploading and migrating QTI files, although we have not yet tested this functionality: https://mitt.uib.no/doc/api/all_resources.html, see endpoint `/api/v1/accounts/:account_id/content_migrations`. Also see: https://community.instructure.com/en/kb/articles/658474-classic-quizzes-vs-new-quizzes-feature-comparison and https://developerdocs.instructure.com/services/new-quizzes/public/api-endpoints/new_quizzes as well as https://community.instructure.com/en/kb/articles/661050-how-do-i-import-a-quiz-from-a-qti-package-in-new-quizzes.
