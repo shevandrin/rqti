@@ -15,7 +15,7 @@ essay(
   expected_lines = lines_expected(feedback),
   words_max = max_words(feedback),
   words_min = NA_integer_,
-  data_allow_paste = FALSE,
+  data_allow_paste = TRUE,
   calculator = NA_character_,
   files = NA_character_
 )
@@ -60,7 +60,7 @@ default it will be calculated according to model answer in the slot
 number of words that a candidate should write in the text input field.}
 
 \item{data_allow_paste}{A boolean, optional. Determines whether it is possible
-for a candidate to copy text into the text input field. Default is FALSE.}
+for a candidate to copy text into the text input field. Default is TRUE. Only works on OPAL and OpenOlat.}
 
 \item{calculator}{A character, optional, determining whether to show a
 calculator to the candidate. Possible values:

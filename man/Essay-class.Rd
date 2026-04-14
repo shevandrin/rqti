@@ -75,7 +75,7 @@ number of words that a candidate can write in the text input field.}
 number of words that a candidate should write in the text input field.}
 
 \item{\code{data_allow_paste}}{A logical, optional. Determines whether it is possible
-for a candidate to copy text into the text input field. Default is \code{FALSE}.}
+for a candidate to copy text into the text input field. Default is \code{TRUE}. Only works on OPAL and OpenOlat.}
 }}
 
 \note{
