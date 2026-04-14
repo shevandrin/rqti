@@ -20,7 +20,7 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
     test_id <- task@identifier
     task@identifier <- paste0("task_", task@identifier)
     section <- new("AssessmentSection", assessment_item = list(task))
-    test <- new("AssessmentTestOpal",
+    test <- new("AssessmentTest",
                 identifier = test_id,
                 title = "QTIJS Preview", section = list(section))
     createQtiTest(test, dir = path, verification = verification,

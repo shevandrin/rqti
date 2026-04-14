@@ -305,9 +305,9 @@ setMethod("createQtiTask", signature(object = "AssessmentItem"),
 setMethod("createQtiTest", signature(object = "AssessmentItem"),
           function(object, dir = ".", verification = FALSE, zip_only) {
               test_section <- section(object)
-              test_object <- test4opal(test_section,
-                                       identifier = paste0("test_",
-                                                           object@identifier))
+              test_object <- test(test_section,
+                                  identifier = paste0("test_",
+                                                      object@identifier))
               create_qti_test(test_object, dir, verification, zip_only)
           })
 
