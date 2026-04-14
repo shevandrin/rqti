@@ -31,7 +31,7 @@ The simplest task type in the rqti package is single choice. A template is autom
 The minimum you need to provide is the `type: sc` (or the equivalent `type: singlechoice`, or `type: schoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
 ```{r scex1, comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/singlechoice-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Note that in this example, a feedback section was also provided. This is optional, but usually it is a good idea to give some explanation for students.
@@ -70,7 +70,7 @@ By default the rights of the uploaded material in OPAL are set to public, so no 
 Let us have a closer look at the input file.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/singlechoice-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Note that you do not necessarily need to specify which list element is correct. The first one is treated as the correct one, which is a useful shortcut. If you communicate this to your collaborators, it is also much easier to read. They do not need to look anywhere else in the file for checking the correct answer.
@@ -107,7 +107,7 @@ Renders as:
 If you want to have more fine-grained control, consider the RMD template ` singlechoice-complex`, which uses more yaml attributes. In addition you can also set feedback for correct and incorrect responses.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/singlechoice-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/singlechoice-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which renders in OPAL as`r ltx(" shown in Figure \\ref{sc2opal}.", ":")`

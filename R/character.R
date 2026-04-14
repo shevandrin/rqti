@@ -63,10 +63,11 @@ setMethod("getPoints", signature(object = "character"),
                   return(1)
               }
               doc <- xml2::read_xml(object)
-              od_tag  <- xml2::xml_find_all(doc, ".//d1:outcomeDeclaration
+              od_tag  <- xml2::xml_find_first(doc, ".//d1:outcomeDeclaration
                                             [@identifier='MAXSCORE']")
-              points <- as.numeric(xml2::xml_text(od_tag))
-              if (is.na(points)) points <- 1
+              points <- xml2::xml_text(od_tag)
+              points <- suppressWarnings(as.numeric(points))
+              points <- if (length(points) == 0 || is.na(points)) 1 else points
               return(points)
           })
 

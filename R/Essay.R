@@ -25,7 +25,7 @@
 #' @name Essay-class
 #' @rdname Essay-class
 #' @aliases Essay
-#' @include AssessmentItem.R
+#' @include AssessmentItem.R rqti.R
 #' @export
 setClass("Essay", contains = "AssessmentItem",
          slots = c(expected_length = "numeric",
@@ -48,7 +48,7 @@ setMethod("initialize", "Essay", function(.Object, ...) {
     # warning for data_allow_paste
     if (length(.Object@data_allow_paste > 0)) {
         if (!.Object@data_allow_paste & interactive()) {
-        "The data_allow_paste property only works on LMS Opal and OpenOlat."
+        warn_once("The data_allow_paste property only works on LMS Opal and OpenOlat.", "allow-paste")
         }
     }
 

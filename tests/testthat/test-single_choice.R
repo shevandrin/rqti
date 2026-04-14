@@ -118,6 +118,11 @@ test_that("Test createResponseProcessing() for SingleChoice class", {
           <variable identifier="MAXSCORE"></variable>
       </setOutcomeValue>
     </responseElseIf>
+    <responseElse>
+      <setOutcomeValue identifier="SCORE">
+        <variable identifier="MINSCORE"></variable>
+      </setOutcomeValue>
+    </responseElse>
   </responseCondition>
   <responseCondition>
     <responseIf>
@@ -194,4 +199,93 @@ test_that("Testing the constructor for SingleChoice class", {
 
     expect_no_error(xml2::read_xml(as.character(xml_sut)))
     expect_s4_class(sut, "SingleChoice")
+})
+
+
+test_that("SingleChoice accepts valid scoring_scheme values", {
+    sc_standard <- singleChoice(
+        prompt = "Question?",
+        choices = c("A", "B", "C"),
+        scoring_scheme = "standard"
+    )
+
+    sc_penalty <- singleChoice(
+        prompt = "Question?",
+        choices = c("A", "B", "C"),
+        scoring_scheme = "penalty"
+    )
+
+    expect_equal(sc_standard@scoring_scheme, "standard")
+    expect_equal(sc_penalty@scoring_scheme, "penalty")
+})
+
+
+test_that("SingleChoice rejects invalid scoring_scheme values", {
+    expect_error(
+        singleChoice(
+            prompt = "Question?",
+            choices = c("A", "B", "C"),
+            scoring_scheme = "wrong"
+        ),
+        "scoring_scheme"
+    )
+})
+
+
+test_that("standard scoring_scheme creates zero minscore and no penalty branch", {
+    sc <- singleChoice(
+        identifier = "sc_standard",
+        prompt = "Question?",
+        choices = c("A", "B", "C"),
+        solution = 1,
+        points = 2,
+        scoring_scheme = "standard"
+    )
+
+    xml <- as.character(createOutcomeDeclaration(sc))
+
+    expect_match(
+        xml,
+        '<outcomeDeclaration identifier="MAXSCORE"[^>]*>.*<value>2</value>.*</outcomeDeclaration>'
+    )
+
+    expect_match(
+        xml,
+        '<outcomeDeclaration identifier="MINSCORE"[^>]*>.*<value>0</value>.*</outcomeDeclaration>'
+    )
+
+    expect_no_match(
+        xml,
+        '<responseElse>.*<variable identifier="MINSCORE"/>.*</responseElse>'
+    )
+})
+
+
+test_that("penalty scoring_scheme creates negative minscore and penalty responseElse", {
+    sc <- singleChoice(
+        identifier = "sc_penalty",
+        prompt = "Question?",
+        choices = c("A", "B", "C"),
+        solution = 1,
+        points = 2,
+        scoring_scheme = "penalty"
+    )
+
+    xml_outcome <- as.character(createOutcomeDeclaration(sc))
+    xml_processing <- as.character(createResponseProcessing(sc))
+
+    expect_match(
+        xml_outcome,
+        '<outcomeDeclaration identifier="MAXSCORE"[^>]*>.*<value>2</value>.*</outcomeDeclaration>'
+    )
+
+    expect_match(
+        xml_outcome,
+        '<outcomeDeclaration identifier="MINSCORE"[^>]*>.*<value>-1</value>.*</outcomeDeclaration>'
+    )
+
+    expect_match(
+        xml_processing,
+        '<responseElse>.*<setOutcomeValue identifier="SCORE">.*<variable identifier="MINSCORE"(?:\\s*/>|>\\s*</variable>).*</setOutcomeValue>.*</responseElse>'
+    )
 })

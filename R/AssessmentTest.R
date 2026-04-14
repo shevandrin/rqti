@@ -241,6 +241,19 @@ setGeneric("createZip", function(object, input, output, file_name, zip_only) {
     StandartGeneric("createZip")
 })
 
+#' Create a configuration file for QTI test
+#'
+#' Generic function for creating additional configuration file for the archive with test
+#'
+#' @param object an instance of the S4 object [AssessmentTest]
+#' @param output string, a folder to store an xml configuration files
+#' @docType methods
+#' @rdname createConfigurationFile-methods
+#' @aliases createConfigurationFile
+setGeneric("createConfigurationFile", function(object, output) {
+    StandartGeneric("createConfigurationFile")
+})
+
 #' @rdname createAssessmentTest-methods
 #' @aliases createAssessmentTest,AssessmentTest
 setMethod("createAssessmentTest", signature(object = "AssessmentTest"),
@@ -305,6 +318,12 @@ setMethod("prepareQTIJSFiles", signature(object = "AssessmentTest"),
 setMethod("createMetadata", signature(object = "AssessmentTest"),
           function(object) {
               create_metadata(object)
+          })
+
+#' @rdname createConfigurationFile-methods
+#' @aliases createConfigurationFile,AssessmentTest
+setMethod("createConfigurationFile", signature(object = "AssessmentTest"),
+          function(object, output) {
           })
 
 assign_fallback_titles <- function(section,

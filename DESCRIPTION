@@ -25,21 +25,18 @@ Imports:
     rmarkdown,
     servr,
     rstudioapi,
-    fs,
     stringr,
     methods,
-    lubridate,
     magrittr,
     httr2,
     curl,
-    digest,
     knitr,
     getPass,
     keyring,
     zip,
     textutils,
     lifecycle,
-    rlang
+    exams
 Suggests:
     covr,
     dplyr,
@@ -63,6 +60,7 @@ Collate:
     'AssessmentSection.R'
     'AssessmentTest.R'
     'AssessmentTestOpal.R'
+    'AssessmentTestOpenOlat.R'
     'Choice.R'
     'CorrectFeedback.R'
     'MatchTable.R'

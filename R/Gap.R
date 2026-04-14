@@ -24,6 +24,9 @@ setMethod("initialize", "Gap", function(.Object, ...) {
         .Object@response_identifier <- id
     }
 
+    .Object@response_identifier <- repair_identifier(.Object@response_identifier)
+    check_identifier(.Object@response_identifier)
+
     validObject(.Object)
     .Object
 })

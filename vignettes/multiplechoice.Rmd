@@ -31,7 +31,7 @@ A minimum template is automatically created when you initiate an rqti project th
 The minimum you need to provide is the `type: mpc` (or the equivalent `type: multiplechoice` or `type: mchoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-simple/skeleton",
+cat(readLines(system.file("rmarkdown/templates/multiplechoice-simple/skeleton",
                                "skeleton.Rmd",
                                package = "rqti")), sep = '\n')
 ```
@@ -57,7 +57,7 @@ Among various grading options, we find this to be the most intuitive, especially
 If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template `multiple-choice (complex)`.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/multiplechoice-complex/skeleton/", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/multiplechoice-complex/skeleton/", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which renders in OPAL as`r ltx(" shown in Figure \\ref{mpc2opal}.", ":")`

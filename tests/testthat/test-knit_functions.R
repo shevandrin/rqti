@@ -3,7 +3,6 @@
 library(testthat)
 library(callr)
 library(chromote)
-library(fs)
 
 wait_until <- function(expr, timeout = 20, interval = 0.25) {
     deadline <- Sys.time() + timeout
@@ -24,11 +23,17 @@ wait_until <- function(expr, timeout = 20, interval = 0.25) {
 }
 
 copy_qtijs_dir <- function() {
-    src <- fs::path_package("QTIJS", package = "rqti")
-    dst <- fs::path(tempdir(), paste0("QTIJS-", Sys.getpid()))
-    fs::dir_create(dst)
-    fs::dir_copy(src, dst, overwrite = TRUE)
-    dst
+    src <- system.file("QTIJS", package = "rqti")
+    dst <- file.path(tempdir(), paste0("QTIJS-", Sys.getpid()))
+    dir.create(dst)
+    fls <- list.files(src, full.names = TRUE, recursive = TRUE)
+    file.copy(
+        from = fls,
+        to = dst,
+        recursive = TRUE,
+        overwrite = TRUE
+    )
+    return(dst)
 }
 
 start_test_server <- function(qtijs_path, port) {
@@ -103,7 +108,7 @@ test_that("servr responds", {
     expect_no_error(
         suppressMessages(
             render_qtijs(
-                fs::path_package("exercises", "sc1d.Rmd", package = "rqti"),
+                system.file("exercises", "sc1d.Rmd", package = "rqti"),
                 qtijs_path = qtijs_path
             )
         )

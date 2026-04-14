@@ -31,7 +31,7 @@ A minimum template is automatically created when you initiate an rqti project th
 The minimum you need to provide is the `type: dropdown` (or the equivalent `type: dd`) in the yaml-section and some text, where at least one gap is formed as a dropdown-element, in a section called  **\#question**. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/dropdown-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Figure \\ref{dd1qtijs}.", ":")`
@@ -85,7 +85,7 @@ By clicking on the arrows, the details will unfold.
 If you want to have more fine-grained control, consider the RMD template ` dropdown (complex)`, which uses more yaml attributes and a more complex use of the helper function `dropdown`.
 
 ```{r comment='', echo = F}
-cat(readLines(fs::path_package("rmarkdown/templates/dropdown-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
+cat(readLines(system.file("rmarkdown/templates/dropdown-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
 ```
 
 Which renders in OPAL as `r ltx(" shown in Figure \\ref{dd2opal}.", ":")`

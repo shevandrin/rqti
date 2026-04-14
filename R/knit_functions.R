@@ -135,7 +135,7 @@ start_server <- function(qtijs_path = qtijs_pkg_path(),
 #'   qtijs_pkg_path()
 #' @export
 qtijs_pkg_path <- function() {
-    fs::path_package("rqti", "QTIJS")
+    system.file("QTIJS", package = "rqti")
 }
 
 #' Prepare qtijs renderer.

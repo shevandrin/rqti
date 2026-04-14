@@ -34,7 +34,7 @@ setClass("QtiContributor", slots = c(name = "character",
                                      contribution_date = "Date"),
          prototype = prototype(name = Sys.getenv("RQTI_AUTHOR"),
                                role = "author",
-                               contribution_date = Date(0)),
+                               contribution_date = as.Date(character())),
          validity = check_contributor)
 
 setMethod("initialize", "QtiContributor", function(.Object, ...) {
@@ -65,7 +65,7 @@ setMethod("initialize", "QtiContributor", function(.Object, ...) {
 #' @export
 qti_contributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
-                            contribution_date = ifelse(name != "", Sys.Date(), NA_Date_)) {
+                            contribution_date = ifelse(name != "", Sys.Date(), as.Date(NA))) {
     deprecate_warn("0.3.1", "qti_contributor()", "qtiContributor()")
     qtiContributor(name, role, contribution_date)
 }
@@ -87,10 +87,10 @@ qti_contributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
 #' @export
 qtiContributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
-                            contribution_date = ifelse(name != "", Sys.Date(), NA_Date_)) {
+                            contribution_date = ifelse(name != "", Sys.Date(), as.Date(NA))) {
     params <- as.list(environment())
     params$Class <- "QtiContributor"
-    if (is.na(params$contribution_date)) params$contribution_date <- Date(0)
+    if (is.na(params$contribution_date)) params$contribution_date <- as.Date(character())
     params$contribution_date <- as.Date(params$contribution_date)
     obj <- do.call("new", params)
     return(obj)

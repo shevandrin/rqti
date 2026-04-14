@@ -50,6 +50,8 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
                                  basename(object@stylesheet_path)))
     }
 
+    createConfigurationFile(object, tdir)
+
     path <- createZip(object, tdir, dir, file_name, zip_only)
     return(path)
 }

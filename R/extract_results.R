@@ -8,7 +8,6 @@
 #' @param hide_filename A boolean value, TRUE to hide original file names by
 #'   default.
 #' @import xml2
-#' @import lubridate
 #' @importFrom zip zip_list
 #' @return A dataframe with attribues of the candidates outcomes and result
 #'   variables.
@@ -49,7 +48,6 @@
 #' df <- extract_results(file, level = "item")
 #' }
 #'
-#' @import digest
 #' @export
 extract_results <- function(file, level = "task", hide_filename = TRUE) {
     if (!all(file.exists(file))) stop("One or more files in list do not exist",
@@ -162,13 +160,13 @@ extract_xml <- function(file) {
 get_result_attr_answers<- function(file, hide_filename) {
     file_name <- clean_name(file)
     if (hide_filename) {
-        file_name <- digest(file_name, algo = "sha1", serialize = FALSE)
+        file_name <- sha1_generator(file_name)
     }
 
     doc <- xml2::read_xml(file)
     node_dt <- xml2::xml_find_first(doc, ".//d1:testResult")
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
-    test_dt <- lubridate::ymd_hms(test_dt)
+    test_dt <- as.POSIXct(strptime(test_dt, "%Y-%m-%d%H:%M:%S", tz = "UTC"))
 
     items_result <- unique_result_set(doc)
 
@@ -188,6 +186,21 @@ get_result_attr_answers<- function(file, hide_filename) {
                        is_answer_given = igiven,
                        scorer_comment = scomments)
     return(data)
+}
+
+# This function is cross-platform to get SHA1 hash-string
+sha1_generator <- function(x) {
+    tf <- tempfile()
+    writeLines(x, tf)
+
+    if (.Platform$OS.type == "windows") {
+        res <- system2("certutil", c("-hashfile", tf, "SHA1"), stdout = TRUE)
+        res <- res[grep("^[0-9A-Fa-f]{40}$", res)]
+        tolower(res)
+    } else {
+        res <- system2("sha1sum", tf, stdout = TRUE)
+        sub(" .*", "", res)
+    }
 }
 
 # rebuild xml nodeset to leave only results after tutor evaluation if it took place
@@ -262,13 +275,13 @@ get_result_attr_options <- function(file, hide_filename) {
     file_name <- clean_name(file)
     file_name <- sub("assessmentResult_", "", file_name)
     if (hide_filename) {
-        file_name <- digest(file_name, algo = "sha1", serialize = FALSE)
+        file_name <- sha1_generator(file_name)
     }
 
     doc <- xml2::read_xml(file)
     node_dt <- xml2::xml_find_first(doc, ".//d1:testResult")
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
-    test_dt <- lubridate::ymd_hms(test_dt)
+    test_dt <- as.POSIXct(test_dt, format = "%Y-%m-%dT%H:%M:%S", tz = "UTC")
 
     items_result <- unique_result_set(doc)
 

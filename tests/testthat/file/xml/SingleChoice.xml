@@ -45,6 +45,11 @@
           <variable identifier="MAXSCORE"/>
         </setOutcomeValue>
       </responseElseIf>
+      <responseElse>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MINSCORE"/>
+        </setOutcomeValue>
+      </responseElse>
     </responseCondition>
     <responseCondition>
       <responseIf>
