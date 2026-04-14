@@ -7,4 +7,4 @@
 #' @slot words_min A numeric, optional. Responsible for setting the minimum
 #'   number of words that a candidate should write in the text input field.
 #' @slot data_allow_paste A logical, optional. Determines whether it is possible
-#'   for a candidate to copy text into the text input field. Default is `FALSE`.
+#'   for a candidate to copy text into the text input field. Default is `TRUE`. Only works on OPAL and OpenOlat.

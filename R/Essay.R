@@ -47,8 +47,8 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 
     # warning for data_allow_paste
     if (length(.Object@data_allow_paste > 0)) {
-        if (.Object@data_allow_paste & interactive()) {
-        rlang::warn("The data_allow_paste property only works on LMS Opal and OpenOlat.", .frequency = "once", .frequency_id = "allow-paste")
+        if (!.Object@data_allow_paste & interactive()) {
+        "The data_allow_paste property only works on LMS Opal and OpenOlat."
         }
     }
 
@@ -96,7 +96,7 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 #'@param words_min A numeric, optional. Responsible for setting the minimum
 #'  number of words that a candidate should write in the text input field.
 #'@param data_allow_paste A boolean, optional. Determines whether it is possible
-#'  for a candidate to copy text into the text input field. Default is FALSE.
+#'  for a candidate to copy text into the text input field. Default is TRUE. Only works on OPAL and OpenOlat.
 #'@param calculator A character, optional, determining whether to show a
 #'  calculator to the candidate. Possible values:
 #'   * "simple"
@@ -132,7 +132,7 @@ essay <- function(identifier = generate_id(),
                   expected_lines = lines_expected(feedback),
                   words_max = max_words(feedback),
                   words_min = NA_integer_,
-                  data_allow_paste = FALSE,
+                  data_allow_paste = TRUE,
                   calculator = NA_character_,
                   files = NA_character_) {
     params <- as.list(environment())
