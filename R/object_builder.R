@@ -147,35 +147,6 @@ create_question_object <- function(file) {
     return(object)
 }
 
-create_entry_slots_old <- function(html, attrs) {
-
-    html <- xml2::xml_find_all(html, "//section[@id='question']")
-    html_str <- paste(clean_question(html), collapse = "")
-    print(html_str)
-
-    entry_gaps <- xml2::xml_find_all(html, "//gap")
-    ids <- make_ids(length(entry_gaps), "response")
-
-    gaps <- Map(create_gap_object, entry_gaps, ids)
-    end <- unlist(gregexpr("<gap>", html_str)) - 1L
-    begin <- unlist(gregexpr("</gap>", html_str)) + 6L
-    all <- sort(c(begin, end, 1, nchar(html_str)))
-    print(all)
-
-    content <- list()
-    for (i in seq(length(all) - 1)) {
-        print(i)
-        text_chank <- substring(html_str, all[i], all[i + 1L])
-        print(text_chank)
-        if ((i %% 2) == 0) {
-            text_chank <- gaps[i / 2]
-        }
-        content <- append(content, text_chank)
-    }
-    attrs <- c(Class = "Entry", content = as.list(list(content)), attrs)
-    return(attrs)
-}
-
 create_entry_slots <- function(html, attrs) {
     question <- xml2::xml_find_first(html, "//section[@id='question']")
 
