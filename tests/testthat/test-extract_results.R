@@ -185,3 +185,53 @@ test_that("Testing extract_results() throws an error for invalid
         expect_error(extract_results(invalid_file),
                      "'file' must contain only one zip or set of xml files")
 })
+
+
+test_that("extract_results() returns consistent structure on task level", {
+    path <- test_path("file/test_result.zip")
+    sut <- suppressMessages(
+        extract_results(path, level = "task", hide_filename = FALSE)
+    )
+
+    expect_s3_class(sut, "data.frame")
+    expect_true(nrow(sut) > 0)
+
+    expected_cols <- c(
+        "file",
+        "date",
+        "id_question",
+        "duration",
+        "score_candidate",
+        "score_max",
+        "is_answer_given",
+        "scorer_comment",
+        "title"
+    )
+
+    expect_named(sut, expected_cols)
+
+    expect_type(sut$file, "character")
+    expect_true(inherits(sut$date, c("POSIXct", "POSIXt")) || is.character(sut$date))
+    expect_type(sut$id_question, "character")
+    expect_type(sut$duration, "double")
+    expect_type(sut$score_candidate, "double")
+    expect_type(sut$score_max, "double")
+    expect_type(sut$is_answer_given, "logical")
+    expect_type(sut$scorer_comment, "character")
+
+    expect_false(anyNA(sut$file))
+    expect_false(anyNA(sut$date))
+    expect_false(anyNA(sut$id_question))
+    expect_false(anyNA(sut$duration))
+    expect_false(anyNA(sut$score_candidate))
+    expect_false(anyNA(sut$score_max))
+    expect_false(anyNA(sut$is_answer_given))
+
+    expect_true(all(nzchar(sut$file)))
+    expect_true(all(nzchar(sut$id_question)))
+
+    expect_true(all(sut$duration >= 0))
+    expect_true(all(sut$score_max >= 0))
+    expect_true(all(sut$score_candidate >= 0))
+    expect_true(all(sut$score_candidate <= sut$score_max))
+})
