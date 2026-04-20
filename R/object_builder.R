@@ -147,10 +147,11 @@ create_question_object <- function(file) {
     return(object)
 }
 
-create_entry_slots <- function(html, attrs) {
+create_entry_slots_old <- function(html, attrs) {
 
     html <- xml2::xml_find_all(html, "//section[@id='question']")
     html_str <- paste(clean_question(html), collapse = "")
+    print(html_str)
 
     entry_gaps <- xml2::xml_find_all(html, "//gap")
     ids <- make_ids(length(entry_gaps), "response")
@@ -159,16 +160,72 @@ create_entry_slots <- function(html, attrs) {
     end <- unlist(gregexpr("<gap>", html_str)) - 1L
     begin <- unlist(gregexpr("</gap>", html_str)) + 6L
     all <- sort(c(begin, end, 1, nchar(html_str)))
+    print(all)
 
     content <- list()
     for (i in seq(length(all) - 1)) {
+        print(i)
         text_chank <- substring(html_str, all[i], all[i + 1L])
+        print(text_chank)
         if ((i %% 2) == 0) {
             text_chank <- gaps[i / 2]
         }
         content <- append(content, text_chank)
     }
     attrs <- c(Class = "Entry", content = as.list(list(content)), attrs)
+    return(attrs)
+}
+
+create_entry_slots <- function(html, attrs) {
+    question <- xml2::xml_find_first(html, "//section[@id='question']")
+
+    # omit heading used only as section marker
+    xml2::xml_remove(xml2::xml_find_all(question, "./h1"))
+
+    entry_gaps <- xml2::xml_find_all(question, ".//gap")
+    ids <- make_ids(length(entry_gaps), "response")
+    gaps <- Map(create_gap_object, entry_gaps, ids)
+
+    html_str <- paste(as.character(xml2::xml_contents(question)), collapse = "")
+    html_str <- change_symbols(html_str)
+
+    placeholders <- paste0("___RQTI_GAP_", seq_along(gaps), "___")
+    for (i in seq_along(placeholders)) {
+        html_str <- sub("<sign\\s*/>", placeholders[i], html_str)
+    }
+
+    pattern <- paste(placeholders, collapse = "|")
+    m <- gregexpr(pattern, html_str)[[1]]
+
+    content <- list()
+    last_end <- 0L
+
+    for (i in seq_along(m)) {
+        start <- m[i]
+        end <- start + attr(m, "match.length")[i] - 1L
+
+        # html before placeholder
+        if (start > last_end + 1L) {
+            chunk <- substr(html_str, last_end + 1L, start - 1L)
+            if (nzchar(chunk)) {
+                content[[length(content) + 1]] <- chunk
+            }
+        }
+
+        # corresponding gap object
+        content[[length(content) + 1]] <- gaps[[i]]
+        last_end <- end
+    }
+
+    # trailing html after last placeholder
+    if (last_end < nchar(html_str)) {
+        chunk <- substr(html_str, last_end + 1L, nchar(html_str))
+        if (nzchar(chunk)) {
+            content[[length(content) + 1]] <- chunk
+        }
+    }
+
+    attrs <- c(Class = "Entry", content = list(content), attrs)
     return(attrs)
 }
 
