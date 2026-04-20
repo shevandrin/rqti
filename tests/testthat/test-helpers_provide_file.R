@@ -121,7 +121,7 @@ test_that("provide_file() embeds correct Base64 payload", {
     tmp <- tempfile(fileext = ".txt")
     writeLines("hello", tmp)
 
-    expected <- base64enc::base64encode(raw)
+    expected <- base64enc::base64encode(tmp)
 
     res <- provide_file(tmp)
     html <- as.character(res)
