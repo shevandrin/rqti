@@ -166,7 +166,7 @@ get_result_attr_answers<- function(file, hide_filename) {
     doc <- xml2::read_xml(file)
     node_dt <- xml2::xml_find_first(doc, ".//d1:testResult")
     test_dt <- xml2::xml_attr(node_dt, "datestamp")
-    test_dt <- as.POSIXct(strptime(test_dt, "%Y-%m-%d%H:%M:%S", tz = "UTC"))
+    test_dt <- as.POSIXct(strptime(test_dt, "%Y-%m-%dT%H:%M:%S", tz = "UTC"))
 
     items_result <- unique_result_set(doc)
 
