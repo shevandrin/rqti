@@ -25,6 +25,11 @@
   number of response options. This ensures that random guessing yields
   an expected score of zero.
 
+- Added
+  [`provide_file()`](https://shevandrin.github.io/rqti/reference/provide_file.md)
+  to embed local files directly into tasks as Base64-encoded hyperlinks
+  for downloadable attachments.
+
 - Enhanced LMS Opal API with new functions
   [`getCourseGroups()`](https://shevandrin.github.io/rqti/reference/getCourseGroups-methods.md)
   and
