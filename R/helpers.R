@@ -193,7 +193,7 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
 #' @param mime MIME type. If NULL, it is guessed from the extension.
 #' @param download Logical. If TRUE, adds the HTML download attribute.
 #' @param warn_size_mb Warn if file is larger than this many MB.
-#'
+#' @importFrom base64enc base64encode
 #' @return knitr_asis object with an HTML hyperlink.
 #' @export
 provide_file <- function(path,
@@ -229,7 +229,7 @@ provide_file <- function(path,
     }
 
     raw  <- readBin(path, "raw", size)
-    encoded <- curl::base64_encode(raw)
+    encoded <- base64enc::base64encode(raw)
     href <- paste0("data:", mime, ";base64,", encoded)
 
     html <- paste0(
