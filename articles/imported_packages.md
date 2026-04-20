@@ -22,5 +22,6 @@
 |    16 | textutils  | Decodes HTML entities.                                                                                    | high                           |
 |    17 | lifecycle  | Deliver warnings about depricated functionality                                                           | high                           |
 |    18 | exams      | Integration with exams package                                                                            | high                           |
+|    19 | base64enc  | To embed file direct to the tasks                                                                         | moderate                       |
 
 Imported and suggested packages
