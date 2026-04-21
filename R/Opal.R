@@ -424,15 +424,19 @@ setMethod("getCourseResult", "Opal", function(object, resource_id, node_id,
 
 #' Get groups from a course on LMS Opal
 #'
-#' This method retrieves groups from a course on LMS Opal by its course id.
-#' The groups are returned as a data frame with all accessible attributes,
-#' such as group id, name, description, participant limits, and group settings.
-#' If no Opal connection object is provided, it attempts to guess the connection
-#' using default settings (e.g., environment variables). If the connection cannot
-#' be established, an error is thrown.
+#' This method retrieves groups from a course on LMS Opal by its course id. The
+#' groups are returned as a data frame with all accessible attributes, such as
+#' group id, name, description, participant limits, and group settings. If no
+#' Opal connection object is provided, it attempts to guess the connection using
+#' default settings (e.g., environment variables). If the connection cannot be
+#' established, an error is thrown.
 #'
-#' @param object An S4 object of class [Opal] that represents a connection to the LMS.
-#' @param course_id A length one character vector specifying the course id.
+#' @param object An S4 object of class [Opal] that represents a connection to
+#'   the LMS.
+#' @param course_id A character vector of length one specifying the course
+#'   resource ID. Note that this is not the course ID shown in the URL, but a
+#'   longer identifier available via the "Show more information" option within
+#'   the course.
 #' @return A data frame with course groups and their attributes.
 #' @examplesIf interactive()
 #' groups <- getCourseGroups("89068111333293")
