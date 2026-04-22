@@ -75,3 +75,28 @@ exams_task <- function(path) {
     xml_path <- write_exams_item_xml(item)
     return(xml_path)
 }
+
+# detector which Rmd format is used in the file (rqti or exams)
+detect_rmd_format <- function(file) {
+    if (!file.exists(file)) {
+        stop("File does not exist: ", file, call. = FALSE)
+    }
+
+    yaml <- rmarkdown::yaml_front_matter(file)
+    has_yaml <- length(yaml) > 0
+
+    x <- readLines(file, warn = FALSE, encoding = "UTF-8")
+    has_meta_information <- any(
+        grepl("^Meta-information\\s*$", x, ignore.case = TRUE)
+    )
+
+    if (has_yaml && !has_meta_information) {
+        return("rqti_rmd")
+    }
+
+    if (has_meta_information && !has_yaml) {
+        return("exams_rmd")
+    }
+
+    return("unknown")
+}

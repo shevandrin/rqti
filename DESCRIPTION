@@ -83,6 +83,7 @@ Collate:
     'TextGapOpal.R'
     'WrongFeedback.R'
     'character.R'
+    'exams_integration.R'
     'extract_results.R'
     'helpers.R'
     'knit_functions.R'
