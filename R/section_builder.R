@@ -1,8 +1,12 @@
 #' Create a section as part of a test content
 #'
-#' Create an AssessmentSection `rqti`-object as part of a test content
-#' @param content A character vector of Rmd, md, xml files, task- or
-#'   section-objects.
+#' Create an AssessmentSection `rqti`-object as part of a test content.
+#' The function accepts `rqti` tasks and sections directly, as well as task
+#' definitions stored in native `rqti` Rmd/md files, `exams`-style Rmd files,
+#' or XML files.
+#' @param content A list of Rmd, md, or xml files, or task ([AssessmentItem]) or
+#'   section ([AssessmentSection]) objects. Supported Rmd/md inputs include native `rqti` files and
+#'   Rmd files written in the `exams` format.
 #' @param n_variants An integer value indicating the number of task variants to
 #'   create from Rmd files. Default is `1`.
 #' @param seed_number An integer vector, optional, specifying seed numbers to
