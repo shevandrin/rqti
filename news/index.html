@@ -41,6 +41,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
+    <li><a class="dropdown-item" href="../articles/exams_integr.html">Integration of the exams Package in rqti</a></li>
     <li><a class="dropdown-item" href="../articles/imported_packages.html">Imported Packages</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -66,6 +67,7 @@
 <li><p>Added <code>fallback_titles</code> argument to <code><a href="../reference/test.html">test()</a></code> and <code><a href="../reference/test4opal.html">test4opal()</a></code> to control how section and item titles are assigned when not explicitly provided. Supported values are “filename” and “generic”. The <code>AssessmentTest</code> class now includes a <code>fallback_titles</code> slot.</p></li>
 <li><p>Added a new slot <code>scoring_scheme</code> to the <code>SingleChoice</code> class to control how response options are scored. Supported values are “standard” (default) and “penalty”. Introduced penalty-based scoring for single-choice tasks. When <code>scoring_scheme = "penalty"</code>, incorrect answers receive a negative score of -points/(k-1), where k is the number of response options. This ensures that random guessing yields an expected score of zero.</p></li>
 <li><p>Added <code><a href="../reference/provide_file.html">provide_file()</a></code> to embed local files directly into tasks as Base64-encoded hyperlinks for downloadable attachments.</p></li>
+<li><p><code><a href="../reference/section.html">section()</a></code> now supports Rmd files created with the <code>exams</code> package. Such files are automatically detected and processed accordingly.</p></li>
 <li><p>Enhanced LMS Opal API with new functions <code><a href="../reference/getCourseGroups-methods.html">getCourseGroups()</a></code> and <code><a href="../reference/getGroupUsers-methods.html">getGroupUsers()</a></code> for retrieving course groups and group users as data frames.</p></li>
 </ul></div>
 <div class="section level3">

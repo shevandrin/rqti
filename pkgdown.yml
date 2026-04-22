@@ -8,6 +8,7 @@ articles:
   directedpairs: directedpairs.html
   dropdown: dropdown.html
   essay: essay.html
+  exams_integr: exams_integr.html
   gap: gap.html
   imported_packages: imported_packages.html
   multiplechoice: multiplechoice.html
@@ -16,7 +17,7 @@ articles:
   section: section.html
   singlechoice: singlechoice.html
   table: table.html
-last_built: 2026-04-20T14:06Z
+last_built: 2026-04-22T21:21Z
 urls:
   reference: https://shevandrin.github.io/rqti/reference
   article: https://shevandrin.github.io/rqti/articles

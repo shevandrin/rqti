@@ -1,6 +1,9 @@
 # Create a section as part of a test content
 
-Create an AssessmentSection `rqti`-object as part of a test content
+Create an AssessmentSection `rqti`-object as part of a test content. The
+function accepts `rqti` tasks and sections directly, as well as task
+definitions stored in native `rqti` Rmd/md files, `exams`-style Rmd
+files, or XML files.
 
 ## Usage
 
@@ -25,7 +28,12 @@ section(
 
 - content:
 
-  A character vector of Rmd, md, xml files, task- or section-objects.
+  A list of Rmd, md, or xml files, or task
+  ([AssessmentItem](https://shevandrin.github.io/rqti/reference/AssessmentItem-class.md))
+  or section
+  ([AssessmentSection](https://shevandrin.github.io/rqti/reference/AssessmentSection-class.md))
+  objects. Supported Rmd/md inputs include native `rqti` files and Rmd
+  files written in the `exams` format.
 
 - n_variants:
 

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Adding metadata • rqti</title>
+<title>Integration of the exams Package in rqti • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Adding metadata">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Integration of the exams Package in rqti">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -84,12 +84,12 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Adding metadata</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Integration of the exams Package in rqti</h1>
             
             <h4 data-toc-skip class="date">2026-04-22</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/adding_metadata.Rmd" class="external-link"><code>vignettes/adding_metadata.Rmd</code></a></small>
-      <div class="d-none name"><code>adding_metadata.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/exams_integr.Rmd" class="external-link"><code>vignettes/exams_integr.Rmd</code></a></small>
+      <div class="d-none name"><code>exams_integr.Rmd</code></div>
     </div>
 
     
@@ -97,85 +97,45 @@
 <pre><code><span><span class="co">#&gt; Registered S3 method overwritten by 'textutils':</span></span>
 <span><span class="co">#&gt;   method             from </span></span>
 <span><span class="co">#&gt;   toLatex.data.frame exams</span></span></code></pre>
-<p>Metadata—including details about creators, rights, and
-descriptions—is essential for ensuring accountability, legal compliance,
-and clarity in the management and use of assessment items and tests.
-This information helps track content origin and ownership, while also
-providing clear descriptions that facilitate better organization and
-retrieval of assessment resources.</p>
-<p>We utilize ONYX’s metadata implementation, which largely supports the
-IEEE Learning Object Metadata (LOM) standard. As a result, metadata is
-stored in XML format within the IMS manifest of the test data. However,
-it is important to note that this metadata may not be displayed by other
-learning management systems, and even OPAL may overwrite it. The primary
-purpose is to maintain metadata within the original xml files being
-shared.</p>
-<p>Here is an example of metadata with two contributors in the yaml
-section:</p>
-<pre><code>---
-title: Demonstration of metadata
-type: essay
-knit: rqti::render_qtijs
-identifier: demo_metadata
-
-metadata:
-  contributor:
-    - name: Andrey Shevandrin
-      role: author
-    - name: Johannes Titz 
-      role: author
-  description: Demonstration of metadata
-  rights: CC BY SA Andrey Shevandrin and Johannes Titz (2024).
----
-
-# question
-
-Essay exercise with metadata attributes in the yaml section.</code></pre>
-<p>Currently, the metadata may contain the following information:</p>
-<ul>
-<li>
-<strong>description</strong>: A string providing a description of
-the task content.</li>
-<li>
-<strong>rights</strong>: A string outlining the usage rights and
-terms associated with the task.</li>
-<li>
-<strong>version</strong>: A string indicating the version of the
-task.</li>
-<li>
-<strong>contributor</strong>: A list of contributor details, where
-each contributor entry may include the following information:
-<ul>
-<li>
-<strong>name</strong>: A string representing the contributor’s
-name.</li>
-<li>
-<strong>role</strong>: A string specifying the type of contribution.
-Possible values include: author, publisher, unknown, initiator,
-terminator, validator, editor, graphical designer, technical
-implementer, content provider, technical validator, educational
-validator, script writer, instructional designer, and subject matter
-expert. By default, <code>rqti</code> sets this value to “author”.</li>
-<li>
-<strong>contribution_date</strong>: A string representing the date
-of contribution. By default, <code>rqti</code> sets this to the current
-system date.</li>
-</ul>
-</li>
-</ul>
-<p>If you are working on a set of tasks, setting metadata for each one
-individually can be tedious. To streamline this process, you can use the
-environment variables <code>RQTI_AUTHOR</code> and
-<code>RQTI_RIGHTS</code>, which will automatically populate these fields
-with default values.</p>
-<p>For example, you can create an <code>.Rprofile</code> file and set
-the default author and usage rights as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>RQTI_AUTHOR <span class="op">=</span> <span class="st">"Ada Lovelace"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>RQTI_RIGHTS <span class="op">=</span> <span class="st">"CC BY SA"</span><span class="op">)</span></span></code></pre></div>
-<p>If you need to use non-default values, just specify the yaml
-attributes, which will override the environment variables.</p>
-  </main>
+<div class="section level2">
+<h2 id="using-exams-rmd-files-in-section">Using exams Rmd files in section()<a class="anchor" aria-label="anchor" href="#using-exams-rmd-files-in-section"></a>
+</h2>
+<p>In addition to native <code>rqti</code> task definitions, the
+<code>rqti</code> package allows the use of tasks written in the format
+of the <code>exams</code> package.</p>
+<p>This integration makes it possible to reuse existing
+<code>exams</code> R Markdown files and include them directly in
+<code>rqti</code> workflows.<br>
+When an <code>.Rmd</code> file is provided, <code>rqti</code>
+automatically detects its format based on the structure of the file.
+Based on this detection, the file is processed accordingly.</p>
+<p>R Markdown files from the <code>exams</code> package can be passed
+directly to the <code><a href="../reference/section.html">section()</a></code> function, just like native
+<code>rqti</code> tasks and/or objects.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sect</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/section.html">section</a></span><span class="op">(</span></span>
+<span>        content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>            <span class="st">"rqti_task.Rmd"</span>,      <span class="co"># native rqti format</span></span>
+<span>            <span class="st">"exams_task.Rmd"</span>,     <span class="co"># exams format</span></span>
+<span>            <span class="va">sc_object</span>            <span class="co"># existing rqti object</span></span>
+<span>        <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>rqti converts exams_task.Rmd into an XML file in QTI 2.1 format using
+functionality from the exams package.</p>
+</div>
+<div class="section level2">
+<h2 id="integration-with-openolat-configuration">Integration with OpenOLAT configuration<a class="anchor" aria-label="anchor" href="#integration-with-openolat-configuration"></a>
+</h2>
+<p>The rqti package also relies on functionality from the exams package
+to create configuration files required by learning management systems
+such as OpenOLAT.</p>
+<p>In particular, the configuration file (QTI21PackageConfig.xml) is
+generated using helper functions from exams. This ensures compatibility
+with OpenOLAT while keeping the implementation aligned with existing
+tools.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

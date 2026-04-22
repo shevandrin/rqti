@@ -36,5 +36,7 @@
 
 - [Compatibility with Learning Management
   Systems](https://shevandrin.github.io/rqti/articles/compatibility.md):
+- [Integration of the exams Package in
+  rqti](https://shevandrin.github.io/rqti/articles/exams_integr.md):
 - [Imported
   Packages](https://shevandrin.github.io/rqti/articles/imported_packages.md):

@@ -30,6 +30,10 @@
   to embed local files directly into tasks as Base64-encoded hyperlinks
   for downloadable attachments.
 
+- [`section()`](https://shevandrin.github.io/rqti/reference/section.md)
+  now supports Rmd files created with the `exams` package. Such files
+  are automatically detected and processed accordingly.
+
 - Enhanced LMS Opal API with new functions
   [`getCourseGroups()`](https://shevandrin.github.io/rqti/reference/getCourseGroups-methods.md)
   and
