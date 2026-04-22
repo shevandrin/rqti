@@ -14,6 +14,9 @@ Introduced penalty-based scoring for single-choice tasks. When `scoring_scheme =
 
 * Added `provide_file()` to embed local files directly into tasks as Base64-encoded hyperlinks for downloadable attachments.
 
+* `section()` now supports Rmd files created with the `exams` package.
+  Such files are automatically detected and processed accordingly.
+
 * Enhanced LMS Opal API with new functions `getCourseGroups()` and `getGroupUsers()` for retrieving course groups and group users as data frames.
 
 ## Improvements
