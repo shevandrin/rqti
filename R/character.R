@@ -146,8 +146,22 @@ setMethod("getObject", signature(object = "character"),
               ext <- file_ext(object)
               if (file.exists(object) & (ext %in% c("xml", "Rmd", "md"))) {
                   if (ext %in% c("Rmd", "md")) {
-                      object <- create_question_object(object)
+
+                      fmt <- detect_rmd_format(object)
+
+                      if (identical(fmt, "rqti_rmd")) {
+                          object <- create_question_object(object)
+                      } else if (identical(fmt, "exams_rmd")) {
+                          object <- exams_task(object)
+                      } else {
+                          stop(
+                              "Cannot determine Rmd format (rqti or exams are allowed): ",
+                              object,
+                              call. = FALSE
+                          )
+                      }
                   }
+
                   return(object)
               }
               return(NULL)

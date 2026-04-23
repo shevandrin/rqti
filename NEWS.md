@@ -12,6 +12,11 @@ values are "filename" and "generic". The `AssessmentTest` class now includes a
 * Added a new slot `scoring_scheme` to the `SingleChoice` class to control how response options are scored. Supported values are "standard" (default) and "penalty".
 Introduced penalty-based scoring for single-choice tasks. When `scoring_scheme = "penalty"`, incorrect answers receive a negative score of -points/(k-1), where k is the number of response options. This ensures that random guessing yields an expected score of zero.
 
+* Added `provide_file()` to embed local files directly into tasks as Base64-encoded hyperlinks for downloadable attachments.
+
+* `section()` now supports Rmd files created with the `exams` package.
+  Such files are automatically detected and processed accordingly.
+
 * Enhanced LMS Opal API with new functions `getCourseGroups()` and `getGroupUsers()` for retrieving course groups and group users as data frames.
 
 ## Improvements

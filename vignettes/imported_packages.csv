@@ -17,4 +17,4 @@ zip,"Manipulates ZIP archives.",high
 textutils,"Decodes HTML entities.",high
 lifecycle, "Deliver warnings about depricated functionality", high
 exams, "Integration with exams package", high
-
+base64enc, "To embed file direct to the tasks", moderate

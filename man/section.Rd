@@ -20,8 +20,9 @@ section(
 )
 }
 \arguments{
-\item{content}{A character vector of Rmd, md, xml files, task- or
-section-objects.}
+\item{content}{A list of Rmd, md, or xml files, or task (\link{AssessmentItem}) or
+section (\link{AssessmentSection}) objects. Supported Rmd/md inputs include native \code{rqti} files and
+Rmd files written in the \code{exams} format.}
 
 \item{n_variants}{An integer value indicating the number of task variants to
 create from Rmd files. Default is \code{1}.}
@@ -63,7 +64,10 @@ comments on each question of the section. Default is \code{TRUE}.}
 An object of class \link{AssessmentSection}.
 }
 \description{
-Create an AssessmentSection \code{rqti}-object as part of a test content
+Create an AssessmentSection \code{rqti}-object as part of a test content.
+The function accepts \code{rqti} tasks and sections directly, as well as task
+definitions stored in native \code{rqti} Rmd/md files, \code{exams}-style Rmd files,
+or XML files.
 }
 \examples{
 sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
