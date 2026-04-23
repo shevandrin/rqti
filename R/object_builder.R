@@ -553,11 +553,26 @@ pandoc_html_convert <- function(input_file, output_file_name, dir_name) {
     pnd_v <- numeric_version("2.19")
     emb <- ifelse(rmarkdown::pandoc_version() > pnd_v, "--embed-resources", "")
     options <- c("-o", output_file_name, "-f", "markdown+tex_math_dollars", "-t", "html5",
-                 "--mathml",
+                 "--mathjax",
                  emb,
                  "--section-divs",
                  "--no-highlight",
                  "--wrap=none", "+RTS", "-M512M")
-    pandoc_convert(input_file, options = options, wd = dir_name)
-    return(file.path(dir_name, output_file_name))
+
+    rmarkdown::pandoc_convert(input_file, options = options, wd = dir_name)
+
+    output_path <- file.path(dir_name, output_file_name)
+
+    html <- paste(readLines(output_path, warn = FALSE), collapse = "\n")
+
+    html <- gsub(
+        '<span class="math (inline|display)">((?:.|\\n)*?)</span>',
+        '\\2',
+        html,
+        perl = TRUE
+    )
+
+    writeLines(html, output_path, useBytes = TRUE)
+
+    return(output_path)
 }

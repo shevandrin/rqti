@@ -1,6 +1,7 @@
 simplemath <- function(number) {
-    out <- htmltools::tag("math", list(xmlns = "http://www.w3.org/1998/Math/MathML", display = "inline", htmltools::tag("semantics", list(htmltools::tag("mn", number), htmltools::tag("annotation", list("encoding" = "application/x-tex", number))))))
-    out <- gsub("\n[ ]*", "", as.character(out))
+    # out <- htmltools::tag(display = "inline", htmltools::tag("semantics", list(htmltools::tag("mn", number), htmltools::tag("annotation", list("encoding" = "application/x-tex", number)))))
+    # out <- gsub("\n[ ]*", "", as.character(out))
+    out <- paste0("\\(", number, "\\)")
     out
 }
 
