@@ -36,7 +36,10 @@ getCourseGroups(object, course_id)
 
 - course_id:
 
-  A length one character vector specifying the course id.
+  A character vector of length one specifying the course resource ID.
+  Note that this is not the course ID shown in the URL, but a longer
+  identifier available via the "Show more information" option within the
+  course.
 
 ## Value
 
