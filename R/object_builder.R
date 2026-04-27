@@ -157,7 +157,8 @@ create_entry_slots <- function(html, attrs) {
     ids <- make_ids(length(entry_gaps), "response")
     gaps <- Map(create_gap_object, entry_gaps, ids)
 
-    html_str <- paste(as.character(xml2::xml_contents(question)), collapse = "")
+    html_qst <- xml2::xml_contents(question)
+    html_str <- paste(as.character(html_qst), collapse = "")
     html_str <- change_symbols(html_str)
 
     placeholders <- paste0("___RQTI_GAP_", seq_along(gaps), "___")
@@ -389,6 +390,8 @@ change_symbols <- function(cont) {
         cont <- gsub("\n", " ", cont)
         cont <- gsub("<br/> ", "<br/>", cont)
         cont <- gsub("   ", "", cont)
+        cont <- gsub("<section\\b", "<div", cont)
+        cont <- gsub("</section>", "</div>", cont)
     } else {
         cont <- gsub("<code>", "<code><br />", cont)
         cont <- gsub("\\\r\\\n", "<br />", cont)
