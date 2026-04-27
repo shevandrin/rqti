@@ -580,12 +580,18 @@ rmd_detect_type <- function(file) {
 pandoc_html_convert <- function(input_file, output_file_name, dir_name) {
     pnd_v <- numeric_version("2.19")
     emb <- ifelse(rmarkdown::pandoc_version() > pnd_v, "--embed-resources", "")
+
+    lua_filter <- system.file("pandoc", "remove-ol-type.lua", package = "rqti")
+    lua_opt <- if (nzchar(lua_filter)) paste0("--lua-filter=", lua_filter) else character(0)
+
     options <- c("-o", output_file_name, "-f", "markdown+tex_math_dollars", "-t", "html5",
                  "--mathjax",
                  emb,
                  "--section-divs",
                  "--no-highlight",
-                 "--wrap=none", "+RTS", "-M512M")
+                 "--wrap=none",
+                 lua_opt,
+                 "+RTS", "-M512M")
 
     rmarkdown::pandoc_convert(input_file, options = options, wd = dir_name)
 
