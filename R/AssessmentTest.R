@@ -306,7 +306,9 @@ setMethod("createZip", signature(object = "AssessmentTest"),
 #' @aliases prepareQTIJSFiles,AssessmentTest
 setMethod("prepareQTIJSFiles", signature(object = "AssessmentTest"),
           function(object, dir) {
-              zip_file <- createQtiTest(object, dir, TRUE)
+              zip_file <- createQtiTest(object = object,
+                                        dir = dir,
+                                        verification = FALSE)
               zip::unzip(zip_file, exdir = dir)
               unlink(zip_file)
               return(NULL)
