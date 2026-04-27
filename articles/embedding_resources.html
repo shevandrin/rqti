@@ -103,8 +103,68 @@
 </h2>
 </div>
 <div class="section level2">
-<h2 id="embedding-files">Embedding files<a class="anchor" aria-label="anchor" href="#embedding-files"></a>
+<h2 id="embedding-files-in-r-markdown-tasks">Embedding files in R Markdown tasks<a class="anchor" aria-label="anchor" href="#embedding-files-in-r-markdown-tasks"></a>
 </h2>
+<p>In some assessment scenarios, it is useful to provide additional
+materials directly within a task, such as datasets, PDFs, or
+supplementary documents.</p>
+<p>The <code>rqti</code> package provides the helper function
+<code><a href="../reference/provide_file.html">provide_file()</a></code> for this purpose. The function embeds a
+local file into the rendered output by encoding it as Base64 and
+creating a downloadable hyperlink. This means that the file is included
+directly in the task and does not need to be hosted externally. This
+approach is especially useful when tasks are exported to learning
+management systems, as all required resources are bundled within the
+task itself.</p>
+<p>The following example demonstrates how <code><a href="../reference/provide_file.html">provide_file()</a></code>
+can be used inside an .Rmd task. In this case, two files are embedded
+and offered to the user as downloadable resources.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>---</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>title: "Essay with embedded files"</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>type: essay</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>knit: rqti::render_qtijs</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>---</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="in">library(rqti)</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="fu"># question</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>Read the provided files and answer the question below.</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="ss">- </span>Dataset: <span class="in">`r provide_file("data.csv", label = "Download dataset")`</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="ss">- </span>Description: <span class="in">`r provide_file("description.pdf", label = "Download description")`</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>Using the provided dataset, describe the main patterns you observe and discuss your findings.</span></code></pre></div>
+<p>In this example:</p>
+<ul>
+<li><p><code>provide_file("data.csv")</code> embeds a dataset directly
+into the task</p></li>
+<li><p><code>provide_file("description.pdf")</code> embeds an additional
+document</p></li>
+<li><p>The links are rendered as standard HTML <code>&lt;a&gt;</code>
+elements with embedded data</p></li>
+<li><p>When the task is exported, both files are included without
+requiring external references</p></li>
+<li><p>The inline usage via r … ensures that the links are generated
+dynamically during rendering.</p></li>
+</ul>
+<div class="section level3">
+<h3 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
+</h3>
+<ul>
+<li><p>Files should be reasonably small, as they are embedded directly
+into the document</p></li>
+<li><p>The label argument can be used to control the displayed link
+text</p></li>
+<li><p>If no label is provided, the file name is used by
+default</p></li>
+<li><p>MIME types are detected automatically, but can be specified
+manually if needed</p></li>
+</ul>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
