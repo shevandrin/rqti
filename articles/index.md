@@ -16,6 +16,8 @@
 - [Table tasks](https://shevandrin.github.io/rqti/articles/table.md):
 - [Adding
   metadata](https://shevandrin.github.io/rqti/articles/adding_metadata.md):
+- [Embedding
+  resources](https://shevandrin.github.io/rqti/articles/embedding_resources.md):
 
 ### Sections and Tests
 

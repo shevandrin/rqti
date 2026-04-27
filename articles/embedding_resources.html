@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Imported Packages • rqti</title>
+<title>Embedding resources • rqti</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Imported Packages">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Embedding resources">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -85,157 +85,26 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Imported Packages</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Embedding resources</h1>
             
             <h4 data-toc-skip class="date">2026-04-27</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/imported_packages.Rmd" class="external-link"><code>vignettes/imported_packages.Rmd</code></a></small>
-      <div class="d-none name"><code>imported_packages.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/embedding_resources.Rmd" class="external-link"><code>vignettes/embedding_resources.Rmd</code></a></small>
+      <div class="d-none name"><code>embedding_resources.Rmd</code></div>
     </div>
 
     
     
+<pre><code><span><span class="co">#&gt; Registered S3 method overwritten by 'textutils':</span></span>
+<span><span class="co">#&gt;   method             from </span></span>
+<span><span class="co">#&gt;   toLatex.data.frame exams</span></span></code></pre>
 <div class="section level2">
-<h2 id="imported-and-suggested-packages">Imported and suggested packages<a class="anchor" aria-label="anchor" href="#imported-and-suggested-packages"></a>
+<h2 id="embedding-images">Embedding images<a class="anchor" aria-label="anchor" href="#embedding-images"></a>
 </h2>
-<table class="table">
-<caption>Imported and suggested packages</caption>
-<colgroup>
-<col width="3%">
-<col width="7%">
-<col width="68%">
-<col width="20%">
-</colgroup>
-<thead><tr class="header">
-<th align="right">Index</th>
-<th align="left">package</th>
-<th align="left">usage</th>
-<th align="left">priority</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="left">htmltools</td>
-<td align="left">Facilitates working with HTML content.</td>
-<td align="left">high</td>
-</tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="left">xml2</td>
-<td align="left">Handles reading, writing, and verification of XML
-files.</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="left">yaml</td>
-<td align="left">Manages YAML objects within Rmd files.</td>
-<td align="left">high</td>
-</tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="left">rmarkdown</td>
-<td align="left">Processes Markdown documents, extracts YAML objects,
-and calls Pandoc functions.</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="left">servr</td>
-<td align="left">Provides a simple HTTP server.</td>
-<td align="left">high</td>
-</tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="left">rstudioapi</td>
-<td align="left">Accesses RStudio session details, manages files and
-projects, and controls RStudio IDE behavior (Viewer).</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="left">stringr</td>
-<td align="left">Provides functions for string manipulation.</td>
-<td align="left">moderate (but frequent in use)</td>
-</tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="left">methods</td>
-<td align="left">Displays methods for a generic function and checks
-available methods for a specific function.</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">9</td>
-<td align="left">magrittr</td>
-<td align="left">Introduces the %&gt;% operator for piping.</td>
-<td align="left">moderate</td>
-</tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="left">httr2</td>
-<td align="left">Facilitates working with HTTP requests.</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">11</td>
-<td align="left">curl</td>
-<td align="left">Transfers data with URLs, enabling file inclusion in
-HTTP requests.</td>
-<td align="left">high</td>
-</tr>
-<tr class="even">
-<td align="right">12</td>
-<td align="left">knitr</td>
-<td align="left">Creates HTML and compiles dynamic documents written in
-R Markdown with embedded R code.</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">13</td>
-<td align="left">getPass</td>
-<td align="left">Hides user passwords (in API).</td>
-<td align="left">high</td>
-</tr>
-<tr class="even">
-<td align="right">14</td>
-<td align="left">keyring</td>
-<td align="left">Securely stores and retrieves sensitive authentication
-data.</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">15</td>
-<td align="left">zip</td>
-<td align="left">Manipulates ZIP archives.</td>
-<td align="left">high</td>
-</tr>
-<tr class="even">
-<td align="right">16</td>
-<td align="left">textutils</td>
-<td align="left">Decodes HTML entities.</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">17</td>
-<td align="left">lifecycle</td>
-<td align="left">Deliver warnings about depricated functionality</td>
-<td align="left">high</td>
-</tr>
-<tr class="even">
-<td align="right">18</td>
-<td align="left">exams</td>
-<td align="left">Integration with exams package</td>
-<td align="left">high</td>
-</tr>
-<tr class="odd">
-<td align="right">19</td>
-<td align="left">base64enc</td>
-<td align="left">To embed file direct to the tasks</td>
-<td align="left">moderate</td>
-</tr>
-</tbody>
-</table>
+</div>
+<div class="section level2">
+<h2 id="embedding-files">Embedding files<a class="anchor" aria-label="anchor" href="#embedding-files"></a>
+</h2>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
