@@ -45,6 +45,10 @@
 - `extract_results(level = "task")` now includes an additional column
   containing `scorerComment` for manually scored item results.
 
+- Images referenced in external XML files are now automatically embedded
+  as Base64. This ensures that tasks are fully self-contained and do not
+  depend on external image files.
+
 ## rqti 1.1.0
 
 CRAN release: 2026-02-23
