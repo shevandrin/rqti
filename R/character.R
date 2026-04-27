@@ -153,6 +153,7 @@ setMethod("getObject", signature(object = "character"),
                           object <- create_question_object(object)
                       } else if (identical(fmt, "exams_rmd")) {
                           object <- exams_task(object)
+                          object <- xml_preparation(object)
                       } else {
                           stop(
                               "Cannot determine Rmd format (rqti or exams are allowed): ",
@@ -160,6 +161,9 @@ setMethod("getObject", signature(object = "character"),
                               call. = FALSE
                           )
                       }
+                  }
+                  if (ext %in% "xml") {
+                      object <- xml_preparation(object)
                   }
 
                   return(object)
@@ -197,7 +201,10 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
                   xml_target <- sub("\\.Rmd$", ".xml", current_rmd_fullpath)
                   file.copy(out_path, xml_target)
               }
-              if (ext == "xml") file.copy(object, out_path)
+              if (ext == "xml") {
+                  object <- xml_preparation(object)
+                  file.copy(object, out_path)
+              }
               if (ext == "zip") zip::unzip(object, exdir = dir)
               params <- knit_params(readLines(object))
               if (!is.null(params$preview_feedback$value)) {
@@ -212,3 +219,46 @@ setMethod("getContributors", signature(object = "character"),
           function(object) {
               return(NULL)
           })
+
+# check images in xml and embedds them
+xml_preparation <- function(obj) {
+    content <- xml2::read_xml(obj)
+    images <- xml2::xml_find_all(content, ".//*[local-name()='img']")
+
+    if (length(images) == 0) return (obj)
+    for (img in images) {
+        src <- xml2::xml_attr(img, "src")
+
+        # skip already embedded images
+        if (grepl("^data:image/", src)) {
+            next
+        }
+        image_path <- file.path(dirname(obj), src)
+
+        if (!file.exists(image_path)) {
+            warning("Image file does not exist: ", src)
+            next
+        }
+
+        ext <- tools::file_ext(image_path)
+        mime <- switch(
+            tolower(ext),
+            "png"  = "image/png",
+            "jpg"  = "image/jpeg",
+            "jpeg" = "image/jpeg",
+            "gif"  = "image/gif",
+            "svg"  = "image/svg+xml",
+            "webp" = "image/webp",
+            "application/octet-stream"
+        )
+
+        encoded <- base64enc::base64encode(image_path)
+        embedded_src <- paste0("data:", mime, ";base64,", encoded)
+
+        xml2::xml_set_attr(img, "src", embedded_src)
+    }
+
+    tmp <- tempfile(fileext = ".xml")
+    xml2::write_xml(content, tmp)
+    return(tmp)
+}
