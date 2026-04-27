@@ -1,0 +1,28 @@
+---
+title: "Embedding resources" 
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+    %\VignetteIndexEntry{Embedding resources}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r api, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+```{r setup api opal, echo=FALSE}
+library(rqti)
+```
+
+`r if(knitr::is_latex_output()) "# Embedding resources"`
+
+## Embedding images
+
+
+
+
+## Embedding files
