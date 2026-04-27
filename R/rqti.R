@@ -10,16 +10,39 @@ check_identifier <- function(id, quiet = FALSE) {
         stop("Identifier must be a single character string.", call. = FALSE)
     }
 
-    checker <- grepl("^[A-Za-z_][A-Za-z0-9_.-]*$", id)
-    checker <- checker & !grepl(":", id)
-    checker <- checker & !grepl("\\s", id)
-    checker <- checker & !grepl("[\u00C4\u00E4\u00DF\u00D6\u00F6\u00DC\u00FC]", id)
+    issues <- character()
+
+    if (!grepl("^[A-Za-z_]", id)) {
+        issues <- c(issues, "must start with a letter or '_'")
+    }
+
+    if (grepl("[^A-Za-z0-9_.-]", id)) {
+        issues <- c(issues,
+                    "contains invalid characters (allowed: letters, digits, '_', '-', '.')"
+        )
+    }
+
+    if (grepl(":", id)) {
+        issues <- c(issues, "contains ':' which is not allowed")
+    }
+
+    if (grepl("\\s", id)) {
+        issues <- c(issues, "contains whitespace")
+    }
+
+    if (grepl("[\u00C4\u00E4\u00DF\u00D6\u00F6\u00DC\u00FC]", id)) {
+        issues <- c(issues, "contains German umlauts")
+    }
+
+    checker <- length(issues) == 0
 
     if (!checker && !quiet) {
         stop(
-            "Invalid identifier '", id,
-            "'. Must start with a letter or '_' and contain only letters, digits, '_', '-', '.'. ",
-            "No spaces or ':' allowed.",
+            sprintf(
+                "Invalid identifier '%s': %s.",
+                id,
+                paste(issues, collapse = "; ")
+            ),
             call. = FALSE
         )
     }
