@@ -87,7 +87,7 @@ detect_rmd_format <- function(file) {
 
     x <- readLines(file, warn = FALSE, encoding = "UTF-8")
     has_meta_information <- any(
-        grepl("^Meta-information\\s*$", x, ignore.case = TRUE)
+        grepl("^meta[- ]?information\\s*$", x, ignore.case = TRUE)
     )
 
     if (has_yaml && !has_meta_information) {
