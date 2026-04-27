@@ -11,18 +11,17 @@ vignette: >
 ```{r api, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE
 )
+source("helper.R")
 ```
 ```{r setup api opal, echo=FALSE}
 library(rqti)
 ```
 
 `r if(knitr::is_latex_output()) "# Embedding resources"`
-
-## Embedding images
-
-
 
 ## Embedding files in R Markdown tasks
 
@@ -74,6 +73,10 @@ In this example:
 
 * The inline usage via r ... ensures that the links are generated dynamically during rendering.
 
+In OPAL this renders as `r ltx("shown in Figure \\ref{essay_files2opal}.", ":")`
+
+![\label{essay_files2opal}Preview of essay task with links in OPAL](images/essay-files.png){width=100%}
+
 ### Notes
 
 * Files should be reasonably small, as they are embedded directly into the document
@@ -83,4 +86,13 @@ In this example:
 * If no label is provided, the file name is used by default
 
 * MIME types are detected automatically, but can be specified manually if needed
+
+
+## Embedding images
+
+Images in .Rmd tasks are handled in the same way as other external resources.
+
+Images are embedded regardless of how they are created or referenced in the .Rmd file (e.g., `![caption](image.png)`) or generated programmatically (e.g., plots in R chunks).
+In all cases, the image data is encoded in Base64 and stored directly in the XML, making the task fully self-contained without external dependencies.
+
 
