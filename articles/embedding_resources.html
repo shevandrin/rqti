@@ -95,13 +95,6 @@
 
     
     
-<pre><code><span><span class="co">#&gt; Registered S3 method overwritten by 'textutils':</span></span>
-<span><span class="co">#&gt;   method             from </span></span>
-<span><span class="co">#&gt;   toLatex.data.frame exams</span></span></code></pre>
-<div class="section level2">
-<h2 id="embedding-images">Embedding images<a class="anchor" aria-label="anchor" href="#embedding-images"></a>
-</h2>
-</div>
 <div class="section level2">
 <h2 id="embedding-files-in-r-markdown-tasks">Embedding files in R Markdown tasks<a class="anchor" aria-label="anchor" href="#embedding-files-in-r-markdown-tasks"></a>
 </h2>
@@ -119,25 +112,25 @@ task itself.</p>
 <p>The following example demonstrates how <code><a href="../reference/provide_file.html">provide_file()</a></code>
 can be used inside an .Rmd task. In this case, two files are embedded
 and offered to the user as downloadable resources.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>---</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>title: "Essay with embedded files"</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>type: essay</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>knit: rqti::render_qtijs</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>---</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="in">library(rqti)</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="fu"># question</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>Read the provided files and answer the question below.</span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="ss">- </span>Dataset: <span class="in">`r provide_file("data.csv", label = "Download dataset")`</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="ss">- </span>Description: <span class="in">`r provide_file("description.pdf", label = "Download description")`</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>Using the provided dataset, describe the main patterns you observe and discuss your findings.</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>---</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>title: "Essay with embedded files"</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>type: essay</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>knit: rqti::render_qtijs</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>---</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="in">library(rqti)</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu"># question</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>Read the provided files and answer the question below.</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="ss">- </span>Dataset: <span class="in">`r provide_file("data.csv", label = "Download dataset")`</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="ss">- </span>Description: <span class="in">`r provide_file("description.pdf", label = "Download description")`</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>Using the provided dataset, describe the main patterns you observe and discuss your findings.</span></code></pre></div>
 <p>In this example:</p>
 <ul>
 <li><p><code>provide_file("data.csv")</code> embeds a dataset directly
@@ -151,6 +144,10 @@ requiring external references</p></li>
 <li><p>The inline usage via r … ensures that the links are generated
 dynamically during rendering.</p></li>
 </ul>
+<p>In OPAL this renders as :</p>
+<div class="float">
+<img src="images/essay-files.png" style="width:100.0%" alt="Preview of essay task with links in OPAL"><div class="figcaption">Preview of essay task with links in OPAL</div>
+</div>
 <div class="section level3">
 <h3 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
 </h3>
@@ -165,6 +162,17 @@ default</p></li>
 manually if needed</p></li>
 </ul>
 </div>
+</div>
+<div class="section level2">
+<h2 id="embedding-images">Embedding images<a class="anchor" aria-label="anchor" href="#embedding-images"></a>
+</h2>
+<p>Images in .Rmd tasks are handled in the same way as other external
+resources.</p>
+<p>Images are embedded regardless of how they are created or referenced
+in the .Rmd file (e.g., <code>![caption](image.png)</code>) or generated
+programmatically (e.g., plots in R chunks). In all cases, the image data
+is encoded in Base64 and stored directly in the XML, making the task
+fully self-contained without external dependencies.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -1,11 +1,5 @@
 # Embedding resources
 
-    #> Registered S3 method overwritten by 'textutils':
-    #>   method             from 
-    #>   toLatex.data.frame exams
-
-## Embedding images
-
 ## Embedding files in R Markdown tasks
 
 In some assessment scenarios, it is useful to provide additional
@@ -62,6 +56,12 @@ In this example:
 - The inline usage via r … ensures that the links are generated
   dynamically during rendering.
 
+In OPAL this renders as :
+
+![Preview of essay task with links in OPAL](images/essay-files.png)
+
+Preview of essay task with links in OPAL
+
 ### Notes
 
 - Files should be reasonably small, as they are embedded directly into
@@ -73,3 +73,14 @@ In this example:
 
 - MIME types are detected automatically, but can be specified manually
   if needed
+
+## Embedding images
+
+Images in .Rmd tasks are handled in the same way as other external
+resources.
+
+Images are embedded regardless of how they are created or referenced in
+the .Rmd file (e.g., `![caption](image.png)`) or generated
+programmatically (e.g., plots in R chunks). In all cases, the image data
+is encoded in Base64 and stored directly in the XML, making the task
+fully self-contained without external dependencies.
