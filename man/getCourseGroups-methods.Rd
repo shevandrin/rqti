@@ -45,6 +45,7 @@ established, an error is thrown.
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 groups <- getCourseGroups("89068111333293")
 \dontshow{\}) # examplesIf}
-\dontshow{if (interactive() groups <- getCourseGroups("89068111333293")) withAutoprint(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+groups <- getCourseGroups("89068111333293")
 \dontshow{\}) # examplesIf}
 }
