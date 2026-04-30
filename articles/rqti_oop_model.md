@@ -105,6 +105,7 @@ First, it is important to know that you can create an object directly
 from Rmd files:
 
 ``` r
+
 scpath <- system.file("rmarkdown/templates/singlechoice-simple/skeleton", 
                            "skeleton.Rmd", package = "rqti")
 sc <- rqti:::create_question_object(scpath)
@@ -216,6 +217,7 @@ as a feedback or metadata object.
 Now you can render this object with `render_qtijs`:
 
 ``` r
+
 render_qtijs(sc)
 ```
 
@@ -228,6 +230,7 @@ But how would you create this object from scratch? This is not very
 hard:
 
 ``` r
+
 choices <- c(
   "There is a 5% probability that you will mistakenly reject the null
  hypothesis, when it is actually correct.",
@@ -248,12 +251,14 @@ error. In the future we will simplify this case.
 Again, you can render the object:
 
 ``` r
+
 render_qtijs(sc2)
 ```
 
 It looks the same because it is almost the same:
 
 ``` r
+
 all.equal(sc, sc2)
 #> [1] "Attributes: < Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) >"
 #> [2] "Attributes: < Component \"choices\": 2 string mismatches >"                                 
@@ -276,6 +281,7 @@ Let us add a feedback object, including some html formatting created
 with htmltools:
 
 ``` r
+
 library(htmltools)
 
 text1 <- p(
@@ -302,6 +308,7 @@ Let us render the new task and activate the feedback in qtijs (you might
 still need to reload the Viewer pane):
 
 ``` r
+
 render_qtijs(sc2b, preview_feedback = T)
 ```
 
@@ -325,6 +332,7 @@ There are several ways to add formulas to your content, but the simplest
 is to use latex syntax in html as per MathJax:
 
 ``` r
+
 math <- r"(When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\)
  and they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$)"
 ```
@@ -338,6 +346,7 @@ automatically.
 Let us render it, this time within an essay task:
 
 ``` r
+
 render_qtijs(
   essay(
     content = list(
@@ -358,6 +367,7 @@ plot or image as raw bytes and embed it directly in a html image tag.
 Let us first create a graph and save it in a temporary file:
 
 ``` r
+
 imgfile <- tempfile(fileext = ".png")
 png(imgfile, width = 800, height = 600, type = "cairo", pointsize = 16)
 x <- seq(-2, 2, 0.1)
@@ -371,6 +381,7 @@ Now we can convert this to a raw byte string and put it inside image
 tags using htmltools:
 
 ``` r
+
 txt <- RCurl::base64Encode(readBin(imgfile, "raw",
                                    file.info(imgfile)[1, "size"]),
                            "txt")
@@ -381,6 +392,7 @@ image <- as.character(img(width = "400",
 Finally, let us add it to a simple gap task:
 
 ``` r
+
 gap_with_img <- entry(
   content = list(
     as.character(p("Here is an illustration of the standard normal distribution:")), 
@@ -397,6 +409,7 @@ gap_with_img <- entry(
 and render it:
 
 ``` r
+
 render_qtijs(gap_with_img)
 ```
 
@@ -423,12 +436,14 @@ Let us now look at creating sections and tests:
 Let us combine the tasks from above into a section:
 
 ``` r
+
 section1 <- assessmentSection(list(sc, gap_with_img))
 ```
 
 And render it:
 
 ``` r
+
 render_qtijs(section1)
 ```
 
@@ -437,6 +452,7 @@ does not reveal the underlying structure. To illustrate better, let us
 add another section and make a test:
 
 ``` r
+
 items <- list(essay(content = list("Who was Ada Lovelace?")), 
               essay(content = list("Who was Grace Hopper?")))
 section2 <- assessmentSection(items, selection = 1)
@@ -446,6 +462,7 @@ exam <- assessmentTest(list(section1, section2), time_limit = 10)
 Render it:
 
 ``` r
+
 render_qtijs(exam)
 ```
 

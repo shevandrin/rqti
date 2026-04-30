@@ -87,6 +87,7 @@ If you happen to use OPAL/ONYX, you can also upload your tasks directly
 by modifying the knit parameter:
 
 ``` r
+
 knit: rqti::render_opal
 ```
 
@@ -284,8 +285,8 @@ Two scoring schemes are available:
   correct answer and 0 points for an incorrect answer.
 
 - “penalty”: The respondent receives full points for a correct answer.
-  For an incorrect answer, a penalty of $- \frac{\text{points}}{k - 1}$
-  is applied, where $k$ is the number of answer options. This approach
+  For an incorrect answer, a penalty of $`-\frac{\text{points}}{k - 1}`$
+  is applied, where $`k`$ is the number of answer options. This approach
   is often referred to as *formula scoring*, although the term is used
   inconsistently in the literature. Note that in Germany, the use of
   penalty scoring raises legal considerations; see, for example:

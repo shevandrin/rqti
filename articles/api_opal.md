@@ -49,6 +49,7 @@ yaml-section of your Rmd file or just call
 with the file as the first parameter:
 
 ``` r
+
 file <- "my_zip_file.zip" # or "task.Rmd" or "task.xml"
 result <- upload2opal(file)
 ```
@@ -86,6 +87,7 @@ uses the file name as the `display_name`. But you can define your own as
 the second parameter:
 
 ``` r
+
 result <- upload2opal(file, display_name = "Exam123")
 ```
 
@@ -93,12 +95,14 @@ Currently, there is no option to delete tasks via the API. But you can
 display the URL of a task via:
 
 ``` r
+
 get_resource_url(display_name = "Exam123")
 ```
 
 Or return all resources as a dataframe via:
 
 ``` r
+
 get_resources()
 ```
 

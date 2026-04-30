@@ -26,6 +26,7 @@ The `rqti` package is available on CRAN, ensuring easy installation and
 access to its features:
 
 ``` r
+
 install.packages("rqti")
 ```
 

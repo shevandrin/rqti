@@ -36,6 +36,7 @@ our package and use the function `section` to create the section. Note
 that we request 10 different variants of all tasks.
 
 ``` r
+
 path <- system.file("exercises", package = "rqti")
 files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 root_section <- section(content = files, n_variants = 10)
@@ -48,6 +49,7 @@ additional OPAL-specific parameters that are not necessarily consistent
 with QTI.
 
 ``` r
+
 test <- test(root_section, "test1")
 # createQtiTest is a method of the OOP class `test`
 createQtiTest(test, zip_only = T)
@@ -85,6 +87,7 @@ Single choice and multiple choice tasks could be part of different
 sections:
 
 ``` r
+
 non_random_tasks <- paste0(path, "/", c("sc1.Rmd", "mpc1.Rmd"))
 root_section <- list(section(files, n_variants = 10),
                      section(non_random_tasks))
@@ -96,6 +99,7 @@ inputs (e.g. objects instead of files). Now we can again make a test out
 of this and upload it to OPAL:
 
 ``` r
+
 test <- test4opal(root_section, "test2")
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test2.zip", "test2", open_in_browser = F)
@@ -121,6 +125,7 @@ Note that the function `section` returns an `AssessmentSection`
 rqti-object:
 
 ``` r
+
 lapply(root_section, class)
 #> [[1]]
 #> [1] "AssessmentSection"
@@ -173,7 +178,7 @@ variants. Participants navigate through each section, being assigned
 only one variant of the task per section. The noteworthy distinction
 from the other approach lies in the plethora of potential paths
 available in the test. Given the presence of 3 variants for each of the
-4 files, a total of $3^{4} = 81$ paths emerges. While this configuration
+4 files, a total of $`3^4 = 81`$ paths emerges. While this configuration
 may complicate psychometric analysis and introduce challenges in
 maintaining task difficulty equilibrium, it provides a notable advantage
 in thwarting cheating, as the paths of two students are likely to
@@ -191,6 +196,7 @@ To choose between these two versions you can use the parameter `by` in
 the sense of `section` by `variants` or `section` by `files`.
 
 ``` r
+
 root_section = section(content = files, n_variants = 3, by = "files")
 ```
 

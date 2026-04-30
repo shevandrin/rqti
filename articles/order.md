@@ -130,8 +130,8 @@ learning management system settings. Default is the file name.
 
 ### points
 
-How many points are given for the whole task. Default is $0.25n$, where
-$n$ is the length of the list.
+How many points are given for the whole task. Default is $`0.25n`$,
+where $`n`$ is the length of the list.
 
 ### points_per_answer
 

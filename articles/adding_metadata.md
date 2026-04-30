@@ -70,6 +70,7 @@ For example, you can create an `.Rprofile` file and set the default
 author and usage rights as follows:
 
 ``` r
+
 Sys.setenv(RQTI_AUTHOR = "Ada Lovelace")
 Sys.setenv(RQTI_RIGHTS = "CC BY SA")
 ```

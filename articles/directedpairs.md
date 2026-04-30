@@ -152,8 +152,8 @@ rare occasions it makes sense to have a strict order of elements
 
 ### points
 
-How many points are given for the whole task. Default is $0.5 \cdot n$,
-where $n$ is the number of pairs.
+How many points are given for the whole task. Default is $`0.5\cdot n`$,
+where $`n`$ is the number of pairs.
 
 ### abbr_id
 

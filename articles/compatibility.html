@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Compatibility with Learning Management Systems</h1>
             
-            <h4 data-toc-skip class="date">2026-04-27</h4>
+            <h4 data-toc-skip class="date">2026-04-30</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/compatibility.Rmd" class="external-link"><code>vignettes/compatibility.Rmd</code></a></small>
       <div class="d-none name"><code>compatibility.Rmd</code></div>
@@ -127,8 +127,8 @@ available in OPAL, but only in connection with QTI 2.2.</p>
 attributes in the <code>assessmentTest</code> element:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>&lt;<span class="kw">assessmentTest</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="er">...</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ot">  data-downloads=</span><span class="st">"file://downloads/;"</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="ot">  data-features=</span><span class="st">"scientific-calculator;mark-items;show-test-time;"</span>&gt;</span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  data-downloads="file://downloads/;"</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  data-features="scientific-calculator;mark-items;show-test-time;"&gt;</span></code></pre></div>
 <p>Under QTI 2.2, this is permissible, although it should be clearly
 documented.</p>
 <p>A simpler alternative would be to include such files directly in the
@@ -159,11 +159,11 @@ we do see a legitimate need for extending the QTI standard, because
 tolerance is an important feature for text-response processing and is
 not adequately supported by the base specification.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>&lt;<span class="kw">setOutcomeValue</span><span class="ot"> identifier=</span><span class="st">"SCORE_codieren"</span>&gt;</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  &lt;<span class="kw">mapTolResponse</span><span class="ot"> xmlns=</span><span class="st">"http://bps-system.de/xsd/imsqti_ext_maptolresponse"</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="ot">                  identifier=</span><span class="st">"codieren"</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="ot">                  tolerance=</span><span class="st">"2"</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="ot">                  toleranceMode=</span><span class="st">"absolute"</span>/&gt;</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>&lt;<span class="kw">setOutcomeValue</span> <span class="ot">identifier=</span><span class="st">"SCORE_codieren"</span>&gt;</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  &lt;<span class="kw">mapTolResponse</span> <span class="ot">xmlns=</span><span class="st">"http://bps-system.de/xsd/imsqti_ext_maptolresponse"</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                  <span class="ot">identifier=</span><span class="st">"codieren"</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                  <span class="ot">tolerance=</span><span class="st">"2"</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>                  <span class="ot">toleranceMode=</span><span class="st">"absolute"</span>/&gt;</span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>&lt;/<span class="kw">setOutcomeValue</span>&gt;</span></code></pre></div>
 </div>
 <div class="section level3">
@@ -194,7 +194,7 @@ file via base64 encoding.</p>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>&lt;/<span class="kw">m:math</span>&gt;</span></code></pre></div>
 <p>By contrast, using the MathML namespace directly on the
 <code>math</code> element works:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>&lt;<span class="kw">math</span><span class="ot"> xmlns=</span><span class="st">"http://www.w3.org/1998/Math/MathML"</span>&gt;</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>&lt;<span class="kw">math</span> <span class="ot">xmlns=</span><span class="st">"http://www.w3.org/1998/Math/MathML"</span>&gt;</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  ...</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>&lt;/<span class="kw">math</span>&gt;</span></code></pre></div>
 </div>

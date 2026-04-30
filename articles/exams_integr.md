@@ -20,6 +20,7 @@ R Markdown files from the `exams` package can be passed directly to the
 function, just like native `rqti` tasks and/or objects.
 
 ``` r
+
 sect <- section(
         content = c(
             "rqti_task.Rmd",      # native rqti format

@@ -174,6 +174,7 @@ This helper function is used to generate a formatted string describing a
 dropdown in Rmd content:
 
 ``` r
+
 choices <- c("s4" = "S4 OOP", "s3" = "S3 OOP", "none" = "no OOP", "r6" = "R6 OOP")
 oop_task <- dropdown(choices = choices, solution = "S4 OOP",
                      response_identifier = "OOP_task")

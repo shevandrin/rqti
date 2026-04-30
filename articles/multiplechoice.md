@@ -68,11 +68,11 @@ themselves, enclose the entire question in `<em></em>` tags to avoid
 conflicts.
 
 By default, the total points available for a question are calculated as
-$0.5n$, where $n$ is the number of answer choices. For example, if there
-are 4 choices, the maximum score for the question is 2 points. Correct
-selections earn 0.5 points each, while incorrect selections deduct 0.5
-points. Regardless of how points are calculated, the minimum score you
-can receive is 0.
+$`0.5n`$, where $`n`$ is the number of answer choices. For example, if
+there are 4 choices, the maximum score for the question is 2 points.
+Correct selections earn 0.5 points each, while incorrect selections
+deduct 0.5 points. Regardless of how points are calculated, the minimum
+score you can receive is 0.
 
 Among various grading options, we find this to be the most intuitive,
 especially when considering the element of guessing. Given our
@@ -159,10 +159,13 @@ In *partial balanced scoring*, the number of correctly selected options
 is rewarded, and the number of incorrectly selected options is penalized
 in proportion to the total number of correct and incorrect options.
 
-For a question with $n$ total options and $c$ correct options, the score
-is
+For a question with $`n`$ total options and $`c`$ correct options, the
+score is
 
-$$\text{Score} = \frac{\#\text{correctly selected}}{c} - \frac{\#\text{incorrectly selected}}{n - c}$$
+``` math
+\text{Score} = \frac{\#\text{correctly selected}}{c}
+               - \frac{\#\text{incorrectly selected}}{n - c}
+```
 
 This approach ensures that random guessing yields an expected score of
 zero, while allowing partial credit for partial knowledge and

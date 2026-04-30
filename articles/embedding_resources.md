@@ -21,6 +21,7 @@ can be used inside an .Rmd task. In this case, two files are embedded
 and offered to the user as downloadable resources.
 
 ```` markdown
+
 ---
 title: "Essay with embedded files"
 type: essay
