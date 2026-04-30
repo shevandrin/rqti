@@ -609,6 +609,34 @@ pandoc_html_convert <- function(input_file, output_file_name, dir_name) {
         perl = TRUE
     )
 
+    html <- gsub(
+        '(<img\\b[^>]*?)\\s+role="img"',
+        '\\1',
+        html,
+        perl = TRUE
+    )
+
+    html <- gsub(
+        '(<img\\b(?![^>]*\\salt=)([^>]*?))\\s+aria-label="([^"]*)"',
+        '\\1 alt="\\3"',
+        html,
+        perl = TRUE
+    )
+
+    html <- gsub(
+        '(<img\\b[^>]*?)\\s+aria-label="[^"]*"',
+        '\\1',
+        html,
+        perl = TRUE
+    )
+
+    html <- gsub(
+        '<img\\b(?![^>]*\\salt=)([^>]*)>',
+        '<img alt="Image"\\1>',
+        html,
+        perl = TRUE
+    )
+
     writeLines(html, output_path, useBytes = TRUE)
 
     return(output_path)
