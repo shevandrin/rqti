@@ -278,6 +278,8 @@ for new features provided as time permits.
   Create object Entry
 - [`essay()`](https://shevandrin.github.io/rqti/reference/essay.md) :
   Create object Essay
+- [`exams_task()`](https://shevandrin.github.io/rqti/reference/exams_task.md)
+  : Convert an exams Rmd task to a QTI 2.1 XML file
 - [`extract_results()`](https://shevandrin.github.io/rqti/reference/extract_results.md)
   : Create data frame with test results
 - [`gap_numeric()`](https://shevandrin.github.io/rqti/reference/gap_numeric.md)
