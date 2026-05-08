@@ -27,3 +27,4 @@ s4_example.R
 ^cover$
 ^_main\.Rmd$
 ^openolat-docker$
+^revdep$
