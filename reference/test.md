@@ -48,7 +48,7 @@ test(
 - time_limit:
 
   An integer value, optional, controlling the time given to a candidate
-  for the test in minutes. Default is 90 minutes.
+  for the test in minutes. Default is `NULL`.
 
 - max_attempts:
 
