@@ -4,10 +4,10 @@
 
 ### New features
 
-- Added support for OpenOlat via a new class `AssessmentTestOpenOlat`.It
-  introduced OpenOlat-specific configuration options (e.g., navigation
-  behavior, visibility settings, number of attempts) as slots and
-  corresponding arguments in
+- Added support for OpenOlat via a new class `AssessmentTestOpenOlat`.
+  It introduced OpenOlat-specific configuration options (e.g.,
+  navigation behavior, visibility settings, number of attempts) as slots
+  and corresponding arguments in
   [`assessmentTestOpenOlat()`](https://shevandrin.github.io/rqti/reference/assessmentTestOpenOlat.md).
 
 - Added `fallback_titles` argument to
@@ -25,14 +25,43 @@
   number of response options. This ensures that random guessing yields
   an expected score of zero.
 
+- Added a new `stylesheet_path` slot to `AssessmentTest` objects,
+  allowing users to include custom CSS stylesheets at the assessment
+  test level. When academic_grading is enabled, the default
+  styles/rqti.css stylesheet is included automatically, and custom
+  styles can be added to override the default appearance.
+
 - Added
+  [`german_grading()`](https://shevandrin.github.io/rqti/reference/german_grading.md),
+  a helper function that returns a predefined German grading scale for
+  the `academic_grading` argument in
+  [`test()`](https://shevandrin.github.io/rqti/reference/test.md) and
+  [`test4opal()`](https://shevandrin.github.io/rqti/reference/test4opal.md),
+  avoiding the need to manually define grading vectors. This grading
+  scheme can also be stored directly in the `academic_grading` slot of
+  `AssessmentTest` objects.
+
+- Added helper
   [`provide_file()`](https://shevandrin.github.io/rqti/reference/provide_file.md)
-  to embed local files directly into tasks as Base64-encoded hyperlinks
-  for downloadable attachments.
+  to embed local files directly into .Rmd tasks as \# Base64-encoded
+  hyperlinks for downloadable attachments.
 
 - [`section()`](https://shevandrin.github.io/rqti/reference/section.md)
   now supports Rmd files created with the `exams` package. Such files
-  are automatically detected and processed accordingly.
+  are automatically detected and converted to QTI 2.1 XML via
+  [`exams::exams2qti21()`](https://rdrr.io/pkg/exams/man/exams2qti21.html),
+  so they can be used directly without additional wrapping.
+
+- Added
+  [`exams_task()`](https://shevandrin.github.io/rqti/reference/exams_task.md)
+  helper for explicit control over exams-based tasks. While
+  [`section()`](https://shevandrin.github.io/rqti/reference/section.md)
+  can handle exams .Rmd files automatically,
+  [`exams_task()`](https://shevandrin.github.io/rqti/reference/exams_task.md)
+  can be used when additional control is needed, e.g., to assign a
+  custom title. The function converts the Rmd file and returns the path
+  to the generated XML file in a temporary directory, allowing
+  combination with native rqti items.
 
 - Enhanced LMS Opal API with new functions
   [`getCourseGroups()`](https://shevandrin.github.io/rqti/reference/getCourseGroups-methods.md)
@@ -42,12 +71,31 @@
 
 ### Improvements
 
+- Enhanced
+  [`verify_qti()`](https://shevandrin.github.io/rqti/reference/verify_qti.md)
+  to support different input types, provide more informative validation
+  messages, and use both `xmllint` and `xml2` backends for XML
+  validation.
+
 - `extract_results(level = "task")` now includes an additional column
   containing `scorerComment` for manually scored item results.
 
 - Images referenced in external XML files are now automatically embedded
   as Base64. This ensures that tasks are fully self-contained and do not
   depend on external image files.
+
+- Changed the default `time_limit` for `AssessmentTest` and
+  `AssessmentTestOpal` objects (and for all related helper functions) to
+  NULL, so time limits are no longer set at the test level by default.
+
+- Changed the default value of `allow_paste` in `Essay` items to TRUE.
+
+### Bug fixes
+
+- Fixed handling of consecutive gaps in .Rmd tasks.
+
+- Fixed identifier validation regex to correctly allow hyphens in valid
+  identifiers.
 
 ## rqti 1.1.0
 

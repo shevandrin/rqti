@@ -64,17 +64,28 @@
 <h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Added support for OpenOlat via a new class <code>AssessmentTestOpenOlat</code>.It introduced OpenOlat-specific configuration options (e.g., navigation behavior, visibility settings, number of attempts) as slots and corresponding arguments in <code><a href="../reference/assessmentTestOpenOlat.html">assessmentTestOpenOlat()</a></code>.</p></li>
+<ul><li><p>Added support for OpenOlat via a new class <code>AssessmentTestOpenOlat</code>. It introduced OpenOlat-specific configuration options (e.g., navigation behavior, visibility settings, number of attempts) as slots and corresponding arguments in <code><a href="../reference/assessmentTestOpenOlat.html">assessmentTestOpenOlat()</a></code>.</p></li>
 <li><p>Added <code>fallback_titles</code> argument to <code><a href="../reference/test.html">test()</a></code> and <code><a href="../reference/test4opal.html">test4opal()</a></code> to control how section and item titles are assigned when not explicitly provided. Supported values are “filename” and “generic”. The <code>AssessmentTest</code> class now includes a <code>fallback_titles</code> slot.</p></li>
 <li><p>Added a new slot <code>scoring_scheme</code> to the <code>SingleChoice</code> class to control how response options are scored. Supported values are “standard” (default) and “penalty”. Introduced penalty-based scoring for single-choice tasks. When <code>scoring_scheme = "penalty"</code>, incorrect answers receive a negative score of -points/(k-1), where k is the number of response options. This ensures that random guessing yields an expected score of zero.</p></li>
-<li><p>Added <code><a href="../reference/provide_file.html">provide_file()</a></code> to embed local files directly into tasks as Base64-encoded hyperlinks for downloadable attachments.</p></li>
-<li><p><code><a href="../reference/section.html">section()</a></code> now supports Rmd files created with the <code>exams</code> package. Such files are automatically detected and processed accordingly.</p></li>
+<li><p>Added a new <code>stylesheet_path</code> slot to <code>AssessmentTest</code> objects, allowing users to include custom CSS stylesheets at the assessment test level. When academic_grading is enabled, the default styles/rqti.css stylesheet is included automatically, and custom styles can be added to override the default appearance.</p></li>
+<li><p>Added <code><a href="../reference/german_grading.html">german_grading()</a></code>, a helper function that returns a predefined German grading scale for the <code>academic_grading</code> argument in <code><a href="../reference/test.html">test()</a></code> and <code><a href="../reference/test4opal.html">test4opal()</a></code>, avoiding the need to manually define grading vectors. This grading scheme can also be stored directly in the <code>academic_grading</code> slot of <code>AssessmentTest</code> objects.</p></li>
+<li><p>Added helper <code><a href="../reference/provide_file.html">provide_file()</a></code> to embed local files directly into .Rmd tasks as # Base64-encoded hyperlinks for downloadable attachments.</p></li>
+<li><p><code><a href="../reference/section.html">section()</a></code> now supports Rmd files created with the <code>exams</code> package. Such files are automatically detected and converted to QTI 2.1 XML via <code><a href="https://rdrr.io/pkg/exams/man/exams2qti21.html" class="external-link">exams::exams2qti21()</a></code>, so they can be used directly without additional wrapping.</p></li>
+<li><p>Added <code><a href="../reference/exams_task.html">exams_task()</a></code> helper for explicit control over exams-based tasks. While <code><a href="../reference/section.html">section()</a></code> can handle exams .Rmd files automatically, <code><a href="../reference/exams_task.html">exams_task()</a></code> can be used when additional control is needed, e.g., to assign a custom title. The function converts the Rmd file and returns the path to the generated XML file in a temporary directory, allowing combination with native rqti items.</p></li>
 <li><p>Enhanced LMS Opal API with new functions <code><a href="../reference/getCourseGroups-methods.html">getCourseGroups()</a></code> and <code><a href="../reference/getGroupUsers-methods.html">getGroupUsers()</a></code> for retrieving course groups and group users as data frames.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
-<ul><li><p><code>extract_results(level = "task")</code> now includes an additional column containing <code>scorerComment</code> for manually scored item results.</p></li>
+<ul><li><p>Enhanced <code><a href="../reference/verify_qti.html">verify_qti()</a></code> to support different input types, provide more informative validation messages, and use both <code>xmllint</code> and <code>xml2</code> backends for XML validation.</p></li>
+<li><p><code>extract_results(level = "task")</code> now includes an additional column containing <code>scorerComment</code> for manually scored item results.</p></li>
 <li><p>Images referenced in external XML files are now automatically embedded as Base64. This ensures that tasks are fully self-contained and do not depend on external image files.</p></li>
+<li><p>Changed the default <code>time_limit</code> for <code>AssessmentTest</code> and <code>AssessmentTestOpal</code> objects (and for all related helper functions) to NULL, so time limits are no longer set at the test level by default.</p></li>
+<li><p>Changed the default value of <code>allow_paste</code> in <code>Essay</code> items to TRUE.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li><p>Fixed handling of consecutive gaps in .Rmd tasks.</p></li>
+<li><p>Fixed identifier validation regex to correctly allow hyphens in valid identifiers.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
