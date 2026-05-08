@@ -245,6 +245,8 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
                  contributor = list(), description = "",
                  rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
 
+    if (length(content) == 1 && is.list(content)) {content <- content[[1]]}
+
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
     params["section"] <- ifelse (length(unlist(params["content"])) == 1,
@@ -367,6 +369,7 @@ test4opal <- function(content, identifier = "test_identifier",
                       stylesheet_path = NULL,
                       contributor = list(), description = "",
                       rights = Sys.getenv("RQTI_RIGHTS"), version = "0.0.9") {
+    if (length(content) == 1 && is.list(content)) {content <- content[[1]]}
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
