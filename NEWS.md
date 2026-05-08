@@ -71,6 +71,9 @@ longer set at the test level by default.
 * Fixed identifier validation regex to correctly allow hyphens in valid 
 identifiers.
 
+* Fixed `test()` and `test4opal()` to correctly handle input provided as a list 
+containing a single section.
+
 # rqti 1.1.0
 
 ## New features
