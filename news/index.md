@@ -97,6 +97,12 @@
 - Fixed identifier validation regex to correctly allow hyphens in valid
   identifiers.
 
+- Fixed [`test()`](https://shevandrin.github.io/rqti/reference/test.md)
+  and
+  [`test4opal()`](https://shevandrin.github.io/rqti/reference/test4opal.md)
+  to correctly handle input provided as a list containing a single
+  section.
+
 ## rqti 1.1.0
 
 CRAN release: 2026-02-23
