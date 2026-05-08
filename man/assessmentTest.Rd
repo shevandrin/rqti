@@ -34,7 +34,7 @@ random digits.}
 default, it takes the value of the identifier.}
 
 \item{time_limit}{An integer value, optional, controlling the time given to a
-candidate for the test in minutes. Default is 90 minutes.}
+candidate for the test in minutes. Default is \code{NULL}.}
 
 \item{max_attempts}{An integer value, optional, indicating the maximum number
 of attempts allowed for the candidate. Default is 1.}
