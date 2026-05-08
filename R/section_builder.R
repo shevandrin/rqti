@@ -165,7 +165,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #' @param title A character value, optional, representing the file title.
 #'   Default is 'Test Title'.
 #' @param time_limit An integer value, optional, controlling the time given to a
-#'   candidate for the test in minutes. Default is 90 minutes.
+#'   candidate for the test in minutes. Default is \code{NULL}.
 #' @param max_attempts An integer value, optional, indicating the maximum number
 #'   of attempts allowed for the candidate. Default is 1.
 #' @param fallback_titles A character value, optional, controlling how titles
@@ -271,7 +271,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #' @param title A character value, optional, representing the file title.
 #'   Default is 'Test Title'.
 #' @param time_limit An integer value, optional, controlling the time given to a
-#'   candidate for the test in minutes. Default is 90 minutes.
+#'   candidate for the test in minutes. Default is \code{NULL}.
 #' @param max_attempts An integer value, optional, indicating the maximum number
 #'   of attempts allowed for the candidate. Default is 1.
 #' @param files A character vector, optional; paths to files that will be
