@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rqti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.1.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,9 +61,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.2.0" id="rqti-120">rqti 1.2.0<a class="anchor" aria-label="anchor" href="#rqti-120"></a></h2>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-2-0"></a></h3>
 <ul><li><p>Added support for OpenOlat via a new class <code>AssessmentTestOpenOlat</code>. It introduced OpenOlat-specific configuration options (e.g., navigation behavior, visibility settings, number of attempts) as slots and corresponding arguments in <code><a href="../reference/assessmentTestOpenOlat.html">assessmentTestOpenOlat()</a></code>.</p></li>
 <li><p>Added <code>fallback_titles</code> argument to <code><a href="../reference/test.html">test()</a></code> and <code><a href="../reference/test4opal.html">test4opal()</a></code> to control how section and item titles are assigned when not explicitly provided. Supported values are “filename” and “generic”. The <code>AssessmentTest</code> class now includes a <code>fallback_titles</code> slot.</p></li>
 <li><p>Added a new slot <code>scoring_scheme</code> to the <code>SingleChoice</code> class to control how response options are scored. Supported values are “standard” (default) and “penalty”. Introduced penalty-based scoring for single-choice tasks. When <code>scoring_scheme = "penalty"</code>, incorrect answers receive a negative score of -points/(k-1), where k is the number of response options. This ensures that random guessing yields an expected score of zero.</p></li>
@@ -75,7 +75,7 @@
 <li><p>Enhanced LMS Opal API with new functions <code><a href="../reference/getCourseGroups-methods.html">getCourseGroups()</a></code> and <code><a href="../reference/getGroupUsers-methods.html">getGroupUsers()</a></code> for retrieving course groups and group users as data frames.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<h3 id="improvements-1-2-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-2-0"></a></h3>
 <ul><li><p>Enhanced <code><a href="../reference/verify_qti.html">verify_qti()</a></code> to support different input types, provide more informative validation messages, and use both <code>xmllint</code> and <code>xml2</code> backends for XML validation.</p></li>
 <li><p><code>extract_results(level = "task")</code> now includes an additional column containing <code>scorerComment</code> for manually scored item results.</p></li>
 <li><p>Images referenced in external XML files are now automatically embedded as Base64. This ensures that tasks are fully self-contained and do not depend on external image files.</p></li>
@@ -83,7 +83,7 @@
 <li><p>Changed the default value of <code>allow_paste</code> in <code>Essay</code> items to TRUE.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-1-2-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-2-0"></a></h3>
 <ul><li><p>Fixed handling of consecutive gaps in .Rmd tasks.</p></li>
 <li><p>Fixed identifier validation regex to correctly allow hyphens in valid identifiers.</p></li>
 <li><p>Fixed <code><a href="../reference/test.html">test()</a></code> and <code><a href="../reference/test4opal.html">test4opal()</a></code> to correctly handle input provided as a list containing a single section.</p></li>
