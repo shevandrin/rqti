@@ -183,4 +183,4 @@ these files.
 Note that setting these two attributes in the Rmd file directly is
 mainly useful if you work on a single task. For collections of tasks
 (tests) it is better to set these attributes when creating the test
-intead of in the Rmd-file.
+instead of in the Rmd-file.

@@ -72,7 +72,7 @@ Directed pair task rendered in OPAL
 ## More control
 
 If you want to have more fine-grained control, consider the RMD template
-`directedpair (complex)`, wich uses more yaml attributes.
+`directedpair (complex)`, which uses more yaml attributes.
 
     ---
     type: dp

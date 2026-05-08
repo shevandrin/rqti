@@ -152,7 +152,7 @@ Default is `vertical`.
 ### points
 
 How many points are given for the whole task. Default is the number of
-choices times 0.5. Note that rqti usess *partial balanced scoring* for
+choices times 0.5. Note that rqti uses *partial balanced scoring* for
 multiple choice questions.
 
 In *partial balanced scoring*, the number of correctly selected options

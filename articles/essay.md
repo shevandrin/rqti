@@ -37,9 +37,9 @@ and some text as a task description in a section called **\#question**:
 
 Knitting via the Knit-Button to qtijs, this task renders as:
 
-![Simple essay erxercise rendered by qtijs](images/xml/essay-simple.jpg)
+![Simple essay exercise rendered by qtijs](images/xml/essay-simple.jpg)
 
-Simple essay erxercise rendered by qtijs
+Simple essay exercise rendered by qtijs
 
 Alternatively, change the knit parameter to `knit: rqti::render_opal`
 (see [Working with the OPAL

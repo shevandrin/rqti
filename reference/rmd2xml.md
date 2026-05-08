@@ -1,7 +1,7 @@
 # Create qti-XML task file from Rmd (md) description
 
 Create XML file for question specification from Rmd (md) description
-according to qti 2.1 infromation model
+according to qti 2.1 information model
 
 ## Usage
 

@@ -37,7 +37,7 @@ updateCourseElementResource(
 
 - resource_id:
 
-  A character string wiht the ID of the resource. This can be found in
+  A character string with the ID of the resource. This can be found in
   the details view of the desired resource within the LMS.
 
 - publish:

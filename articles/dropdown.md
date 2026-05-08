@@ -9,7 +9,7 @@ dropdown-list. Note that our package implements dropdowns as
 *entry*-objects because this is essentially what dropwdowns are. Several
 dropdowns can be combined in a single task, but a combination with
 numeric and text entries (gaps) is not possible; mainly due to
-limitations on the site of learning managment systems.
+limitations on the site of learning management systems.
 
 ## Minimum version
 
