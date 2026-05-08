@@ -295,7 +295,7 @@ setMethod("getCourseElements", "Opal", function(object, course_id) {
 #' @param node_id A character string with the course element ID. This can be
 #'   found, for example, in the course editor under the "Title and Description"
 #'   tab of the respective course element in the LMS Opal.
-#' @param resource_id A character string wiht the ID of the resource. This can
+#' @param resource_id A character string with the ID of the resource. This can
 #'   be found in the details view of the desired resource within the LMS.
 #' @param publish A boolean value that determines whether the course should be
 #'   published after the resource is updated. If `TRUE` (default), the course

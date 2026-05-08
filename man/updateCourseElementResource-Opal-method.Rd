@@ -23,7 +23,7 @@ the course's details (Resource ID) in the LMS.}
 found, for example, in the course editor under the "Title and Description"
 tab of the respective course element in the LMS Opal.}
 
-\item{resource_id}{A character string wiht the ID of the resource. This can
+\item{resource_id}{A character string with the ID of the resource. This can
 be found in the details view of the desired resource within the LMS.}
 
 \item{publish}{A boolean value that determines whether the course should be

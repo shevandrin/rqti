@@ -20,7 +20,7 @@ The path string to the xml file.
 }
 \description{
 Create XML file for question specification from Rmd (md) description
-according to qti 2.1 infromation model
+according to qti 2.1 information model
 }
 \examples{
 \dontrun{

@@ -36,7 +36,7 @@ cat(readLines(system.file("rmarkdown/templates/essay-simple/skeleton", "skeleton
 
 Knitting via the Knit-Button to qtijs, this task renders as`r ltx(" shown in Figure \\ref{essay1qtijs}.", ":")`
 
-![\label{essay1qtijs}Simple essay erxercise rendered by qtijs](images/xml/essay-simple.jpg){width=100%}
+![\label{essay1qtijs}Simple essay exercise rendered by qtijs](images/xml/essay-simple.jpg){width=100%}
 
 Alternatively, change the knit parameter to `knit: rqti::render_opal` (see [Working with the OPAL API](api_opal.html)) to upload to OPAL directly, producing`r ltx(" the output in Figure \\ref{essay1opal}.", ":")`
 

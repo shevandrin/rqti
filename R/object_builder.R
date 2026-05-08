@@ -30,7 +30,7 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 #' Create qti-XML task file from Rmd (md) description
 #'
 #' Create XML file for question specification from Rmd (md) description
-#' according to qti 2.1 infromation model
+#' according to qti 2.1 information model
 #' @param file A string of path to file with markdown description of question.
 #' @param path A string, optional; a folder to store xml file. Default is
 #'   working directory.
@@ -456,7 +456,7 @@ define_ids <- function(vect, abbr, type) {
     } else {
         ids <- make_ids(length(vect), type)
     }
-    # add prefix when it starst wiht digit
+    # add prefix when it starst with digit
     ids <- sapply(ids, function(x) ifelse(grepl("^\\d", x), paste0(type, x), x),
                   USE.NAMES = FALSE)
     # eliminate special character

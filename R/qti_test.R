@@ -196,7 +196,7 @@ create_item_session_control <- function(attempts, comments, rebuild) {
     return(session_control)
 }
 
-# creates manifest file wiht root tag "manifest"
+# creates manifest file with root tag "manifest"
 create_manifest <- function(object) {
     manifest_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
                         "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
