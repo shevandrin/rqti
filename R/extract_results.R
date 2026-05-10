@@ -22,6 +22,7 @@
 #'  * 'is_answer_given' - TRUE if candidate gave the answer on question,
 #'   otherwise FALSE
 #'  * 'title' - the values of attribute 'title' of assessment items
+#'  * 'candidate_comment' - candidate's comment for the item (if available).
 #'  * 'scorer_comment' - scorer's comment for manually scored items (if available).
 #'
 #'   2.With option level = "item" data frame consists of columns:
@@ -175,6 +176,7 @@ get_result_attr_answers<- function(file, hide_filename) {
     durations <- Map(get_duration, items_result)
     scores <- Map(get_score, items_result, "SCORE")
     maxes <- Map(get_score, items_result, "MAXSCORE")
+    ccomments <- sapply(items_result, get_candidate_comment)
     scomments <- sapply(items_result, get_scorer_comment)
 
     data <- data.frame(file = rep(file_name, length(ids_item)),
@@ -184,6 +186,7 @@ get_result_attr_answers<- function(file, hide_filename) {
                        score_candidate = as.numeric(scores),
                        score_max = as.numeric(maxes),
                        is_answer_given = igiven,
+                       candidate_comment = ccomments,
                        scorer_comment = scomments)
     return(data)
 }
@@ -246,6 +249,15 @@ get_score <- function(node, type) {
 
 get_scorer_comment <- function(node) {
     comment_node <- xml_find_first(node, ".//d1:scorerComment")
+    if (is.na(comment_node)) return(NA_character_)
+
+    comment_text <- xml_text(comment_node)
+    if (comment_text == "") return(NA_character_)
+    return(comment_text)
+}
+
+get_candidate_comment <- function(node) {
+    comment_node <- xml_find_first(node, ".//d1:candidateComment")
     if (is.na(comment_node)) return(NA_character_)
 
     comment_text <- xml_text(comment_node)

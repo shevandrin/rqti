@@ -204,6 +204,7 @@ test_that("extract_results() returns consistent structure on task level", {
         "score_candidate",
         "score_max",
         "is_answer_given",
+        "candidate_comment",
         "scorer_comment",
         "title"
     )
@@ -217,6 +218,7 @@ test_that("extract_results() returns consistent structure on task level", {
     expect_type(sut$score_candidate, "double")
     expect_type(sut$score_max, "double")
     expect_type(sut$is_answer_given, "logical")
+    expect_type(sut$candidate_comment, "character")
     expect_type(sut$scorer_comment, "character")
 
     expect_false(anyNA(sut$file))
@@ -234,4 +236,27 @@ test_that("extract_results() returns consistent structure on task level", {
     expect_true(all(sut$score_max >= 0))
     expect_true(all(sut$score_candidate >= 0))
     expect_true(all(sut$score_candidate <= sut$score_max))
+})
+
+test_that("extract_results() includes candidate comments on task level", {
+    path <- test_path("file/xml/assessmentResult_candidate_comment.xml")
+    sut <- suppressWarnings(suppressMessages(
+        extract_results(path, level = "task", hide_filename = FALSE)
+    ))
+
+    expect_named(sut, c(
+        "file",
+        "date",
+        "id_question",
+        "duration",
+        "score_candidate",
+        "score_max",
+        "is_answer_given",
+        "candidate_comment",
+        "scorer_comment"
+    ))
+    expect_equal(nrow(sut), 1L)
+    expect_equal(sut$id_question, "metaanalyse_S15")
+    expect_equal(sut$candidate_comment, "0.5\r\n0.4\r\n0.68\r\n0.38")
+    expect_true(is.na(sut$scorer_comment))
 })

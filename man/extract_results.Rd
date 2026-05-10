@@ -36,6 +36,7 @@ candidate)
 \item 'is_answer_given' - TRUE if candidate gave the answer on question,
 otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
+\item 'candidate_comment' - candidate's comment for the item (if available).
 \item 'scorer_comment' - scorer's comment for manually scored items (if available).
 }
 
