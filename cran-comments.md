@@ -1,3 +1,12 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+- Fixed HTML documentation warnings caused by malformed documentation markup in 
+`provide_file()`.
+
+- Corrected documentation formatting in `publishCourse()` methods that triggered
+HTML validation 
+
 ## Release 1.2.0 summary
 
 ## New features
