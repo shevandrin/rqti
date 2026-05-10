@@ -1,7 +1,7 @@
 # Embed a local file as a downloadable hyperlink in R Markdown
 
-Designed for inline use in R Markdown, e.g. "r
-provide_file("attachment.pdf")"
+Designed for inline use in R Markdown, e.g.
+`` `r provide_file("attachment.pdf")` ``.
 
 ## Usage
 
@@ -44,5 +44,6 @@ knitr_asis object with an HTML hyperlink.
 ## Details
 
 The function reads a local file, encodes it as Base64, and returns an
-tag with a data: URI. This allows the file to be embedded directly into
-the rendered output instead of being referenced externally.
+HTML anchor tag with a data: URI. This allows the file to be embedded
+directly into the rendered output instead of being referenced
+externally.
