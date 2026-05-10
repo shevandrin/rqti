@@ -16,7 +16,9 @@ publishCourse(object, course_id)
 
 - object:
 
-  An S4 object of class `LMS` that represents a connection to the LMS.
+  An S4 object of class
+  [LMS](https://shevandrin.github.io/rqti/reference/LMS-class.md) that
+  represents a connection to the LMS.
 
 - course_id:
 
