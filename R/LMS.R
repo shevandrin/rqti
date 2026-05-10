@@ -296,7 +296,7 @@ setMethod("updateCourseElementResource", signature(object = "missing"),
 
 #' Publish a course on LMS
 #'
-#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param object An S4 object of class `LMS` that represents a connection to the LMS.
 #' @param course_id A character string with course id in the LMS.
 #' @return Status code of the HTTP request.
 #' @export
@@ -309,7 +309,7 @@ setGeneric("publishCourse", function(object, course_id)
 #' If no LMS connection object is provided, it attempts to guess the connection using default settings (e.g., environment variables).
 #' If the connection cannot be established, an error is thrown.
 #'
-#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param object An S4 object of class `LMS` that represents a connection to the LMS.
 #' @param course_id A character string with course id in the LMS.
 #' @return Status code of the HTTP request.
 #' @export

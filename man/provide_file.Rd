@@ -28,10 +28,10 @@ knitr_asis object with an HTML hyperlink.
 }
 \description{
 Designed for inline use in R Markdown, e.g.
-"r provide_file("attachment.pdf")"
+\code{`r provide_file("attachment.pdf")`}.
 }
 \details{
 The function reads a local file, encodes it as Base64, and returns an
-\if{html}{\out{<a>}} tag with a data: URI. This allows the file to be embedded directly
-into the rendered output instead of being referenced externally.
+HTML anchor tag with a data: URI. This allows the file to be embedded
+directly into the rendered output instead of being referenced externally.
 }

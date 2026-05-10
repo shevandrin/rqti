@@ -7,7 +7,7 @@
 \S4method{publishCourse}{missing}(object, course_id)
 }
 \arguments{
-\item{object}{An S4 object of class \link{LMS} that represents a connection to the LMS.}
+\item{object}{An S4 object of class \code{LMS} that represents a connection to the LMS.}
 
 \item{course_id}{A character string with course id in the LMS.}
 }

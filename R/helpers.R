@@ -182,11 +182,11 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
 #' Embed a local file as a downloadable hyperlink in R Markdown
 #'
 #' Designed for inline use in R Markdown, e.g.
-#' "r provide_file("attachment.pdf")"
+#' `` `r provide_file("attachment.pdf")` ``.
 #'
 #' The function reads a local file, encodes it as Base64, and returns an
-#' <a> tag with a data: URI. This allows the file to be embedded directly
-#' into the rendered output instead of being referenced externally.
+#' HTML anchor tag with a data: URI. This allows the file to be embedded
+#' directly into the rendered output instead of being referenced externally.
 #'
 #' @param path Path to the local file.
 #' @param label Text shown to the user. Defaults to the file name.
