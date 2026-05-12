@@ -4,6 +4,8 @@
 
 ## rqti 1.2.0
 
+CRAN release: 2026-05-10
+
 ### New features
 
 - Added support for OpenOlat via a new class `AssessmentTestOpenOlat`.
