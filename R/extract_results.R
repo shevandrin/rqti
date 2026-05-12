@@ -160,7 +160,7 @@ extract_xml <- function(file) {
 get_result_attr_answers<- function(file, hide_filename) {
     file_name <- clean_name(file)
     if (hide_filename) {
-        file_name <- sha1_generator(file_name)
+        file_name <- md5_generator(file_name)
     }
 
     doc <- xml2::read_xml(file)
@@ -188,19 +188,12 @@ get_result_attr_answers<- function(file, hide_filename) {
     return(data)
 }
 
-# This function is cross-platform to get SHA1 hash-string
-sha1_generator <- function(x) {
+# This function is cross-platform to get md5 hash-string
+md5_generator <- function(x) {
     tf <- tempfile()
+    on.exit(unlink(tf), add = TRUE)
     writeLines(x, tf)
-
-    if (.Platform$OS.type == "windows") {
-        res <- system2("certutil", c("-hashfile", tf, "SHA1"), stdout = TRUE)
-        res <- res[grep("^[0-9A-Fa-f]{40}$", res)]
-        tolower(res)
-    } else {
-        res <- system2("sha1sum", tf, stdout = TRUE)
-        sub(" .*", "", res)
-    }
+    unname(tools::md5sum(tf))
 }
 
 # rebuild xml nodeset to leave only results after tutor evaluation if it took place
@@ -275,7 +268,7 @@ get_result_attr_options <- function(file, hide_filename) {
     file_name <- clean_name(file)
     file_name <- sub("assessmentResult_", "", file_name)
     if (hide_filename) {
-        file_name <- sha1_generator(file_name)
+        file_name <- md5_generator(file_name)
     }
 
     doc <- xml2::read_xml(file)
