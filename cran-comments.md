@@ -1,6 +1,6 @@
 ## Release 1.2.1 summary
 
-It is a resubmission due to the macOS portability fix.
+It is a patch due to the macOS portability fix.
 
 ## Bug fixes
 
