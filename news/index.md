@@ -1,5 +1,7 @@
 # Changelog
 
+## rqti (development version)
+
 ## rqti 1.2.1
 
 CRAN release: 2026-05-14
