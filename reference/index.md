@@ -155,6 +155,8 @@
   : Get value of the slot 'calculator'
 - [`getContributors()`](https://shevandrin.github.io/rqti/reference/getContributors-methods.md)
   : Get list of contributors values
+- [`getCourseAssessment()`](https://shevandrin.github.io/rqti/reference/getCourseAssessment-methods.md)
+  : Get assessment scores for a course element
 - [`getCourseElements()`](https://shevandrin.github.io/rqti/reference/getCourseElements-methods.md)
   : Get elements of the course by courseId from LMS
 - [`getCourseGroups()`](https://shevandrin.github.io/rqti/reference/getCourseGroups-methods.md)

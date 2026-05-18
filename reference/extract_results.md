@@ -52,6 +52,8 @@ variables.
 
 - 'title' - the values of attribute 'title' of assessment items
 
+- 'candidate_comment' - candidate's comment for the item (if available).
+
 - 'scorer_comment' - scorer's comment for manually scored items (if
   available).
 
