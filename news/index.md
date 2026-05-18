@@ -2,6 +2,8 @@
 
 ## rqti 1.2.1
 
+CRAN release: 2026-05-14
+
 ### Bug fixes
 
 - Replaced platform-specific external SHA1 commands in tests with an
