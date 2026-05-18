@@ -357,6 +357,47 @@ setMethod("getCourseResult", signature(object = "missing"),
 })
 
 
+#' Get assessment scores for a course element
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param course_id A length one character vector with course id.
+#' @param node_id A length one character vector with course element id.
+#' @param user_id A length one character vector with a user login name or email
+#'   address. If `NULL`, assessments are returned for all users.
+#' @param ... Additional arguments to be passed to the method, if applicable.
+#' @return A data frame with assessment scores.
+#' @rdname getCourseAssessment-methods
+#' @export
+setGeneric("getCourseAssessment", function(object, course_id, node_id,
+                                           user_id = NULL, ...)
+    standardGeneric("getCourseAssessment"))
+
+#' Get assessment scores for a course element
+#'
+#' This method retrieves current assessment data for a course element on a
+#' Learning Management System (LMS), including score, maximum score, passed
+#' status, and attempts. If no LMS connection object is provided, it attempts to
+#' guess the connection using default settings (e.g., environment variables). If
+#' the connection cannot be established, an error is thrown.
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param course_id A length one character vector with course id.
+#' @param node_id A length one character vector with course element id.
+#' @param user_id A length one character vector with a user login name or email
+#'   address. If `NULL`, assessments are returned for all users.
+#' @param ... Additional arguments to be passed to the method, if applicable.
+#' @examplesIf interactive()
+#' assessment <- getCourseAssessment("89068111333293", "1617337826161777006")
+#' @rdname getCourseAssessment-methods
+#' @export
+setMethod("getCourseAssessment", signature(object = "missing"),
+          function(object, course_id, node_id, user_id = NULL, ...) {
+              connection <- get_default_connetion()
+              return(getCourseAssessment(connection, course_id = course_id,
+                                         node_id = node_id, user_id = user_id, ...))
+          })
+
+
 #' Get groups from a course
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.

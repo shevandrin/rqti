@@ -382,3 +382,48 @@ test_that("getCourseResult also works with an explicit zip file path", {
     )
     expect_true(file.exists(out))
 })
+
+test_that("course assessment XML is parsed into score data", {
+    xml <- xml2::read_xml(
+        paste0(
+            "<assessableResultsVOes>",
+            "<assessableResultsVO>",
+            "<identityKey>4434478786</identityKey>",
+            "<userVO>",
+            "<key>4431478786</key>",
+            "<firstName>Natalie</firstName>",
+            "<lastName>Nutzer</lastName>",
+            "<email>natalie.nutzer@beispiel.de</email>",
+            "</userVO>",
+            "<score>15.0</score>",
+            "<maxScore>25.0</maxScore>",
+            "<passed>true</passed>",
+            "<attempts>4</attempts>",
+            "</assessableResultsVO>",
+            "</assessableResultsVOes>"
+        )
+    )
+
+    assessment <- parse_course_assessment_response(xml)
+
+    expect_s3_class(assessment, "data.frame")
+    expect_identical(
+        names(assessment),
+        c(
+            "identity_key", "user_id", "user_login", "user_first_name",
+            "user_last_name", "user_email", "score", "max_score", "passed",
+            "attempts"
+        )
+    )
+    expect_equal(nrow(assessment), 1)
+    expect_identical(assessment$identity_key, "4434478786")
+    expect_identical(assessment$user_id, "4431478786")
+    expect_true(is.na(assessment$user_login))
+    expect_identical(assessment$user_first_name, "Natalie")
+    expect_identical(assessment$user_last_name, "Nutzer")
+    expect_identical(assessment$user_email, "natalie.nutzer@beispiel.de")
+    expect_equal(assessment$score, 15)
+    expect_equal(assessment$max_score, 25)
+    expect_true(assessment$passed)
+    expect_identical(assessment$attempts, 4L)
+})
