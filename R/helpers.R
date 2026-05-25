@@ -286,3 +286,123 @@ html_escape <- function(x) {
     x <- gsub('"', "&quot;", x, fixed = TRUE)
     x
 }
+
+
+#' Embed an audio file directly into HTML/XML using Base64 encoding
+#'
+#' Designed for inline use in R Markdown, e.g.
+#' `` `r provide_audio("media/klammer.wav")` ``.
+#'
+#' The function reads a local audio file, encodes it as Base64,
+#' and returns either:
+#' - an HTML <object> tag
+#' - or an HTML <audio> tag
+#'
+#' This makes the final XML/HTML fully self-contained.
+#'
+#' @param path Path to the local audio file.
+#' @param mime MIME type. If NULL, it is guessed from the extension.
+#' @param method Rendering method:
+#'   - "object" (default)
+#'   - "audio"
+#' @param warn_size_mb Warn if file is larger than this many MB.
+#'
+#' @importFrom base64enc base64encode
+#'
+#' @return knitr_asis object containing embedded audio HTML.
+#' @export
+provide_audio <- function(path,
+                          mime = NULL,
+                          method = c("object", "audio"),
+                          warn_size_mb = 5) {
+
+    method <- match.arg(method)
+
+    if (!is.character(path) || length(path) != 1 || !nzchar(path)) {
+        stop("`path` must be a non-empty character string.", call. = FALSE)
+    }
+
+    if (!file.exists(path)) {
+        stop("File does not exist: ", path, call. = FALSE)
+    }
+
+    size <- file.info(path)$size
+
+    if (!is.null(warn_size_mb)) {
+
+        size_mb <- size / 1024^2
+
+        if (is.finite(size_mb) && size_mb > warn_size_mb) {
+
+            warning(
+                sprintf(
+                    paste0(
+                        "Audio file '%s' is %.2f MB. ",
+                        "Embedding it will increase the size ",
+                        "of the generated XML/HTML."
+                    ),
+                    basename(path),
+                    size_mb
+                ),
+                call. = FALSE
+            )
+
+        }
+
+    }
+
+    if (is.null(mime)) {
+
+        ext <- tolower(tools::file_ext(path))
+
+        mime <- switch(
+            ext,
+            wav  = "audio/wav",
+            mp3  = "audio/mpeg",
+            ogg  = "audio/ogg",
+            m4a  = "audio/mp4",
+            flac = "audio/flac",
+            stop("Unsupported audio format: ", ext, call. = FALSE)
+        )
+
+    }
+
+    raw <- readBin(path, "raw", n = size)
+
+    encoded <- base64enc::base64encode(raw)
+
+    src <- paste0(
+        "data:",
+        mime,
+        ";base64,",
+        encoded
+    )
+
+    if (method == "object") {
+
+        html <- paste0(
+            '<object data="',
+            html_escape(src),
+            '" type="',
+            html_escape(mime),
+            '" />'
+        )
+
+    } else {
+
+        html <- paste0(
+            '<audio controls="controls">',
+            '<source src="',
+            html_escape(src),
+            '" type="',
+            html_escape(mime),
+            '" />',
+            'Your browser does not support the audio file.',
+            '</audio>'
+        )
+
+    }
+
+    knitr::asis_output(html)
+
+}
