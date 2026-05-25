@@ -422,6 +422,68 @@ setMethod("getCourseResult", "Opal", function(object, resource_id, node_id,
     }
 })
 
+#' Get assessment scores for a course element on LMS Opal
+#'
+#' This method retrieves current assessment data for a course element on LMS
+#' Opal by course id and course element id. It returns user metadata together
+#' with score, maximum score, passed status, and attempts. If `user_id` is
+#' supplied, the query is restricted to that user login name or email address.
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to
+#'   the LMS.
+#' @param course_id A character vector of length one specifying the course
+#'   context ID.
+#' @param node_id A character vector of length one specifying the course element
+#'   ID.
+#' @param user_id A character vector of length one specifying the user login name
+#'   or email address. If `NULL`, assessments are returned for all users.
+#' @return A data frame with assessment scores. Each row represents a user and
+#'   contains identity id, user id, user name/email, score, maximum score,
+#'   passed status, and attempts.
+#' @examplesIf interactive()
+#' assessment <- getCourseAssessment("89068111333293", "1617337826161777006")
+#' @rdname getCourseAssessment-methods
+#' @export
+setMethod("getCourseAssessment", "Opal", function(object, course_id, node_id,
+                                                  user_id = NULL) {
+
+    if (!isUserLoggedIn(object)) {
+        login_status <- authLMS(object)
+        if (login_status != 200) return(NULL)
+    }
+
+    url_res <- paste0(object@endpoint, "restapi/repo/courses/", course_id,
+                      "/assessments/", node_id)
+    if (!is.null(user_id)) {
+        url_res <- paste0(url_res, "?userId=", utils::URLencode(user_id, reserved = TRUE))
+    }
+
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_method("GET")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+
+    if (response$status_code == 404) {
+        message("The course or course element could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code == 401) {
+        message("Status Code: 401 Unauthorized.")
+        message("The required permissions are typically granted to course owners, course administrators, or users in roles with access to the assessment tool.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    parsed_response <- resp_body_xml(response)
+    parse_course_assessment_response(parsed_response)
+})
+
+
 #' Get groups from a course on LMS Opal
 #'
 #' This method retrieves groups from a course on LMS Opal by its course id. The
@@ -601,6 +663,71 @@ setMethod("getGroupUsers", "Opal", function(object, group_id) {
 })
 
 
+parse_course_assessment_response <- function(parsed_response) {
+    records <- xml2::xml_find_all(parsed_response,
+                                  ".//*[local-name()='assessableResultsVO']")
+
+    if (length(records) == 0) {
+        return(data.frame(
+            identity_key = character(),
+            user_id = character(),
+            user_login = character(),
+            user_first_name = character(),
+            user_last_name = character(),
+            user_email = character(),
+            score = numeric(),
+            max_score = numeric(),
+            passed = logical(),
+            attempts = integer(),
+            stringsAsFactors = FALSE
+        ))
+    }
+
+    get_text <- function(node, path) {
+        value <- xml2::xml_text(xml2::xml_find_first(node, path))
+        if (length(value) == 0 || is.na(value)) NA_character_ else value
+    }
+
+    get_num <- function(node, path) {
+        as.numeric(get_text(node, path))
+    }
+
+    get_int <- function(node, path) {
+        as.integer(get_text(node, path))
+    }
+
+    get_lgl <- function(node, path) {
+        as.logical(get_text(node, path))
+    }
+
+    df <- data.frame(
+        identity_key = vapply(records, get_text, character(1),
+                              ".//*[local-name()='identityKey']"),
+        user_id = vapply(records, get_text, character(1),
+                         ".//*[local-name()='userVO']/*[local-name()='key']"),
+        user_login = vapply(records, get_text, character(1),
+                            ".//*[local-name()='userVO']/*[local-name()='login']"),
+        user_first_name = vapply(records, get_text, character(1),
+                                 ".//*[local-name()='userVO']/*[local-name()='firstName']"),
+        user_last_name = vapply(records, get_text, character(1),
+                                ".//*[local-name()='userVO']/*[local-name()='lastName']"),
+        user_email = vapply(records, get_text, character(1),
+                            ".//*[local-name()='userVO']/*[local-name()='email']"),
+        score = vapply(records, get_num, numeric(1),
+                       ".//*[local-name()='score']"),
+        max_score = vapply(records, get_num, numeric(1),
+                           ".//*[local-name()='maxScore']"),
+        passed = vapply(records, get_lgl, logical(1),
+                        ".//*[local-name()='passed']"),
+        attempts = vapply(records, get_int, integer(1),
+                          ".//*[local-name()='attempts']"),
+        stringsAsFactors = FALSE
+    )
+    rownames(df) <- NULL
+    return(df)
+}
+
+
 #' @importFrom curl form_file
 upload_resource <- function(file, display_name, rtype, access,
                             endpoint = NULL) {
@@ -674,5 +801,4 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                open_in_browser = open_in_browser,
                as_survey = as_survey)
 }
-
 

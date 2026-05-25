@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentResult xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+  <context />
+  <testResult identifier="metaanalyse" datestamp="2025-03-02T20:44:37" completionStatus="completed" />
+  <itemResult identifier="metaanalyse_S15" datestamp="2025-03-02T20:44:33" sessionStatus="final" sequenceIndex="1" completionStatus="completed">
+    <responseVariable identifier="duration" cardinality="single" baseType="duration">
+      <candidateResponse>
+        <value baseType="integer">158</value>
+      </candidateResponse>
+    </responseVariable>
+    <responseVariable identifier="response_1" baseType="float" cardinality="single">
+      <correctResponse>
+        <value baseType="float">0.5</value>
+      </correctResponse>
+      <candidateResponse>
+        <value baseType="float">0.5</value>
+      </candidateResponse>
+    </responseVariable>
+    <outcomeVariable identifier="SCORE" cardinality="single" manualScored="false" baseType="float" view="tutor">
+      <value baseType="float">5</value>
+    </outcomeVariable>
+    <outcomeVariable identifier="MAXSCORE" cardinality="single" manualScored="false" baseType="float" view="scorer">
+      <value baseType="float">5</value>
+    </outcomeVariable>
+    <candidateComment>0.5&#xD;
+0.4&#xD;
+0.68&#xD;
+0.38</candidateComment>
+  </itemResult>
+</assessmentResult>
