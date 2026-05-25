@@ -2,6 +2,13 @@
 
 ## rqti (development version)
 
+### New features
+
+- Added `provide_audio()` helper to embed local audio files directly
+  into QTI/HTML content using Base64 encoding. The function supports
+  both `<object>` and `<audio>` rendering methods and self-contained
+  audio embedding for portable assessment items.
+
 ## rqti 1.2.1
 
 CRAN release: 2026-05-14
