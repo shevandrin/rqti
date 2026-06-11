@@ -13,19 +13,26 @@ getCourseAssessment(object, course_id, node_id, user_id = NULL, ...)
 \S4method{getCourseAssessment}{Opal}(object, course_id, node_id, user_id = NULL)
 }
 \arguments{
-\item{object}{An S4 object of class \link{LMS} that represents a connection to the LMS.}
+\item{object}{An S4 object of class \link{Opal} that represents a connection to
+the LMS.}
 
-\item{course_id}{A length one character vector with course id.}
+\item{course_id}{A character vector of length one specifying the course
+context ID.}
 
-\item{node_id}{A length one character vector with course element id.}
+\item{node_id}{A character vector of length one specifying the course element
+ID.}
 
-\item{user_id}{A length one character vector with a user login name or email
-address. If \code{NULL}, assessments are returned for all users.}
+\item{user_id}{A character vector of length one specifying the user login name
+or email address. If \code{NULL}, assessments are returned for all users.}
 
 \item{...}{Additional arguments to be passed to the method, if applicable.}
 }
 \value{
 A data frame with assessment scores.
+
+A data frame with assessment scores. Each row represents a user and
+contains identity id, user id, user name/email, score, maximum score,
+passed status, and attempts.
 }
 \description{
 This method retrieves current assessment data for a course element on a
@@ -33,9 +40,17 @@ Learning Management System (LMS), including score, maximum score, passed
 status, and attempts. If no LMS connection object is provided, it attempts to
 guess the connection using default settings (e.g., environment variables). If
 the connection cannot be established, an error is thrown.
+
+This method retrieves current assessment data for a course element on LMS
+Opal by course id and course element id. It returns user metadata together
+with score, maximum score, passed status, and attempts. If \code{user_id} is
+supplied, the query is restricted to that user login name or email address.
 }
 \examples{
-\dontshow{if (interactive()) \{}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 assessment <- getCourseAssessment("89068111333293", "1617337826161777006")
-\dontshow{\}}
+\dontshow{\}) # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+assessment <- getCourseAssessment("89068111333293", "1617337826161777006")
+\dontshow{\}) # examplesIf}
 }
