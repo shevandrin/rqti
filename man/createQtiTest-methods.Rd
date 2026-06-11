@@ -29,11 +29,11 @@ createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
 \item{dir}{A character value, optional; a folder to store xml file; working
 directory is used by default.}
 
-\item{verification}{A boolean value, optional; to check validity of xml
+\item{verification}{A boolean value, optional; checks the validity of XML
 files. Default is \code{FALSE}.}
 
-\item{zip_only}{A boolean value, optional; returns only zip file in case of
-\code{TRUE} or zip, xml and downloads files in case of \code{FALSE} value. Default is
+\item{zip_only}{A boolean value, optional; if \code{TRUE}, returns only the zip
+file. If \code{FALSE}, returns the zip, XML, and download files. Default is
 \code{FALSE}.}
 }
 \value{

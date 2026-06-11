@@ -26,8 +26,8 @@ directory by default}
 
 \item{file_name}{string, optional; file name of zip archive}
 
-\item{zip_only}{boolean, optional; returns only zip file in case of TRUE or
-zip, xml and downloads files in case of FALSE value}
+\item{zip_only}{boolean, optional; if TRUE, returns only the zip file. If
+FALSE, returns the zip, XML, and download files.}
 }
 \description{
 Generic function for creating zip archive with set of XML documents of

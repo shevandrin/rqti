@@ -18,9 +18,9 @@ getCourseElements(object, course_id)
 \item{course_id}{A length one character vector with course id.}
 }
 \value{
-A dataframe with the elements of the course.
+A data frame with the elements of the course.
 
-A dataframe with the data of the elements of the course (fields: nodeId,
+A data frame with the data of the elements of the course (fields: nodeId,
 shortTitle, shortName, longTitle) on LMS Opal.
 }
 \description{

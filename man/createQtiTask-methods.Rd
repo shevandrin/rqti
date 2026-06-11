@@ -24,10 +24,10 @@ createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
 \item{dir}{A character value, optional; a folder to store xml file; working
 directory is used by default.}
 
-\item{verification}{A boolean value, optional; to check validity of xml file.
+\item{verification}{A boolean value, optional; checks the validity of the XML file.
 Default is \code{FALSE}.}
 
-\item{zip}{A boolean value, optional; the \code{TRUE} value allows to create a
+\item{zip}{A boolean value, optional; \code{TRUE} creates a
 zip archive with the manifest and task files inside. Default is \code{FALSE}.}
 }
 \value{

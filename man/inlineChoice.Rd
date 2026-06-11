@@ -38,11 +38,11 @@ this gap. Default is 1}
 order in which the choices are initially presented to the candidate. Default
 is \code{TRUE}.}
 
-\item{placeholder}{A character value, optional, responsible for placing
+\item{placeholder}{A character value, optional, used to place
 helpful text in the text input field in the content delivery engine. Default
 is "".}
 
-\item{expected_length}{A numeric value, optional, responsible for setting the
+\item{expected_length}{A numeric value, optional, used to set the
 size of the text input field in the content delivery engine. Default value
 is adjusted by the first choice size.}
 }

@@ -98,7 +98,7 @@ setMethod("initialize", "AssessmentSection", function(.Object, ...) {
 #'   the section are delivered in the test. Default is `NA_integer_`, meaning
 #'   "no selection".
 #' @param time_limit An integer value, optional, controlling the amount of time
-#'   in munutes a candidate is allowed for this part of the test.
+#'   in minutes a candidate is allowed for this part of the test.
 #' @param visible A boolean value, optional, indicating whether the title of
 #'   this section is shown in the hierarchy of the test structure. Default is
 #'   `TRUE`.
@@ -214,4 +214,3 @@ setMethod("getContributors", signature(object = "AssessmentSection"),
               result <- unlist(sapply(object@assessment_item, getContributors))
               return(result)
           })
-

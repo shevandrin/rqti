@@ -27,7 +27,7 @@ library(rqti)
 
 In this type of task, the student is given two sets of items, which need to be matched. A template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `directedpair (simple)` and `directedpair (complex)`.
 
-The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the yaml-section and a list with at least two elements in a section called **\#question**:
+The minimum you need to provide is the `type: pair` (or the equivalent `type: dp`) in the YAML section and a list with at least two elements in a section called **\#question**:
 
 ```{r comment='', echo = F}
 path <- system.file("rmarkdown/templates/directedpair-simple/skeleton", "skeleton.Rmd", package = "rqti")
@@ -51,7 +51,7 @@ which will handle the preview. Clicking the Knit button in RStudio renders the f
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template ` directedpair (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template `directedpair (complex)`, which uses more YAML attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(system.file("rmarkdown/templates/directedpair-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -61,7 +61,7 @@ In OPAL this renders as `r ltx("shown in Figure \\ref{dp2opal}.", "shown in the 
 
 ![\label{dp2opal}More complex directed pair task rendered in OPAL](images/directedpair-complex.jpg){width=100%}
 
-## yaml attributes
+## YAML attributes
 
 ### type
 

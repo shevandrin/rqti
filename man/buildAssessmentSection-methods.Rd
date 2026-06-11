@@ -29,5 +29,5 @@ of \link{AssessmentItem})}
 \item{verify}{boolean, optional; check validity of xml file, default \code{FALSE}}
 }
 \description{
-Generic function for tags that contains assessementSection in assessnetTest
+Generic function for tags that contain assessmentSection in assessmentTest
 }

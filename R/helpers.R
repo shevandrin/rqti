@@ -14,7 +14,7 @@
 #'   input field in the content delivery engine.
 #' @param placeholder A character string, optional; places helpful text in the
 #'   text input field in the content delivery engine.
-#' @return A character string mapped as yaml.
+#' @return A character string mapped as YAML.
 #' @examples
 #' gap_text(c("Solution", "Solutions"), tolerance = 2)
 #'
@@ -34,25 +34,25 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 
 #' Create YAML string for NumericGap object
 #'
-#' @param solution A numeric value; contains right answer for this numeric
+#' @param solution A numeric value; contains the correct answer for this numeric
 #'   entry.
-#' @param tolerance A numeric value, optional; specifies the value for up and
-#'   low boundaries of tolerance rate for candidate answer. Default is 0.
+#' @param tolerance A numeric value, optional; specifies the upper and lower
+#'   boundaries of the tolerance range for the candidate's answer. Default is 0.
 #' @param tolerance_type A character string, optional; specifies tolerance mode;
 #'   possible values:"exact", "absolute" (by default), "relative".
 #' @param points A numeric value, optional; the number of points for this gap.
 #'   Default is 1.
 #' @param response_identifier A character string, optional; an identifier for
 #'   the answer.
-#' @param include_lower_bound A boolean, optional; specifies whether or not the
-#'   lower bound is included in tolerance rate.
-#' @param include_upper_bound A boolean, optional; specifies whether or not the
-#'   upper bound is included in tolerance rate.
-#' @param expected_length An integer value, optional; is responsible to set a
-#'   size of text input field in content delivery engine.
-#' @param placeholder A character string, optional; is responsible to place some
-#'   helpful text in text input field in content delivery engine.
-#' @return A character string mapped as yaml.
+#' @param include_lower_bound A boolean, optional; specifies whether the
+#'   lower bound is included in the tolerance range.
+#' @param include_upper_bound A boolean, optional; specifies whether the
+#'   upper bound is included in the tolerance range.
+#' @param expected_length An integer value, optional; sets the size of the text
+#'   input field in the content delivery engine.
+#' @param placeholder A character string, optional; places helpful text in the
+#'   text input field in the content delivery engine.
+#' @return A character string mapped as YAML.
 #' @examples
 #' gap_numeric(5.0, tolerance = 10, tolerance_type = "relative")
 #'
@@ -72,18 +72,18 @@ gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
 
 #' Create YAML string for InlineChoice object (dropdown list)
 #'
-#' @param choices A numeric or character vector; contains values of possible
+#' @param choices A numeric or character vector; contains the possible
 #'   answers. If you use a named vector, the names will be used as identifiers.
 #' @param solution_index An integer value, optional; the number of right answer
 #'   in the `choices` vector. Default is `1`.
 #' @param points A numeric value, optional; the number of points for this gap.
 #'   Default is `1`.
-#' @param shuffle A boolean, optional; is responsible to randomize the order in
+#' @param shuffle A boolean, optional; determines whether to randomize the order in
 #'   which the choices are initially presented to the candidate. Default is
 #'   `TRUE`.
 #' @param response_identifier A character string, optional; an identifier for
 #'   the answer.
-#' @return A character string mapped as yaml.
+#' @return A character string mapped as YAML.
 #' @seealso [gap_text()], [gap_numeric()], [mdlist()]
 #' @examples
 #' dropdown(c("Option A", "Option B"), response_identifier = "task_dd_list")

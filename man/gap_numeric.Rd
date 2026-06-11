@@ -17,11 +17,11 @@ gap_numeric(
 )
 }
 \arguments{
-\item{solution}{A numeric value; contains right answer for this numeric
+\item{solution}{A numeric value; contains the correct answer for this numeric
 entry.}
 
-\item{tolerance}{A numeric value, optional; specifies the value for up and
-low boundaries of tolerance rate for candidate answer. Default is 0.}
+\item{tolerance}{A numeric value, optional; specifies the upper and lower
+boundaries of the tolerance range for the candidate's answer. Default is 0.}
 
 \item{tolerance_type}{A character string, optional; specifies tolerance mode;
 possible values:"exact", "absolute" (by default), "relative".}
@@ -32,20 +32,20 @@ Default is 1.}
 \item{response_identifier}{A character string, optional; an identifier for
 the answer.}
 
-\item{include_lower_bound}{A boolean, optional; specifies whether or not the
-lower bound is included in tolerance rate.}
+\item{include_lower_bound}{A boolean, optional; specifies whether the
+lower bound is included in the tolerance range.}
 
-\item{include_upper_bound}{A boolean, optional; specifies whether or not the
-upper bound is included in tolerance rate.}
+\item{include_upper_bound}{A boolean, optional; specifies whether the
+upper bound is included in the tolerance range.}
 
-\item{expected_length}{An integer value, optional; is responsible to set a
-size of text input field in content delivery engine.}
+\item{expected_length}{An integer value, optional; sets the size of the text
+input field in the content delivery engine.}
 
-\item{placeholder}{A character string, optional; is responsible to place some
-helpful text in text input field in content delivery engine.}
+\item{placeholder}{A character string, optional; places helpful text in the
+text input field in the content delivery engine.}
 }
 \value{
-A character string mapped as yaml.
+A character string mapped as YAML.
 }
 \description{
 Create YAML string for NumericGap object

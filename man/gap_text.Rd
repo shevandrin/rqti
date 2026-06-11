@@ -37,7 +37,7 @@ input field in the content delivery engine.}
 text input field in the content delivery engine.}
 }
 \value{
-A character string mapped as yaml.
+A character string mapped as YAML.
 }
 \description{
 Create YAML string for TextGap object

@@ -3,7 +3,7 @@
 #'   represents random digits.
 #' @slot points A numeric value, optional, representing the number of points for
 #'   this gap. Default is `1`.
-#' @slot placeholder A character value, optional, responsible for placing
+#' @slot placeholder A character value, optional, used to place
 #'   helpful text in the text input field in the content delivery engine.
-#' @slot expected_length A numeric value, optional, responsible for setting the
+#' @slot expected_length A numeric value, optional, used to set the
 #'   size of the text input field in the content delivery engine.

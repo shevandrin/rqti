@@ -62,10 +62,10 @@ setMethod("initialize", "InlineChoice", function(.Object, ...) {
 #'@param shuffle A boolean value, optional, determining whether to randomize the
 #'  order in which the choices are initially presented to the candidate. Default
 #'  is `TRUE`.
-#'@param placeholder A character value, optional, responsible for placing
+#'@param placeholder A character value, optional, used to place
 #'  helpful text in the text input field in the content delivery engine. Default
 #'  is "".
-#'@param expected_length A numeric value, optional, responsible for setting the
+#'@param expected_length A numeric value, optional, used to set the
 #'  size of the text input field in the content delivery engine. Default value
 #'  is adjusted by the first choice size.
 #'@return An object of class [InlineChoice]

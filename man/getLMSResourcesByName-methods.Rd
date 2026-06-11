@@ -18,13 +18,13 @@ the LMS.}
 
 \item{...}{Additional arguments to be passed to the method, if applicable.}
 
-\item{display_name}{A string value withe the name of resource.}
+\item{display_name}{A string value with the resource name.}
 
 \item{rtype}{A string value with the type of resource. Possible values:
 "FileResource.TEST", "FileResource.QUESTION", or "FileResource.SURVEY".}
 }
 \value{
-A dataframe with attributes of user's resources.
+A data frame with attributes of the user's resources.
 }
 \description{
 This method retrieves data about a user's resource by its name on Learning Management System (LMS).

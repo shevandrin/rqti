@@ -157,7 +157,7 @@ setMethod("upload2LMS", "LMS", function(object, test, ...) {
 #' @param object An S4 object of class [LMS] that represents a connection to the
 #'   LMS.
 #' @param ... Additional arguments to be passed to the method, if applicable.
-#' @return A dataframe with attributes of user's resources.
+#' @return A data frame with attributes of the user's resources.
 #' @rdname getLMSResources-methods
 #' @export
 setGeneric("getLMSResources", function(object, ...) standardGeneric("getLMSResources"))
@@ -183,7 +183,7 @@ setMethod("getLMSResources", signature(object = "missing"), function(object) {
 #' @param object An S4 object of class [LMS] that represents a connection to the
 #'   LMS.
 #' @param ... Additional arguments to be passed to the method, if applicable.
-#' @return A dataframe with attributes of user's resources.
+#' @return A data frame with attributes of the user's resources.
 #' @rdname getLMSResourcesByName-methods
 #' @export
 setGeneric("getLMSResourcesByName", function(object, ...)
@@ -197,7 +197,7 @@ setGeneric("getLMSResourcesByName", function(object, ...)
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the
 #'   LMS.
-#' @param display_name A string value withe the name of resource.
+#' @param display_name A string value with the resource name.
 #' @param rtype A string value with the type of resource. Possible values:
 #'   "FileResource.TEST", "FileResource.QUESTION", or "FileResource.SURVEY".
 #' @examplesIf interactive()
@@ -214,8 +214,8 @@ setMethod("getLMSResourcesByName", signature(object = "missing"),
 #' Create an URL using the resource's display name on LMS
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
-#' @param display_name A length one character vector to entitle file in LMS;
-#'  it takes file name without extension by default; optional.
+#' @param display_name A length-one character vector naming the file in LMS;
+#'  by default, this is the file name without extension; optional.
 #' @return A string value of URL.
 #' @importFrom utils browseURL
 #' @rdname getLMSResourceURL-methods
@@ -230,8 +230,8 @@ setGeneric("getLMSResourceURL", function(object, display_name)
 #' If the connection cannot be established, an error is thrown.
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
-#' @param display_name A length one character vector to entitle file in LMS;
-#'  it takes file name without extension by default; optional.
+#' @param display_name A length-one character vector naming the file in LMS;
+#'  by default, this is the file name without extension; optional.
 #' @rdname getLMSResourceURL-methods
 #' @export
 setMethod("getLMSResourceURL", signature(object = "missing"),
@@ -245,7 +245,7 @@ setMethod("getLMSResourceURL", signature(object = "missing"),
 #'
 #' @param object An S4 object of class [LMS] that represents a connection to the LMS.
 #' @param course_id A length one character vector with course id.
-#' @return A dataframe with the elements of the course.
+#' @return A data frame with the elements of the course.
 #' @rdname getCourseElements-methods
 #' @export
 setGeneric("getCourseElements", function(object, course_id)

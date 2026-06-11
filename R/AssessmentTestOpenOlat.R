@@ -122,8 +122,8 @@ setMethod("initialize", "AssessmentTestOpenOlat", function(.Object, ...) {
 #'  options is possible:
 #'     - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
 #'     - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
-#'@param allow_comment A boolean, optional, enabling the candidate to leave
-#'  comments in each question. Default is `TRUE.`
+#'@param allow_comment A boolean, optional, allowing the candidate to leave
+#'  comments on each question. Default is `TRUE`.
 #'@param rebuild_variables A boolean, optional, enabling the recalculation of
 #'  variables and reshuffling the order of choices for each item-attempt.
 #'  Default is `TRUE`.

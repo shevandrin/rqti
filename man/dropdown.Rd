@@ -13,7 +13,7 @@ dropdown(
 )
 }
 \arguments{
-\item{choices}{A numeric or character vector; contains values of possible
+\item{choices}{A numeric or character vector; contains the possible
 answers. If you use a named vector, the names will be used as identifiers.}
 
 \item{solution_index}{An integer value, optional; the number of right answer
@@ -22,7 +22,7 @@ in the \code{choices} vector. Default is \code{1}.}
 \item{points}{A numeric value, optional; the number of points for this gap.
 Default is \code{1}.}
 
-\item{shuffle}{A boolean, optional; is responsible to randomize the order in
+\item{shuffle}{A boolean, optional; determines whether to randomize the order in
 which the choices are initially presented to the candidate. Default is
 \code{TRUE}.}
 
@@ -30,7 +30,7 @@ which the choices are initially presented to the candidate. Default is
 the answer.}
 }
 \value{
-A character string mapped as yaml.
+A character string mapped as YAML.
 }
 \description{
 Create YAML string for InlineChoice object (dropdown list)

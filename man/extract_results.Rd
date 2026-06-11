@@ -15,7 +15,7 @@ extract_results(file, level = "task", hide_filename = TRUE)
 default.}
 }
 \value{
-A dataframe with attribues of the candidates outcomes and result
+A data frame with attributes of the candidates' outcomes and results.
 variables.
 }
 \description{

@@ -18,7 +18,7 @@ getLMSResources(object, ...)
 \item{...}{Additional arguments to be passed to the method, if applicable.}
 }
 \value{
-A dataframe with attributes of user's resources.
+A data frame with attributes of the user's resources.
 }
 \description{
 This method retrieves data about all resources associated with the current user on the Learning Management System (LMS).

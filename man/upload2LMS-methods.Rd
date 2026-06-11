@@ -30,10 +30,10 @@ objects, or a character string with path to Rmd/md, zip or XML files.}
 
 \item{...}{Additional arguments to be passed to the method, if applicable.}
 
-\item{display_name}{A length one character vector to entitle resource in OPAL;
-file name without extension or identifier of the object by default; optional.}
+\item{display_name}{A length-one character vector naming the resource in OPAL;
+by default, this is the file name without extension or the object identifier; optional.}
 
-\item{access}{An integer value, optional; it is responsible for publication
+\item{access}{An integer value, optional; it controls publication
 status, where 1 - only those responsible for this learning resource; 2 -
 responsible and other authors; 3 - all registered users; 4 - registered
 users and guests. Default is 4.}
@@ -41,8 +41,8 @@ users and guests. Default is 4.}
 \item{overwrite}{A boolean value. If \code{TRUE}, and a file with the specified
 display name already exists, it will be overwritten. Default is \code{TRUE}.}
 
-\item{open_in_browser}{A boolean value; optional; it controls whether to open
-a URL in default browser. Default is \code{TRUE.}}
+\item{open_in_browser}{A boolean value, optional; controls whether to open
+a URL in the default browser. Default is \code{TRUE}.}
 
 \item{as_survey}{A boolean value, optional. If \code{TRUE}, the resource will be
 treated as a survey; if \code{FALSE}, as a test. Default is \code{FALSE}.}

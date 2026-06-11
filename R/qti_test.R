@@ -5,10 +5,10 @@
 #' @param object an instance of the [AssessmentTest] S4 object
 #' @param path string, optional; a path to folder to store zip file with
 #'   possible file name; working directory by default
-#' @param verification boolean, optional; to check validity of xml file, default
-#'   `FALSE`
-#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
-#'   zip, xml and downloads files in case of FALSE value
+#' @param verification boolean, optional; checks the validity of the XML file.
+#'   Default is `FALSE`.
+#' @param zip_only boolean, optional; if TRUE, returns only the zip file. If
+#'   FALSE, returns the zip, XML, and download files.
 #' @return xml document.
 create_qti_test <- function(object, path = ".", verification = FALSE,
                             zip_only = FALSE) {

@@ -23,11 +23,11 @@
 #' @slot time_limit A numeric value, optional, controlling the amount of time in
 #'   minutes which a candidate is allowed for this part of the test.
 #' @slot max_attempts A numeric value, optional, enabling the maximum number of
-#'   attempts that a candidate is allowed to pass.
-#' @slot allow_comment A boolean value, optional, enabling to allow candidates
-#'   to leave comments in each question.
-#' @slot rebuild_variables A boolean value, optional, enabling to recalculate
-#'   variables and reshuffle the order of choices for each item-attempt.
+#'   attempts that a candidate is allowed to make.
+#' @slot allow_comment A boolean value, optional, allowing candidates to leave
+#'   comments on each question.
+#' @slot rebuild_variables A boolean value, optional, allowing variables to be
+#'   recalculated and the order of choices to be reshuffled for each item attempt.
 #' @slot fallback_titles A character value, optional, controlling how titles
 #'   are assigned when no explicit title is provided. Possible values are
 #'   "filename" (use filenames as titles) and "generic" (use generic labels
@@ -45,12 +45,12 @@
 #'   \code{german_grading()}.
 #' @slot grade_label A character value, optional, representing a short message
 #'   to display with a grade in the final feedback. For multilingual usage, it
-#'   hat to be a named vector with two-letter ISO language codes as names (e.g.,
+#'   has to be a named vector with two-letter ISO language codes as names (e.g.,
 #'   c(en="Grade", de="Note")); during test creation, it takes the value for the
 #'   language of the operating system. Default is c(en="Grade", de="Note").
 #' @slot table_label A character value, optional, representing a concise message
 #'   to display as the column title of the grading table in the final feedback.
-#'   For multilingual usage, it hat to be a named vector with two-letter ISO
+#'   For multilingual usage, it has to be a named vector with two-letter ISO
 #'   language codes as names (e.g., c(en="Grade", de="Note")); during test
 #'   creation, it takes the value for the language of the operating system.
 #'   Default is c(en="Grade", de="Note").
@@ -62,4 +62,3 @@
 #'   is added in addition and may override default styles.
 #' @slot metadata An object of class [QtiMetadata] that holds metadata information
 #' about the test.
-

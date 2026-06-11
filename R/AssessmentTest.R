@@ -157,11 +157,11 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #'  options is possible:
 #'     - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
 #'     - 'simultaneous': Candidates' responses are submitted all together by the end of the test.
-#'@param allow_comment A boolean, optional, enabling the candidate to leave
-#'  comments in each question. Default is `TRUE.`
+#'@param allow_comment A boolean, optional, allowing the candidate to leave
+#'  comments on each question. Default is `TRUE`.
 #'@param rebuild_variables A boolean, optional, enabling the recalculation of
 #'  variables and reshuffling the order of choices for each item-attempt.
-#'  Default is `TRUE.`
+#'  Default is `TRUE`.
 #'@param stylesheet_path A character value, optional, specifying the path to a
 #'   custom CSS stylesheet. If provided, the stylesheet is included at the
 #'   assessment test level and applied during rendering. When
@@ -232,8 +232,8 @@ setGeneric("createAssessmentTest",
 #' @param output string, optional; a folder to store zip and xml files; working
 #'   directory by default
 #' @param file_name string, optional; file name of zip archive
-#' @param zip_only boolean, optional; returns only zip file in case of TRUE or
-#'   zip, xml and downloads files in case of FALSE value
+#' @param zip_only boolean, optional; if TRUE, returns only the zip file. If
+#'   FALSE, returns the zip, XML, and download files.
 #' @docType methods
 #' @rdname createZip-methods
 #' @aliases createZip
@@ -394,4 +394,3 @@ assign_titles_section <- function(sec, path, warned_paths = FALSE) {
 
     return(list(section = sec, warned_paths = warned_paths))
 }
-

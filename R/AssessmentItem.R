@@ -116,9 +116,9 @@ setGeneric("createResponseProcessing",
 #'   [MultipleChoiceTable], [DirectedPair]).
 #' @param dir A character value, optional; a folder to store xml file; working
 #'   directory is used by default.
-#' @param verification A boolean value, optional; to check validity of xml file.
+#' @param verification A boolean value, optional; checks the validity of the XML file.
 #'   Default is `FALSE`.
-#' @param zip A boolean value, optional; the `TRUE` value allows to create a
+#' @param zip A boolean value, optional; `TRUE` creates a
 #'   zip archive with the manifest and task files inside. Default is `FALSE`.
 #' @return A path to xml or zip file.
 #' @examples
@@ -147,11 +147,11 @@ setGeneric("createQtiTask",
 #'   [AssessmentItem] S4 object.
 #' @param dir A character value, optional; a folder to store xml file; working
 #'   directory is used by default.
-#' @param verification A boolean value, optional; to check validity of xml
+#' @param verification A boolean value, optional; checks the validity of XML
 #'   files. Default is `FALSE`.
-#' @param zip_only A boolean value, optional; returns only zip file in case of
-#'   `TRUE` or zip, xml and downloads files in case of `FALSE` value. Default is
-#' `FALSE`.
+#' @param zip_only A boolean value, optional; if `TRUE`, returns only the zip
+#'   file. If `FALSE`, returns the zip, XML, and download files. Default is
+#'   `FALSE`.
 #' @return  A path to zip and xml files.
 #' @examples
 #' essay <- new("Essay", prompt = "Test task", title = "Essay",
@@ -224,7 +224,7 @@ setGeneric("getAssessmentItems",
 
 #' Build tags for AssessmentSection in assessmentTest
 #'
-#' Generic function for tags that contains assessementSection in assessnetTest
+#' Generic function for tags that contain assessmentSection in assessmentTest
 #'
 #' @param object an instance of the S4 object ([AssessmentSection] and all types
 #'   of [AssessmentItem])

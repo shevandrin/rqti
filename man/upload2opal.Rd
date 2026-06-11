@@ -20,28 +20,27 @@ upload2opal(
 \link{AssessmentTestOpal} or \link{AssessmentItem} objects, Rmd/md or XML files;
 required.}
 
-\item{display_name}{A length one character vector to entitle file in OPAL;
-file name without extension by default; optional.}
+\item{display_name}{A length-one character vector naming the file in OPAL;
+by default, this is the file name without extension; optional.}
 
-\item{access}{An integer value, optional; it is responsible for publication
+\item{access}{An integer value, optional; it controls publication
 status, where 1 - only those responsible for this learning resource; 2 -
 responsible and other authors; 3 - all registered users; 4 - registered
 users and guests. Default is 4.}
 
-\item{overwrite}{A boolean value; if the value is \code{TRUE}, if only one file
-with the specified display name is found, it will be overwritten. Default is
-\code{TRUE}.}
+\item{overwrite}{A boolean value; if \code{TRUE} and exactly one file with the
+specified display name is found, it will be overwritten. Default is \code{TRUE}.}
 
-\item{endpoint}{A string of endpoint of LMS Opal; by default it is got from
+\item{endpoint}{A string containing the OPAL LMS endpoint; by default, it is read from
 environment variable \code{RQTI_API_ENDPOINT}. To set a global environment
 variable, you need to call \code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')}
-or you can put these command into .Renviron.}
+or put this command into .Renviron.}
 
-\item{open_in_browser}{A boolean value; optional; it controls whether to open
-a URL in default browser. Default is \code{TRUE.}}
+\item{open_in_browser}{A boolean value, optional; controls whether to open
+a URL in the default browser. Default is \code{TRUE}.}
 
-\item{as_survey}{A boolean value; optional; it controls resource type (test
-r survey). Default is \code{FALSE}.}
+\item{as_survey}{A boolean value, optional; controls the resource type (test
+or survey). Default is \code{FALSE}.}
 
 \item{api_user}{A character value of the username in the OPAL.}
 }

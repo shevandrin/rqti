@@ -20,10 +20,10 @@ represents random digits.}
 \item{\code{points}}{A numeric value, optional, representing the number of points for
 this gap. Default is \code{1}.}
 
-\item{\code{placeholder}}{A character value, optional, responsible for placing
+\item{\code{placeholder}}{A character value, optional, used to place
 helpful text in the text input field in the content delivery engine.}
 
-\item{\code{expected_length}}{A numeric value, optional, responsible for setting the
+\item{\code{expected_length}}{A numeric value, optional, used to set the
 size of the text input field in the content delivery engine.}
 }}
 

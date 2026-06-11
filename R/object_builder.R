@@ -515,7 +515,7 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
                 cls <- "DirectedPair"
                 message(paste("The task is converted into \'Directed pair\'",
                               "type. To keep table put \'as_table: TRUE\'",
-                              "in yaml section of the Rmd file"))
+                              "in YAML section of the Rmd file"))
             }
 
         } else {
@@ -531,7 +531,7 @@ define_match_class <- function(ids, rows, cols, as_table = FALSE) {
                 cls <- "DirectedPair"
                 message(paste("The task is converted into \'Directed pair\'",
                               "type. To keep table put \'as_table=T\'",
-                              "in yaml section of the Rmd file"))
+                              "in YAML section of the Rmd file"))
             }
         } else {
             cls <- "OneInColTable"
@@ -574,7 +574,7 @@ rmd_detect_type <- function(file) {
     pattern <- c("<<.*?>>", "<gap>.*?</gap>")
     matches <- any(grepl(paste(pattern, collapse = "|"), content))
     if (!matches) {
-        stop("Define correct type of the task in yaml section of Rmd file")
+        stop("Define the correct task type in the YAML section of the Rmd file")
     } else {
         return("gap")
     }

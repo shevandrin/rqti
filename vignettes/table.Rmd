@@ -28,7 +28,7 @@ In this type of task, the candidate matches rows with columns in a table. This f
 
 A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `table (simple)` and `table (complex)`.
 
-The minimum you need to provide is the `type: table` in the yaml-section and a table in a section called **\#question**:
+The minimum you need to provide is the `type: table` in the YAML section and a table in a section called **\#question**:
 
 ```{r comment='', echo = F}
 cat(readLines(system.file("rmarkdown/templates/table-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -54,7 +54,7 @@ In this example, a feedback section was also included. While feedback is optiona
 
 ## More control
 
-If you want to have more fine-grained control, consider the Rmd template `table (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template `table (complex)`, which uses more YAML attributes.
 
 ```{r comment='', echo = F}
 cat(readLines(system.file("rmarkdown/templates/table-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -66,7 +66,7 @@ Which, in OPAL, renders as `r ltx("illustrated in Figure \\ref{tbl2opal}.", ":")
 
 You can see that the order of the columns is now the same as in the source table.
 
-## yaml attributes
+## YAML attributes
 
 ### type
 

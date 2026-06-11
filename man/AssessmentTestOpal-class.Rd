@@ -53,13 +53,13 @@ the test.
 minutes which a candidate is allowed for this part of the test.}
 
 \item{\code{max_attempts}}{A numeric value, optional, enabling the maximum number of
-attempts that a candidate is allowed to pass.}
+attempts that a candidate is allowed to make.}
 
-\item{\code{allow_comment}}{A boolean value, optional, enabling to allow candidates
-to leave comments in each question.}
+\item{\code{allow_comment}}{A boolean value, optional, allowing candidates to leave
+comments on each question.}
 
-\item{\code{rebuild_variables}}{A boolean value, optional, enabling to recalculate
-variables and reshuffle the order of choices for each item-attempt.}
+\item{\code{rebuild_variables}}{A boolean value, optional, allowing variables to be
+recalculated and the order of choices to be reshuffled for each item attempt.}
 
 \item{\code{fallback_titles}}{A character value, optional, controlling how titles
 are assigned when no explicit title is provided. Possible values are
@@ -86,7 +86,7 @@ language of the operating system. Default is c(en="Grade", de="Note").}
 
 \item{\code{table_label}}{A character value, optional, representing a concise message
 to display as the column title of the grading table in the final feedback.
-For multilingual usage, it hat to be a named vector with two-letter ISO
+For multilingual usage, it has to be a named vector with two-letter ISO
 language codes as names (e.g., c(en="Grade", de="Note")); during test
 creation, it takes the value for the language of the operating system.
 Default is c(en="Grade", de="Note").}
@@ -102,7 +102,7 @@ is added in addition and may override default styles.}
 about the test.}
 
 \item{\code{show_test_time}}{A boolean value, optional, determining whether to show
-the candidate elapsed processing time without time limit. Default is
+the candidate's elapsed processing time without a time limit. Default is
 \code{FALSE}.}
 
 \item{\code{calculator}}{A character value, optional, determining whether to show a
@@ -113,10 +113,10 @@ calculator to the candidate. Possible values:
 }}
 
 \item{\code{mark_items}}{A boolean value, optional, determining whether to allow
-candidate marking of questions. Default is \code{TRUE}.}
+candidates to mark questions. Default is \code{TRUE}.}
 
 \item{\code{keep_responses}}{A boolean value, optional, determining whether to save
-candidate's answers from the previous attempt. Default is \code{FALSE}.}
+the candidate's answers from the previous attempt. Default is \code{FALSE}.}
 
 \item{\code{files}}{A character vector, optional, containing paths to files that will
 be accessible to the candidate during the test/exam.}

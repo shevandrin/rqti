@@ -9,7 +9,7 @@
 #'   default.
 #' @import xml2
 #' @importFrom zip zip_list
-#' @return A dataframe with attribues of the candidates outcomes and result
+#' @return A data frame with attributes of the candidates' outcomes and results.
 #'   variables.
 #' @note 1.With option level = "task" data frame consists of columns:
 #'  * 'file' - name of the xml file with test results (to identify
@@ -90,7 +90,7 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
 
     else {
         warning("No task files found in archive.\n",
-                "The \'title\' column will be skipped in the final dataframe",
+                "The 'title' column will be skipped in the final data frame",
                 immediate. = TRUE, call. = FALSE)
         db <- NULL
     }

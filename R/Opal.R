@@ -69,16 +69,16 @@ setMethod("isUserLoggedIn", "Opal", function(object) {
 #'   [Opal] class.
 #' @param test An [AssessmentTest], [AssessmentTestOpal] or [AssessmentItem]
 #'   objects, or a character string with path to Rmd/md, zip or XML files.
-#' @param display_name A length one character vector to entitle resource in OPAL;
-#'  file name without extension or identifier of the object by default; optional.
-#' @param access An integer value, optional; it is responsible for publication
+#' @param display_name A length-one character vector naming the resource in OPAL;
+#'  by default, this is the file name without extension or the object identifier; optional.
+#' @param access An integer value, optional; it controls publication
 #'  status, where 1 - only those responsible for this learning resource; 2 -
 #'  responsible and other authors; 3 - all registered users; 4 - registered
 #'  users and guests. Default is 4.
 #' @param overwrite A boolean value. If `TRUE`, and a file with the specified
 #'   display name already exists, it will be overwritten. Default is `TRUE`.
-#' @param open_in_browser A boolean value; optional; it controls whether to open
-#'  a URL in default browser. Default is `TRUE.`
+#' @param open_in_browser A boolean value, optional; controls whether to open
+#'  a URL in the default browser. Default is `TRUE`.
 #' @param as_survey A boolean value, optional. If `TRUE`, the resource will be
 #'   treated as a survey; if `FALSE`, as a test. Default is `FALSE`.
 #' @docType methods
@@ -116,7 +116,7 @@ setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
                 (curr_type == "FileResource.SURVEY" && istest && as_survey)) {
                 resp <- update_resource(file, rdf$key, endpoint = object@endpoint)
             } else {
-                stop("Current type and target type of the resouce is not equal.\n",
+                stop("Current type and target type of the resource is not equal.\n",
                      "Current type: ", curr_type, ";\nTarget type:", target_type,
                      "\n Create a new resource by assigning a display_name.\n",
                      "Call upload2opal(... display_name = \"new_name\")",
@@ -183,7 +183,7 @@ setMethod("getLMSResources", "Opal", function(object){
 #'
 #' @param object An S4 object of class [Opal] that represents a connection to
 #'   the LMS.
-#' @param display_name A string value withe the name of resource.
+#' @param display_name A string value with the resource name.
 #' @param rtype A string value with the type of resource. Possible values:
 #'   "FileResource.TEST", "FileResource.QUESTION", or "FileResource.SURVEY".
 #' @rdname getLMSResourcesByName-methods
@@ -207,7 +207,7 @@ setMethod("getLMSResourcesByName", "Opal", function(object, display_name,
 #' Create a URL using the resource's display name in LMS Opal
 #'
 #' @param object An S4 object of class [Opal] that represents a connection to the LMS.
-#' @param display_name A length one character vector to entitle file in OPAL;
+#' @param display_name A length-one character vector naming the file in OPAL;
 #'  it takes file name without extension by default; optional.
 #' @rdname getLMSResourceURL-methods
 #' @export
@@ -233,7 +233,7 @@ setMethod("getLMSResourceURL", "Opal", function(object, display_name) {
 #'
 #' @param object An S4 object of class [Opal] that represents a connection to the LMS.
 #' @param course_id A length one character vector with course id.
-#' @return A dataframe with the data of the elements of the course (fields: nodeId,
+#' @return A data frame with the data of the elements of the course (fields: nodeId,
 #' shortTitle, shortName, longTitle) on LMS Opal.
 #' @rdname getCourseElements-methods
 #' @export
@@ -767,23 +767,22 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
 #'@param test A length one character vector of [AssessmentTest],
 #'  [AssessmentTestOpal] or [AssessmentItem] objects, Rmd/md or XML files;
 #'  required.
-#'@param display_name A length one character vector to entitle file in OPAL;
-#'  file name without extension by default; optional.
-#'@param access An integer value, optional; it is responsible for publication
+#'@param display_name A length-one character vector naming the file in OPAL;
+#'  by default, this is the file name without extension; optional.
+#'@param access An integer value, optional; it controls publication
 #'  status, where 1 - only those responsible for this learning resource; 2 -
 #'  responsible and other authors; 3 - all registered users; 4 - registered
 #'  users and guests. Default is 4.
-#'@param overwrite A boolean value; if the value is `TRUE`, if only one file
-#'  with the specified display name is found, it will be overwritten. Default is
-#'  `TRUE`.
-#'@param endpoint A string of endpoint of LMS Opal; by default it is got from
+#'@param overwrite A boolean value; if `TRUE` and exactly one file with the
+#'  specified display name is found, it will be overwritten. Default is `TRUE`.
+#'@param endpoint A string containing the OPAL LMS endpoint; by default, it is read from
 #'  environment variable `RQTI_API_ENDPOINT`. To set a global environment
 #'  variable, you need to call `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')`
-#'  or you can put these command into .Renviron.
-#'@param open_in_browser A boolean value; optional; it controls whether to open
-#'  a URL in default browser. Default is `TRUE.`
-#'@param as_survey A boolean value; optional; it controls resource type (test
-#'r survey). Default is `FALSE`.
+#'  or put this command into .Renviron.
+#'@param open_in_browser A boolean value, optional; controls whether to open
+#'  a URL in the default browser. Default is `TRUE`.
+#'@param as_survey A boolean value, optional; controls the resource type (test
+#'  or survey). Default is `FALSE`.
 #'@param api_user A character value of the username in the OPAL.
 #'@return A list with the key, display name, and URL of the resource in Opal.
 #'@examplesIf interactive()
@@ -801,4 +800,3 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                open_in_browser = open_in_browser,
                as_survey = as_survey)
 }
-

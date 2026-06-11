@@ -20,7 +20,7 @@ dddd represents random digits.}
 default, it takes the value of the identifier.}
 
 \item{\code{time_limit}}{A numeric value, optional, controlling the amount of time
-\emph{in munutes} a candidate is allowed for this part of the test.}
+\emph{in minutes} a candidate is allowed for this part of the test.}
 
 \item{\code{visible}}{A boolean value, optional. If TRUE, it shows this section in
 the hierarchy of the test structure. Default is \code{TRUE}.}
@@ -38,10 +38,10 @@ to the candidate. Default is \code{FALSE}.}
 section are delivered in the test.}
 
 \item{\code{max_attempts}}{A numeric value, optional, enabling the maximum number of
-attempts a candidate is allowed to pass in this section.}
+attempts a candidate is allowed to make in this section.}
 
-\item{\code{allow_comment}}{A boolean value, optional, enabling to allow the
-candidate to leave comments in each question of the section. Defautl is
+\item{\code{allow_comment}}{A boolean value, optional, allowing the candidate to
+leave comments on each question of the section. Default is
 \code{TRUE}.}
 }}
 

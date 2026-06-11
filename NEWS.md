@@ -160,7 +160,7 @@ is not given.
 
 ### New features
 
-* New API OPAL function `get_course_elements()` returns dataframe with elements of 
+* New API OPAL function `get_course_elements()` returns a data frame with elements of 
 the course by course id.
 
 * New API OPAL function `get_course_results()` returns an xml with data about 

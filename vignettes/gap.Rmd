@@ -30,7 +30,7 @@ Our package allows for the integration of both textual and numeric responses wit
 
 A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates ` gap (simple)` and ` gap (complex)`.
 
-The minimum you need to provide is the `type: gap` (or the equivalent `type: cloze`) in the yaml-section and some text, where at least one gap is used, in a section called  **\#question**. Furthermore, when employing helper functions from the rqti package, it is essential to ensure its prior loading.
+The minimum you need to provide is the `type: gap` (or the equivalent `type: cloze`) in the YAML section and some text, where at least one gap is used, in a section called  **\#question**. Furthermore, when employing helper functions from the rqti package, it is essential to ensure it is loaded first.
 
 ```{r comment='', echo = F}
 cat(readLines(system.file("rmarkdown/templates/gap-simple/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -86,7 +86,7 @@ By clicking on the arrows, the details will unfold.
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template ` gap (complex)`, which uses more yaml attributes and more complex calls of the helper functions.
+If you want to have more fine-grained control, consider the Rmd template `gap (complex)`, which uses more YAML attributes and more complex calls of the helper functions.
 
 ```{r comment='', echo = F}
 cat(readLines(system.file("rmarkdown/templates/gap-complex/skeleton", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -96,7 +96,7 @@ In OPAL this renders as `r ltx("shown in Figure \\ref{gap2opal}.", ":")`
 
 ![\label{gap2opal}Preview of complex gap task in OPAL](images/gap-complex.jpg){width=100%}
 
-## yaml attributes
+## YAML attributes
 
 ### type
 
@@ -162,7 +162,7 @@ This is the ID of the gap, useful for later data analysis. The default has the f
 
 Specifies whether the lower bound is included in the tolerance interval.
 
-### inclue_upper_bound
+### include_upper_bound
 
 Specifies whether the upper bound is included in the tolerance interval.
 

@@ -28,7 +28,7 @@ This is just a normal multiple choice task.
 
 A minimum template is automatically created when you initiate an rqti project through RStudio. Alternatively, it can be added by clicking on `New file -> R Markdown -> From Template`. The `rqti` templates end with `{rqti}`. Here we look at the templates `multiplechoice (simple)` and `multiplechoice (complex)`.
 
-The minimum you need to provide is the `type: mpc` (or the equivalent `type: multiplechoice` or `type: mchoice`) in the yaml-section and a list with at least two elements in a section called **\# question**:
+The minimum you need to provide is the `type: mpc` (or the equivalent `type: multiplechoice` or `type: mchoice`) in the YAML section and a list with at least two elements in a section called **\# question**:
 
 ```{r comment='', echo = F}
 cat(readLines(system.file("rmarkdown/templates/multiplechoice-simple/skeleton",
@@ -54,7 +54,7 @@ Among various grading options, we find this to be the most intuitive, especially
 
 ## More control
 
-If you want to have more fine-grained control, consider the available attributes for the yaml section in the RMD template `multiple-choice (complex)`.
+If you want to have more fine-grained control, consider the available attributes for the YAML section in the Rmd template `multiple-choice (complex)`.
 
 ```{r comment='', echo = F}
 cat(readLines(system.file("rmarkdown/templates/multiplechoice-complex/skeleton/", "skeleton.Rmd", package = "rqti")), sep = '\n')
@@ -64,7 +64,7 @@ Which renders in OPAL as`r ltx(" shown in Figure \\ref{mpc2opal}.", ":")`
 
 ![\label{mpc2opal}More complex multiple choice task rendered in OPAL](images/multiplechoice-complex.jpg){width=100%}
 
-## yaml attributes
+## YAML attributes
 
 ### type
 
@@ -93,7 +93,7 @@ Should the items be displayed in `vertical` or `horizontal` mode? Default is `ve
 
 ### points
 
-How many points are given for the whole task. Default is the number of choices times 0.5. Note that rqti uses *partial balanced scoring* for multiple choice questions.
+How many points are given for the whole task. The default is the number of choices times 0.5. Note that rqti uses *partial balanced scoring* for multiple choice questions.
 
 In *partial balanced scoring*, the number of correctly selected options is rewarded,
 and the number of incorrectly selected options is penalized in proportion to the

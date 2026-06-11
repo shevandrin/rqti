@@ -82,12 +82,12 @@ mode options is possible:
 - 'individual': Submit candidates' responses on an item-by-item basis; used by default.
 - 'simultaneous': Candidates' responses are submitted all together by the end of the test.}
 
-\item{allow_comment}{A boolean, optional, enabling the candidate to leave
-comments in each question. Default is \code{TRUE.}}
+\item{allow_comment}{A boolean, optional, allowing the candidate to leave
+comments on each question. Default is \code{TRUE}.}
 
 \item{rebuild_variables}{A boolean, optional, enabling the recalculation of
-variables and reshuffling the order of choices for each item-attempt.
-Default is \code{TRUE.}}
+variables and reshuffling the order of choices for each item attempt.
+Default is \code{TRUE}.}
 
 \item{stylesheet_path}{A character value, optional, specifying the path to a
 custom CSS stylesheet. If provided, the stylesheet is included at the

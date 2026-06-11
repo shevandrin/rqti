@@ -13,11 +13,11 @@ create_qti_test(object, path = ".", verification = FALSE, zip_only
 \item{path}{string, optional; a path to folder to store zip file with
 possible file name; working directory by default}
 
-\item{verification}{boolean, optional; to check validity of xml file, default
-\code{FALSE}}
+\item{verification}{boolean, optional; checks the validity of the XML file.
+Default is \code{FALSE}.}
 
-\item{zip_only}{boolean, optional; returns only zip file in case of TRUE or
-zip, xml and downloads files in case of FALSE value}
+\item{zip_only}{boolean, optional; if TRUE, returns only the zip file. If
+FALSE, returns the zip, XML, and download files.}
 }
 \value{
 xml document.

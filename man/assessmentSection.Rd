@@ -34,7 +34,7 @@ the section are delivered in the test. Default is \code{NA_integer_}, meaning
 "no selection".}
 
 \item{time_limit}{An integer value, optional, controlling the amount of time
-in munutes a candidate is allowed for this part of the test.}
+in minutes a candidate is allowed for this part of the test.}
 
 \item{visible}{A boolean value, optional, indicating whether the title of
 this section is shown in the hierarchy of the test structure. Default is
