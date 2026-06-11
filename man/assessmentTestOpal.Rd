@@ -89,7 +89,7 @@ options is possible:
 comments on each question. Default is \code{TRUE}.}
 
 \item{rebuild_variables}{A boolean, optional, enabling the recalculation of
-variables and reshuffling the order of choices for each item attempt.
+variables and reshuffling the order of choices for each item-attempt.
 Default is \code{TRUE}.}
 
 \item{show_test_time}{A boolean, optional, determining whether to show
@@ -104,7 +104,7 @@ calculator to the candidate. Possible values:
 candidates to mark questions. Default is \code{TRUE}.}
 
 \item{keep_responses}{A boolean, optional, determining whether to save the
-candidate's answers from the previous attempt. Default is \code{FALSE}.}
+the candidate's answers from the previous attempt. Default is \code{FALSE}.}
 
 \item{stylesheet_path}{A character value, optional, specifying the path to a
 custom CSS stylesheet. If provided, the stylesheet is included at the

@@ -30,7 +30,7 @@ item objects, such as \link{SingleChoice}, \link{MultipleChoice}, \link{Essay}, 
 \link{Ordering}, \link{OneInRowTable}, \link{OneInColTable}, \link{MultipleChoiceTable}, and
 \link{DirectedPair}.}
 
-\item{\code{shuffle}}{A boolean value, optional, responsible for randomizing the
+\item{\code{shuffle}}{A boolean value, optional, determining whether to randomize the
 order in which the assessment items and subsections are initially presented
 to the candidate. Default is \code{FALSE}.}
 

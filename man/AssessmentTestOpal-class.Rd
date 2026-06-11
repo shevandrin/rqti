@@ -80,7 +80,7 @@ To display a grading table, provide a named numeric vector or use
 
 \item{\code{grade_label}}{A character value, optional, representing a short message
 to display with a grade in the final feedback. For multilingual usage, it
-hat to be a named vector with two-letter ISO language codes as names (e.g.,
+has to be a named vector with two-letter ISO language codes as names (e.g.,
 c(en="Grade", de="Note")); during test creation, it takes the value for the
 language of the operating system. Default is c(en="Grade", de="Note").}
 

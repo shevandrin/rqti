@@ -50,14 +50,14 @@ a candidate is allowed for this part of the test.}
 this section is shown in the hierarchy of the test structure. Default is
 \code{TRUE}.}
 
-\item{shuffle}{A boolean value, optional, responsible for randomizing the
+\item{shuffle}{A boolean value, optional, determining whether to randomize the
 order in which the assessment items and subsections are initially presented
 to the candidate. Default is \code{FALSE}.}
 
-\item{max_attempts}{An integer value, optional, enabling the maximum number
-of attempts allowed for a candidate to pass this section.}
+\item{max_attempts}{An integer value, optional, setting the maximum number
+of attempts allowed for a candidate in this section.}
 
-\item{allow_comment}{A boolean value, optional, enabling candidates to leave
+\item{allow_comment}{A boolean value, optional, allowing candidates to leave
 comments on each question of the section. Default is \code{TRUE}.}
 }
 \value{

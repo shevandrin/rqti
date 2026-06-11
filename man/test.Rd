@@ -86,7 +86,7 @@ mode options is possible:
 comments on each question. Default is \code{TRUE}.}
 
 \item{rebuild_variables}{A boolean, optional, enabling the recalculation of
-variables and reshuffling the order of choices for each item attempt.
+variables and reshuffling the order of choices for each item-attempt.
 Default is \code{TRUE}.}
 
 \item{stylesheet_path}{A character value, optional, specifying the path to a

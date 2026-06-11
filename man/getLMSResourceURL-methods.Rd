@@ -16,7 +16,7 @@ getLMSResourceURL(object, display_name)
 \item{object}{An S4 object of class \link{Opal} that represents a connection to the LMS.}
 
 \item{display_name}{A length-one character vector naming the file in OPAL;
-by default, this is the file name without extension; optional.}
+it takes file name without extension by default; optional.}
 }
 \value{
 A string value of URL.
