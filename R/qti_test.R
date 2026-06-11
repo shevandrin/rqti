@@ -45,6 +45,7 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
     }
 
     if (length(object@stylesheet_path) != 0) {
+        dir.create(file.path(tdir, "styles"), showWarnings = FALSE)
         file.copy(from = object@stylesheet_path,
                   to = file.path(tdir, "styles",
                                  basename(object@stylesheet_path)))

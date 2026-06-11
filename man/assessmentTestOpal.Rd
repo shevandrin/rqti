@@ -22,6 +22,7 @@ assessmentTestOpal(
   calculator = NA_character_,
   mark_items = TRUE,
   keep_responses = FALSE,
+  stylesheet_path = NULL,
   metadata = qtiMetadata(),
   points = NA_real_
 )
@@ -104,6 +105,13 @@ marking of questions. Default is \code{TRUE}.}
 
 \item{keep_responses}{A boolean, optional, determining whether to save the
 candidate's answers from the previous attempt. Default is \code{FALSE}.}
+
+\item{stylesheet_path}{A character value, optional, specifying the path to a
+custom CSS stylesheet. If provided, the stylesheet is included at the
+assessment test level and applied during rendering. When
+\code{academic_grading} is set, the default stylesheet
+\code{styles/rqti.css} is included automatically; a user-defined stylesheet
+is added in addition and may override default styles.}
 
 \item{metadata}{An object of class \link{QtiMetadata} that holds metadata
 information about the test. By default it creates \link{QtiMetadata} object. See

@@ -526,6 +526,28 @@ expect_equal(sut, expected)
 unlink("test1a9b56cf96", recursive = TRUE)
 })
 
+test_that("createQtiTest includes custom stylesheets in zip archives", {
+    style_file <- tempfile(fileext = ".css")
+    writeLines(".custom { color: red; }", style_file)
+    on.exit(unlink(style_file), add = TRUE)
+
+    exam <- test(
+        section(essay(identifier = "essay_style")),
+        identifier = "id_test_style",
+        stylesheet_path = style_file
+    )
+
+    zip_file <- suppressMessages(createQtiTest(
+        exam,
+        dir = tempdir(),
+        zip_only = TRUE
+    ))
+    on.exit(unlink(zip_file), add = TRUE)
+
+    zip_content <- zip::zip_list(zip_file)$filename
+    expect_true(file.path("styles", basename(style_file)) %in% zip_content)
+})
+
 test_that("Testing method createAssessmentTest for AssessmentTest class", {
     sc1 <- new("SingleChoice", prompt = "Test task", title = "SC",
                identifier = "q1", choices = c("a", "b", "c"))
@@ -759,4 +781,14 @@ test_that("Test assessmentTestOpal function that return an object
 
               # Check if the object is of class AssessmentTestOpal
               expect_equal(expected, sut)
+})
+
+test_that("assessmentTestOpal keeps stylesheet_path", {
+              sc <- singleChoice(prompt = "Question", choices = c("A", "B", "C"))
+              s <- section(sc, title = "Section with custom stylesheet")
+              style_file <- tempfile(fileext = ".css")
+
+              sut <- assessmentTestOpal(list(s), stylesheet_path = style_file)
+
+              expect_equal(sut@stylesheet_path, style_file)
 })
