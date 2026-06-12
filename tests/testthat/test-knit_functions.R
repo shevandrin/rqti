@@ -1,4 +1,6 @@
 test_that("render_qtijs works in browser", {
+  skip_if(isTRUE(as.logical(Sys.getenv("R_COVR"))),
+          "Skipping browser test during covr")
   skip_if(nzchar(Sys.getenv("_R_CHECK_PACKAGE_NAME_")))
   skip_on_ci()
   skip_on_cran()
