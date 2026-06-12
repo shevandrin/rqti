@@ -22,8 +22,6 @@ jobs:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-pandoc@v2
-        with:
-          pandoc-version: '2.19'
 
       - name: Install libxml2 (xmllint)
         run: |
