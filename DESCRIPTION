@@ -45,10 +45,9 @@ Suggests:
     XML,
     readr,
     RCurl,
-    chromote,
-    callr,
     pkgload,
-    httpuv
+    httpuv,
+    later
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 URL: https://github.com/shevandrin/rqti, https://shevandrin.github.io/rqti/
