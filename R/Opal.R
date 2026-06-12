@@ -605,8 +605,6 @@ setMethod("getGroupUsers", "Opal", function(object, group_id) {
             req_error(is_error = ~ FALSE) %>%
             req_perform()
 
-        print(response$status_code)
-
         if (response$status_code == 404) {
             message("The group ", gid, " could not be found.")
             next

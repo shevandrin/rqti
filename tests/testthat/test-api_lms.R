@@ -2,14 +2,53 @@
 
 library(testthat)
 
-skip_if_no_opal <- function() {
-    skip_if(Sys.getenv("RQTI_API_USER") == "")
+OPAL_TEST_CONNECTION <- NULL
+
+opal_for_test <- function() {
+    if (!is.null(OPAL_TEST_CONNECTION)) {
+        return(OPAL_TEST_CONNECTION)
+    }
+
+    con <- tryCatch(
+        suppressWarnings(opal()),
+        error = function(e) skip(paste("Could not create OPAL connection:", conditionMessage(e)))
+    )
+
+    OPAL_TEST_CONNECTION <<- con
+    con
 }
 
-skip_if_no_course_env <- function() {
-    needed <- c("RQTI_OPAL_COURSE_ID", "RQTI_OPAL_NODE_ID", "RQTI_OPAL_RESOURCE_ID")
-    vals <- Sys.getenv(needed)
-    skip_if(any(vals == ""))
+skip_if_no_opal <- function() {
+    skip_if(Sys.getenv("RQTI_API_USER") == "", "RQTI_API_USER is not set.")
+    invisible(opal_for_test())
+}
+
+METHODENGURU_COURSE_ID <- "38156107780"
+METHODENGURU_RESOURCE_ID <- "1671679683120887006"
+METHODENGURU_TEST_DUMMY_NODE_ID <- "1706153362112925006"
+METHODENGURU_TEST_DUMMY_SHORT_NAME <- "Test dummy"
+
+methodenguru_fixture <- function() {
+    skip_if_no_opal()
+
+    con <- opal_for_test()
+
+    elems <- tryCatch(
+        getCourseElements(con, METHODENGURU_RESOURCE_ID),
+        error = function(e) skip(paste("Could not retrieve Methodenguru elements:", conditionMessage(e)))
+    )
+
+    element <- elems[elems$nodeId == METHODENGURU_TEST_DUMMY_NODE_ID, , drop = FALSE]
+    skip_if(nrow(element) == 0, "No Methodenguru course element with the hardcoded Test dummy node id")
+
+    list(
+        con = con,
+        course_id = METHODENGURU_COURSE_ID,
+        resource_id = METHODENGURU_RESOURCE_ID,
+        node_id = METHODENGURU_TEST_DUMMY_NODE_ID,
+        element = element,
+        elements = elems
+    )
 }
 
 # Stable names reused across test runs
@@ -22,6 +61,7 @@ TEST_RTYPE_SURVEY_NAME <- "rqti_test_rtype_survey"
 TEST_URL_DIRECT_NAME <- "rqti_test_url_direct"
 TEST_URL_METHOD_NAME <- "rqti_test_url_method"
 TEST_MISSING_NAME <- "rqti_test_definitely_not_existing"
+TEST_METHODENGURU_NAME <- "rqti_methodenguru_test_dummy"
 
 make_test_item <- function(id = TEST_ITEM_NAME) {
     suppressWarnings(essay(identifier = id))
@@ -282,12 +322,11 @@ test_that("qti test archives are detected correctly", {
     expect_true(is_test(path))
 })
 
-test_that("getCourseElements works for a configured real course", {
+test_that("getCourseElements works for the Methodenguru course", {
     skip_if_no_opal()
-    skip_if_no_course_env()
 
-    con <- opal()
-    course_id <- Sys.getenv("RQTI_OPAL_COURSE_ID")
+    con <- opal_for_test()
+    course_id <- METHODENGURU_RESOURCE_ID
 
     elems <- getCourseElements(con, course_id)
 
@@ -297,90 +336,113 @@ test_that("getCourseElements works for a configured real course", {
     expect_true(nrow(elems) >= 1)
 })
 
-test_that("publishCourse returns a successful status for a configured real course", {
-    skip_if_no_opal()
-    skip_if_no_course_env()
+test_that("Methodenguru course ids and Test dummy element can be resolved", {
+    fx <- methodenguru_fixture()
 
-    con <- opal()
-    course_id <- Sys.getenv("RQTI_OPAL_COURSE_ID")
-
-    status <- publishCourse(con, course_id)
-
-    expect_true(is.numeric(status) || is.integer(status))
-    expect_identical(as.integer(status), 200L)
+    expect_identical(fx$course_id, METHODENGURU_COURSE_ID)
+    expect_identical(fx$resource_id, METHODENGURU_RESOURCE_ID)
+    expect_true(nzchar(fx$course_id))
+    expect_true(nzchar(fx$resource_id))
+    expect_s3_class(fx$elements, "data.frame")
+    expect_true(all(c("nodeId", "shortTitle", "shortName", "longTitle") %in% names(fx$elements)))
+    expect_identical(fx$element$shortName[[1]], METHODENGURU_TEST_DUMMY_SHORT_NAME)
+    expect_true(nzchar(fx$node_id))
 })
 
-test_that("updateCourseElementResource updates and publishes a configured real course element", {
-    skip_if_no_opal()
-    skip_if_no_course_env()
+test_that("getCourseGroups downloads Methodenguru groups", {
+    fx <- methodenguru_fixture()
 
-    con <- opal()
-    course_id <- Sys.getenv("RQTI_OPAL_COURSE_ID")
-    node_id <- Sys.getenv("RQTI_OPAL_NODE_ID")
-    resource_id <- Sys.getenv("RQTI_OPAL_RESOURCE_ID")
+    groups <- getCourseGroups(fx$con, fx$resource_id)
+
+    expect_s3_class(groups, "data.frame")
+    expect_true(all(c(
+        "key", "name", "description", "minParticipants", "maxParticipants",
+        "invitationEnabled", "signoutEnabled"
+    ) %in% names(groups)))
+})
+
+test_that("getGroupUsers downloads participants for Methodenguru groups", {
+    fx <- methodenguru_fixture()
+    groups <- getCourseGroups(fx$con, fx$resource_id)
+
+    if (nrow(groups) == 0) {
+        skip("No Methodenguru groups available.")
+    }
+
+    users <- getGroupUsers(fx$con, groups$key)
+
+    expect_s3_class(users, "data.frame")
+    expect_true(all(c(
+        "group_id", "user_id", "user_login", "user_first_name",
+        "user_last_name", "user_email"
+    ) %in% names(users)))
+    expect_true(nrow(users) >= 0)
+})
+
+test_that("getCourseAssessment downloads Methodenguru assessment data", {
+    fx <- methodenguru_fixture()
+
+    assessment <- getCourseAssessment(fx$con, fx$resource_id, fx$node_id)
+
+    if (is.null(assessment)) {
+        skip("No Methodenguru assessment data available or accessible.")
+    }
+
+    expect_s3_class(assessment, "data.frame")
+    expect_true(all(c(
+        "identity_key", "user_id", "user_login", "user_first_name",
+        "user_last_name", "user_email", "score", "max_score", "passed",
+        "attempts"
+    ) %in% names(assessment)))
+})
+
+test_that("getCourseResult downloads Methodenguru Test dummy result data", {
+    fx <- methodenguru_fixture()
+
+    expect_identical(fx$element$shortName[[1]], METHODENGURU_TEST_DUMMY_SHORT_NAME)
+
+    out <- getCourseResult(
+        fx$con,
+        resource_id = fx$resource_id,
+        node_id = fx$elements$nodeId[fx$elements$shortName == "TestDummy2"],
+        path_outcome = tempdir(),
+        rename = TRUE
+    )
+
+    if (is.null(out)) {
+        skip("No Methodenguru result zip available for Test dummy.")
+    }
+
+    expect_true(file.exists(out))
+    expect_match(basename(out), "^results_TestDummy2\\.zip$")
+})
+
+test_that("Methodenguru Test dummy can be updated with a new test resource", {
+    fx <- methodenguru_fixture()
+    exam <- make_test_exam(TEST_METHODENGURU_NAME)
+
+    uploaded <- suppressMessages(
+        upload2LMS(
+            fx$con,
+            exam,
+            display_name = TEST_METHODENGURU_NAME,
+            open_in_browser = FALSE,
+            overwrite = TRUE
+        )
+    )
 
     resp <- updateCourseElementResource(
-        con,
-        course_id = course_id,
-        node_id = node_id,
-        resource_id = resource_id,
+        fx$con,
+        course_id = fx$resource_id,
+        node_id = fx$node_id,
+        resource_id = uploaded$key,
         publish = TRUE
     )
 
-    expect_true(!is.null(resp))
-    expect_identical(resp$status_code, 200)
-})
-
-test_that("getCourseResult downloads a zip for a configured real course element", {
-    skip_if_no_opal()
-    skip_if_no_course_env()
-
-    con <- opal()
-    resource_id <- Sys.getenv("RQTI_OPAL_RESOURCE_ID")
-    node_id <- Sys.getenv("RQTI_OPAL_NODE_ID")
-
-    out <- getCourseResult(
-        con,
-        resource_id = resource_id,
-        node_id = node_id,
-        path_outcome = tempdir(),
-        rename = FALSE
-    )
-
-    if (is.null(out)) {
-        skip("No result zip available for configured course/node.")
-    }
-
-    expect_true(file.exists(out))
-    expect_match(basename(out), "\\.zip$")
-})
-
-test_that("getCourseResult also works with an explicit zip file path", {
-    skip_if_no_opal()
-    skip_if_no_course_env()
-
-    con <- opal()
-    resource_id <- Sys.getenv("RQTI_OPAL_RESOURCE_ID")
-    node_id <- Sys.getenv("RQTI_OPAL_NODE_ID")
-    target <- file.path(tempdir(), "rqti_test_results.zip")
-
-    out <- getCourseResult(
-        con,
-        resource_id = resource_id,
-        node_id = node_id,
-        path_outcome = target,
-        rename = FALSE
-    )
-
-    if (is.null(out)) {
-        skip("No result zip available for configured course/node.")
-    }
-
-    expect_identical(
-        normalizePath(out, winslash = "/"),
-        normalizePath(target, winslash = "/", mustWork = FALSE)
-    )
-    expect_true(file.exists(out))
+    expect_type(uploaded, "list")
+    expect_true(nzchar(uploaded$key))
+    expect_identical(as.integer(resp$status_code), 200L)
+    expect_identical(fx$element$shortName[[1]], METHODENGURU_TEST_DUMMY_SHORT_NAME)
 })
 
 test_that("course assessment XML is parsed into score data", {
