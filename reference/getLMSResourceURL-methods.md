@@ -28,7 +28,7 @@ getLMSResourceURL(object, display_name)
 
 - display_name:
 
-  A length one character vector to entitle file in OPAL; it takes file
+  A length-one character vector naming the file in OPAL; it takes file
   name without extension by default; optional.
 
 ## Value

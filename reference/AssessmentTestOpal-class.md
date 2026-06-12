@@ -66,17 +66,17 @@ questions/tasks and/or one or more sub sections.
 - `max_attempts`:
 
   A numeric value, optional, enabling the maximum number of attempts
-  that a candidate is allowed to pass.
+  that a candidate is allowed to make.
 
 - `allow_comment`:
 
-  A boolean value, optional, enabling to allow candidates to leave
-  comments in each question.
+  A boolean value, optional, allowing candidates to leave comments on
+  each question.
 
 - `rebuild_variables`:
 
-  A boolean value, optional, enabling to recalculate variables and
-  reshuffle the order of choices for each item-attempt.
+  A boolean value, optional, allowing variables to be recalculated and
+  the order of choices to be reshuffled for each item attempt.
 
 - `fallback_titles`:
 
@@ -102,7 +102,7 @@ questions/tasks and/or one or more sub sections.
 - `grade_label`:
 
   A character value, optional, representing a short message to display
-  with a grade in the final feedback. For multilingual usage, it hat to
+  with a grade in the final feedback. For multilingual usage, it has to
   be a named vector with two-letter ISO language codes as names (e.g.,
   c(en="Grade", de="Note")); during test creation, it takes the value
   for the language of the operating system. Default is c(en="Grade",
@@ -112,7 +112,7 @@ questions/tasks and/or one or more sub sections.
 
   A character value, optional, representing a concise message to display
   as the column title of the grading table in the final feedback. For
-  multilingual usage, it hat to be a named vector with two-letter ISO
+  multilingual usage, it has to be a named vector with two-letter ISO
   language codes as names (e.g., c(en="Grade", de="Note")); during test
   creation, it takes the value for the language of the operating system.
   Default is c(en="Grade", de="Note").
@@ -134,8 +134,8 @@ questions/tasks and/or one or more sub sections.
 
 - `show_test_time`:
 
-  A boolean value, optional, determining whether to show the candidate
-  elapsed processing time without time limit. Default is `FALSE`.
+  A boolean value, optional, determining whether to show the candidate's
+  elapsed processing time without a time limit. Default is `FALSE`.
 
 - `calculator`:
 
@@ -148,12 +148,12 @@ questions/tasks and/or one or more sub sections.
 
 - `mark_items`:
 
-  A boolean value, optional, determining whether to allow candidate
-  marking of questions. Default is `TRUE`.
+  A boolean value, optional, determining whether to allow candidates to
+  mark questions. Default is `TRUE`.
 
 - `keep_responses`:
 
-  A boolean value, optional, determining whether to save candidate's
+  A boolean value, optional, determining whether to save the candidate's
   answers from the previous attempt. Default is `FALSE`.
 
 - `files`:

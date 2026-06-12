@@ -55,14 +55,14 @@ inlineChoice(
 
 - placeholder:
 
-  A character value, optional, responsible for placing helpful text in
-  the text input field in the content delivery engine. Default is "".
+  A character value, optional, used to place helpful text in the text
+  input field in the content delivery engine. Default is "".
 
 - expected_length:
 
-  A numeric value, optional, responsible for setting the size of the
-  text input field in the content delivery engine. Default value is
-  adjusted by the first choice size.
+  A numeric value, optional, used to set the size of the text input
+  field in the content delivery engine. Default value is adjusted by the
+  first choice size.
 
 ## Value
 

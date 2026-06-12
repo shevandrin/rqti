@@ -19,7 +19,7 @@ learning management systems, and even OPAL may overwrite it. The primary
 purpose is to maintain metadata within the original xml files being
 shared.
 
-Here is an example of metadata with two contributors in the yaml
+Here is an example of metadata with two contributors in the YAML
 section:
 
     ---
@@ -75,5 +75,5 @@ Sys.setenv(RQTI_AUTHOR = "Ada Lovelace")
 Sys.setenv(RQTI_RIGHTS = "CC BY SA")
 ```
 
-If you need to use non-default values, just specify the yaml attributes,
+If you need to use non-default values, just specify the YAML attributes,
 which will override the environment variables.

@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Single Choice tasks</h1>
             
-            <h4 data-toc-skip class="date">2026-05-25</h4>
+            <h4 data-toc-skip class="date">2026-06-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/singlechoice.Rmd" class="external-link"><code>vignettes/singlechoice.Rmd</code></a></small>
       <div class="d-none name"><code>singlechoice.Rmd</code></div>
@@ -113,7 +113,7 @@ at the templates <code>singlechoice (simple)</code> and
 <code>singlechoice (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: sc</code> (or the
 equivalent <code>type: singlechoice</code>, or
-<code>type: schoice</code>) in the yaml-section and a list with at least
+<code>type: schoice</code>) in the YAML section and a list with at least
 two elements in a section called <strong># question</strong>:</p>
 <pre><code>---
 type: sc
@@ -235,10 +235,10 @@ For instance:</p>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="ss">- </span>*C* <span class="co">&lt;!-- treated as correct --&gt;</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="ss">- </span>D</span></code></pre></div>
 <p>Once again, this is much easier to read than providing the solution
-somewhere else (e.g. in the yaml section). Furthermore, producing a
-preview as html directly shows you which element is correct. If you want
+somewhere else (e.g. in the YAML section). Furthermore, producing a
+preview as HTML directly shows you which element is correct. If you want
 to use italics in your choice, you can also wrap the correct solution in
-emphasize tags:
+emphasis tags:
 <code>&lt;em&gt; a choice with *some italics*&lt;/em&gt;</code>.</p>
 <p>An important note: Do not forget to put a blank line before your
 question and the answer list, otherwise the list will not be a proper
@@ -257,9 +257,9 @@ D</p>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
-<p>If you want to have more fine-grained control, consider the RMD
-template <code>singlechoice-complex</code>, which uses more yaml
-attributes. In addition you can also set feedback for correct and
+<p>If you want to have more fine-grained control, consider the Rmd
+template <code>singlechoice-complex</code>, which uses more YAML
+attributes. In addition, you can also set feedback for correct and
 incorrect responses.</p>
 <pre><code>---
 type: sc # equivalent to singlechoice and schoice
@@ -302,7 +302,7 @@ and points have been updated. The next section provides a detailed
 explanation of all YAML attributes.</p>
 </div>
 <div class="section level2">
-<h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
+<h2 id="yaml-attributes">YAML attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
 </h2>
 <div class="section level3">
 <h3 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>

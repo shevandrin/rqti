@@ -32,7 +32,7 @@ getLMSResourcesByName(object, display_name, rtype = NULL)
 
 - display_name:
 
-  A string value withe the name of resource.
+  A string value with the resource name.
 
 - rtype:
 
@@ -42,7 +42,7 @@ getLMSResourcesByName(object, display_name, rtype = NULL)
 
 ## Value
 
-A dataframe with attributes of user's resources.
+A data frame with attributes of the user's resources.
 
 ## Examples
 

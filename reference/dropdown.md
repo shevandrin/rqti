@@ -18,8 +18,8 @@ dropdown(
 
 - choices:
 
-  A numeric or character vector; contains values of possible answers. If
-  you use a named vector, the names will be used as identifiers.
+  A numeric or character vector; contains the possible answers. If you
+  use a named vector, the names will be used as identifiers.
 
 - solution_index:
 
@@ -33,8 +33,8 @@ dropdown(
 
 - shuffle:
 
-  A boolean, optional; is responsible to randomize the order in which
-  the choices are initially presented to the candidate. Default is
+  A boolean, optional; determines whether to randomize the order in
+  which the choices are initially presented to the candidate. Default is
   `TRUE`.
 
 - response_identifier:
@@ -43,7 +43,7 @@ dropdown(
 
 ## Value
 
-A character string mapped as yaml.
+A character string mapped as YAML.
 
 ## See also
 

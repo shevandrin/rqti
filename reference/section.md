@@ -78,18 +78,18 @@ section(
 
 - shuffle:
 
-  A boolean value, optional, responsible for randomizing the order in
-  which the assessment items and subsections are initially presented to
-  the candidate. Default is `FALSE`.
+  A boolean value, optional, determining whether to randomize the order
+  in which the assessment items and subsections are initially presented
+  to the candidate. Default is `FALSE`.
 
 - max_attempts:
 
-  An integer value, optional, enabling the maximum number of attempts
-  allowed for a candidate to pass this section.
+  An integer value, optional, setting the maximum number of attempts
+  allowed for a candidate in this section.
 
 - allow_comment:
 
-  A boolean value, optional, enabling candidates to leave comments on
+  A boolean value, optional, allowing candidates to leave comments on
   each question of the section. Default is `TRUE`.
 
 ## Value

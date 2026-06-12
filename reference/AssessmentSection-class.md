@@ -18,7 +18,7 @@ test XML specification according to QTI 2.1.
 
 - `time_limit`:
 
-  A numeric value, optional, controlling the amount of time *in munutes*
+  A numeric value, optional, controlling the amount of time *in minutes*
   a candidate is allowed for this part of the test.
 
 - `visible`:
@@ -43,9 +43,9 @@ test XML specification according to QTI 2.1.
 
 - `shuffle`:
 
-  A boolean value, optional, responsible for randomizing the order in
-  which the assessment items and subsections are initially presented to
-  the candidate. Default is `FALSE`.
+  A boolean value, optional, determining whether to randomize the order
+  in which the assessment items and subsections are initially presented
+  to the candidate. Default is `FALSE`.
 
 - `selection`:
 
@@ -55,12 +55,12 @@ test XML specification according to QTI 2.1.
 - `max_attempts`:
 
   A numeric value, optional, enabling the maximum number of attempts a
-  candidate is allowed to pass in this section.
+  candidate is allowed to make in this section.
 
 - `allow_comment`:
 
-  A boolean value, optional, enabling to allow the candidate to leave
-  comments in each question of the section. Defautl is `TRUE`.
+  A boolean value, optional, allowing the candidate to leave comments on
+  each question of the section. Default is `TRUE`.
 
 ## See also
 

@@ -110,14 +110,14 @@ test(
 
 - allow_comment:
 
-  A boolean, optional, enabling the candidate to leave comments in each
-  question. Default is `TRUE.`
+  A boolean, optional, allowing the candidate to leave comments on each
+  question. Default is `TRUE`.
 
 - rebuild_variables:
 
   A boolean, optional, enabling the recalculation of variables and
   reshuffling the order of choices for each item-attempt. Default is
-  `TRUE.`
+  `TRUE`.
 
 - stylesheet_path:
 

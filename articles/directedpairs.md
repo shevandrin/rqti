@@ -14,7 +14,7 @@ with [rqti](https://github.com/shevandrin/rqti). Here we look at the
 templates `directedpair (simple)` and `directedpair (complex)`.
 
 The minimum you need to provide is the `type: pair` (or the equivalent
-`type: dp`) in the yaml-section and a list with at least two elements in
+`type: dp`) in the YAML section and a list with at least two elements in
 a section called **\#question**:
 
     ---
@@ -71,8 +71,8 @@ Directed pair task rendered in OPAL
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template
-`directedpair (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template
+`directedpair (complex)`, which uses more YAML attributes.
 
     ---
     type: dp
@@ -121,7 +121,7 @@ OPAL](images/directedpair-complex.jpg)
 
 More complex directed pair task rendered in OPAL
 
-## yaml attributes
+## YAML attributes
 
 ### type
 

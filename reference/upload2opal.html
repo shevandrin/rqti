@@ -93,38 +93,37 @@ required.</p></dd>
 
 
 <dt id="arg-display-name">display_name<a class="anchor" aria-label="anchor" href="#arg-display-name"></a></dt>
-<dd><p>A length one character vector to entitle file in OPAL;
-file name without extension by default; optional.</p></dd>
+<dd><p>A length-one character vector naming the file in OPAL;
+by default, this is the file name without extension; optional.</p></dd>
 
 
 <dt id="arg-access">access<a class="anchor" aria-label="anchor" href="#arg-access"></a></dt>
-<dd><p>An integer value, optional; it is responsible for publication
+<dd><p>An integer value, optional; it controls publication
 status, where 1 - only those responsible for this learning resource; 2 -
 responsible and other authors; 3 - all registered users; 4 - registered
 users and guests. Default is 4.</p></dd>
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
-<dd><p>A boolean value; if the value is <code>TRUE</code>, if only one file
-with the specified display name is found, it will be overwritten. Default is
-<code>TRUE</code>.</p></dd>
+<dd><p>A boolean value; if <code>TRUE</code> and exactly one file with the
+specified display name is found, it will be overwritten. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-endpoint">endpoint<a class="anchor" aria-label="anchor" href="#arg-endpoint"></a></dt>
-<dd><p>A string of endpoint of LMS Opal; by default it is got from
+<dd><p>A string containing the OPAL LMS endpoint; by default, it is read from
 environment variable <code>RQTI_API_ENDPOINT</code>. To set a global environment
 variable, you need to call <code>Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')</code>
-or you can put these command into .Renviron.</p></dd>
+or put this command into .Renviron.</p></dd>
 
 
 <dt id="arg-open-in-browser">open_in_browser<a class="anchor" aria-label="anchor" href="#arg-open-in-browser"></a></dt>
-<dd><p>A boolean value; optional; it controls whether to open
-a URL in default browser. Default is <code>TRUE.</code></p></dd>
+<dd><p>A boolean value, optional; controls whether to open
+a URL in the default browser. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-as-survey">as_survey<a class="anchor" aria-label="anchor" href="#arg-as-survey"></a></dt>
-<dd><p>A boolean value; optional; it controls resource type (test
-r survey). Default is <code>FALSE</code>.</p></dd>
+<dd><p>A boolean value, optional; controls the resource type (test
+or survey). Default is <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-api-user">api_user<a class="anchor" aria-label="anchor" href="#arg-api-user"></a></dt>

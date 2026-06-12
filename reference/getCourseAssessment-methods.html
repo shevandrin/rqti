@@ -3,11 +3,19 @@
 Learning Management System (LMS), including score, maximum score, passed
 status, and attempts. If no LMS connection object is provided, it attempts to
 guess the connection using default settings (e.g., environment variables). If
-the connection cannot be established, an error is thrown."><meta property="og:description" content="This method retrieves current assessment data for a course element on a
+the connection cannot be established, an error is thrown.
+This method retrieves current assessment data for a course element on LMS
+Opal by course id and course element id. It returns user metadata together
+with score, maximum score, passed status, and attempts. If user_id is
+supplied, the query is restricted to that user login name or email address."><meta property="og:description" content="This method retrieves current assessment data for a course element on a
 Learning Management System (LMS), including score, maximum score, passed
 status, and attempts. If no LMS connection object is provided, it attempts to
 guess the connection using default settings (e.g., environment variables). If
-the connection cannot be established, an error is thrown."><meta property="og:image" content="https://shevandrin.github.io/rqti/logo.svg"></head><body>
+the connection cannot be established, an error is thrown.
+This method retrieves current assessment data for a course element on LMS
+Opal by course id and course element id. It returns user metadata together
+with score, maximum score, passed status, and attempts. If user_id is
+supplied, the query is restricted to that user login name or email address."><meta property="og:image" content="https://shevandrin.github.io/rqti/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -75,6 +83,10 @@ Learning Management System (LMS), including score, maximum score, passed
 status, and attempts. If no LMS connection object is provided, it attempts to
 guess the connection using default settings (e.g., environment variables). If
 the connection cannot be established, an error is thrown.</p>
+<p>This method retrieves current assessment data for a course element on LMS
+Opal by course id and course element id. It returns user metadata together
+with score, maximum score, passed status, and attempts. If <code>user_id</code> is
+supplied, the query is restricted to that user login name or email address.</p>
     </div>
 
     <div class="section level2">
@@ -93,20 +105,23 @@ the connection cannot be established, an error is thrown.</p>
 
 
 <dl><dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An S4 object of class <a href="LMS-class.html">LMS</a> that represents a connection to the LMS.</p></dd>
+<dd><p>An S4 object of class <a href="Opal-class.html">Opal</a> that represents a connection to
+the LMS.</p></dd>
 
 
 <dt id="arg-course-id">course_id<a class="anchor" aria-label="anchor" href="#arg-course-id"></a></dt>
-<dd><p>A length one character vector with course id.</p></dd>
+<dd><p>A character vector of length one specifying the course
+context ID.</p></dd>
 
 
 <dt id="arg-node-id">node_id<a class="anchor" aria-label="anchor" href="#arg-node-id"></a></dt>
-<dd><p>A length one character vector with course element id.</p></dd>
+<dd><p>A character vector of length one specifying the course element
+ID.</p></dd>
 
 
 <dt id="arg-user-id">user_id<a class="anchor" aria-label="anchor" href="#arg-user-id"></a></dt>
-<dd><p>A length one character vector with a user login name or email
-address. If <code>NULL</code>, assessments are returned for all users.</p></dd>
+<dd><p>A character vector of length one specifying the user login name
+or email address. If <code>NULL</code>, assessments are returned for all users.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -116,11 +131,20 @@ address. If <code>NULL</code>, assessments are returned for all users.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame with assessment scores.</p>
+<p>A data frame with assessment scores. Each row represents a user and
+contains identity id, user id, user name/email, score, maximum score,
+passed status, and attempts.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span><span class="va">assessment</span> <span class="op">&lt;-</span> <span class="fu">getCourseAssessment</span><span class="op">(</span><span class="st">"89068111333293"</span>, <span class="st">"1617337826161777006"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+<span class="r-in"><span><span class="va">assessment</span> <span class="op">&lt;-</span> <span class="fu">getCourseAssessment</span><span class="op">(</span><span class="st">"89068111333293"</span>, <span class="st">"1617337826161777006"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

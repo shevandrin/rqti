@@ -31,39 +31,38 @@ upload2opal(
 
 - display_name:
 
-  A length one character vector to entitle file in OPAL; file name
-  without extension by default; optional.
+  A length-one character vector naming the file in OPAL; by default,
+  this is the file name without extension; optional.
 
 - access:
 
-  An integer value, optional; it is responsible for publication status,
-  where 1 - only those responsible for this learning resource; 2 -
-  responsible and other authors; 3 - all registered users; 4 -
-  registered users and guests. Default is 4.
+  An integer value, optional; it controls publication status, where 1 -
+  only those responsible for this learning resource; 2 - responsible and
+  other authors; 3 - all registered users; 4 - registered users and
+  guests. Default is 4.
 
 - overwrite:
 
-  A boolean value; if the value is `TRUE`, if only one file with the
-  specified display name is found, it will be overwritten. Default is
-  `TRUE`.
+  A boolean value; if `TRUE` and exactly one file with the specified
+  display name is found, it will be overwritten. Default is `TRUE`.
 
 - endpoint:
 
-  A string of endpoint of LMS Opal; by default it is got from
+  A string containing the OPAL LMS endpoint; by default, it is read from
   environment variable `RQTI_API_ENDPOINT`. To set a global environment
   variable, you need to call
-  `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or you can put these
-  command into .Renviron.
+  `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or put this command
+  into .Renviron.
 
 - open_in_browser:
 
-  A boolean value; optional; it controls whether to open a URL in
-  default browser. Default is `TRUE.`
+  A boolean value, optional; controls whether to open a URL in the
+  default browser. Default is `TRUE`.
 
 - as_survey:
 
-  A boolean value; optional; it controls resource type (test r survey).
-  Default is `FALSE`.
+  A boolean value, optional; controls the resource type (test or
+  survey). Default is `FALSE`.
 
 - api_user:
 

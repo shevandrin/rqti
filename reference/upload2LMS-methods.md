@@ -58,15 +58,16 @@ upload2LMS(
 
 - display_name:
 
-  A length one character vector to entitle resource in OPAL; file name
-  without extension or identifier of the object by default; optional.
+  A length-one character vector naming the resource in OPAL; by default,
+  this is the file name without extension or the object identifier;
+  optional.
 
 - access:
 
-  An integer value, optional; it is responsible for publication status,
-  where 1 - only those responsible for this learning resource; 2 -
-  responsible and other authors; 3 - all registered users; 4 -
-  registered users and guests. Default is 4.
+  An integer value, optional; it controls publication status, where 1 -
+  only those responsible for this learning resource; 2 - responsible and
+  other authors; 3 - all registered users; 4 - registered users and
+  guests. Default is 4.
 
 - overwrite:
 
@@ -75,8 +76,8 @@ upload2LMS(
 
 - open_in_browser:
 
-  A boolean value; optional; it controls whether to open a URL in
-  default browser. Default is `TRUE.`
+  A boolean value, optional; controls whether to open a URL in the
+  default browser. Default is `TRUE`.
 
 - as_survey:
 

@@ -4,12 +4,12 @@
     #>   method             from 
     #>   toLatex.data.frame exams
 
-In this type of task, the candidate has to select an element form a
-dropdown-list. Note that our package implements dropdowns as
-*entry*-objects because this is essentially what dropwdowns are. Several
+In this type of task, the candidate has to select an element from a
+dropdown list. Note that our package implements dropdowns as
+*entry*-objects because this is essentially what dropdowns are. Several
 dropdowns can be combined in a single task, but a combination with
-numeric and text entries (gaps) is not possible; mainly due to
-limitations on the site of learning management systems.
+numeric and text entries (gaps) is not possible, mainly due to
+limitations of learning management systems.
 
 ## Minimum version
 
@@ -20,10 +20,10 @@ project through RStudio. Alternatively, it can be added by clicking on
 templates `dropdown (simple)` and `dropdown (complex)`.
 
 The minimum you need to provide is the `type: dropdown` (or the
-equivalent `type: dd`) in the yaml-section and some text, where at least
-one gap is formed as a dropdown-element, in a section called
+equivalent `type: dd`) in the YAML section and some text, where at least
+one gap is formed as a dropdown element, in a section called
 **\#question**. Furthermore, when employing helper functions from the
-rqti package, it is essential to ensure its prior loading.
+rqti package, it is essential to ensure it is loaded first.
 
     ---
     type: dropdown
@@ -71,9 +71,9 @@ There are two ways to specify a dropdown-element in Rmd content:
   (also see section [Helper function
   dropdown](#helper-function-dropdown))
 
-By default, 1 point can be reached for each dropdown (specify `points`
-to your needs). The total number of points for completing a task is
-defined as the sum of points of all dropdowns.
+By default, 1 point can be earned for each dropdown. Adjust `points` to
+your needs. The total number of points for completing a task is defined
+as the sum of points of all dropdowns.
 
 Note that in this example, a feedback section was also provided. The
 feedback is optional, but usually it is a good idea to give some
@@ -104,8 +104,8 @@ Provide Feedback for Question 2
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template
-`dropdown (complex)`, which uses more yaml attributes and a more complex
+If you want to have more fine-grained control, consider the Rmd template
+`dropdown (complex)`, which uses more YAML attributes and a more complex
 use of the helper function `dropdown`.
 
     ---
@@ -141,7 +141,7 @@ OPAL](images/dropdown-complex.jpg)
 
 More complex dropdown task rendered in OPAL
 
-## yaml attributes
+## YAML attributes
 
 ### type
 
@@ -186,9 +186,9 @@ The arguments of the `dropdown` function are:
 
 ### choices
 
-Elements of dropdown. If you use a named vector, the names will be used
-as identifiers. This is useful for later data analysis and is generally
-adviced.
+Elements of the dropdown. If you use a named vector, the names will be
+used as identifiers. This is useful for later data analysis and is
+generally advised.
 
 ### solution_index
 

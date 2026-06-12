@@ -23,10 +23,10 @@ project through RStudio. Alternatively, it can be added by clicking on
 templates `gap (simple)` and `gap (complex)`.
 
 The minimum you need to provide is the `type: gap` (or the equivalent
-`type: cloze`) in the yaml-section and some text, where at least one gap
+`type: cloze`) in the YAML section and some text, where at least one gap
 is used, in a section called **\#question**. Furthermore, when employing
-helper functions from the rqti package, it is essential to ensure its
-prior loading.
+helper functions from the rqti package, it is essential to ensure it is
+loaded first.
 
     ---
     type: gap
@@ -129,8 +129,8 @@ Provide Feedback for Question 2
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template
-`gap (complex)`, which uses more yaml attributes and more complex calls
+If you want to have more fine-grained control, consider the Rmd template
+`gap (complex)`, which uses more YAML attributes and more complex calls
 of the helper functions.
 
     ---
@@ -200,7 +200,7 @@ In OPAL this renders as :
 
 Preview of complex gap task in OPAL
 
-## yaml attributes
+## YAML attributes
 
 ### type
 
@@ -277,7 +277,7 @@ identifier.
 
 Specifies whether the lower bound is included in the tolerance interval.
 
-### inclue_upper_bound
+### include_upper_bound
 
 Specifies whether the upper bound is included in the tolerance interval.
 

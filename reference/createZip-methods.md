@@ -39,5 +39,5 @@ createZip(object, input, output, file_name, zip_only)
 
 - zip_only:
 
-  boolean, optional; returns only zip file in case of TRUE or zip, xml
-  and downloads files in case of FALSE value
+  boolean, optional; if TRUE, returns only the zip file. If FALSE,
+  returns the zip, XML, and download files.

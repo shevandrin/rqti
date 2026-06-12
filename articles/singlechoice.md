@@ -17,7 +17,7 @@ RStudio. Alternatively, it can be added by clicking on
 templates `singlechoice (simple)` and `singlechoice (complex)`.
 
 The minimum you need to provide is the `type: sc` (or the equivalent
-`type: singlechoice`, or `type: schoice`) in the yaml-section and a list
+`type: singlechoice`, or `type: schoice`) in the YAML section and a list
 with at least two elements in a section called **\# question**:
 
     ---
@@ -160,10 +160,10 @@ Choose the correct one:
 ```
 
 Once again, this is much easier to read than providing the solution
-somewhere else (e.g. in the yaml section). Furthermore, producing a
-preview as html directly shows you which element is correct. If you want
+somewhere else (e.g. in the YAML section). Furthermore, producing a
+preview as HTML directly shows you which element is correct. If you want
 to use italics in your choice, you can also wrap the correct solution in
-emphasize tags: `<em> a choice with *some italics*</em>`.
+emphasis tags: `<em> a choice with *some italics*</em>`.
 
 An important note: Do not forget to put a blank line before your
 question and the answer list, otherwise the list will not be a proper
@@ -183,9 +183,9 @@ Renders as:
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template
-`singlechoice-complex`, which uses more yaml attributes. In addition you
-can also set feedback for correct and incorrect responses.
+If you want to have more fine-grained control, consider the Rmd template
+`singlechoice-complex`, which uses more YAML attributes. In addition,
+you can also set feedback for correct and incorrect responses.
 
     ---
     type: sc # equivalent to singlechoice and schoice
@@ -230,7 +230,7 @@ Notably, the choices are now displayed horizontally, and the title and
 points have been updated. The next section provides a detailed
 explanation of all YAML attributes.
 
-## yaml attributes
+## YAML attributes
 
 ### type
 

@@ -54,7 +54,7 @@ gap_text(
 
 ## Value
 
-A character string mapped as yaml.
+A character string mapped as YAML.
 
 ## See also
 

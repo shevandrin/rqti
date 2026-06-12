@@ -36,13 +36,13 @@ createQtiTask(object, dir = getwd(), verification = FALSE, zip = FALSE)
 
 - verification:
 
-  A boolean value, optional; to check validity of xml file. Default is
-  `FALSE`.
+  A boolean value, optional; checks the validity of the XML file.
+  Default is `FALSE`.
 
 - zip:
 
-  A boolean value, optional; the `TRUE` value allows to create a zip
-  archive with the manifest and task files inside. Default is `FALSE`.
+  A boolean value, optional; `TRUE` creates a zip archive with the
+  manifest and task files inside. Default is `FALSE`.
 
 ## Value
 

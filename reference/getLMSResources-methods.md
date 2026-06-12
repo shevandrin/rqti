@@ -32,4 +32,4 @@ getLMSResources(object)
 
 ## Value
 
-A dataframe with attributes of user's resources.
+A data frame with attributes of the user's resources.

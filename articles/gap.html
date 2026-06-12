@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Gap tasks</h1>
             
-            <h4 data-toc-skip class="date">2026-05-25</h4>
+            <h4 data-toc-skip class="date">2026-06-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/gap.Rmd" class="external-link"><code>vignettes/gap.Rmd</code></a></small>
       <div class="d-none name"><code>gap.Rmd</code></div>
@@ -116,10 +116,10 @@ project through RStudio. Alternatively, it can be added by clicking on
 at the templates <code>gap (simple)</code> and
 <code>gap (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: gap</code> (or the
-equivalent <code>type: cloze</code>) in the yaml-section and some text,
+equivalent <code>type: cloze</code>) in the YAML section and some text,
 where at least one gap is used, in a section called
 <strong>#question</strong>. Furthermore, when employing helper functions
-from the rqti package, it is essential to ensure its prior loading.</p>
+from the rqti package, it is essential to ensure it is loaded first.</p>
 <pre><code>---
 type: gap
 knit: rqti::render_qtijs
@@ -210,8 +210,8 @@ tags).</p>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
-<p>If you want to have more fine-grained control, consider the RMD
-template <code>gap (complex)</code>, which uses more yaml attributes and
+<p>If you want to have more fine-grained control, consider the Rmd
+template <code>gap (complex)</code>, which uses more YAML attributes and
 more complex calls of the helper functions.</p>
 <pre><code>---
 type: gap # type of exercise
@@ -279,7 +279,7 @@ Try again. (Only displayed if the solution is not correct.)
 </div>
 </div>
 <div class="section level2">
-<h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
+<h2 id="yaml-attributes">YAML attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
 </h2>
 <div class="section level3">
 <h3 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>
@@ -375,7 +375,7 @@ identifier.</p>
 interval.</p>
 </div>
 <div class="section level3">
-<h3 id="inclue_upper_bound">inclue_upper_bound<a class="anchor" aria-label="anchor" href="#inclue_upper_bound"></a>
+<h3 id="include_upper_bound">include_upper_bound<a class="anchor" aria-label="anchor" href="#include_upper_bound"></a>
 </h3>
 <p>Specifies whether the upper bound is included in the tolerance
 interval.</p>

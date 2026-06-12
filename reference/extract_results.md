@@ -26,7 +26,7 @@ extract_results(file, level = "task", hide_filename = TRUE)
 
 ## Value
 
-A dataframe with attribues of the candidates outcomes and result
+A data frame with attributes of the candidates' outcomes and results.
 variables.
 
 ## Note
@@ -101,6 +101,6 @@ df <- extract_results(file, level = "item")
 #> 0 - manifest file
 #> 0 - files with assessment items
 #> Warning: No task files found in archive.
-#> The 'title' column will be skipped in the final dataframe
+#> The 'title' column will be skipped in the final data frame
 # }
 ```

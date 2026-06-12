@@ -1,7 +1,7 @@
 # Build tags for AssessmentSection in assessmentTest
 
-Generic function for tags that contains assessementSection in
-assessnetTest
+Generic function for tags that contain assessmentSection in
+assessmentTest
 
 ## Usage
 

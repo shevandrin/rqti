@@ -57,7 +57,7 @@ assessmentSection(
 
 - time_limit:
 
-  An integer value, optional, controlling the amount of time in munutes
+  An integer value, optional, controlling the amount of time in minutes
   a candidate is allowed for this part of the test.
 
 - visible:

@@ -17,7 +17,7 @@ project through RStudio. Alternatively, it can be added by clicking on
 [rqti](https://github.com/shevandrin/rqti). Here we look at the
 templates `table (simple)` and `table (complex)`.
 
-The minimum you need to provide is the `type: table` in the yaml-section
+The minimum you need to provide is the `type: table` in the YAML section
 and a table in a section called **\#question**:
 
     ---
@@ -100,7 +100,7 @@ overall topic.
 ## More control
 
 If you want to have more fine-grained control, consider the Rmd template
-`table (complex)`, which uses more yaml attributes.
+`table (complex)`, which uses more YAML attributes.
 
     ---
     type: table
@@ -149,7 +149,7 @@ Preview of complex table task in the learning management system OPAL
 You can see that the order of the columns is now the same as in the
 source table.
 
-## yaml attributes
+## YAML attributes
 
 ### type
 

@@ -32,7 +32,7 @@ getCourseElements(object, course_id)
 
 ## Value
 
-A dataframe with the elements of the course.
+A data frame with the elements of the course.
 
-A dataframe with the data of the elements of the course (fields: nodeId,
-shortTitle, shortName, longTitle) on LMS Opal.
+A data frame with the data of the elements of the course (fields:
+nodeId, shortTitle, shortName, longTitle) on LMS Opal.

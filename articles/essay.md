@@ -15,7 +15,7 @@ project through RStudio. Alternatively, it can be added by clicking on
 [rqti](https://github.com/shevandrin/rqti) Here we look at the templates
 `essay (simple)` and `essay (complex)`.
 
-The minimum you need to provide is the `type: essay` in the yaml-section
+The minimum you need to provide is the `type: essay` in the YAML section
 and some text as a task description in a section called **\#question**:
 
     ---
@@ -55,14 +55,14 @@ an open question requires manual review, only general feedback without
 conditions should be provided. The feedback is optional, but usually it
 is a good idea to give some explanation for students. Furthermore, a
 feedback section for essay tasks can serve as a good basis for grading
-student’s answers. In addition the length of the feedback section is
-taken into account in constructing the text field and the maximum number
-of words. If no feedback is provided, sensible defaults are used.
+students’ answers. In addition, the length of the feedback section is
+taken into account when constructing the text field and the maximum
+number of words. If no feedback is provided, sensible defaults are used.
 
 ## More control
 
-If you want to have more fine-grained control, consider the RMD template
-`essay (complex)`, which uses more yaml attributes.
+If you want to have more fine-grained control, consider the Rmd template
+`essay (complex)`, which uses more YAML attributes.
 
     ---
     type: essay # type of exercise
@@ -95,7 +95,7 @@ Which, in OPAL, renders as :
 
 More complex essay task rendered in OPAL
 
-## yaml attributes
+## YAML attributes
 
 ### type
 

@@ -36,14 +36,13 @@ createQtiTest(object, dir = getwd())
 
 - verification:
 
-  A boolean value, optional; to check validity of xml files. Default is
-  `FALSE`.
+  A boolean value, optional; checks the validity of XML files. Default
+  is `FALSE`.
 
 - zip_only:
 
-  A boolean value, optional; returns only zip file in case of `TRUE` or
-  zip, xml and downloads files in case of `FALSE` value. Default is
-  `FALSE`.
+  A boolean value, optional; if `TRUE`, returns only the zip file. If
+  `FALSE`, returns the zip, XML, and download files. Default is `FALSE`.
 
 ## Value
 

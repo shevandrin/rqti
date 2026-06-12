@@ -43,8 +43,8 @@ here: <https://www.tu-chemnitz.de/urz/network/access/vpn.html>
 
 ## Uploading tasks and tests to OPAL
 
-You can either set the `knit: rqti::render_opal` parameter in the
-yaml-section of your Rmd file or just call
+You can either set the `knit: rqti::render_opal` parameter in the YAML
+section of your Rmd file or just call
 [`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
 with the file as the first parameter:
 
@@ -99,7 +99,7 @@ display the URL of a task via:
 get_resource_url(display_name = "Exam123")
 ```
 
-Or return all resources as a dataframe via:
+Or return all resources as a data frame via:
 
 ``` r
 
@@ -163,10 +163,10 @@ default and are required to request such privileges before utilizing the
 API. To facilitate this process, it is advisable to reach out to your IT
 and/or OPAL provider for assistance.
 
-## OPAL specific yaml attributes
+## OPAL-specific YAML attributes
 
-There are several opal-specific yaml attributes, which are explicitly
-explained in the articles on the task types. Two of them apply on the
+There are several OPAL-specific YAML attributes, which are explicitly
+explained in the articles on the task types. Two of them apply at the
 test level:
 
 ### calculator
@@ -180,7 +180,7 @@ If additional files are required to complete this task, you need to
 assign the ‘files’ attribute a single file path or a list of paths to
 these files.
 
-Note that setting these two attributes in the Rmd file directly is
+Note that setting these two attributes directly in the Rmd file is
 mainly useful if you work on a single task. For collections of tasks
-(tests) it is better to set these attributes when creating the test
-instead of in the Rmd-file.
+(tests), it is better to set these attributes when creating the test
+instead of in the Rmd file.

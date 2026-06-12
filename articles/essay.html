@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Essay tasks</h1>
             
-            <h4 data-toc-skip class="date">2026-05-25</h4>
+            <h4 data-toc-skip class="date">2026-06-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/essay.Rmd" class="external-link"><code>vignettes/essay.Rmd</code></a></small>
       <div class="d-none name"><code>essay.Rmd</code></div>
@@ -110,7 +110,7 @@ project through RStudio. Alternatively, it can be added by clicking on
 the templates <code>essay (simple)</code> and
 <code>essay (complex)</code>.</p>
 <p>The minimum you need to provide is the <code>type: essay</code> in
-the yaml-section and some text as a task description in a section called
+the YAML section and some text as a task description in a section called
 <strong>#question</strong>:</p>
 <pre><code>---
 type: essay # type of exercise
@@ -143,16 +143,16 @@ Since an open question requires manual review, only general feedback
 without conditions should be provided. The feedback is optional, but
 usually it is a good idea to give some explanation for students.
 Furthermore, a feedback section for essay tasks can serve as a good
-basis for grading student’s answers. In addition the length of the
-feedback section is taken into account in constructing the text field
+basis for grading students’ answers. In addition, the length of the
+feedback section is taken into account when constructing the text field
 and the maximum number of words. If no feedback is provided, sensible
 defaults are used.</p>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
 </h2>
-<p>If you want to have more fine-grained control, consider the RMD
-template <code>essay (complex)</code>, which uses more yaml
+<p>If you want to have more fine-grained control, consider the Rmd
+template <code>essay (complex)</code>, which uses more YAML
 attributes.</p>
 <pre><code>---
 type: essay # type of exercise
@@ -184,7 +184,7 @@ based on S4 OOP.</code></pre>
 </div>
 </div>
 <div class="section level2">
-<h2 id="yaml-attributes">yaml attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
+<h2 id="yaml-attributes">YAML attributes<a class="anchor" aria-label="anchor" href="#yaml-attributes"></a>
 </h2>
 <div class="section level3">
 <h3 id="type">type<a class="anchor" aria-label="anchor" href="#type"></a>

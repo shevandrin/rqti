@@ -15,7 +15,7 @@ project through RStudio. Alternatively, it can be added by clicking on
 templates `multiplechoice (simple)` and `multiplechoice (complex)`.
 
 The minimum you need to provide is the `type: mpc` (or the equivalent
-`type: multiplechoice` or `type: mchoice`) in the yaml-section and a
+`type: multiplechoice` or `type: mchoice`) in the YAML section and a
 list with at least two elements in a section called **\# question**:
 
     ---
@@ -85,7 +85,7 @@ multiple choice tasks](#some-advice-on-multiple-choice-tasks).
 ## More control
 
 If you want to have more fine-grained control, consider the available
-attributes for the yaml section in the RMD template
+attributes for the YAML section in the Rmd template
 `multiple-choice (complex)`.
 
     ---
@@ -119,7 +119,7 @@ OPAL](images/multiplechoice-complex.jpg)
 
 More complex multiple choice task rendered in OPAL
 
-## yaml attributes
+## YAML attributes
 
 ### type
 
@@ -151,8 +151,8 @@ Default is `vertical`.
 
 ### points
 
-How many points are given for the whole task. Default is the number of
-choices times 0.5. Note that rqti uses *partial balanced scoring* for
+How many points are given for the whole task. The default is the number
+of choices times 0.5. Note that rqti uses *partial balanced scoring* for
 multiple choice questions.
 
 In *partial balanced scoring*, the number of correctly selected options

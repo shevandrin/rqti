@@ -7,6 +7,12 @@ attempts to guess the connection using default settings (e.g.,
 environment variables). If the connection cannot be established, an
 error is thrown.
 
+This method retrieves current assessment data for a course element on
+LMS Opal by course id and course element id. It returns user metadata
+together with score, maximum score, passed status, and attempts. If
+`user_id` is supplied, the query is restricted to that user login name
+or email address.
+
 ## Usage
 
 ``` r
@@ -24,21 +30,21 @@ getCourseAssessment(object, course_id, node_id, user_id = NULL)
 - object:
 
   An S4 object of class
-  [LMS](https://shevandrin.github.io/rqti/reference/LMS-class.md) that
+  [Opal](https://shevandrin.github.io/rqti/reference/Opal-class.md) that
   represents a connection to the LMS.
 
 - course_id:
 
-  A length one character vector with course id.
+  A character vector of length one specifying the course context ID.
 
 - node_id:
 
-  A length one character vector with course element id.
+  A character vector of length one specifying the course element ID.
 
 - user_id:
 
-  A length one character vector with a user login name or email address.
-  If `NULL`, assessments are returned for all users.
+  A character vector of length one specifying the user login name or
+  email address. If `NULL`, assessments are returned for all users.
 
 - ...:
 
@@ -48,4 +54,17 @@ getCourseAssessment(object, course_id, node_id, user_id = NULL)
 
 A data frame with assessment scores.
 
+A data frame with assessment scores. Each row represents a user and
+contains identity id, user id, user name/email, score, maximum score,
+passed status, and attempts.
+
 ## Examples
+
+``` r
+if (FALSE) { # interactive()
+assessment <- getCourseAssessment("89068111333293", "1617337826161777006")
+}
+if (FALSE) { # interactive()
+assessment <- getCourseAssessment("89068111333293", "1617337826161777006")
+}
+```

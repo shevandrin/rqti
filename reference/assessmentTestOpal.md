@@ -23,6 +23,7 @@ assessmentTestOpal(
   calculator = NA_character_,
   mark_items = TRUE,
   keep_responses = FALSE,
+  stylesheet_path = NULL,
   metadata = qtiMetadata(),
   points = NA_real_
 )
@@ -112,8 +113,8 @@ assessmentTestOpal(
 
 - allow_comment:
 
-  A boolean, optional, enabling the candidate to leave comments in each
-  question. Default is `TRUE.`
+  A boolean, optional, allowing the candidate to leave comments on each
+  question. Default is `TRUE`.
 
 - rebuild_variables:
 
@@ -123,8 +124,8 @@ assessmentTestOpal(
 
 - show_test_time:
 
-  A boolean, optional, determining whether to show candidate elapsed
-  processing time without a time limit. Default is `TRUE`.
+  A boolean, optional, determining whether to show the candidate's
+  elapsed processing time without a time limit. Default is `TRUE`.
 
 - calculator:
 
@@ -133,13 +134,22 @@ assessmentTestOpal(
 
 - mark_items:
 
-  A boolean, optional, determining whether to allow candidate marking of
+  A boolean, optional, determining whether to allow candidates to mark
   questions. Default is `TRUE`.
 
 - keep_responses:
 
-  A boolean, optional, determining whether to save the candidate's
+  A boolean, optional, determining whether to save the the candidate's
   answers from the previous attempt. Default is `FALSE`.
+
+- stylesheet_path:
+
+  A character value, optional, specifying the path to a custom CSS
+  stylesheet. If provided, the stylesheet is included at the assessment
+  test level and applied during rendering. When `academic_grading` is
+  set, the default stylesheet `styles/rqti.css` is included
+  automatically; a user-defined stylesheet is added in addition and may
+  override default styles.
 
 - metadata:
 

@@ -15,7 +15,7 @@ project through RStudio. Alternatively, it can be added by clicking on
 [rqti](https://github.com/shevandrin/rqti). Here we look at the
 templates `order (simple)` and `order (complex)`.
 
-The minimum you need to provide is the `type: order` in the yaml-section
+The minimum you need to provide is the `type: order` in the YAML section
 and a list with at least two elements in a section called
 **\#question**:
 
@@ -54,7 +54,7 @@ to OPAL directly, producing:
 
 Simple order task rendered in OPAL
 
-The order of the items in the Rmd-list is considered to be the correct
+The order of the items in the Rmd list is considered to be the correct
 one.
 
 Note that in this example, a feedback section was provided. The feedback
@@ -64,7 +64,7 @@ students.
 ## More control
 
 If you want to have more fine-grained control, consider the Rmd template
-`order (complex)`, which uses more yaml attributes.
+`order (complex)`, which uses more YAML attributes.
 
     ---
     type: order
@@ -110,7 +110,7 @@ Which on OPAL renders as:
 
 More complex order task rendered in OPAL
 
-## yaml attributes
+## YAML attributes
 
 ### type
 

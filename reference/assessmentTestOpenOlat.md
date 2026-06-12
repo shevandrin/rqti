@@ -122,8 +122,8 @@ assessmentTestOpenOlat(
 
 - allow_comment:
 
-  A boolean, optional, enabling the candidate to leave comments in each
-  question. Default is `TRUE.`
+  A boolean, optional, allowing the candidate to leave comments on each
+  question. Default is `TRUE`.
 
 - rebuild_variables:
 
