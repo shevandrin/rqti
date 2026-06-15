@@ -50,8 +50,10 @@ setClass("AssessmentTestOpal", contains = "AssessmentTest",
 setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
     .Object <- callNextMethod()
 
-    found_files <- c(sapply(.Object@section, getFiles, USE.NAMES = FALSE))
-    .Object@files <- c(.Object@files, unique(unlist(found_files)))
+    found_files <- unlist(sapply(.Object@section, getFiles, USE.NAMES = FALSE),
+                          use.names = FALSE)
+    files <- unique(c(.Object@files, found_files))
+    .Object@files <- files[!is.na(files)]
 
     if (is.na(.Object@calculator)) {
         found_calc <- c(sapply(.Object@section, getCalculator, USE.NAMES = FALSE))
@@ -132,6 +134,8 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
 #'   candidates to mark questions. Default is `TRUE`.
 #' @param keep_responses A boolean, optional, determining whether to save the
 #'   the candidate's answers from the previous attempt. Default is `FALSE`.
+#' @param files A character vector, optional; paths to files that will be
+#'   available for download in OPAL.
 #'@param stylesheet_path A character value, optional, specifying the path to a
 #'   custom CSS stylesheet. If provided, the stylesheet is included at the
 #'   assessment test level and applied during rendering. When
@@ -166,6 +170,7 @@ assessmentTestOpal <- function(section, identifier = generate_id(type = "test"),
                            allow_comment = TRUE, rebuild_variables = TRUE,
                            show_test_time = TRUE, calculator = NA_character_,
                            mark_items  = TRUE, keep_responses = FALSE,
+                           files = character(),
                            stylesheet_path = NULL,
                            metadata = qtiMetadata(), points = NA_real_) {
     params <- as.list(environment())

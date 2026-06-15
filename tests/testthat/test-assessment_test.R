@@ -792,3 +792,14 @@ test_that("assessmentTestOpal keeps stylesheet_path", {
 
               expect_equal(sut@stylesheet_path, style_file)
 })
+
+test_that("assessmentTestOpal keeps files", {
+              sc <- singleChoice(prompt = "Question", choices = c("A", "B", "C"))
+              s <- section(sc, title = "Section with downloadable files")
+              files <- c(test_path("file/test_fig1.jpg"),
+                         test_path("file/test_fig2.jpg"))
+
+              sut <- assessmentTestOpal(list(s), files = files)
+
+              expect_equal(sut@files, files)
+})

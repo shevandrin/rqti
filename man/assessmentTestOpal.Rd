@@ -22,6 +22,7 @@ assessmentTestOpal(
   calculator = NA_character_,
   mark_items = TRUE,
   keep_responses = FALSE,
+  files = character(),
   stylesheet_path = NULL,
   metadata = qtiMetadata(),
   points = NA_real_
@@ -105,6 +106,9 @@ candidates to mark questions. Default is \code{TRUE}.}
 
 \item{keep_responses}{A boolean, optional, determining whether to save the
 the candidate's answers from the previous attempt. Default is \code{FALSE}.}
+
+\item{files}{A character vector, optional; paths to files that will be
+available for download in OPAL.}
 
 \item{stylesheet_path}{A character value, optional, specifying the path to a
 custom CSS stylesheet. If provided, the stylesheet is included at the
