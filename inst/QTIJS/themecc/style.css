@@ -406,8 +406,65 @@ span.visible {
             top: 1px;
 }
 
-table {
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) {
     border-collapse: collapse;
+    border-spacing: 0;
+    margin: 1rem 0;
+    width: auto;
+    max-width: 100%;
+    border-top: 2px solid #222;
+    border-bottom: 2px solid #222;
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) caption {
+    caption-side: top;
+    padding-bottom: 0.45rem;
+    color: #333;
+    font-weight: 600;
+    text-align: left;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) thead {
+    border-bottom: 1.4px solid #222;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) tbody tr + tr {
+    border-top: 1px solid #ddd;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) th,
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) td {
+    padding: 0.38rem 0.75rem;
+    text-align: right;
+    vertical-align: top;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) th {
+    font-weight: 600;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) td {
+    font-variant-numeric: tabular-nums;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) tfoot {
+    border-top: 1.4px solid #222;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) tfoot th,
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) tfoot td {
+    font-weight: 600;
+}
+
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) td.left,
+table:not(.qtijs-associate-table):not(.qtijs-match-table):not(.qtijs-drawing-tools) td .left {
+    padding: 0.2cm;
+    text-align: left;
+    vertical-align: top;
+    padding-top: 0.1cm;
+    padding-bottom: 0.1cm;
 }
 
 .rqti-table-row:hover {
