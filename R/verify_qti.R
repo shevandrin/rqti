@@ -171,7 +171,7 @@ verify_qti_impl <- function(doc,
 
             if (ignore_import) {
                 parsed <- Filter(
-                    function(x) !(isTRUE(x$element == "{http://www.w3.org/2001/XMLSchema}import")),
+                    function(x) !is_schema_import_error(x),
                     parsed
                 )
             }
@@ -227,7 +227,7 @@ verify_qti_impl <- function(doc,
 
     if (ignore_import) {
         parsed <- Filter(
-            function(x) !(isTRUE(x$element == "{http://www.w3.org/2001/XMLSchema}import")),
+            function(x) !is_schema_import_error(x),
             parsed
         )
     }
@@ -552,6 +552,10 @@ make_result <- function(valid, errors, engine, color) {
         ),
         class = "qti_validation_result"
     )
+}
+
+is_schema_import_error <- function(err) {
+    isTRUE(err$element %in% c("{http://www.w3.org/2001/XMLSchema}import", "import"))
 }
 
 parse_errors <- function(raw_errors, xml_lines, file_in, ctx, red, reset) {
