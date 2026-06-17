@@ -45,7 +45,14 @@ test_that("extended schema allows details in itemBody", {
     f <- system.file("exercises", "sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
     item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
-    xml2::xml_add_child(item_body, xml2::read_xml("<details><summary>Hint</summary><p>More text</p></details>"))
+    details <- paste0(
+        "<details>",
+        "<summary>Hint</summary>",
+        "Text with <i>inline emphasis</i> after the summary.",
+        "<p>More text</p>",
+        "</details>"
+    )
+    xml2::xml_add_child(item_body, xml2::read_xml(details))
 
     res_default <- verify_qti(x, print = FALSE, engine = "xml2")
     res_extended <- verify_qti(x, extended_schema = TRUE, print = FALSE, engine = "xml2")

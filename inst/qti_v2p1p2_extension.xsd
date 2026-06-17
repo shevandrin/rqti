@@ -165,11 +165,55 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element ref="summary" minOccurs="0" maxOccurs="1" />
             <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="printedVariable" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="feedbackBlock" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="feedbackInline" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="templateInline" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="templateBlock" minOccurs="1" maxOccurs="1" />
                 <xs:element ref="m:math" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="xi:include" minOccurs="1" maxOccurs="1" />
                 <xs:choice minOccurs="1" maxOccurs="1">
-                    <xs:element ref="summary" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="pre" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="h1" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="h2" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="h3" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="h4" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="h5" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="h6" minOccurs="1" maxOccurs="1" />
                     <xs:element ref="p" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="address" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="dl" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="ol" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="ul" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="br" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="hr" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="img" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="object" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="blockquote" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="em" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="a" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="code" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="span" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="sub" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="acronym" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="big" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="tt" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="kbd" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="q" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="i" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="dfn" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="abbr" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="strong" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="sup" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="var" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="small" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="samp" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="b" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="cite" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="table" minOccurs="1" maxOccurs="1" />
+                    <xs:element ref="div" minOccurs="1" maxOccurs="1" />
                 </xs:choice>
             </xs:choice>
         </xs:sequence>
