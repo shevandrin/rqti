@@ -22,14 +22,7 @@
           <xs:complexContent>
             <xs:extension base="ItemBody.Type">
               <xs:sequence>
-                <xs:choice minOccurs="1" maxOccurs="unbounded">
-                  <xs:element ref="rubricBlock" minOccurs="1" maxOccurs="1"/>
-                  <xs:choice minOccurs="1" maxOccurs="1">
-                    <xs:choice minOccurs="1" maxOccurs="1">
-                      <xs:element name="details" type="Details.Type" minOccurs="0" maxOccurs="1"/>
-                    </xs:choice>
-                  </xs:choice>
-                </xs:choice>
+                <xs:element ref="details" minOccurs="0" maxOccurs="unbounded"/>
               </xs:sequence>
             </xs:extension>
           </xs:complexContent>
@@ -42,9 +35,7 @@
           <xs:complexContent>
             <xs:extension base="ModalFeedback.Type">
               <xs:sequence>
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="details" type="Details.Type" minOccurs="0" maxOccurs="1"/>
-                </xs:choice>
+                <xs:element ref="details" minOccurs="0" maxOccurs="unbounded"/>
               </xs:sequence>
             </xs:extension>
           </xs:complexContent>

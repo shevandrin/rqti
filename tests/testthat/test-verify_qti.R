@@ -37,8 +37,21 @@ test_that("verify_qti accepts legacy extended_schema flag", {
 
     res <- verify_qti(f, extended_schema = TRUE, print = FALSE, engine = "xml2")
 
-    expect_s3_class(res, "qti_validation_result")
+    expect_true(res$valid)
     expect_identical(res$schema, "qti_v2p1p2_extension.xsd")
+})
+
+test_that("extended schema allows details in itemBody", {
+    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    x <- xml2::read_xml(f)
+    item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
+    xml2::xml_add_child(item_body, xml2::read_xml("<details><summary>Hint</summary><p>More text</p></details>"))
+
+    res_default <- verify_qti(x, print = FALSE, engine = "xml2")
+    res_extended <- verify_qti(x, extended_schema = TRUE, print = FALSE, engine = "xml2")
+
+    expect_false(res_default$valid)
+    expect_true(res_extended$valid)
 })
 
 test_that("verify_qti can select a local qti22 schema", {
@@ -150,10 +163,19 @@ test_that("verify_qti rejects character input that is neither a path nor XML", {
 test_that("verify_qti identifies schema import errors", {
     import_error <- list(element = "import")
     namespaced_import_error <- list(element = "{http://www.w3.org/2001/XMLSchema}import")
+    import_warning <- list(
+        element = NA_character_,
+        raw_message = paste(
+            "element import: Schemas parser warning :",
+            "Skipping import of schema located at 'http://www.imsglobal.org/xsd/w3/2001/xml.xsd'",
+            "since this namespace was already imported"
+        )
+    )
     content_error <- list(element = "assessmentItem")
 
     expect_true(rqti:::is_schema_import_error(import_error))
     expect_true(rqti:::is_schema_import_error(namespaced_import_error))
+    expect_true(rqti:::is_schema_import_error(import_warning))
     expect_false(rqti:::is_schema_import_error(content_error))
 })
 

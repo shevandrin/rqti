@@ -694,7 +694,12 @@ qti_schema_search_dirs <- function(start = getwd(), max_depth = 5) {
 }
 
 is_schema_import_error <- function(err) {
-    isTRUE(err$element %in% c("{http://www.w3.org/2001/XMLSchema}import", "import"))
+    isTRUE(err$element %in% c("{http://www.w3.org/2001/XMLSchema}import", "import")) ||
+        (
+            !is.null(err$raw_message) &&
+                grepl("Skipping import of schema", err$raw_message, fixed = TRUE) &&
+                grepl("already imported", err$raw_message, fixed = TRUE)
+        )
 }
 
 parse_errors <- function(raw_errors, xml_lines, file_in, ctx, red, reset) {
