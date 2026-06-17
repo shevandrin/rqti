@@ -11,7 +11,8 @@ verify_qti_impl(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 }
 \arguments{
@@ -36,6 +37,13 @@ locally saved schema instead of downloading from the internet.}
 
 \item{print}{Logical. Should the validation result be printed before it is
 returned? Defaults to \code{TRUE}.}
+
+\item{schema}{Character string or \code{NULL}. Schema to validate against. Use
+\code{NULL} for the default QTI 2.1 schema, \code{"extended"} for the extended rqti
+QTI 2.1 schema, \code{"qti21"} for the default QTI 2.1 schema, \code{"qti22"} for a
+local QTI 2.2 schema, or a file path to a custom XSD. The legacy
+\code{extended_schema = TRUE} argument is still supported and is equivalent to
+\code{schema = "extended"} when \code{schema} is \code{NULL}.}
 }
 \value{
 An object of class \code{"qti_validation_result"} with components:

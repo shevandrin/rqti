@@ -11,6 +11,63 @@ test_that("verify_qti validates a correct QTI document", {
     expect_true(verify_qti(x, print = F, engine = "xml2")$valid)
 })
 
+test_that("verify_qti reports the schema used for validation", {
+    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+
+    res_default <- verify_qti(f, print = FALSE, engine = "xml2")
+    expect_true(res_default$valid)
+    expect_identical(res_default$schema, "imsqti_v2p1p2.xsd")
+
+    res_extended <- verify_qti(f, schema = "extended", print = FALSE, engine = "xml2")
+    expect_s3_class(res_extended, "qti_validation_result")
+    expect_identical(res_extended$schema, "qti_v2p1p2_extension.xsd")
+
+    schema_path <- system.file("imsqti_v2p1p2.xsd", package = "rqti")
+    res_path <- verify_qti(f, schema = schema_path, print = FALSE, engine = "xml2")
+    expect_true(res_path$valid)
+    expect_identical(res_path$schema, "imsqti_v2p1p2.xsd")
+
+    res_file_name <- verify_qti(f, schema = "imsqti_v2p1p2.xsd", print = FALSE, engine = "xml2")
+    expect_true(res_file_name$valid)
+    expect_identical(res_file_name$schema, "imsqti_v2p1p2.xsd")
+})
+
+test_that("verify_qti accepts legacy extended_schema flag", {
+    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+
+    res <- verify_qti(f, extended_schema = TRUE, print = FALSE, engine = "xml2")
+
+    expect_s3_class(res, "qti_validation_result")
+    expect_identical(res$schema, "qti_v2p1p2_extension.xsd")
+})
+
+test_that("verify_qti can select a local qti22 schema", {
+    skip_if_not(any(file.exists(file.path(rqti:::qti_schema_search_dirs(), "imsqti_v2p2.xsd"))))
+
+    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+
+    res <- verify_qti(f, schema = "qti22", print = FALSE, engine = "xml2")
+
+    expect_s3_class(res, "qti_validation_result")
+    expect_identical(res$schema, "imsqti_v2p2.xsd")
+
+    res_file_name <- verify_qti(f, schema = "imsqti_v2p2.xsd", print = FALSE, engine = "xml2")
+    expect_s3_class(res_file_name, "qti_validation_result")
+    expect_identical(res_file_name$schema, "imsqti_v2p2.xsd")
+})
+
+test_that("verify_qti explains unknown schema selectors", {
+    skip_if(file.exists(file.path(getwd(), "unknown_schema.xsd")))
+
+    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+
+    expect_error(
+        verify_qti(f, schema = "unknown_schema.xsd", print = FALSE, engine = "xml2"),
+        "Unknown schema selector or missing XSD file",
+        fixed = TRUE
+    )
+})
+
 test_that("verify_qti prints valid validation results", {
     f <- system.file("exercises", "sc1d.xml", package = "rqti")
 

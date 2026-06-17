@@ -15,7 +15,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 \S4method{verify_qti}{character}(
@@ -25,7 +26,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 \S4method{verify_qti}{xml_document}(
@@ -35,7 +37,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 \S4method{verify_qti}{AssessmentItem}(
@@ -45,7 +48,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 \S4method{verify_qti}{AssessmentTest}(
@@ -55,7 +59,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 }
 \arguments{
@@ -72,6 +77,10 @@ verify_qti(
 \item{ignore_import}{Logical. Ignore import warnings?}
 
 \item{print}{Logical. Print results?}
+
+\item{schema}{Character string or \code{NULL}. Schema selector or custom XSD path.
+Supported selectors are \code{"qti21"}, \code{"extended"}, and \code{"qti22"}. Defaults
+to \code{NULL}, which uses the legacy \code{extended_schema} flag.}
 }
 \value{
 A \code{qti_validation_result} or \code{qti_validation_results_list} object.

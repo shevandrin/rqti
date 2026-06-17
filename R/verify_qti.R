@@ -27,6 +27,12 @@
 #'   locally saved schema instead of downloading from the internet.
 #' @param print Logical. Should the validation result be printed before it is
 #'   returned? Defaults to `TRUE`.
+#' @param schema Character string or `NULL`. Schema to validate against. Use
+#'   `NULL` for the default QTI 2.1 schema, `"extended"` for the extended rqti
+#'   QTI 2.1 schema, `"qti21"` for the default QTI 2.1 schema, `"qti22"` for a
+#'   local QTI 2.2 schema, or a file path to a custom XSD. The legacy
+#'   `extended_schema = TRUE` argument is still supported and is equivalent to
+#'   `schema = "extended"` when `schema` is `NULL`.
 #'
 #' @return An object of class `"qti_validation_result"` with components:
 #'   \describe{
@@ -54,7 +60,8 @@ verify_qti_impl <- function(doc,
                             color = TRUE,
                             engine = c("auto", "xml2", "xmllint"),
                             ignore_import = TRUE,
-                            print = TRUE) {
+                            print = TRUE,
+                            schema = NULL) {
     engine <- match.arg(engine)
 
     # Handle non-file inputs for potential xmllint use
@@ -90,12 +97,8 @@ verify_qti_impl <- function(doc,
     }
 
     # schema
-    schema_name <- if (extended_schema) "qti_v2p1p2_extension.xsd" else "imsqti_v2p1p2.xsd"
-    schema_file <- file.path(system.file(package = "rqti"), schema_name)
-
-    if (!nzchar(schema_file) || !file.exists(schema_file)) {
-        stop("Could not find schema file: ", schema_name)
-    }
+    schema_file <- resolve_qti_schema(schema, extended_schema)
+    schema_label <- attr(schema_file, "label", exact = TRUE)
 
     # colors
     red <- if (isTRUE(color)) "\033[31m" else ""
@@ -140,7 +143,8 @@ verify_qti_impl <- function(doc,
                     valid = TRUE,
                     errors = list(),
                     engine = "xmllint",
-                    color = color
+                    color = color,
+                    schema = schema_label
                 )
                 if (isTRUE(print)) print(res)
                 return(invisible(res))
@@ -180,7 +184,8 @@ verify_qti_impl <- function(doc,
                 valid = !length(parsed),
                 errors = parsed,
                 engine = "xmllint",
-                color = color
+                color = color,
+                schema = schema_label
             )
 
             if (isTRUE(print)) print(res)
@@ -204,7 +209,8 @@ verify_qti_impl <- function(doc,
             valid = TRUE,
             errors = list(),
             engine = "xml2",
-            color = color
+            color = color,
+            schema = schema_label
         )
         if (isTRUE(print)) print(res)
         return(invisible(res))
@@ -236,7 +242,8 @@ verify_qti_impl <- function(doc,
         valid = !length(parsed),
         errors = parsed,
         engine = "xml2",
-        color = color
+        color = color,
+        schema = schema_label
     )
 
     if (isTRUE(print)) print(res)
@@ -263,6 +270,9 @@ print.qti_validation_result <- function(x, ...) {
         if (!is.null(x$engine) && nzchar(x$engine)) {
             cat(" [engine: ", x$engine, "]", sep = "")
         }
+        if (!is.null(x$schema) && nzchar(x$schema)) {
+            cat(" [schema: ", x$schema, "]", sep = "")
+        }
         cat("\n")
         return(invisible(x))
     }
@@ -270,6 +280,9 @@ print.qti_validation_result <- function(x, ...) {
     cat("QTI validation: invalid")
     if (!is.null(x$engine) && nzchar(x$engine)) {
         cat(" [engine: ", x$engine, "]", sep = "")
+    }
+    if (!is.null(x$schema) && nzchar(x$schema)) {
+        cat(" [schema: ", x$schema, "]", sep = "")
     }
     cat("\n\n")
 
@@ -302,12 +315,16 @@ print.qti_validation_result <- function(x, ...) {
 #' @param engine Character. Validation backend ("auto", "xml2", "xmllint").
 #' @param ignore_import Logical. Ignore import warnings?
 #' @param print Logical. Print results?
+#' @param schema Character string or `NULL`. Schema selector or custom XSD path.
+#'   Supported selectors are `"qti21"`, `"extended"`, and `"qti22"`. Defaults
+#'   to `NULL`, which uses the legacy `extended_schema` flag.
 #'
 #' @return A `qti_validation_result` or `qti_validation_results_list` object.
 #' @export
 setGeneric("verify_qti", function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
                                   engine = c("auto", "xml2", "xmllint"),
-                                  ignore_import = TRUE, print = TRUE) {
+                                  ignore_import = TRUE, print = TRUE,
+                                  schema = NULL) {
     standardGeneric("verify_qti")
 })
 
@@ -315,7 +332,8 @@ setGeneric("verify_qti", function(doc, extended_schema = FALSE, ctx = 40, color 
 setMethod("verify_qti", signature(doc = "character"),
           function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
                    engine = c("auto", "xml2", "xmllint"),
-                   ignore_import = TRUE, print = TRUE) {
+                   ignore_import = TRUE, print = TRUE,
+                   schema = NULL) {
               engine <- match.arg(engine)
 
               # Check if it's a file path
@@ -331,7 +349,7 @@ setMethod("verify_qti", signature(doc = "character"),
                           rmd2xml(doc, tmp_xml)
 
                           # Verify the resulting XML
-                          verify_qti_impl(tmp_xml, extended_schema, ctx, color, engine, ignore_import, print)
+                          verify_qti_impl(tmp_xml, extended_schema, ctx, color, engine, ignore_import, print, schema)
 
                       }, error = function(e) {
                           stop("Failed to render Rmd file: ", doc, "\nError: ", e$message)
@@ -339,7 +357,7 @@ setMethod("verify_qti", signature(doc = "character"),
 
                   } else {
                       # Handle XML or other file paths
-                      verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print)
+                      verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print, schema)
                   }
 
               } else {
@@ -350,7 +368,7 @@ setMethod("verify_qti", signature(doc = "character"),
                       stop("Input is not a valid file path or XML string (must start with '<')")
                   }
 
-                  verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print)
+                  verify_qti_impl(doc, extended_schema, ctx, color, engine, ignore_import, print, schema)
               }
           }
 )
@@ -359,9 +377,10 @@ setMethod("verify_qti", signature(doc = "character"),
 setMethod("verify_qti", signature(doc = "xml_document"),
           function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
                    engine = c("auto", "xml2", "xmllint"),
-                   ignore_import = TRUE, print = TRUE) {
+                   ignore_import = TRUE, print = TRUE,
+                   schema = NULL) {
               # Handle xml_document - convert to character
-              verify_qti_impl(as.character(doc), extended_schema, ctx, color, engine, ignore_import, print)
+              verify_qti_impl(as.character(doc), extended_schema, ctx, color, engine, ignore_import, print, schema)
           }
 )
 
@@ -369,13 +388,14 @@ setMethod("verify_qti", signature(doc = "xml_document"),
 setMethod("verify_qti", signature(doc = "AssessmentItem"),
           function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
                    engine = c("auto", "xml2", "xmllint"),
-                   ignore_import = TRUE, print = TRUE) {
+                   ignore_import = TRUE, print = TRUE,
+                   schema = NULL) {
               engine <- match.arg(engine)
               tmp_file <- tempfile(fileext = ".xml")
               on.exit(unlink(tmp_file))
 
               createQtiTask(doc, tmp_file)
-              verify_qti(tmp_file, extended_schema, ctx, color, engine, ignore_import, print)
+              verify_qti(tmp_file, extended_schema, ctx, color, engine, ignore_import, print, schema)
           }
 )
 
@@ -383,7 +403,8 @@ setMethod("verify_qti", signature(doc = "AssessmentItem"),
 setMethod("verify_qti", signature(doc = "AssessmentTest"),
           function(doc, extended_schema = FALSE, ctx = 40, color = TRUE,
                    engine = c("auto", "xml2", "xmllint"),
-                   ignore_import = TRUE, print = TRUE) {
+                   ignore_import = TRUE, print = TRUE,
+                   schema = NULL) {
               engine <- match.arg(engine)
               tmp_dir <- tempfile(pattern = "test_")
               dir.create(tmp_dir)
@@ -394,7 +415,7 @@ setMethod("verify_qti", signature(doc = "AssessmentTest"),
               xml_files <- xml_files[!grepl("manifest\\.xml$", xml_files, ignore.case = TRUE)]
 
               results <- lapply(xml_files, function(f) {
-                  verify_qti(f, extended_schema, ctx, color, engine, ignore_import, print = FALSE)
+                  verify_qti(f, extended_schema, ctx, color, engine, ignore_import, print = FALSE, schema = schema)
               })
 
               names(results) <- basename(xml_files)
@@ -542,16 +563,134 @@ make_snippet <- function(xml_lines, line, elem, attr, ctx, red, reset) {
     snippet
 }
 
-make_result <- function(valid, errors, engine, color) {
+make_result <- function(valid, errors, engine, color, schema = NULL) {
     structure(
         list(
             valid = valid,
             errors = errors,
             engine = engine,
+            schema = schema,
             color = isTRUE(color)
         ),
         class = "qti_validation_result"
     )
+}
+
+resolve_qti_schema <- function(schema = NULL, extended_schema = FALSE) {
+    if (is.null(schema)) {
+        schema <- if (isTRUE(extended_schema)) "extended" else "qti21"
+    }
+
+    if (!is.character(schema) || length(schema) != 1 || !nzchar(schema)) {
+        stop("`schema` must be NULL, a schema selector, or a single XSD file path.", call. = FALSE)
+    }
+
+    schema_key <- tolower(schema)
+    schema_key <- gsub("[._-]", "", schema_key)
+
+    schema_file <- switch(
+        schema_key,
+        default = system_schema_file("imsqti_v2p1p2.xsd"),
+        qti21 = system_schema_file("imsqti_v2p1p2.xsd"),
+        qti2p1 = system_schema_file("imsqti_v2p1p2.xsd"),
+        qti21default = system_schema_file("imsqti_v2p1p2.xsd"),
+        extended = system_schema_file("qti_v2p1p2_extension.xsd"),
+        extendedschema = system_schema_file("qti_v2p1p2_extension.xsd"),
+        extendedxsd = system_schema_file("qti_v2p1p2_extension.xsd"),
+        qti21extended = system_schema_file("qti_v2p1p2_extension.xsd"),
+        qti2p1extended = system_schema_file("qti_v2p1p2_extension.xsd"),
+        qti22 = find_qti22_schema(),
+        qti2p2 = find_qti22_schema(),
+        NULL
+    )
+
+    if (is.null(schema_file)) {
+        schema_file <- find_schema_file(schema)
+
+        if (is.null(schema_file)) {
+            stop(
+                "Unknown schema selector or missing XSD file: ", schema, "\n",
+                "Use one of 'qti21', 'extended', 'qti22', or pass a path to an XSD file.",
+                call. = FALSE
+            )
+        }
+    }
+
+    if (!file.exists(schema_file)) {
+        stop("Could not find schema file: ", schema_file, call. = FALSE)
+    }
+
+    schema_file <- normalizePath(schema_file, mustWork = TRUE)
+    attr(schema_file, "label") <- basename(schema_file)
+    schema_file
+}
+
+find_schema_file <- function(schema) {
+    candidates <- c(
+        schema,
+        file.path(system.file(package = "rqti"), schema),
+        file.path(qti_schema_search_dirs(), schema)
+    )
+
+    matches <- candidates[file.exists(candidates)]
+
+    if (length(matches)) {
+        normalizePath(matches[[1]], mustWork = TRUE)
+    } else {
+        NULL
+    }
+}
+
+system_schema_file <- function(schema_name) {
+    schema_file <- find_schema_file(schema_name)
+
+    if (is.null(schema_file)) {
+        stop("Could not find schema file: ", schema_name, call. = FALSE)
+    }
+
+    schema_file
+}
+
+find_qti22_schema <- function() {
+    candidates <- c(
+        "imsqti_v2p2.xsd",
+        "imsqti_v2p2p1.xsd",
+        "qti_v2p2.xsd",
+        "qti_v2p2p1.xsd",
+        "imsqti_v2p2p2.xsd",
+        "qti_v2p2p2.xsd"
+    )
+
+    for (candidate in candidates) {
+        schema_file <- find_schema_file(candidate)
+        if (!is.null(schema_file)) {
+            return(schema_file)
+        }
+    }
+
+    stop(
+        "Could not find a QTI 2.2 schema file. ",
+        "Pass the XSD path explicitly, for example schema = 'imsqti_v2p2.xsd'. ",
+        "If the schema imports/includes other XSD files, keep them beside the main XSD ",
+        "or use a schema copy with local schemaLocation references.",
+        call. = FALSE
+    )
+}
+
+qti_schema_search_dirs <- function(start = getwd(), max_depth = 5) {
+    dirs <- normalizePath(start, mustWork = TRUE)
+
+    current <- dirs[[1]]
+    for (i in seq_len(max_depth)) {
+        parent <- dirname(current)
+        if (identical(parent, current)) {
+            break
+        }
+        dirs <- c(dirs, parent)
+        current <- parent
+    }
+
+    unique(dirs)
 }
 
 is_schema_import_error <- function(err) {
