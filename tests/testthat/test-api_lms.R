@@ -478,6 +478,74 @@ test_that("upload2LMS sends standalone question archives with question target ty
     expect_identical(res$key, "question-key")
 })
 
+test_that("Opal API methods return NULL for missing course resources", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) httr2::response(status_code = 404),
+        .package = "rqti"
+    )
+
+    expect_message(
+        out_elements <- getCourseElements(con, "missing-course"),
+        "The course could not be found."
+    )
+    expect_null(out_elements)
+
+    expect_message(
+        out_result <- getCourseResult(
+            con,
+            resource_id = "missing-course",
+            node_id = "missing-node",
+            path_outcome = tempdir()
+        ),
+        "The course could not be found."
+    )
+    expect_null(out_result)
+
+    expect_message(
+        out_assessment <- getCourseAssessment(
+            con,
+            course_id = "missing-course",
+            node_id = "missing-node"
+        ),
+        "The course or course element could not be found."
+    )
+    expect_null(out_assessment)
+
+    expect_message(
+        out_groups <- getCourseGroups(con, "missing-course"),
+        "The course could not be found."
+    )
+    expect_null(out_groups)
+})
+
+test_that("getGroupUsers skips missing groups and returns an empty data frame", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) httr2::response(status_code = 404),
+        .package = "rqti"
+    )
+
+    expect_message(
+        users <- getGroupUsers(con, "missing-group"),
+        "The group missing-group could not be found."
+    )
+
+    expect_s3_class(users, "data.frame")
+    expect_equal(nrow(users), 0)
+    expect_identical(
+        names(users),
+        c(
+            "group_id", "user_id", "user_login", "user_first_name",
+            "user_last_name", "user_email"
+        )
+    )
+})
+
 test_that("getCourseElements works for the Methodenguru course", {
     skip_if_no_opal()
 
