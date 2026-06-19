@@ -599,8 +599,8 @@ resolve_qti_schema <- function(schema = NULL, extended_schema = FALSE) {
         extendedxsd = system_schema_file("qti_v2p1p2_extension.xsd"),
         qti21extended = system_schema_file("qti_v2p1p2_extension.xsd"),
         qti2p1extended = system_schema_file("qti_v2p1p2_extension.xsd"),
-        qti22 = find_qti22_schema(),
-        qti2p2 = find_qti22_schema(),
+        qti22 = qti22_schema_file(),
+        qti2p2 = qti22_schema_file(),
         NULL
     )
 
@@ -629,6 +629,7 @@ find_schema_file <- function(schema) {
     candidates <- c(
         schema,
         file.path(system.file(package = "rqti"), schema),
+        file.path(system.file(package = "rqti"), "xsd", schema),
         file.path(qti_schema_search_dirs(), schema)
     )
 
@@ -651,30 +652,10 @@ system_schema_file <- function(schema_name) {
     schema_file
 }
 
-find_qti22_schema <- function() {
-    candidates <- c(
-        "imsqti_v2p2.xsd",
-        "imsqti_v2p2p1.xsd",
-        "qti_v2p2.xsd",
-        "qti_v2p2p1.xsd",
-        "imsqti_v2p2p2.xsd",
-        "qti_v2p2p2.xsd"
-    )
+qti22_schema_file <- function() {
+    schema_file <- system_schema_file(file.path("xsd", "imsqti_v2p2.xsd"))
 
-    for (candidate in candidates) {
-        schema_file <- find_schema_file(candidate)
-        if (!is.null(schema_file)) {
-            return(schema_file)
-        }
-    }
-
-    stop(
-        "Could not find a QTI 2.2 schema file. ",
-        "Pass the XSD path explicitly, for example schema = 'imsqti_v2p2.xsd'. ",
-        "If the schema imports/includes other XSD files, keep them beside the main XSD ",
-        "or use a schema copy with local schemaLocation references.",
-        call. = FALSE
-    )
+    schema_file
 }
 
 qti_schema_search_dirs <- function(start = getwd(), max_depth = 5) {

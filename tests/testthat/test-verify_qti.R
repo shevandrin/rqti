@@ -62,8 +62,6 @@ test_that("extended schema allows details in itemBody", {
 })
 
 test_that("verify_qti can select a local qti22 schema", {
-    skip_if_not(any(file.exists(file.path(rqti:::qti_schema_search_dirs(), "imsqti_v2p2.xsd"))))
-
     f <- system.file("exercises", "sc1d.xml", package = "rqti")
 
     res <- verify_qti(f, schema = "qti22", print = FALSE, engine = "xml2")
