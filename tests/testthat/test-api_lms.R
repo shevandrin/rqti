@@ -478,6 +478,42 @@ test_that("upload2LMS sends standalone question archives with question target ty
     expect_identical(res$key, "question-key")
 })
 
+test_that("upload_resource returns successful responses and errors on failures", {
+    upload_file <- tempfile(fileext = ".zip")
+    writeBin(charToRaw("mock qti archive"), upload_file)
+
+    local_mocked_bindings(
+        req_perform = function(req) httr2::response(status_code = 200),
+        .package = "rqti"
+    )
+
+    resp <- upload_resource(
+        upload_file,
+        display_name = "mock_upload",
+        rtype = "FileResource.TEST",
+        access = 4,
+        endpoint = "https://opal.example/"
+    )
+
+    expect_identical(resp$status_code, 200L)
+
+    local_mocked_bindings(
+        req_perform = function(req) httr2::response(status_code = 404),
+        .package = "rqti"
+    )
+
+    expect_error(
+        upload_resource(
+            upload_file,
+            display_name = "mock_upload",
+            rtype = "FileResource.TEST",
+            access = 4,
+            endpoint = "https://opal.example/"
+        ),
+        "Status Code: 404"
+    )
+})
+
 test_that("Opal API methods return NULL for missing course resources", {
     con <- mock_opal_connection()
 
