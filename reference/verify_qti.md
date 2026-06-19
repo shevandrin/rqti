@@ -12,7 +12,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 # S4 method for class 'character'
@@ -23,7 +24,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 # S4 method for class 'xml_document'
@@ -34,7 +36,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 # S4 method for class 'AssessmentItem'
@@ -45,7 +48,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 
 # S4 method for class 'AssessmentTest'
@@ -56,7 +60,8 @@ verify_qti(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 ```
 
@@ -90,6 +95,12 @@ verify_qti(
 - print:
 
   Logical. Print results?
+
+- schema:
+
+  Character string or `NULL`. Schema selector or custom XSD path.
+  Supported selectors are `"qti21"`, `"extended"`, and `"qti22"`.
+  Defaults to `NULL`, which uses the legacy `extended_schema` flag.
 
 ## Value
 

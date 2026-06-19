@@ -80,7 +80,8 @@ or an <code>xml2::xml_document</code>.</p>
 <span>  color <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"xml2"</span>, <span class="st">"xmllint"</span><span class="op">)</span>,</span>
 <span>  ignore_import <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  print <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  print <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  schema <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -122,6 +123,15 @@ locally saved schema instead of downloading from the internet.</p></dd>
 <dt id="arg-print">print<a class="anchor" aria-label="anchor" href="#arg-print"></a></dt>
 <dd><p>Logical. Should the validation result be printed before it is
 returned? Defaults to <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-schema">schema<a class="anchor" aria-label="anchor" href="#arg-schema"></a></dt>
+<dd><p>Character string or <code>NULL</code>. Schema to validate against. Use
+<code>NULL</code> for the default QTI 2.1 schema, <code>"extended"</code> for the extended rqti
+QTI 2.1 schema, <code>"qti21"</code> for the default QTI 2.1 schema, <code>"qti22"</code> for a
+local QTI 2.2 schema, or a file path to a custom XSD. The legacy
+<code>extended_schema = TRUE</code> argument is still supported and is equivalent to
+<code>schema = "extended"</code> when <code>schema</code> is <code>NULL</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -14,7 +14,8 @@ verify_qti_impl(
   color = TRUE,
   engine = c("auto", "xml2", "xmllint"),
   ignore_import = TRUE,
-  print = TRUE
+  print = TRUE,
+  schema = NULL
 )
 ```
 
@@ -54,6 +55,15 @@ verify_qti_impl(
 
   Logical. Should the validation result be printed before it is
   returned? Defaults to `TRUE`.
+
+- schema:
+
+  Character string or `NULL`. Schema to validate against. Use `NULL` for
+  the default QTI 2.1 schema, `"extended"` for the extended rqti QTI 2.1
+  schema, `"qti21"` for the default QTI 2.1 schema, `"qti22"` for a
+  local QTI 2.2 schema, or a file path to a custom XSD. The legacy
+  `extended_schema = TRUE` argument is still supported and is equivalent
+  to `schema = "extended"` when `schema` is `NULL`.
 
 ## Value
 
