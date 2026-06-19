@@ -38,6 +38,13 @@ opal <- function(api_user = NA_character_, endpoint = NA_character_) {
     return(result)
 }
 
+ensure_opal_login <- function(object) {
+    if (isUserLoggedIn(object)) return(TRUE)
+
+    login_status <- authLMS(object)
+    login_status == 200
+}
+
 #' Check if User is Logged in LMS Opal
 #'
 #' This method checks whether a user is logged into an LMS Opal by
@@ -164,10 +171,7 @@ setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
 #' @export
 setMethod("getLMSResources", "Opal", function(object){
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     url_res <- paste0(object@endpoint, "restapi/repo/entries/search?myentries=true")
     req <- request(url_res) %>%
@@ -191,10 +195,7 @@ setMethod("getLMSResources", "Opal", function(object){
 setMethod("getLMSResourcesByName", "Opal", function(object, display_name,
                                                     rtype = NULL){
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     df <- getLMSResources(object)
     rlist <- subset(df, df$displayname == display_name)
@@ -213,10 +214,7 @@ setMethod("getLMSResourcesByName", "Opal", function(object, display_name,
 #' @export
 setMethod("getLMSResourceURL", "Opal", function(object, display_name) {
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     rdf <- getLMSResourcesByName(object, display_name)
     if (length(rdf$key) == 0) {
@@ -239,10 +237,7 @@ setMethod("getLMSResourceURL", "Opal", function(object, display_name) {
 #' @export
 setMethod("getCourseElements", "Opal", function(object, course_id) {
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     url_elem <- paste0(object@endpoint, "restapi/repo/courses/", course_id, "/elements")
     req <- request(url_elem) %>%
@@ -310,10 +305,7 @@ setMethod("updateCourseElementResource", "Opal", function(object, course_id,
                                                           node_id, resource_id,
                                                           publish = TRUE) {
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     url_res <- paste0(object@endpoint, "restapi/repo/courses/", course_id,
                       "/elements/", node_id,
@@ -339,10 +331,7 @@ setMethod("updateCourseElementResource", "Opal", function(object, course_id,
 #' @export
 setMethod("publishCourse", "Opal", function(object, course_id) {
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     url_res <- paste0(object@endpoint, "restapi/repo/courses/", course_id, "/publish")
     req <- request(url_res) %>%
@@ -368,10 +357,7 @@ setMethod("getCourseResult", "Opal", function(object, resource_id, node_id,
                                               path_outcome = ".", rename = TRUE){
     params <- as.list(environment())
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     url_res <- paste0(object@endpoint, "restapi/repo/courses/", resource_id,
                       "/assessments/", node_id, "/results")
@@ -447,10 +433,7 @@ setMethod("getCourseResult", "Opal", function(object, resource_id, node_id,
 setMethod("getCourseAssessment", "Opal", function(object, course_id, node_id,
                                                   user_id = NULL) {
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     url_res <- paste0(object@endpoint, "restapi/repo/courses/", course_id,
                       "/assessments/", node_id)
@@ -506,10 +489,7 @@ setMethod("getCourseAssessment", "Opal", function(object, course_id, node_id,
 #' @export
 setMethod("getCourseGroups", "Opal", function(object, course_id) {
 
-    if (!isUserLoggedIn(object)) {
-        login_status <- authLMS(object)
-        if (login_status != 200) return(NULL)
-    }
+    if (!ensure_opal_login(object)) return(NULL)
 
     url_res_group <- paste0(object@endpoint, "restapi/repo/courses/", course_id, "/groups")
     req <- request(url_res_group) %>%
@@ -581,6 +561,8 @@ setMethod("getCourseGroups", "Opal", function(object, course_id) {
 #' @rdname getGroupUsers-methods
 #' @export
 setMethod("getGroupUsers", "Opal", function(object, group_id) {
+
+    if (!ensure_opal_login(object)) return(NULL)
 
     get_first_chr <- function(x) {
         if (!is.null(x) && length(x) > 0) {
