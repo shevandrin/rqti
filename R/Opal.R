@@ -101,7 +101,7 @@ setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
         ifelse(istest, "FileResource.TEST", "FileResource.QUESTION")
     }
 
-    rdf <- getLMSResourcesByName(object, display_name, rtype)
+    rdf <- getLMSResourcesByName(object, display_name)
 
     if (nrow(rdf) > 0 && overwrite) {
 

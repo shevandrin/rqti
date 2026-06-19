@@ -71,6 +71,30 @@ make_test_exam <- function(id = TEST_EXAM_NAME) {
     suppressMessages(test(section(make_test_item(id))))
 }
 
+opal_upload_response <- function(key = "mock-key", display_name = "mock-resource") {
+    httr2::response(
+        status_code = 200,
+        headers = list("content-type" = "application/xml"),
+        body = charToRaw(paste0(
+            "<repositoryEntryVO>",
+            "<key>", key, "</key>",
+            "<displayname>", display_name, "</displayname>",
+            "</repositoryEntryVO>"
+        ))
+    )
+}
+
+mock_opal_connection <- function() {
+    local_mocked_bindings(
+        get_password = function(...) list(api_user = "tester",
+                                          api_password = "secret"),
+        authLMS = function(...) 200,
+        .package = "rqti",
+        .env = parent.frame()
+    )
+    opal(api_user = "tester", endpoint = "https://opal.example/")
+}
+
 test_that("opal() creates a valid Opal connection object", {
     skip_if_no_opal()
 
@@ -320,6 +344,138 @@ test_that("qti test archives are detected correctly", {
     exam <- suppressMessages(test(section(es)))
     path <- createQtiTest(exam, dir = tempdir())
     expect_true(is_test(path))
+})
+
+test_that("upload2LMS sends survey resources with survey target type", {
+    con <- mock_opal_connection()
+    uploaded <- NULL
+
+    local_mocked_bindings(
+        getLMSResourcesByName = function(object, display_name, rtype = NULL) {
+            data.frame(key = character(),
+                       displayname = character(),
+                       resourceableTypeName = character())
+        },
+        upload_resource = function(file, display_name, rtype, access,
+                                   endpoint = NULL) {
+            uploaded <<- list(file = file, display_name = display_name,
+                              rtype = rtype, access = access,
+                              endpoint = endpoint)
+            opal_upload_response("survey-key", display_name)
+        },
+        update_resource = function(...) stop("unexpected update"),
+        .package = "rqti"
+    )
+
+    res <- suppressMessages(upload2LMS(
+        con,
+        make_test_exam("mock_survey"),
+        display_name = "mock_survey",
+        open_in_browser = FALSE,
+        as_survey = TRUE
+    ))
+
+    expect_identical(uploaded$rtype, "FileResource.SURVEY")
+    expect_identical(uploaded$display_name, "mock_survey")
+    expect_identical(res$key, "survey-key")
+})
+
+test_that("upload2LMS rejects overwriting a resource with a different type", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        getLMSResourcesByName = function(object, display_name, rtype = NULL) {
+            data.frame(key = "survey-key",
+                       displayname = display_name,
+                       resourceableTypeName = "FileResource.SURVEY")
+        },
+        upload_resource = function(...) stop("unexpected upload"),
+        update_resource = function(...) stop("unexpected update"),
+        .package = "rqti"
+    )
+
+    expect_error(
+        suppressMessages(upload2LMS(
+            con,
+            make_test_exam("mock_test"),
+            display_name = "mock_existing_survey",
+            open_in_browser = FALSE,
+            as_survey = FALSE
+        )),
+        "Current type and target type of the resource is not equal"
+    )
+})
+
+test_that("upload2LMS derives display_name when it is NULL", {
+    con <- mock_opal_connection()
+    uploaded <- NULL
+
+    local_mocked_bindings(
+        getLMSResourcesByName = function(object, display_name, rtype = NULL) {
+            data.frame(key = character(),
+                       displayname = character(),
+                       resourceableTypeName = character())
+        },
+        upload_resource = function(file, display_name, rtype, access,
+                                   endpoint = NULL) {
+            uploaded <<- list(file = file, display_name = display_name,
+                              rtype = rtype)
+            opal_upload_response("null-display-key", display_name)
+        },
+        update_resource = function(...) stop("unexpected update"),
+        .package = "rqti"
+    )
+
+    res <- suppressMessages(upload2LMS(
+        con,
+        make_test_exam("mock_null_display"),
+        display_name = NULL,
+        open_in_browser = FALSE
+    ))
+
+    expect_false(is.null(uploaded$display_name))
+    expect_identical(
+        uploaded$display_name,
+        tools::file_path_sans_ext(basename(uploaded$file))
+    )
+    expect_identical(res$display_name, uploaded$display_name)
+})
+
+test_that("upload2LMS sends standalone question archives with question target type", {
+    con <- mock_opal_connection()
+    uploaded <- NULL
+    question_zip <- suppressMessages(createQtiTask(
+        make_test_item("mock_question"),
+        dir = tempdir(),
+        zip = TRUE
+    ))
+
+    local_mocked_bindings(
+        getLMSResourcesByName = function(object, display_name, rtype = NULL) {
+            data.frame(key = character(),
+                       displayname = character(),
+                       resourceableTypeName = character())
+        },
+        upload_resource = function(file, display_name, rtype, access,
+                                   endpoint = NULL) {
+            uploaded <<- list(file = file, display_name = display_name,
+                              rtype = rtype)
+            opal_upload_response("question-key", display_name)
+        },
+        update_resource = function(...) stop("unexpected update"),
+        .package = "rqti"
+    )
+
+    res <- suppressMessages(upload2LMS(
+        con,
+        question_zip,
+        display_name = "mock_question",
+        open_in_browser = FALSE
+    ))
+
+    expect_false(is_test(question_zip))
+    expect_identical(uploaded$rtype, "FileResource.QUESTION")
+    expect_identical(res$key, "question-key")
 })
 
 test_that("getCourseElements works for the Methodenguru course", {
