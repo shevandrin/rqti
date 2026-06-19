@@ -647,22 +647,6 @@ parse_course_assessment_response <- function(parsed_response) {
     records <- xml2::xml_find_all(parsed_response,
                                   ".//*[local-name()='assessableResultsVO']")
 
-    if (length(records) == 0) {
-        return(data.frame(
-            identity_key = character(),
-            user_id = character(),
-            user_login = character(),
-            user_first_name = character(),
-            user_last_name = character(),
-            user_email = character(),
-            score = numeric(),
-            max_score = numeric(),
-            passed = logical(),
-            attempts = integer(),
-            stringsAsFactors = FALSE
-        ))
-    }
-
     get_text <- function(node, path) {
         value <- xml2::xml_text(xml2::xml_find_first(node, path))
         if (length(value) == 0 || is.na(value)) NA_character_ else value
@@ -680,7 +664,7 @@ parse_course_assessment_response <- function(parsed_response) {
         as.logical(get_text(node, path))
     }
 
-    df <- data.frame(
+    course_assessment_df(
         identity_key = vapply(records, get_text, character(1),
                               ".//*[local-name()='identityKey']"),
         user_id = vapply(records, get_text, character(1),
@@ -700,11 +684,35 @@ parse_course_assessment_response <- function(parsed_response) {
         passed = vapply(records, get_lgl, logical(1),
                         ".//*[local-name()='passed']"),
         attempts = vapply(records, get_int, integer(1),
-                          ".//*[local-name()='attempts']"),
+                          ".//*[local-name()='attempts']")
+    )
+}
+
+course_assessment_df <- function(identity_key = character(),
+                                 user_id = character(),
+                                 user_login = character(),
+                                 user_first_name = character(),
+                                 user_last_name = character(),
+                                 user_email = character(),
+                                 score = numeric(),
+                                 max_score = numeric(),
+                                 passed = logical(),
+                                 attempts = integer()) {
+    df <- data.frame(
+        identity_key = identity_key,
+        user_id = user_id,
+        user_login = user_login,
+        user_first_name = user_first_name,
+        user_last_name = user_last_name,
+        user_email = user_email,
+        score = score,
+        max_score = max_score,
+        passed = passed,
+        attempts = attempts,
         stringsAsFactors = FALSE
     )
     rownames(df) <- NULL
-    return(df)
+    df
 }
 
 

@@ -749,3 +749,24 @@ test_that("course assessment XML is parsed into score data", {
     expect_true(assessment$passed)
     expect_identical(assessment$attempts, 4L)
 })
+
+test_that("course assessment XML without records returns the assessment schema", {
+    xml <- xml2::read_xml("<assessableResultsVOes/>")
+
+    assessment <- parse_course_assessment_response(xml)
+
+    expect_s3_class(assessment, "data.frame")
+    expect_identical(
+        names(assessment),
+        c(
+            "identity_key", "user_id", "user_login", "user_first_name",
+            "user_last_name", "user_email", "score", "max_score", "passed",
+            "attempts"
+        )
+    )
+    expect_equal(nrow(assessment), 0)
+    expect_type(assessment$identity_key, "character")
+    expect_type(assessment$score, "double")
+    expect_type(assessment$passed, "logical")
+    expect_type(assessment$attempts, "integer")
+})
