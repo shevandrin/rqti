@@ -70,6 +70,10 @@ file in a temporary directory, allowing combination with native rqti items.
 
 ## Improvements
 
+* Improved `extract_results()` performance for archives with many result files
+  by extracting only relevant XML/result zip files, avoiding repeated row
+  binding, and reducing XPath work for item-level responses.
+
 * Enhanced `verify_qti()` to support different input types, provide more 
 informative validation messages, and use both `xmllint` and `xml2` backends
 for XML validation.

@@ -100,8 +100,9 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
                 immediate. = TRUE, call. = FALSE)
         db <- NULL
     }
-    df <- data.frame()
-    for (f in res_files) {
+    dfs <- vector("list", length(res_files))
+    for (i in seq_along(res_files)) {
+        f <- res_files[i]
         xml_path <- file.path(tdir, f)
         switch(level,
             task = {
@@ -111,16 +112,13 @@ build_dataset <- function(tdir, level, names = NULL, hide_filename) {
                 df0 <- get_result_attr_options(xml_path, hide_filename)
             }
         )
-        name <- ifelse(is.null(names), f, names[which(res_files == f)])
         if (!is.null(db)) {
-            titles <- c()
-            for (id in df0$id_question) {
-                titles <- c(titles, unname(db[names(db) == id]))
-            }
-            df0$title <- titles
+            df0$title <- unname(db[df0$id_question])
         }
-        df <- rbind(df, df0)
+        dfs[[i]] <- df0
     }
+    df <- do.call(rbind, dfs)
+    rownames(df) <- NULL
     return(df)
 }
 
@@ -146,7 +144,9 @@ make_name_unique <- function(file, possible_name) {
 extract_xml <- function(file) {
     zdir <- tempfile()
     dir.create(zdir)
-    zip::unzip(file.path(file), exdir = zdir)
+    content <- zip::zip_list(file.path(file))$filename
+    keep <- tools::file_ext(content) %in% c("xml", "zip")
+    zip::unzip(file.path(file), files = content[keep], exdir = zdir)
 
     tdir <- tempfile()
     dir.create(tdir)
@@ -210,6 +210,8 @@ md5_generator <- function(x) {
 unique_result_set <- function(doc) {
     items_result <- xml2::xml_find_all(doc, ".//d1:itemResult")
     ids <- unlist(Map(xml_attr, items_result, "identifier"))
+    if (!any(duplicated(ids))) return(items_result)
+
     unique_ids <- ids[!duplicated(ids)]
     for (id in unique_ids) {
         expression <- paste0(".//d1:itemResult", "[@identifier=\'", id, "\']")
@@ -365,13 +367,19 @@ get_info <- function(node){
 
 # takes information from tag with identifier as base type of response variable
 get_info_identifier <- function(node, options_node) {
+    node_children <- xml2::xml_children(node)
+    child_names <- xml2::xml_name(node_children)
+    outcome_nodes <- node_children[child_names == "outcomeVariable"]
+    outcome_ids <- xml2::xml_attr(outcome_nodes, "identifier")
+    outcome_values <- vapply(outcome_nodes, get_direct_value, character(1))
+    names(outcome_values) <- outcome_ids
 
     corr_res <- xml2::xml_find_all(node, ".//d1:correctResponse")
-    corr_values <- get_value(corr_res)
+    corr_values <- get_direct_values(corr_res)
 
     cand_res <- xml2::xml_find_all(node, ".//d1:candidateResponse")[-1]
     if (length(cand_res) !=0) {
-        cand_values <- get_value(cand_res)
+        cand_values <- get_direct_values(cand_res)
     } else {
         cand_values <-  rep("", length(corr_values))
     }
@@ -384,8 +392,7 @@ get_info_identifier <- function(node, options_node) {
         options <- stringr::str_split_1(choice_seq, " ")
     } else options <- corr_values
 
-    card_node <- xml2::xml_find_first(node, ".//d1:responseVariable[@identifier='RESPONSE']")
-    card <- xml2::xml_attr(card_node, "cardinality")
+    card <- xml2::xml_attr(options_node, "cardinality")
     if (is.na(card)) card <- "single"
 
     corr <- sapply(options, function(x) x %in% corr_values, USE.NAMES = FALSE)
@@ -399,14 +406,11 @@ get_info_identifier <- function(node, options_node) {
     result <- corr * cand
     true_cand <- sum(result)
 
-    score <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='SCORE']")
-
-    score_value <- ifelse(result, as.numeric(get_value(score)) / true_cand, "0")
-
-
-    maxscore <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='MAXSCORE']")
+    score_value <- outcome_values["SCORE"]
+    maxscore_value <- outcome_values["MAXSCORE"]
+    score_value <- ifelse(result, as.numeric(score_value) / true_cand, "0")
     maxscore_value <- ifelse(result,
-                             as.numeric(get_value(maxscore)) / true_counts, "0")
+                             as.numeric(maxscore_value) / true_counts, "0")
 
     base_types <- rep(xml2::xml_attr(options_node, "baseType"), length(options))
     card <- rep(xml2::xml_attr(options_node, "cardinality"), length(options))
@@ -464,57 +468,56 @@ get_info_directedPair <- function(node, options_node) {
 
 # takes information from tag with float or string as base type of response variable
 get_info_float <- function(node) {
-    options_nodes <- xml2::xml_find_all(node, ".//d1:responseVariable[@identifier!='duration']")
-    options <- character(0)
-    corr <- character(0)
-    cand <- character(0)
-    base_types <- character(0)
-    card <- character(0)
-    q_type <- character(0)
-    score_values <- character(0)
-    maxscore_values <- character(0)
-    result <- character(0)
-    for (opt in options_nodes) {
+    node_children <- xml2::xml_children(node)
+    child_names <- xml2::xml_name(node_children)
+    response_nodes <- node_children[child_names == "responseVariable"]
+    response_ids <- xml2::xml_attr(response_nodes, "identifier")
+    options_nodes <- response_nodes[response_ids != "duration"]
+
+    outcome_nodes <- node_children[child_names == "outcomeVariable"]
+    outcome_ids <- xml2::xml_attr(outcome_nodes, "identifier")
+    outcome_values <- vapply(outcome_nodes, get_direct_value, character(1))
+    names(outcome_values) <- outcome_ids
+
+    len <- length(options_nodes)
+    options <- character(len)
+    corr <- character(len)
+    cand <- character(len)
+    base_types <- character(len)
+    card <- character(len)
+    q_type <- character(len)
+    score_values <- character(len)
+    maxscore_values <- character(len)
+    result <- logical(len)
+    for (i in seq_along(options_nodes)) {
+        opt <- options_nodes[[i]]
         id <- xml2::xml_attr(opt, "identifier")
-        options <- append(options, id)
-        corr_res <- xml2::xml_find_all(opt, ".//d1:correctResponse")
-        corr_values <- get_value(corr_res)
-        if (length(corr_values) == 0) corr_values = ""
-        corr <- append(corr, corr_values)
-        cand_res <- xml2::xml_find_all(opt, ".//d1:candidateResponse")
-        cand_values <- get_value(cand_res)
-        if (length(cand_values) == 0) cand_values = ""
-        cand <- append(cand, cand_values)
+        options[i] <- id
 
-        expression <- paste0(".//d1:outcomeVariable[@identifier=\'SCORE_",
-                             id, "\']")
-        score <- xml2::xml_find_all(node, expression)
-        if (length(score) == 0) {
-            score <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='SCORE']")
-        }
-        score_value <- get_value(score)
-        if (length(score) == 0) score_value <- "0"
-        score_values <- append(score_values, score_value)
+        corr_values <- get_response_value(opt, "correctResponse")
+        cand_values <- get_response_value(opt, "candidateResponse")
+        corr[i] <- corr_values
+        cand[i] <- cand_values
 
-        expression <- paste0(".//d1:outcomeVariable[@identifier=\'MAXSCORE_",
-                             id, "\']")
-        maxscore <- xml2::xml_find_all(node, expression)
-        if (length(maxscore) == 0) {
-            maxscore <- xml2::xml_find_all(node, ".//d1:outcomeVariable[@identifier='MAXSCORE']")
-        }
-        maxscore_value <- get_value(maxscore)
-        if (length(maxscore) == 0) maxscore_value <- 0
-        maxscore_values <- append(maxscore_values, maxscore_value)
+        score_value <- outcome_values[paste0("SCORE_", id)]
+        if (is.na(score_value)) score_value <- outcome_values["SCORE"]
+        if (is.na(score_value)) score_value <- "0"
+        score_values[i] <- score_value
+
+        maxscore_value <- outcome_values[paste0("MAXSCORE_", id)]
+        if (is.na(maxscore_value)) maxscore_value <- outcome_values["MAXSCORE"]
+        if (is.na(maxscore_value)) maxscore_value <- "0"
+        maxscore_values[i] <- maxscore_value
         result_value <- ifelse(score_value == maxscore_value & score_value != 0,
                                TRUE, FALSE)
-        result <- append(result, result_value)
+        result[i] <- result_value
 
         b_type <- xml2::xml_attr(opt, "baseType")
-        base_types <- append(base_types, b_type)
-        card <- append(card, xml2::xml_attr(opt, "cardinality"))
-        if (b_type == "float") {q_type <- append(q_type, "NumericGap")}
-        else if (corr_values == "") {q_type <- append(q_type, "Essay")}
-        else {q_type <- append(q_type, "TextGap")}
+        base_types[i] <- b_type
+        card[i] <- xml2::xml_attr(opt, "cardinality")
+        if (b_type == "float") {q_type[i] <- "NumericGap"}
+        else if (corr_values == "") {q_type[i] <- "Essay"}
+        else {q_type[i] <- "TextGap"}
 
     }
 
@@ -523,6 +526,29 @@ get_info_float <- function(node) {
     names(res) <- c("options", "corr", "cand", "base_types", "card", "q_type",
                     "score_value", "maxscore_value", "correctness")
     return(res)
+}
+
+get_direct_value <- function(node) {
+    values <- xml2::xml_children(node)
+    values <- values[xml2::xml_name(values) == "value"]
+    if (length(values) == 0) return("")
+    xml2::xml_text(values[[1]])
+}
+
+get_direct_values <- function(nodes) {
+    if (length(nodes) == 0) return(character(0))
+    unlist(lapply(nodes, function(node) {
+        values <- xml2::xml_children(node)
+        values <- values[xml2::xml_name(values) == "value"]
+        xml2::xml_text(values)
+    }), use.names = FALSE)
+}
+
+get_response_value <- function(node, response_name) {
+    children <- xml2::xml_children(node)
+    response <- children[xml2::xml_name(children) == response_name]
+    if (length(response) == 0) return("")
+    get_direct_value(response[[1]])
 }
 
 # takes value from tag value
@@ -542,11 +568,11 @@ is_answer_given <- function(node) {
 # extracts all xml file in temp folder
 get_all_xml <- function(file, indir, exdir) {
     zip_file <- file.path(indir, file)
-    zip::unzip(zip_file, exdir = exdir, junkpaths = TRUE)
     content <- zip::zip_list(zip_file)$filename
     check_valid_utf8(content)
+    content <- content[tools::file_ext(content) == "xml"]
+    zip::unzip(zip_file, files = content, exdir = exdir, junkpaths = TRUE)
     files <- file.path(exdir, content)
-    files <- files[grep(".xml", files)]
 
     for (fl in files) {
         if (length(files) > 1) {
