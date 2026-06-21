@@ -102,3 +102,10 @@ test_that("Testing the constructor for CorrectFeedback class", {
     expect_s4_class(sut, "CorrectFeedback")
 })
 
+test_that("correctFeedback() accepts character content", {
+    sut <- correctFeedback(content = "Some comments", title = "Feedback")
+
+    expect_s4_class(sut, "CorrectFeedback")
+    expect_type(sut@content, "list")
+    expect_equal(sut@content, list("Some comments"))
+})

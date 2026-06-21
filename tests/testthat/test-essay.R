@@ -57,6 +57,17 @@ test_that("Test the warning message of the feedback in Essay class", {
                "Only general feedback is possible for this type of task")
 })
 
+test_that("Entry requires at least one gap in content", {
+  expect_error(
+    new("Entry",
+        content = list("<p>No gap here</p>"),
+        title = "Entry without gap",
+        identifier = "entry_without_gap"),
+    "must include at least one gap instance",
+    fixed = TRUE
+  )
+})
+
 test_that("Testing of set default max count of words and
           default size as expected length parameter of the feedback",{
   essay@feedback <- list(new("ModalFeedback", title = "correct",

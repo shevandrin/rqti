@@ -24,6 +24,26 @@ test_that("test rmd2xml", {
     unlink("to_delete", recursive = TRUE)
 })
 
+test_that("detect_rmd_format() detects rqti, exams, and unknown Rmd files", {
+    rqti_file <- tempfile(fileext = ".Rmd")
+    writeLines(c("---", "title: Example", "---", "", "Question"), rqti_file)
+
+    exams_file <- tempfile(fileext = ".Rmd")
+    writeLines(c("Question", "", "Meta-information", "extype: schoice"),
+               exams_file)
+
+    unknown_file <- tempfile(fileext = ".Rmd")
+    writeLines("Question without metadata", unknown_file)
+
+    expect_equal(detect_rmd_format(rqti_file), "rqti_rmd")
+    expect_equal(detect_rmd_format(exams_file), "exams_rmd")
+    expect_equal(detect_rmd_format(unknown_file), "unknown")
+    expect_error(
+        detect_rmd_format("missing_file.Rmd"),
+        "File does not exist"
+    )
+})
+
 testthat::skip_if_not_installed("XML")
 test_that("test abbreviate for rmd2xml() in OneInRowTable class", {
     file_sut <- test_path("file/rmd/OneInRowTable_abbr_example.Rmd")

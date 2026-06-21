@@ -35,6 +35,16 @@ test_that("provide_audio() fails for missing file", {
 
 })
 
+test_that("provide_audio() fails for invalid path input", {
+
+    expect_error(
+        provide_audio(""),
+        "`path` must be a non-empty character string.",
+        fixed = TRUE
+    )
+
+})
+
 test_that("provide_audio() warns for large files", {
 
     path <- tempfile(fileext = ".wav")

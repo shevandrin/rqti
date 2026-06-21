@@ -40,6 +40,21 @@ test_that("provide_file() embeds text files with guessed MIME type", {
 })
 
 
+test_that("provide_file() falls back to octet-stream for unknown extensions", {
+    tmp <- tempfile(fileext = ".unknown")
+    writeLines("hello world", tmp)
+
+    res <- provide_file(tmp)
+    html <- as.character(res)
+
+    expect_match(
+        html,
+        'href="data:application/octet-stream;base64,',
+        fixed = TRUE
+    )
+})
+
+
 test_that("provide_file() uses explicit MIME type when provided", {
     tmp <- tempfile(fileext = ".txt")
     writeLines("hello world", tmp)
@@ -130,5 +145,16 @@ test_that("provide_file() embeds correct Base64 payload", {
         html,
         paste0("base64,", expected),
         fixed = TRUE
+    )
+})
+
+
+test_that("provide_file() warns when embedded file exceeds size threshold", {
+    tmp <- tempfile(fileext = ".txt")
+    writeLines("hello world", tmp)
+
+    expect_warning(
+        provide_file(tmp, warn_size_mb = 0),
+        "Embedding it will increase the size"
     )
 })

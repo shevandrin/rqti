@@ -130,3 +130,50 @@ test_that("Testing the constructor for MultipleChoiceTable class", {
     expect_no_error(xml2::read_xml(as.character(xml_sut)))
     expect_s4_class(sut, "MultipleChoiceTable")
 })
+
+test_that("MatchTable validation reports mismatched identifiers and scores", {
+    expect_error(
+        new("MultipleChoiceTable",
+            content = list("<p>Match rows and columns</p>"),
+            rows = c("Row 1", "Row 2"),
+            rows_identifiers = "r1",
+            cols = "Col 1",
+            cols_identifiers = "c1",
+            answers_identifiers = "r1 c1",
+            answers_scores = 1,
+            title = "Bad table",
+            identifier = "bad_table"),
+        "Number of rows and rows_identifiers are not equal",
+        fixed = TRUE
+    )
+
+    expect_error(
+        new("MultipleChoiceTable",
+            content = list("<p>Match rows and columns</p>"),
+            rows = "Row 1",
+            rows_identifiers = "r1",
+            cols = c("Col 1", "Col 2"),
+            cols_identifiers = "c1",
+            answers_identifiers = "r1 c1",
+            answers_scores = 1,
+            title = "Bad table",
+            identifier = "bad_table"),
+        "Number of cols and cols_identifiers are not equal",
+        fixed = TRUE
+    )
+
+    expect_error(
+        new("MultipleChoiceTable",
+            content = list("<p>Match rows and columns</p>"),
+            rows = "Row 1",
+            rows_identifiers = "r1",
+            cols = "Col 1",
+            cols_identifiers = "c1",
+            answers_identifiers = c("r1 c1", "r1 c2"),
+            answers_scores = 1,
+            title = "Bad table",
+            identifier = "bad_table"),
+        "'answers_identifiers' and 'answers_scores' must have the same number",
+        fixed = TRUE
+    )
+})
