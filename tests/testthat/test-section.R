@@ -27,6 +27,16 @@ test_that("Testing of function section where handles mismatched num_variants
                  "The items in seed_number must be equal to number of variants")
 })
 
+test_that("section() rejects unsupported by values", {
+    file <- test_path("file/rmd/order.Rmd")
+
+    expect_error(
+        section(file, by = "bad"),
+        "Invalid value for parameter 'by'",
+        fixed = TRUE
+    )
+})
+
 test_that("Testing of function section() creates assessment section correctly
           when by is \'files\'", {
     file1 <- test_path("file/rmd/order.Rmd")
@@ -71,4 +81,3 @@ assessment section correctly", {
               expect_true(is(sut2, "SingleChoice"))
               expect_equal(length(sut3@assessment_item), 3)
           })
-

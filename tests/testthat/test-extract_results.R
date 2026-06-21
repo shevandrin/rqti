@@ -330,3 +330,15 @@ test_that("extract_results() includes task comments on item level", {
     expect_equal(sut$candidate_comment, "0.5\r\n0.4\r\n0.68\r\n0.38")
     expect_true(is.na(sut$scorer_comment))
 })
+
+test_that("comment extractors return NA for empty comments", {
+    doc <- xml2::read_xml(
+        '<itemResult xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1">
+            <candidateComment></candidateComment>
+            <scorerComment></scorerComment>
+        </itemResult>'
+    )
+
+    expect_true(is.na(get_candidate_comment(doc)))
+    expect_true(is.na(get_scorer_comment(doc)))
+})

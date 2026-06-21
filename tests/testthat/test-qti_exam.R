@@ -92,6 +92,19 @@ test_that("Testing createQtiTest method behavior when the Rmd file
               expect_equal("The file does not exist", error_message)
 })
 
+test_that("check_files_existence() reports missing files", {
+    existing <- tempfile()
+    writeLines("exists", existing)
+    missing <- tempfile()
+
+    expect_error(
+        check_files_existence(c(existing, missing)),
+        paste0("The following files do not exist: ", missing),
+        fixed = TRUE
+    )
+    expect_null(check_files_existence(existing))
+})
+
 test_that("Testing createQtiTest method", {
               path_1 <- test_path("file/rmd/mc_no_point.Rmd")
               path_2 <- test_path("file/md/sc_example2.md")
