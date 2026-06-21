@@ -8,6 +8,23 @@ mycor <- function(x, y) {
   cor(x, y)
 }
 
+add_item_comment_cols <- function(x) {
+    x$candidate_comment <- NA_character_
+    x$scorer_comment <- NA_character_
+
+    title_pos <- base::match("title", names(x))
+    if (!is.na(title_pos)) {
+        x <- x[c(
+            names(x)[seq_len(title_pos - 1)],
+            "candidate_comment",
+            "scorer_comment",
+            "title"
+        )]
+    }
+
+    x
+}
+
 # missing this:
 #  filter(is_answser_given == TRUE) %>%
 
@@ -53,6 +70,7 @@ test_that("Testing function extract_results with zip archive", {
     expected$score_candidate <- as.double(expected$score_candidate)
     expected$score_max <- as.double(expected$score_max)
     expected$is_response_correct <- expected$is_response_correct
+    expected <- add_item_comment_cols(expected)
 
     expect_equal(sut,expected)
 })
@@ -72,6 +90,13 @@ test_that("Testing function extract_results", {
 
     expected$score_candidate <- as.double(expected$score_candidate)
     expected$score_max <- as.double(expected$score_max)
+    expected <- add_item_comment_cols(expected)
+    comment_id <- "_2021_mlehreI_wiederholung_396357082_section_28_item_1_essay"
+    expected$scorer_comment[expected$id_question == comment_id] <- paste0(
+        "Es geht mehr darum, die Auswirkung von Yoga auf Fitness zu ",
+        "untersuchen, nicht auf Stress (-0,5). AV und UV sind vertauscht ",
+        "(-2).  Der Rest passt. Insgesamt 2,5 Punkte Abzug"
+    )
 
     # To delete all symbols
     expected$candidate_response <- gsub("[^a-zA-Z0-9]", "",
@@ -100,6 +125,7 @@ test_that("Testing function extract_results", {
     expected$score_candidate <- as.double(expected$score_candidate)
     expected$score_max <- as.double(expected$score_max)
     expected$is_response_correct <- expected$is_response_correct
+    expected <- add_item_comment_cols(expected)
 
     # To delete all symbols
     expected$candidate_response <- gsub("[^a-zA-Z0-9]", "",
@@ -124,6 +150,7 @@ test_that("Testing function extract_results with zip archive", {
     expected$is_response_correct <- expected$is_response_correct
     expected$score_candidate <- as.double(expected$score_candidate)
     expected$score_max <- as.double(expected$score_max)
+    expected <- add_item_comment_cols(expected)
 
     rownames(expected) <- NULL
     expect_equal(sut,expected)
@@ -148,6 +175,7 @@ test_that("Testing function extract_results with zip archive", {
 
     expected$candidate_response <- as.character(expected$candidate_response)
     expected$is_response_correct <- as.logical(expected$is_response_correct)
+    expected <- add_item_comment_cols(expected)
 
     rownames(expected) <- NULL
     expect_equal(sut,expected)
@@ -172,6 +200,7 @@ test_that("Testing function extract_results with zip archive", {
 
     expected$candidate_response <- as.logical(expected$candidate_response)
     expected$is_response_correct <- as.logical(expected$is_response_correct)
+    expected <- add_item_comment_cols(expected)
 
     expect_equal(sut,expected)
 })
@@ -252,6 +281,47 @@ test_that("extract_results() includes candidate comments on task level", {
         "score_candidate",
         "score_max",
         "is_answer_given",
+        "candidate_comment",
+        "scorer_comment"
+    ))
+    expect_equal(nrow(sut), 1L)
+    expect_equal(sut$id_question, "metaanalyse_S15")
+    expect_equal(sut$candidate_comment, "0.5\r\n0.4\r\n0.68\r\n0.38")
+    expect_true(is.na(sut$scorer_comment))
+})
+
+test_that("read_qti() is an alias for extract_results()", {
+    path <- test_path("file/xml/assessmentResult_candidate_comment.xml")
+
+    expected <- suppressWarnings(suppressMessages(
+        extract_results(path, level = "task", hide_filename = FALSE)
+    ))
+    sut <- suppressWarnings(suppressMessages(
+        read_qti(path, level = "task", hide_filename = FALSE)
+    ))
+
+    expect_equal(sut, expected)
+})
+
+test_that("extract_results() includes task comments on item level", {
+    path <- test_path("file/xml/assessmentResult_candidate_comment.xml")
+    sut <- suppressWarnings(suppressMessages(
+        extract_results(path, level = "item", hide_filename = FALSE)
+    ))
+
+    expect_named(sut, c(
+        "file",
+        "date",
+        "id_question",
+        "base_type",
+        "cardinalities",
+        "qti_type",
+        "id_answer",
+        "expected_response",
+        "candidate_response",
+        "score_candidate",
+        "score_max",
+        "is_response_correct",
         "candidate_comment",
         "scorer_comment"
     ))

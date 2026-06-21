@@ -43,6 +43,8 @@
 #' * 'is_response_correct' - TRUE if candidate gave the right response,
 #'   otherwise FALSE
 #' * 'title' - the values of attribute 'title' of assessment items
+#' * 'candidate_comment' - candidate's comment for the item (if available).
+#' * 'scorer_comment' - scorer's comment for manually scored items (if available).
 #' @examples
 #' \donttest{
 #' file <- system.file("test_results.zip", package = "rqti")
@@ -74,6 +76,10 @@ extract_results <- function(file, level = "task", hide_filename = TRUE) {
     ret <- build_dataset(tdir, level, file_names, hide_filename)
     return(ret)
 }
+
+#' @rdname extract_results
+#' @export
+read_qti <- extract_results
 
 build_dataset <- function(tdir, level, names = NULL, hide_filename) {
     xml_files <- list.files(tdir)
@@ -302,6 +308,8 @@ get_result_attr_options <- function(file, hide_filename) {
     score_values <- character(0)
     maxscore_values <- character(0)
     correctness <- logical(0)
+    ccomments <- character(0)
+    scomments <- character(0)
     for (ch in items_result) {
         res <- get_info(ch)
         len <- length(res$options)
@@ -316,6 +324,8 @@ get_result_attr_options <- function(file, hide_filename) {
         score_values <- append(score_values, res$score_value)
         maxscore_values <- append(maxscore_values, res$maxscore_value)
         correctness <- append(correctness, res$correctness)
+        ccomments <- append(ccomments, rep(get_candidate_comment(ch), len))
+        scomments <- append(scomments, rep(get_scorer_comment(ch), len))
     }
 
     data <- data.frame(
@@ -330,7 +340,9 @@ get_result_attr_options <- function(file, hide_filename) {
         candidate_response = cand_responses,
         score_candidate = as.numeric(score_values),
         score_max = as.numeric(maxscore_values),
-        is_response_correct = as.integer(as.logical(correctness))
+        is_response_correct = as.integer(as.logical(correctness)),
+        candidate_comment = ccomments,
+        scorer_comment = scomments
     )
     return(data)
 }

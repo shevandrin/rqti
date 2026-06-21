@@ -2,6 +2,11 @@
 
 ## New features
 
+* Added `read_qti()` as an alias for `extract_results()`.
+
+* `extract_results(level = "item")` now includes task-level
+  `candidate_comment` and `scorer_comment` columns for each item row.
+
 * Added `provide_audio()` helper to embed local audio files directly into
   QTI/HTML content using Base64 encoding. The function supports both
   `<object>` and `<audio>` rendering methods and

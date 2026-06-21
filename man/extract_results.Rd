@@ -2,9 +2,12 @@
 % Please edit documentation in R/extract_results.R
 \name{extract_results}
 \alias{extract_results}
+\alias{read_qti}
 \title{Create data frame with test results}
 \usage{
 extract_results(file, level = "task", hide_filename = TRUE)
+
+read_qti(file, level = "task", hide_filename = TRUE)
 }
 \arguments{
 \item{file}{A string with a path of the xml test result file.}
@@ -59,6 +62,8 @@ question
 \item 'is_response_correct' - TRUE if candidate gave the right response,
 otherwise FALSE
 \item 'title' - the values of attribute 'title' of assessment items
+\item 'candidate_comment' - candidate's comment for the item (if available).
+\item 'scorer_comment' - scorer's comment for manually scored items (if available).
 }
 }
 \examples{
