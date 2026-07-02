@@ -65,8 +65,7 @@ setMethod("initialize", "LMS", function(.Object, ...) {
 #' @param ... Additional arguments to be passed to the method, if applicable.
 #' @docType methods
 #' @rdname authLMS-methods
-#' @importFrom httr2 request req_error req_perform resp_body_xml req_headers
-#'   resp_body_json req_method req_body_multipart
+#' @importFrom httr2 request req_error req_perform resp_body_xml req_headers resp_body_json req_method req_body_multipart req_body_raw
 #' @import getPass
 #' @importFrom keyring key_list key_set_with_value has_keyring_support key_delete key_get
 #' @export
@@ -427,6 +426,106 @@ setMethod("getCourseGroups", signature(object = "missing"),
           function(object, course_id) {
               connection <- get_default_connetion()
               return(getCourseGroups(connection, course_id = course_id))
+          })
+
+#' Create a group in a course
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param course_id A length one character vector with course id.
+#' @param name A length one character vector with the group name.
+#' @param ... Additional arguments to be passed to the method, if applicable.
+#' @return A data frame with the created group attributes.
+#' @rdname createCourseGroup-methods
+#' @export
+setGeneric("createCourseGroup", function(object, course_id, name, ...)
+    standardGeneric("createCourseGroup"))
+
+#' Create a group in a course
+#'
+#' This method creates a group in a course on the Learning Management System
+#' (LMS). If no LMS connection object is provided, it attempts to guess the
+#' connection using default settings (e.g., environment variables). If the
+#' connection cannot be established, an error is thrown.
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param course_id A length one character vector with course id.
+#' @param name A length one character vector with the group name.
+#' @param ... Additional arguments to be passed to the method, if applicable.
+#' @examplesIf interactive()
+#' group <- createCourseGroup("89068111333293", "Topic 5")
+#' @rdname createCourseGroup-methods
+#' @export
+setMethod("createCourseGroup", signature(object = "missing"),
+          function(object, course_id, name, ...) {
+              connection <- get_default_connetion()
+              return(createCourseGroup(connection, course_id = course_id,
+                                       name = name, ...))
+          })
+
+
+#' Add a user to a group
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param group_id A length one character vector with group id.
+#' @param user_id A length one character vector with user id.
+#' @return Status code of the HTTP request.
+#' @rdname addGroupUser-methods
+#' @export
+setGeneric("addGroupUser", function(object, group_id, user_id)
+    standardGeneric("addGroupUser"))
+
+#' Add a user to a group
+#'
+#' This method adds a user to a group on the Learning Management System (LMS).
+#' If no LMS connection object is provided, it attempts to guess the connection
+#' using default settings (e.g., environment variables). If the connection cannot
+#' be established, an error is thrown.
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param group_id A length one character vector with group id.
+#' @param user_id A length one character vector with user id.
+#' @examplesIf interactive()
+#' addGroupUser("442662912", "196610")
+#' @rdname addGroupUser-methods
+#' @export
+setMethod("addGroupUser", signature(object = "missing"),
+          function(object, group_id, user_id) {
+              connection <- get_default_connetion()
+              return(addGroupUser(connection, group_id = group_id,
+                                  user_id = user_id))
+          })
+
+
+#' Remove a user from a group
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param group_id A length one character vector with group id.
+#' @param user_id A length one character vector with user id.
+#' @return Status code of the HTTP request.
+#' @rdname removeGroupUser-methods
+#' @export
+setGeneric("removeGroupUser", function(object, group_id, user_id)
+    standardGeneric("removeGroupUser"))
+
+#' Remove a user from a group
+#'
+#' This method removes a user from a group on the Learning Management System
+#' (LMS). If no LMS connection object is provided, it attempts to guess the
+#' connection using default settings (e.g., environment variables). If the
+#' connection cannot be established, an error is thrown.
+#'
+#' @param object An S4 object of class [LMS] that represents a connection to the LMS.
+#' @param group_id A length one character vector with group id.
+#' @param user_id A length one character vector with user id.
+#' @examplesIf interactive()
+#' removeGroupUser("442662912", "196610")
+#' @rdname removeGroupUser-methods
+#' @export
+setMethod("removeGroupUser", signature(object = "missing"),
+          function(object, group_id, user_id) {
+              connection <- get_default_connetion()
+              return(removeGroupUser(connection, group_id = group_id,
+                                     user_id = user_id))
           })
 
 

@@ -4,6 +4,10 @@
 
 * Added `read_qti()` as an alias for `extract_results()`.
 
+* Added OPAL API functions `createCourseGroup()` for creating course groups,
+  `addGroupUser()` for adding users to groups, and `removeGroupUser()` for
+  removing users from groups.
+
 * `extract_results(level = "item")` now includes task-level
   `candidate_comment` and `scorer_comment` columns for each item row.
 

@@ -507,30 +507,207 @@ setMethod("getCourseGroups", "Opal", function(object, course_id) {
     }
 
     parsed_response <- resp_body_xml(response)
-    groups <- xml2::as_list(parsed_response)$groupVOes
+    parse_group_vo_response(parsed_response)
+})
 
-    get_first_chr <- function(x) {
-        if (!is.null(x) && length(x) > 0) as.character(x[[1]]) else NA_character_
-    }
 
-    get_first_num <- function(x) {
-        if (!is.null(x) && length(x) > 0) as.numeric(x[[1]]) else NA_real_
-    }
+#' Create a group in a course on LMS Opal
+#'
+#' This method creates a learning group in an LMS Opal course using OPAL's
+#' `GroupVO` XML representation. The group name must be unique within the
+#' course. `invitationEnabled` controls whether new group members receive an
+#' invitation that has to be accepted; `signoutEnabled` controls whether members
+#' may leave the group themselves.
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to
+#'   the LMS.
+#' @param course_id A character vector of length one specifying the course
+#'   resource ID. Note that this is not the course ID shown in the URL, but a
+#'   longer identifier available via the "Show more information" option within
+#'   the course.
+#' @param name A character vector of length one with the group name.
+#' @param description A character vector of length one with the group
+#'   description. Defaults to an empty string.
+#' @param minParticipants A numeric value with the minimum number of
+#'   participants. Defaults to `0`.
+#' @param maxParticipants A numeric value with the maximum number of
+#'   participants. Defaults to `0`.
+#' @param invitationEnabled A boolean value. If `TRUE`, invitations are enabled
+#'   for new group members. Defaults to `TRUE`.
+#' @param signoutEnabled A boolean value. If `TRUE`, members may leave the
+#'   group themselves. Defaults to `TRUE`.
+#' @return A one-row data frame with the created group attributes, or `NULL`
+#'   when OPAL rejects the request.
+#' @examplesIf interactive()
+#' group <- createCourseGroup(
+#'     "89068111333293",
+#'     "Topic 5",
+#'     description = "Group for topic 5",
+#'     minParticipants = 1,
+#'     maxParticipants = 1,
+#'     invitationEnabled = FALSE,
+#'     signoutEnabled = FALSE
+#' )
+#' @rdname createCourseGroup-methods
+#' @export
+setMethod("createCourseGroup", "Opal",
+          function(object, course_id, name, description = "",
+                   minParticipants = 0, maxParticipants = 0,
+                   invitationEnabled = TRUE, signoutEnabled = TRUE) {
 
-    get_first_lgl <- function(x) {
-        if (!is.null(x) && length(x) > 0) as.logical(x[[1]]) else NA
-    }
-    groups_df <- data.frame(
-        key = vapply(groups, function(g) get_first_chr(g$key), character(1)),
-        name = vapply(groups, function(g) get_first_chr(g$name), character(1)),
-        description = vapply(groups, function(g) get_first_chr(g$description), character(1)),
-        minParticipants = vapply(groups, function(g) get_first_num(g$minParticipants), numeric(1)),
-        maxParticipants = vapply(groups, function(g) get_first_num(g$maxParticipants), numeric(1)),
-        invitationEnabled = vapply(groups, function(g) get_first_lgl(g$invitationEnabled), logical(1)),
-        signoutEnabled = vapply(groups, function(g) get_first_lgl(g$signoutEnabled), logical(1)),
-        stringsAsFactors = FALSE
+    if (!ensure_opal_login(object)) return(NULL)
+
+    group_xml <- create_group_vo_xml(
+        name = name,
+        description = description,
+        minParticipants = minParticipants,
+        maxParticipants = maxParticipants,
+        invitationEnabled = invitationEnabled,
+        signoutEnabled = signoutEnabled
     )
-    return(groups_df)
+
+    url_res_group <- paste0(object@endpoint, "restapi/repo/courses/",
+                            course_id, "/groups")
+    req <- request(url_res_group) %>%
+        req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN"),
+                    "Content-Type" = "application/xml") %>%
+        req_method("PUT") %>%
+        req_body_raw(charToRaw(group_xml), type = "application/xml")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+
+    if (response$status_code == 400) {
+        message("The group could not be created. It may already exist in the course.")
+        return(NULL)
+    }
+
+    if (response$status_code == 401) {
+        message("Status Code: 401 Unauthorized.")
+        message("The required permissions are typically granted to course owners, course administrators, or users in roles with access to the assessment tool.")
+        return(NULL)
+    }
+
+    if (response$status_code == 404) {
+        message("The course could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    parsed_response <- resp_body_xml(response)
+    parse_group_vo_response(parsed_response)
+})
+
+
+#' Add a user to a group on LMS Opal
+#'
+#' This method adds a user to a learning group in LMS Opal by group id and user
+#' id.
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to
+#'   the LMS.
+#' @param group_id A character vector of length one specifying the group ID.
+#' @param user_id A character vector of length one specifying the user ID.
+#' @return Status code `200` if the user was added successfully, or `NULL` when
+#'   OPAL rejects the request.
+#' @examplesIf interactive()
+#' addGroupUser("442662912", "196610")
+#' @rdname addGroupUser-methods
+#' @export
+setMethod("addGroupUser", "Opal", function(object, group_id, user_id) {
+
+    if (!ensure_opal_login(object)) return(NULL)
+
+    assert_opal_api_scalar(group_id, "group_id")
+    assert_opal_api_scalar(user_id, "user_id")
+
+    url_res <- paste0(object@endpoint, "restapi/groups/", group_id,
+                      "/participants/", user_id)
+
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_method("PUT")
+
+    response <- req %>%
+        req_error(is_error = ~ FALSE) %>%
+        req_perform()
+
+    if (response$status_code == 401) {
+        message("Status Code: 401 Unauthorized.")
+        message("The required permissions are typically granted to course owners, course administrators, or users in roles with access to the assessment tool.")
+        return(NULL)
+    }
+
+    if (response$status_code == 404) {
+        message("The group or user could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    as.integer(response$status_code)
+})
+
+
+#' Remove a user from a group on LMS Opal
+#'
+#' This method removes a user from a learning group in LMS Opal by group id and
+#' user id.
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to
+#'   the LMS.
+#' @param group_id A character vector of length one specifying the group ID.
+#' @param user_id A character vector of length one specifying the user ID.
+#' @return Status code `200` if the user was removed successfully, or `NULL`
+#'   when OPAL rejects the request.
+#' @examplesIf interactive()
+#' removeGroupUser("442662912", "196610")
+#' @rdname removeGroupUser-methods
+#' @export
+setMethod("removeGroupUser", "Opal", function(object, group_id, user_id) {
+
+    if (!ensure_opal_login(object)) return(NULL)
+
+    assert_opal_api_scalar(group_id, "group_id")
+    assert_opal_api_scalar(user_id, "user_id")
+
+    url_res <- paste0(object@endpoint, "restapi/groups/", group_id,
+                      "/participants/", user_id)
+
+    req <- request(url_res) %>%
+        req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_method("DELETE")
+
+    response <- req %>%
+        req_error(is_error = ~ FALSE) %>%
+        req_perform()
+
+    if (response$status_code == 401) {
+        message("Status Code: 401 Unauthorized.")
+        return(NULL)
+    }
+
+    if (response$status_code == 404) {
+        message("The group or user could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code == 304) {
+        message("The user could not be removed because they are not a participant of the group.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    as.integer(response$status_code)
 })
 
 
@@ -641,6 +818,119 @@ setMethod("getGroupUsers", "Opal", function(object, group_id) {
     rownames(out) <- NULL
     return(out)
 })
+
+
+create_group_vo_xml <- function(name, description = "", minParticipants = 0,
+                                maxParticipants = 0,
+                                invitationEnabled = TRUE,
+                                signoutEnabled = TRUE) {
+    assert_opal_api_scalar(name, "name")
+    assert_opal_api_scalar(description, "description")
+    assert_opal_api_scalar(minParticipants, "minParticipants")
+    assert_opal_api_scalar(maxParticipants, "maxParticipants")
+    assert_opal_api_scalar(invitationEnabled, "invitationEnabled")
+    assert_opal_api_scalar(signoutEnabled, "signoutEnabled")
+
+    if (!is.logical(invitationEnabled)) {
+        stop("`invitationEnabled` must be TRUE or FALSE.", call. = FALSE)
+    }
+    if (!is.logical(signoutEnabled)) {
+        stop("`signoutEnabled` must be TRUE or FALSE.", call. = FALSE)
+    }
+
+    minParticipants <- suppressWarnings(as.numeric(minParticipants))
+    maxParticipants <- suppressWarnings(as.numeric(maxParticipants))
+
+    if (is.na(minParticipants)) {
+        stop("`minParticipants` must be numeric.", call. = FALSE)
+    }
+    if (is.na(maxParticipants)) {
+        stop("`maxParticipants` must be numeric.", call. = FALSE)
+    }
+
+    bool_xml <- function(x) if (isTRUE(x)) "true" else "false"
+
+    group <- xml2::xml_new_root("groupVO")
+    xml2::xml_add_child(group, "name", as.character(name))
+    xml2::xml_add_child(group, "description", as.character(description))
+    xml2::xml_add_child(group, "minParticipants", as.character(minParticipants))
+    xml2::xml_add_child(group, "maxParticipants", as.character(maxParticipants))
+    xml2::xml_add_child(group, "invitationEnabled", bool_xml(invitationEnabled))
+    xml2::xml_add_child(group, "signoutEnabled", bool_xml(signoutEnabled))
+
+    as.character(group)
+}
+
+assert_opal_api_scalar <- function(x, arg) {
+    if (length(x) != 1 || is.na(x)) {
+        stop("`", arg, "` must be a non-missing value of length one.",
+             call. = FALSE)
+    }
+}
+
+parse_group_vo_response <- function(parsed_response) {
+    root <- xml2::xml_root(parsed_response)
+    records <- if (xml2::xml_name(root) == "groupVO") {
+        list(root)
+    } else {
+        as.list(xml2::xml_find_all(root, ".//*[local-name()='groupVO']"))
+    }
+
+    get_text <- function(node, path) {
+        value <- xml2::xml_text(xml2::xml_find_first(node, path))
+        if (length(value) == 0 || is.na(value)) NA_character_ else value
+    }
+
+    get_num <- function(node, path) {
+        as.numeric(get_text(node, path))
+    }
+
+    get_lgl <- function(node, path) {
+        as.logical(get_text(node, path))
+    }
+
+    group_vo_df(
+        key = vapply(records, get_text, character(1),
+                     "./*[local-name()='key']"),
+        name = vapply(records, get_text, character(1),
+                      "./*[local-name()='name']"),
+        description = vapply(records, get_text, character(1),
+                             "./*[local-name()='description']"),
+        type = vapply(records, get_text, character(1),
+                      "./*[local-name()='type']"),
+        minParticipants = vapply(records, get_num, numeric(1),
+                                 "./*[local-name()='minParticipants']"),
+        maxParticipants = vapply(records, get_num, numeric(1),
+                                 "./*[local-name()='maxParticipants']"),
+        invitationEnabled = vapply(records, get_lgl, logical(1),
+                                   "./*[local-name()='invitationEnabled']"),
+        signoutEnabled = vapply(records, get_lgl, logical(1),
+                                "./*[local-name()='signoutEnabled']")
+    )
+}
+
+group_vo_df <- function(key = character(),
+                        name = character(),
+                        description = character(),
+                        type = character(),
+                        minParticipants = numeric(),
+                        maxParticipants = numeric(),
+                        invitationEnabled = logical(),
+                        signoutEnabled = logical()) {
+    df <- data.frame(
+        key = key,
+        name = name,
+        description = description,
+        type = type,
+        minParticipants = minParticipants,
+        maxParticipants = maxParticipants,
+        invitationEnabled = invitationEnabled,
+        signoutEnabled = signoutEnabled,
+        stringsAsFactors = FALSE
+    )
+    rownames(df) <- NULL
+    df
+}
 
 
 parse_course_assessment_response <- function(parsed_response) {

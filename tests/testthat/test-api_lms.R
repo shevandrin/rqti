@@ -557,6 +557,191 @@ test_that("Opal API methods return NULL for missing course resources", {
     expect_null(out_groups)
 })
 
+test_that("createCourseGroup sends a GroupVO XML PUT request and parses the response", {
+    con <- mock_opal_connection()
+    captured_req <- NULL
+    old_token <- Sys.getenv("X-OLAT-TOKEN", unset = NA_character_)
+    on.exit({
+        if (is.na(old_token)) {
+            Sys.unsetenv("X-OLAT-TOKEN")
+        } else {
+            Sys.setenv("X-OLAT-TOKEN" = old_token)
+        }
+    }, add = TRUE)
+    Sys.setenv("X-OLAT-TOKEN" = "test-token")
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) {
+            captured_req <<- req
+            httr2::response(
+                status_code = 200,
+                headers = list("content-type" = "application/xml"),
+                body = charToRaw(paste0(
+                    "<groupVO>",
+                    "<key>425132035</key>",
+                    "<description>Gruppe zur Bearbeitung des Thema 5</description>",
+                    "<name>Thema 5 WS2021</name>",
+                    "<type>LearningGroup</type>",
+                    "<minParticipants>1</minParticipants>",
+                    "<maxParticipants>1</maxParticipants>",
+                    "<invitationEnabled>false</invitationEnabled>",
+                    "<signoutEnabled>false</signoutEnabled>",
+                    "</groupVO>"
+                ))
+            )
+        },
+        .package = "rqti"
+    )
+
+    group <- createCourseGroup(
+        con,
+        "89334258174661",
+        "Thema 5 WS2021",
+        description = "Gruppe zur Bearbeitung des Thema 5",
+        minParticipants = 1,
+        maxParticipants = 1,
+        invitationEnabled = FALSE,
+        signoutEnabled = FALSE
+    )
+
+    body <- rawToChar(captured_req$body$data)
+
+    expect_identical(captured_req$url,
+                     "https://opal.example/restapi/repo/courses/89334258174661/groups")
+    expect_identical(captured_req$method, "PUT")
+    expect_identical(captured_req$body$content_type, "application/xml")
+    expect_identical(captured_req$headers$`X-OLAT-TOKEN`, "test-token")
+    expect_match(body, "<groupVO>")
+    expect_match(body, "<name>Thema 5 WS2021</name>", fixed = TRUE)
+    expect_match(body, "<description>Gruppe zur Bearbeitung des Thema 5</description>",
+                 fixed = TRUE)
+    expect_match(body, "<minParticipants>1</minParticipants>", fixed = TRUE)
+    expect_match(body, "<maxParticipants>1</maxParticipants>", fixed = TRUE)
+    expect_match(body, "<invitationEnabled>false</invitationEnabled>", fixed = TRUE)
+    expect_match(body, "<signoutEnabled>false</signoutEnabled>", fixed = TRUE)
+
+    expect_s3_class(group, "data.frame")
+    expect_equal(nrow(group), 1)
+    expect_identical(group$key, "425132035")
+    expect_identical(group$name, "Thema 5 WS2021")
+    expect_identical(group$type, "LearningGroup")
+    expect_equal(group$minParticipants, 1)
+    expect_equal(group$maxParticipants, 1)
+    expect_false(group$invitationEnabled)
+    expect_false(group$signoutEnabled)
+})
+
+test_that("createCourseGroup returns NULL when OPAL rejects the group", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) httr2::response(status_code = 400),
+        .package = "rqti"
+    )
+
+    expect_message(
+        group <- createCourseGroup(con, "89334258174661", "Existing group"),
+        "The group could not be created"
+    )
+    expect_null(group)
+})
+
+test_that("addGroupUser sends a participant PUT request", {
+    con <- mock_opal_connection()
+    captured_req <- NULL
+    old_token <- Sys.getenv("X-OLAT-TOKEN", unset = NA_character_)
+    on.exit({
+        if (is.na(old_token)) {
+            Sys.unsetenv("X-OLAT-TOKEN")
+        } else {
+            Sys.setenv("X-OLAT-TOKEN" = old_token)
+        }
+    }, add = TRUE)
+    Sys.setenv("X-OLAT-TOKEN" = "test-token")
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) {
+            captured_req <<- req
+            httr2::response(status_code = 200)
+        },
+        .package = "rqti"
+    )
+
+    status <- addGroupUser(con, "442662912", "196610")
+
+    expect_identical(captured_req$url,
+                     "https://opal.example/restapi/groups/442662912/participants/196610")
+    expect_identical(captured_req$method, "PUT")
+    expect_identical(captured_req$headers$`X-OLAT-TOKEN`, "test-token")
+    expect_identical(status, 200L)
+})
+
+test_that("addGroupUser returns NULL when OPAL cannot find the group or user", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) httr2::response(status_code = 404),
+        .package = "rqti"
+    )
+
+    expect_message(
+        status <- addGroupUser(con, "missing-group", "missing-user"),
+        "The group or user could not be found"
+    )
+    expect_null(status)
+})
+
+test_that("removeGroupUser sends a participant DELETE request", {
+    con <- mock_opal_connection()
+    captured_req <- NULL
+    old_token <- Sys.getenv("X-OLAT-TOKEN", unset = NA_character_)
+    on.exit({
+        if (is.na(old_token)) {
+            Sys.unsetenv("X-OLAT-TOKEN")
+        } else {
+            Sys.setenv("X-OLAT-TOKEN" = old_token)
+        }
+    }, add = TRUE)
+    Sys.setenv("X-OLAT-TOKEN" = "test-token")
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) {
+            captured_req <<- req
+            httr2::response(status_code = 200)
+        },
+        .package = "rqti"
+    )
+
+    status <- removeGroupUser(con, "442662912", "196610")
+
+    expect_identical(captured_req$url,
+                     "https://opal.example/restapi/groups/442662912/participants/196610")
+    expect_identical(captured_req$method, "DELETE")
+    expect_identical(captured_req$headers$`X-OLAT-TOKEN`, "test-token")
+    expect_identical(status, 200L)
+})
+
+test_that("removeGroupUser returns NULL when the user is not a participant", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) httr2::response(status_code = 304),
+        .package = "rqti"
+    )
+
+    expect_message(
+        status <- removeGroupUser(con, "442662912", "196610"),
+        "not a participant"
+    )
+    expect_null(status)
+})
+
 test_that("getGroupUsers skips missing groups and returns an empty data frame", {
     con <- mock_opal_connection()
 
@@ -769,4 +954,43 @@ test_that("course assessment XML without records returns the assessment schema",
     expect_type(assessment$score, "double")
     expect_type(assessment$passed, "logical")
     expect_type(assessment$attempts, "integer")
+})
+
+test_that("group XML is parsed into group data", {
+    xml <- xml2::read_xml(
+        paste0(
+            "<groupVOes>",
+            "<groupVO>",
+            "<key>425132035</key>",
+            "<description>group descri</description>",
+            "<name>Group Rest 6</name>",
+            "<type>LearningGroup</type>",
+            "<minParticipants>0</minParticipants>",
+            "<maxParticipants>0</maxParticipants>",
+            "<invitationEnabled>false</invitationEnabled>",
+            "<signoutEnabled>true</signoutEnabled>",
+            "</groupVO>",
+            "</groupVOes>"
+        )
+    )
+
+    groups <- parse_group_vo_response(xml)
+
+    expect_s3_class(groups, "data.frame")
+    expect_identical(
+        names(groups),
+        c(
+            "key", "name", "description", "type", "minParticipants",
+            "maxParticipants", "invitationEnabled", "signoutEnabled"
+        )
+    )
+    expect_equal(nrow(groups), 1)
+    expect_identical(groups$key, "425132035")
+    expect_identical(groups$name, "Group Rest 6")
+    expect_identical(groups$description, "group descri")
+    expect_identical(groups$type, "LearningGroup")
+    expect_equal(groups$minParticipants, 0)
+    expect_equal(groups$maxParticipants, 0)
+    expect_false(groups$invitationEnabled)
+    expect_true(groups$signoutEnabled)
 })
