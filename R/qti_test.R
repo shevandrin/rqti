@@ -219,18 +219,33 @@ create_manifest <- function(object) {
 
     file_name <- paste0(object@identifier, ".xml")
     file <-  tag("file", list(href = file_name))
+    stylesheet_files <- create_stylesheet_file_tags(object)
     items <- unlist(Map(getAssessmentItems, object@section, USE.NAMES = FALSE))
     dependencies <- Map(create_dependency, names(items))
     test_resource <- tag("resource", list(identifier = object@identifier,
                                           type = "imsqti_test_xmlv2p1",
                                           href = paste0(object@identifier,
                                                         ".xml"),
-                                          file, metadata,
+                                          file, stylesheet_files, metadata,
                                           dependencies))
     item_resources <- Map(create_resource_item, names(items), items)
     resources <- tag("resources", list(test_resource, item_resources))
 
     tagAppendChildren(manifest, organizations, resources)
+}
+
+create_stylesheet_file_tags <- function(object) {
+    hrefs <- character()
+
+    if (!is.null(object@academic_grading)) {
+        hrefs <- c(hrefs, "styles/rqti.css")
+    }
+
+    if (length(object@stylesheet_path) != 0) {
+        hrefs <- c(hrefs, file.path("styles", basename(object@stylesheet_path)))
+    }
+
+    Map(function(href) tag("file", list(href = href)), unique(hrefs))
 }
 
 # create tag 'dependency' for minifest file

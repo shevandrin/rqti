@@ -546,6 +546,56 @@ test_that("createQtiTest includes custom stylesheets in zip archives", {
 
     zip_content <- zip::zip_list(zip_file)$filename
     expect_true(file.path("styles", basename(style_file)) %in% zip_content)
+
+    manifest_dir <- tempfile()
+    dir.create(manifest_dir)
+    on.exit(unlink(manifest_dir, recursive = TRUE), add = TRUE)
+    unzip(zip_file, files = "imsmanifest.xml", exdir = manifest_dir)
+    manifest <- xml2::read_xml(file.path(manifest_dir, "imsmanifest.xml"))
+    ns <- xml2::xml_ns(manifest)
+    manifest_files <- xml2::xml_attr(
+        xml2::xml_find_all(
+            manifest,
+            ".//d1:resource[@identifier='id_test_style']/d1:file",
+            ns
+        ),
+        "href"
+    )
+    expect_true(file.path("styles", basename(style_file)) %in% manifest_files)
+})
+
+test_that("createQtiTest includes academic grading stylesheet in manifests", {
+    exam <- test(
+        section(essay(identifier = "essay_grade_style")),
+        identifier = "id_test_grade_style",
+        academic_grading = c("1.0" = 1, "5.0" = 0)
+    )
+
+    zip_file <- suppressMessages(createQtiTest(
+        exam,
+        dir = tempdir(),
+        zip_only = TRUE
+    ))
+    on.exit(unlink(zip_file), add = TRUE)
+
+    zip_content <- zip::zip_list(zip_file)$filename
+    expect_true(file.path("styles", "rqti.css") %in% zip_content)
+
+    manifest_dir <- tempfile()
+    dir.create(manifest_dir)
+    on.exit(unlink(manifest_dir, recursive = TRUE), add = TRUE)
+    unzip(zip_file, files = "imsmanifest.xml", exdir = manifest_dir)
+    manifest <- xml2::read_xml(file.path(manifest_dir, "imsmanifest.xml"))
+    ns <- xml2::xml_ns(manifest)
+    manifest_files <- xml2::xml_attr(
+        xml2::xml_find_all(
+            manifest,
+            ".//d1:resource[@identifier='id_test_grade_style']/d1:file",
+            ns
+        ),
+        "href"
+    )
+    expect_true(file.path("styles", "rqti.css") %in% manifest_files)
 })
 
 test_that("Testing method createAssessmentTest for AssessmentTest class", {
