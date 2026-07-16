@@ -6,6 +6,8 @@
 \alias{rqti-package}
 \title{rqti: Create Tests According to QTI 2.1 Standard}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 Create tests and tasks compliant with the Question & Test Interoperability (QTI) information model version 2.1. Input sources are Rmd/md description files or S4-class objects. Output formats include standalone zip or xml files. Supports the generation of basic task types (single and multiple choice, order, pair association, matching tables, filling gaps and essay) and provides a comprehensive set of attributes for customizing tests.
 }
 \seealso{
@@ -22,6 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Andrey Shevandrin \email{shevandrin@gmail.com} (\href{https://orcid.org/0000-0003-0807-2546}{ORCID}) [copyright holder]
   \item Johannes Titz \email{johannes@titz.science} (\href{https://orcid.org/0000-0002-1102-5719}{ORCID}) [copyright holder]
 }
 
