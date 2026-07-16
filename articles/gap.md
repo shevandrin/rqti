@@ -238,7 +238,7 @@ gap1 <- gap_numeric(solution = 1.4, tolerance = 10, tolerance_type = "relative",
                     include_lower_bound = TRUE, include_upper_bound = TRUE,
                     expected_length = 10, placeholder = "put mean value here")
 cat(gap1)
-<gap>{solution: 1.4, tolerance: 10, tolerance_type: relative, points: 5, response_identifier: mean_value, include_lower_bound: yes, include_upper_bound: yes, expected_length: 10, placeholder: put mean value here, type: numeric}</gap>
+<gap>{solution: 1.4, tolerance: 10, tolerance_type: 'relative', points: 5, response_identifier: 'mean_value', include_lower_bound: true, include_upper_bound: true, expected_length: 10, placeholder: 'put mean value here', type: 'numeric'}</gap>
 ```
 
 As you can see, YAML is ultimately used, but for most users, it is more
@@ -305,7 +305,7 @@ gap2 <- gap_text(gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen")
                           placeholder = "text without special characters",
                           expected_length = 25))
 cat(gap2)
-<gap>{solution: <gap>{solution: [Bildungsportal Sachsen,Bildungs Portal Sachsen], tolerance: 4, case_sensitive: no, points: 1, expected_length: 25, placeholder: text without special characters, type: text_opal}</gap>, case_sensitive: no, points: 1, expected_length: 199, type: text}</gap>
+<gap>{solution: '<gap>{solution: [''Bildungsportal Sachsen'', ''Bildungs Portal Sachsen''], tolerance: 4, case_sensitive: false, points: 1, expected_length: 25, placeholder: ''text without special characters'', type: ''text_opal''}</gap>', case_sensitive: false, points: 1, expected_length: 211, type: 'text'}</gap>
 ```
 
 Argument list of `gap_text`:
