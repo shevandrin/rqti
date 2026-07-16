@@ -205,6 +205,9 @@ create_entry_slots <- function(html, attrs) {
 create_gap_object <- function(entry, id) {
     gap_str <- xml2::xml_text(entry)
     gap_str <- sub("\r\n", " ", gap_str)
+    gap_str <- gsub("\u2018|\u2019", "'", gap_str)
+    gap_str <- gsub("\u201C|\u201D", '"', gap_str)
+
     attrs <- yaml::yaml.load(gap_str)
     if (!is.list(attrs)) {
         if (!is.na(suppressWarnings(as.numeric(gap_str)))) {

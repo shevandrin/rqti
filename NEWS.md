@@ -15,6 +15,11 @@
   QTI/HTML content using Base64 encoding. The function supports both
   `<object>` and `<audio>` rendering methods and
   self-contained audio embedding for portable assessment items.
+  
+## Bug fixes
+
+* Dropdown items (dropdown()) can now include commas and other punctuation 
+without breaking YAML parsing.
 
 # rqti 1.2.1
 

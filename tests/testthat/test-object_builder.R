@@ -466,7 +466,7 @@ test_that("Testing create_question_object() for InlineChoice
                                               "verkaufen?"),
                                    new("InlineChoice",
                                        response_identifier = "response_3",
-                                       choices = c(2007, 2008)),
+                                       choices = c("2007", "2008")),
                                    '</p>'),
                     feedback = list(new("WrongFeedback",
                                     content = list("<p>wrong feedback</p>")),

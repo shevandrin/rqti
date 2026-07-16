@@ -100,39 +100,65 @@ dropdown <- function(choices, solution_index = 1, points = 1, shuffle = TRUE,
     return(result)
 }
 
-clean_yaml_str <- function(params, solution, type){
+
+clean_yaml_str <- function(params, solution, type) {
     x <- c(params, list(type = type))
+
+    clean_text <- function(v) {
+        v <- as.character(v)
+        v <- gsub("\r|\n", " ", v)
+        v <- gsub("\\s+", " ", v)
+        trimws(v)
+    }
+
+    quote_yaml <- function(v) {
+        v <- clean_text(v)
+
+        # In YAML single-quoted strings, an apostrophe is escaped as ''
+        v <- gsub("'", "''", v, fixed = TRUE)
+
+        paste0("'", v, "'")
+    }
 
     fmt_value <- function(v) {
         if (length(v) > 1) {
-            v <- as.character(v)
-            v <- gsub("'", "", v, fixed = TRUE)
-            v <- trimws(v)
-            return(paste0("[", paste(v, collapse = ","), "]"))
+            if (is.character(v)) {
+                values <- vapply(v, quote_yaml, character(1))
+            } else if (is.logical(v)) {
+                values <- ifelse(v, "true", "false")
+            } else {
+                values <- as.character(v)
+            }
+
+            return(paste0("[", paste(values, collapse = ", "), "]"))
         }
 
         if (is.logical(v)) {
-            return(ifelse(isTRUE(v), "yes", "no"))
+            return(if (isTRUE(v)) "true" else "false")
         }
 
         if (is.numeric(v)) {
             return(as.character(v))
         }
 
-        v <- as.character(v)
-        v <- gsub("\r|\n", " ", v)
-        v <- gsub("\\s+", " ", v)
-        v <- gsub("'", "", v, fixed = TRUE)
-        trimws(v)
+        quote_yaml(v)
     }
+
     parts <- mapply(
-        FUN = function(k, v) paste0(k, ": ", fmt_value(v)),
+        FUN = function(k, v) {
+            paste0(k, ": ", fmt_value(v))
+        },
         k = names(x),
         v = x,
         SIMPLIFY = TRUE,
         USE.NAMES = FALSE
     )
-    return(paste0("<gap>{", paste(parts, collapse = ", "), "}</gap>"))
+
+    paste0(
+        "<gap>{",
+        paste(parts, collapse = ", "),
+        "}</gap>"
+    )
 }
 
 
