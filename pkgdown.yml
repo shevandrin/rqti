@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   adding_metadata: adding_metadata.html
@@ -18,7 +18,7 @@ articles:
   section: section.html
   singlechoice: singlechoice.html
   table: table.html
-last_built: 2026-06-19T10:08Z
+last_built: 2026-07-16T10:29Z
 urls:
   reference: https://shevandrin.github.io/rqti/reference
   article: https://shevandrin.github.io/rqti/articles

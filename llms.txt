@@ -225,6 +225,8 @@ for new features provided as time permits.
 - [`WrongFeedback-class`](https://shevandrin.github.io/rqti/reference/WrongFeedback-class.md)
   [`WrongFeedback`](https://shevandrin.github.io/rqti/reference/WrongFeedback-class.md)
   : Class "WrongFeedback"
+- [`addGroupUser()`](https://shevandrin.github.io/rqti/reference/addGroupUser-methods.md)
+  : Add a user to a group
 - [`assessmentSection()`](https://shevandrin.github.io/rqti/reference/assessmentSection.md)
   : Create an object AssessmentSection
 - [`assessmentTest()`](https://shevandrin.github.io/rqti/reference/assessmentTest.md)
@@ -243,6 +245,8 @@ for new features provided as time permits.
   : Create an element assessmentTest of a qti-xml document for test
 - [`createConfigurationFile()`](https://shevandrin.github.io/rqti/reference/createConfigurationFile-methods.md)
   : Create a configuration file for QTI test
+- [`createCourseGroup()`](https://shevandrin.github.io/rqti/reference/createCourseGroup-methods.md)
+  : Create a group in a course
 - [`createItemBody()`](https://shevandrin.github.io/rqti/reference/createItemBody-methods.md)
   : Create an element itemBody of a qti-xml document
 - [`createMetadata()`](https://shevandrin.github.io/rqti/reference/createMetadata-methods.md)
@@ -281,6 +285,7 @@ for new features provided as time permits.
 - [`exams_task()`](https://shevandrin.github.io/rqti/reference/exams_task.md)
   : Convert an exams Rmd task to a QTI 2.1 XML file
 - [`extract_results()`](https://shevandrin.github.io/rqti/reference/extract_results.md)
+  [`read_qti()`](https://shevandrin.github.io/rqti/reference/extract_results.md)
   : Create data frame with test results
 - [`gap_numeric()`](https://shevandrin.github.io/rqti/reference/gap_numeric.md)
   : Create YAML string for NumericGap object
@@ -369,6 +374,8 @@ for new features provided as time permits.
   : Constructor function for class QtiMetadata
 - [`qtijs_pkg_path()`](https://shevandrin.github.io/rqti/reference/qtijs_pkg_path.md)
   : Shortcut for the qtijs path of the rqti package local installation.
+- [`removeGroupUser()`](https://shevandrin.github.io/rqti/reference/removeGroupUser-methods.md)
+  : Remove a user from a group
 - [`render_opal()`](https://shevandrin.github.io/rqti/reference/render_opal.md)
   : Render Rmd directly in Opal via API
 - [`render_qtijs()`](https://shevandrin.github.io/rqti/reference/render_qtijs.md)

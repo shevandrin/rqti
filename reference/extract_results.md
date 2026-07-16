@@ -8,6 +8,8 @@ or xml file and creates two kinds of data frames (according to parameter
 
 ``` r
 extract_results(file, level = "task", hide_filename = TRUE)
+
+read_qti(file, level = "task", hide_filename = TRUE)
 ```
 
 ## Arguments
@@ -89,6 +91,11 @@ variables.
   otherwise FALSE
 
 - 'title' - the values of attribute 'title' of assessment items
+
+- 'candidate_comment' - candidate's comment for the item (if available).
+
+- 'scorer_comment' - scorer's comment for manually scored items (if
+  available).
 
 ## Examples
 

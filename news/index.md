@@ -5,6 +5,22 @@
 ### New features
 
 - Added
+  [`read_qti()`](https://shevandrin.github.io/rqti/reference/extract_results.md)
+  as an alias for
+  [`extract_results()`](https://shevandrin.github.io/rqti/reference/extract_results.md).
+
+- Added OPAL API functions
+  [`createCourseGroup()`](https://shevandrin.github.io/rqti/reference/createCourseGroup-methods.md)
+  for creating course groups,
+  [`addGroupUser()`](https://shevandrin.github.io/rqti/reference/addGroupUser-methods.md)
+  for adding users to groups, and
+  [`removeGroupUser()`](https://shevandrin.github.io/rqti/reference/removeGroupUser-methods.md)
+  for removing users from groups.
+
+- `extract_results(level = "item")` now includes task-level
+  `candidate_comment` and `scorer_comment` columns for each item row.
+
+- Added
   [`provide_audio()`](https://shevandrin.github.io/rqti/reference/provide_audio.md)
   helper to embed local audio files directly into QTI/HTML content using
   Base64 encoding. The function supports both `<object>` and `<audio>`
@@ -96,6 +112,12 @@ CRAN release: 2026-05-10
   for retrieving course groups and group users as data frames.
 
 ### Improvements
+
+- Improved
+  [`extract_results()`](https://shevandrin.github.io/rqti/reference/extract_results.md)
+  performance for archives with many result files by extracting only
+  relevant XML/result zip files, avoiding repeated row binding, and
+  reducing XPath work for item-level responses.
 
 - Enhanced
   [`verify_qti()`](https://shevandrin.github.io/rqti/reference/verify_qti.md)

@@ -49,6 +49,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/TextGap-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/TextGapOpal-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/WrongFeedback-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/addGroupUser-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/assessmentSection.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/assessmentTest.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/assessmentTestOpal.html</loc></url>
@@ -58,6 +59,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/correctFeedback.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/createAssessmentTest-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/createConfigurationFile-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/createCourseGroup-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/createItemBody-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/createMetadata-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/createOutcomeDeclaration-methods.html</loc></url>
@@ -123,6 +125,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/qti_contributor.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/qti_metadata.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/qtijs_pkg_path.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/removeGroupUser-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/render_opal.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/render_qtijs.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/render_xml.html</loc></url>

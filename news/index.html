@@ -64,7 +64,10 @@
 <h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>Added <code><a href="../reference/provide_audio.html">provide_audio()</a></code> helper to embed local audio files directly into QTI/HTML content using Base64 encoding. The function supports both <code>&lt;object&gt;</code> and <code>&lt;audio&gt;</code> rendering methods and self-contained audio embedding for portable assessment items.</li>
+<ul><li><p>Added <code><a href="../reference/extract_results.html">read_qti()</a></code> as an alias for <code><a href="../reference/extract_results.html">extract_results()</a></code>.</p></li>
+<li><p>Added OPAL API functions <code><a href="../reference/createCourseGroup-methods.html">createCourseGroup()</a></code> for creating course groups, <code><a href="../reference/addGroupUser-methods.html">addGroupUser()</a></code> for adding users to groups, and <code><a href="../reference/removeGroupUser-methods.html">removeGroupUser()</a></code> for removing users from groups.</p></li>
+<li><p><code>extract_results(level = "item")</code> now includes task-level <code>candidate_comment</code> and <code>scorer_comment</code> columns for each item row.</p></li>
+<li><p>Added <code><a href="../reference/provide_audio.html">provide_audio()</a></code> helper to embed local audio files directly into QTI/HTML content using Base64 encoding. The function supports both <code>&lt;object&gt;</code> and <code>&lt;audio&gt;</code> rendering methods and self-contained audio embedding for portable assessment items.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -91,7 +94,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-1-2-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-2-0"></a></h3>
-<ul><li><p>Enhanced <code><a href="../reference/verify_qti.html">verify_qti()</a></code> to support different input types, provide more informative validation messages, and use both <code>xmllint</code> and <code>xml2</code> backends for XML validation.</p></li>
+<ul><li><p>Improved <code><a href="../reference/extract_results.html">extract_results()</a></code> performance for archives with many result files by extracting only relevant XML/result zip files, avoiding repeated row binding, and reducing XPath work for item-level responses.</p></li>
+<li><p>Enhanced <code><a href="../reference/verify_qti.html">verify_qti()</a></code> to support different input types, provide more informative validation messages, and use both <code>xmllint</code> and <code>xml2</code> backends for XML validation.</p></li>
 <li><p><code>extract_results(level = "task")</code> now includes an additional column containing <code>scorerComment</code> for manually scored item results.</p></li>
 <li><p>Images referenced in external XML files are now automatically embedded as Base64. This ensures that tasks are fully self-contained and do not depend on external image files.</p></li>
 <li><p>Changed the default <code>time_limit</code> for <code>AssessmentTest</code> and <code>AssessmentTestOpal</code> objects (and for all related helper functions) to NULL, so time limits are no longer set at the test level by default.</p></li>
@@ -218,7 +222,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
