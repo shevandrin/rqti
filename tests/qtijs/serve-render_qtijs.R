@@ -21,10 +21,11 @@ copy_qtijs_dir <- function() {
 }
 
 qtijs_path <- copy_qtijs_dir()
-sc1d <- system.file("exercises", "sc1d.Rmd", package = "rqti")
+sc1d <- system.file("rmarkdown", "templates", "singlechoice-simple",
+                    "skeleton", "skeleton.Rmd", package = "rqti")
 
 if (!nzchar(sc1d)) {
-    stop("Could not find exercises/sc1d.Rmd in the rqti package")
+    stop("Could not find rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd in the rqti package")
 }
 
 invisible(rqti:::prepareQTIJSFiles(sc1d, qtijs_path))

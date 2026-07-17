@@ -43,7 +43,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' f <- system.file("exercises", "sc1d.xml", package = "rqti")
+#' f <- system.file("sc1d.xml", package = "rqti")
 #'
 #' res <- verify_qti(f)
 #' res$valid

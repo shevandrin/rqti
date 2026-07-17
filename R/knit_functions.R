@@ -30,8 +30,11 @@
 #'   result.
 #'
 #' @examplesIf interactive()
-#'   file <- system.file("exercises/sc1.Rmd", package = 'rqti')
-#'   render_qtijs(file)
+#'file <- system.file(
+#'     "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+#'     package='rqti'
+#')
+#'render_qtijs(file)
 #'
 #' @importFrom knitr knit_params
 #' @export
@@ -69,7 +72,7 @@ render_qtijs <- function(input, preview_feedback = FALSE,
 #' @inheritParams render_qtijs
 #' @return nothing, has side effects
 #' @examplesIf interactive()
-#'   file <- system.file("exercises/sc1d.xml", package = 'rqti')
+#'   file <- system.file("sc1d.xml", package = 'rqti')
 #'   render_qtijs(file)
 #'
 #' @export
@@ -175,8 +178,11 @@ stop_server <- function() {
 #' @param ... required for passing arguments when knitting
 #' @return A list with the key, display name, and URL of the resource in Opal.
 #' @examplesIf interactive()
-#'   file <- system.file("exercises/sc1.Rmd", package = 'rqti')
-#'   render_opal(file)
+#'file <- system.file(
+#'     "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+#'     package='rqti'
+#')
+#'render_opal(file)
 #' @export
 render_opal <- function(input, ...) {
     knit_test <- rmd2zip(input)

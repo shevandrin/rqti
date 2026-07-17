@@ -1,5 +1,5 @@
 test_that("verify_qti validates a correct QTI document", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
     expect_true(nzchar(f))
 
     # Path input
@@ -12,7 +12,7 @@ test_that("verify_qti validates a correct QTI document", {
 })
 
 test_that("verify_qti reports the schema used for validation", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
 
     res_default <- verify_qti(f, print = FALSE, engine = "xml2")
     expect_true(res_default$valid)
@@ -33,7 +33,7 @@ test_that("verify_qti reports the schema used for validation", {
 })
 
 test_that("verify_qti accepts legacy extended_schema flag", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
 
     res <- verify_qti(f, extended_schema = TRUE, print = FALSE, engine = "xml2")
 
@@ -42,7 +42,7 @@ test_that("verify_qti accepts legacy extended_schema flag", {
 })
 
 test_that("extended schema allows details in itemBody", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
     item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
     details <- paste0(
@@ -62,7 +62,7 @@ test_that("extended schema allows details in itemBody", {
 })
 
 test_that("verify_qti can select a local qti22 schema", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
 
     res <- verify_qti(f, schema = "qti22", print = FALSE, engine = "xml2")
 
@@ -77,7 +77,7 @@ test_that("verify_qti can select a local qti22 schema", {
 test_that("verify_qti explains unknown schema selectors", {
     skip_if(file.exists(file.path(getwd(), "unknown_schema.xsd")))
 
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
 
     expect_error(
         verify_qti(f, schema = "unknown_schema.xsd", print = FALSE, engine = "xml2"),
@@ -87,7 +87,7 @@ test_that("verify_qti explains unknown schema selectors", {
 })
 
 test_that("verify_qti prints valid validation results", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
 
     out <- capture.output(res <- verify_qti(f, print = TRUE, color = FALSE, engine = "xml2"))
 
@@ -99,7 +99,7 @@ test_that("verify_qti validates XML string input with xmllint", {
     skip_if(.Platform$OS.type == "windows")
     skip_if_not(nzchar(Sys.which("xmllint")), "xmllint is not installed")
 
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
     xml <- paste(readLines(f, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
 
     res <- verify_qti(xml, print = FALSE, engine = "xmllint")
@@ -110,7 +110,7 @@ test_that("verify_qti validates XML string input with xmllint", {
 })
 
 test_that("verify_qti returns structured result for invalid QTI", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
 
     # introduce a schema error (add an invalid tag to itemBody)
@@ -128,7 +128,7 @@ test_that("verify_qti returns structured result for invalid QTI", {
 })
 
 test_that("verify_qti prints invalid validation results with parsed detail", {
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
     item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
     xml2::xml_add_child(item_body, "details", .where = 0)
@@ -144,7 +144,7 @@ test_that("verify_qti reports invalid documents with xmllint", {
     skip_if(.Platform$OS.type == "windows")
     skip_if_not(nzchar(Sys.which("xmllint")), "xmllint is not installed")
 
-    f <- system.file("exercises", "sc1d.xml", package = "rqti")
+    f <- system.file("sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
     item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
     xml2::xml_add_child(item_body, "details", .where = 0)
@@ -186,7 +186,8 @@ test_that("verify_qti identifies schema import errors", {
 
 test_that("verify_qti validates Rmd file", {
     # Use a vignette Rmd as example
-    rmd_file <- system.file("exercises", "sc1.Rmd", package = "rqti")
+    rmd_file <- system.file("rmarkdown", "templates", "singlechoice-simple",
+                            "skeleton", "skeleton.Rmd", package = "rqti")
     expect_true(nzchar(rmd_file))
 
     res <- verify_qti(rmd_file, print = F)
@@ -196,7 +197,8 @@ test_that("verify_qti validates Rmd file", {
 
 test_that("verify_qti validates AssessmentItem object", {
     # Create an AssessmentItem from Rmd
-    rmd_file <- system.file("exercises", "sc1.Rmd", package = "rqti")
+    rmd_file <- system.file("rmarkdown", "templates", "singlechoice-simple",
+                            "skeleton", "skeleton.Rmd", package = "rqti")
     expect_true(nzchar(rmd_file))
 
     item <- create_question_object(rmd_file)
@@ -208,14 +210,19 @@ test_that("verify_qti validates AssessmentItem object", {
 
 test_that("verify_qti validates AssessmentTest object", {
     # Create two AssessmentItem objects from Rmd
-    rmd_file1 <- system.file("exercises", "sc1.Rmd", package = "rqti")
-    rmd_file2 <- system.file("exercises", "gap1.Rmd", package = "rqti")
+    rmd_file1 <- system.file("rmarkdown", "templates", "singlechoice-simple",
+                            "skeleton", "skeleton.Rmd", package = "rqti")
+
+    rmd_file2 <- system.file("rmarkdown", "templates", "gap-simple",
+                            "skeleton", "skeleton.Rmd", package = "rqti")
 
     expect_true(nzchar(rmd_file1))
     expect_true(nzchar(rmd_file2))
 
     item1 <- create_question_object(rmd_file1)
+    item1@identifier <- "item1"
     item2 <- create_question_object(rmd_file2)
+    item2@identifier <- "item2"
 
     # Create an AssessmentTest with the items
     section <- new("AssessmentSection", assessment_item = list(item1, item2))
@@ -237,7 +244,8 @@ test_that("verify_qti validates AssessmentTest object", {
 })
 
 test_that("verify_qti prints AssessmentTest validation summaries", {
-    rmd_file <- system.file("exercises", "sc1.Rmd", package = "rqti")
+    rmd_file <- system.file("rmarkdown", "templates", "singlechoice-simple",
+                            "skeleton", "skeleton.Rmd", package = "rqti")
     item <- create_question_object(rmd_file)
     section <- new("AssessmentSection", assessment_item = list(item))
     test <- new("AssessmentTest",

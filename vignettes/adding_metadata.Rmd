@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 ```{r setup metadata, echo=FALSE}
 library(rqti)
-path <- system.file("exercises", package = "rqti")
+path <- system.file(package = "rqti")
 ```
 
 `r if(knitr::is_latex_output()) "# Adding metadata"`

@@ -38,13 +38,15 @@ Although it is possible to feed a test with tasks directly, we suggest to always
 We designed a simple wrapper for sections. Here we load some files from our package and use the function `section` to create the section. Note that we request 10 different variants of all tasks.
 
 ```{r ghost, include=FALSE}
-path <- system.file("exercises", package = "rqti")
-files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
+path <- system.file("rmarkdown", "templates", package = "rqti")
+files <- paste0(path, "/", c("gap-simple/skeleton/skeleton.Rmd", 
+                             "gap-complex/skeleton/skeleton.Rmd"))
 ```
 
 ```{r section1, eval=F}
-path <- system.file("exercises", package = "rqti")
-files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
+path <- system.file("rmarkdown", "templates", package = "rqti")
+files <- paste0(path, "/", c("gap-simple/skeleton/skeleton.Rmd", 
+                             "gap-complex/skeleton/skeleton.Rmd"))
 root_section <- section(content = files, n_variants = 10)
 ```
 

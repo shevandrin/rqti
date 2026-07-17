@@ -53,7 +53,10 @@ QTI-task and uploads it to the OPAL.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-file <- system.file("exercises/sc1.Rmd", package='rqti')
+file <- system.file(
+    "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+    package='rqti'
+)
 upload2opal(file, "task 1", open_in_browser = FALSE)
 \dontshow{\}) # examplesIf}
 }
