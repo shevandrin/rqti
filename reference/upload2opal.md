@@ -76,7 +76,10 @@ A list with the key, display name, and URL of the resource in Opal.
 
 ``` r
 if (FALSE) { # interactive()
-file <- system.file("exercises/sc1.Rmd", package='rqti')
+file <- system.file(
+    "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+    package='rqti'
+)
 upload2opal(file, "task 1", open_in_browser = FALSE)
 }
 ```

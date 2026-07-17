@@ -65,7 +65,10 @@ after the word knit `knit: rqti::render_qtijs`.
 
 ``` r
 if (FALSE) { # interactive()
-  file <- system.file("exercises/sc1.Rmd", package = 'rqti')
-  render_qtijs(file)
+file <- system.file(
+    "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+    package='rqti'
+)
+render_qtijs(file)
 }
 ```

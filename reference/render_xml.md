@@ -35,7 +35,7 @@ nothing, has side effects
 
 ``` r
 if (FALSE) { # interactive()
-  file <- system.file("exercises/sc1d.xml", package = 'rqti')
+  file <- system.file("sc1d.xml", package = 'rqti')
   render_qtijs(file)
 }
 ```

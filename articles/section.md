@@ -37,8 +37,9 @@ that we request 10 different variants of all tasks.
 
 ``` r
 
-path <- system.file("exercises", package = "rqti")
-files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
+path <- system.file("rmarkdown", "templates", package = "rqti")
+files <- paste0(path, "/", c("gap-simple/skeleton/skeleton.Rmd", 
+                             "gap-complex/skeleton/skeleton.Rmd"))
 root_section <- section(content = files, n_variants = 10)
 ```
 

@@ -31,7 +31,10 @@ after the word knit `knit: rqti::render_opal`.
 
 ``` r
 if (FALSE) { # interactive()
-  file <- system.file("exercises/sc1.Rmd", package = 'rqti')
-  render_opal(file)
+file <- system.file(
+    "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+    package='rqti'
+)
+render_opal(file)
 }
 ```
