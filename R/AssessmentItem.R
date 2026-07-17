@@ -39,14 +39,10 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 
 setValidity("AssessmentItem", function(object) {
     errors <- list()
-    calc <- object@calculator
-    if (length(calc) == 1) {
-        if (!any(c("simple", "simple-calculator",
-              "scientific", "scientific-calculator") %in% calc) &&
-        !is.na(calc)) {
-        errors <- c(errors, "The '@calculator' slot must be one of the following: 'simple', 'scientific'.")
-        }
-    }
+
+    error <- validate_calculator(object@calculator)
+    if (!is.null(error)) errors <- c(errors, error)
+
     if (length(errors) == 0) TRUE else unlist(errors)
 })
 

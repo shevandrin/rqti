@@ -126,3 +126,80 @@ warn_once <- local({
         }
     }
 })
+
+# Generic helper to validate character slots against a predefined set of
+# allowed values, with optional support for NA and empty strings
+validate_choice_slot <- function(
+        x,
+        allowed,
+        slot_name,
+        allow_na = FALSE,
+        allow_empty = FALSE
+) {
+    if (length(x) == 0L) {
+        if (allow_empty) {
+            return(NULL)
+        }
+
+        return(sprintf(
+            "The '%s' slot must contain exactly one value.",
+            slot_name
+        ))
+    }
+
+    if (length(x) != 1L) {
+        return(sprintf(
+            "The '%s' slot must contain exactly one value.",
+            slot_name
+        ))
+    }
+
+    if (is.na(x)) {
+        if (allow_na) {
+            return(NULL)
+        }
+
+        return(sprintf(
+            "The '%s' slot must not be NA.",
+            slot_name
+        ))
+    }
+
+    if (identical(x, "")) {
+        if (allow_empty) {
+            return(NULL)
+        }
+
+        return(sprintf(
+            "The '%s' slot must not be an empty string.",
+            slot_name
+        ))
+    }
+
+    if (!x %in% allowed) {
+        return(sprintf(
+            "The '%s' slot must be one of: %s. Received: '%s'.",
+            slot_name,
+            paste(sprintf("'%s'", allowed), collapse = ", "),
+            x
+        ))
+    }
+
+    NULL
+}
+
+
+validate_calculator <- function(x) {
+    validate_choice_slot(
+        x = x,
+        allowed = c(
+            "simple",
+            "simple-calculator",
+            "scientific",
+            "scientific-calculator"
+        ),
+        slot_name = "@calculator",
+        allow_na = TRUE,
+        allow_empty = TRUE
+    )
+}
