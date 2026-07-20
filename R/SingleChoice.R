@@ -127,9 +127,7 @@ singleChoice <- function(identifier = generate_id(),
                          files = NA_character_,
                          scoring_scheme = "standard") {
     params <- as.list(environment())
-    if (is.character(params$content)) params$content <- list(params$content)
-    params$Class <- "SingleChoice"
-    obj <- do.call("new", params)
+    obj <- construct_item(params, "SingleChoice")
     return(obj)
 }
 
