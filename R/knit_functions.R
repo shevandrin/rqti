@@ -72,7 +72,7 @@ render_qtijs <- function(input, preview_feedback = FALSE,
 #' @inheritParams render_qtijs
 #' @return nothing, has side effects
 #' @examplesIf interactive()
-#'   file <- system.file("sc1d.xml", package = 'rqti')
+#'   file <- system.file("extdata", "sc1d.xml", package = 'rqti')
 #'   render_qtijs(file)
 #'
 #' @export

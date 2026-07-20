@@ -1,5 +1,5 @@
 test_that("verify_qti validates a correct QTI document", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
     expect_true(nzchar(f))
 
     # Path input
@@ -12,7 +12,7 @@ test_that("verify_qti validates a correct QTI document", {
 })
 
 test_that("verify_qti reports the schema used for validation", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
 
     res_default <- verify_qti(f, print = FALSE, engine = "xml2")
     expect_true(res_default$valid)
@@ -33,7 +33,7 @@ test_that("verify_qti reports the schema used for validation", {
 })
 
 test_that("verify_qti accepts legacy extended_schema flag", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
 
     res <- verify_qti(f, extended_schema = TRUE, print = FALSE, engine = "xml2")
 
@@ -42,7 +42,7 @@ test_that("verify_qti accepts legacy extended_schema flag", {
 })
 
 test_that("extended schema allows details in itemBody", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
     item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
     details <- paste0(
@@ -62,7 +62,7 @@ test_that("extended schema allows details in itemBody", {
 })
 
 test_that("verify_qti can select a local qti22 schema", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
 
     res <- verify_qti(f, schema = "qti22", print = FALSE, engine = "xml2")
 
@@ -77,7 +77,7 @@ test_that("verify_qti can select a local qti22 schema", {
 test_that("verify_qti explains unknown schema selectors", {
     skip_if(file.exists(file.path(getwd(), "unknown_schema.xsd")))
 
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
 
     expect_error(
         verify_qti(f, schema = "unknown_schema.xsd", print = FALSE, engine = "xml2"),
@@ -87,7 +87,7 @@ test_that("verify_qti explains unknown schema selectors", {
 })
 
 test_that("verify_qti prints valid validation results", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
 
     out <- capture.output(res <- verify_qti(f, print = TRUE, color = FALSE, engine = "xml2"))
 
@@ -99,7 +99,7 @@ test_that("verify_qti validates XML string input with xmllint", {
     skip_if(.Platform$OS.type == "windows")
     skip_if_not(nzchar(Sys.which("xmllint")), "xmllint is not installed")
 
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
     xml <- paste(readLines(f, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
 
     res <- verify_qti(xml, print = FALSE, engine = "xmllint")
@@ -110,7 +110,7 @@ test_that("verify_qti validates XML string input with xmllint", {
 })
 
 test_that("verify_qti returns structured result for invalid QTI", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
 
     # introduce a schema error (add an invalid tag to itemBody)
@@ -128,7 +128,7 @@ test_that("verify_qti returns structured result for invalid QTI", {
 })
 
 test_that("verify_qti prints invalid validation results with parsed detail", {
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
     item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
     xml2::xml_add_child(item_body, "details", .where = 0)
@@ -144,7 +144,7 @@ test_that("verify_qti reports invalid documents with xmllint", {
     skip_if(.Platform$OS.type == "windows")
     skip_if_not(nzchar(Sys.which("xmllint")), "xmllint is not installed")
 
-    f <- system.file("sc1d.xml", package = "rqti")
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
     x <- xml2::read_xml(f)
     item_body <- xml2::xml_find_first(x, "//*[local-name()='itemBody']")
     xml2::xml_add_child(item_body, "details", .where = 0)

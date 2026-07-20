@@ -25,7 +25,7 @@ local server.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-  file <- system.file("sc1d.xml", package = 'rqti')
+  file <- system.file("extdata", "sc1d.xml", package = 'rqti')
   render_qtijs(file)
 \dontshow{\}) # examplesIf}
 }

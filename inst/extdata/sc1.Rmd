@@ -1,0 +1,17 @@
+---
+type: sc
+knit: rqti::render_qtijs
+---
+
+# question
+
+Which version of the QTI standard is used by the R package rqti?
+
+- 2.1
+- 1.2
+- 3.0
+- 2.2
+
+# feedback
+
+The used qti version is 2.1.

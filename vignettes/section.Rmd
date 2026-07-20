@@ -38,22 +38,20 @@ Although it is possible to feed a test with tasks directly, we suggest to always
 We designed a simple wrapper for sections. Here we load some files from our package and use the function `section` to create the section. Note that we request 10 different variants of all tasks.
 
 ```{r ghost, include=FALSE}
-path <- system.file("rmarkdown", "templates", package = "rqti")
-files <- paste0(path, "/", c("gap-simple/skeleton/skeleton.Rmd", 
-                             "gap-complex/skeleton/skeleton.Rmd"))
+path <- system.file("extdata", package = "rqti")
+files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 ```
 
 ```{r section1, eval=F}
-path <- system.file("rmarkdown", "templates", package = "rqti")
-files <- paste0(path, "/", c("gap-simple/skeleton/skeleton.Rmd", 
-                             "gap-complex/skeleton/skeleton.Rmd"))
+path <- system.file("extdata", package = "rqti")
+files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 root_section <- section(content = files, n_variants = 10)
 ```
 
 Now we can make a test out of this and upload it to OPAL. Again there are helpers for that: `test` and `test4opal`. `test` is more general and is always consistent with the QTI model, whereas `test4opal` can use additional OPAL-specific parameters that are not necessarily consistent with QTI.
 
 ```{r section1upload, eval = F}
-test <- test(root_section, "test1")
+test <- test(root_section, "test1", fallback_titles = "filename")
 # createQtiTest is a method of the OOP class `test`
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test1.zip", open_in_browser = F)
