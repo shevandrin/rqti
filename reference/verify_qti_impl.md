@@ -95,7 +95,7 @@ default, that object is also printed in a human-readable form.
 
 ``` r
 if (FALSE) { # \dontrun{
-f <- system.file("sc1d.xml", package = "rqti")
+f <- system.file("extdata", "sc1d.xml", package = "rqti")
 
 res <- verify_qti(f)
 res$valid

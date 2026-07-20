@@ -37,9 +37,8 @@ that we request 10 different variants of all tasks.
 
 ``` r
 
-path <- system.file("rmarkdown", "templates", package = "rqti")
-files <- paste0(path, "/", c("gap-simple/skeleton/skeleton.Rmd", 
-                             "gap-complex/skeleton/skeleton.Rmd"))
+path <- system.file("extdata", package = "rqti")
+files <- paste0(path, "/", c("gap1.Rmd", "gap2.Rmd"))
 root_section <- section(content = files, n_variants = 10)
 ```
 
@@ -51,7 +50,7 @@ with QTI.
 
 ``` r
 
-test <- test(root_section, "test1")
+test <- test(root_section, "test1", fallback_titles = "filename")
 # createQtiTest is a method of the OOP class `test`
 createQtiTest(test, zip_only = T)
 repo <- upload2opal("test1.zip", open_in_browser = F)
