@@ -70,6 +70,10 @@
 <li><p>Added <code><a href="../reference/provide_audio.html">provide_audio()</a></code> helper to embed local audio files directly into QTI/HTML content using Base64 encoding. The function supports both <code>&lt;object&gt;</code> and <code>&lt;audio&gt;</code> rendering methods and self-contained audio embedding for portable assessment items.</p></li>
 </ul></div>
 <div class="section level3">
+<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<ul><li>Changed the preferred R Markdown YAML configuration for <code>preview_feedback</code>. The option should now be specified as a top-level YAML field instead of inside <code>params</code>. The previous syntax within <code>params</code> is deprecated and will be removed in a future release.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
 <ul><li>Dropdown items (dropdown()) can now include commas and other punctuation without breaking YAML parsing.</li>
 </ul></div>
