@@ -61,6 +61,32 @@ test_that("extended schema allows details in itemBody", {
     expect_true(res_extended$valid)
 })
 
+test_that("extended schema validates TextGapOpal tolerance processing", {
+    item <- new(
+        "Entry",
+        identifier = "text_gap_opal_schema",
+        content = list(
+            "<p>",
+            new(
+                "TextGapOpal",
+                response_identifier = "RESPONSE_1",
+                solution = c("more", "MORE", "More"),
+                tolerance = 4
+            ),
+            "</p>"
+        )
+    )
+
+    res <- verify_qti(
+        item,
+        extended_schema = TRUE,
+        print = FALSE,
+        engine = "xml2"
+    )
+
+    expect_true(res$valid)
+})
+
 test_that("verify_qti can select a local qti22 schema", {
     f <- system.file("exercises", "sc1d.xml", package = "rqti")
 

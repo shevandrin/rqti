@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://bps-system.de/xsd/imsqti_ext_maptolresponse"
+    targetNamespace="http://bps-system.de/xsd/imsqti_ext_maptolresponse"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+  <xs:element name="mapTolResponse" type="MapTolResponse.Type"/>
+
+  <xs:complexType name="MapTolResponse.Type">
+    <xs:attribute name="identifier" type="xs:NCName" use="required"/>
+    <xs:attribute name="tolerance" type="xs:string" use="optional"/>
+    <xs:attribute name="toleranceMode" use="optional" default="exact">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="absolute"/>
+          <xs:enumeration value="exact"/>
+          <xs:enumeration value="relative"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+</xs:schema>

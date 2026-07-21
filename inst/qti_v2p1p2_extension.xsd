@@ -4,6 +4,7 @@
      xmlns:xi="http://www.w3.org/2001/XInclude"
      xmlns:m="http://www.w3.org/1998/Math/MathML"
      xmlns:apip="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0"
+     xmlns:maptol="http://bps-system.de/xsd/imsqti_ext_maptolresponse"
      xmlns:xs="http://www.w3.org/2001/XMLSchema"
      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      version="IMS QTI 2.1.1"
@@ -13,6 +14,7 @@
     <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="xsd/XInclude.xsd" />
     <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml2/mathml2.xsd" />
     <xs:import namespace="http://www.imsglobal.org/xsd/apip/apipv1p0/imsapip_qtiv1p0" schemaLocation="xsd/apipv1p0_qtiextv2p1_v1p0.xsd" />
+    <xs:import namespace="http://bps-system.de/xsd/imsqti_ext_maptolresponse" schemaLocation="maptolresponse.xsd" />
 
     <xs:include schemaLocation="imsqti_v2p1p2.xsd"/>
 
@@ -79,9 +81,9 @@
     <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
         <xs:complexType name="SetValue.Type" abstract="false" mixed="false">
             <xs:complexContent>
-                <xs:extension base="SetValue.Type">
+                <xs:restriction base="SetValue.Type">
                     <xs:sequence>
-                    <xs:choice minOccurs="0" maxOccurs="1">
+                    <xs:choice minOccurs="1" maxOccurs="1">
 
               <xs:element ref="and" minOccurs="1" maxOccurs="1" />
               <xs:element ref="gt" minOccurs="1" maxOccurs="1" />
@@ -148,11 +150,12 @@
               <xs:element ref="statsOperator" minOccurs="1" maxOccurs="1" />
               <xs:element ref="mathOperator" minOccurs="1" maxOccurs="1" />
               <!-- Add the mapTolResponse element here -->
-              <xs:element ref="mapTolResponse" minOccurs="0" maxOccurs="1"/>
+              <xs:element ref="maptol:mapTolResponse" minOccurs="1" maxOccurs="1"/>
 
                     </xs:choice>
                     </xs:sequence>
-                </xs:extension>
+                    <xs:attributeGroup ref="identifier.SetValue.Attr" />
+                </xs:restriction>
             </xs:complexContent>
         </xs:complexType>
     </xs:redefine>
@@ -219,24 +222,10 @@
         </xs:sequence>
     </xs:complexType>
 
-    <!-- Add new complex type for MapTolResponse.Type -->
-    <xs:complexType name="MapTolResponse.Type" abstract="false" mixed="true">
-        <xs:annotation>
-            <xs:documentation source="documentation">
-                The complexType for the Opal mapTolResponse tag, used for tolerance for numeric gap.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:attributeGroup ref="identifier.MapTolResponse.Attr" />
-        <xs:attributeGroup ref="tolerance.MapTolResponse.Attr" />
-        <xs:attributeGroup ref="toleranceMode.MapTolResponse.Attr" />
-    </xs:complexType>
-
     <!-- Define new elements -->
 
     <xs:element name="details" type="Details.Type"/>
     <xs:element name="summary" type="HTMLText.Type"/>
-    <xs:element name="mapTolResponse" type="MapTolResponse.Type" />
-
     <!-- Define new attributes -->
 
     <xs:attributeGroup name="data-allowPaste.ExtendedTextInteraction.Attr">
@@ -263,30 +252,6 @@
                     <xs:enumeration value="A" />
                     <xs:enumeration value="i" />
                     <xs:enumeration value="I" />
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="tolerance.MapTolResponse.Attr">
-        <xs:attribute name="tolerance" use="optional">
-            <xs:simpleType>
-                <xs:list itemType="ToleranceList.Type" />
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="identifier.MapTolResponse.Attr">
-        <xs:attribute name="identifier" use="required" type="Identifier.Type" />
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="toleranceMode.MapTolResponse.Attr">
-        <xs:attribute name="toleranceMode" use="optional" default="exact">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="absolute" />
-                    <xs:enumeration value="exact" />
-                    <xs:enumeration value="relative" />
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
