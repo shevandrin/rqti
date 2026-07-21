@@ -206,11 +206,18 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
                   file.copy(object, out_path)
               }
               if (ext == "zip") zip::unzip(object, exdir = dir)
+
+              preview_feedback <- yaml_front_matter(object)$preview_feedback
               params <- knit_params(readLines(object))
-              if (!is.null(params$preview_feedback$value)) {
-                  return(params$preview_feedback$value)
+              if (!is.null(params$preview_feedback)) {
+                  preview_feedback <- params$preview_feedback$value
+                  lifecycle::deprecate_warn(
+                      when = "1.2.2",
+                      what = I("placing `preview_feedback` inside the YAML `params` section"),
+                      with = I("a top-level YAML attribute named `preview_feedback`")
+                  )
               }
-              return(NULL)
+              return(preview_feedback)
           })
 
 #' @rdname getContributors-methods
