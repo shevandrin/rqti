@@ -100,6 +100,8 @@
   : Authenticate with LMS
 - [`buildAssessmentSection()`](https://shevandrin.github.io/rqti/reference/buildAssessmentSection-methods.md)
   : Build tags for AssessmentSection in assessmentTest
+- [`construct_item()`](https://shevandrin.github.io/rqti/reference/construct_item.md)
+  : Constructor helper to create rqti objects
 - [`correctFeedback()`](https://shevandrin.github.io/rqti/reference/correctFeedback.md)
   : Create object CorrectFeedback
 - [`createAssessmentTest()`](https://shevandrin.github.io/rqti/reference/createAssessmentTest-methods.md)
@@ -198,6 +200,8 @@
   : Create object MultipleChoice
 - [`multipleChoiceTable()`](https://shevandrin.github.io/rqti/reference/multipleChoiceTable.md)
   : Create object MultipleChoiceTable
+- [`normalize_html_content()`](https://shevandrin.github.io/rqti/reference/normalize_html_content.md)
+  : Normalize HTML content
 - [`numericGap()`](https://shevandrin.github.io/rqti/reference/numericGap_doc.md)
   [`gapNumeric()`](https://shevandrin.github.io/rqti/reference/numericGap_doc.md)
   : Create object NumericGap

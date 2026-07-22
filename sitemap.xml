@@ -56,6 +56,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/assessmentTestOpenOlat.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/authLMS-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/buildAssessmentSection-methods.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/construct_item.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/correctFeedback.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/createAssessmentTest-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/createConfigurationFile-methods.html</loc></url>
@@ -105,6 +106,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/modalFeedback.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/multipleChoice.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/multipleChoiceTable.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/normalize_html_content.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/numericGap_doc.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/oneInColTable.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/oneInRowTable.html</loc></url>
