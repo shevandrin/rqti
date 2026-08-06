@@ -37,6 +37,9 @@ hash implementation to improve portability across operating systems.
 
 * Fixed MathJax rendering for dynamically loaded referent content in QTI.JS.
 
+* Updated OPAL authentication to use the current REST login endpoint and
+  header-based credentials.
+
 # rqti 1.2.0
 
 ## New features
