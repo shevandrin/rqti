@@ -321,8 +321,8 @@ html_escape <- function(x) {
 #'
 #' The function reads a local audio file, encodes it as Base64,
 #' and returns either:
-#' - an HTML <object> tag
-#' - or an HTML <audio> tag
+#' - an HTML \code{<object>} tag
+#' - or an HTML \code{<audio>} tag
 #'
 #' This makes the final XML/HTML fully self-contained.
 #'
