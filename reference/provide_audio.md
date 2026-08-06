@@ -45,8 +45,8 @@ knitr_asis object containing embedded audio HTML.
 The function reads a local audio file, encodes it as Base64, and returns
 either:
 
-- an HTML tag
+- an HTML `<object>` tag
 
-- or an HTML tag
+- or an HTML `<audio>` tag
 
 This makes the final XML/HTML fully self-contained.
