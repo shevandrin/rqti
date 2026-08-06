@@ -205,10 +205,10 @@ validate_calculator <- function(x) {
 }
 
 
-#' Normalize HTML content
-#'
-#' Recursively converts objects created by `htmltools` to character strings.
-#' Other content is returned unchanged.
+# Normalize HTML content
+#
+# Recursively converts objects created by `htmltools` to character strings.
+# Other content is returned unchanged.
 normalize_html_content <- function(content) {
     if (inherits(
         content,
@@ -224,7 +224,7 @@ normalize_html_content <- function(content) {
     content
 }
 
-#' Constructor helper to create rqti objects
+# Constructor helper to create rqti objects
 construct_item <- function(params, Class) {
     params$content <- normalize_html_content(params$content)
     if (is.character(params$content)) params$content <- list(params$content)
