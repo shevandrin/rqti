@@ -39,6 +39,9 @@
 - Dropdown items (dropdown()) can now include commas and other
   punctuation without breaking YAML parsing.
 
+- Updated OPAL authentication to use the current REST login endpoint and
+  header-based credentials.
+
 ## rqti 1.2.1
 
 CRAN release: 2026-05-14
@@ -51,9 +54,6 @@ CRAN release: 2026-05-14
 
 - Fixed MathJax rendering for dynamically loaded referent content in
   QTI.JS.
-
-- Updated OPAL authentication to use the current REST login endpoint and
-  header-based credentials.
 
 ## rqti 1.2.0
 
