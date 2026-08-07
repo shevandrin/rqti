@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rqti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.2.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,20 +61,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rqti-development-version">rqti (development version)<a class="anchor" aria-label="anchor" href="#rqti-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.3.0" id="rqti-130">rqti 1.3.0<a class="anchor" aria-label="anchor" href="#rqti-130"></a></h2>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-1-3-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-3-0"></a></h3>
 <ul><li><p>Added <code><a href="../reference/extract_results.html">read_qti()</a></code> as an alias for <code><a href="../reference/extract_results.html">extract_results()</a></code>.</p></li>
 <li><p>Added OPAL API functions <code><a href="../reference/createCourseGroup-methods.html">createCourseGroup()</a></code> for creating course groups, <code><a href="../reference/addGroupUser-methods.html">addGroupUser()</a></code> for adding users to groups, and <code><a href="../reference/removeGroupUser-methods.html">removeGroupUser()</a></code> for removing users from groups.</p></li>
 <li><p><code>extract_results(level = "item")</code> now includes task-level <code>candidate_comment</code> and <code>scorer_comment</code> columns for each item row.</p></li>
 <li><p>Added <code><a href="../reference/provide_audio.html">provide_audio()</a></code> helper to embed local audio files directly into QTI/HTML content using Base64 encoding. The function supports both <code>&lt;object&gt;</code> and <code>&lt;audio&gt;</code> rendering methods and self-contained audio embedding for portable assessment items.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<h3 id="improvements-1-3-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-3-0"></a></h3>
 <ul><li>Changed the preferred R Markdown YAML configuration for <code>preview_feedback</code>. The option should now be specified as a top-level YAML field instead of inside <code>params</code>. The previous syntax within <code>params</code> is deprecated and will be removed in a future release.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-1-3-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-3-0"></a></h3>
 <ul><li>Dropdown items (dropdown()) can now include commas and other punctuation without breaking YAML parsing.</li>
 </ul></div>
 </div>

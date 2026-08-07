@@ -1,6 +1,6 @@
 # Changelog
 
-## rqti (development version)
+## rqti 1.3.0
 
 ### New features
 
