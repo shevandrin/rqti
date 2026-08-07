@@ -28,6 +28,9 @@ in a future release.
 * Dropdown items (dropdown()) can now include commas and other punctuation 
 without breaking YAML parsing.
 
+* Updated OPAL authentication to use the current REST login endpoint and
+  header-based credentials.
+
 # rqti 1.2.1
 
 ## Bug fixes
@@ -36,9 +39,6 @@ without breaking YAML parsing.
 hash implementation to improve portability across operating systems.
 
 * Fixed MathJax rendering for dynamically loaded referent content in QTI.JS.
-
-* Updated OPAL authentication to use the current REST login endpoint and
-  header-based credentials.
 
 # rqti 1.2.0
 
