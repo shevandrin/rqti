@@ -1,26 +1,37 @@
-## Release 1.2.1 summary
+## Release 1.3.0 summary
 
-It is a patch due to the macOS portability fix.
+## New features
 
+* Added `read_qti()` as an alias for `extract_results()`.
+
+* Added OPAL API functions `createCourseGroup()` for creating course groups,
+  `addGroupUser()` for adding users to groups, and `removeGroupUser()` for
+  removing users from groups.
+
+* `extract_results(level = "item")` now includes task-level
+  `candidate_comment` and `scorer_comment` columns for each item row.
+
+* Added `provide_audio()` helper to embed local audio files directly into
+  QTI/HTML content using Base64 encoding. The function supports both
+  `<object>` and `<audio>` rendering methods and
+  self-contained audio embedding for portable assessment items.
+  
+## Improvements
+
+* Changed the preferred R Markdown YAML configuration for `preview_feedback`. 
+The option should now be specified as a top-level YAML field instead of inside 
+`params`. The previous syntax within `params` is deprecated and will be removed 
+in a future release.
+  
 ## Bug fixes
 
-* Replaced platform-specific external SHA1 commands in tests with an R-native
-hash implementation to improve portability across operating systems.
+* Dropdown items (dropdown()) can now include commas and other punctuation 
+without breaking YAML parsing.
 
-* Fixed MathJax rendering for dynamically loaded referent content in QTI.JS.
+* Updated OPAL authentication to use the current REST login endpoint and
+  header-based credentials.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 0 notes
 
-* checking CRAN incoming feasibility ... NOTE
-  Maintainer: Andrey Shevandrin <shevandrin@gmail.com>
-  Days since last update: 3
-
-  This is a patch submission shortly after the previous submission to fix a
-  CRAN check failure on macOS.
-
-* checking for future file timestamps ... NOTE
-  unable to verify current time
-
-  This appears to be a local check environment issue.
