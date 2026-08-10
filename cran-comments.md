@@ -30,6 +30,9 @@ without breaking YAML parsing.
 
 * Updated OPAL authentication to use the current REST login endpoint and
   header-based credentials.
+  
+* Fixed grade feedback score ranges so that rounding to two decimal places no
+  longer leaves gaps between adjacent grade intervals.
 
 ## R CMD check results
 
