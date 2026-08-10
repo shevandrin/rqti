@@ -42,6 +42,9 @@
 - Updated OPAL authentication to use the current REST login endpoint and
   header-based credentials.
 
+- Fixed grade feedback score ranges so that rounding to two decimal
+  places no longer leaves gaps between adjacent grade intervals.
+
 ## rqti 1.2.1
 
 CRAN release: 2026-05-14
