@@ -1,6 +1,16 @@
 # Changelog
 
+## rqti 1.3.1
+
+### Bug fixes
+
+- Fixed Pandoc compatibility by using the appropriate option to disable
+  syntax highlighting based on the capabilities of the installed Pandoc
+  version.
+
 ## rqti 1.3.0
+
+CRAN release: 2026-09-21
 
 ### New features
 
