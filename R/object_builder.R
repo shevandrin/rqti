@@ -110,7 +110,8 @@ create_question_object <- function(file) {
     mtdata$contributor <- contrs
     mtdata <- do.call(qtiMetadata, mtdata)
     # ignore parameters that are not related to object creation
-    attrs <- attrs[! names(attrs) %in% c("knit", "metadata", "params")]
+    attrs <- attrs[! names(attrs) %in% c("knit", "metadata", "params",
+                                         "preview_feedback")]
 
     tdir <- tempdir()
 
@@ -240,6 +241,9 @@ create_entry_slots <- function(html, attrs) {
 create_gap_object <- function(entry, id) {
     gap_str <- xml2::xml_text(entry)
     gap_str <- sub("\r\n", " ", gap_str)
+    gap_str <- gsub("\u2018|\u2019", "'", gap_str)
+    gap_str <- gsub("\u201C|\u201D", '"', gap_str)
+
     attrs <- yaml::yaml.load(gap_str)
     if (!is.list(attrs)) {
         if (!is.na(suppressWarnings(as.numeric(gap_str)))) {
@@ -615,28 +619,68 @@ rmd_detect_type <- function(file) {
     }
 }
 
-pandoc_html_convert <- function(input_file, output_file_name, dir_name) {
-    pnd_v <- numeric_version("2.19")
-    emb <- ifelse(rmarkdown::pandoc_version() > pnd_v, "--embed-resources", "")
-    syntax_highlight <- if (rmarkdown::pandoc_version() >= numeric_version("3.0")) {
-        "--no-highlight"
-    } else {
+pandoc_highlight_option <- function() {
+    pandoc_info <- rmarkdown::find_pandoc()
+    pandoc <- file.path(
+        pandoc_info$dir,
+        if (.Platform$OS.type == "windows") "pandoc.exe" else "pandoc"
+    )
+
+    help <- system2(
+        pandoc,
+        "--help",
+        stdout = TRUE,
+        stderr = TRUE
+    )
+
+    if (any(grepl("--syntax-highlighting", help, fixed = TRUE))) {
         "--syntax-highlighting=none"
+    } else {
+        "--no-highlight"
+    }
+}
+
+pandoc_html_convert <- function(input_file, output_file_name, dir_name) {
+    pandoc_version <- rmarkdown::pandoc_version()
+
+    embed_opt <- if (pandoc_version > numeric_version("2.19")) {
+        "--embed-resources"
+    } else {
+        character(0)
     }
 
-    lua_filter <- system.file("pandoc", "remove-ol-type.lua", package = "rqti")
-    lua_opt <- if (nzchar(lua_filter)) paste0("--lua-filter=", lua_filter) else character(0)
+    highlight_opt <- pandoc_highlight_option()
 
-    options <- c("-o", output_file_name, "-f", "markdown+tex_math_dollars", "-t", "html5",
-                 "--mathjax",
-                 emb,
-                 "--section-divs",
-                 syntax_highlight,
-                 "--wrap=none",
-                 lua_opt,
-                 "+RTS", "-M512M")
+    lua_filter <- system.file(
+        "pandoc",
+        "remove-ol-type.lua",
+        package = "rqti"
+    )
 
-    rmarkdown::pandoc_convert(input_file, options = options, wd = dir_name)
+    lua_opt <- if (nzchar(lua_filter)) {
+        paste0("--lua-filter=", lua_filter)
+    } else {
+        character(0)
+    }
+
+    options <- c(
+        "-o", output_file_name,
+        "-f", "markdown+tex_math_dollars",
+        "-t", "html5",
+        "--mathjax",
+        embed_opt,
+        "--section-divs",
+        highlight_opt,
+        "--wrap=none",
+        lua_opt,
+        "+RTS", "-M512M"
+    )
+
+    rmarkdown::pandoc_convert(
+        input_file,
+        options = options,
+        wd = dir_name
+    )
 
     output_path <- file.path(dir_name, output_file_name)
 

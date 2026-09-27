@@ -111,9 +111,7 @@ oneInColTable <- function(identifier = generate_id(),
                          calculator = NA_character_,
                          files = NA_character_) {
     params <- as.list(environment())
-    if (is.character(params$content)) params$content <- list(params$content)
-    params$Class <- "OneInColTable"
-    obj <- do.call("new", params)
+    obj <- construct_item(params, "OneInColTable")
     return(obj)
 }
 

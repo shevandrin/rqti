@@ -64,20 +64,20 @@ test_that("Testing gap_numeric() function", {
                       tolerance = 1,
                       points = 2)
 
-    expected <- '<gap>{solution: 300, tolerance: 1, tolerance_type: absolute, points: 2, include_lower_bound: yes, include_upper_bound: yes, expected_length: 2, type: numeric}</gap>'
+    expected <- '<gap>{solution: 300, tolerance: 1, tolerance_type: \'absolute\', points: 2, include_lower_bound: true, include_upper_bound: true, expected_length: 2, type: \'numeric\'}</gap>'
 
     expect_equal(sut, expected)
 })
 
 test_that("Test helper function dropdown(), min version", {
     sut <- dropdown(c("a", "b"), points = 4.55)
-    expected <- "<gap>{choices: [a,b], solution_index: 1, points: 4.55, shuffle: yes, type: InlineChoice}</gap>"
+    expected <- "<gap>{choices: ['a', 'b'], solution_index: 1, points: 4.55, shuffle: true, type: 'InlineChoice'}</gap>"
     expect_equal(sut, expected)
 })
 
 test_that("Test helper function dropdown() with named vector", {
     sut <- dropdown(c("a a."="a", "b b."="b"))
-    expected <- "<gap>{choices: [a,b], solution_index: 1, points: 1, shuffle: yes, choices_identifiers: [a a.,b b.], type: InlineChoice}</gap>"
+    expected <- "<gap>{choices: ['a', 'b'], solution_index: 1, points: 1, shuffle: true, choices_identifiers: ['a a.', 'b b.'], type: 'InlineChoice'}</gap>"
     expect_equal(sut, expected)
 })
 
@@ -95,6 +95,6 @@ test_that("Test helper function dropdown(), long content and named vector as inp
         points = 0.5,
         response_identifier = "dd_voraussetzung"
     )
-    expected <- "<gap>{choices: [xxxxxxxxx xxxxx xxx xxxxxxxxxxx xxxxxxxx xxxxxxxxx xxx xxxxxxx xxx.,yyyyyyyyy yyy yyyyy y yyy yyyyy y.,zzzzzzzzzz zzzzz zzzzz z zzz zzz zzzzzzzzzzzz zzzzzzzzz.], solution_index: 1, points: 0.5, shuffle: yes, response_identifier: dd_voraussetzung, choices_identifiers: [xxxxxxxxx xxxxx xxx xxxxxxxxxxx xxxxxxxx xxxxxxxxx xxx xxxxxxx xxx.,yyyyyyyyy yyy yyyyy y yyy yyyyy y.,zzzzzzzzzz zzzzz zzzzz z zzz zzz zzzzzzzzzzzz zzzzzzzzz.], type: InlineChoice}</gap>"
+    expected <- "<gap>{choices: ['xxxxxxxxx xxxxx xxx xxxxxxxxxxx xxxxxxxx xxxxxxxxx xxx xxxxxxx xxx.', 'yyyyyyyyy yyy yyyyy y yyy yyyyy y.', 'zzzzzzzzzz zzzzz zzzzz z zzz zzz zzzzzzzzzzzz zzzzzzzzz.'], solution_index: 1, points: 0.5, shuffle: true, response_identifier: 'dd_voraussetzung', choices_identifiers: ['xxxxxxxxx xxxxx xxx xxxxxxxxxxx xxxxxxxx xxxxxxxxx xxx xxxxxxx xxx.', 'yyyyyyyyy yyy yyyyy y yyy yyyyy y.', 'zzzzzzzzzz zzzzz zzzzz z zzz zzz zzzzzzzzzzzz zzzzzzzzz.'], type: 'InlineChoice'}</gap>"
     expect_equal(sut, expected)
 })

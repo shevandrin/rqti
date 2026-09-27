@@ -1,4 +1,11 @@
-# rqti (development version)
+# rqti 1.3.1
+
+## Bug fixes
+
+* Fixed Pandoc compatibility by using the appropriate option to disable syntax
+  highlighting based on the capabilities of the installed Pandoc version.
+
+# rqti 1.3.0
 
 ## New features
 
@@ -20,6 +27,24 @@
   QTI/HTML content using Base64 encoding. The function supports both
   `<object>` and `<audio>` rendering methods and
   self-contained audio embedding for portable assessment items.
+  
+## Improvements
+
+* Changed the preferred R Markdown YAML configuration for `preview_feedback`. 
+The option should now be specified as a top-level YAML field instead of inside 
+`params`. The previous syntax within `params` is deprecated and will be removed 
+in a future release.
+  
+## Bug fixes
+
+* Dropdown items (dropdown()) can now include commas and other punctuation 
+without breaking YAML parsing.
+
+* Updated OPAL authentication to use the current REST login endpoint and
+  header-based credentials.
+  
+* Fixed grade feedback score ranges so that rounding to two decimal places no
+  longer leaves gaps between adjacent grade intervals.
 
 # rqti 1.2.1
 

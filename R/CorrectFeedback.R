@@ -39,9 +39,7 @@ correctFeedback <- function(content = list(),
                             title = character(0),
                             show = TRUE) {
     params <- as.list(environment())
-    if (is.character(params$content)) params$content <- list(params$content)
-    params$Class <- "CorrectFeedback"
-    obj <- do.call("new", params)
+    obj <- construct_item(params, "CorrectFeedback")
     return(obj)
 }
 

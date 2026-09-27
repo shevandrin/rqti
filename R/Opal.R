@@ -1064,8 +1064,11 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
 #'@param api_user A character value of the username in the OPAL.
 #'@return A list with the key, display name, and URL of the resource in Opal.
 #'@examplesIf interactive()
-#'file <- system.file("exercises/sc1.Rmd", package='rqti')
-#' upload2opal(file, "task 1", open_in_browser = FALSE)
+#'file <- system.file(
+#'     "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+#'     package='rqti'
+#')
+#'upload2opal(file, "task 1", open_in_browser = FALSE)
 #'@export
 upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,

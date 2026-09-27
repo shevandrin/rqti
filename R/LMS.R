@@ -88,9 +88,19 @@ setMethod("authLMS", "LMS", function(object, ...) {
     api_password <- get_password(paste0("rqti", tolower(object@name)),
                                  api_user)$api_password
 
-    url_login <- paste0(endpoint, "restapi/auth/", api_user, "?password=", api_password)
-    req <- request(url_login)
-    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+    url_login <- paste0(sub("/+$", "", endpoint), "/restapi/auth/login")
+
+    response <- request(url_login) |>
+        req_method("POST") |>
+        req_headers(
+            `Content-Type` = "application/xml",
+            Accept = "text/plain",
+            username = api_user,
+            password = api_password
+        ) |>
+        req_error(is_error = \(response) FALSE) |>
+        req_perform()
+
     if (response$status_code == 200) {
         parse <- resp_body_xml(response)
         token <- response$headers$`X-OLAT-TOKEN`

@@ -28,3 +28,5 @@ s4_example.R
 ^_main\.Rmd$
 ^openolat-docker$
 ^revdep$
+^\.positai$
+^\.claude$

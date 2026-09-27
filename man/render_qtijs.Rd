@@ -49,7 +49,10 @@ after the word knit \code{knit: rqti::render_qtijs}.
 }
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
-  file <- system.file("exercises/sc1.Rmd", package = 'rqti')
-  render_qtijs(file)
+file <- system.file(
+    "rmarkdown/templates/singlechoice-simple/skeleton/skeleton.Rmd",
+    package='rqti'
+)
+render_qtijs(file)
 \dontshow{\}) # examplesIf}
 }

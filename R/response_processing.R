@@ -252,7 +252,7 @@ make_set_conditions_grade <- function(grades_list, max_points, grade_label, tabl
     grades_list <- sort(grades_list)
     grades <- names(grades_list)
     id_grade_fb <- paste0("feedback_grade_", gsub("\\.", "", grades))
-    grade_levels <- grades_list * max_points
+    grade_levels <- round(grades_list * max_points, 2)
     lower_bounds <- sprintf("%.2f", grade_levels)
     upper_bounds <- c(sprintf("%.2f", grade_levels[-1]), "max")
     conditions <- Map(create_resp_cond_grade_feedback, lower_bounds,

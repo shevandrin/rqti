@@ -35,8 +35,8 @@ Designed for inline use in R Markdown, e.g.
 The function reads a local audio file, encodes it as Base64,
 and returns either:
 \itemize{
-\item an HTML \if{html}{\out{<object>}} tag
-\item or an HTML \if{html}{\out{<audio>}} tag
+\item an HTML \code{<object>} tag
+\item or an HTML \code{<audio>} tag
 }
 
 This makes the final XML/HTML fully self-contained.

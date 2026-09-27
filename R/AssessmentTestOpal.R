@@ -69,6 +69,15 @@ setMethod("initialize", "AssessmentTestOpal", function(.Object, ...) {
     .Object
 })
 
+setValidity("AssessmentTestOpal", function(object) {
+    errors <- list()
+
+    error <- validate_calculator(object@calculator)
+    if (!is.null(error)) errors <- c(errors, error)
+
+    if (length(errors) == 0L) TRUE else unlist(errors)
+})
+
 #'Create an object [AssessmentTestOpal]
 #'
 #'Create an AssessmentTestOpal `rqti`-object.
