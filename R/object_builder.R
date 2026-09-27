@@ -55,6 +55,19 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #' [MultipleChoiceTable], [DirectedPair]) from an Rmd file.
 #'
+#' @section CSS in YAML:
+#' Use `stylesheet_path: styles.css` for a CSS file (or a YAML sequence of
+#' files). Relative paths are resolved against the Rmd file's directory.
+#' Use a YAML literal block `css: |` for CSS text. When both are supplied,
+#' files are linked in the supplied order, followed by the CSS text.
+#' Stylesheets are linked from the assessment item and included in QTI ZIPs
+#' and their manifests. Standalone XML exports write CSS beside the XML in
+#' a `styles/items/` subdirectory; keep that directory with the XML.
+#' These fields do not convert inline HTML `style` attributes to classes.
+#' CSS references such as `url(...)` and `@import` are not collected or
+#' rewritten; use self-contained stylesheets. Rendering depends on the
+#' delivery platform's CSS support.
+#'
 #' @param file A string representing the path to an Rmd file.
 #' @return One of the rqti S4 AssessmentItem objects: [SingleChoice],
 #' [MultipleChoice], [Essay], [Entry], [Ordering], [OneInRowTable],
@@ -68,6 +81,28 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 create_question_object <- function(file) {
     rmd_checker(file)
     attrs <- yaml_front_matter(file)
+    if (!is.null(attrs$stylesheet_path)) {
+        paths <- attrs$stylesheet_path
+        if (is.list(paths) && all(vapply(paths, function(x) {
+            is.character(x) && length(x) == 1L
+        }, logical(1)))) paths <- unlist(paths, use.names = FALSE)
+        if (!is.character(paths) || anyNA(paths) || any(!nzchar(paths))) {
+            stop("'stylesheet_path' must contain non-empty file paths.", call. = FALSE)
+        }
+        # Relative paths are relative to the source, even when called elsewhere.
+        absolute <- grepl("^(/|[A-Za-z]:[/\\\\]|~)", paths)
+        paths[!absolute] <- file.path(dirname(normalizePath(file)), paths[!absolute])
+        check_files_existence(paths)
+        if (any(dir.exists(paths))) stop("'stylesheet_path' must refer to files.", call. = FALSE)
+        attrs$stylesheet_path <- normalizePath(paths, winslash = "/", mustWork = TRUE)
+    }
+    if (!is.null(attrs$css) &&
+        (!is.character(attrs$css) || length(attrs$css) != 1L || anyNA(attrs$css))) {
+        stop("'css' must be a single string of CSS text.", call. = FALSE)
+    }
+    # YAML null means no stylesheet, rather than an invalid S4 slot value.
+    if (is.null(attrs$css)) attrs$css <- NULL
+    if (is.null(attrs$stylesheet_path)) attrs$stylesheet_path <- NULL
     # form value for slot metadata
     mtdata <- attrs$metadata
     contrs <- lapply(mtdata$contributor, function(x) {do.call(qtiContributor, x)})

@@ -62,6 +62,14 @@ be accessible to the candidate during the test/exam.}
 \item{\code{metadata}}{An object of class \link{QtiMetadata} that holds metadata information
 about the task.}
 
+\item{\code{stylesheet_path}}{Optional character vector of local CSS file paths.
+Stylesheets are linked from the item and included in QTI exports. In Rmd
+YAML, relative paths are resolved against the Rmd file's directory.}
+
+\item{\code{css}}{Optional single character string of CSS text, linked after any
+files in \code{stylesheet_path}. In Rmd YAML, use a literal block (\verb{css: |}).
+CSS assets referenced by \code{url()} or \verb{@import} are not bundled automatically.}
+
 \item{\code{choices}}{A character vector defining a set of answer options in the
 question.}
 

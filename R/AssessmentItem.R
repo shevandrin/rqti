@@ -16,6 +16,8 @@ setClass("AssessmentItem", slots = c(identifier = "character",
                                      points = "numeric",
                                      feedback = "list",
                                      files = "character",
+                                     stylesheet_path = "character",
+                                     css = "character",
                                      calculator = "character",
                                      metadata = "QtiMetadata"),
          prototype = prototype(prompt = "",
@@ -39,6 +41,12 @@ setMethod("initialize", "AssessmentItem", function(.Object, ...) {
 
 setValidity("AssessmentItem", function(object) {
     errors <- list()
+    if (anyNA(object@stylesheet_path) || any(!nzchar(object@stylesheet_path))) {
+        errors <- c(errors, "'stylesheet_path' must contain non-empty file paths.")
+    }
+    if (length(object@css) > 1L || anyNA(object@css)) {
+        errors <- c(errors, "'css' must be a single string of CSS text.")
+    }
     calc <- object@calculator
     if (length(calc) == 1) {
         if (!any(c("simple", "simple-calculator",

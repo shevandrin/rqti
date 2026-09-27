@@ -13,6 +13,9 @@ create_assessment_item <- function(object) {
     assesment_item <- tagAppendChildren(assesment_item,
                                         createResponseDeclaration(object),
                                         createOutcomeDeclaration(object),
+                                        lapply(item_stylesheet_hrefs(object), function(href) {
+                                            tag("stylesheet", list(href = href, type = "text/css"))
+                                        }),
                                         createItemBody(object),
                                         createResponseProcessing(object),
                                         Map(createModalFeedback, object@feedback))
@@ -237,6 +240,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
     if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
     path_task <- file.path(dir, paste0(file_name, ".xml"))
+    write_item_stylesheets(object, dir)
     xml2::write_xml(doc, path_task)
     if (interactive()) message("see assessment item: ", path_task)
     return(stringr::str_remove(path_task, getwd()))
@@ -254,7 +258,10 @@ create_manifest_task <- function(object) {
     resource <- tag("resource", list(identifier = object@identifier,
                                      type = "imsqti_item_xmlv2p1",
                                      href = paste0(object@identifier, ".xml"),
-                                     file))
+                                     file,
+                                     lapply(item_stylesheet_hrefs(object), function(href) {
+                                         tag("file", list(href = href))
+                                     })))
     resources <- tag("resources", list(resource))
     tagAppendChildren(manifest, metadata, organisations, resources)
 }
@@ -292,7 +299,7 @@ create_task_zip <- function(object, path = ".", verification = FALSE,
     tdir <- tempfile()
     dir.create(tdir)
 
-    task_path <- suppressMessages(create_qti_task(object, tdir))
+    task_path <- suppressMessages(create_qti_task(object, tdir, verification))
 
     manifest <- create_manifest_task(object)
     doc_manifest <- xml2::read_xml(as.character(manifest))
@@ -302,4 +309,30 @@ create_task_zip <- function(object, path = ".", verification = FALSE,
     path <- zip_wrapper(file_name, tdir, path, NULL, zip_only)
     message("see zip with assessment item: ", path)
     return(path)
+}
+
+# Item-specific directories prevent collisions between different style.css files
+# and the existing assessment-test-level stylesheets.
+item_stylesheet_hrefs <- function(object) {
+    n <- length(object@stylesheet_path) + as.integer(length(object@css) > 0L && nzchar(object@css))
+    if (n == 0L) return(character())
+    check_identifier(object@identifier)
+    paste0("styles/items/", object@identifier, "/", seq_len(n), ".css")
+}
+
+write_item_stylesheets <- function(object, dir) {
+    hrefs <- item_stylesheet_hrefs(object)
+    if (!length(hrefs)) return(invisible(NULL))
+    paths <- object@stylesheet_path
+    check_files_existence(paths)
+    if (any(dir.exists(paths))) stop("'stylesheet_path' must refer to files.", call. = FALSE)
+    targets <- file.path(dir, hrefs)
+    dir.create(dirname(targets[1]), recursive = TRUE, showWarnings = FALSE)
+    if (length(paths) && !all(file.copy(paths, targets[seq_along(paths)], overwrite = TRUE))) {
+        stop("Could not copy item CSS files.", call. = FALSE)
+    }
+    if (length(targets) > length(paths)) {
+        writeLines(enc2utf8(object@css), targets[length(targets)], useBytes = TRUE)
+    }
+    invisible(NULL)
 }

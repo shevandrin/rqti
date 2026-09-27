@@ -2,6 +2,11 @@
 
 ## New features
 
+* Rmd questions now support `stylesheet_path` (one or more local CSS files)
+  and `css: |` (CSS text) in YAML. Item stylesheets are written with XML
+  exports and included in item and assessment ZIPs and manifests. Relative
+  paths are resolved against the Rmd source directory.
+
 * Added `read_qti()` as an alias for `extract_results()`.
 
 * Added OPAL API functions `createCourseGroup()` for creating course groups,

@@ -35,3 +35,9 @@
 #'   be accessible to the candidate during the test/exam.
 #' @slot metadata An object of class [QtiMetadata] that holds metadata information
 #' about the task.
+#' @slot stylesheet_path Optional character vector of local CSS file paths.
+#'   Stylesheets are linked from the item and included in QTI exports. In Rmd
+#'   YAML, relative paths are resolved against the Rmd file's directory.
+#' @slot css Optional single character string of CSS text, linked after any
+#'   files in `stylesheet_path`. In Rmd YAML, use a literal block (`css: |`).
+#'   CSS assets referenced by `url()` or `@import` are not bundled automatically.

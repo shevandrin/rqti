@@ -228,7 +228,11 @@ create_manifest <- function(object) {
                                                         ".xml"),
                                           file, stylesheet_files, metadata,
                                           dependencies))
-    item_resources <- Map(create_resource_item, names(items), items)
+    item_stylesheets <- unlist(lapply(unname(object@section), section_stylesheet_hrefs),
+                              recursive = FALSE)
+    item_resources <- Map(function(id, href) {
+        create_resource_item(id, href, item_stylesheets[[id]])
+    }, names(items), items)
     resources <- tag("resources", list(test_resource, item_resources))
 
     tagAppendChildren(manifest, organizations, resources)
@@ -254,12 +258,27 @@ create_dependency <- function(id) {
 }
 
 # create tag 'resource' for manifest file
-create_resource_item <- function(id, href) {
+create_resource_item <- function(id, href, stylesheet_hrefs = character()) {
     file <- tag("file", list(href = href))
     tag("resource", list(identifier = id,
                          type = "imsqti_item_xmlv2p1",
                          href = href,
-                         file))
+                         file,
+                         lapply(stylesheet_hrefs, function(path) {
+                             tag("file", list(href = path))
+                         })))
+}
+
+section_stylesheet_hrefs <- function(object) {
+    result <- list()
+    for (item in object@assessment_item) {
+        if (is(item, "AssessmentSection")) {
+            result <- c(result, section_stylesheet_hrefs(item))
+        } else if (is(item, "AssessmentItem")) {
+            result[item@identifier] <- list(item_stylesheet_hrefs(item))
+        }
+    }
+    result
 }
 
 #' @importFrom zip zip
