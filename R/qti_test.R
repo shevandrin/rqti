@@ -231,7 +231,10 @@ create_manifest <- function(object) {
     item_stylesheets <- unlist(lapply(unname(object@section), section_stylesheet_hrefs),
                               recursive = FALSE)
     item_resources <- Map(function(id, href) {
-        create_resource_item(id, href, item_stylesheets[[id]])
+        # Named item lists can prefix manifest resource IDs. The XML filename
+        # still uses the actual item identifier used for stylesheet packaging.
+        item_id <- tools::file_path_sans_ext(basename(href))
+        create_resource_item(id, href, item_stylesheets[[item_id]])
     }, names(items), items)
     resources <- tag("resources", list(test_resource, item_resources))
 

@@ -180,3 +180,22 @@ test_that("missing CSS files at export fail rather than produce broken links", {
     expect_error(createQtiTask(item, dir = file.path(root, "out")), "do not exist")
     expect_false(file.exists(file.path(root, "out", "styled.xml")))
 })
+
+test_that("named item lists include CSS in each manifest resource", {
+    root <- tempfile()
+    on.exit(unlink(root, recursive = TRUE), add = TRUE)
+    items <- list(first = new("SingleChoice", identifier = "named_css",
+        choices = c("Yes", "No"), solution = 1, css = ".highlight { color: blue; }"))
+    exam <- assessmentTest(identifier = "named_exam",
+        section = list(assessmentSection(items, identifier = "named_section")))
+    archive <- suppressMessages(createQtiTest(exam, dir = root, zip_only = TRUE))
+    unpacked <- file.path(root, "unpacked")
+    unzip(archive, exdir = unpacked)
+    doc <- xml2::read_xml(file.path(unpacked, "named_css.xml"))
+    hrefs <- css_xml_hrefs(doc, ".//d1:stylesheet")
+    manifest <- xml2::read_xml(file.path(unpacked, "imsmanifest.xml"))
+    expect_length(hrefs, 1)
+    expect_true(all(file.exists(file.path(unpacked, hrefs))))
+    expect_true(all(hrefs %in% css_xml_hrefs(manifest,
+        ".//d1:resource[@href='named_css.xml']/d1:file")))
+})
