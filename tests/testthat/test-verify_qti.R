@@ -89,15 +89,46 @@ test_that("extended schema validates TextGapOpal tolerance processing", {
 
 test_that("verify_qti can select a local qti22 schema", {
     f <- system.file("extdata", "sc1d.xml", package = "rqti")
+    qti22_xml <- paste(readLines(f, warn = FALSE), collapse = "\n")
+    qti22_xml <- gsub(
+        "http://www.imsglobal.org/xsd/imsqti_v2p1",
+        "http://www.imsglobal.org/xsd/imsqti_v2p2",
+        qti22_xml,
+        fixed = TRUE
+    )
 
-    res <- verify_qti(f, schema = "qti22", print = FALSE, engine = "xml2")
+    expect_no_warning(
+        res <- verify_qti(
+            qti22_xml,
+            schema = "qti22",
+            print = FALSE,
+            engine = "xml2"
+        )
+    )
 
     expect_s3_class(res, "qti_validation_result")
+    expect_true(res$valid)
     expect_identical(res$schema, "imsqti_v2p2.xsd")
 
-    res_file_name <- verify_qti(f, schema = "imsqti_v2p2.xsd", print = FALSE, engine = "xml2")
+    expect_no_warning(
+        res_file_name <- verify_qti(
+            qti22_xml,
+            schema = "imsqti_v2p2.xsd",
+            print = FALSE,
+            engine = "xml2"
+        )
+    )
     expect_s3_class(res_file_name, "qti_validation_result")
+    expect_true(res_file_name$valid)
     expect_identical(res_file_name$schema, "imsqti_v2p2.xsd")
+
+    schema_path <- rqti:::resolve_qti_schema("qti22")
+    validation <- xml2::xml_validate(
+        xml2::read_xml(qti22_xml),
+        xml2::read_xml(schema_path)
+    )
+    expect_true(isTRUE(validation))
+    expect_length(attr(validation, "errors"), 0)
 })
 
 test_that("verify_qti explains unknown schema selectors", {

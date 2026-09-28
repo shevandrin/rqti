@@ -21,7 +21,13 @@ test_that("Rmd YAML supports relative file paths and CSS text in order", {
     writeLines(".highlight { color: red; }", file.path(dirname(src), "first.css"))
     writeLines(".highlight { color: blue; }", file.path(dirname(src), "second.css"))
     item <- create_question_object(src)
-    expect_equal(item@stylesheet_path, normalizePath(file.path(dirname(src), c("first.css", "second.css"))))
+    expect_equal(
+        item@stylesheet_path,
+        normalizePath(
+            file.path(dirname(src), c("first.css", "second.css")),
+            winslash = "/"
+        )
+    )
     expect_match(item@css, "color: green", fixed = TRUE)
     # Parsed objects keep absolute paths and can be exported from another cwd.
     out <- file.path(root, "output")
