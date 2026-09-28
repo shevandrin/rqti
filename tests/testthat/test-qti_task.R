@@ -1,4 +1,22 @@
 # SingleChoice
+test_that("writing an item preserves whitespace in preformatted content", {
+    out <- tempfile(fileext = ".xml")
+    on.exit(unlink(out), add = TRUE)
+    code <- "  Res.Df RSS\n1     49 100"
+    sc <- new("SingleChoice",
+              identifier = "preformatted",
+              title = "Preformatted output",
+              content = list(paste0("<pre><code>", code, "</code></pre>")),
+              choices = c("Yes", "No"),
+              solution = 1)
+
+    suppressMessages(createQtiTask(sc, dir = out, verification = TRUE))
+    written <- paste(readLines(out, warn = FALSE), collapse = "\n")
+
+    expect_match(written, paste0("<pre><code>", code, "</code></pre>"),
+                 fixed = TRUE)
+})
+
 test_that("Testing xml file of SingleChoice task", {
     path <- test_path("file/xml/SingleChoice.xml")
     expected <- readLines(path)

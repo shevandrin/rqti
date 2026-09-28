@@ -241,7 +241,13 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
 
     path_task <- file.path(dir, paste0(file_name, ".xml"))
     write_item_stylesheets(object, dir)
-    xml2::write_xml(doc, path_task)
+    # Pretty-printing inserts indentation between <pre> and its child elements.
+    # Browsers preserve that whitespace, which can shift only the first line of
+    # verbatim output. Keep items containing preformatted content compact while
+    # retaining the established formatting for all other item XML.
+    has_pre <- length(xml2::xml_find_all(doc, ".//*[local-name()='pre']")) > 0L
+    write_options <- if (has_pre) character() else "format"
+    xml2::write_xml(doc, path_task, options = write_options)
     if (interactive()) message("see assessment item: ", path_task)
     return(stringr::str_remove(path_task, getwd()))
 }
