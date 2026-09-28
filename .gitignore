@@ -40,3 +40,11 @@ BOOK/setup.R
 revdep/
 CRAN-SUBMISSION
 .positai
+
+# Local exam and coverage artifacts
+/output/
+/TESTPruefung_*.zip
+/codecov.sh
+/coverage.xml
+/exams2rqti.R
+*teilnehmerlisten*

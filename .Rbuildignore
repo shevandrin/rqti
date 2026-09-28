@@ -30,3 +30,9 @@ s4_example.R
 ^revdep$
 ^\.positai$
 ^\.claude$
+^output$
+^TESTPruefung_.*\.zip$
+^codecov\.sh$
+^coverage\.xml$
+^exams2rqti\.R$
+^.*teilnehmerlisten.*$
