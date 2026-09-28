@@ -2,7 +2,7 @@
 test_that("writing an item preserves whitespace in preformatted content", {
     out <- tempfile(fileext = ".xml")
     on.exit(unlink(out), add = TRUE)
-    code <- "  Res.Df RSS\n1     49 100"
+    code <- "  Res.Df RSS\n1     49 100\npath C:\\\\tmp"
     sc <- new("SingleChoice",
               identifier = "preformatted",
               title = "Preformatted output",
@@ -15,6 +15,7 @@ test_that("writing an item preserves whitespace in preformatted content", {
 
     expect_match(written, paste0("<pre><code>", code, "</code></pre>"),
                  fixed = TRUE)
+    expect_match(written, "\n  <responseDeclaration", fixed = TRUE)
 })
 
 test_that("Testing xml file of SingleChoice task", {

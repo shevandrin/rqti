@@ -198,6 +198,48 @@ create_prompt <- function(object) {
     }
 }
 
+serialize_xml_node_compact <- function(node) {
+    connection <- rawConnection(raw(), "wb")
+    on.exit(close(connection))
+    xml2::write_xml(node, connection, options = "no_declaration")
+    rawToChar(rawConnectionValue(connection))
+}
+
+write_item_xml <- function(doc, path) {
+    pre <- xml2::xml_find_all(doc, ".//*[local-name()='pre']")
+    if (length(pre) == 0L) {
+        xml2::write_xml(doc, path)
+        return(invisible(path))
+    }
+
+    preserved <- vapply(pre, serialize_xml_node_compact, character(1))
+    prefix <- "rqti-preserved-pre"
+    document_text <- as.character(doc)
+    while (grepl(prefix, document_text, fixed = TRUE)) {
+        prefix <- paste0(prefix, "-")
+    }
+    markers <- paste0(prefix, "-", seq_along(pre))
+    for (i in rev(seq_along(pre))) {
+        xml2::xml_replace(pre[[i]], xml2::xml_comment(markers[i]))
+    }
+
+    xml2::write_xml(doc, path)
+    connection <- file(path, "rb")
+    on.exit(close(connection), add = TRUE)
+    bytes <- readBin(connection, "raw", n = file.info(path)$size)
+    close(connection)
+    text <- rawToChar(bytes)
+    for (i in seq_along(markers)) {
+        marker <- paste0("<!--", markers[i], "-->")
+        pieces <- strsplit(text, marker, fixed = TRUE)[[1L]]
+        stopifnot(length(pieces) == 2L)
+        text <- paste0(pieces[1L], preserved[i], pieces[2L])
+    }
+    connection <- file(path, "wb")
+    writeBin(charToRaw(text), connection)
+    invisible(path)
+}
+
 #' Create XML file for question specification
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
@@ -241,13 +283,9 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
 
     path_task <- file.path(dir, paste0(file_name, ".xml"))
     write_item_stylesheets(object, dir)
-    # Pretty-printing inserts indentation between <pre> and its child elements.
-    # Browsers preserve that whitespace, which can shift only the first line of
-    # verbatim output. Keep items containing preformatted content compact while
-    # retaining the established formatting for all other item XML.
-    has_pre <- length(xml2::xml_find_all(doc, ".//*[local-name()='pre']")) > 0L
-    write_options <- if (has_pre) character() else "format"
-    xml2::write_xml(doc, path_task, options = write_options)
+    # Pretty-printing inserts visible whitespace inside <pre> elements. Preserve
+    # those subtrees compactly while formatting the rest of the item document.
+    write_item_xml(doc, path_task)
     if (interactive()) message("see assessment item: ", path_task)
     return(stringr::str_remove(path_task, getwd()))
 }
