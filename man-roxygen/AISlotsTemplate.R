@@ -41,3 +41,6 @@
 #' @slot css Optional single character string of CSS text, linked after any
 #'   files in `stylesheet_path`. In Rmd YAML, use a literal block (`css: |`).
 #'   CSS assets referenced by `url()` or `@import` are not bundled automatically.
+#' @slot template A list of [MaximaVariables] objects describing template
+#'   calculations. Defaults to an empty list. These descriptions are currently
+#'   stored only; XML generation and Rmd parsing are not yet supported.

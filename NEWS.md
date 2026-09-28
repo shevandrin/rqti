@@ -9,6 +9,10 @@
   When it is omitted, rqti continues to use the existing `rqtiopal` credential
   service, preserving the behavior of existing code and saved credentials.
 
+* Added the `MaximaVariables` S4 model and an empty-by-default `template` slot
+  on assessment items. This initial model stores calculation descriptions;
+  Maxima XML generation and Rmd integration are not yet implemented.
+
 ## Bug fixes
 
 * `extract_results(level = "item")` now supports integer responses and labels

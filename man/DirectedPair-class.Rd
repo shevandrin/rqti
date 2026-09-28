@@ -71,6 +71,10 @@ YAML, relative paths are resolved against the Rmd file's directory.}
 files in \code{stylesheet_path}. In Rmd YAML, use a literal block (\verb{css: |}).
 CSS assets referenced by \code{url()} or \verb{@import} are not bundled automatically.}
 
+\item{\code{template}}{A list of \link{MaximaVariables} objects describing template
+calculations. Defaults to an empty list. These descriptions are currently
+stored only; XML generation and Rmd parsing are not yet supported.}
+
 \item{\code{rows}}{A character vector specifying answer options as row names in the
 table or the first elements in couples in \link{DirectedPair}.}
 
