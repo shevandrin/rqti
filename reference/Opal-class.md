@@ -22,6 +22,12 @@ class is designed to facilitate interactions with the Opal LMS API.
   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or placed in the
   `.Renviron` file.
 
+- `credential_id`:
+
+  A character string identifying this endpoint's credentials in the
+  operating-system keyring. If omitted, the legacy `rqtiopal` service is
+  used.
+
 ## See also
 
 [LMS-class](https://shevandrin.github.io/rqti/reference/LMS-class.md)

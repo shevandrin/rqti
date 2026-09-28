@@ -115,17 +115,23 @@ test4opal(
 - navigation_mode:
 
   A character value, optional, determining the general paths that the
-  candidate may have during the exam. Two mode options are possible: -
-  'linear': Candidate is not allowed to return to previous questions. -
-  'nonlinear': Candidate is free to navigate; used by default.
+  candidate may have during the exam. Two mode options are possible:
+
+  - 'linear': Candidate is not allowed to return to previous questions.
+
+  - 'nonlinear': Candidate is free to navigate; used by default.
 
 - submission_mode:
 
   A character value, optional, determining when the candidate's
   responses are submitted for response processing. One of two mode
-  options is possible: - 'individual': Submit candidates' responses on
-  an item-by-item basis; used by default. - 'simultaneous': Candidates'
-  responses are submitted all together by the end of the test.
+  options is possible:
+
+  - 'individual': Submit candidates' responses on an item-by-item basis;
+    used by default.
+
+  - 'simultaneous': Candidates' responses are submitted all together by
+    the end of the test.
 
 - allow_comment:
 

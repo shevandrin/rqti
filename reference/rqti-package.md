@@ -25,6 +25,9 @@ Useful links:
 
 Authors:
 
+- Andrey Shevandrin <shevandrin@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-0807-2546)) \[copyright holder\]
+
 - Johannes Titz <johannes@titz.science>
   ([ORCID](https://orcid.org/0000-0002-1102-5719)) \[copyright holder\]
 

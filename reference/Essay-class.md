@@ -92,6 +92,20 @@ according to QTI 2.1.
   [QtiMetadata](https://shevandrin.github.io/rqti/reference/QtiMetadata-class.md)
   that holds metadata information about the task.
 
+- `stylesheet_path`:
+
+  Optional character vector of local CSS file paths. Stylesheets are
+  linked from the item and included in QTI exports. In Rmd YAML,
+  relative paths are resolved against the Rmd file's directory.
+
+- `css`:
+
+  Optional single character string of CSS text, linked after any files
+  in `stylesheet_path`. In Rmd YAML, use a literal block (`css: |`). CSS
+  assets referenced by
+  [`url()`](https://rdrr.io/r/base/connections.html) or `@import` are
+  not bundled automatically.
+
 - `expected_length`:
 
   A numeric, optional. Responsible for setting the size of the text

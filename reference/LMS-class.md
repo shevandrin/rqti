@@ -21,3 +21,10 @@ implementations.
   To set this variable globally, use:
   `Sys.setenv(RQTI_API_ENDPOINT = 'your_endpoint')`, or add it to your
   `.Renviron` file for persistence across sessions.
+
+- `credential_id`:
+
+  A character string identifying the credential set in the
+  operating-system keyring. If omitted, rqti uses its original service
+  name for backward compatibility. Set it when the same API username has
+  different passwords on different LMS installations.
