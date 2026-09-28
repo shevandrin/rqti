@@ -36,3 +36,11 @@ s4_example.R
 ^coverage\.xml$
 ^exams2rqti\.R$
 ^.*teilnehmerlisten.*$
+^dashboard-preview\.html$
+^groups\.R$
+^overviewStats\.R$
+^showOverview\.html$
+^style\.css$
+^test$
+^test-docker\.sh$
+^verify\.sh$
