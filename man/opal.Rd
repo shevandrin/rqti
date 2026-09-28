@@ -4,12 +4,20 @@
 \alias{opal}
 \title{Create an Opal LMS Connection Object}
 \usage{
-opal(api_user = NA_character_, endpoint = NA_character_)
+opal(
+  api_user = NA_character_,
+  endpoint = NA_character_,
+  credential_id = NA_character_
+)
 }
 \arguments{
 \item{api_user}{A character string specifying the API username.}
 
 \item{endpoint}{A character string specifying the API endpoint for the LMS.}
+
+\item{credential_id}{An optional name for the credential set. By default,
+rqti continues to use the legacy \code{rqtiopal} service. Supply an ID to use a
+separate password for another OPAL installation.}
 }
 \value{
 An object of class \code{Opal}, inheriting from \code{LMS},

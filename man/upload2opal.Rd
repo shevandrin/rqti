@@ -12,7 +12,8 @@ upload2opal(
   endpoint = NULL,
   open_in_browser = TRUE,
   as_survey = FALSE,
-  api_user = NULL
+  api_user = NULL,
+  credential_id = NULL
 )
 }
 \arguments{
@@ -43,6 +44,9 @@ a URL in the default browser. Default is \code{TRUE}.}
 or survey). Default is \code{FALSE}.}
 
 \item{api_user}{A character value of the username in the OPAL.}
+
+\item{credential_id}{An optional name for the credential set. If omitted, the
+legacy \code{rqtiopal} service is used.}
 }
 \value{
 A list with the key, display name, and URL of the resource in Opal.

@@ -10,6 +10,9 @@
 #' @slot endpoint A character string containing the API endpoint of the Opal LMS.
 #'   This can be set using the environment variable `RQTI_API_ENDPOINT` with
 #'   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or placed in the `.Renviron` file.
+#' @slot credential_id A character string identifying this endpoint's credentials
+#'   in the operating-system keyring. If omitted, the legacy `rqtiopal` service
+#'   is used.
 #'
 #' @seealso \link{LMS-class} for the parent class.
 #'
@@ -28,13 +31,18 @@ setClass("Opal", contains = "LMS",
 #'
 #' @param api_user A character string specifying the API username.
 #' @param endpoint A character string specifying the API endpoint for the LMS.
+#' @param credential_id An optional name for the credential set. By default,
+#'   rqti continues to use the legacy `rqtiopal` service. Supply an ID to use a
+#'   separate password for another OPAL installation.
 #'
 #' @return An object of class `Opal`, inheriting from `LMS`,
 #'   which can be used to interact with the Opal LMS API.
 #'
 #' @export
-opal <- function(api_user = NA_character_, endpoint = NA_character_) {
-    result <- new("Opal", api_user = api_user, endpoint = endpoint)
+opal <- function(api_user = NA_character_, endpoint = NA_character_,
+                 credential_id = NA_character_) {
+    result <- new("Opal", api_user = api_user, endpoint = endpoint,
+                  credential_id = credential_id)
     return(result)
 }
 
@@ -1062,6 +1070,8 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
 #'@param as_survey A boolean value, optional; controls the resource type (test
 #'  or survey). Default is `FALSE`.
 #'@param api_user A character value of the username in the OPAL.
+#'@param credential_id An optional name for the credential set. If omitted, the
+#'  legacy `rqtiopal` service is used.
 #'@return A list with the key, display name, and URL of the resource in Opal.
 #'@examplesIf interactive()
 #'file <- system.file(
@@ -1073,10 +1083,13 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
 upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,
                         as_survey = FALSE,
-                        api_user = NULL) {
+                        api_user = NULL,
+                        credential_id = NULL) {
     api_user = ifelse(is.null(api_user), NA_character_, api_user)
     endpoint = ifelse(is.null(endpoint), NA_character_, endpoint)
-    conn <- new("Opal", api_user = api_user, endpoint = endpoint)
+    credential_id = ifelse(is.null(credential_id), NA_character_, credential_id)
+    conn <- new("Opal", api_user = api_user, endpoint = endpoint,
+                credential_id = credential_id)
     upload2LMS(conn, test, display_name, access, overwrite,
                open_in_browser = open_in_browser,
                as_survey = as_survey)

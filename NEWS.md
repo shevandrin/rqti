@@ -1,5 +1,12 @@
 # rqti 1.3.1
 
+## New features
+
+* `opal()` and `upload2opal()` now accept an optional `credential_id`, allowing
+  the same username to use different passwords on different OPAL installations.
+  When it is omitted, rqti continues to use the existing `rqtiopal` credential
+  service, preserving the behavior of existing code and saved credentials.
+
 ## Bug fixes
 
 * Fixed Pandoc compatibility by using the appropriate option to disable syntax

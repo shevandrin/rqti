@@ -10,13 +10,27 @@
 #'   To set this variable globally, use:
 #'   `Sys.setenv(RQTI_API_ENDPOINT = 'your_endpoint')`,
 #'   or add it to your `.Renviron` file for persistence across sessions.
+#' @slot credential_id A character string identifying the credential set in the
+#'   operating-system keyring. If omitted, rqti uses its original service name
+#'   for backward compatibility. Set it when the same API username has different
+#'   passwords on different LMS installations.
 #'
 #' @name LMS-class
 #' @rdname LMS-class
 #' @aliases LMS
 setClass("LMS", slots = c(name = "character",
                           api_user = "character",
-                          endpoint = "character"))
+                          endpoint = "character",
+                          credential_id = "character"))
+
+credential_service_name <- function(object) {
+    service_name <- paste0("rqti", tolower(object@name))
+    credential_id <- object@credential_id
+    if (length(credential_id) == 0 || is.na(credential_id)) {
+        return(service_name)
+    }
+    paste0(service_name, "-", credential_id)
+}
 
 setMethod("initialize", "LMS", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -36,10 +50,25 @@ setMethod("initialize", "LMS", function(.Object, ...) {
         .Object@endpoint <- endpoint
     }
 
+    if (length(.Object@credential_id) == 0) {
+        .Object@credential_id <- NA_character_
+    }
+    if (length(.Object@credential_id) != 1) {
+        stop("credential_id must be a length-one character string.",
+             call. = FALSE)
+    }
+    if (!is.na(.Object@credential_id)) {
+        .Object@credential_id <- trimws(.Object@credential_id)
+        if (!nzchar(.Object@credential_id)) {
+            stop("credential_id must be non-empty when supplied.",
+                 call. = FALSE)
+        }
+    }
+
     api_user <- .Object@api_user
     if (length(api_user) == 0) api_user <- NULL
 
-    api_user <- get_password(service_name = paste0("rqti", tolower(.Object@name)),
+    api_user <- get_password(service_name = credential_service_name(.Object),
                             api_user = api_user)$api_user
     if (is.null(api_user)) {
         stop(
@@ -85,7 +114,7 @@ setMethod("authLMS", "LMS", function(object, ...) {
     if (length(api_user) == 0 ) api_user <- NULL
 
     endpoint <- object@endpoint
-    api_password <- get_password(paste0("rqti", tolower(object@name)),
+    api_password <- get_password(credential_service_name(object),
                                  api_user)$api_password
 
     url_login <- paste0(sub("/+$", "", endpoint), "/restapi/auth/login")
@@ -643,7 +672,8 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
         }
     }
 
-    return(list(api_username = api_user, api_password = psw))
+    return(list(api_user = api_user, api_username = api_user,
+                api_password = psw))
 }
 
 # check if this is a test using the manifest file

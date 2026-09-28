@@ -21,6 +21,10 @@ Defaults to \code{"Opal"}.}
 \item{\code{endpoint}}{A character string containing the API endpoint of the Opal LMS.
 This can be set using the environment variable \code{RQTI_API_ENDPOINT} with
 \code{Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')} or placed in the \code{.Renviron} file.}
+
+\item{\code{credential_id}}{A character string identifying this endpoint's credentials
+in the operating-system keyring. If omitted, the legacy \code{rqtiopal} service
+is used.}
 }}
 
 \seealso{
