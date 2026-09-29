@@ -49,7 +49,7 @@ otherwise FALSE
 candidate)
 \item 'date' - date and time of test
 \item 'id_question' - question item identifier
-\item 'base_type' - type of answer (identifier, string or float)
+\item 'base_type' - type of answer (identifier, directedPair, string, float or integer)
 \item 'cardinalities' - defines whether this question is single, multiple or
 ordered -value
 \item 'qti_type' - specifies the type of the task

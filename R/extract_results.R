@@ -30,7 +30,7 @@
 #'   candidate)
 #' * 'date' - date and time of test
 #' * 'id_question' - question item identifier
-#' * 'base_type' - type of answer (identifier, string or float)
+#' * 'base_type' - type of answer (identifier, directedPair, string, float or integer)
 #' * 'cardinalities' - defines whether this question is single, multiple or
 #'   ordered -value
 #' * 'qti_type' - specifies the type of the task
@@ -353,10 +353,18 @@ get_result_attr_options <- function(file, hide_filename) {
 get_info <- function(node){
     first_tag <- xml2::xml_find_first(node, ".//d1:responseVariable[@identifier!='duration']")
     b_type <- xml2::xml_attr(first_tag, "baseType")
+    item_id <- xml2::xml_attr(node, "identifier")
+    if (is.na(b_type) || b_type == "") {
+        stop("Missing baseType for response in item '", item_id, "'.",
+             call. = FALSE)
+    }
+    if (!b_type %in% c("identifier", "directedPair", "float", "integer", "string")) {
+        stop("Unsupported baseType '", b_type, "' in item '", item_id, "'.",
+             call. = FALSE)
+    }
     if (b_type == "identifier") info <- get_info_identifier(node, first_tag)
     if (b_type == "directedPair") info <- get_info_directedPair(node, first_tag)
-    if (b_type == "float") info <- get_info_float(node)
-    if (b_type == "string") info <- get_info_float(node)
+    if (b_type %in% c("float", "integer", "string")) info <- get_info_float(node)
     res <- list(info$options, info$corr, info$cand, info$base_types, info$card,
                 info$q_type, info$score_value, info$maxscore_value,
                 info$correctness)
@@ -466,7 +474,7 @@ get_info_directedPair <- function(node, options_node) {
     return(res)
 }
 
-# takes information from tag with float or string as base type of response variable
+# takes information from tag with float, integer or string as base type of response variable
 get_info_float <- function(node) {
     node_children <- xml2::xml_children(node)
     child_names <- xml2::xml_name(node_children)
@@ -515,7 +523,7 @@ get_info_float <- function(node) {
         b_type <- xml2::xml_attr(opt, "baseType")
         base_types[i] <- b_type
         card[i] <- xml2::xml_attr(opt, "cardinality")
-        if (b_type == "float") {q_type[i] <- "NumericGap"}
+        if (b_type %in% c("float", "integer")) {q_type[i] <- "NumericGap"}
         else if (corr_values == "") {q_type[i] <- "Essay"}
         else {q_type[i] <- "TextGap"}
 

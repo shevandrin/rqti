@@ -342,3 +342,57 @@ test_that("comment extractors return NA for empty comments", {
     expect_true(is.na(get_candidate_comment(doc)))
     expect_true(is.na(get_scorer_comment(doc)))
 })
+
+test_that("extract_results preserves integer responses and classifies numeric gaps", {
+    doc <- xml2::read_xml(test_path("file/xml/assessmentResult_candidate_comment.xml"))
+    response <- xml2::xml_find_first(doc, ".//d1:responseVariable[@identifier='response_1']")
+    xml2::xml_set_attr(response, "baseType", "integer")
+    values <- xml2::xml_find_all(response, ".//d1:value")
+    xml2::xml_set_attr(values, "baseType", "integer")
+    xml2::xml_set_text(values, "42")
+    path <- tempfile(fileext = ".xml")
+    on.exit(unlink(path), add = TRUE)
+    xml2::write_xml(doc, path)
+
+    sut <- suppressWarnings(suppressMessages(
+        extract_results(path, level = "item", hide_filename = FALSE)
+    ))
+
+    expect_equal(nrow(sut), 1L)
+    expect_equal(sut$base_type, "integer")
+    expect_equal(sut$qti_type, "NumericGap")
+    expect_equal(sut$expected_response, "42")
+    expect_equal(sut$candidate_response, "42")
+    expect_equal(sut$score_candidate, 5)
+    expect_equal(sut$score_max, 5)
+    expect_equal(sut$is_response_correct, 1L)
+
+    xml2::xml_remove(xml2::xml_find_first(response, "d1:correctResponse"))
+    xml2::write_xml(doc, path)
+    sut <- suppressWarnings(suppressMessages(
+        extract_results(path, level = "item", hide_filename = FALSE)
+    ))
+    expect_equal(sut$qti_type, "NumericGap")
+    expect_equal(sut$expected_response, "")
+})
+
+test_that("get_info reports unsupported and missing response base types", {
+    doc <- xml2::read_xml(test_path("file/xml/assessmentResult_candidate_comment.xml"))
+    item <- xml2::xml_find_first(doc, ".//d1:itemResult")
+    response <- xml2::xml_find_first(item, "d1:responseVariable[@identifier='response_1']")
+
+    xml2::xml_set_attr(response, "baseType", "boolean")
+    expect_error(get_info(item),
+                 "Unsupported baseType 'boolean' in item 'metaanalyse_S15'.",
+                 fixed = TRUE)
+    for (base_type in list(NULL, "")) {
+        xml2::xml_set_attr(response, "baseType", base_type)
+        expect_error(get_info(item),
+                     "Missing baseType for response in item 'metaanalyse_S15'.",
+                     fixed = TRUE)
+    }
+    xml2::xml_remove(response)
+    expect_error(get_info(item),
+                 "Missing baseType for response in item 'metaanalyse_S15'.",
+                 fixed = TRUE)
+})
