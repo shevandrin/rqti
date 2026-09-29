@@ -14,6 +14,10 @@
 
 ### Bug fixes
 
+- `extract_results(level = "item")` now supports integer responses and
+  labels them as `NumericGap`. Missing or unsupported response base
+  types now produce an error identifying the affected item.
+
 - Fixed Pandoc compatibility by using the appropriate option to disable
   syntax highlighting based on the capabilities of the installed Pandoc
   version.
