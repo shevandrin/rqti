@@ -3847,15 +3847,21 @@ function updateResultIcons(item) {
     let count_order = 0;
     spanIcons.forEach(el=>{
         var resp_id = el.getAttribute(RESPONSE_ID);
-        let base_type = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("baseType");
-        let cardinality = item.querySelector(`responseDeclaration[identifier=${resp_id}]`).getAttribute("cardinality");
+        let htmlItem = el.closest(ITEM_SEL);
+        let qtiItem = htmlItem ? QTI.DOM.getElementById(htmlItem.id): item;
+        let declaration = qtiItem && qtiItem.declarations && qtiItem.declarations[resp_id];
+        let responseDeclaration = qtiItem && qtiItem.querySelector(`responseDeclaration[identifier=${resp_id}]`);
+        if (!declaration || !responseDeclaration)
+            return;
+        let base_type = responseDeclaration.getAttribute("baseType");
+        let cardinality = responseDeclaration.getAttribute("cardinality");
         switch(base_type) {
         case "identifier":
-            let resp_user = item.declarations[el.getAttribute(RESPONSE_ID)].value;
+            let resp_user = declaration.value;
             if (cardinality === "ordered") {
                 if (resp_user !== null) {
                     let resp_id = el.parentElement.getAttribute(ID);
-                    let corr_resp = item.declarations["RESPONSE"].correctResponse;
+                    let corr_resp = declaration.correctResponse;
                     add_span_icon(corr_resp[count_order] === resp_user[count_order], el);
                     count_order += 1;
                 }
@@ -3867,7 +3873,7 @@ function updateResultIcons(item) {
                         let resp_id = el.nextElementSibling.getAttribute(ID);
                         let was_given = resp_user.includes(resp_id);
                         if (was_given) {
-                            let resp_corr = item.declarations["RESPONSE"].correctResponse;
+                            let resp_corr = declaration.correctResponse;
                             add_span_icon(resp_corr.includes(resp_id), el);
                         } else {
                             el.removeAttribute("class");
@@ -3875,7 +3881,7 @@ function updateResultIcons(item) {
                         };
                         break;
                     case "inlineChoiceInteraction":
-                        let resp_corr = item.declarations[el.getAttribute(RESPONSE_ID)].correctResponse;
+                        let resp_corr = declaration.correctResponse;
                         add_span_icon(resp_corr === resp_user, el, false);
                         break;
                 }
@@ -3883,10 +3889,10 @@ function updateResultIcons(item) {
             break;
         case "float":
             let resp_id_flt = el.getAttribute(RESPONSE_ID)
-            let resp_user_flt = item.declarations[resp_id_flt].value;
+            let resp_user_flt = qtiItem.declarations[resp_id_flt].value;
             if (resp_user_flt !== null && resp_user_flt !== "") {
-                let resp_corr = item.declarations[resp_id_flt].correctResponse;
-                add_span_icon(isResponseCorrectWithTolerance(item, resp_id_flt), el, false);
+                let resp_corr = qtiItem.declarations[resp_id_flt].correctResponse;
+                add_span_icon(isResponseCorrectWithTolerance(qtiItem, resp_id_flt), el, false);
             } else {
                 el.removeAttribute("class");
             };
@@ -3894,11 +3900,11 @@ function updateResultIcons(item) {
             break;
         case "string":
             let resp_id_str = el.getAttribute(RESPONSE_ID)
-            let mapping_corr = item.declarations[resp_id_str].mapping.entries;
+            let mapping_corr = qtiItem.declarations[resp_id_str].mapping.entries;
             let resp_corr = Object.keys(mapping_corr).map(key => mapping_corr[key].mapKey);
             let register = Object.keys(mapping_corr).map(key => mapping_corr[key].caseSensitive);
             let case_sensitive = register.some(value => value === 'true');
-            let resp_user_str = item.declarations[resp_id_str].value;
+            let resp_user_str = qtiItem.declarations[resp_id_str].value;
             if (!case_sensitive && resp_user_str !== null) {
                 resp_user_str = resp_user_str.toLowerCase();
                 resp_corr = resp_corr.map(value => value.toLowerCase());
@@ -3910,12 +3916,15 @@ function updateResultIcons(item) {
             };
             break;
         case "directedPair":
-            let resp_corr_tbl = item.declarations[resp_id].correctResponse;
-            let max_assoc= item.querySelector(`matchInteraction`).getAttribute("maxAssociations");
+            let resp_corr_tbl = declaration.correctResponse;
+            let match_interaction = [...qtiItem.querySelectorAll(`matchInteraction`)]
+                .find(interaction=>interaction.getAttribute("responseIdentifier") == resp_id);
+            let max_assoc = match_interaction && match_interaction.getAttribute("maxAssociations");
             let is_table = (max_assoc != 0)? true: false;
             if (is_table) {
                 let resp_cell_tbl = el.querySelector('input').getAttribute(ID);
                 let is_checked = el.querySelector('input').checked;
+                el.classList.remove("rqti-table-right", "rqti-table-wrong");
                 if (is_checked) {
                     if (resp_corr_tbl.includes(resp_cell_tbl)) {
                         el.classList.add("rqti-table-right");
