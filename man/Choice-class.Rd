@@ -7,8 +7,8 @@
 \title{Class "Choice"}
 \description{
 Abstract class \code{Choice} is not meant to be instantiated directly; instead, it
-serves as a base for derived classes \link[=SingleChoice-class]{SingleChoice} and
-\link[=MultipleChoice-class]{MultipleChoice}.
+serves as a base for derived classes \linkS4class{SingleChoice} and
+\linkS4class{MultipleChoice}.
 }
 \section{Slots}{
 
