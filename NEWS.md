@@ -2,12 +2,26 @@
 
 ## New features
 
-* `opal()` and `upload2opal()` now accept an optional `credential_id`, allowing
-  the same username to use different passwords on different OPAL installations.
-  When it is omitted, rqti continues to use the existing `rqtiopal` credential
-  service, preserving the behavior of existing code and saved credentials.
+* OPAL credential services are derived automatically from the normalized
+  endpoint, allowing the same username to use different passwords on different
+  installations without a manual ID. Existing `rqtiopal` entries remain a
+  transparent fallback. `credential_id` is retained as an optional override.
+
+* `set_opal_credentials()` securely stores a password under the service derived
+  from an OPAL endpoint.
+
+* OPAL authentication tokens are now stored per connection instead of in the
+  process-wide `X-OLAT-TOKEN` environment variable. Implicit connections can
+  select a credential set with `RQTI_API_CREDENTIAL_ID`.
 
 ## Bug fixes
+
+* OPAL endpoints are normalized to one trailing slash, successful login bodies
+  are no longer parsed as unused XML, and a successful response without an
+  `X-OLAT-TOKEN` header now produces a clear error.
+
+* `render_opal()` forwards named `endpoint`, `api_user`, and `credential_id`
+  arguments to `opal()`.
 
 * Fixed Pandoc compatibility by using the appropriate option to disable syntax
   highlighting based on the capabilities of the installed Pandoc version.

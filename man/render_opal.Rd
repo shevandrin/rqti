@@ -9,7 +9,8 @@ render_opal(input, ...)
 \arguments{
 \item{input}{(the path to the input Rmd document)}
 
-\item{...}{required for passing arguments when knitting}
+\item{...}{Arguments supplied by the knitting frontend. Named \code{endpoint},
+\code{api_user}, and \code{credential_id} arguments are forwarded to \code{\link[=opal]{opal()}}.}
 }
 \value{
 A list with the key, display name, and URL of the resource in Opal.

@@ -175,7 +175,8 @@ stop_server <- function() {
 #' after the word knit `knit: rqti::render_opal`.
 #'
 #' @param input (the path to the input Rmd document)
-#' @param ... required for passing arguments when knitting
+#' @param ... Arguments supplied by the knitting frontend. Named `endpoint`,
+#'   `api_user`, and `credential_id` arguments are forwarded to [opal()].
 #' @return A list with the key, display name, and URL of the resource in Opal.
 #' @examplesIf interactive()
 #'file <- system.file(
@@ -186,8 +187,13 @@ stop_server <- function() {
 #' @export
 render_opal <- function(input, ...) {
     knit_test <- rmd2zip(input)
-    con <- new("Opal")
+    on.exit(unlink(knit_test), add = TRUE)
+
+    dots <- list(...)
+    connection_names <- intersect(names(dots),
+                                  c("endpoint", "api_user", "credential_id"))
+    connection_args <- dots[connection_names]
+    con <- do.call(opal, connection_args)
     result <- upload2LMS(con, knit_test)
-    unlink(knit_test)
     return(result)
 }

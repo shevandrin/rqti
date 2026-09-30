@@ -11,8 +11,8 @@
 #'   This can be set using the environment variable `RQTI_API_ENDPOINT` with
 #'   `Sys.setenv(RQTI_API_ENDPOINT='xxxxxxxxxxxxxxx')` or placed in the `.Renviron` file.
 #' @slot credential_id A character string identifying this endpoint's credentials
-#'   in the operating-system keyring. If omitted, the legacy `rqtiopal` service
-#'   is used.
+#'   in the operating-system keyring. If omitted, a service name is derived from
+#'   the endpoint, with the legacy `rqtiopal` service used as a fallback.
 #'
 #' @seealso \link{LMS-class} for the parent class.
 #'
@@ -24,6 +24,48 @@
 setClass("Opal", contains = "LMS",
          prototype = list(name = "Opal"))
 
+#' Store credentials for an OPAL endpoint
+#'
+#' Saves a password in the operating-system credential store. The service name
+#' is derived automatically from `endpoint`, so separate OPAL installations do
+#' not require a manually chosen credential ID. Existing credentials stored
+#' under the legacy `rqtiopal` service remain available as a fallback.
+#'
+#' @param endpoint A length-one character string containing the OPAL endpoint.
+#' @param api_user A length-one character string containing the API username.
+#' @param credential_id An optional explicit credential label. This is normally
+#'   unnecessary and is retained for custom grouping and backward compatibility.
+#' @return The derived keyring service name, invisibly.
+#' @export
+set_opal_credentials <- function(endpoint, api_user,
+                                 credential_id = NA_character_) {
+    if (length(endpoint) != 1 || is.na(endpoint) || !nzchar(trimws(endpoint))) {
+        stop("endpoint must be a non-empty length-one character string.",
+             call. = FALSE)
+    }
+    if (length(api_user) != 1 || is.na(api_user) || !nzchar(api_user)) {
+        stop("api_user must be a non-empty length-one character string.",
+             call. = FALSE)
+    }
+    if (length(credential_id) != 1) {
+        stop("credential_id must be a length-one character string.",
+             call. = FALSE)
+    }
+    if (!is.na(credential_id)) {
+        credential_id <- trimws(credential_id)
+        if (!nzchar(credential_id)) {
+            stop("credential_id must be non-empty when supplied.",
+                 call. = FALSE)
+        }
+    }
+
+    service_name <- credential_service_from_endpoint(
+        "Opal", endpoint, credential_id
+    )
+    keyring::key_set(service = service_name, username = api_user)
+    invisible(service_name)
+}
+
 #' Create an Opal LMS Connection Object
 #'
 #' This helper function initializes an `Opal` object, a subclass of `LMS`,
@@ -32,11 +74,16 @@ setClass("Opal", contains = "LMS",
 #' @param api_user A character string specifying the API username.
 #' @param endpoint A character string specifying the API endpoint for the LMS.
 #' @param credential_id An optional name for the credential set. By default,
-#'   rqti continues to use the legacy `rqtiopal` service. Supply an ID to use a
-#'   separate password for another OPAL installation.
+#'   rqti derives the credential service from `endpoint`, while retaining the
+#'   legacy `rqtiopal` service as a fallback. `RQTI_API_CREDENTIAL_ID` or an
+#'   explicit value overrides automatic endpoint-based naming.
 #'
 #' @return An object of class `Opal`, inheriting from `LMS`,
 #'   which can be used to interact with the Opal LMS API.
+#' @details Interactive first-time setup still prompts for a username and
+#'   password when neither endpoint-specific nor legacy credentials exist. A
+#'   legacy `rqtiopal` entry is otherwise used as a fallback. Use
+#'   [set_opal_credentials()] when an endpoint needs a different password.
 #'
 #' @export
 opal <- function(api_user = NA_character_, endpoint = NA_character_,
@@ -65,9 +112,12 @@ ensure_opal_login <- function(object) {
 #' @export
 setMethod("isUserLoggedIn", "Opal", function(object) {
 
+    token <- lms_token(object)
+    if (!nzchar(token)) return(FALSE)
+
     url_log <- paste0(object@endpoint, "restapi/repo/entries/search?myentries=true")
     req <- request(url_log) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+        req_headers("X-OLAT-TOKEN" = token)
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     is_logged_in <- response$status_code == 200
     return(is_logged_in)
@@ -129,7 +179,9 @@ setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
             if ((curr_type == "FileResource.TEST" && istest && !as_survey) ||
                 (curr_type == "FileResource.QUESTION" && !istest) ||
                 (curr_type == "FileResource.SURVEY" && istest && as_survey)) {
-                resp <- update_resource(file, rdf$key, endpoint = object@endpoint)
+                resp <- update_resource(file, rdf$key,
+                                        endpoint = object@endpoint,
+                                        token = lms_token(object))
             } else {
                 stop("Current type and target type of the resource is not equal.\n",
                      "Current type: ", curr_type, ";\nTarget type:", target_type,
@@ -151,13 +203,15 @@ setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
             # update the resource
             if (key %in% seq(length(menu_options) - 2)) {
                 resp <- update_resource(file, menu_options[key], rtype,
-                                        endpoint = object@endpoint)
+                                        endpoint = object@endpoint,
+                                        token = lms_token(object))
             }
         }
     }
 
     if (!exists("resp")) {
-        resp <- upload_resource(file, display_name, rtype, access, object@endpoint)
+        resp <- upload_resource(file, display_name, rtype, access,
+                                object@endpoint, token = lms_token(object))
     }
     parse <- resp_body_xml(resp)
     key <- xml_find_first(parse, "key") %>% xml_text()
@@ -183,7 +237,7 @@ setMethod("getLMSResources", "Opal", function(object){
 
     url_res <- paste0(object@endpoint, "restapi/repo/entries/search?myentries=true")
     req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+        req_headers("X-OLAT-TOKEN" = lms_token(object))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     rlist <- resp_body_json(response)
     rdf <- do.call(rbind.data.frame, rlist)
@@ -249,7 +303,7 @@ setMethod("getCourseElements", "Opal", function(object, course_id) {
 
     url_elem <- paste0(object@endpoint, "restapi/repo/courses/", course_id, "/elements")
     req <- request(url_elem) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+        req_headers("X-OLAT-TOKEN" = lms_token(object))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
 
     if (response$status_code == 404) {
@@ -319,7 +373,7 @@ setMethod("updateCourseElementResource", "Opal", function(object, course_id,
                       "/elements/", node_id,
                       "/test/update?testResourceableId=", resource_id)
     req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("PUT")
+        req_headers("X-OLAT-TOKEN" = lms_token(object)) %>% req_method("PUT")
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
 
     if (response$status_code == 200 && publish) {
@@ -343,7 +397,7 @@ setMethod("publishCourse", "Opal", function(object, course_id) {
 
     url_res <- paste0(object@endpoint, "restapi/repo/courses/", course_id, "/publish")
     req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("POST")
+        req_headers("X-OLAT-TOKEN" = lms_token(object)) %>% req_method("POST")
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     return(response$status_code)
 })
@@ -370,7 +424,7 @@ setMethod("getCourseResult", "Opal", function(object, resource_id, node_id,
     url_res <- paste0(object@endpoint, "restapi/repo/courses/", resource_id,
                       "/assessments/", node_id, "/results")
     req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN"))
+        req_headers("X-OLAT-TOKEN" = lms_token(object))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
 
     if (response$status_code == 404) {
@@ -450,7 +504,7 @@ setMethod("getCourseAssessment", "Opal", function(object, course_id, node_id,
     }
 
     req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_headers("X-OLAT-TOKEN" = lms_token(object)) %>%
         req_method("GET")
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
 
@@ -501,7 +555,7 @@ setMethod("getCourseGroups", "Opal", function(object, course_id) {
 
     url_res_group <- paste0(object@endpoint, "restapi/repo/courses/", course_id, "/groups")
     req <- request(url_res_group) %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>% req_method("GET")
+        req_headers("X-OLAT-TOKEN" = lms_token(object)) %>% req_method("GET")
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
 
     if (response$status_code == 404) {
@@ -577,7 +631,7 @@ setMethod("createCourseGroup", "Opal",
     url_res_group <- paste0(object@endpoint, "restapi/repo/courses/",
                             course_id, "/groups")
     req <- request(url_res_group) %>%
-        req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN"),
+        req_headers("X-OLAT-TOKEN" = lms_token(object),
                     "Content-Type" = "application/xml") %>%
         req_method("PUT") %>%
         req_body_raw(charToRaw(group_xml), type = "application/xml")
@@ -635,7 +689,7 @@ setMethod("addGroupUser", "Opal", function(object, group_id, user_id) {
                       "/participants/", user_id)
 
     req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_headers("X-OLAT-TOKEN" = lms_token(object)) %>%
         req_method("PUT")
 
     response <- req %>%
@@ -688,7 +742,7 @@ setMethod("removeGroupUser", "Opal", function(object, group_id, user_id) {
                       "/participants/", user_id)
 
     req <- request(url_res) %>%
-        req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_headers("X-OLAT-TOKEN" = lms_token(object)) %>%
         req_method("DELETE")
 
     response <- req %>%
@@ -765,7 +819,7 @@ setMethod("getGroupUsers", "Opal", function(object, group_id) {
         url_res <- paste0(object@endpoint, "restapi/groups/", gid, "/participants")
 
         req <- request(url_res) %>%
-            req_headers("X-OLAT-TOKEN" = Sys.getenv("X-OLAT-TOKEN")) %>%
+            req_headers("X-OLAT-TOKEN" = lms_token(object)) %>%
             req_method("GET")
 
         response <- req %>%
@@ -1016,11 +1070,11 @@ course_assessment_df <- function(identity_key = character(),
 
 #' @importFrom curl form_file
 upload_resource <- function(file, display_name, rtype, access,
-                            endpoint = NULL) {
+                            endpoint = NULL, token = "") {
 
     url_upl <- paste0(endpoint, "restapi/repo/entries")
     req <- request(url_upl) %>% req_method("PUT") %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_headers("X-OLAT-TOKEN" = token) %>%
         req_body_multipart(file = curl::form_file(file),
                            displayname = display_name,
                            access = as.character(access),
@@ -1032,10 +1086,10 @@ upload_resource <- function(file, display_name, rtype, access,
     return(response)
 }
 
-update_resource <- function(file, id, rtype, endpoint = NULL) {
+update_resource <- function(file, id, rtype, endpoint = NULL, token = "") {
     url_upd <- paste0(endpoint, "restapi/repo/entries/", id, "/update")
     req <- request(url_upd) %>% req_method("PUT") %>%
-        req_headers("X-OLAT-TOKEN"=Sys.getenv("X-OLAT-TOKEN")) %>%
+        req_headers("X-OLAT-TOKEN" = token) %>%
         req_body_multipart(file = curl::form_file(file))
     response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
     if (response$status_code != 200) {
@@ -1071,7 +1125,9 @@ update_resource <- function(file, id, rtype, endpoint = NULL) {
 #'  or survey). Default is `FALSE`.
 #'@param api_user A character value of the username in the OPAL.
 #'@param credential_id An optional name for the credential set. If omitted, the
-#'  legacy `rqtiopal` service is used.
+#'  credential service is derived from `endpoint`, with the legacy `rqtiopal`
+#'  service retained as a fallback. `RQTI_API_CREDENTIAL_ID` overrides the
+#'  automatic name when set.
 #'@return A list with the key, display name, and URL of the resource in Opal.
 #'@examplesIf interactive()
 #'file <- system.file(

@@ -46,7 +46,9 @@ or survey). Default is \code{FALSE}.}
 \item{api_user}{A character value of the username in the OPAL.}
 
 \item{credential_id}{An optional name for the credential set. If omitted, the
-legacy \code{rqtiopal} service is used.}
+credential service is derived from \code{endpoint}, with the legacy \code{rqtiopal}
+service retained as a fallback. \code{RQTI_API_CREDENTIAL_ID} overrides the
+automatic name when set.}
 }
 \value{
 A list with the key, display name, and URL of the resource in Opal.

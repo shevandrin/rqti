@@ -16,8 +16,9 @@ opal(
 \item{endpoint}{A character string specifying the API endpoint for the LMS.}
 
 \item{credential_id}{An optional name for the credential set. By default,
-rqti continues to use the legacy \code{rqtiopal} service. Supply an ID to use a
-separate password for another OPAL installation.}
+rqti derives the credential service from \code{endpoint}, while retaining the
+legacy \code{rqtiopal} service as a fallback. \code{RQTI_API_CREDENTIAL_ID} or an
+explicit value overrides automatic endpoint-based naming.}
 }
 \value{
 An object of class \code{Opal}, inheriting from \code{LMS},
@@ -26,4 +27,10 @@ which can be used to interact with the Opal LMS API.
 \description{
 This helper function initializes an \code{Opal} object, a subclass of \code{LMS},
 representing a connection to the Opal Learning Management System (LMS).
+}
+\details{
+Interactive first-time setup still prompts for a username and
+password when neither endpoint-specific nor legacy credentials exist. A
+legacy \code{rqtiopal} entry is otherwise used as a fallback. Use
+\code{\link[=set_opal_credentials]{set_opal_credentials()}} when an endpoint needs a different password.
 }

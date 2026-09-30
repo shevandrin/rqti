@@ -11,9 +11,12 @@
 #'   `Sys.setenv(RQTI_API_ENDPOINT = 'your_endpoint')`,
 #'   or add it to your `.Renviron` file for persistence across sessions.
 #' @slot credential_id A character string identifying the credential set in the
-#'   operating-system keyring. If omitted, rqti uses its original service name
-#'   for backward compatibility. Set it when the same API username has different
-#'   passwords on different LMS installations.
+#'   operating-system keyring. If omitted, rqti derives the credential service
+#'   from the endpoint and falls back to its original service name for backward
+#'   compatibility. `RQTI_API_CREDENTIAL_ID` or an explicit value can override
+#'   automatic endpoint-based naming.
+#' @slot session An internal environment containing connection-specific session
+#'   state, including the authentication token.
 #'
 #' @name LMS-class
 #' @rdname LMS-class
@@ -21,21 +24,66 @@
 setClass("LMS", slots = c(name = "character",
                           api_user = "character",
                           endpoint = "character",
-                          credential_id = "character"))
+                          credential_id = "character",
+                          session = "environment"),
+         prototype = list(session = new.env(parent = emptyenv())))
+
+credential_service_from_endpoint <- function(lms_name, endpoint,
+                                             credential_id = NA_character_) {
+    service_name <- paste0("rqti", tolower(lms_name))
+    if (length(credential_id) > 0 && !is.na(credential_id)) {
+        return(paste0(service_name, "-", credential_id))
+    }
+
+    endpoint_id <- sub("^[[:alpha:]][[:alnum:]+.-]*://", "",
+                       tolower(trimws(endpoint)))
+    endpoint_id <- sub("/+$", "", endpoint_id)
+    endpoint_id <- gsub("[^a-z0-9._-]+", "-", endpoint_id)
+    endpoint_id <- gsub("^-+|-+$", "", endpoint_id)
+    if (!nzchar(endpoint_id)) {
+        stop("Cannot derive a credential service from endpoint.", call. = FALSE)
+    }
+    paste0(service_name, "-", endpoint_id)
+}
 
 credential_service_name <- function(object) {
-    service_name <- paste0("rqti", tolower(object@name))
-    credential_id <- object@credential_id
-    if (length(credential_id) == 0 || is.na(credential_id)) {
-        return(service_name)
+    credential_service_from_endpoint(object@name, object@endpoint,
+                                     object@credential_id)
+}
+
+credential_service_names <- function(object) {
+    primary <- credential_service_name(object)
+    if (length(object@credential_id) > 0 && !is.na(object@credential_id)) {
+        return(primary)
     }
-    paste0(service_name, "-", credential_id)
+
+    # The original rqti service remains a fallback so existing installations
+    # continue to find credentials saved before endpoint-specific services.
+    unique(c(primary, paste0("rqti", tolower(object@name))))
+}
+
+get_lms_credentials <- function(object, api_user = NULL, psw = NULL) {
+    services <- credential_service_names(object)
+    get_password(
+        service_name = services[[1]],
+        api_user = api_user,
+        psw = psw,
+        fallback_service_names = services[-1]
+    )
 }
 
 setMethod("initialize", "LMS", function(.Object, ...) {
     .Object <- callNextMethod()
 
+    # Environments have reference semantics, allowing authentication methods to
+    # update session state without changing the public authLMS() return value.
+    # Always allocate a fresh environment so connections never share a token.
+    .Object@session <- new.env(parent = emptyenv())
+
     if (length(.Object@endpoint) == 0) .Object@endpoint <- NA_character_
+    if (length(.Object@endpoint) != 1) {
+        stop("endpoint must be a length-one character string.", call. = FALSE)
+    }
     if (is.na(.Object@endpoint)) {
         endpoint <- Sys.getenv("RQTI_API_ENDPOINT")
         if (endpoint == "") {
@@ -49,6 +97,11 @@ setMethod("initialize", "LMS", function(.Object, ...) {
         }
         .Object@endpoint <- endpoint
     }
+    .Object@endpoint <- trimws(.Object@endpoint)
+    if (!nzchar(.Object@endpoint)) {
+        stop("endpoint must be non-empty.", call. = FALSE)
+    }
+    .Object@endpoint <- paste0(sub("/+$", "", .Object@endpoint), "/")
 
     if (length(.Object@credential_id) == 0) {
         .Object@credential_id <- NA_character_
@@ -56,6 +109,12 @@ setMethod("initialize", "LMS", function(.Object, ...) {
     if (length(.Object@credential_id) != 1) {
         stop("credential_id must be a length-one character string.",
              call. = FALSE)
+    }
+    if (is.na(.Object@credential_id)) {
+        env_credential_id <- Sys.getenv("RQTI_API_CREDENTIAL_ID")
+        if (nzchar(env_credential_id)) {
+            .Object@credential_id <- env_credential_id
+        }
     }
     if (!is.na(.Object@credential_id)) {
         .Object@credential_id <- trimws(.Object@credential_id)
@@ -68,8 +127,7 @@ setMethod("initialize", "LMS", function(.Object, ...) {
     api_user <- .Object@api_user
     if (length(api_user) == 0) api_user <- NULL
 
-    api_user <- get_password(service_name = credential_service_name(.Object),
-                            api_user = api_user)$api_user
+    api_user <- get_lms_credentials(.Object, api_user = api_user)$api_user
     if (is.null(api_user)) {
         stop(
             "The API username is required but not found.\n",
@@ -86,6 +144,23 @@ setMethod("initialize", "LMS", function(.Object, ...) {
     .Object
 })
 
+lms_token <- function(object) {
+    if (!exists("token", envir = object@session, inherits = FALSE)) return("")
+    object@session$token
+}
+
+set_lms_token <- function(object, token) {
+    object@session$token <- token
+    invisible(object)
+}
+
+clear_lms_token <- function(object) {
+    if (exists("token", envir = object@session, inherits = FALSE)) {
+        rm("token", envir = object@session)
+    }
+    invisible(object)
+}
+
 #' Authenticate with LMS
 #'
 #' A generic function to handle authentication with a Learning Management System
@@ -94,7 +169,7 @@ setMethod("initialize", "LMS", function(.Object, ...) {
 #' @param ... Additional arguments to be passed to the method, if applicable.
 #' @docType methods
 #' @rdname authLMS-methods
-#' @importFrom httr2 request req_error req_perform resp_body_xml req_headers resp_body_json req_method req_body_multipart req_body_raw
+#' @importFrom httr2 request req_error req_perform resp_body_xml resp_header req_headers resp_body_json req_method req_body_multipart req_body_raw
 #' @import getPass
 #' @importFrom keyring key_list key_set_with_value has_keyring_support key_delete key_get
 #' @export
@@ -114,10 +189,14 @@ setMethod("authLMS", "LMS", function(object, ...) {
     if (length(api_user) == 0 ) api_user <- NULL
 
     endpoint <- object@endpoint
-    api_password <- get_password(credential_service_name(object),
-                                 api_user)$api_password
+    api_password <- get_lms_credentials(object, api_user = api_user)$api_password
 
     url_login <- paste0(sub("/+$", "", endpoint), "/restapi/auth/login")
+
+    # Never retain a token from an earlier successful login when a new login is
+    # attempted. In particular, this prevents a failed login from silently
+    # continuing under another connection's identity.
+    clear_lms_token(object)
 
     response <- request(url_login) |>
         req_method("POST") |>
@@ -131,9 +210,14 @@ setMethod("authLMS", "LMS", function(object, ...) {
         req_perform()
 
     if (response$status_code == 200) {
-        parse <- resp_body_xml(response)
-        token <- response$headers$`X-OLAT-TOKEN`
-        Sys.setenv("X-OLAT-TOKEN"=token)
+        token <- resp_header(response, "X-OLAT-TOKEN")
+        if (is.null(token) || !nzchar(token)) {
+            stop(
+                "Authentication returned HTTP 200 but no X-OLAT-TOKEN header.",
+                call. = FALSE
+            )
+        }
+        set_lms_token(object, token)
     }
     return(response$status_code)
 })
@@ -600,10 +684,13 @@ setMethod("getGroupUsers", signature(object = "missing"),
 
 
 #' @importFrom utils menu
-get_password <- function(service_name, api_user = NULL, psw = NULL) {
+get_password <- function(service_name, api_user = NULL, psw = NULL,
+                         fallback_service_names = character()) {
     env_api_user <- Sys.getenv("RQTI_API_USER")
     api_user <- if (!is.null(api_user) && is.na(api_user)) NULL else api_user
     if (is.null(api_user) & env_api_user != "") api_user <- env_api_user
+    service_names <- unique(c(service_name, fallback_service_names))
+    selected_service <- service_name
 
     if (!has_keyring_support()) {
         warning("OS does not support key ring storage")
@@ -614,11 +701,31 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
     }
 
     if (!is.null(api_user)) {
-        # Instead of checking with key_list(), try retrieving directly
-        user_exist <- !inherits(
-            try(key_get(service_name, api_user), silent = TRUE),
-            "try-error"
-        )
+        # Prefer the endpoint-specific service, then transparently fall back to
+        # the original service for credentials saved by older rqti versions.
+        if (is.null(psw)) {
+            for (candidate in service_names) {
+                candidate_password <- try(key_get(candidate, api_user),
+                                          silent = TRUE)
+                if (!inherits(candidate_password, "try-error")) {
+                    return(list(
+                        api_user = api_user,
+                        api_username = api_user,
+                        api_password = candidate_password,
+                        credential_service = candidate
+                    ))
+                }
+            }
+        }
+
+        # A supplied password always belongs to the primary service. This lets
+        # callers move away from a legacy fallback without modifying it.
+        user_exist <- if (is.null(psw)) {
+            FALSE
+        } else {
+            !inherits(try(key_get(service_name, api_user), silent = TRUE),
+                      "try-error")
+        }
 
         if (!user_exist) {
             if (interactive()) {
@@ -627,7 +734,7 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
 
                 if (key == 1) {
                     if (is.null(psw)) psw <- getPass("Enter Password: ")
-                    key_set_with_value(service_name, api_user, psw)
+                    key_set_with_value(selected_service, api_user, psw)
                 } else {
                     return(NULL)
                 }
@@ -637,22 +744,31 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
         }
 
         if (is.null(psw)) {
-            psw <- key_get(service_name, api_user)
+            psw <- key_get(selected_service, api_user)
         } else {
-            key_set_with_value(service_name, api_user, psw)
+            key_set_with_value(selected_service, api_user, psw)
         }
 
     } else {
-        keys <- key_list(service_name)
+        keys <- NULL
+        for (candidate in service_names) {
+            candidate_keys <- key_list(candidate)
+            if (nrow(candidate_keys) > 0) {
+                selected_service <- candidate
+                keys <- candidate_keys
+                break
+            }
+        }
+        if (is.null(keys)) keys <- key_list(selected_service)
         number_keys <- nrow(keys)
 
         if (number_keys == 0) {
             api_user <- readline(paste0("Enter Username:"))
             psw <- getPass("Enter Password: ")
-            key_set_with_value(service_name, api_user, psw)
+            key_set_with_value(selected_service, api_user, psw)
         } else if (number_keys == 1) {
             api_user <- keys$username
-            psw <- key_get(service_name, keys$username)
+            psw <- key_get(selected_service, keys$username)
         } else {
             menu_options <- c(keys$username, "Abort")
             if (interactive()) {
@@ -667,13 +783,14 @@ get_password <- function(service_name, api_user = NULL, psw = NULL) {
             } else {
                 api_user <- menu_options[key]
                 message("Selected username: ", api_user)
-                psw <- key_get(service_name, api_user)
+                psw <- key_get(selected_service, api_user)
             }
         }
     }
 
     return(list(api_user = api_user, api_username = api_user,
-                api_password = psw))
+                api_password = psw,
+                credential_service = selected_service))
 }
 
 # check if this is a test using the manifest file

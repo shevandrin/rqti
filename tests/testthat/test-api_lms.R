@@ -357,10 +357,10 @@ test_that("upload2LMS sends survey resources with survey target type", {
                        resourceableTypeName = character())
         },
         upload_resource = function(file, display_name, rtype, access,
-                                   endpoint = NULL) {
+                                   endpoint = NULL, token = "") {
             uploaded <<- list(file = file, display_name = display_name,
                               rtype = rtype, access = access,
-                              endpoint = endpoint)
+                              endpoint = endpoint, token = token)
             opal_upload_response("survey-key", display_name)
         },
         update_resource = function(...) stop("unexpected update"),
@@ -417,7 +417,7 @@ test_that("upload2LMS derives display_name when it is NULL", {
                        resourceableTypeName = character())
         },
         upload_resource = function(file, display_name, rtype, access,
-                                   endpoint = NULL) {
+                                   endpoint = NULL, token = "") {
             uploaded <<- list(file = file, display_name = display_name,
                               rtype = rtype)
             opal_upload_response("null-display-key", display_name)
@@ -457,7 +457,7 @@ test_that("upload2LMS sends standalone question archives with question target ty
                        resourceableTypeName = character())
         },
         upload_resource = function(file, display_name, rtype, access,
-                                   endpoint = NULL) {
+                                   endpoint = NULL, token = "") {
             uploaded <<- list(file = file, display_name = display_name,
                               rtype = rtype)
             opal_upload_response("question-key", display_name)
@@ -492,7 +492,8 @@ test_that("upload_resource returns successful responses and errors on failures",
         display_name = "mock_upload",
         rtype = "FileResource.TEST",
         access = 4,
-        endpoint = "https://opal.example/"
+        endpoint = "https://opal.example/",
+        token = "test-token"
     )
 
     expect_identical(resp$status_code, 200L)
@@ -508,7 +509,8 @@ test_that("upload_resource returns successful responses and errors on failures",
             display_name = "mock_upload",
             rtype = "FileResource.TEST",
             access = 4,
-            endpoint = "https://opal.example/"
+            endpoint = "https://opal.example/",
+            token = "test-token"
         ),
         "Status Code: 404"
     )
@@ -560,15 +562,7 @@ test_that("Opal API methods return NULL for missing course resources", {
 test_that("createCourseGroup sends a GroupVO XML PUT request and parses the response", {
     con <- mock_opal_connection()
     captured_req <- NULL
-    old_token <- Sys.getenv("X-OLAT-TOKEN", unset = NA_character_)
-    on.exit({
-        if (is.na(old_token)) {
-            Sys.unsetenv("X-OLAT-TOKEN")
-        } else {
-            Sys.setenv("X-OLAT-TOKEN" = old_token)
-        }
-    }, add = TRUE)
-    Sys.setenv("X-OLAT-TOKEN" = "test-token")
+    con@session$token <- "test-token"
 
     local_mocked_bindings(
         ensure_opal_login = function(object) TRUE,
@@ -651,15 +645,7 @@ test_that("createCourseGroup returns NULL when OPAL rejects the group", {
 test_that("addGroupUser sends a participant PUT request", {
     con <- mock_opal_connection()
     captured_req <- NULL
-    old_token <- Sys.getenv("X-OLAT-TOKEN", unset = NA_character_)
-    on.exit({
-        if (is.na(old_token)) {
-            Sys.unsetenv("X-OLAT-TOKEN")
-        } else {
-            Sys.setenv("X-OLAT-TOKEN" = old_token)
-        }
-    }, add = TRUE)
-    Sys.setenv("X-OLAT-TOKEN" = "test-token")
+    con@session$token <- "test-token"
 
     local_mocked_bindings(
         ensure_opal_login = function(object) TRUE,
@@ -698,15 +684,7 @@ test_that("addGroupUser returns NULL when OPAL cannot find the group or user", {
 test_that("removeGroupUser sends a participant DELETE request", {
     con <- mock_opal_connection()
     captured_req <- NULL
-    old_token <- Sys.getenv("X-OLAT-TOKEN", unset = NA_character_)
-    on.exit({
-        if (is.na(old_token)) {
-            Sys.unsetenv("X-OLAT-TOKEN")
-        } else {
-            Sys.setenv("X-OLAT-TOKEN" = old_token)
-        }
-    }, add = TRUE)
-    Sys.setenv("X-OLAT-TOKEN" = "test-token")
+    con@session$token <- "test-token"
 
     local_mocked_bindings(
         ensure_opal_login = function(object) TRUE,

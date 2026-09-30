@@ -23,8 +23,12 @@ To set this variable globally, use:
 or add it to your \code{.Renviron} file for persistence across sessions.}
 
 \item{\code{credential_id}}{A character string identifying the credential set in the
-operating-system keyring. If omitted, rqti uses its original service name
-for backward compatibility. Set it when the same API username has different
-passwords on different LMS installations.}
+operating-system keyring. If omitted, rqti derives the credential service
+from the endpoint and falls back to its original service name for backward
+compatibility. \code{RQTI_API_CREDENTIAL_ID} or an explicit value can override
+automatic endpoint-based naming.}
+
+\item{\code{session}}{An internal environment containing connection-specific session
+state, including the authentication token.}
 }}
 
