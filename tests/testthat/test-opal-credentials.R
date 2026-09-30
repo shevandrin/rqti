@@ -112,6 +112,16 @@ test_that("legacy credentials remain a transparent fallback", {
 
 test_that("first-time credential setup still asks for username and password", {
     stored <- NULL
+    old_api_user <- Sys.getenv("RQTI_API_USER", unset = NA_character_)
+    on.exit({
+        if (is.na(old_api_user)) {
+            Sys.unsetenv("RQTI_API_USER")
+        } else {
+            Sys.setenv(RQTI_API_USER = old_api_user)
+        }
+    }, add = TRUE)
+    Sys.unsetenv("RQTI_API_USER")
+
     local_mocked_bindings(
         readline = function(prompt) "new-user",
         .package = "base"

@@ -44,3 +44,6 @@ s4_example.R
 ^test$
 ^test-docker\.sh$
 ^verify\.sh$
+^test-exam-login\.R$
+^test-exam-login\.sh$
+^mail\.txt$

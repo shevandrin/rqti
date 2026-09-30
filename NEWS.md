@@ -23,6 +23,11 @@
 * `render_opal()` forwards named `endpoint`, `api_user`, and `credential_id`
   arguments to `opal()`.
 
+* Live OPAL integration tests now require the explicit opt-in environment
+  variable `RQTI_RUN_LIVE_TESTS=true`. This prevents ordinary package checks
+  from authenticating against whichever endpoint happens to be configured in
+  the developer's environment.
+
 * Fixed Pandoc compatibility by using the appropriate option to disable syntax
   highlighting based on the capabilities of the installed Pandoc version.
 

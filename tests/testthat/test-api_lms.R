@@ -19,6 +19,10 @@ opal_for_test <- function() {
 }
 
 skip_if_no_opal <- function() {
+    skip_if(
+        !identical(tolower(Sys.getenv("RQTI_RUN_LIVE_TESTS")), "true"),
+        "Live OPAL tests require RQTI_RUN_LIVE_TESTS=true."
+    )
     skip_if(Sys.getenv("RQTI_API_USER") == "", "RQTI_API_USER is not set.")
     invisible(opal_for_test())
 }
