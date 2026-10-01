@@ -2,6 +2,8 @@
 
 ## rqti 1.3.1
 
+CRAN release: 2026-10-01
+
 ### New features
 
 - [`opal()`](https://shevandrin.github.io/rqti/reference/opal.md) and
