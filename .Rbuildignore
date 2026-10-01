@@ -23,6 +23,7 @@ s4_example.R
 ^engine\.bin$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^AGENTS\.md$
 ^BOOK$
 ^cover$
 ^_main\.Rmd$

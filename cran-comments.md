@@ -3,6 +3,12 @@
 This is a follow-up release to rqti 1.3.0.
 This addresses the errors observed in the CRAN macOS checks for version 1.3.0.
 
+## Resubmission
+
+Excluded the development-only `AGENTS.md` file via `.Rbuildignore` to fix the
+"Non-standard file/directory found at top level" NOTE reported by the incoming
+Windows and Debian checks.
+
 ## New features
 
 * `opal()` and `upload2opal()` now accept an optional `credential_id`, allowing
@@ -21,5 +27,7 @@ This addresses the errors observed in the CRAN macOS checks for version 1.3.0.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+Checked the rebuilt source archive with `R CMD check --no-manual` on macOS
+(aarch64), R 4.5.2, with RStudio's bundled Pandoc available.
 
+0 errors | 0 warnings | 0 notes
