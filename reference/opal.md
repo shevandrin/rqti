@@ -6,11 +6,7 @@ representing a connection to the Opal Learning Management System (LMS).
 ## Usage
 
 ``` r
-opal(
-  api_user = NA_character_,
-  endpoint = NA_character_,
-  credential_id = NA_character_
-)
+opal(api_user = NA_character_, endpoint = NA_character_)
 ```
 
 ## Arguments
@@ -22,12 +18,6 @@ opal(
 - endpoint:
 
   A character string specifying the API endpoint for the LMS.
-
-- credential_id:
-
-  An optional name for the credential set. By default, rqti continues to
-  use the legacy `rqtiopal` service. Supply an ID to use a separate
-  password for another OPAL installation.
 
 ## Value
 

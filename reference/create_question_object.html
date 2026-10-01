@@ -11,7 +11,7 @@ MultipleChoiceTable, DirectedPair) from an Rmd file."><meta property="og:image" 
 
     <a class="navbar-brand me-2" href="../index.html">rqti</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.3.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@ MultipleChoiceTable, DirectedPair) from an Rmd file."><meta property="og:image" 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Create rqti S4 <a href="AssessmentItem-class.html">AssessmentItem</a> Object from Rmd</h1>
-      <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/R/object_builder.R" class="external-link"><code>R/object_builder.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/v1.3.0/R/object_builder.R" class="external-link"><code>R/object_builder.R</code></a></small>
       <div class="d-none name"><code>create_question_object.Rd</code></div>
     </div>
 
@@ -89,22 +89,6 @@ MultipleChoiceTable, DirectedPair) from an Rmd file."><meta property="og:image" 
     <p>One of the rqti S4 AssessmentItem objects: <a href="SingleChoice-class.html">SingleChoice</a>,
 <a href="MultipleChoice-class.html">MultipleChoice</a>, <a href="Essay-class.html">Essay</a>, <a href="Entry-class.html">Entry</a>, <a href="Ordering-class.html">Ordering</a>, <a href="OneInRowTable-class.html">OneInRowTable</a>,
 <a href="OneInColTable-class.html">OneInColTable</a>, <a href="MultipleChoiceTable-class.html">MultipleChoiceTable</a>, or <a href="DirectedPair-class.html">DirectedPair</a>.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="css-in-yaml">CSS in YAML<a class="anchor" aria-label="anchor" href="#css-in-yaml"></a></h2>
-
-
-<p>Use <code>stylesheet_path: styles.css</code> for a CSS file (or a YAML sequence of
-files). Relative paths are resolved against the Rmd file's directory.
-Use a YAML literal block <code>css: |</code> for CSS text. When both are supplied,
-files are linked in the supplied order, followed by the CSS text.
-Stylesheets are linked from the assessment item and included in QTI ZIPs
-and their manifests. Standalone XML exports write CSS beside the XML in
-a <code>styles/items/</code> subdirectory; keep that directory with the XML.
-These fields do not convert inline HTML <code>style</code> attributes to classes.
-CSS references such as <code>url(...)</code> and <code>@import</code> are not collected or
-rewritten; use self-contained stylesheets. Rendering depends on the
-delivery platform's CSS support.</p>
     </div>
 
     <div class="section level2">

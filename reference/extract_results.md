@@ -68,8 +68,7 @@ variables.
 
 - 'id_question' - question item identifier
 
-- 'base_type' - type of answer (identifier, directedPair, string, float
-  or integer)
+- 'base_type' - type of answer (identifier, string or float)
 
 - 'cardinalities' - defines whether this question is single, multiple or
   ordered -value

@@ -14,8 +14,7 @@ upload2opal(
   endpoint = NULL,
   open_in_browser = TRUE,
   as_survey = FALSE,
-  api_user = NULL,
-  credential_id = NULL
+  api_user = NULL
 )
 ```
 
@@ -68,11 +67,6 @@ upload2opal(
 - api_user:
 
   A character value of the username in the OPAL.
-
-- credential_id:
-
-  An optional name for the credential set. If omitted, the legacy
-  `rqtiopal` service is used.
 
 ## Value
 

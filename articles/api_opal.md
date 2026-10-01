@@ -27,25 +27,13 @@ default and are required to request such privileges before utilizing the
 API. To facilitate this process, it is advisable to reach out to your IT
 and/or OPAL provider for assistance.
 
-To store the username and password, `rqti` uses the operating system’s
-credential storage through the `keyring` package. Existing code
-continues to use the `rqtiopal` service. If the same username has a
-different password on another OPAL installation, set `credential_id` in
-[`opal()`](https://shevandrin.github.io/rqti/reference/opal.md) or
-[`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md).
-rqti then uses a separate service named `rqtiopal-<credential_id>`.
-
-For example, the exam installation can use its own `rqtiopal-exam`
-entry:
-
-``` r
-
-exam_opal <- opal(
-    api_user = "titz@tu-chemnitz.de",
-    endpoint = "https://exam.tu-chemnitz.de/opal/",
-    credential_id = "exam"
-)
-```
+To store the username and password, `rqti` uses the keyring system
+credential storage. The first time authentication is attempted, it asks
+for a username and a password and saves them in a key with service name
+“rqtiopal”. Once the key is created, it is automatically used in further
+sessions. It is not recommended to create additional keys unless you
+have a more complex setup (e.g. using multiple learning management
+systems).
 
 Some universities only allow to use the OPAL API in the network of the
 university. Before calling

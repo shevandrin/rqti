@@ -1,42 +1,10 @@
 # Changelog
 
-## rqti (development version)
-
-## rqti 1.3.1
-
-CRAN release: 2026-10-01
-
-### New features
-
-- [`opal()`](https://shevandrin.github.io/rqti/reference/opal.md) and
-  [`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
-  now accept an optional `credential_id`, allowing the same username to
-  use different passwords on different OPAL installations. When it is
-  omitted, rqti continues to use the existing `rqtiopal` credential
-  service, preserving the behavior of existing code and saved
-  credentials.
-
-### Bug fixes
-
-- `extract_results(level = "item")` now supports integer responses and
-  labels them as `NumericGap`. Missing or unsupported response base
-  types now produce an error identifying the affected item.
-
-- Fixed Pandoc compatibility by using the appropriate option to disable
-  syntax highlighting based on the capabilities of the installed Pandoc
-  version.
-
 ## rqti 1.3.0
 
 CRAN release: 2026-09-21
 
 ### New features
-
-- Rmd questions now support `stylesheet_path` (one or more local CSS
-  files) and `css: |` (CSS text) in YAML. Item stylesheets are written
-  with XML exports and included in item and assessment ZIPs and
-  manifests. Relative paths are resolved against the Rmd source
-  directory.
 
 - Added
   [`read_qti()`](https://shevandrin.github.io/rqti/reference/extract_results.md)
