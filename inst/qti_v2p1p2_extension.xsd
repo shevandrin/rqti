@@ -29,6 +29,28 @@
         </xs:complexType>
     </xs:redefine>
 
+    <!-- OPAL reassigns correct answers before response rules. The required
+         setCorrectResponse separates this extension from the base rule group. -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="ResponseProcessing.Type">
+            <xs:complexContent>
+                <xs:extension base="ResponseProcessing.Type">
+                    <xs:sequence minOccurs="0">
+                        <xs:element ref="setCorrectResponse" maxOccurs="unbounded"/>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element ref="xi:include"/>
+                            <xs:element ref="responseCondition"/>
+                            <xs:element ref="responseProcessingFragment"/>
+                            <xs:element ref="setOutcomeValue"/>
+                            <xs:element ref="exitResponse"/>
+                            <xs:element ref="lookupOutcomeValue"/>
+                        </xs:choice>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
     <!-- Redefine the ItemBody.Type to add the details element -->
     <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
         <xs:complexType name="ItemBody.Type">

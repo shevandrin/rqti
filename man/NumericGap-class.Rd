@@ -27,7 +27,7 @@ helpful text in the text input field in the content delivery engine.}
 size of the text input field in the content delivery engine.}
 
 \item{\code{solution}}{A numeric value containing the correct answer for this numeric
-entry.}
+entry. Leave empty when using \code{solution_variable}.}
 
 \item{\code{tolerance}}{A numeric value, optional, specifying the value for the upper
 and lower boundaries of the tolerance rate for candidate answers. Default
@@ -46,6 +46,14 @@ lower bound is included in the tolerance rate. Default is \code{TRUE}.}
 
 \item{\code{include_upper_bound}}{A boolean value, optional, specifying whether the
 upper bound is included in the tolerance rate. Default is \code{TRUE}.}
+
+\item{\code{solution_variable}}{An optional QTI identifier of an \code{integer} or \code{float}
+template variable used as the correct answer. Defaults to \code{character()}.
+Cannot be combined with a non-empty \code{solution}. The containing item must
+declare this variable. Dynamic gaps default to an expected length of 10
+unless explicitly provided. OPAL-style assignment during response processing
+requires the extended rqti schema. Create dynamic gaps with \code{new()};
+constructor helpers do not yet expose this slot.}
 }}
 
 \examples{
@@ -58,6 +66,13 @@ ng <- new("NumericGap",
           tolerance_type = "relative",
           include_lower_bound = TRUE,
           include_upper_bound = TRUE)
+dynamic_gap <- new("NumericGap", response_identifier = "answer",
+                   solution_variable = "c")
+variables <- new("MaximaVariables", code = "string(['c = 3]);",
+                 variables = c(c = "integer"))
+item <- new("Entry", content = list("<p>Answer: ", dynamic_gap, "</p>"),
+            template = list(variables))
+createTemplateProcessing(item)
 }
 \seealso{
 \link{Entry}, \link{TextGap}, \link{TextGapOpal} and \link{InlineChoice}.

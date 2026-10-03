@@ -1,5 +1,10 @@
 # rqti (development version)
 
+* `NumericGap` objects can use `solution_variable` to bind their correct answer
+  to a numeric template variable. Export sets the answer after template
+  calculations and again before response processing, preserving scoring and
+  tolerance settings. OPAL-style response processing uses the extended schema.
+
 * Added `TemplateVariableRef` content objects that display declared template
   variables with `printedVariable`, including alongside gaps in `Entry` items.
   Item export rejects references to undeclared template variables.

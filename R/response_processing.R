@@ -101,6 +101,7 @@ create_default_resp_processing_order <- function(object) {
 
 #process modalfeedback for entry
 create_response_processing_entry <- function(object) {
+    validate_dynamic_solutions(object)
     answers <- Map(getResponse, object@content)
     answers[sapply(answers, is.null)] <- NULL
 
@@ -122,7 +123,8 @@ create_response_processing_entry <- function(object) {
                               make_default_feedback_cond(answers),
                               resp_conds)
     }
-    return(responseProcessing(list(processing, set_ov, conditions)))
+    return(responseProcessing(list(create_dynamic_correct_responses(object),
+                                   processing, set_ov, conditions)))
 }
 
 set_outcome_value_entry <- function(object) {

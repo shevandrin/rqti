@@ -42,9 +42,12 @@ setGeneric("createTemplateProcessing", function(object) {
 
 #' @rdname createTemplateProcessing
 setMethod("createTemplateProcessing", "AssessmentItem", function(object) {
+    validate_dynamic_solutions(object)
     if (!length(object@template)) return(NULL)
     validate_template_identifiers(object)
-    tag("templateProcessing", lapply(object@template, create_template_rules))
+    tag("templateProcessing", list(
+        lapply(object@template, create_template_rules),
+        create_dynamic_correct_responses(object)))
 })
 
 # Preserve OPAL's inner character references; htmltools adds XML escaping.
@@ -84,4 +87,39 @@ validate_template_identifiers <- function(object) {
              call. = FALSE)
     }
     invisible(TRUE)
+}
+
+# Answer bindings belong to gaps, independently of the calculation block.
+dynamic_numeric_gaps <- function(object) {
+    Filter(function(x) is(x, "NumericGap") && length(x@solution_variable) > 0L,
+           object@content)
+}
+
+validate_dynamic_solutions <- function(object) {
+    gaps <- dynamic_numeric_gaps(object)
+    if (!length(gaps)) return(invisible(TRUE))
+    validObject(object)
+    # Drop names on the list itself so named template lists cannot prefix IDs.
+    types <- do.call(c, unname(lapply(object@template, function(block) {
+        c(setNames("string", block@identifier), block@variables)
+    })))
+    for (gap in gaps) {
+        validObject(gap)
+        id <- gap@solution_variable
+        if (!id %in% names(types)) {
+            stop("Undeclared solution variable: ", id, call. = FALSE)
+        }
+        if (!types[[id]] %in% c("integer", "float")) {
+            stop("Solution variable must have type integer or float: ", id,
+                 call. = FALSE)
+        }
+    }
+    invisible(TRUE)
+}
+
+create_dynamic_correct_responses <- function(object) {
+    lapply(dynamic_numeric_gaps(object), function(gap) {
+        tag("setCorrectResponse", list(identifier = gap@response_identifier,
+            tag("variable", list(identifier = gap@solution_variable))))
+    })
 }
