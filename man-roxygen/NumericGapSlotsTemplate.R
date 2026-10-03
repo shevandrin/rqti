@@ -17,5 +17,5 @@
 #'   Cannot be combined with a non-empty `solution`. The containing item must
 #'   declare this variable. Dynamic gaps default to an expected length of 10
 #'   unless explicitly provided. OPAL-style assignment during response processing
-#'   requires the extended rqti schema. Create dynamic gaps with `new()`;
-#'   constructor helpers do not yet expose this slot.
+#'   requires the extended rqti schema. Use [numericGap()] or `new()` to create
+#'   dynamic gaps.

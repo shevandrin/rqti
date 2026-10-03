@@ -21,7 +21,8 @@ oneInColTable(
   shuffle_cols = TRUE,
   feedback = list(),
   calculator = NA_character_,
-  files = NA_character_
+  files = NA_character_,
+  template = list()
 )
 }
 \arguments{
@@ -87,6 +88,10 @@ calculator to the candidate. Possible values:
 
 \item{files}{A character vector, optional, containing paths to files that will
 be accessible to the candidate during the test/exam.}
+
+\item{template}{A list of \link{MaximaVariables} objects, for example created with
+\code{\link[=maxima_variables]{maxima_variables()}}. Defaults to an empty list. Blocks run in list order
+when the exported item is delivered by a player supporting MAXIMA.}
 }
 \value{
 An object of class \link{OneInColTable}

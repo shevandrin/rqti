@@ -1,5 +1,10 @@
 # rqti (development version)
 
+* Added `maxima_variables()` and `template_value()` constructors. All item
+  constructors now accept a trailing `template` argument; `numericGap()` and
+  `gapNumeric()` accept `solution_variable` for dynamic correct answers.
+  Existing positional arguments retain their order.
+
 * `NumericGap` objects can use `solution_variable` to bind their correct answer
   to a numeric template variable. Export sets the answer after template
   calculations and again before response processing, preserving scoring and

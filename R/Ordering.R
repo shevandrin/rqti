@@ -93,6 +93,7 @@ setMethod("initialize", "Ordering", function(.Object, ...) {
 #'              calculator = "scientific-calculator",
 #'              files = "text_book.pdf")
 #'
+#' @template TemplateParameter
 #' @export
 ordering <- function(identifier = generate_id(),
                   title = identifier,
@@ -105,7 +106,8 @@ ordering <- function(identifier = generate_id(),
                   shuffle = TRUE,
                   feedback = list(),
                   calculator = NA_character_,
-                  files = NA_character_) {
+                  files = NA_character_,
+                  template = list()) {
     params <- as.list(environment())
     obj <- construct_item(params, "Ordering")
     return(obj)

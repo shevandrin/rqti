@@ -61,3 +61,41 @@ setValidity("MaximaVariables", function(object) {
     }
     if (length(errors)) errors else TRUE
 })
+
+#' Describe a Maxima calculation and its outputs
+#'
+#' Creates a [MaximaVariables] object for an assessment item's `template` list.
+#' This function stores the program without executing it. The exported XML uses
+#' OPAL/ONYX MAXIMA operators; validation requires the extended rqti schema.
+#' Rmd integration is not yet supported.
+#'
+#' @param code A single non-empty string containing the Maxima program. It must
+#'   return a string representation of associations for the named outputs.
+#' @param variables A non-empty named character vector of QTI output types:
+#'   `integer`, `float`, or `string`. Names start with an ASCII letter and contain
+#'   only ASCII letters, digits, or underscores. All outputs have single
+#'   cardinality.
+#' @param identifier The QTI identifier for the intermediate string result.
+#'   Defaults to `"all"`. Use distinct identifiers for multiple blocks.
+#' @return A [MaximaVariables] object.
+#' @seealso [template_value()], [numericGap()], [entry()]
+#' @export
+#' @examples
+#' calculation <- maxima_variables(
+#'     code = "block([a,b,c], a: random(100), b: random(100),
+#'              c: a + b, string(['a = a, 'b = b, 'c = c]));",
+#'     variables = c(a = "integer", b = "integer", c = "integer")
+#' )
+#' item <- entry(
+#'     identifier = "addition",
+#'     template = list(calculation),
+#'     content = list("<p>", template_value("a"), " + ", template_value("b"),
+#'                    " = ", numericGap(solution_variable = "c"), "</p>")
+#' )
+#' createTemplateDeclaration(item)
+#' createTemplateProcessing(item)
+#' createItemBody(item)
+maxima_variables <- function(code, variables, identifier = "all") {
+    new("MaximaVariables", code = code, variables = variables,
+        identifier = identifier)
+}

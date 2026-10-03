@@ -62,3 +62,20 @@ validate_template_references <- function(object) {
     }
     invisible(TRUE)
 }
+
+#' Display a template variable in question content
+#'
+#' Creates a [TemplateVariableRef] rendered as QTI `printedVariable`. Use it
+#' within an item's `content` list alongside text and gaps. The item must declare
+#' the referenced variable in its `template` list when exported. This function
+#' does not evaluate the variable or create an answer field.
+#' @param identifier A single valid QTI identifier of the template variable.
+#' @return A [TemplateVariableRef] object.
+#' @seealso [maxima_variables()], [entry()]
+#' @export
+#' @examples
+#' reference <- template_value("a")
+#' createText(reference)
+template_value <- function(identifier) {
+    new("TemplateVariableRef", identifier = identifier)
+}

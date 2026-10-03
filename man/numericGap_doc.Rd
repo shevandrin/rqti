@@ -6,32 +6,34 @@
 \title{Create object \link{NumericGap}}
 \usage{
 numericGap(
-  solution,
+  solution = numeric(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
-  include_upper_bound = TRUE
+  include_upper_bound = TRUE,
+  solution_variable = character()
 )
 
 gapNumeric(
-  solution,
+  solution = numeric(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
-  include_upper_bound = TRUE
+  include_upper_bound = TRUE,
+  solution_variable = character()
 )
 }
 \arguments{
 \item{solution}{A numeric value containing the correct answer for this numeric
-entry.}
+entry. Omit when using \code{solution_variable}.}
 
 \item{response_identifier}{A character value representing an identifier for
 the answer. By default, it is generated as 'id_gap_dddd', where dddd
@@ -46,7 +48,7 @@ is "".}
 
 \item{expected_length}{A numeric value, optional, used to set the
 size of the text input field in the content delivery engine. Default value
-is adjusted by solution size.}
+is adjusted by solution size, or 10 for a dynamic answer.}
 
 \item{tolerance}{A numeric value, optional, specifying the value for the upper
 and lower boundaries of the tolerance rate for candidate answers. Default is
@@ -65,6 +67,10 @@ lower bound is included in the tolerance rate. Default is \code{TRUE}.}
 
 \item{include_upper_bound}{A boolean value, optional, specifying whether the
 upper bound is included in the tolerance rate. Default is \code{TRUE}.}
+
+\item{solution_variable}{An optional QTI identifier of an \code{integer} or \code{float}
+template variable used as the correct answer. Cannot be combined with a
+non-empty \code{solution}. Defaults to \code{character()}.}
 }
 \value{
 An object of class \link{NumericGap}
@@ -74,6 +80,7 @@ Create object \link{NumericGap}
 }
 \examples{
 ng_min <- numericGap(5.1)
+dynamic_gap <- numericGap(solution_variable = "c")
 
 ng <- numericGap(solution = 5.1,
                 response_identifier  = "id_gap_1234",

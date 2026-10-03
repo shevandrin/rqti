@@ -52,8 +52,8 @@ template variable used as the correct answer. Defaults to \code{character()}.
 Cannot be combined with a non-empty \code{solution}. The containing item must
 declare this variable. Dynamic gaps default to an expected length of 10
 unless explicitly provided. OPAL-style assignment during response processing
-requires the extended rqti schema. Create dynamic gaps with \code{new()};
-constructor helpers do not yet expose this slot.}
+requires the extended rqti schema. Use \code{\link[=numericGap]{numericGap()}} or \code{new()} to create
+dynamic gaps.}
 }}
 
 \examples{

@@ -83,7 +83,10 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'Create object [NumericGap]
 #'
 #'@param solution A numeric value containing the correct answer for this numeric
-#'  entry.
+#'  entry. Omit when using `solution_variable`.
+#'@param solution_variable An optional QTI identifier of an `integer` or `float`
+#'  template variable used as the correct answer. Cannot be combined with a
+#'  non-empty `solution`. Defaults to `character()`.
 #'@param response_identifier A character value representing an identifier for
 #'  the answer. By default, it is generated as 'id_gap_dddd', where dddd
 #'  represents random digits.
@@ -94,7 +97,7 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'  is "".
 #'@param expected_length A numeric value, optional, used to set the
 #'  size of the text input field in the content delivery engine. Default value
-#'  is adjusted by solution size.
+#'  is adjusted by solution size, or 10 for a dynamic answer.
 #'@param tolerance A numeric value, optional, specifying the value for the upper
 #'  and lower boundaries of the tolerance rate for candidate answers. Default is
 #'  0.
@@ -111,6 +114,7 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'@seealso [entry()][textGap()][textGapOpal()]
 #' @examples
 #'ng_min <- numericGap(5.1)
+#'dynamic_gap <- numericGap(solution_variable = "c")
 #'
 #'ng <- numericGap(solution = 5.1,
 #'                 response_identifier  = "id_gap_1234",
@@ -121,15 +125,19 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'                 tolerance_type = "relative")
 #'@rdname numericGap_doc
 #'@export
-numericGap <- function(solution,
+numericGap <- function(solution = numeric(),
                     response_identifier = generate_id(type = "gap"),
                     points = 1,
                     placeholder = "",
-                    expected_length = size_gap(solution),
+                    expected_length = if (length(solution_variable)) 10 else size_gap(solution),
                     tolerance = 0,
                     tolerance_type = "absolute",
                     include_lower_bound = TRUE,
-                    include_upper_bound = TRUE){
+                    include_upper_bound = TRUE,
+                    solution_variable = character()) {
+    if (missing(solution) && !length(solution_variable)) {
+        stop("Provide solution or solution_variable.", call. = FALSE)
+    }
     params <- as.list(environment())
     params$Class <- "NumericGap"
     obj <- do.call("new", params)
