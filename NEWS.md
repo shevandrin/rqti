@@ -1,5 +1,9 @@
 # rqti (development version)
 
+* Added `TemplateVariableRef` content objects that display declared template
+  variables with `printedVariable`, including alongside gaps in `Entry` items.
+  Item export rejects references to undeclared template variables.
+
 * Assessment items now export Maxima template declarations and processing,
   preserving block order and rejecting conflicting variable identifiers.
   Programs use the MAXIMA custom operator supported by OPAL/ONYX; Rmd

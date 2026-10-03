@@ -78,6 +78,7 @@ Collate:
     'Opal.R'
     'Ordering.R'
     'SingleChoice.R'
+    'TemplateVariableRef.R'
     'TextGap.R'
     'TextGapOpal.R'
     'WrongFeedback.R'

@@ -4,7 +4,8 @@
 #' @slot title A character representing the title of the XML file associated
 #'   with the task. By default, it takes the value of the identifier.
 #' @slot content A list of character content to form the text of the question,
-#'   which can include HTML tags. For tasks of the [Entry] type, it must also
+#'   which can include HTML tags and [TemplateVariableRef] objects for displaying
+#'   declared template variables. For tasks of the [Entry] type, it must also
 #'   contain at least one instance of Gap objects, such as [TextGap-class],
 #'   [TextGapOpal], [NumericGap], or [InlineChoice].
 #' @slot prompt An optional character representing a simple question text,

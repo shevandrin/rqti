@@ -146,7 +146,9 @@ setMethod("createResponseProcessing", signature(object = "Entry"),
 #' Generic function for creating a set of html elements to display question for
 #' XML document of specification the question following the QTI schema v2.1
 #'
-#' @param object an instance of the S4 object (Gap, InlineChoice, character)
+#' @param object A [Gap], [InlineChoice], [TemplateVariableRef], or character
+#'   content fragment.
+#' @return An HTML/XML tag or a character fragment marked as HTML.
 #' @docType methods
 #' @rdname createText-methods
 #' @export
