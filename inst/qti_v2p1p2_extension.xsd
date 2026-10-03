@@ -18,6 +18,17 @@
 
     <xs:include schemaLocation="imsqti_v2p1p2.xsd"/>
 
+    <!-- OPAL/ONYX stores MAXIMA programs in an unqualified value attribute. -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="CustomOperator.Type">
+            <xs:complexContent>
+                <xs:extension base="CustomOperator.Type">
+                    <xs:attribute name="value" type="xs:string" use="optional"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
     <!-- Redefine the ItemBody.Type to add the details element -->
     <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
         <xs:complexType name="ItemBody.Type">

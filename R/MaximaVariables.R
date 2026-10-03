@@ -1,8 +1,8 @@
 #' Maxima template calculation
 #'
 #' Stores a Maxima program and the types of its named outputs. The program is
-#' not executed in R. This initial model does not yet generate template XML
-#' or support Rmd parsing.
+#' not executed in R. Template XML is generated when the containing assessment
+#' item is exported. Rmd parsing is not yet supported.
 #'
 #' @slot code A single non-empty string containing the Maxima program.
 #' @slot variables A non-empty named character vector of output types:

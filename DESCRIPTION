@@ -93,6 +93,7 @@ Collate:
     'rqti-package.R'
     'rqti_project.R'
     'section_builder.R'
+    'template_processing.R'
     'utils-pipe.R'
     'verify_qti.R'
     'zzz.R'

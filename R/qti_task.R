@@ -13,6 +13,8 @@ create_assessment_item <- function(object) {
     assesment_item <- tagAppendChildren(assesment_item,
                                         createResponseDeclaration(object),
                                         createOutcomeDeclaration(object),
+                                        createTemplateDeclaration(object),
+                                        createTemplateProcessing(object),
                                         lapply(item_stylesheet_hrefs(object), function(href) {
                                             tag("stylesheet", list(href = href, type = "text/css"))
                                         }),

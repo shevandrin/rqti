@@ -1,5 +1,11 @@
 # rqti (development version)
 
+* Assessment items now export Maxima template declarations and processing,
+  preserving block order and rejecting conflicting variable identifiers.
+  Programs use the MAXIMA custom operator supported by OPAL/ONYX; Rmd
+  integration is not yet implemented. XML validation requires the extended
+  rqti schema because OPAL uses `customOperator/@value`.
+
 # rqti 1.3.1
 
 ## New features
