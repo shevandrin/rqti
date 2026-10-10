@@ -99,6 +99,7 @@ setMethod("initialize", "Entry", function(.Object, ...) {
 #'                                    content = list("Model answer"))),
 #'                    calculator = "scientific-calculator",
 #'                    files = "text_book.pdf")
+#' @template TemplateParameter
 #'@export
 entry <- function(identifier = generate_id(),
                   title = identifier,
@@ -107,7 +108,8 @@ entry <- function(identifier = generate_id(),
                   points = 1,
                   feedback = list(),
                   calculator = NA_character_,
-                  files = NA_character_) {
+                  files = NA_character_,
+                  template = list()) {
     params <- as.list(environment())
     obj <- construct_item(params, "Entry")
     return(obj)
@@ -146,7 +148,9 @@ setMethod("createResponseProcessing", signature(object = "Entry"),
 #' Generic function for creating a set of html elements to display question for
 #' XML document of specification the question following the QTI schema v2.1
 #'
-#' @param object an instance of the S4 object (Gap, InlineChoice, character)
+#' @param object A [Gap], [InlineChoice], [TemplateVariableRef], or character
+#'   content fragment.
+#' @return An HTML/XML tag or a character fragment marked as HTML.
 #' @docType methods
 #' @rdname createText-methods
 #' @export

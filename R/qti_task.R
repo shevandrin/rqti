@@ -8,11 +8,14 @@
 #' @returns A list() with a shiny.tag class
 #'
 create_assessment_item <- function(object) {
+    validate_template_references(object)
     assessment_attributes <- create_assessment_attributes(object)
     assesment_item <- tag("assessmentItem", assessment_attributes)
     assesment_item <- tagAppendChildren(assesment_item,
                                         createResponseDeclaration(object),
                                         createOutcomeDeclaration(object),
+                                        createTemplateDeclaration(object),
+                                        createTemplateProcessing(object),
                                         lapply(item_stylesheet_hrefs(object), function(href) {
                                             tag("stylesheet", list(href = href, type = "text/css"))
                                         }),

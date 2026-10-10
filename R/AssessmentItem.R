@@ -8,7 +8,7 @@
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @aliases AssessmentItem
-#' @include ModalFeedback.R rqti.R QtiMetadata.R
+#' @include ModalFeedback.R rqti.R QtiMetadata.R MaximaVariables.R
 setClass("AssessmentItem", slots = c(identifier = "character",
                                      title = "character",
                                      content = "list",
@@ -19,9 +19,11 @@ setClass("AssessmentItem", slots = c(identifier = "character",
                                      stylesheet_path = "character",
                                      css = "character",
                                      calculator = "character",
-                                     metadata = "QtiMetadata"),
+                                     metadata = "QtiMetadata",
+                                     template = "list"),
          prototype = prototype(prompt = "",
-                               points = 1))
+                               points = 1,
+                               template = list()))
 
 setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -46,6 +48,15 @@ setValidity("AssessmentItem", function(object) {
     }
     if (length(object@css) > 1L || anyNA(object@css)) {
         errors <- c(errors, "'css' must be a single string of CSS text.")
+    }
+
+    for (block in object@template) {
+        if (!is(block, "MaximaVariables")) {
+            errors <- c(errors, "Elements of template must be MaximaVariables objects.")
+        } else {
+            validity <- validObject(block, test = TRUE)
+            if (!isTRUE(validity)) errors <- c(errors, validity)
+        }
     }
 
     error <- validate_calculator(object@calculator)

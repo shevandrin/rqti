@@ -53,6 +53,7 @@ URL: https://github.com/shevandrin/rqti, https://shevandrin.github.io/rqti/
 BugReports: https://github.com/shevandrin/rqti/issues
 Collate: 
     'rqti.R'
+    'MaximaVariables.R'
     'QtiMetadata.R'
     'ModalFeedback.R'
     'AssessmentItem.R'
@@ -77,6 +78,7 @@ Collate:
     'Opal.R'
     'Ordering.R'
     'SingleChoice.R'
+    'TemplateVariableRef.R'
     'TextGap.R'
     'TextGapOpal.R'
     'WrongFeedback.R'
@@ -92,6 +94,7 @@ Collate:
     'rqti-package.R'
     'rqti_project.R'
     'section_builder.R'
+    'template_processing.R'
     'utils-pipe.R'
     'verify_qti.R'
     'zzz.R'

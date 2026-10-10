@@ -20,7 +20,8 @@ represents random digits.}
 with the task. By default, it takes the value of the identifier.}
 
 \item{\code{content}}{A list of character content to form the text of the question,
-which can include HTML tags. For tasks of the \link{Entry} type, it must also
+which can include HTML tags and \link{TemplateVariableRef} objects for displaying
+declared template variables. For tasks of the \link{Entry} type, it must also
 contain at least one instance of Gap objects, such as \linkS4class{TextGap},
 \link{TextGapOpal}, \link{NumericGap}, or \link{InlineChoice}.}
 
@@ -69,6 +70,10 @@ YAML, relative paths are resolved against the Rmd file's directory.}
 \item{\code{css}}{Optional single character string of CSS text, linked after any
 files in \code{stylesheet_path}. In Rmd YAML, use a literal block (\verb{css: |}).
 CSS assets referenced by \code{url()} or \verb{@import} are not bundled automatically.}
+
+\item{\code{template}}{A list of \link{MaximaVariables} objects describing template
+calculations. Defaults to an empty list. Blocks generate template declarations and
+processing in list order. Rmd parsing is not yet supported.}
 
 \item{\code{choices}}{A character vector containing the answers. The order of answers
 in the vector represents the correct response for the task.}

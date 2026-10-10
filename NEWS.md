@@ -1,5 +1,25 @@
 # rqti (development version)
 
+* Added `maxima_variables()` and `template_value()` constructors. All item
+  constructors now accept a trailing `template` argument; `numericGap()` and
+  `gapNumeric()` accept `solution_variable` for dynamic correct answers.
+  Existing positional arguments retain their order.
+
+* `NumericGap` objects can use `solution_variable` to bind their correct answer
+  to a numeric template variable. Export sets the answer after template
+  calculations and again before response processing, preserving scoring and
+  tolerance settings. OPAL-style response processing uses the extended schema.
+
+* Added `TemplateVariableRef` content objects that display declared template
+  variables with `printedVariable`, including alongside gaps in `Entry` items.
+  Item export rejects references to undeclared template variables.
+
+* Assessment items now export Maxima template declarations and processing,
+  preserving block order and rejecting conflicting variable identifiers.
+  Programs use the MAXIMA custom operator supported by OPAL/ONYX; Rmd
+  integration is not yet implemented. XML validation requires the extended
+  rqti schema because OPAL uses `customOperator/@value`.
+
 # rqti 1.3.1
 
 ## New features
@@ -15,6 +35,10 @@
 * OPAL authentication tokens are now stored per connection instead of in the
   process-wide `X-OLAT-TOKEN` environment variable. Implicit connections can
   select a credential set with `RQTI_API_CREDENTIAL_ID`.
+
+* Added the `MaximaVariables` S4 model and an empty-by-default `template` slot
+  on assessment items. This initial model stores calculation descriptions;
+  Maxima XML generation and Rmd integration are not yet implemented.
 
 ## Bug fixes
 

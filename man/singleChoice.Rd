@@ -18,7 +18,8 @@ singleChoice(
   shuffle = TRUE,
   calculator = NA_character_,
   files = NA_character_,
-  scoring_scheme = "standard"
+  scoring_scheme = "standard",
+  template = list()
 )
 }
 \arguments{
@@ -85,6 +86,10 @@ answers receive 0. This is used by default.
 answers receive a negative score of -points/(k-1), where k is the number of
 response options.
 }}
+
+\item{template}{A list of \link{MaximaVariables} objects, for example created with
+\code{\link[=maxima_variables]{maxima_variables()}}. Defaults to an empty list. Blocks run in list order
+when the exported item is delivered by a player supporting MAXIMA.}
 }
 \value{
 An object of class \link{SingleChoice}
