@@ -1,3 +1,5 @@
+# rqti (development version)
+
 # rqti 1.3.1
 
 ## New features
@@ -27,6 +29,10 @@
   variable `RQTI_RUN_LIVE_TESTS=true`. This prevents ordinary package checks
   from authenticating against whichever endpoint happens to be configured in
   the developer's environment.
+
+* `extract_results(level = "item")` now supports integer responses and labels
+  them as `NumericGap`. Missing or unsupported response base types now produce
+  an error identifying the affected item.
 
 * Fixed Pandoc compatibility by using the appropriate option to disable syntax
   highlighting based on the capabilities of the installed Pandoc version.

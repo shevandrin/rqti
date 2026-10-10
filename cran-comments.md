@@ -1,40 +1,33 @@
-## Release 1.3.0 summary
+## Release 1.3.1 summary
+
+This is a follow-up release to rqti 1.3.0.
+This addresses the errors observed in the CRAN macOS checks for version 1.3.0.
+
+## Resubmission
+
+Excluded the development-only `AGENTS.md` file via `.Rbuildignore` to fix the
+"Non-standard file/directory found at top level" NOTE reported by the incoming
+Windows and Debian checks.
 
 ## New features
 
-* Added `read_qti()` as an alias for `extract_results()`.
+* `opal()` and `upload2opal()` now accept an optional `credential_id`, allowing
+  the same username to use different passwords on different OPAL installations.
+  When it is omitted, rqti continues to use the existing `rqtiopal` credential
+  service, preserving the behavior of existing code and saved credentials.
 
-* Added OPAL API functions `createCourseGroup()` for creating course groups,
-  `addGroupUser()` for adding users to groups, and `removeGroupUser()` for
-  removing users from groups.
-
-* `extract_results(level = "item")` now includes task-level
-  `candidate_comment` and `scorer_comment` columns for each item row.
-
-* Added `provide_audio()` helper to embed local audio files directly into
-  QTI/HTML content using Base64 encoding. The function supports both
-  `<object>` and `<audio>` rendering methods and
-  self-contained audio embedding for portable assessment items.
-  
-## Improvements
-
-* Changed the preferred R Markdown YAML configuration for `preview_feedback`. 
-The option should now be specified as a top-level YAML field instead of inside 
-`params`. The previous syntax within `params` is deprecated and will be removed 
-in a future release.
-  
 ## Bug fixes
 
-* Dropdown items (dropdown()) can now include commas and other punctuation 
-without breaking YAML parsing.
+* `extract_results(level = "item")` now supports integer responses and labels
+  them as `NumericGap`. Missing or unsupported response base types now produce
+  an error identifying the affected item.
 
-* Updated OPAL authentication to use the current REST login endpoint and
-  header-based credentials.
-  
-* Fixed grade feedback score ranges so that rounding to two decimal places no
-  longer leaves gaps between adjacent grade intervals.
+* Fixed Pandoc compatibility by using the appropriate option to disable syntax
+  highlighting based on the capabilities of the installed Pandoc version.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+Checked the rebuilt source archive with `R CMD check --no-manual` on macOS
+(aarch64), R 4.5.2, with RStudio's bundled Pandoc available.
 
+0 errors | 0 warnings | 0 notes
