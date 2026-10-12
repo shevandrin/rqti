@@ -1,0 +1,540 @@
+# Changelog
+
+## rqti (development version)
+
+- QTI 2.2 schemas are compressed in the installed package and unpacked
+  on demand into the R session’s temporary directory. All schema
+  dependencies remain bundled, so validation works offline. Generated
+  template previews are excluded from the source package.
+
+- Knit previews write to the running server’s renderer folder across R
+  sessions, including when RStudio uses a development checkout and Knit
+  loads an installed package. Explicit mismatches fail before any
+  preview files are removed.
+
+- Maxima authoring checks and previews share a persistent,
+  build-specific cache of compiled libraries. Locks coordinate
+  concurrent R sessions; calculations and random answers remain
+  independent. Old, oversized, and incomplete caches are removed.
+  `rqti.maxima_cache_dir` can override or disable persistence.
+
+- qti.js previews use native Maxima through the local R server,
+  including the RStudio Viewer. Calculations run asynchronously,
+  preserve typed outputs and scoring, and report source diagnostics with
+  retry support. Each item has a fresh process; compiled libraries are
+  reused between jobs. The native backend loads the statistics libraries
+  used by the R authoring checks.
+
+- Rmd exercises accept one self-contained `{maxima}` chunk returning all
+  named outputs, following the ONYX all-in-one approach. A second chunk
+  is rejected.
+
+- Rmd files support locally checked `{maxima}` template chunks with
+  inferred output names/types and optional explicit declarations.
+  [`template_value()`](https://shevandrin.github.io/rqti/maxima-preview/reference/template_value.md)
+  displays an output, and `gap_numeric(solution_variable = ...)` binds a
+  dynamic numeric answer.
+  [`numericGap()`](https://shevandrin.github.io/rqti/maxima-preview/reference/numericGap_doc.md)
+  and the S4 slot use `solution_variable` consistently. Checks call
+  Maxima directly, preserve syntax/runtime diagnostics, and stop export
+  on failure or timeout. The `rim` package is not required.
+  [`maxima_variables()`](https://shevandrin.github.io/rqti/maxima-preview/reference/maxima_variables.md)
+  also infers types when its `variables` argument is omitted.
+
+- Added
+  [`maxima_variables()`](https://shevandrin.github.io/rqti/maxima-preview/reference/maxima_variables.md)
+  and
+  [`template_value()`](https://shevandrin.github.io/rqti/maxima-preview/reference/template_value.md)
+  constructors. All item constructors now accept a trailing `template`
+  argument;
+  [`numericGap()`](https://shevandrin.github.io/rqti/maxima-preview/reference/numericGap_doc.md)
+  and
+  [`gapNumeric()`](https://shevandrin.github.io/rqti/maxima-preview/reference/numericGap_doc.md)
+  accept `solution_variable` for dynamic correct answers. Existing
+  positional arguments retain their order.
+
+- `NumericGap` objects can use `solution_variable` to bind their correct
+  answer to a numeric template variable. Export sets the answer after
+  template calculations and again before response processing, preserving
+  scoring and tolerance settings. OPAL-style response processing uses
+  the extended schema.
+
+- Added `TemplateVariableRef` content objects that display declared
+  template variables with `printedVariable`, including alongside gaps in
+  `Entry` items. Item export rejects references to undeclared template
+  variables.
+
+- Assessment items now export Maxima template declarations and
+  processing, preserving block order and rejecting conflicting variable
+  identifiers. Programs use the MAXIMA custom operator supported by
+  OPAL/ONYX. XML validation requires the extended rqti schema because
+  OPAL uses `customOperator/@value`.
+
+## rqti 1.3.1
+
+CRAN release: 2026-10-01
+
+### New features
+
+- OPAL credential services are derived automatically from the normalized
+  endpoint, allowing the same username to use different passwords on
+  different installations without a manual ID. Existing `rqtiopal`
+  entries remain a transparent fallback. `credential_id` is retained as
+  an optional override.
+
+- [`set_opal_credentials()`](https://shevandrin.github.io/rqti/maxima-preview/reference/set_opal_credentials.md)
+  securely stores a password under the service derived from an OPAL
+  endpoint.
+
+- OPAL authentication tokens are now stored per connection instead of in
+  the process-wide `X-OLAT-TOKEN` environment variable. Implicit
+  connections can select a credential set with `RQTI_API_CREDENTIAL_ID`.
+
+- Added the `MaximaVariables` S4 model and an empty-by-default
+  `template` slot on assessment items. This initial model stores
+  calculation descriptions; Maxima XML generation and Rmd integration
+  are not yet implemented.
+
+### Bug fixes
+
+- OPAL endpoints are normalized to one trailing slash, successful login
+  bodies are no longer parsed as unused XML, and a successful response
+  without an `X-OLAT-TOKEN` header now produces a clear error.
+
+- [`render_opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/render_opal.md)
+  forwards named `endpoint`, `api_user`, and `credential_id` arguments
+  to
+  [`opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/opal.md).
+
+- Live OPAL integration tests now require the explicit opt-in
+  environment variable `RQTI_RUN_LIVE_TESTS=true`. This prevents
+  ordinary package checks from authenticating against whichever endpoint
+  happens to be configured in the developer’s environment.
+
+- `extract_results(level = "item")` now supports integer responses and
+  labels them as `NumericGap`. Missing or unsupported response base
+  types now produce an error identifying the affected item.
+
+- Fixed Pandoc compatibility by using the appropriate option to disable
+  syntax highlighting based on the capabilities of the installed Pandoc
+  version.
+
+## rqti 1.3.0
+
+CRAN release: 2026-09-21
+
+### New features
+
+- Rmd questions now support `stylesheet_path` (one or more local CSS
+  files) and `css: |` (CSS text) in YAML. Item stylesheets are written
+  with XML exports and included in item and assessment ZIPs and
+  manifests. Relative paths are resolved against the Rmd source
+  directory.
+
+- Added
+  [`read_qti()`](https://shevandrin.github.io/rqti/maxima-preview/reference/extract_results.md)
+  as an alias for
+  [`extract_results()`](https://shevandrin.github.io/rqti/maxima-preview/reference/extract_results.md).
+
+- Added OPAL API functions
+  [`createCourseGroup()`](https://shevandrin.github.io/rqti/maxima-preview/reference/createCourseGroup-methods.md)
+  for creating course groups,
+  [`addGroupUser()`](https://shevandrin.github.io/rqti/maxima-preview/reference/addGroupUser-methods.md)
+  for adding users to groups, and
+  [`removeGroupUser()`](https://shevandrin.github.io/rqti/maxima-preview/reference/removeGroupUser-methods.md)
+  for removing users from groups.
+
+- `extract_results(level = "item")` now includes task-level
+  `candidate_comment` and `scorer_comment` columns for each item row.
+
+- Added
+  [`provide_audio()`](https://shevandrin.github.io/rqti/maxima-preview/reference/provide_audio.md)
+  helper to embed local audio files directly into QTI/HTML content using
+  Base64 encoding. The function supports both `<object>` and `<audio>`
+  rendering methods and self-contained audio embedding for portable
+  assessment items.
+
+### Improvements
+
+- Changed the preferred R Markdown YAML configuration for
+  `preview_feedback`. The option should now be specified as a top-level
+  YAML field instead of inside `params`. The previous syntax within
+  `params` is deprecated and will be removed in a future release.
+
+### Bug fixes
+
+- Dropdown items (dropdown()) can now include commas and other
+  punctuation without breaking YAML parsing.
+
+- Updated OPAL authentication to use the current REST login endpoint and
+  header-based credentials.
+
+- Fixed grade feedback score ranges so that rounding to two decimal
+  places no longer leaves gaps between adjacent grade intervals.
+
+## rqti 1.2.1
+
+CRAN release: 2026-05-14
+
+### Bug fixes
+
+- Replaced platform-specific external SHA1 commands in tests with an
+  R-native hash implementation to improve portability across operating
+  systems.
+
+- Fixed MathJax rendering for dynamically loaded referent content in
+  QTI.JS.
+
+## rqti 1.2.0
+
+CRAN release: 2026-05-10
+
+### New features
+
+- Added support for OpenOlat via a new class `AssessmentTestOpenOlat`.
+  It introduced OpenOlat-specific configuration options (e.g.,
+  navigation behavior, visibility settings, number of attempts) as slots
+  and corresponding arguments in
+  [`assessmentTestOpenOlat()`](https://shevandrin.github.io/rqti/maxima-preview/reference/assessmentTestOpenOlat.md).
+
+- Added `fallback_titles` argument to
+  [`test()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test.md)
+  and
+  [`test4opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test4opal.md)
+  to control how section and item titles are assigned when not
+  explicitly provided. Supported values are “filename” and “generic”.
+  The `AssessmentTest` class now includes a `fallback_titles` slot.
+
+- Added a new slot `scoring_scheme` to the `SingleChoice` class to
+  control how response options are scored. Supported values are
+  “standard” (default) and “penalty”. Introduced penalty-based scoring
+  for single-choice tasks. When `scoring_scheme = "penalty"`, incorrect
+  answers receive a negative score of -points/(k-1), where k is the
+  number of response options. This ensures that random guessing yields
+  an expected score of zero.
+
+- Added a new `stylesheet_path` slot to `AssessmentTest` objects,
+  allowing users to include custom CSS stylesheets at the assessment
+  test level. When academic_grading is enabled, the default
+  styles/rqti.css stylesheet is included automatically, and custom
+  styles can be added to override the default appearance.
+
+- Added
+  [`german_grading()`](https://shevandrin.github.io/rqti/maxima-preview/reference/german_grading.md),
+  a helper function that returns a predefined German grading scale for
+  the `academic_grading` argument in
+  [`test()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test.md)
+  and
+  [`test4opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test4opal.md),
+  avoiding the need to manually define grading vectors. This grading
+  scheme can also be stored directly in the `academic_grading` slot of
+  `AssessmentTest` objects.
+
+- Added helper
+  [`provide_file()`](https://shevandrin.github.io/rqti/maxima-preview/reference/provide_file.md)
+  to embed local files directly into .Rmd tasks as \# Base64-encoded
+  hyperlinks for downloadable attachments.
+
+- [`section()`](https://shevandrin.github.io/rqti/maxima-preview/reference/section.md)
+  now supports Rmd files created with the `exams` package. Such files
+  are automatically detected and converted to QTI 2.1 XML via
+  [`exams::exams2qti21()`](https://rdrr.io/pkg/exams/man/exams2qti21.html),
+  so they can be used directly without additional wrapping.
+
+- Added
+  [`exams_task()`](https://shevandrin.github.io/rqti/maxima-preview/reference/exams_task.md)
+  helper for explicit control over exams-based tasks. While
+  [`section()`](https://shevandrin.github.io/rqti/maxima-preview/reference/section.md)
+  can handle exams .Rmd files automatically,
+  [`exams_task()`](https://shevandrin.github.io/rqti/maxima-preview/reference/exams_task.md)
+  can be used when additional control is needed, e.g., to assign a
+  custom title. The function converts the Rmd file and returns the path
+  to the generated XML file in a temporary directory, allowing
+  combination with native rqti items.
+
+- Enhanced LMS Opal API with new functions
+  [`getCourseGroups()`](https://shevandrin.github.io/rqti/maxima-preview/reference/getCourseGroups-methods.md)
+  and
+  [`getGroupUsers()`](https://shevandrin.github.io/rqti/maxima-preview/reference/getGroupUsers-methods.md)
+  for retrieving course groups and group users as data frames.
+
+### Improvements
+
+- Improved
+  [`extract_results()`](https://shevandrin.github.io/rqti/maxima-preview/reference/extract_results.md)
+  performance for archives with many result files by extracting only
+  relevant XML/result zip files, avoiding repeated row binding, and
+  reducing XPath work for item-level responses.
+
+- Enhanced
+  [`verify_qti()`](https://shevandrin.github.io/rqti/maxima-preview/reference/verify_qti.md)
+  to support different input types, provide more informative validation
+  messages, and use both `xmllint` and `xml2` backends for XML
+  validation.
+
+- `extract_results(level = "task")` now includes an additional column
+  containing `scorerComment` for manually scored item results.
+
+- Images referenced in external XML files are now automatically embedded
+  as Base64. This ensures that tasks are fully self-contained and do not
+  depend on external image files.
+
+- Changed the default `time_limit` for `AssessmentTest` and
+  `AssessmentTestOpal` objects (and for all related helper functions) to
+  NULL, so time limits are no longer set at the test level by default.
+
+- Changed the default value of `allow_paste` in `Essay` items to TRUE.
+
+### Bug fixes
+
+- Fixed handling of consecutive gaps in .Rmd tasks.
+
+- Fixed identifier validation regex to correctly allow hyphens in valid
+  identifiers.
+
+- Fixed
+  [`test()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test.md)
+  and
+  [`test4opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test4opal.md)
+  to correctly handle input provided as a list containing a single
+  section.
+
+## rqti 1.1.0
+
+CRAN release: 2026-02-23
+
+### New features
+
+- Added support for the `RQTI_API_USER` environment variable. If
+  `api_user` is not provided explicitly, its value is now read from the
+  environment.
+
+### Bug fixes
+
+- Fixed an issue in
+  [`upload2opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/upload2opal.md)
+  where arguments `open_in_browser` and `as_survey` were not forwarded
+  to
+  [`upload2LMS()`](https://shevandrin.github.io/rqti/maxima-preview/reference/upload2LMS-methods.md).
+
+- Fixed problems in auto-generated scripts via RStudio template.
+
+- Fixed parameter serialization in
+  [`dropdown()`](https://shevandrin.github.io/rqti/maxima-preview/reference/dropdown.md)
+  to preserve long values, normalize numeric and logical formatting, and
+  ensure stable, test-consistent gap interaction output.
+
+### Improvements
+
+- Rendering functions
+  ([`render_qtijs()`](https://shevandrin.github.io/rqti/maxima-preview/reference/render_qtijs.md),
+  [`render_xml()`](https://shevandrin.github.io/rqti/maxima-preview/reference/render_xml.md),
+  and
+  [`render_zip()`](https://shevandrin.github.io/rqti/maxima-preview/reference/render_zip.md))
+  now accept a `qtijs_path` argument (defaulting to
+  [`qtijs_pkg_path()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qtijs_pkg_path.md)),
+  allowing explicit control over the qtijs installation path.
+
+- Added a `daemon` argument to
+  [`start_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/start_server.md)
+  for improved server control.
+
+- Exported the
+  [`qtijs_pkg_path()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qtijs_pkg_path.md)
+  helper function for accessing the qtijs installation path.
+
+- Improved error and warning messages for duplicate identifiers.
+
+## rqti 1.0.0
+
+CRAN release: 2025-03-05
+
+#### New features
+
+- Major API Refactor: The API functionality has been refactored to
+  require creating an Opal object for establishing a connection. Methods
+  are now called on this object for interacting with the LMS API,
+  replacing the previous function-based approach.
+
+- Added a
+  [`verify_qti()`](https://shevandrin.github.io/rqti/maxima-preview/reference/verify_qti.md)
+  function to validate XML documents against the QTI v2.1 schema. Two
+  schema versions are supported: the original IMS Global schema and an
+  extended version that permits additional HTML tags.
+
+- Added new constructor functions
+  [`assessmentTest()`](https://shevandrin.github.io/rqti/maxima-preview/reference/assessmentTest.md),
+  [`assessmentTestOpal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/assessmentTestOpal.md),
+  [`assessmentSection()`](https://shevandrin.github.io/rqti/maxima-preview/reference/assessmentSection.md).
+
+- The default values of the “academic_grading” parameter/slot have been
+  updated in the functions
+  [`assessmentTest()`](https://shevandrin.github.io/rqti/maxima-preview/reference/assessmentTest.md),
+  [`assessmentTestOpal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/assessmentTestOpal.md),
+  [`test()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test.md),
+  and in the classes `AssessmentTest` and `AssessmentTestOpal`. This
+  parameter/slot is a named numeric vector that defines the grade table
+  shown to candidates as feedback at the end of the test. The updated
+  default follows the German grading system: gt \<- c(“1.0” = 0.95,
+  “1.3” = 0.9, “1.7” = 0.85, “2.0” = 0.8, “2.3” = 0.75, “2.7” = 0.7,
+  “3.0” = 0.65, “3.3” = 0.6, “3.7” = 0.55, “4.0” = 0.5, “5.0” = 0),
+  where each grade corresponds to the minimum percentage score required
+  to achieve it. To disable the grading table at the end of the test,
+  set this parameter to NA_real\_.
+
+- Generic functions are now exported to allow advanced users to extend
+  the functionality of S4 classes `(createItemBody()`,
+  [`createResponseDeclaration()`](https://shevandrin.github.io/rqti/maxima-preview/reference/createResponseDeclaration-methods.md),
+  [`createOutcomeDeclaration()`](https://shevandrin.github.io/rqti/maxima-preview/reference/createOutcomeDeclaration-methods.md),
+  [`createResponseProcessing()`](https://shevandrin.github.io/rqti/maxima-preview/reference/createResponseProcessing-methods.md),
+  [`createText()`](https://shevandrin.github.io/rqti/maxima-preview/reference/createText-methods.md)).
+
+- Added support for the `preview_feedback` option within ‘params’ in the
+  YAML section of R Markdown files.
+
+- Renamed the service name in the keyring system credential storage to
+  “rqtiopal”.
+
+- Renamed the “contributor” slot in `QtiContributor` to ‘name’.
+
+#### Improvements
+
+- QTIJS rendering (`DirectedPair` type, round Score and Maxscore
+  values).
+
+- Added a ‘\<div\>’ tag as a root child within the ‘itemBody’ element
+  for `Entry` type tasks to ensure compatibility with the LMS OpenOlat.
+
+- The functions
+  [`qti_metadata()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qti_metadata.md)
+  and
+  [`qti_contributor()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qti_contributor.md)
+  have been deprecated. Use
+  [`qtiMetadata()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qtiMetadata.md)
+  and
+  [`qtiContributor()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qtiContributor.md)
+  instead.
+
+- The ‘question_type’ column has been removed from the data frame
+  returned by `extract_result(level = "item")`.
+
+## rqti 0.3.0
+
+CRAN release: 2024-07-19
+
+#### Bug fixes
+
+- Fix parsing R Markdown files with tables according the latest pandoc
+  version.
+
+- Fix `extract_results(level="items")` for `Ordering` type, when
+  candidate response is not given.
+
+- Fix error at `createQtitask(obj, zip=TRUE)`.
+
+#### New features
+
+- New API OPAL function `get_course_elements()` returns a data frame
+  with elements of the course by course id.
+
+- New API OPAL function `get_course_results()` returns an xml with data
+  about results by course id and node id.
+
+- New API OPAL function `publish_courses()` for publishing a course by
+  Resource ID.
+
+#### Improvements
+
+- QTIJS rendering.
+
+## rqti 0.2.1
+
+CRAN release: 2024-05-26
+
+#### Bug fixes
+
+- In metadata default value for the slot “contribution_date” is assigned
+  to Date(0).
+
+#### New features
+
+- method
+  [`createQtiTask()`](https://shevandrin.github.io/rqti/maxima-preview/reference/createQtiTask-methods.md)
+  can create XML or zip files, to control this use parameter zip=TRUE.
+
+- QTIJS rendering shows feedback and score for tasks.
+
+## rqti 0.2.0
+
+CRAN release: 2024-05-08
+
+#### Bug fixes
+
+- Handle problem with xsd scheme for xml validation.
+
+- Handle some problems with html and mathml entities.
+
+#### New features
+
+- Improved the appearance of the tasks in QTIJS viewer.
+
+- Added constructor functions for task classes:
+  [`singleChoice()`](https://shevandrin.github.io/rqti/maxima-preview/reference/singleChoice.md),
+  [`multipleChoice()`](https://shevandrin.github.io/rqti/maxima-preview/reference/multipleChoice.md),
+  [`essay()`](https://shevandrin.github.io/rqti/maxima-preview/reference/essay.md),
+  [`ordering()`](https://shevandrin.github.io/rqti/maxima-preview/reference/ordering.md),
+  [`entry()`](https://shevandrin.github.io/rqti/maxima-preview/reference/entry.md),
+  [`directedPair()`](https://shevandrin.github.io/rqti/maxima-preview/reference/directedPair.md),
+  [`oneInColTable()`](https://shevandrin.github.io/rqti/maxima-preview/reference/oneInColTable.md),
+  [`oneInRowTable()`](https://shevandrin.github.io/rqti/maxima-preview/reference/oneInRowTable.md),
+  `myltipleChoiceTable()`.
+
+- Added constructor functions for content of Entry class:
+  [`numericGap()`](https://shevandrin.github.io/rqti/maxima-preview/reference/numericGap_doc.md),
+  [`textGap()`](https://shevandrin.github.io/rqti/maxima-preview/reference/textGap_doc.md),
+  [`textGapOpal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/textGapOpal_doc.md),
+  [`inlineChoice()`](https://shevandrin.github.io/rqti/maxima-preview/reference/inlineChoice.md).
+
+- Added constructor functions for the feedback objects:
+  [`modalFeedback()`](https://shevandrin.github.io/rqti/maxima-preview/reference/modalFeedback.md),
+  [`correctFeedback()`](https://shevandrin.github.io/rqti/maxima-preview/reference/correctFeedback.md),
+  [`wrongFeedback()`](https://shevandrin.github.io/rqti/maxima-preview/reference/wrongFeedback.md).
+
+- Added the ability to upload SURVEY resource type to Opal using the
+  API. The
+  [`upload2opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/upload2opal.md)
+  function now includes a new parameter, “as_survey”, which allows you
+  to specify the resource type. Set “as_survey = TRUE” to upload as a
+  SURVEY resource type.
+
+- Added the ability to put metadata in the manifest file for tests. To
+  store metadata information `AssessmentItem` and `AssessmentTest` use
+  slot “@metadata” that takes `QtiMetadata` (and `QtiContributor`
+  inside) classes as type. Two construction functions have been added to
+  create objects:
+  [`qti_metadata()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qti_metadata.md)
+  and
+  [`qti_contributor()`](https://shevandrin.github.io/rqti/maxima-preview/reference/qti_contributor.md).
+
+## rqti 0.1.1
+
+CRAN release: 2024-03-21
+
+#### Bug fixes
+
+- Added the missing qti.js for rendering Rmd-files with tasks.
+
+- Added processing of the pandoc –embed-resources parameter for pandoc
+  versions \< 2.19.
+
+#### New features
+
+- Identifiers of `AssessmentItem`, `AssessmentSection` and
+  `AssessmentTest` objects are checked for compliance with QTI
+  requirements.
+
+## rqti 0.1.0
+
+CRAN release: 2024-03-19
+
+- Initial CRAN submission.

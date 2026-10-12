@@ -1,0 +1,36 @@
+# LMS Class
+
+The `LMS` class is an abstract representation of a Learning Management
+System (LMS). It provides a foundation for defining LMS-specific
+implementations.
+
+## Slots
+
+- `name`:
+
+  A character string representing the name or identifier of the LMS.
+
+- `api_user`:
+
+  A character string containing the username for authentication.
+
+- `endpoint`:
+
+  A character string specifying the LMS API endpoint. By default, this
+  value is retrieved from the environment variable `RQTI_API_ENDPOINT`.
+  To set this variable globally, use:
+  `Sys.setenv(RQTI_API_ENDPOINT = 'your_endpoint')`, or add it to your
+  `.Renviron` file for persistence across sessions.
+
+- `credential_id`:
+
+  A character string identifying the credential set in the
+  operating-system keyring. If omitted, rqti derives the credential
+  service from the endpoint and falls back to its original service name
+  for backward compatibility. `RQTI_API_CREDENTIAL_ID` or an explicit
+  value can override automatic endpoint-based naming.
+
+- `session`:
+
+  An internal environment containing connection-specific session state,
+  including the authentication token.

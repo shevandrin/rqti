@@ -1,0 +1,174 @@
+# Create a test
+
+Create an AssessmentTest `rqti`-object.
+
+## Usage
+
+``` r
+test(
+  content,
+  identifier = "test_identifier",
+  title = "Test Title",
+  time_limit = NULL,
+  max_attempts = 1L,
+  fallback_titles = "generic",
+  academic_grading = NULL,
+  grade_label = c(en = "Grade", de = "Note"),
+  table_label = c(en = "Grade", de = "Note"),
+  navigation_mode = "nonlinear",
+  submission_mode = "individual",
+  allow_comment = TRUE,
+  rebuild_variables = TRUE,
+  stylesheet_path = NULL,
+  contributor = list(),
+  description = "",
+  rights = Sys.getenv("RQTI_RIGHTS"),
+  version = "0.0.9"
+)
+```
+
+## Arguments
+
+- content:
+
+  A list containing
+  [AssessmentSection](https://shevandrin.github.io/rqti/maxima-preview/reference/AssessmentSection-class.md)
+  objects.
+
+- identifier:
+
+  A character value indicating the identifier of the test file. Default
+  is 'test_identifier'.
+
+- title:
+
+  A character value, optional, representing the file title. Default is
+  'Test Title'.
+
+- time_limit:
+
+  An integer value, optional, controlling the time given to a candidate
+  for the test in minutes. Default is `NULL`.
+
+- max_attempts:
+
+  An integer value, optional, indicating the maximum number of attempts
+  allowed for the candidate. Default is 1.
+
+- fallback_titles:
+
+  A character value, optional, controlling how titles are assigned when
+  no explicit title is provided. Possible values are "filename" (use
+  filenames as titles) and "generic" (use generic labels such as
+  "Section 1", "Section 1.2", or "Task 1.2.1"). Default is "generic".
+
+- academic_grading:
+
+  A named numeric vector that defines the grade table shown to the
+  candidate as feedback at the end of the test.
+
+  Each grade corresponds to the minimum percentage score required to
+  achieve it. A helper function
+  [`german_grading()`](https://shevandrin.github.io/rqti/maxima-preview/reference/german_grading.md)
+  is available to generate a common German grading scheme.
+
+  The default is `NULL`, which means that no grading table is shown. To
+  display a grading table, provide a named numeric vector or use
+  [`german_grading()`](https://shevandrin.github.io/rqti/maxima-preview/reference/german_grading.md).
+
+- grade_label:
+
+  A character value, optional; a short message that shows with a grade
+  in the final feedback; for multilingual use, it can be a named vector
+  with two-letter ISO language codes as names (e.g., c(en="Grade",
+  de="Note")); during test creation, it takes the value for the language
+  of the operating system; c(en="Grade", de="Note")is default.
+
+- table_label:
+
+  A character value, optional; a concise message to display as the
+  column title of the grading table in the final feedback; for
+  multilingual use, it can be a named vector with two-letter ISO
+  language codes as names (e.g., c(en="Grade", de="Note")); during test
+  creation, it takes the value for the language of the operating system;
+  c(en="Grade", de="Note")is default.
+
+- navigation_mode:
+
+  A character value, optional, determining the general paths that the
+  candidate may have during the exam. Two mode options are possible: -
+  'linear': Candidate is not allowed to return to previous questions. -
+  'nonlinear': Candidate is free to navigate; used by default.
+
+- submission_mode:
+
+  A character value, optional, determining when the candidate's
+  responses are submitted for response processing. One of two mode
+  options is possible: - 'individual': Submit candidates' responses on
+  an item-by-item basis; used by default. - 'simultaneous': Candidates'
+  responses are submitted all together by the end of the test.
+
+- allow_comment:
+
+  A boolean, optional, allowing the candidate to leave comments on each
+  question. Default is `TRUE`.
+
+- rebuild_variables:
+
+  A boolean, optional, enabling the recalculation of variables and
+  reshuffling the order of choices for each item-attempt. Default is
+  `TRUE`.
+
+- stylesheet_path:
+
+  A character value, optional, specifying the path to a custom CSS
+  stylesheet. If provided, the stylesheet is included at the assessment
+  test level and applied during rendering. When `academic_grading` is
+  set, the default stylesheet `styles/rqti.css` is included
+  automatically; a user-defined stylesheet is added in addition and may
+  override default styles.
+
+- contributor:
+
+  A list of objects
+  [QtiContributor](https://shevandrin.github.io/rqti/maxima-preview/reference/QtiContributor-class.md)-type
+  that holds metadata information about the authors.
+
+- description:
+
+  A character string providing a textual description of the content of
+  this learning object.
+
+- rights:
+
+  A character string describing the intellectual property rights and
+  conditions of use for this learning object. By default it takes value
+  from environment variable 'RQTI_RIGHTS'.
+
+- version:
+
+  A character string representing the edition/version of this learning
+  object.
+
+## Value
+
+An
+[AssessmentTest](https://shevandrin.github.io/rqti/maxima-preview/reference/AssessmentTest-class.md)
+object.
+
+## See also
+
+[`test4opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test4opal.md),
+[`section()`](https://shevandrin.github.io/rqti/maxima-preview/reference/section.md),
+[AssessmentTest](https://shevandrin.github.io/rqti/maxima-preview/reference/AssessmentTest-class.md),
+[AssessmentSection](https://shevandrin.github.io/rqti/maxima-preview/reference/AssessmentSection-class.md)
+
+## Examples
+
+``` r
+sc <- new("SingleChoice", prompt = "Question", choices = c("A", "B", "C"))
+es <- new("Essay", prompt = "Question")
+s <- section(c(sc, es), title = "Section with nonrandomized tasks")
+t <- test(s, title = "Example of the Exam")
+#> Authors are found in exercises and added as contributors:  (author).
+```
