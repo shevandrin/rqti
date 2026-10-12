@@ -1,5 +1,10 @@
 # rqti (development version)
 
+* QTI 2.2 schemas are compressed in the installed package and unpacked on demand
+  into the R session's temporary directory. All schema dependencies remain
+  bundled, so validation works offline. Generated template previews are excluded
+  from the source package.
+
 # rqti 1.3.1
 
 ## New features

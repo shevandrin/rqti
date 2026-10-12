@@ -43,7 +43,9 @@ returned? Defaults to \code{TRUE}.}
 QTI 2.1 schema, \code{"qti21"} for the default QTI 2.1 schema, \code{"qti22"} for a
 local QTI 2.2 schema, or a file path to a custom XSD. The legacy
 \code{extended_schema = TRUE} argument is still supported and is equivalent to
-\code{schema = "extended"} when \code{schema} is \code{NULL}.}
+\code{schema = "extended"} when \code{schema} is \code{NULL}.
+QTI 2.2 schemas are bundled in compressed form and unpacked once per R
+session when selected. Validation does not require an internet connection.}
 }
 \value{
 An object of class \code{"qti_validation_result"} with components:

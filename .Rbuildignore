@@ -45,3 +45,10 @@ s4_example.R
 ^test$
 ^test-docker\.sh$
 ^verify\.sh$
+^inst/rmarkdown/templates/.*/skeleton/.*\.html$
+^inst/QTIJS/qti_other\.js$
+^inst/extdata/\.Rhistory$
+^inst/xsd/(imsqti_v2p2|imsqtiv2p2_html5_v1p0)\.xsd$
+^inst/w3$
+^inst/apipv1p0$
+^\.git$
