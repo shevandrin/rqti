@@ -68,6 +68,29 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' rewritten; use self-contained stylesheets. Rendering depends on the
 #' delivery platform's CSS support.
 #'
+#' @section Maxima chunks:
+#' A `{maxima}` chunk stores its program in the item's template and executes it
+#' locally using [maxima_check()] before conversion. Maxima must be installed;
+#' no R interface package is required. Names and types are inferred from the
+#' program's returned `string([...])` association list. Override this with
+#' explicit output declarations using the chunk option
+#' `variables = c(a = "integer", answer = "float")`. Supported types are
+#' `integer`, `float`, and `string`; rational numbers and real numeric constants
+#' map to `float`. Unsupported values require explicit types (for example,
+#' `string` to display a list). Inference observes one random variant, so use
+#' explicit types if output types can vary. Declared outputs must exist in the
+#' returned list and have compatible types in the checked variant.
+#' Use inline `template_value("a")` to display an output and
+#' `gap_numeric(solution_variable = "answer")` to bind a numeric correct answer.
+#' Displayed references are supported in the question body, not in choices.
+#' Multiple chunks execute in source order in ONYX, with distinct intermediate
+#' identifiers derived from their labels. They are checked in separate local
+#' processes, so each chunk must be self-contained. Set `maxima_identifier` to
+#' override a chunk's intermediate identifier. Template chunks must be evaluated
+#' and uncached; errors stop export and upload. QTIJS previews evaluate these
+#' programs through the local Maxima server.
+#' See `inst/extdata/maxima-addition.Rmd` for a complete example.
+#'
 #' @param file A string representing the path to an Rmd file.
 #' @return One of the rqti S4 AssessmentItem objects: [SingleChoice],
 #' [MultipleChoice], [Essay], [Entry], [Ordering], [OneInRowTable],
@@ -113,7 +136,19 @@ create_question_object <- function(file) {
     attrs <- attrs[! names(attrs) %in% c("knit", "metadata", "params",
                                          "preview_feedback")]
 
-    tdir <- tempdir()
+    old_chunk_options <- knitr::opts_chunk$get()
+    old_knit_options <- knitr::opts_knit$get()
+    on.exit({
+        knitr::opts_chunk$restore(old_chunk_options)
+        knitr::opts_knit$restore(old_knit_options)
+    }, add = TRUE)
+    collector <- new.env(parent = emptyenv())
+    collector$blocks <- list()
+    restore_knitting <- setup_maxima_knitting(file, collector)
+    on.exit(restore_knitting(), add = TRUE)
+    tdir <- tempfile("rqti-rmd-")
+    dir.create(tdir)
+    on.exit(unlink(tdir, recursive = TRUE), add = TRUE)
 
     md_path <- file.path(tdir, "_temp_md.md")
     knitr::opts_chunk$set(fig.cap="")
@@ -145,6 +180,7 @@ create_question_object <- function(file) {
     if (length(html_qstn) == 0) {
         stop("The \'question\' section was not found in Rmd", call. = FALSE)
     }
+    references <- collect_maxima_references(html_qstn)
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
         create_sc_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {
@@ -177,9 +213,16 @@ create_question_object <- function(file) {
     if (is.null(slots$content)) {
         slots$content <- as.list(paste(clean_question(html_qstn), collapse = ""))
     }
+    slots$content <- restore_maxima_references(slots$content, references)
+    if (length(collector$blocks)) slots$template <- collector$blocks
     slots[["type"]] <- NULL
 
     object <- do.call(new, slots)
+    if (length(collector$blocks) || length(references)) {
+        validate_template_identifiers(object)
+        validate_template_references(object)
+        validate_dynamic_solutions(object)
+    }
     return(object)
 }
 

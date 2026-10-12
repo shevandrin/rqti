@@ -14,7 +14,7 @@ A \link{TemplateVariableRef} object.
 }
 \description{
 Creates a \link{TemplateVariableRef} rendered as QTI \code{printedVariable}. Use it
-within an item's \code{content} list alongside text and gaps. The item must declare
+within an item's \code{content} list or inline in an rqti Rmd document. The item must declare
 the referenced variable in its \code{template} list when exported. This function
 does not evaluate the variable or create an answer field.
 }

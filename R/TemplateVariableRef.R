@@ -4,7 +4,7 @@
 #' variable using QTI `printedVariable`. It does not define an answer field or
 #' contribute points. When the complete item is exported, the referenced name
 #' must be declared in its `template` list. Both named outputs and intermediate
-#' result identifiers can be referenced. Rmd parsing is not yet supported.
+#' result identifiers can be referenced. In Rmd, use [template_value()] inline.
 #'
 #' @slot identifier A single valid QTI identifier of the template variable.
 #' @name TemplateVariableRef-class
@@ -66,7 +66,7 @@ validate_template_references <- function(object) {
 #' Display a template variable in question content
 #'
 #' Creates a [TemplateVariableRef] rendered as QTI `printedVariable`. Use it
-#' within an item's `content` list alongside text and gaps. The item must declare
+#' within an item's `content` list or inline in an rqti Rmd document. The item must declare
 #' the referenced variable in its `template` list when exported. This function
 #' does not evaluate the variable or create an answer field.
 #' @param identifier A single valid QTI identifier of the template variable.

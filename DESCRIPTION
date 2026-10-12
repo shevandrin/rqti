@@ -16,6 +16,8 @@ Authors@R: c(
 Description: Create tests and tasks compliant with the Question & Test Interoperability (QTI) information model version 2.1. Input sources are Rmd/md description files or S4-class objects. Output formats include standalone zip or xml files. Supports the generation of basic task types (single and multiple choice, order, pair association, matching tables, filling gaps and essay) and provides a comprehensive set of attributes for customizing tests.
 License: GPL (>= 3)
 Encoding: UTF-8
+Depends: R (>= 4.1.0)
+SystemRequirements: Maxima (optional, for Maxima checks and output type inference)
 Roxygen: list(markdown = TRUE)
 Imports: 
     htmltools,
@@ -36,7 +38,14 @@ Imports:
     textutils,
     lifecycle,
     exams,
-    base64enc
+    base64enc,
+    processx,
+    httpuv,
+    later,
+    promises,
+    jsonlite,
+    openssl,
+    filelock
 Suggests:
     covr,
     dplyr,
@@ -45,8 +54,7 @@ Suggests:
     readr,
     RCurl,
     pkgload,
-    httpuv,
-    later
+    withr
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 URL: https://github.com/shevandrin/rqti, https://shevandrin.github.io/rqti/
@@ -87,6 +95,9 @@ Collate:
     'extract_results.R'
     'helpers.R'
     'knit_functions.R'
+    'maxima_cache.R'
+    'maxima_preview.R'
+    'maxima_rmd.R'
     'object_builder.R'
     'qti_task.R'
     'qti_test.R'
@@ -98,8 +109,6 @@ Collate:
     'utils-pipe.R'
     'verify_qti.R'
     'zzz.R'
-Depends: 
-    R (>= 2.10)
 LazyData: true
 Config/roxygen2/version: 8.0.0
 RoxygenNote: 7.3.3

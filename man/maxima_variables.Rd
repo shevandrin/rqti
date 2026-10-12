@@ -4,7 +4,7 @@
 \alias{maxima_variables}
 \title{Describe a Maxima calculation and its outputs}
 \usage{
-maxima_variables(code, variables, identifier = "all")
+maxima_variables(code, variables = NULL, identifier = "all")
 }
 \arguments{
 \item{code}{A single non-empty string containing the Maxima program. It must
@@ -13,7 +13,10 @@ return a string representation of associations for the named outputs.}
 \item{variables}{A non-empty named character vector of QTI output types:
 \code{integer}, \code{float}, or \code{string}. Names start with an ASCII letter and contain
 only ASCII letters, digits, or underscores. All outputs have single
-cardinality.}
+cardinality.
+If omitted, the code is executed locally and types are detected from one
+returned association list. Explicit types can be used for outputs whose
+type varies across random variants or for string display of lists.}
 
 \item{identifier}{The QTI identifier for the intermediate string result.
 Defaults to \code{"all"}. Use distinct identifiers for multiple blocks.}
@@ -23,9 +26,13 @@ A \link{MaximaVariables} object.
 }
 \description{
 Creates a \link{MaximaVariables} object for an assessment item's \code{template} list.
-This function stores the program without executing it. The exported XML uses
+With explicit types, this function stores the program without executing it.
+Without types, it runs the program locally to inspect the returned outputs.
+The exported XML uses
 OPAL/ONYX MAXIMA operators; validation requires the extended rqti schema.
-Rmd integration is not yet supported.
+In rqti Rmd files, use a \code{{maxima}} chunk. Output types are inferred from one
+local execution unless a named \code{variables} vector is supplied. Its code is
+checked locally before item creation, including declared names/types.
 }
 \examples{
 calculation <- maxima_variables(

@@ -2,7 +2,7 @@
 #'
 #' Stores a Maxima program and the types of its named outputs. The program is
 #' not executed in R. Template XML is generated when the containing assessment
-#' item is exported. Rmd parsing is not yet supported.
+#' item is exported. Rmd Maxima chunks are additionally checked locally.
 #'
 #' @slot code A single non-empty string containing the Maxima program.
 #' @slot variables A non-empty named character vector of output types:
@@ -65,9 +65,13 @@ setValidity("MaximaVariables", function(object) {
 #' Describe a Maxima calculation and its outputs
 #'
 #' Creates a [MaximaVariables] object for an assessment item's `template` list.
-#' This function stores the program without executing it. The exported XML uses
+#' With explicit types, this function stores the program without executing it.
+#' Without types, it runs the program locally to inspect the returned outputs.
+#' The exported XML uses
 #' OPAL/ONYX MAXIMA operators; validation requires the extended rqti schema.
-#' Rmd integration is not yet supported.
+#' In rqti Rmd files, use a `{maxima}` chunk. Output types are inferred from one
+#' local execution unless a named `variables` vector is supplied. Its code is
+#' checked locally before item creation, including declared names/types.
 #'
 #' @param code A single non-empty string containing the Maxima program. It must
 #'   return a string representation of associations for the named outputs.
@@ -75,6 +79,9 @@ setValidity("MaximaVariables", function(object) {
 #'   `integer`, `float`, or `string`. Names start with an ASCII letter and contain
 #'   only ASCII letters, digits, or underscores. All outputs have single
 #'   cardinality.
+#'   If omitted, the code is executed locally and types are detected from one
+#'   returned association list. Explicit types can be used for outputs whose
+#'   type varies across random variants or for string display of lists.
 #' @param identifier The QTI identifier for the intermediate string result.
 #'   Defaults to `"all"`. Use distinct identifiers for multiple blocks.
 #' @return A [MaximaVariables] object.
@@ -95,7 +102,10 @@ setValidity("MaximaVariables", function(object) {
 #' createTemplateDeclaration(item)
 #' createTemplateProcessing(item)
 #' createItemBody(item)
-maxima_variables <- function(code, variables, identifier = "all") {
+maxima_variables <- function(code, variables = NULL, identifier = "all") {
+    if (is.null(variables)) {
+        variables <- resolve_maxima_types(maxima_check(code, outputs = TRUE))
+    }
     new("MaximaVariables", code = code, variables = variables,
         identifier = identifier)
 }

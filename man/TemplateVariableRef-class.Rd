@@ -10,7 +10,7 @@ Use this object in an assessment item's \code{content} list to display a templat
 variable using QTI \code{printedVariable}. It does not define an answer field or
 contribute points. When the complete item is exported, the referenced name
 must be declared in its \code{template} list. Both named outputs and intermediate
-result identifiers can be referenced. Rmd parsing is not yet supported.
+result identifiers can be referenced. In Rmd, use \code{\link[=template_value]{template_value()}} inline.
 }
 \section{Slots}{
 

@@ -21,9 +21,10 @@
 #' @param preview_feedback A boolean value; optional. Set `TRUE` value to always
 #'   display feedback (for example, as a modal answer). Default is `FALSE`.
 #' @param qtijs_path The path to the qtijs renderer (qti.js), which will be
-#'   started with servr::httw and to which xml files will be copied. Default is
-#'   the QTIJS folder in the R package rqti local installation via the helper
-#'   qtijs_pkg_path().
+#'   served by the local preview server and to which xml files will be copied. Default is
+#'   the folder used by the running preview server, or the installed package's
+#'   QTIJS folder when no server is running. Knit sessions inherit the server's
+#'   folder even when RStudio uses a development checkout.
 #' @param ... required for passing arguments when knitting
 #'
 #' @return An URL of the corresponding local server to display the rendering
@@ -39,8 +40,7 @@
 #' @importFrom knitr knit_params
 #' @export
 render_qtijs <- function(input, preview_feedback = FALSE,
-                         qtijs_path = qtijs_pkg_path(), ...) {
-    clean_qtijs(qtijs_path)
+                         qtijs_path = qtijs_preview_path(), ...) {
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
     url <- Sys.getenv("RQTI_URL")
@@ -49,9 +49,11 @@ render_qtijs <- function(input, preview_feedback = FALSE,
         if (!interactive()) {
             stop("Server for QTIJS not running. You can start it manually with start_server()")
         } else {
-            url <- prepare_renderer()
+            url <- prepare_renderer(qtijs_path)
         }
     }
+    check_qtijs_preview_path(qtijs_path)
+    clean_qtijs(qtijs_path)
     preparation <- prepareQTIJSFiles(input, qtijs_path)
     if (!is.null(preparation)) preview_feedback <- preparation
     url <- paste0(url, "?mfb=", as.numeric(preview_feedback))
@@ -76,10 +78,10 @@ render_qtijs <- function(input, preview_feedback = FALSE,
 #'   render_qtijs(file)
 #'
 #' @export
-render_xml <- function(input, qtijs_path = qtijs_pkg_path()) {
-    url <- prepare_renderer()
+render_xml <- function(input, qtijs_path = qtijs_preview_path()) {
+    url <- prepare_renderer(qtijs_path)
     # use index.xml for a single file
-    file.copy(input, paste0(qtijs_path, "/index.xml"))
+    file.copy(input, paste0(qtijs_path, "/index.xml"), overwrite = TRUE)
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
     }
@@ -93,8 +95,8 @@ render_xml <- function(input, qtijs_path = qtijs_pkg_path()) {
 #' @inheritParams render_qtijs
 #' @return nothing, has side effects
 #' @export
-render_zip <- function(input, qtijs_path = qtijs_pkg_path()) {
-    url <- prepare_renderer()
+render_zip <- function(input, qtijs_path = qtijs_preview_path()) {
+    url <- prepare_renderer(qtijs_path)
     zip::unzip(input, exdir = qtijs_path)
     if (Sys.getenv("RSTUDIO") == "1") {
         rstudioapi::viewer(url)
@@ -110,9 +112,10 @@ render_zip <- function(input, qtijs_path = qtijs_pkg_path()) {
 #' will not work. The Knit-Button starts a new session and invoking a server
 #' there does not work. You can automatically start the server via an .RProfile
 #' file on start up.
-#' @param daemon This parameter is forwarded to `servr::httw` and should always be
-#'   TRUE (the default). FALSE is only used for testing purposes when called via
-#'   `callr::bg()`
+#' @param daemon Run the server in the background. Use TRUE (the default) in
+#'   RStudio. FALSE keeps serving until the R process exits, for example in tests.
+#' @details Maxima previews use locally installed Maxima through the R server
+#'   and work in both the RStudio Viewer and an external browser.
 #' @inheritParams render_qtijs
 #' @return The URL string of the qtijs server.
 #' @examples
@@ -122,15 +125,16 @@ render_zip <- function(input, qtijs_path = qtijs_pkg_path()) {
 #' @export
 start_server <- function(qtijs_path = qtijs_pkg_path(),
                          daemon = T) {
+    qtijs_path <- normalizePath(qtijs_path, mustWork = TRUE)
     # this will kill all servers that were started via
     # servr in the session; maybe this is not necessary
-    servr::daemon_stop(which = servr::daemon_list())
-    server_info <- servr::httw(dir = qtijs_path, verbose = F, browser = F,
-                               daemon = daemon)
-    message("To stop the server, run stop_server(). If you restart the R session, the server is restarted, too. Call start_server() to manually (re)start the server.\nServing the directory ", qtijs_path, " at ", server_info$url)
+    stop_server()
+    url <- start_maxima_local_server(qtijs_path, daemon)
+    message("Serving qti.js with local Maxima support at ", url,
+            ". To stop the server, run stop_server().")
     # only way to get the url when using Knit Button
-    Sys.setenv("RQTI_URL" = server_info$url)
-    return(server_info$url)
+    Sys.setenv(RQTI_URL = url, RQTI_QTIJS_PATH = qtijs_path)
+    return(url)
 }
 
 #' Shortcut for the qtijs path of the rqti package local installation.
@@ -141,15 +145,35 @@ qtijs_pkg_path <- function() {
     system.file("QTIJS", package = "rqti")
 }
 
+# The Knit button starts a separate R session. Both URL and directory must be
+# inherited, since that session may load a different installed package copy.
+qtijs_preview_path <- function() {
+    path <- Sys.getenv("RQTI_QTIJS_PATH")
+    if (nzchar(Sys.getenv("RQTI_URL")) && nzchar(path)) path else qtijs_pkg_path()
+}
+
+check_qtijs_preview_path <- function(qtijs_path) {
+    served_path <- Sys.getenv("RQTI_QTIJS_PATH")
+    if (nzchar(Sys.getenv("RQTI_URL")) && nzchar(served_path) &&
+        !identical(normalizePath(qtijs_path, mustWork = TRUE),
+                   normalizePath(served_path, mustWork = TRUE))) {
+        stop("qtijs_path differs from the running preview server's folder. ",
+             "Omit qtijs_path to use that folder, or run start_server(qtijs_path) ",
+             "in the RStudio console first.", call. = FALSE)
+    }
+    invisible(qtijs_path)
+}
+
 #' Prepare qtijs renderer.
 #'
 #' Starts server for qtijs, returns path of qtijs and the url of the server.
 #' @inheritParams render_qtijs
-prepare_renderer <- function(qtijs_path = qtijs_pkg_path()) {
+prepare_renderer <- function(qtijs_path = qtijs_preview_path()) {
     # start a server there is no server url yet
     if (Sys.getenv("RQTI_URL") == "") {
         start_server(qtijs_path)
     }
+    check_qtijs_preview_path(qtijs_path)
     # clean up
     clean_qtijs(qtijs_path)
     Sys.getenv("RQTI_URL")
@@ -164,8 +188,12 @@ clean_qtijs <- function(qtijs_path = qtijs_pkg_path()) {
 #' @return nothing, has side effects
 #' @export
 stop_server <- function() {
-    Sys.setenv(RQTI_URL = "")
+    Sys.unsetenv(c("RQTI_URL", "RQTI_QTIJS_PATH"))
     servr::daemon_stop()
+    if (is.function(maxima_local_preview_server$stop)) {
+        maxima_local_preview_server$stop()
+        maxima_local_preview_server$stop <- NULL
+    }
 }
 
 #' Render Rmd directly in Opal via API

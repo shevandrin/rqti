@@ -1,5 +1,33 @@
 # rqti (development version)
 
+* QTI 2.2 schemas are compressed in the installed package and unpacked on demand
+  into the R session's temporary directory. All schema dependencies remain
+  bundled, so validation works offline. Generated template previews are excluded
+  from the source package.
+
+* Knit previews write to the running server's renderer folder across R sessions,
+  including when RStudio uses a development checkout and Knit loads an installed
+  package. Explicit mismatches fail before any preview files are removed.
+
+* Maxima authoring checks and previews share a persistent, build-specific cache
+  of compiled libraries. Locks coordinate concurrent R sessions; calculations
+  and random answers remain independent. Old, oversized, and incomplete caches
+  are removed. `rqti.maxima_cache_dir` can override or disable persistence.
+
+* qti.js previews use native Maxima through the local R server,
+  including the RStudio Viewer. Calculations run asynchronously, preserve
+  typed outputs and scoring, and report source diagnostics with retry support.
+  Each item has a fresh process; compiled libraries are reused between jobs.
+  The native backend loads the statistics libraries used by the R authoring checks.
+
+* Rmd files support locally checked `{maxima}` template chunks with inferred
+  output names/types and optional explicit declarations. `template_value()` displays an output, and
+  `gap_numeric(solution_variable = ...)` binds a dynamic numeric answer.
+  `numericGap()` and the S4 slot use `solution_variable` consistently.
+  Checks call Maxima directly, preserve syntax/runtime diagnostics, and stop
+  export on failure or timeout. The `rim` package is not required.
+  `maxima_variables()` also infers types when its `variables` argument is omitted.
+
 * Added `maxima_variables()` and `template_value()` constructors. All item
   constructors now accept a trailing `template` argument; `numericGap()` and
   `gapNumeric()` accept `solution_variable` for dynamic correct answers.
@@ -16,8 +44,8 @@
 
 * Assessment items now export Maxima template declarations and processing,
   preserving block order and rejecting conflicting variable identifiers.
-  Programs use the MAXIMA custom operator supported by OPAL/ONYX; Rmd
-  integration is not yet implemented. XML validation requires the extended
+  Programs use the MAXIMA custom operator supported by OPAL/ONYX.
+  XML validation requires the extended
   rqti schema because OPAL uses `customOperator/@value`.
 
 # rqti 1.3.1

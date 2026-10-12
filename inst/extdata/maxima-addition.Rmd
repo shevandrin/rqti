@@ -1,0 +1,26 @@
+---
+type: gap
+identifier: maxima_rmd_addition
+title: "Maxima addition from R Markdown"
+knit: rqti::render_qtijs
+---
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+```{maxima addition}
+block(
+    [a, b, answer],
+    a: random(100),
+    b: random(100),
+        answer: a + b,
+    string(['a = a, 'b = b, 'answer = answer])
+);
+```
+
+# question
+
+What is **`r template_value("a")`** + **`r template_value("b")`**?
+
+Answer: `r gap_numeric(solution_variable="answer", tolerance_type="exact", points=1)`

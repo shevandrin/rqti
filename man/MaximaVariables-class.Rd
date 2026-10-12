@@ -8,7 +8,7 @@
 \description{
 Stores a Maxima program and the types of its named outputs. The program is
 not executed in R. Template XML is generated when the containing assessment
-item is exported. Rmd parsing is not yet supported.
+item is exported. Rmd Maxima chunks are additionally checked locally.
 }
 \section{Slots}{
 

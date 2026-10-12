@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE assessmentItem>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd" identifier="maxima_rmd_addition" title="Maxima addition from R Markdown" adaptive="false" timeDependent="false">
+  <responseDeclaration identifier="response_1" cardinality="single" baseType="float"/>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="SCORE_response_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MAXSCORE_response_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration identifier="MINSCORE_response_1" cardinality="single" baseType="float">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <templateDeclaration identifier="maxima_addition" cardinality="single" baseType="string"/>
+  <templateDeclaration identifier="a" cardinality="single" baseType="integer"/>
+  <templateDeclaration identifier="b" cardinality="single" baseType="integer"/>
+  <templateDeclaration identifier="answer" cardinality="single" baseType="integer"/>
+  <templateProcessing>
+    <setTemplateValue identifier="maxima_addition">
+      <customOperator definition="MAXIMA" value="block(&amp;#xA;&amp;#xD;    [a, b, answer],&amp;#xA;&amp;#xD;    a: random(100),&amp;#xA;&amp;#xD;    b: random(100),&amp;#xA;&amp;#xD;        answer: a + b,&amp;#xA;&amp;#xD;    string([&amp;#x27;a = a, &amp;#x27;b = b, &amp;#x27;answer = answer])&amp;#xA;&amp;#xD;);"/>
+    </setTemplateValue>
+    <setTemplateValue identifier="a">
+      <customOperator definition="MAXIMA" value="assoc(a,$(1));">
+        <variable identifier="maxima_addition"/>
+      </customOperator>
+    </setTemplateValue>
+    <setTemplateValue identifier="b">
+      <customOperator definition="MAXIMA" value="assoc(b,$(1));">
+        <variable identifier="maxima_addition"/>
+      </customOperator>
+    </setTemplateValue>
+    <setTemplateValue identifier="answer">
+      <customOperator definition="MAXIMA" value="assoc(answer,$(1));">
+        <variable identifier="maxima_addition"/>
+      </customOperator>
+    </setTemplateValue>
+    <setCorrectResponse identifier="response_1">
+      <variable identifier="answer"/>
+    </setCorrectResponse>
+  </templateProcessing>
+  <itemBody>
+    <div>
+      <p>What is <strong><span><printedVariable identifier="a"/></span></strong> + <strong><span><printedVariable identifier="b"/></span></strong>?</p>
+      <p>Answer:
+      <textEntryInteraction responseIdentifier="response_1" expectedLength="10"/>
+      </p>
+    </div>
+  </itemBody>
+  <responseProcessing>
+    <setCorrectResponse identifier="response_1">
+      <variable identifier="answer"/>
+    </setCorrectResponse>
+    <responseCondition>
+      <responseIf>
+        <equal toleranceMode="exact" tolerance="0 0" includeLowerBound="true" includeUpperBound="true">
+          <variable identifier="response_1"/>
+          <correct identifier="response_1"/>
+        </equal>
+        <setOutcomeValue identifier="SCORE_response_1">
+          <variable identifier="MAXSCORE_response_1"/>
+        </setOutcomeValue>
+      </responseIf>
+    </responseCondition>
+    <setOutcomeValue identifier="SCORE">
+      <sum>
+        <variable identifier="SCORE_response_1"/>
+      </sum>
+    </setOutcomeValue>
+  </responseProcessing>
+</assessmentItem>
