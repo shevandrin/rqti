@@ -180,6 +180,12 @@ sc
 #> Slot "files":
 #> character(0)
 #> 
+#> Slot "stylesheet_path":
+#> character(0)
+#> 
+#> Slot "css":
+#> character(0)
+#> 
 #> Slot "calculator":
 #> character(0)
 #> 

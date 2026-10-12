@@ -38,6 +38,20 @@ One of the rqti S4 AssessmentItem objects:
 or
 [DirectedPair](https://shevandrin.github.io/rqti/reference/DirectedPair-class.md).
 
+## CSS in YAML
+
+Use `stylesheet_path: styles.css` for a CSS file (or a YAML sequence of
+files). Relative paths are resolved against the Rmd file's directory.
+Use a YAML literal block `css: |` for CSS text. When both are supplied,
+files are linked in the supplied order, followed by the CSS text.
+Stylesheets are linked from the assessment item and included in QTI ZIPs
+and their manifests. Standalone XML exports write CSS beside the XML in
+a `styles/items/` subdirectory; keep that directory with the XML. These
+fields do not convert inline HTML `style` attributes to classes. CSS
+references such as `url(...)` and `@import` are not collected or
+rewritten; use self-contained stylesheets. Rendering depends on the
+delivery platform's CSS support.
+
 ## Examples
 
 ``` r
