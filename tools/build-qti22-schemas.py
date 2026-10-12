@@ -29,7 +29,8 @@ def bundle():
                                    date_time=(1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
-            archive.writestr(info, path.read_bytes(), compresslevel=9)
+            archive.writestr(info, path.read_bytes().replace(b"\r\n", b"\n"),
+                             compresslevel=9)
     return result.getvalue()
 
 

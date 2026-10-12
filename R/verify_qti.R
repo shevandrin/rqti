@@ -662,9 +662,7 @@ qti22_schema_file <- function() {
     if (!nzchar(archive)) {
         stop("Could not find the bundled QTI 2.2 schema archive.", call. = FALSE)
     }
-    hash <- as.character(openssl::md5(readBin(
-        archive, "raw", n = file.info(archive)$size
-    )))
+    hash <- unname(tools::md5sum(archive))
     cached_directory <- if (is.null(qti22_schema_cache$directory)) "" else qti22_schema_cache$directory
     cached_file <- file.path(cached_directory,
                              "xsd", "imsqti_v2p2.xsd")

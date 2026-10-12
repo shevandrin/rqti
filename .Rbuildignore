@@ -55,3 +55,4 @@ s4_example.R
 ^inst/w3$
 ^inst/apipv1p0$
 ^issue-257-draft\.md$
+^\.git$

@@ -33,6 +33,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check offline schema bundle
+        if: runner.os == 'Linux'
+        run: python3 tools/build-qti22-schemas.py --check
+
       - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r@v2

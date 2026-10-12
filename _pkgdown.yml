@@ -11,6 +11,7 @@ articles:
   - singlechoice
   - multiplechoice
   - gap
+  - maxima
   - dropdown
   - essay
   - order

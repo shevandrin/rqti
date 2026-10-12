@@ -1,0 +1,48 @@
+name: Maxima documentation
+
+on:
+  push:
+    branches: [prototype/maxima-rmd]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  # Match the existing non-PR pkgdown deployment group.
+  group: pkgdown-true
+  cancel-in-progress: false
+
+jobs:
+  pkgdown:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::.
+          needs: website
+      - name: Build versioned Maxima documentation
+        run: |
+          pkgdown::build_site_github_pages(
+            new_process = FALSE,
+            install = FALSE,
+            override = list(
+              development = list(mode = "devel", destination = "maxima-preview"),
+              repo = list(branch = "prototype/maxima-rmd")
+            )
+          )
+        shell: Rscript {0}
+      - name: Deploy versioned documentation
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs/maxima-preview
+          target-folder: maxima-preview
