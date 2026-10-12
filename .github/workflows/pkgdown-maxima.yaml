@@ -30,14 +30,21 @@ jobs:
           needs: website
       - name: Build versioned Maxima documentation
         run: |
-          pkgdown::build_site_github_pages(
-            new_process = FALSE,
-            install = FALSE,
+          pkg <- pkgdown::as_pkgdown(
+            ".",
             override = list(
-              development = list(mode = "devel", destination = "maxima-preview"),
+              destination = "docs/maxima-preview",
+              url = "https://shevandrin.github.io/rqti/maxima-preview/",
+              development = list(mode = "unreleased"),
               repo = list(branch = "prototype/maxima-rmd")
             )
           )
+          pkgdown::build_site_github_pages(
+            pkg,
+            new_process = FALSE,
+            install = FALSE
+          )
+          stopifnot(file.exists("docs/maxima-preview/articles/maxima.html"))
         shell: Rscript {0}
       - name: Deploy versioned documentation
         uses: JamesIves/github-pages-deploy-action@v4.4.1
