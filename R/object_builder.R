@@ -83,10 +83,10 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' Use inline `template_value("a")` to display an output and
 #' `gap_numeric(solution_variable = "answer")` to bind a numeric correct answer.
 #' Displayed references are supported in the question body, not in choices.
-#' Multiple chunks execute in source order in ONYX, with distinct intermediate
-#' identifiers derived from their labels. They are checked in separate local
-#' processes, so each chunk must be self-contained. Set `maxima_identifier` to
-#' override a chunk's intermediate identifier. Template chunks must be evaluated
+#' Only one Maxima chunk is supported per Rmd exercise. Combine all calculations
+#' in that chunk and return all named outputs together. Its intermediate
+#' identifier is derived from the chunk label; set `maxima_identifier` to
+#' override it. Template chunks must be evaluated
 #' and uncached; errors stop export and upload. QTIJS previews evaluate these
 #' programs through the local Maxima server.
 #' See `inst/extdata/maxima-addition.Rmd` for a complete example.

@@ -11,7 +11,6 @@ articles:
   - singlechoice
   - multiplechoice
   - gap
-  - maxima
   - dropdown
   - essay
   - order
@@ -34,6 +33,7 @@ articles:
 - title: Other
   navbar: Other
   contents:
+  - maxima
   - compatibility
   - exams_integr
   - imported_packages

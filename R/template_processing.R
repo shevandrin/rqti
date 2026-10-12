@@ -29,8 +29,9 @@ setMethod("createTemplateDeclaration", "AssessmentItem", function(object) {
 
 #' Create QTI template processing
 #'
-#' Programs run in the target Maxima-capable player, not in R. Blocks execute
-#' in list order. Each program stores a string result before its outputs are
+#' Programs run in the target Maxima-capable player, not in R. Programs
+#' are serialized in list order; the player may schedule independent programs
+#' in parallel. Each program stores a string result before its outputs are
 #' extracted. The OPAL/ONYX `value` attribute requires rqti's extended schema
 #' for XML validation (`schema = "extended"` in [verify_qti]). Live execution requires a player supporting the MAXIMA operator.
 #' @param object An [AssessmentItem] object.

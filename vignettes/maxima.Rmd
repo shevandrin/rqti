@@ -77,7 +77,7 @@ printed by `start_server()` or `render_qtijs()`.
 
 qti.js sends the template calculation to the local R server, which runs Maxima
 and returns typed outputs. Submitting an answer preserves the current numbers;
-knitting or reloading creates another variant. A failed preview shows the
+reload the preview page to generate another variant. A failed preview shows the
 diagnostic and a **Retry** button. To stop the server, use `rqti::stop_server()`.
 
 The Knit button uses a separate R session. rqti passes both the server URL and
@@ -90,9 +90,29 @@ Supported output types are `integer`, `float`, and `string`. Rational numbers
 and real numeric constants can be used as floating-point outputs. Inference
 observes one random variant; specify types when they may vary between variants:
 
-Add the chunk option
-`variables = c(a = "integer", b = "integer", answer = "float")`
-to the `{maxima addition}` chunk header.
+For example, replace the addition chunk above with this explicitly typed chunk:
+
+```{r show-explicit-types, eval=TRUE, echo=FALSE, results='asis'}
+cat(paste(c(
+  "````markdown",
+  "```{maxima addition, variables = c(a = \"integer\", b = \"integer\", answer = \"float\", label = \"string\")}",
+  "block(",
+  "    [a, b, answer, label],",
+  "    a: random(100),",
+  "    b: random(100),",
+  "    answer: a + b,",
+  "    label: \"Addition\",",
+  "    string(['a = a, 'b = b, 'answer = answer, 'label = label])",
+  ");",
+  "```",
+  "````"
+), collapse = "\n"), "\n")
+```
+
+The named `variables` vector sets the QTI types for the returned outputs.
+`answer = "float"` accepts both integer and floating-point results. The extra
+text output can be displayed with `template_value("label")`. Explicit types do
+not bypass the local execution check.
 
 Lists and other structured values need an explicit `string` declaration when
 used for display. This does not create a generated image or a dynamic text
@@ -102,10 +122,37 @@ rqti executes each Rmd Maxima chunk before export, including chunks with explici
 types. Syntax/runtime errors, missing outputs, incompatible declared types, or
 missing template references stop export. Diagnostics identify the source file,
 chunk label, and numbered code. Template chunks must be evaluated and uncached.
-Multiple chunks are checked in separate processes, so each must be
-self-contained. Displayed references are supported in the question body.
+Only one Maxima chunk is allowed per Rmd exercise. Return all the values
+needed by the question and its answer from that chunk's `string([...])` list.
+This follows the all-in-one approach in
+[issue #257](https://github.com/shevandrin/rqti/issues/257): independent ONYX
+calculations may run in parallel and give separate random calculations the same
+seed. A single block keeps related calculations together. Displayed references
+are supported in the question body.
 
-Use `maxima_check()` to check a standalone program. Execution is bounded by
+### Check Maxima code directly
+
+`maxima_check()` takes one R character string containing Maxima code, including
+its terminating semicolons or dollar signs. It runs that code in a fresh local
+Maxima process and returns `TRUE` invisibly on success:
+
+```{r check-program}
+rqti::maxima_check("1 + 2;")
+```
+
+For a program returning the same `string([...])` associations used in an Rmd
+chunk, set `outputs = TRUE` to obtain a named vector of inferred types:
+
+```{r check-outputs}
+code <- "string(['a = 3, 'answer = 1/2, 'label = \"Addition\"]);"
+types <- rqti::maxima_check(code, outputs = TRUE)
+types
+# c(a = "integer", answer = "float", label = "string")
+```
+
+A syntax or runtime failure raises an R error containing the Maxima diagnostic
+and numbered source code. Rmd conversion calls this function automatically;
+you do not need to call it separately before knitting. Execution is bounded by
 `options(rqti.maxima_timeout = 120)` in seconds, including library startup.
 The statistics libraries `distrib`, `descriptive`, and `stats` load by default.
 
@@ -144,11 +191,3 @@ directory or keep the cache within the current R session:
 options(rqti.maxima_cache_dir = "/path/to/cache")
 options(rqti.maxima_cache_dir = FALSE)
 ```
-
-## Try these checks
-
-1. Submit a correct and an incorrect answer: scores should be 1 and 0.
-2. Confirm that submitting answers leaves the current question numbers unchanged.
-3. Knit or reload and check another variant.
-4. Put `1/0;` in the Maxima chunk: knitting should stop with a source diagnostic.
-5. Restore the valid code, export a ZIP, and check variants and scoring in ONYX.

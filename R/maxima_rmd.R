@@ -221,6 +221,9 @@ setup_maxima_knitting <- function(file, collector) {
         options
     })
     knitr::knit_engines$set(maxima = function(options) {
+        if (length(collector$blocks)) {
+            stop("Only one Maxima chunk is supported per Rmd exercise. Combine the calculations into one chunk returning all named outputs.", call. = FALSE)
+        }
         if (isTRUE(options$cache > 0) || !isTRUE(options$eval)) {
             stop("Maxima template chunks must use eval=TRUE and cache=FALSE so local checks always run.", call. = FALSE)
         }

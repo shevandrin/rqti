@@ -66,6 +66,17 @@ maxima_rmd_file <- function(code, variables = "c(a='integer')", question = NULL,
     path
 }
 
+test_that("a second Maxima chunk is rejected without executing its code", {
+    skip_on_cran()
+    skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
+    file <- maxima_rmd_file("string(['a = 3]);")
+    write(c("", "```{maxima second}", "1/0;", "```"), file, append = TRUE)
+    expect_error(create_question_object(file),
+                 "Only one Maxima chunk is supported per Rmd exercise", fixed = TRUE)
+    # The failure must restore knitting state for the next conversion.
+    expect_length(create_question_object(maxima_rmd_file("string(['a = 3]);"))@template, 1)
+})
+
 test_that("missing Maxima stops template rendering but leaves ordinary Rmd usable", {
     old <- options(rqti.maxima = "")
     on.exit(options(old), add = TRUE)

@@ -20,6 +20,9 @@
   Each item has a fresh process; compiled libraries are reused between jobs.
   The native backend loads the statistics libraries used by the R authoring checks.
 
+* Rmd exercises accept one self-contained `{maxima}` chunk returning all named
+  outputs, following the ONYX all-in-one approach. A second chunk is rejected.
+
 * Rmd files support locally checked `{maxima}` template chunks with inferred
   output names/types and optional explicit declarations. `template_value()` displays an output, and
   `gap_numeric(solution_variable = ...)` binds a dynamic numeric answer.
