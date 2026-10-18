@@ -1,5 +1,7 @@
 # rqti (development version)
 
+* Documentation has been regenerated with roxygen2 8.0.0; its version is
+  recorded in `Config/roxygen2/version` rather than the legacy `RoxygenNote`.
 * QTI 2.2 schemas are compressed in the installed package and unpacked on demand
   into the R session's temporary directory. All schema dependencies remain
   bundled, so validation works offline. Generated template previews are excluded
