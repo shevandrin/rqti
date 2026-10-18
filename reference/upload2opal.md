@@ -71,8 +71,10 @@ upload2opal(
 
 - credential_id:
 
-  An optional name for the credential set. If omitted, the legacy
-  `rqtiopal` service is used.
+  An optional name for the credential set. If omitted, the credential
+  service is derived from `endpoint`, with the legacy `rqtiopal` service
+  retained as a fallback. `RQTI_API_CREDENTIAL_ID` overrides the
+  automatic name when set.
 
 ## Value
 

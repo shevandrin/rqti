@@ -2,6 +2,14 @@
 
 ## rqti (development version)
 
+- Documentation has been regenerated with roxygen2 8.0.0; its version is
+  recorded in `Config/roxygen2/version` rather than the legacy
+  `RoxygenNote`.
+
+- The bundled `test_results.zip` example now uses neutral task
+  identifiers. Scores, responses, dates, and participant filename
+  pseudonyms are unchanged.
+
 - QTI 2.2 schemas are compressed in the installed package and unpacked
   on demand into the R session’s temporary directory. All schema
   dependencies remain bundled, so validation works offline. Generated
@@ -13,15 +21,34 @@ CRAN release: 2026-10-01
 
 ### New features
 
-- [`opal()`](https://shevandrin.github.io/rqti/reference/opal.md) and
-  [`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)
-  now accept an optional `credential_id`, allowing the same username to
-  use different passwords on different OPAL installations. When it is
-  omitted, rqti continues to use the existing `rqtiopal` credential
-  service, preserving the behavior of existing code and saved
-  credentials.
+- OPAL credential services are derived automatically from the normalized
+  endpoint, allowing the same username to use different passwords on
+  different installations without a manual ID. Existing `rqtiopal`
+  entries remain a transparent fallback. `credential_id` is retained as
+  an optional override.
+
+- [`set_opal_credentials()`](https://shevandrin.github.io/rqti/reference/set_opal_credentials.md)
+  securely stores a password under the service derived from an OPAL
+  endpoint.
+
+- OPAL authentication tokens are now stored per connection instead of in
+  the process-wide `X-OLAT-TOKEN` environment variable. Implicit
+  connections can select a credential set with `RQTI_API_CREDENTIAL_ID`.
 
 ### Bug fixes
+
+- OPAL endpoints are normalized to one trailing slash, successful login
+  bodies are no longer parsed as unused XML, and a successful response
+  without an `X-OLAT-TOKEN` header now produces a clear error.
+
+- [`render_opal()`](https://shevandrin.github.io/rqti/reference/render_opal.md)
+  forwards named `endpoint`, `api_user`, and `credential_id` arguments
+  to [`opal()`](https://shevandrin.github.io/rqti/reference/opal.md).
+
+- Live OPAL integration tests now require the explicit opt-in
+  environment variable `RQTI_RUN_LIVE_TESTS=true`. This prevents
+  ordinary package checks from authenticating against whichever endpoint
+  happens to be configured in the developer’s environment.
 
 - `extract_results(level = "item")` now supports integer responses and
   labels them as `NumericGap`. Missing or unsupported response base

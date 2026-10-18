@@ -252,6 +252,8 @@
   description
 - [`section()`](https://shevandrin.github.io/rqti/reference/section.md)
   : Create a section as part of a test content
+- [`set_opal_credentials()`](https://shevandrin.github.io/rqti/reference/set_opal_credentials.md)
+  : Store credentials for an OPAL endpoint
 - [`singleChoice()`](https://shevandrin.github.io/rqti/reference/singleChoice.md)
   : Create object SingleChoice
 - [`start_server()`](https://shevandrin.github.io/rqti/reference/start_server.md)

@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Working with the OPAL API</h1>
             
-            <h4 data-toc-skip class="date">2026-10-12</h4>
+            <h4 data-toc-skip class="date">2026-10-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/api_opal.Rmd" class="external-link"><code>vignettes/api_opal.Rmd</code></a></small>
       <div class="d-none name"><code>api_opal.Rmd</code></div>
@@ -122,19 +122,34 @@ before utilizing the API. To facilitate this process, it is advisable to
 reach out to your IT and/or OPAL provider for assistance.</p>
 <p>To store the username and password, <code>rqti</code> uses the
 operating system’s credential storage through the <code>keyring</code>
-package. Existing code continues to use the <code>rqtiopal</code>
-service. If the same username has a different password on another OPAL
-installation, set <code>credential_id</code> in <code><a href="../reference/opal.html">opal()</a></code> or
-<code><a href="../reference/upload2opal.html">upload2opal()</a></code>. rqti then uses a separate service named
-<code>rqtiopal-&lt;credential_id&gt;</code>.</p>
-<p>For example, the exam installation can use its own
-<code>rqtiopal-exam</code> entry:</p>
+package. The credential service is derived automatically from the
+endpoint, so the same username can have different passwords on different
+OPAL installations. Existing credentials stored under the original
+<code>rqtiopal</code> service remain available as a fallback.</p>
+<p>For example, store the exam password securely and then connect
+without choosing a credential ID:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">exam_opal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/opal.html">opal</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">exam_endpoint</span> <span class="op">&lt;-</span> <span class="st">"https://exam.tu-chemnitz.de/opal/"</span></span>
+<span><span class="fu"><a href="../reference/set_opal_credentials.html">set_opal_credentials</a></span><span class="op">(</span><span class="va">exam_endpoint</span>, <span class="st">"titz@tu-chemnitz.de"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">exam_opal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/opal.html">opal</a></span><span class="op">(</span></span>
 <span>    api_user <span class="op">=</span> <span class="st">"titz@tu-chemnitz.de"</span>,</span>
-<span>    endpoint <span class="op">=</span> <span class="st">"https://exam.tu-chemnitz.de/opal/"</span>,</span>
-<span>    credential_id <span class="op">=</span> <span class="st">"exam"</span></span>
+<span>    endpoint <span class="op">=</span> <span class="va">exam_endpoint</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>This endpoint maps to the service
+<code>rqtiopal-exam.tu-chemnitz.de-opal</code>.
+<code>credential_id</code> remains available as an optional override for
+unusual setups. For implicit connections, an override can also be
+supplied through <code>RQTI_API_CREDENTIAL_ID</code>.</p>
+<p>Interactive first-time setup remains supported. If neither an
+endpoint-specific credential nor a legacy credential exists,
+<code><a href="../reference/opal.html">opal()</a></code> asks for a username and password and saves them
+under the endpoint-derived service. If a legacy <code>rqtiopal</code>
+entry exists, it is used without another prompt for backward
+compatibility. When an endpoint needs a different password, call
+<code><a href="../reference/set_opal_credentials.html">set_opal_credentials()</a></code> once to store it explicitly.
+Non-interactive workflows should always provision the credential in
+advance.</p>
 <p>Some universities only allow to use the OPAL API in the network of
 the university. Before calling <code><a href="../reference/upload2opal.html">upload2opal()</a></code> set up a VPN
 client accordingly. For TU Chemnitz see the instructions here: <a href="https://www.tu-chemnitz.de/urz/network/access/vpn.html" class="external-link uri">https://www.tu-chemnitz.de/urz/network/access/vpn.html</a></p>

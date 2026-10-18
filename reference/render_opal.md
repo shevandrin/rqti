@@ -16,7 +16,9 @@ render_opal(input, ...)
 
 - ...:
 
-  required for passing arguments when knitting
+  Arguments supplied by the knitting frontend. Named `endpoint`,
+  `api_user`, and `credential_id` arguments are forwarded to
+  [`opal()`](https://shevandrin.github.io/rqti/reference/opal.md).
 
 ## Value
 

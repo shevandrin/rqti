@@ -25,8 +25,8 @@ class is designed to facilitate interactions with the Opal LMS API.
 - `credential_id`:
 
   A character string identifying this endpoint's credentials in the
-  operating-system keyring. If omitted, the legacy `rqtiopal` service is
-  used.
+  operating-system keyring. If omitted, a service name is derived from
+  the endpoint, with the legacy `rqtiopal` service used as a fallback.
 
 ## See also
 

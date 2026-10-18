@@ -91,14 +91,22 @@ representing a connection to the Opal Learning Management System (LMS).</p>
 
 <dt id="arg-credential-id">credential_id<a class="anchor" aria-label="anchor" href="#arg-credential-id"></a></dt>
 <dd><p>An optional name for the credential set. By default,
-rqti continues to use the legacy <code>rqtiopal</code> service. Supply an ID to use a
-separate password for another OPAL installation.</p></dd>
+rqti derives the credential service from <code>endpoint</code>, while retaining the
+legacy <code>rqtiopal</code> service as a fallback. <code>RQTI_API_CREDENTIAL_ID</code> or an
+explicit value overrides automatic endpoint-based naming.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class <code>Opal</code>, inheriting from <code>LMS</code>,
 which can be used to interact with the Opal LMS API.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Interactive first-time setup still prompts for a username and
+password when neither endpoint-specific nor legacy credentials exist. A
+legacy <code>rqtiopal</code> entry is otherwise used as a fallback. Use
+<code><a href="set_opal_credentials.html">set_opal_credentials()</a></code> when an endpoint needs a different password.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

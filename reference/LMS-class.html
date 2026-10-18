@@ -91,9 +91,15 @@ or add it to your <code>.Renviron</code> file for persistence across sessions.</
 
 <dt><code>credential_id</code></dt>
 <dd><p>A character string identifying the credential set in the
-operating-system keyring. If omitted, rqti uses its original service name
-for backward compatibility. Set it when the same API username has different
-passwords on different LMS installations.</p></dd>
+operating-system keyring. If omitted, rqti derives the credential service
+from the endpoint and falls back to its original service name for backward
+compatibility. <code>RQTI_API_CREDENTIAL_ID</code> or an explicit value can override
+automatic endpoint-based naming.</p></dd>
+
+
+<dt><code>session</code></dt>
+<dd><p>An internal environment containing connection-specific session
+state, including the authentication token.</p></dd>
 
 
 </dl></div>

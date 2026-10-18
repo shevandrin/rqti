@@ -28,24 +28,41 @@ API. To facilitate this process, it is advisable to reach out to your IT
 and/or OPAL provider for assistance.
 
 To store the username and password, `rqti` uses the operating system’s
-credential storage through the `keyring` package. Existing code
-continues to use the `rqtiopal` service. If the same username has a
-different password on another OPAL installation, set `credential_id` in
-[`opal()`](https://shevandrin.github.io/rqti/reference/opal.md) or
-[`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md).
-rqti then uses a separate service named `rqtiopal-<credential_id>`.
+credential storage through the `keyring` package. The credential service
+is derived automatically from the endpoint, so the same username can
+have different passwords on different OPAL installations. Existing
+credentials stored under the original `rqtiopal` service remain
+available as a fallback.
 
-For example, the exam installation can use its own `rqtiopal-exam`
-entry:
+For example, store the exam password securely and then connect without
+choosing a credential ID:
 
 ``` r
 
+exam_endpoint <- "https://exam.tu-chemnitz.de/opal/"
+set_opal_credentials(exam_endpoint, "titz@tu-chemnitz.de")
+
 exam_opal <- opal(
     api_user = "titz@tu-chemnitz.de",
-    endpoint = "https://exam.tu-chemnitz.de/opal/",
-    credential_id = "exam"
+    endpoint = exam_endpoint
 )
 ```
+
+This endpoint maps to the service `rqtiopal-exam.tu-chemnitz.de-opal`.
+`credential_id` remains available as an optional override for unusual
+setups. For implicit connections, an override can also be supplied
+through `RQTI_API_CREDENTIAL_ID`.
+
+Interactive first-time setup remains supported. If neither an
+endpoint-specific credential nor a legacy credential exists,
+[`opal()`](https://shevandrin.github.io/rqti/reference/opal.md) asks for
+a username and password and saves them under the endpoint-derived
+service. If a legacy `rqtiopal` entry exists, it is used without another
+prompt for backward compatibility. When an endpoint needs a different
+password, call
+[`set_opal_credentials()`](https://shevandrin.github.io/rqti/reference/set_opal_credentials.md)
+once to store it explicitly. Non-interactive workflows should always
+provision the credential in advance.
 
 Some universities only allow to use the OPAL API in the network of the
 university. Before calling
