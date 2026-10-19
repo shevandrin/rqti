@@ -93,15 +93,8 @@ vertical or horizontal mode. Possible values:
 answer in the \code{choices} slot. By default, the first item in the \code{choices}
 slot is considered the correct answer. Default is \code{1}.}
 
-\item{\code{scoring_scheme}}{A character value, optional, defining how response
-options are scored. Possible values:
-\itemize{
-\item "standard" - the correct answer receives full points and incorrect
-answers receive 0. This is used by default.
-\item "penalty" - the correct answer receives full points and incorrect
-answers receive a negative score of -1/(k-1), where k is the number of
-response options.
-}}
+\item{\code{scoring_scheme}}{A method name or named list from \code{\link[=single_choice_scoring]{single_choice_scoring()}}.
+Defaults to \code{"standard"}; \code{"penalty"} retains correction for guessing.}
 }}
 
 \examples{

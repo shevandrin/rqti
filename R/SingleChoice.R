@@ -29,14 +29,12 @@
 #' @include AssessmentItem.R Choice.R
 setClass("SingleChoice", contains = "Choice",
          slots = list(solution = "numeric",
-                      scoring_scheme = "character"),
+                      scoring_scheme = "characterOrScoring"),
          prototype = list(solution = 1,
                           scoring_scheme = "standard"),
          validity = function(object) {
-             if (length(object@scoring_scheme) != 1 ||
-                 !object@scoring_scheme %in% c("standard", "penalty")) {
-                 return("Slot 'scoring_scheme' must be either 'standard' or 'penalty'.")
-             }
+             error <- validate_choice_scoring(object)
+             if (!is.null(error)) return(error)
              TRUE
              })
 setMethod("initialize", "SingleChoice", function(.Object, ...) {
@@ -84,13 +82,12 @@ setMethod("initialize", "SingleChoice", function(.Object, ...) {
 #'   * "scientific".
 #' @param files A character vector, optional, containing paths to files that
 #'   will be accessible to the candidate during the test/exam.
-#' @param scoring_scheme A character value, optional, defining how response
-#'   options are scored. Possible values:
-#'   * "standard" - the correct answer receives full points and incorrect
-#'   answers receive 0. This is used by default.
-#'   * "penalty" - the correct answer receives full points and incorrect
-#'   answers receive a negative score of -points/(k-1), where k is the number of
-#'   response options.
+#' @param scoring_scheme A method name or specification from [single_choice_scoring()].
+#'   The default `"standard"` awards full points for the correct answer and zero
+#'   otherwise. Omitting `scoring_scheme` retains this default; the default
+#'   method of the separate [single_choice_scoring()] helper does not override it.
+#'   `"penalty"` deducts `points/(k-1)` for an incorrect answer, where
+#'   k is the number of options. Both award zero for an omitted answer.
 #' @return An object of class [SingleChoice]
 #' @examples
 #' sc_min <- singleChoice(prompt = "Question?",
@@ -167,12 +164,9 @@ setMethod("createOutcomeDeclaration", signature(object = "SingleChoice"),
                                                                 value = NULL,
                                                                 base_type = "identifier"))
               }
-              points <- object@points
-              if (object@scoring_scheme == "penalty") {
-                  min_score <- - points / (length(object@choices) - 1)
-              } else {
-                  min_score <- 0
-              }
+              spec <- resolve_choice_scoring(object)
+              points <- spec$maximum
+              min_score <- spec$minimum
               tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
                                                value = points),
@@ -194,3 +188,11 @@ create_response_declaration_single_choice <- function(object) {
                                     baseType = "identifier",
                                     child))
 }
+
+#' @rdname getPoints-methods
+#' @aliases getPoints,SingleChoice
+setMethod("getPoints", "SingleChoice", function(object) {
+    points <- resolve_choice_scoring(object)$maximum
+    names(points) <- object@identifier
+    points
+})

@@ -1,5 +1,15 @@
 # rqti (development version)
 
+* `single_choice_scoring()` and `multiple_choice_scoring()` configure the
+  corresponding item types through `scoring_scheme`, with separate help pages.
+  Single-choice items support custom correct,
+  incorrect and omitted credits and all 21 Kanzow et al. (2023) coefficients,
+  with their documented format restrictions. Multiple-choice items support
+  five literature methods, explicit weights, and all `exams_eval()` choice
+  policies, including exact matching, zero distractor weights and negative
+  floors. Existing defaults are unchanged. New rules use standard QTI 2.1
+  response processing; platform support should be checked separately.
+
 * Documentation has been regenerated with roxygen2 8.0.0; its version is
   recorded in `Config/roxygen2/version` rather than the legacy `RoxygenNote`.
 

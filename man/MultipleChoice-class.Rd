@@ -88,6 +88,9 @@ vertical or horizontal mode. Possible values:
 \item "vertical" - Default.
 \item "horizontal"
 }}
+
+\item{\code{scoring_scheme}}{A method name or named list from \code{\link[=multiple_choice_scoring]{multiple_choice_scoring()}}.
+Defaults to \code{"standard"}, preserving the existing weighted mapping.}
 }}
 
 \examples{

@@ -76,15 +76,12 @@ calculator to the candidate. Possible values:
 \item{files}{A character vector, optional, containing paths to files that
 will be accessible to the candidate during the test/exam.}
 
-\item{scoring_scheme}{A character value, optional, defining how response
-options are scored. Possible values:
-\itemize{
-\item "standard" - the correct answer receives full points and incorrect
-answers receive 0. This is used by default.
-\item "penalty" - the correct answer receives full points and incorrect
-answers receive a negative score of -points/(k-1), where k is the number of
-response options.
-}}
+\item{scoring_scheme}{A method name or specification from \code{\link[=single_choice_scoring]{single_choice_scoring()}}.
+The default \code{"standard"} awards full points for the correct answer and zero
+otherwise. Omitting \code{scoring_scheme} retains this default; the default
+method of the separate \code{\link[=single_choice_scoring]{single_choice_scoring()}} helper does not override it.
+\code{"penalty"} deducts \code{points/(k-1)} for an incorrect answer, where
+k is the number of options. Both award zero for an omitted answer.}
 }
 \value{
 An object of class \link{SingleChoice}

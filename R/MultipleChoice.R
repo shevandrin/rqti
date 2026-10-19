@@ -18,13 +18,21 @@
 #'           choice_identifiers = c("ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"),
 #'           shuffle = TRUE,
 #'           orientation = "vertical")
+#' @slot scoring_scheme A method name or named list from [multiple_choice_scoring()].
+#'   Defaults to `"standard"`, preserving the existing weighted mapping.
 #' @name MultipleChoice-class
 #' @rdname MultipleChoice-class
 #' @aliases MultipleChoice
 #' @include AssessmentItem.R Choice.R
 #' @exportClass MultipleChoice
 #' @import methods
-setClass("MultipleChoice", contains = "Choice")
+setClass("MultipleChoice", contains = "Choice",
+         slots = c(scoring_scheme = "characterOrScoring"),
+         prototype = list(scoring_scheme = "standard"),
+         validity = function(object) {
+             error <- validate_choice_scoring(object)
+             if (is.null(error)) TRUE else error
+         })
 
 #' Create object [MultipleChoice]
 #'
@@ -65,6 +73,8 @@ setClass("MultipleChoice", contains = "Choice")
 #'   * "scientific".
 #' @param files A character vector, optional, containing paths to files that
 #'   will be accessible to the candidate during the test/exam.
+#' @param scoring_scheme A method name or specification from [multiple_choice_scoring()].
+#'   The default `"standard"` retains the existing balanced mapping and zero floor.
 #' @return An object of class [MultipleChoice]
 #' @examples
 #'mc_min <- multipleChoice(choices = c("option1", "option2", "option3"),
@@ -96,7 +106,8 @@ multipleChoice <- function(identifier = generate_id(),
                          orientation = "vertical",
                          shuffle = TRUE,
                          calculator = NA_character_,
-                         files = NA_character_) {
+                         files = NA_character_,
+                         scoring_scheme = "standard") {
     params <- as.list(environment())
     obj <- construct_item(params, "MultipleChoice")
     return(obj)
@@ -131,9 +142,33 @@ create_item_body_multiplechoice <- function(object) {
 create_response_declaration_multiple_choice <- function(object) {
     correct_choice_identifier <- object@choice_identifiers[object@points > 0]
     correct_response <- create_correct_response(correct_choice_identifier)
-    mapping <- create_mapping(object)
+    mapping <- if (identical(object@scoring_scheme, "standard")) {
+        create_mapping(object)
+    } else {
+        spec <- resolve_choice_scoring(object)
+        entries <- Map(create_map_entry, spec$weights, object@choice_identifiers)
+        tag("mapping", c(list(defaultValue = 0), entries))
+    }
     tag("responseDeclaration", list(identifier = "RESPONSE",
                                     cardinality = "multiple",
                                     baseType = "identifier",
                                     correct_response, mapping))
 }
+
+#' @rdname createResponseProcessing-methods
+#' @aliases createResponseProcessing,MultipleChoice
+setMethod("createResponseProcessing", "MultipleChoice", function(object) {
+    if (identical(object@scoring_scheme, "standard")) {
+        create_default_resp_processing(object)
+    } else create_choice_scoring_processing(object)
+})
+
+#' @rdname createOutcomeDeclaration-methods
+#' @aliases createOutcomeDeclaration,MultipleChoice
+setMethod("createOutcomeDeclaration", "MultipleChoice", function(object) {
+    if (identical(object@scoring_scheme, "standard")) return(callNextMethod())
+    tags <- callNextMethod()
+    spec <- resolve_choice_scoring(object)
+    tags[[3L]] <- make_outcome_declaration("MINSCORE", value = spec$minimum)
+    tags
+})

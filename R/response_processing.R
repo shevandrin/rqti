@@ -63,6 +63,10 @@ create_default_resp_processing <- function(object) {
 
 #process modalfeedback for sc
 create_default_resp_processing_sc <- function(object) {
+    if (!is.character(object@scoring_scheme) ||
+        !object@scoring_scheme %in% c("standard", "penalty")) {
+        return(create_choice_scoring_processing(object))
+    }
     resp_cond1 <- make_first_cond_sc_order()
     resp_cond23 <- make_default_resp_cond()
     resp_cond4 <- NULL

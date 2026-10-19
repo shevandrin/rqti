@@ -8,6 +8,8 @@
 #' @rdname Choice-class
 #' @aliases Choice
 #' @include AssessmentItem.R
+setClassUnion("characterOrScoring", c("character", "list"))
+
 setClass("Choice", contains = "AssessmentItem",
          slots = c(choices = "character",
                    choice_identifiers = "character",
