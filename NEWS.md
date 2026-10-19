@@ -1,5 +1,8 @@
 # rqti (development version)
 
+* Fall back to the first grading-table label for C.UTF-8 and unrecognized
+  locales, so academic grading can be exported in noninteractive sessions.
+
 * Serialize section session controls, time limits, selection and ordering in
   the order required by the QTI schema.
 
