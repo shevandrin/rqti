@@ -7,7 +7,7 @@
 qtiContributor(
   name = Sys.getenv("RQTI_AUTHOR"),
   role = "author",
-  contribution_date = ifelse(name != "", Sys.Date(), as.Date(NA))
+  contribution_date = NULL
 )
 }
 \arguments{
@@ -19,9 +19,10 @@ designer, technical implementer, content provider, technical validator,
 educational validator, script writer, instructional designer, subject
 matter expert. Default is "author".}
 
-\item{contribution_date}{A character string representing date of the
-contribution. Default is the current system date, when contributor is
-assigned.}
+\item{contribution_date}{A date or character string in \code{YYYY-MM-DD} format.
+\code{NULL} (the default) uses the current system date. No date is added when
+no contributor is assigned. Supply an explicit date to record a different
+contribution date.}
 }
 \description{
 Creates object of \link{QtiContributor}-class

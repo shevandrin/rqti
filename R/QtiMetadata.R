@@ -1,3 +1,8 @@
+default_contribution_date <- function(name) {
+    if (!nzchar(name)) return(as.Date(character()))
+    Sys.Date()
+}
+
 check_contributor <- function(object) {
     errors <- list()
     roles <- c("author", "publisher", "unknown", "initiator", "terminator",
@@ -24,7 +29,8 @@ check_contributor <- function(object) {
 #'   educational validator, script writer, instructional designer, subject
 #'   matter expert. Default is "author".
 #' @slot contribution_date A character string representing date of the
-#'   contribution. Default is the current system date.
+#'   contribution. Defaults to the current system date when a contributor
+#'   is assigned.
 #' @name QtiContributor-class
 #' @rdname QtiContributor-class
 #' @aliases QtiContributor
@@ -40,7 +46,7 @@ setClass("QtiContributor", slots = c(name = "character",
 setMethod("initialize", "QtiContributor", function(.Object, ...) {
     .Object <- callNextMethod()
     if (.Object@name != "" && length(.Object@contribution_date) == 0) {
-        .Object@contribution_date <- Sys.Date()
+        .Object@contribution_date <- default_contribution_date(.Object@name)
     }
     validObject(.Object)
     .Object
@@ -56,16 +62,17 @@ setMethod("initialize", "QtiContributor", function(.Object, ...) {
 #'   designer, technical implementer, content provider, technical validator,
 #'   educational validator, script writer, instructional designer, subject
 #'   matter expert. Default is "author".
-#' @param contribution_date A character string representing date of the
-#'   contribution. Default is the current system date, when contributor is
-#'   assigned.
+#' @param contribution_date A date or character string in `YYYY-MM-DD` format.
+#'   `NULL` (the default) uses the current system date. No date is added when
+#'   no contributor is assigned. Supply an explicit date to record a different
+#'   contribution date.
 #' @examples
 #' creator= qti_contributor("Max Mustermann", "technical validator")
 #' @importFrom lifecycle deprecate_warn
 #' @export
 qti_contributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
-                            contribution_date = ifelse(name != "", Sys.Date(), as.Date(NA))) {
+                            contribution_date = NULL) {
     deprecate_warn("0.3.1", "qti_contributor()", "qtiContributor()")
     qtiContributor(name, role, contribution_date)
 }
@@ -79,18 +86,24 @@ qti_contributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
 #'   designer, technical implementer, content provider, technical validator,
 #'   educational validator, script writer, instructional designer, subject
 #'   matter expert. Default is "author".
-#' @param contribution_date A character string representing date of the
-#'   contribution. Default is the current system date, when contributor is
-#'   assigned.
+#' @param contribution_date A date or character string in `YYYY-MM-DD` format.
+#'   `NULL` (the default) uses the current system date. No date is added when
+#'   no contributor is assigned. Supply an explicit date to record a different
+#'   contribution date.
 #' @examples
 #' creator= qtiContributor("Max Mustermann", "technical validator")
 #' @export
 qtiContributor <- function(name = Sys.getenv("RQTI_AUTHOR"),
                             role = "author",
-                            contribution_date = ifelse(name != "", Sys.Date(), as.Date(NA))) {
+                            contribution_date = NULL) {
     params <- as.list(environment())
     params$Class <- "QtiContributor"
-    if (is.na(params$contribution_date)) params$contribution_date <- as.Date(character())
+    if (is.null(params$contribution_date)) {
+        params$contribution_date <- default_contribution_date(name)
+    }
+    if (length(params$contribution_date) == 1L && is.na(params$contribution_date)) {
+        params$contribution_date <- as.Date(character())
+    }
     params$contribution_date <- as.Date(params$contribution_date)
     obj <- do.call("new", params)
     return(obj)

@@ -405,8 +405,11 @@ add_test_metadata <- function(object, params) {
                           " contributors: ", msg, ".")
             message(msg)
             contr_unique <- lapply(contr_unique, function(x) {
-                                            x@contribution_date <- Sys.Date()
-                                            return(x)})
+                if (length(x@contribution_date) == 0L) {
+                    x@contribution_date <- default_contribution_date(x@name)
+                }
+                x
+            })
             mtdata@contributor = contr_unique
         }
     }

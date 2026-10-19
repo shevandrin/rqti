@@ -21,6 +21,7 @@ educational validator, script writer, instructional designer, subject
 matter expert. Default is "author".}
 
 \item{\code{contribution_date}}{A character string representing date of the
-contribution. Default is the current system date.}
+contribution. Defaults to the current system date when a contributor
+is assigned.}
 }}
 

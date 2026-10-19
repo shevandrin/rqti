@@ -1,5 +1,9 @@
 # rqti (development version)
 
+* Contributor dates default to the current date when a contributor is assigned.
+  Dates can be set explicitly in YAML or the contributor helper.
+  Preserve supplied dates when collecting item contributors into test metadata.
+
 * `single_choice_scoring()` and `multiple_choice_scoring()` configure the
   corresponding item types through `scoring_scheme`, with separate help pages.
   Single-choice items support custom correct,
