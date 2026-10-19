@@ -1,5 +1,8 @@
 # rqti (development version)
 
+* Serialize section session controls, time limits, selection and ordering in
+  the order required by the QTI schema.
+
 * Contributor dates default to the current date when a contributor is assigned.
   Dates can be set explicitly in YAML or the contributor helper.
   Preserve supplied dates when collecting item contributors into test metadata.

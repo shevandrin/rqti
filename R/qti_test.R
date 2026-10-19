@@ -173,10 +173,10 @@ create_section_test <- function(object, folder, verify) {
                                   fixed = "false",
                                   title = object@title,
                                   visible = tolower(object@visible),
-                                  tagList(time_limit,
-                                          shuffle,
+                                  tagList(session_control,
+                                          time_limit,
                                           selection,
-                                          session_control,
+                                          shuffle,
                                           assessment_items)))
 }
 
