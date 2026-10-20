@@ -10,9 +10,21 @@
 #' @aliases Gap
 setClass("Gap", slots = c(response_identifier = "character",
                           points = "numeric",
+                          incorrect = "numeric",
                           placeholder = "character",
                           expected_length = "numeric"),
-         prototype = prototype(points = 1))
+         prototype = prototype(points = 1, incorrect = 0))
+
+validate_gap_incorrect <- function(object) {
+    if (length(object@incorrect) != 1L || anyNA(object@incorrect) ||
+        !is.finite(object@incorrect) || object@incorrect > 0) {
+        stop("incorrect must be one finite non-positive score.", call. = FALSE)
+    }
+    if (object@incorrect < 0 && is(object, "InlineChoice")) {
+        stop("incorrect is supported for numeric and text gaps, not dropdowns.", call. = FALSE)
+    }
+    TRUE
+}
 
 setMethod("initialize", "Gap", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -26,6 +38,7 @@ setMethod("initialize", "Gap", function(.Object, ...) {
 
     .Object@response_identifier <- repair_identifier(.Object@response_identifier)
     check_identifier(.Object@response_identifier)
+    validate_gap_incorrect(.Object)
 
     validObject(.Object)
     .Object
@@ -61,7 +74,7 @@ setMethod("createOutcomeDeclaration", "Gap", function(object) {
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,Gap
 setMethod("createResponseProcessing", "Gap", function(object) {
-    create_response_processing_gap_basic(object)
+    gap_penalty_processing(object, create_response_processing_gap_basic(object))
 })
 
 #' @rdname getIdentifier-methods
@@ -80,6 +93,6 @@ create_outcome_declaration_gap <- function(object) {
                                          value = object@points)
     MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
                                                 object@response_identifier),
-                                         value = 0)
+                                         value = object@incorrect)
     tagList(SCORE, MAXSCORE, MINSCORE)
 }

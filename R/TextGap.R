@@ -53,6 +53,7 @@ setMethod("initialize", "TextGap", function(.Object,...){
 #'  is adjusted by solution size.
 #'@param case_sensitive A boolean value, determining whether the evaluation of
 #'  the correct answer is case sensitive. Default is `FALSE`.
+#'@inheritParams numericGap
 #'@return An object of class [TextGap]
 #'@seealso [entry()][numericGap()][textGapOpal()]
 #' @examples
@@ -71,7 +72,8 @@ textGap <- function(solution,
                     points = 1,
                     placeholder = "",
                     expected_length = size_gap(solution),
-                    case_sensitive = FALSE){
+                    case_sensitive = FALSE,
+                    incorrect = 0){
     params <- as.list(environment())
     params$Class <- "TextGap"
     obj <- do.call("new", params)

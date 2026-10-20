@@ -168,7 +168,8 @@ create_mapping <- function(object) {
 create_mapping_gap <- function(object) {
     map_enrties <- Map(create_map_entry, object@points, object@solution,
                        object@case_sensitive)
-    tag("mapping", list(map_enrties))
+    tag("mapping", list(defaultValue = if (object@incorrect < 0) object@incorrect else NULL,
+                        map_enrties))
 }
 
 create_map_entry <- function(value, key, case_sensitive = NULL) {

@@ -45,6 +45,7 @@ setClass("TextGapOpal", contains = "TextGap", slots = c(tolerance = "numeric"),
 #'@param tolerance A numeric value defining how many characters will be taken
 #'  into account to tolerate spelling mistakes in the evaluation of candidate
 #'  answers. Default is 0.
+#'@inheritParams numericGap
 #'@return An object of class [TextGapOpal]
 #'@seealso [entry()][numericGap()][textGap()]
 #' @examples
@@ -65,7 +66,8 @@ textGapOpal <- function(solution,
                     placeholder = "",
                     expected_length = size_gap(solution),
                     case_sensitive = FALSE,
-                    tolerance = 0){
+                    tolerance = 0,
+                    incorrect = 0){
     params <- as.list(environment())
     params$Class <- "TextGapOpal"
     obj <- do.call("new", params)
@@ -79,5 +81,5 @@ gapTextOpal <- textGapOpal
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGapOpal
 setMethod("createResponseProcessing", "TextGapOpal", function(object) {
-    create_response_processing_text_entry_opal(object)
+    gap_penalty_processing(object, create_response_processing_text_entry_opal(object))
 })

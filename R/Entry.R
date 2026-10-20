@@ -163,6 +163,8 @@ create_response_declaration_entry <- function(object) {
 }
 
 create_outcome_declaration_entry <- function(object) {
+    answers <- Filter(Negate(is.null), Map(getResponse, object@content))
+    minimum <- sum(vapply(answers, function(x) x@incorrect, numeric(1)))
     feedbacks_declaration <- NULL
     if (length(object@feedback) > 0) {
         feedbacks_declaration <- tagList(make_outcome_declaration("FEEDBACKBASIC",
@@ -177,7 +179,7 @@ create_outcome_declaration_entry <- function(object) {
     stand_declaration <- tagList(make_outcome_declaration("SCORE", value = 0),
                                  make_outcome_declaration("MAXSCORE",
                                                           value = object@points),
-                                 make_outcome_declaration("MINSCORE", value = 0))
+                                 make_outcome_declaration("MINSCORE", value = minimum))
     answers <- Map(getResponse, object@content)
     answers[sapply(answers, is.null)] <- NULL
 

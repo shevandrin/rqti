@@ -173,6 +173,22 @@ make_default_feedback_cond <- function(answers = list(NULL)) {
     return(resp_cond)
 }
 
+gap_penalty_processing <- function(object, processing) {
+    if (object@incorrect == 0) return(processing)
+    id <- object@response_identifier
+    score <- paste0("SCORE_", id)
+    answered <- not(isNull(variable(id)))
+    if (is(object, "TextGap")) {
+        # At least one non-whitespace character, using XML Schema regex syntax.
+        answered <- and(list(answered, tag("patternMatch",
+            list(pattern = "[\\s\\S]*\\S[\\s\\S]*", variable(id)))))
+    }
+    tagList(setOutcomeValue(list(identifier = score, baseValue(list(baseType = "float", 0)))),
+        responseCondition(responseIf(list(answered,
+            setOutcomeValue(list(identifier = score,
+                baseValue(list(baseType = "float", object@incorrect)))), processing))))
+}
+
 create_response_processing_gap_basic <- function(object) {
     not_tag <- not(isNull(variable(object@response_identifier)))
     map_tag <- mapResponse(object@response_identifier)

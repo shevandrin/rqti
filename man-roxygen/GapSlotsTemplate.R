@@ -3,6 +3,9 @@
 #'   represents random digits.
 #' @slot points A numeric value, optional, representing the number of points for
 #'   this gap. Default is `1`.
+#' @slot incorrect Score for an incorrect nonempty response, in points.
+#'   Default `0`. Numeric/text gaps allow a finite non-positive score;
+#'   omitted or whitespace-only text responses receive zero.
 #' @slot placeholder A character value, optional, used to place
 #'   helpful text in the text input field in the content delivery engine.
 #' @slot expected_length A numeric value, optional, used to set the

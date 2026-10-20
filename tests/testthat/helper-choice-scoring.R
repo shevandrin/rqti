@@ -41,6 +41,10 @@ score_choice_qti <- function(doc, response = NULL, responses = NULL, manual_scor
                 } else value
             },
             isNull = length(eval_node(children[[1L]])) == 0L,
+            patternMatch = {
+                value <- eval_node(children[[1L]])
+                length(value) > 0L && grepl(xml2::xml_attr(node, "pattern"), value, perl = TRUE)
+            },
             not = !eval_node(children[[1L]]),
             and = all(unlist(args())),
             equal = {

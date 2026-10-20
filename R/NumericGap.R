@@ -82,6 +82,8 @@ setMethod("initialize", "NumericGap", function(.Object, ...) {
 #'  lower bound is included in the tolerance rate. Default is `TRUE`.
 #'@param include_upper_bound A boolean value, optional, specifying whether the
 #'  upper bound is included in the tolerance rate. Default is `TRUE`.
+#'@param incorrect Score for an incorrect nonempty response, in points.
+#'  Must be finite and non-positive. Default `0`; omissions receive zero.
 #'@return An object of class [NumericGap]
 #'@seealso [entry()][textGap()][textGapOpal()]
 #' @examples
@@ -104,7 +106,8 @@ numericGap <- function(solution,
                     tolerance = 0,
                     tolerance_type = "absolute",
                     include_lower_bound = TRUE,
-                    include_upper_bound = TRUE){
+                    include_upper_bound = TRUE,
+                    incorrect = 0){
     params <- as.list(environment())
     params$Class <- "NumericGap"
     obj <- do.call("new", params)
@@ -130,7 +133,7 @@ setMethod("createResponseDeclaration", "NumericGap", function(object) {
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,NumericGap
 setMethod("createResponseProcessing", "NumericGap", function(object) {
-    create_response_processing_num_entry(object)
+    gap_penalty_processing(object, create_response_processing_num_entry(object))
 })
 
 create_response_declaration_num_entry <- function(object) {

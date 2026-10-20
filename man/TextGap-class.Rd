@@ -20,6 +20,10 @@ represents random digits.}
 \item{\code{points}}{A numeric value, optional, representing the number of points for
 this gap. Default is \code{1}.}
 
+\item{\code{incorrect}}{Score for an incorrect nonempty response, in points.
+Default \code{0}. Numeric/text gaps allow a finite non-positive score;
+omitted or whitespace-only text responses receive zero.}
+
 \item{\code{placeholder}}{A character value, optional, used to place
 helpful text in the text input field in the content delivery engine.}
 

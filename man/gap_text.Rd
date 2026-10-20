@@ -11,7 +11,8 @@ gap_text(
   points = 1,
   response_identifier = NULL,
   expected_length = size_gap(solution),
-  placeholder = NULL
+  placeholder = NULL,
+  incorrect = NULL
 )
 }
 \arguments{
@@ -35,6 +36,9 @@ input field in the content delivery engine.}
 
 \item{placeholder}{A character string, optional; places helpful text in the
 text input field in the content delivery engine.}
+
+\item{incorrect}{Score for an incorrect nonempty response, in points.
+Must be finite and non-positive. Default \code{0}; omissions receive zero.}
 }
 \value{
 A character string mapped as YAML.

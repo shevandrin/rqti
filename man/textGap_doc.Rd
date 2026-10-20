@@ -11,7 +11,8 @@ textGap(
   points = 1,
   placeholder = "",
   expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  case_sensitive = FALSE,
+  incorrect = 0
 )
 
 gapText(
@@ -20,7 +21,8 @@ gapText(
   points = 1,
   placeholder = "",
   expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  case_sensitive = FALSE,
+  incorrect = 0
 )
 }
 \arguments{
@@ -44,6 +46,9 @@ is adjusted by solution size.}
 
 \item{case_sensitive}{A boolean value, determining whether the evaluation of
 the correct answer is case sensitive. Default is \code{FALSE}.}
+
+\item{incorrect}{Score for an incorrect nonempty response, in points.
+Must be finite and non-positive. Default \code{0}; omissions receive zero.}
 }
 \value{
 An object of class \link{TextGap}
