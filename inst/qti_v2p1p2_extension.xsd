@@ -18,6 +18,17 @@
 
     <xs:include schemaLocation="imsqti_v2p1p2.xsd"/>
 
+    <!-- HTML5 download hints are an rqti extension, not standard QTI 2.1. -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="A.Type" mixed="true">
+            <xs:complexContent>
+                <xs:extension base="A.Type">
+                    <xs:attribute name="download" type="xs:string" use="optional" />
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
     <!-- Redefine the ItemBody.Type to add the details element -->
     <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
         <xs:complexType name="ItemBody.Type">

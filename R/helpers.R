@@ -214,6 +214,14 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
 #' HTML anchor tag with a data: URI. This allows the file to be embedded
 #' directly into the rendered output instead of being referenced externally.
 #'
+#' The default HTML5 `download` attribute requests a download and suggests a
+#' file name. It is accepted by `verify_qti(..., schema = "extended")`, but is
+#' outside the standard QTI 2.1 schema. Set `download = FALSE` to omit it; the
+#' browser may then display the resource instead of downloading it, and the
+#' suggested file name is lost. In either case, the target LMS and browser
+#' must support embedded data URIs. Schema validation does not establish this
+#' support.
+#'
 #' @param path Path to the local file.
 #' @param label Text shown to the user. Defaults to the file name.
 #' @param mime MIME type. If NULL, it is guessed from the extension.

@@ -34,4 +34,12 @@ Designed for inline use in R Markdown, e.g.
 The function reads a local file, encodes it as Base64, and returns an
 HTML anchor tag with a data: URI. This allows the file to be embedded
 directly into the rendered output instead of being referenced externally.
+
+The default HTML5 \code{download} attribute requests a download and suggests a
+file name. It is accepted by \code{verify_qti(..., schema = "extended")}, but is
+outside the standard QTI 2.1 schema. Set \code{download = FALSE} to omit it; the
+browser may then display the resource instead of downloading it, and the
+suggested file name is lost. In either case, the target LMS and browser
+must support embedded data URIs. Schema validation does not establish this
+support.
 }
