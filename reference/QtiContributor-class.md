@@ -19,5 +19,5 @@ This class stores metadata information about contributors.
 
 - `contribution_date`:
 
-  A character string representing date of the contribution. Default is
-  the current system date.
+  A character string representing date of the contribution. Defaults to
+  the current system date when a contributor is assigned.

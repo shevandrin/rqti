@@ -20,6 +20,9 @@ createResponseProcessing(object)
 # S4 method for class 'Gap'
 createResponseProcessing(object)
 
+# S4 method for class 'MultipleChoice'
+createResponseProcessing(object)
+
 # S4 method for class 'NumericGap'
 createResponseProcessing(object)
 

@@ -262,7 +262,9 @@ Default is `vertical`.
 
 ### points
 
-How many points are given for the correct solution. Default is 1.
+How many points are given for the correct solution under standard
+scoring. Default is 1. For custom rules and literature presets, `points`
+scales the scoring coefficients; see `scoring_scheme` below.
 
 ### calculator
 
@@ -279,18 +281,194 @@ This only works on OPAL.
 
 ### scoring_scheme
 
-Two scoring schemes are available:
+If `scoring_scheme` is omitted, **standard scoring is used**, in both
+Rmd/YAML and the
+[`singleChoice()`](https://shevandrin.github.io/rqti/reference/singleChoice.md)
+function: a correct answer receives `points`, and an incorrect or
+omitted answer receives zero. The default `points` is 1, giving scores
+of 1/0/0. You can state this explicitly:
 
-- “standard” (the default): The respondent receives full points for a
-  correct answer and 0 points for an incorrect answer.
+``` yaml
+scoring_scheme: standard
+```
 
-- “penalty”: The respondent receives full points for a correct answer.
-  For an incorrect answer, a penalty of $`-\frac{\text{points}}{k - 1}`$
-  is applied, where $`k`$ is the number of answer options. This approach
-  is often referred to as *formula scoring*, although the term is used
-  inconsistently in the literature. Note that in Germany, the use of
-  penalty scoring raises legal considerations; see, for example:
-  <https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html>
+The original `penalty` scheme also remains available. It awards `points`
+for a correct answer, `-points / (k - 1)` for an incorrect answer, and
+zero for an omission, where `k` is the number of options. The option
+count is inferred from the item; you do not supply it as a scoring
+parameter.
+
+``` yaml
+scoring_scheme: penalty
+```
+
+Note that in Germany, the use of penalty scoring raises legal
+considerations; see, for example:
+<https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html>
+
+#### Custom scoring in R
+
+[`singleChoice()`](https://shevandrin.github.io/rqti/reference/singleChoice.md)
+accepts a scoring specification made by
+[`single_choice_scoring()`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md).
+For custom single-choice scoring, its parameters are:
+
+| Parameter   |    Default | Meaning                                             |
+|:------------|-----------:|:----------------------------------------------------|
+| `method`    | `"custom"` | Use explicit credits for each response outcome      |
+| `correct`   |          1 | Credit for selecting the correct answer             |
+| `incorrect` |          0 | Credit or penalty for selecting an incorrect answer |
+| `omitted`   |          0 | Credit or penalty for leaving the item unanswered   |
+
+The three credits are multiplied by the item’s `points`. They must be
+finite; `correct` must be positive, and the other credits cannot exceed
+`correct`. The `solution` argument of
+[`singleChoice()`](https://shevandrin.github.io/rqti/reference/singleChoice.md)
+identifies the correct option by its position (the default is 1); it is
+separate from the scoring specification.
+
+``` r
+
+sc <- singleChoice(
+  identifier = "custom_single_choice",
+  choices = c("A", "B", "C"),
+  solution = 1,
+  points = 2,
+  scoring_scheme = single_choice_scoring(
+    method = "custom", correct = 1, incorrect = -0.2, omitted = 0
+  )
+)
+```
+
+This item awards 2 points for A, -0.4 points for B or C, and zero for an
+omission. Single-choice penalties remain negative; there is no zero
+floor.
+
+[`single_choice_scoring()`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md)
+is a specification helper, not the function that selects an item’s
+default scoring rule. Its signature defaults to `method = "custom"` so
+that `single_choice_scoring(incorrect = -0.2)` is a convenient
+equivalent of the explicit custom specification above. Calling
+[`single_choice_scoring()`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md)
+without settings gives coefficients 1/0/0, matching standard
+single-choice scoring. Omitting `scoring_scheme` from
+[`singleChoice()`](https://shevandrin.github.io/rqti/reference/singleChoice.md)
+still selects `"standard"`.
+
+#### The equivalent Rmd/YAML form
+
+Use a named YAML mapping for the same settings. Do not put an R function
+call inside the YAML field:
+
+``` markdown
+---
+type: sc
+points: 2
+scoring_scheme:
+  method: custom
+  correct: 1
+  incorrect: -0.2
+  omitted: 0
+---
+
+# question
+
+Choose the correct answer.
+
+- *A*
+- B
+- C
+```
+
+The emphasized answer marks the correct option. The YAML mapping and the
+R specification above produce the same scoring rule.
+
+#### R/exams single-choice penalties
+
+The `exams` method follows the `negative` setting of
+[`exams::exams_eval()`](https://rdrr.io/pkg/exams/man/exams_eval.html):
+
+| `negative`        | Correct |    Incorrect | Omitted |
+|:------------------|--------:|-------------:|--------:|
+| `FALSE` (default) |       P |            0 |       0 |
+| `TRUE`            |       P |           -P |       0 |
+| Numeric d         |       P | -abs(d) \* P |       0 |
+
+Here P is the item’s `points`. For example,
+`single_choice_scoring("exams", negative = 0.25)` awards 2 points for a
+correct answer and -0.5 for an incorrect answer when `points = 2`. It is
+equivalent to `single_choice_scoring(incorrect = -0.25)`. This is a
+parameter convention used by R/exams, not an additional grading formula.
+The magnitude is supplied by the author; it is not automatically
+computed from the number of options as in `scoring_scheme = "penalty"`.
+
+#### Literature presets and restrictions
+
+A preset can be supplied as a method name in either interface:
+
+``` r
+
+sc_preset <- singleChoice(
+  choices = c("A", "B", "C"),
+  scoring_scheme = "kanzow_05"
+)
+```
+
+``` yaml
+scoring_scheme: kanzow_05
+```
+
+`single_choice_scoring("kanzow_05")` and a YAML mapping containing
+`method: kanzow_05` are equivalent ways to select the same preset. The
+identifiers `kanzow_01` through `kanzow_21` refer to Table 2 of [Kanzow
+et al. (2023)](https://mededu.jmir.org/2023/1/e44084/). The aliases
+`number_right`, `fair_penalty`, `correction_for_guessing`, and
+`rights_minus_wrongs` select methods 1, 3, 6, and 13, respectively. See
+[`?single_choice_scoring`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md)
+for the complete coefficient table.
+
+Methods **10, 12, 14, 15, 17, 18, and 20 require exactly two options**.
+Using one with three or more options raises an **error** when the item
+is constructed or the Rmd file is converted; the rule is not silently
+changed. For example:
+
+``` r
+
+singleChoice(choices = c("A", "B", "C"), scoring_scheme = "kanzow_10")
+#> Error in `validObject()`:
+#> ! invalid class "SingleChoice" object: Invalid scoring_scheme: kanzow_10 requires exactly two options; received 3. This restriction follows Kanzow et al. (2023).
+```
+
+Method 21 additionally requires a true/false statement and an explicit
+`statement_truth`. This is the assertion’s **actual truth**, not the
+student’s answer. For example, “2 + 2 = 4” needs
+`statement_truth = TRUE`; “2 + 2 = 5” needs `FALSE`. Method 21 penalizes
+misclassifying a true assertion by 62/38 points and misclassifying a
+false assertion by 38/62 points for a one-point item. Correct answers
+score 1 and omissions score 0. No other preset needs this setting. The
+displayed answer order is separate: `solution` still identifies which
+option is correct. For example:
+
+``` r
+
+sc_true_false <- singleChoice(
+  prompt = "2 + 2 = 4",
+  choices = c("False", "True"), solution = 2,
+  scoring_scheme = single_choice_scoring("kanzow_21", statement_truth = TRUE)
+)
+```
+
+``` yaml
+scoring_scheme:
+  method: kanzow_21
+  statement_truth: true
+```
+
+For all presets, `points` scales the published coefficients. Methods 4,
+7, and 8 can therefore have a maximum different from `points`;
+[`getPoints()`](https://shevandrin.github.io/rqti/reference/getPoints-methods.md)
+reports the actual maximum. Including a preset does not recommend it for
+every use.
 
 ## Feedback
 

@@ -9,7 +9,7 @@ Creates object of
 qti_contributor(
   name = Sys.getenv("RQTI_AUTHOR"),
   role = "author",
-  contribution_date = ifelse(name != "", Sys.Date(), as.Date(NA))
+  contribution_date = NULL
 )
 ```
 
@@ -29,8 +29,10 @@ qti_contributor(
 
 - contribution_date:
 
-  A character string representing date of the contribution. Default is
-  the current system date, when contributor is assigned.
+  A date or character string in `YYYY-MM-DD` format. `NULL` (the
+  default) uses the current system date. No date is added when no
+  contributor is assigned. Supply an explicit date to record a different
+  contribution date.
 
 ## Examples
 

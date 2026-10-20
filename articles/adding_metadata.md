@@ -58,8 +58,8 @@ Currently, the metadata may contain the following information:
     writer, instructional designer, and subject matter expert. By
     default, `rqti` sets this value to “author”.
   - **contribution_date**: A string representing the date of
-    contribution. By default, `rqti` sets this to the current system
-    date.
+    contribution. If no date is supplied, `rqti` uses the current system
+    date. Dates use `YYYY-MM-DD` format.
 
 If you are working on a set of tasks, setting metadata for each one
 individually can be tedious. To streamline this process, you can use the
@@ -77,3 +77,16 @@ Sys.setenv(RQTI_RIGHTS = "CC BY SA")
 
 If you need to use non-default values, just specify the YAML attributes,
 which will override the environment variables.
+
+The contribution date can also be set per contributor in YAML:
+
+``` yaml
+metadata:
+  contributor:
+    - name: Ada Lovelace
+      role: author
+      contribution_date: "2025-06-01"
+```
+
+Explicit dates are preserved when item contributors are collected into
+test metadata.

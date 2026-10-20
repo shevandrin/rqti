@@ -181,13 +181,8 @@ slot is considered the correct answer. Default is <code>1</code>.</p></dd>
 
 
 <dt><code>scoring_scheme</code></dt>
-<dd><p>A character value, optional, defining how response
-options are scored. Possible values:</p><ul><li><p>"standard" - the correct answer receives full points and incorrect
-answers receive 0. This is used by default.</p></li>
-<li><p>"penalty" - the correct answer receives full points and incorrect
-answers receive a negative score of -1/(k-1), where k is the number of
-response options.</p></li>
-</ul></dd>
+<dd><p>A method name or named list from <code><a href="single_choice_scoring.html">single_choice_scoring()</a></code>.
+Defaults to <code>"standard"</code>; <code>"penalty"</code> retains correction for guessing.</p></dd>
 
 
 </dl></div>

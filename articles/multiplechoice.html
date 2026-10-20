@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Multiple Choice tasks</h1>
             
-            <h4 data-toc-skip class="date">2026-10-18</h4>
+            <h4 data-toc-skip class="date">2026-10-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/multiplechoice.Rmd" class="external-link"><code>vignettes/multiplechoice.Rmd</code></a></small>
       <div class="d-none name"><code>multiplechoice.Rmd</code></div>
@@ -151,23 +151,14 @@ To indicate the correct options, surround them with asterisks (using
 markdown for italics). If you need to use italics within the choices
 themselves, enclose the entire question in
 <code>&lt;em&gt;&lt;/em&gt;</code> tags to avoid conflicts.</p>
-<p>By default, the total points available for a question are calculated
-as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">0.5n</annotation></semantics></math>,
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
-is the number of answer choices. For example, if there are 4 choices,
-the maximum score for the question is 2 points. Correct selections earn
-0.5 points each, while incorrect selections deduct 0.5 points.
-Regardless of how points are calculated, the minimum score you can
-receive is 0.</p>
-<p>Among various grading options, we find this to be the most intuitive,
-especially when considering the element of guessing. Given our
-inclination against forced-choice tasks, we do not see significant value
-in introducing different grading alternatives. Rather, we recommend
-directing attention towards better task types like gaps for a more
-effective assessment approach. See also the section <a href="#some-advice-on-multiple-choice-tasks">Some advice on multiple
-choice tasks</a>.</p>
+<p>For an Rmd item without an explicit <code>points</code> value, the
+default maximum is 0.5 times the number of <strong>correct</strong>
+options. Each selected correct option then earns 0.5 points; penalties
+for selected incorrect options balance the total positive credit. The
+default item score is floored at zero. These are the default rules, not
+the only available scoring methods; see <code>scoring_scheme</code>
+below for alternatives and <code><a href="../reference/multiple_choice_scoring.html">multiple_choice_scoring()</a></code> for
+its own help page.</p>
 </div>
 <div class="section level2">
 <h2 id="more-control">More control<a class="anchor" aria-label="anchor" href="#more-control"></a>
@@ -246,27 +237,128 @@ strict order of choices (setting shuffle to <code>false</code>).</p>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>How many points are given for the whole task. The default is the
-number of choices times 0.5. Note that rqti uses <em>partial balanced
-scoring</em> for multiple choice questions.</p>
-<p>In <em>partial balanced scoring</em>, the number of correctly
-selected options is rewarded, and the number of incorrectly selected
-options is penalized in proportion to the total number of correct and
-incorrect options.</p>
-<p>For a question with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
-total options and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>
-correct options, the score is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Score</mtext><mo>=</mo><mfrac><mrow><mi>#</mi><mtext mathvariant="normal">correctly selected</mtext></mrow><mi>c</mi></mfrac><mo>−</mo><mfrac><mrow><mi>#</mi><mtext mathvariant="normal">incorrectly selected</mtext></mrow><mrow><mi>n</mi><mo>−</mo><mi>c</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">
-\text{Score} = \frac{\#\text{correctly selected}}{c}
-               - \frac{\#\text{incorrectly selected}}{n - c}
+<p>For an Rmd item, a scalar <code>points</code> sets the maximum for
+the task. If omitted, the maximum is 0.5 times the number of correct
+options. In the S4 helper, <code>multipleChoice(points = ...)</code>
+instead accepts a vector with one entry per option. Positive entries
+identify the correct options and their sum is the maximum P.</p>
+</div>
+<div class="section level3">
+<h3 id="scoring_scheme">scoring_scheme<a class="anchor" aria-label="anchor" href="#scoring_scheme"></a>
+</h3>
+<p>The default <code>"standard"</code> uses <strong>balanced scoring
+equivalent to Youden’s J</strong>, with negative totals floored at zero.
+With equally weighted correct options, C correct options and W incorrect
+options, both greater than zero, the awarded score is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mfrac><mrow><mi>#</mi><mtext mathvariant="normal">correct options selected</mtext></mrow><mi>C</mi></mfrac><mo>−</mo><mfrac><mrow><mi>#</mi><mtext mathvariant="normal">incorrect options selected</mtext></mrow><mi>W</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+P\max\left(0,
+  \frac{\#\text{correct options selected}}{C}
+  - \frac{\#\text{incorrect options selected}}{W}
+\right).
 </annotation></semantics></math></p>
-<p>This approach ensures that random guessing yields an expected score
-of zero, while allowing partial credit for partial knowledge and
-discouraging the selection of options that the examinee is unsure about.
-We do not offer other scoring schemes as we believe this is the best
-option.</p>
+<p>The raw normalized expression is Youden’s J. It has zero expectation
+under independent random selection. Flooring negative totals at zero
+means the awarded score does not generally have zero expectation. If the
+S4 item supplies explicit negative option weights, <code>standard</code>
+preserves those weights; use <code>weights</code> to preserve explicit
+zero weights as well. Unequal correct-option weights or custom penalties
+need not be equivalent to Youden’s J. The formula above applies to the
+ordinary automatically balanced default.</p>
+<p>Use <code><a href="../reference/multiple_choice_scoring.html">multiple_choice_scoring()</a></code> to choose another
+multiple-response model:</p>
+<table class="table">
+<colgroup>
+<col width="47%">
+<col width="52%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Method</th>
+<th align="left">Meaning</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>standard</code></td>
+<td align="left">Default balanced (Youden’s J) mapping, with a zero
+floor; explicit weights are preserved</td>
+</tr>
+<tr class="even">
+<td align="left"><code>weights</code></td>
+<td align="left">Supplied option weights, including explicit zeros</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>all_or_nothing</code></td>
+<td align="left">Full credit only for selecting exactly the correct
+set</td>
+</tr>
+<tr class="even">
+<td align="left"><code>plus_minus</code></td>
+<td align="left">Equal positive and negative contributions for selected
+options</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>subset</code></td>
+<td align="left">Credit for selected correct options only if no
+incorrect option is selected</td>
+</tr>
+<tr class="even">
+<td align="left"><code>ripkey</code></td>
+<td align="left">Credit for selected correct options unless more than C
+options are selected</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>true_false</code></td>
+<td align="left">Credit for each correctly classified option, including
+unchecked incorrect options</td>
+</tr>
+<tr class="even">
+<td align="left"><code>exams</code></td>
+<td align="left">The R/exams partial-credit, weighting and score-floor
+settings</td>
+</tr>
+</tbody>
+</table>
+<p>For example, select plus/minus scoring in R:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multipleChoice.html">multipleChoice</a></span><span class="op">(</span></span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  scoring_scheme <span class="op">=</span> <span class="fu"><a href="../reference/multiple_choice_scoring.html">multiple_choice_scoring</a></span><span class="op">(</span><span class="st">"plus_minus"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Or in YAML:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">scoring_scheme</span><span class="kw">:</span><span class="at"> plus_minus</span></span></code></pre></div>
+<p>Configurable methods accept a named mapping in YAML and named
+settings in R:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mc_exams</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multipleChoice.html">multipleChoice</a></span><span class="op">(</span></span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  scoring_scheme <span class="op">=</span> <span class="fu"><a href="../reference/multiple_choice_scoring.html">multiple_choice_scoring</a></span><span class="op">(</span></span>
+<span>    <span class="st">"exams"</span>, partial <span class="op">=</span> <span class="cn">TRUE</span>, negative <span class="op">=</span> <span class="op">-</span><span class="fl">0.25</span>, rule <span class="op">=</span> <span class="st">"false2"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">scoring_scheme</span><span class="kw">:</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="at">  </span><span class="fu">method</span><span class="kw">:</span><span class="at"> exams</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="at">  </span><span class="fu">partial</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="at">  </span><span class="fu">negative</span><span class="kw">:</span><span class="at"> </span><span class="fl">-0.25</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="at">  </span><span class="fu">rule</span><span class="kw">:</span><span class="at"> </span><span class="st">"false2"</span></span></code></pre></div>
+<p><code>weights</code> and <code>plus_minus</code> accept
+<code>lower_bound</code>, a nonpositive fraction of P.
+<code>all_or_nothing</code> accepts <code>incorrect</code> and
+<code>omitted</code> credits. The <code>exams</code> method accepts all
+five weighting rules (<code>false2</code>, <code>false</code>,
+<code>true</code>, <code>all</code>, <code>none</code>),
+<code>partial</code>, and <code>negative</code>. Quote the
+<code>"false"</code> and <code>"true"</code> rule names in YAML so that
+they are parsed as strings rather than logical values. See
+<code><a href="../reference/multiple_choice_scoring.html">?multiple_choice_scoring</a></code> for defaults and the full
+definitions.</p>
+<p>The <code>true_false</code> method treats unchecked options as false
+decisions; a blank selection can therefore earn credit for incorrect
+options left unchecked. Checkboxes do not distinguish such a decision
+from an omission. This is a different format from asking for an explicit
+true/false response to every statement. The single-choice
+<code>kanzow_*</code> presets, and method 21’s
+<code>statement_truth</code> setting, belong to
+<code><a href="../reference/single_choice_scoring.html">single_choice_scoring()</a></code> and are not accepted by
+<code><a href="../reference/multiple_choice_scoring.html">multiple_choice_scoring()</a></code>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -291,9 +383,9 @@ reach all points)</li>
 <p>For more complex tasks the list of answers is often just available as
 a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"dropdown list"</span>, <span class="st">"programming language evaluation"</span>, <span class="st">"numeric gap"</span>), </span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>       <span class="at">solutions =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- *dropdown list*</span><span class="sc">\n</span><span class="st">- programming language evaluation</span><span class="sc">\n</span><span class="st">- *numeric gap*"</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="st">"dropdown list"</span>, <span class="st">"programming language evaluation"</span>, <span class="st">"numeric gap"</span>), </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>       <span class="at">solutions =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- *dropdown list*</span><span class="sc">\n</span><span class="st">- programming language evaluation</span><span class="sc">\n</span><span class="st">- *numeric gap*"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="some-advice-on-multiple-choice-tasks">Some advice on multiple choice tasks<a class="anchor" aria-label="anchor" href="#some-advice-on-multiple-choice-tasks"></a>

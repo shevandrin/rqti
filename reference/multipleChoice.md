@@ -18,7 +18,8 @@ multipleChoice(
   orientation = "vertical",
   shuffle = TRUE,
   calculator = NA_character_,
-  files = NA_character_
+  files = NA_character_,
+  scoring_scheme = "standard"
 )
 ```
 
@@ -102,6 +103,13 @@ multipleChoice(
 
   A character vector, optional, containing paths to files that will be
   accessible to the candidate during the test/exam.
+
+- scoring_scheme:
+
+  A method name or specification from
+  [`multiple_choice_scoring()`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md).
+  The default `"standard"` retains the existing balanced mapping and
+  zero floor.
 
 ## Value
 

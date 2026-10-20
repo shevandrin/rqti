@@ -110,15 +110,15 @@ singleChoice(
 
 - scoring_scheme:
 
-  A character value, optional, defining how response options are scored.
-  Possible values:
-
-  - "standard" - the correct answer receives full points and incorrect
-    answers receive 0. This is used by default.
-
-  - "penalty" - the correct answer receives full points and incorrect
-    answers receive a negative score of -points/(k-1), where k is the
-    number of response options.
+  A method name or specification from
+  [`single_choice_scoring()`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md).
+  The default `"standard"` awards full points for the correct answer and
+  zero otherwise. Omitting `scoring_scheme` retains this default; the
+  default method of the separate
+  [`single_choice_scoring()`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md)
+  helper does not override it. `"penalty"` deducts `points/(k-1)` for an
+  incorrect answer, where k is the number of options. Both award zero
+  for an omitted answer.
 
 ## Value
 

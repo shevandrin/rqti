@@ -129,6 +129,12 @@ assessment task according to QTI 2.1.
 
   - "horizontal"
 
+- `scoring_scheme`:
+
+  A method name or named list from
+  [`multiple_choice_scoring()`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md).
+  Defaults to `"standard"`, preserving the existing weighted mapping.
+
 ## Examples
 
 ``` r

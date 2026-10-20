@@ -70,7 +70,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qtiContributor</span><span class="op">(</span></span>
 <span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"RQTI_AUTHOR"</span><span class="op">)</span>,</span>
 <span>  role <span class="op">=</span> <span class="st">"author"</span>,</span>
-<span>  contribution_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">name</span> <span class="op">!=</span> <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
+<span>  contribution_date <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,9 +91,10 @@ matter expert. Default is "author".</p></dd>
 
 
 <dt id="arg-contribution-date">contribution_date<a class="anchor" aria-label="anchor" href="#arg-contribution-date"></a></dt>
-<dd><p>A character string representing date of the
-contribution. Default is the current system date, when contributor is
-assigned.</p></dd>
+<dd><p>A date or character string in <code>YYYY-MM-DD</code> format.
+<code>NULL</code> (the default) uses the current system date. No date is added when
+no contributor is assigned. Supply an explicit date to record a different
+contribution date.</p></dd>
 
 </dl></div>
 

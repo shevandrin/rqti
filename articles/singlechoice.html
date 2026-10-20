@@ -87,7 +87,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Single Choice tasks</h1>
             
-            <h4 data-toc-skip class="date">2026-10-18</h4>
+            <h4 data-toc-skip class="date">2026-10-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/main/vignettes/singlechoice.Rmd" class="external-link"><code>vignettes/singlechoice.Rmd</code></a></small>
       <div class="d-none name"><code>singlechoice.Rmd</code></div>
@@ -343,7 +343,10 @@ choices (setting shuffle to <code>false</code>).</p>
 <div class="section level3">
 <h3 id="points">points<a class="anchor" aria-label="anchor" href="#points"></a>
 </h3>
-<p>How many points are given for the correct solution. Default is 1.</p>
+<p>How many points are given for the correct solution under standard
+scoring. Default is 1. For custom rules and literature presets,
+<code>points</code> scales the scoring coefficients; see
+<code>scoring_scheme</code> below.</p>
 </div>
 <div class="section level3">
 <h3 id="calculator">calculator<a class="anchor" aria-label="anchor" href="#calculator"></a>
@@ -363,20 +366,212 @@ This only works on OPAL.</p>
 <div class="section level3">
 <h3 id="scoring_scheme">scoring_scheme<a class="anchor" aria-label="anchor" href="#scoring_scheme"></a>
 </h3>
-<p>Two scoring schemes are available:</p>
-<ul>
-<li><p>“standard” (the default): The respondent receives full points for
-a correct answer and 0 points for an incorrect answer.</p></li>
-<li><p>“penalty”: The respondent receives full points for a correct
-answer. For an incorrect answer, a penalty of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mfrac><mtext mathvariant="normal">points</mtext><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">-\frac{\text{points}}{k - 1}</annotation></semantics></math>
-is applied, where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
-is the number of answer options. This approach is often referred to as
-<em>formula scoring</em>, although the term is used inconsistently in
-the literature. Note that in Germany, the use of penalty scoring raises
-legal considerations; see, for example: <a href="https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html" class="external-link uri">https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html</a></p></li>
-</ul>
+<p>If <code>scoring_scheme</code> is omitted, <strong>standard scoring
+is used</strong>, in both Rmd/YAML and the <code><a href="../reference/singleChoice.html">singleChoice()</a></code>
+function: a correct answer receives <code>points</code>, and an
+incorrect or omitted answer receives zero. The default
+<code>points</code> is 1, giving scores of 1/0/0. You can state this
+explicitly:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">scoring_scheme</span><span class="kw">:</span><span class="at"> standard</span></span></code></pre></div>
+<p>The original <code>penalty</code> scheme also remains available. It
+awards <code>points</code> for a correct answer,
+<code>-points / (k - 1)</code> for an incorrect answer, and zero for an
+omission, where <code>k</code> is the number of options. The option
+count is inferred from the item; you do not supply it as a scoring
+parameter.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">scoring_scheme</span><span class="kw">:</span><span class="at"> penalty</span></span></code></pre></div>
+<p>Note that in Germany, the use of penalty scoring raises legal
+considerations; see, for example: <a href="https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html" class="external-link uri">https://nrwe.justiz.nrw.de/ovgs/ovg_nrw/j2008/14_A_2154_08urteil20081216.html</a></p>
+<div class="section level4">
+<h4 id="custom-scoring-in-r">Custom scoring in R<a class="anchor" aria-label="anchor" href="#custom-scoring-in-r"></a>
+</h4>
+<p><code><a href="../reference/singleChoice.html">singleChoice()</a></code> accepts a scoring specification made by
+<code><a href="../reference/single_choice_scoring.html">single_choice_scoring()</a></code>. For custom single-choice scoring,
+its parameters are:</p>
+<table class="table">
+<colgroup>
+<col width="37%">
+<col width="31%">
+<col width="31%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Default</th>
+<th align="left">Meaning</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>method</code></td>
+<td align="right"><code>"custom"</code></td>
+<td align="left">Use explicit credits for each response outcome</td>
+</tr>
+<tr class="even">
+<td align="left"><code>correct</code></td>
+<td align="right">1</td>
+<td align="left">Credit for selecting the correct answer</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>incorrect</code></td>
+<td align="right">0</td>
+<td align="left">Credit or penalty for selecting an incorrect
+answer</td>
+</tr>
+<tr class="even">
+<td align="left"><code>omitted</code></td>
+<td align="right">0</td>
+<td align="left">Credit or penalty for leaving the item unanswered</td>
+</tr>
+</tbody>
+</table>
+<p>The three credits are multiplied by the item’s <code>points</code>.
+They must be finite; <code>correct</code> must be positive, and the
+other credits cannot exceed <code>correct</code>. The
+<code>solution</code> argument of <code><a href="../reference/singleChoice.html">singleChoice()</a></code> identifies
+the correct option by its position (the default is 1); it is separate
+from the scoring specification.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/singleChoice.html">singleChoice</a></span><span class="op">(</span></span>
+<span>  identifier <span class="op">=</span> <span class="st">"custom_single_choice"</span>,</span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,</span>
+<span>  solution <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  points <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  scoring_scheme <span class="op">=</span> <span class="fu"><a href="../reference/single_choice_scoring.html">single_choice_scoring</a></span><span class="op">(</span></span>
+<span>    method <span class="op">=</span> <span class="st">"custom"</span>, correct <span class="op">=</span> <span class="fl">1</span>, incorrect <span class="op">=</span> <span class="op">-</span><span class="fl">0.2</span>, omitted <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This item awards 2 points for A, -0.4 points for B or C, and zero for
+an omission. Single-choice penalties remain negative; there is no zero
+floor.</p>
+<p><code><a href="../reference/single_choice_scoring.html">single_choice_scoring()</a></code> is a specification helper, not
+the function that selects an item’s default scoring rule. Its signature
+defaults to <code>method = "custom"</code> so that
+<code>single_choice_scoring(incorrect = -0.2)</code> is a convenient
+equivalent of the explicit custom specification above. Calling
+<code><a href="../reference/single_choice_scoring.html">single_choice_scoring()</a></code> without settings gives coefficients
+1/0/0, matching standard single-choice scoring. Omitting
+<code>scoring_scheme</code> from <code><a href="../reference/singleChoice.html">singleChoice()</a></code> still
+selects <code>"standard"</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="the-equivalent-rmdyaml-form">The equivalent Rmd/YAML form<a class="anchor" aria-label="anchor" href="#the-equivalent-rmdyaml-form"></a>
+</h4>
+<p>Use a named YAML mapping for the same settings. Do not put an R
+function call inside the YAML field:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="an">type:</span><span class="co"> sc</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="an">points:</span><span class="co"> 2</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="an">scoring_scheme:</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">  method: custom</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">  correct: 1</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">  incorrect: -0.2</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">  omitted: 0</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="fu"># question</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>Choose the correct answer.</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="ss">- </span>*A*</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="ss">- </span>B</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="ss">- </span>C</span></code></pre></div>
+<p>The emphasized answer marks the correct option. The YAML mapping and
+the R specification above produce the same scoring rule.</p>
+</div>
+<div class="section level4">
+<h4 id="rexams-single-choice-penalties">R/exams single-choice penalties<a class="anchor" aria-label="anchor" href="#rexams-single-choice-penalties"></a>
+</h4>
+<p>The <code>exams</code> method follows the <code>negative</code>
+setting of <code><a href="https://rdrr.io/pkg/exams/man/exams_eval.html" class="external-link">exams::exams_eval()</a></code>:</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left"><code>negative</code></th>
+<th align="right">Correct</th>
+<th align="right">Incorrect</th>
+<th align="right">Omitted</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">
+<code>FALSE</code> (default)</td>
+<td align="right">P</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left"><code>TRUE</code></td>
+<td align="right">P</td>
+<td align="right">-P</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Numeric d</td>
+<td align="right">P</td>
+<td align="right">-abs(d) * P</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Here P is the item’s <code>points</code>. For example,
+<code>single_choice_scoring("exams", negative = 0.25)</code> awards 2
+points for a correct answer and -0.5 for an incorrect answer when
+<code>points = 2</code>. It is equivalent to
+<code>single_choice_scoring(incorrect = -0.25)</code>. This is a
+parameter convention used by R/exams, not an additional grading formula.
+The magnitude is supplied by the author; it is not automatically
+computed from the number of options as in
+<code>scoring_scheme = "penalty"</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="literature-presets-and-restrictions">Literature presets and restrictions<a class="anchor" aria-label="anchor" href="#literature-presets-and-restrictions"></a>
+</h4>
+<p>A preset can be supplied as a method name in either interface:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sc_preset</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/singleChoice.html">singleChoice</a></span><span class="op">(</span></span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>,</span>
+<span>  scoring_scheme <span class="op">=</span> <span class="st">"kanzow_05"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">scoring_scheme</span><span class="kw">:</span><span class="at"> kanzow_05</span></span></code></pre></div>
+<p><code>single_choice_scoring("kanzow_05")</code> and a YAML mapping
+containing <code>method: kanzow_05</code> are equivalent ways to select
+the same preset. The identifiers <code>kanzow_01</code> through
+<code>kanzow_21</code> refer to Table 2 of <a href="https://mededu.jmir.org/2023/1/e44084/" class="external-link">Kanzow et al. (2023)</a>.
+The aliases <code>number_right</code>, <code>fair_penalty</code>,
+<code>correction_for_guessing</code>, and
+<code>rights_minus_wrongs</code> select methods 1, 3, 6, and 13,
+respectively. See <code><a href="../reference/single_choice_scoring.html">?single_choice_scoring</a></code> for the complete
+coefficient table.</p>
+<p>Methods <strong>10, 12, 14, 15, 17, 18, and 20 require exactly two
+options</strong>. Using one with three or more options raises an
+<strong>error</strong> when the item is constructed or the Rmd file is
+converted; the rule is not silently changed. For example:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/singleChoice.html">singleChoice</a></span><span class="op">(</span>choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, scoring_scheme <span class="op">=</span> <span class="st">"kanzow_10"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validObject()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> invalid class "SingleChoice" object: Invalid scoring_scheme: kanzow_10 requires exactly two options; received 3. This restriction follows Kanzow et al. (2023).</span></span></code></pre></div>
+<p>Method 21 additionally requires a true/false statement and an
+explicit <code>statement_truth</code>. This is the assertion’s
+<strong>actual truth</strong>, not the student’s answer. For example, “2
++ 2 = 4” needs <code>statement_truth = TRUE</code>; “2 + 2 = 5” needs
+<code>FALSE</code>. Method 21 penalizes misclassifying a true assertion
+by 62/38 points and misclassifying a false assertion by 38/62 points for
+a one-point item. Correct answers score 1 and omissions score 0. No
+other preset needs this setting. The displayed answer order is separate:
+<code>solution</code> still identifies which option is correct. For
+example:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sc_true_false</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/singleChoice.html">singleChoice</a></span><span class="op">(</span></span>
+<span>  prompt <span class="op">=</span> <span class="st">"2 + 2 = 4"</span>,</span>
+<span>  choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"False"</span>, <span class="st">"True"</span><span class="op">)</span>, solution <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  scoring_scheme <span class="op">=</span> <span class="fu"><a href="../reference/single_choice_scoring.html">single_choice_scoring</a></span><span class="op">(</span><span class="st">"kanzow_21"</span>, statement_truth <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">scoring_scheme</span><span class="kw">:</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="at">  </span><span class="fu">method</span><span class="kw">:</span><span class="at"> kanzow_21</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="at">  </span><span class="fu">statement_truth</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>For all presets, <code>points</code> scales the published
+coefficients. Methods 4, 7, and 8 can therefore have a maximum different
+from <code>points</code>; <code><a href="../reference/getPoints-methods.html">getPoints()</a></code> reports the actual
+maximum. Including a preset does not recommend it for every use.</p>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -400,12 +595,12 @@ It is often more effective to present the entire solution, organized
 into manageable chunks that users can expand or collapse, such as HTML
 elements with <code>&lt;details&gt;</code> and
 <code>&lt;summary&gt;</code> tags. To give an example:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question1<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  Provide Feedback for Question 1</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Question 2<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  Provide Feedback for Question 2</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div>
 <p>will render as:</p>
 <details><summary> Question 1</summary>
   Provide Feedback for Question 1
@@ -420,8 +615,8 @@ need to go beyond using the general feedback.</p>
 <p>For more complex tasks the list of answers is often just available as
 a variable. In this case you can use the helper function
 <code>mdlist</code> to convert the vector into a markdown list:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">mdlist</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="fl">2.1</span>, <span class="fl">2.2</span>, <span class="fl">3.0</span>), <span class="at">solutions =</span> <span class="dv">2</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"- 1.2</span><span class="sc">\n</span><span class="st">- *2.1*</span><span class="sc">\n</span><span class="st">- 2.2</span><span class="sc">\n</span><span class="st">- 3"</span></span></code></pre></div>
 <!-- make a separate vignette for this -->
 <!-- ## A programatic low level approach -->
 <!-- The `rqti` package is very flexible in that you can also use low level functions to create rqti content. Let us say you have a csv table with many single choice tasks. It is quite easy to transform this to a rqti section: -->

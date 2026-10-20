@@ -16,6 +16,9 @@ getPoints(object)
 # S4 method for class 'MultipleChoice'
 getPoints(object)
 
+# S4 method for class 'SingleChoice'
+getPoints(object)
+
 # S4 method for class 'character'
 getPoints(object)
 ```

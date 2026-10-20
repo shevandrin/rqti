@@ -337,6 +337,8 @@ for new features provided as time permits.
   : Create object MultipleChoice
 - [`multipleChoiceTable()`](https://shevandrin.github.io/rqti/reference/multipleChoiceTable.md)
   : Create object MultipleChoiceTable
+- [`multiple_choice_scoring()`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md)
+  : Configure multiple-choice scoring
 - [`numericGap()`](https://shevandrin.github.io/rqti/reference/numericGap_doc.md)
   [`gapNumeric()`](https://shevandrin.github.io/rqti/reference/numericGap_doc.md)
   : Create object NumericGap
@@ -395,6 +397,8 @@ for new features provided as time permits.
   : Store credentials for an OPAL endpoint
 - [`singleChoice()`](https://shevandrin.github.io/rqti/reference/singleChoice.md)
   : Create object SingleChoice
+- [`single_choice_scoring()`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md)
+  : Configure single-choice scoring
 - [`start_server()`](https://shevandrin.github.io/rqti/reference/start_server.md)
   : Start qtijs renderer as a local server.
 - [`stop_server()`](https://shevandrin.github.io/rqti/reference/stop_server.md)

@@ -67,20 +67,14 @@ markdown for italics). If you need to use italics within the choices
 themselves, enclose the entire question in `<em></em>` tags to avoid
 conflicts.
 
-By default, the total points available for a question are calculated as
-$`0.5n`$, where $`n`$ is the number of answer choices. For example, if
-there are 4 choices, the maximum score for the question is 2 points.
-Correct selections earn 0.5 points each, while incorrect selections
-deduct 0.5 points. Regardless of how points are calculated, the minimum
-score you can receive is 0.
-
-Among various grading options, we find this to be the most intuitive,
-especially when considering the element of guessing. Given our
-inclination against forced-choice tasks, we do not see significant value
-in introducing different grading alternatives. Rather, we recommend
-directing attention towards better task types like gaps for a more
-effective assessment approach. See also the section [Some advice on
-multiple choice tasks](#some-advice-on-multiple-choice-tasks).
+For an Rmd item without an explicit `points` value, the default maximum
+is 0.5 times the number of **correct** options. Each selected correct
+option then earns 0.5 points; penalties for selected incorrect options
+balance the total positive credit. The default item score is floored at
+zero. These are the default rules, not the only available scoring
+methods; see `scoring_scheme` below for alternatives and
+[`multiple_choice_scoring()`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md)
+for its own help page.
 
 ## More control
 
@@ -151,27 +145,105 @@ Default is `vertical`.
 
 ### points
 
-How many points are given for the whole task. The default is the number
-of choices times 0.5. Note that rqti uses *partial balanced scoring* for
-multiple choice questions.
+For an Rmd item, a scalar `points` sets the maximum for the task. If
+omitted, the maximum is 0.5 times the number of correct options. In the
+S4 helper, `multipleChoice(points = ...)` instead accepts a vector with
+one entry per option. Positive entries identify the correct options and
+their sum is the maximum P.
 
-In *partial balanced scoring*, the number of correctly selected options
-is rewarded, and the number of incorrectly selected options is penalized
-in proportion to the total number of correct and incorrect options.
+### scoring_scheme
 
-For a question with $`n`$ total options and $`c`$ correct options, the
-score is
+The default `"standard"` uses **balanced scoring equivalent to Youden’s
+J**, with negative totals floored at zero. With equally weighted correct
+options, C correct options and W incorrect options, both greater than
+zero, the awarded score is
 
 ``` math
-\text{Score} = \frac{\#\text{correctly selected}}{c}
-               - \frac{\#\text{incorrectly selected}}{n - c}
+P\max\left(0,
+  \frac{\#\text{correct options selected}}{C}
+  - \frac{\#\text{incorrect options selected}}{W}
+\right).
 ```
 
-This approach ensures that random guessing yields an expected score of
-zero, while allowing partial credit for partial knowledge and
-discouraging the selection of options that the examinee is unsure about.
-We do not offer other scoring schemes as we believe this is the best
-option.
+The raw normalized expression is Youden’s J. It has zero expectation
+under independent random selection. Flooring negative totals at zero
+means the awarded score does not generally have zero expectation. If the
+S4 item supplies explicit negative option weights, `standard` preserves
+those weights; use `weights` to preserve explicit zero weights as well.
+Unequal correct-option weights or custom penalties need not be
+equivalent to Youden’s J. The formula above applies to the ordinary
+automatically balanced default.
+
+Use
+[`multiple_choice_scoring()`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md)
+to choose another multiple-response model:
+
+| Method | Meaning |
+|:---|:---|
+| `standard` | Default balanced (Youden’s J) mapping, with a zero floor; explicit weights are preserved |
+| `weights` | Supplied option weights, including explicit zeros |
+| `all_or_nothing` | Full credit only for selecting exactly the correct set |
+| `plus_minus` | Equal positive and negative contributions for selected options |
+| `subset` | Credit for selected correct options only if no incorrect option is selected |
+| `ripkey` | Credit for selected correct options unless more than C options are selected |
+| `true_false` | Credit for each correctly classified option, including unchecked incorrect options |
+| `exams` | The R/exams partial-credit, weighting and score-floor settings |
+
+For example, select plus/minus scoring in R:
+
+``` r
+
+mc <- multipleChoice(
+  choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
+  scoring_scheme = multiple_choice_scoring("plus_minus")
+)
+```
+
+Or in YAML:
+
+``` yaml
+scoring_scheme: plus_minus
+```
+
+Configurable methods accept a named mapping in YAML and named settings
+in R:
+
+``` r
+
+mc_exams <- multipleChoice(
+  choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
+  scoring_scheme = multiple_choice_scoring(
+    "exams", partial = TRUE, negative = -0.25, rule = "false2"
+  )
+)
+```
+
+``` yaml
+scoring_scheme:
+  method: exams
+  partial: true
+  negative: -0.25
+  rule: "false2"
+```
+
+`weights` and `plus_minus` accept `lower_bound`, a nonpositive fraction
+of P. `all_or_nothing` accepts `incorrect` and `omitted` credits. The
+`exams` method accepts all five weighting rules (`false2`, `false`,
+`true`, `all`, `none`), `partial`, and `negative`. Quote the `"false"`
+and `"true"` rule names in YAML so that they are parsed as strings
+rather than logical values. See
+[`?multiple_choice_scoring`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md)
+for defaults and the full definitions.
+
+The `true_false` method treats unchecked options as false decisions; a
+blank selection can therefore earn credit for incorrect options left
+unchecked. Checkboxes do not distinguish such a decision from an
+omission. This is a different format from asking for an explicit
+true/false response to every statement. The single-choice `kanzow_*`
+presets, and method 21’s `statement_truth` setting, belong to
+[`single_choice_scoring()`](https://shevandrin.github.io/rqti/reference/single_choice_scoring.md)
+and are not accepted by
+[`multiple_choice_scoring()`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md).
 
 ## Feedback
 
