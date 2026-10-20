@@ -88,6 +88,11 @@ A \code{qti_validation_result} or \code{qti_validation_results_list} object.
 \description{
 S4 generic for validating QTI documents in various formats.
 }
+\details{
+Assessment-test validation checks the generated QTI test and item
+documents. The content-package manifest and OpenOlat's separate
+\code{QTI21PackageConfig.xml} are not QTI assessment documents and are excluded.
+}
 \section{Functions}{
 \itemize{
 \item \code{verify_qti(character)}: Validate character input (file path or XML string)

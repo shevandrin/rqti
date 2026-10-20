@@ -1,5 +1,8 @@
 # rqti (development version)
 
+* Exclude OpenOlat's separate package configuration from QTI item/test schema
+  validation, as already done for the content-package manifest.
+
 * Numeric and text gaps accept an `incorrect` score in points, including
   penalties. Omissions remain zero, and entry minimum scores include penalties.
   The Rmd helpers `gap_numeric()` and `gap_text()` accept the same setting.

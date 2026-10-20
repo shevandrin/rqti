@@ -11,6 +11,23 @@ test_that("verify_qti validates a correct QTI document", {
     expect_true(verify_qti(x, print = F, engine = "xml2")$valid)
 })
 
+test_that("OpenOlat configuration is packaged separately from QTI validation", {
+    item <- singleChoice(identifier = "opal_item", choices = c("A", "B"))
+    assessment <- assessmentTestOpenOlat(
+        list(assessmentSection(list(item), identifier = "section")),
+        identifier = "openolat", rebuild_variables = NA)
+    results <- verify_qti(assessment, print = FALSE, engine = "xml2")
+    expect_length(results, 2L)
+    expect_true(all(vapply(results, function(x) x$valid, logical(1))))
+    expect_false("QTI21PackageConfig.xml" %in% names(results))
+    out <- withr::local_tempdir()
+    archive <- createQtiTest(assessment, dir = out, zip_only = TRUE)
+    expect_true(any(basename(utils::unzip(archive, list = TRUE)$Name) == "QTI21PackageConfig.xml"))
+    assessment@section[[1]]@assessment_item[[1]]@content <- list("<madeUp/>")
+    invalid <- verify_qti(assessment, print = FALSE, engine = "xml2")
+    expect_true(any(!vapply(invalid, function(x) x$valid, logical(1))))
+})
+
 test_that("verify_qti reports the schema used for validation", {
     f <- system.file("extdata", "sc1d.xml", package = "rqti")
 

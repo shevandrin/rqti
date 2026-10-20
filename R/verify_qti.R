@@ -320,6 +320,9 @@ print.qti_validation_result <- function(x, ...) {
 #' @param schema Character string or `NULL`. Schema selector or custom XSD path.
 #'   Supported selectors are `"qti21"`, `"extended"`, and `"qti22"`. Defaults
 #'   to `NULL`, which uses the legacy `extended_schema` flag.
+#' @details Assessment-test validation checks the generated QTI test and item
+#'   documents. The content-package manifest and OpenOlat's separate
+#'   `QTI21PackageConfig.xml` are not QTI assessment documents and are excluded.
 #'
 #' @return A `qti_validation_result` or `qti_validation_results_list` object.
 #' @export
@@ -414,7 +417,8 @@ setMethod("verify_qti", signature(doc = "AssessmentTest"),
 
               createQtiTest(doc, tmp_dir)
               xml_files <- list.files(tmp_dir, pattern = "\\.xml$", full.names = TRUE, recursive = TRUE)
-              xml_files <- xml_files[!grepl("manifest\\.xml$", xml_files, ignore.case = TRUE)]
+              auxiliary <- c("imsmanifest.xml", "manifest.xml", "qti21packageconfig.xml")
+              xml_files <- xml_files[!tolower(basename(xml_files)) %in% auxiliary]
 
               results <- lapply(xml_files, function(f) {
                   verify_qti(f, extended_schema, ctx, color, engine, ignore_import, print = FALSE, schema = schema)
