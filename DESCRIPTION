@@ -41,6 +41,7 @@ Suggests:
     covr,
     dplyr,
     testthat (>= 3.0.0),
+    withr,
     XML,
     readr,
     RCurl,
