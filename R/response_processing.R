@@ -159,6 +159,12 @@ make_default_feedback_cond <- function(answers = list(NULL)) {
     set_ov <- setOutcomeValue(list(identifier = "FEEDBACKBASIC", tag_bv))
     response_if <- responseIf(list(tag_isnull, set_ov))
     tag_lt <- lt(list(variable("SCORE"), variable("MAXSCORE")))
+    # Serialized fractional weights can sum just below MAXSCORE. Relative QTI
+    # tolerance is a percentage: 1e-10 percent allows 1e-12 relative roundoff.
+    full_score <- equal(list(toleranceMode = "relative",
+        tolerance = "0.0000000001 0.0000000001",
+        variable("SCORE"), variable("MAXSCORE")))
+    tag_lt <- and(list(tag_lt, not(full_score)))
 
     tag_bv <- baseValue(list(baseType = "identifier", "incorrect"))
     set_ov <- setOutcomeValue(list(identifier = "FEEDBACKBASIC", tag_bv))

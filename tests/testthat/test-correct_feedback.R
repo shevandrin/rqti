@@ -109,3 +109,20 @@ test_that("correctFeedback() accepts character content", {
     expect_type(sut@content, "list")
     expect_equal(sut@content, list("Some comments"))
 })
+
+
+test_that("full-credit feedback tolerates fractional-weight serialization roundoff", {
+    item <- multipleChoice(choices = c("A", "B", "C", "D", "E"),
+        points = c(1 / 3, 1 / 3, 1 / 3, -0.5, -0.5),
+        feedback = list(correctFeedback("Correct"), wrongFeedback("Incorrect")))
+    doc <- xml2::read_xml(as.character(createResponseProcessing(item)))
+    tolerance <- xml2::xml_find_first(doc,
+        ".//responseElseIf[setOutcomeValue[@identifier='FEEDBACKBASIC']]//equal")
+    expect_equal(xml2::xml_attr(tolerance, "toleranceMode"), "relative")
+    percent <- as.numeric(strsplit(xml2::xml_attr(tolerance, "tolerance"), " ")[[1]])
+    # QTI relative tolerances are percentages. Catch the live OpenOlat case
+    # while keeping genuine shortfalls (including fine custom weights) wrong.
+    expect_true(1 - 0.999999999999999 < percent[1] / 100)
+    expect_true(1 - 0.999999999 > percent[1] / 100)
+    expect_true(1 - 2 / 3 > percent[1] / 100)
+})
