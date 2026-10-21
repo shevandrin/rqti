@@ -76,7 +76,8 @@
 <span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  tolerance_type <span class="op">=</span> <span class="st">"absolute"</span>,</span>
 <span>  include_lower_bound <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  include_upper_bound <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  include_upper_bound <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  incorrect <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">gapNumeric</span><span class="op">(</span></span>
@@ -88,7 +89,8 @@
 <span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  tolerance_type <span class="op">=</span> <span class="st">"absolute"</span>,</span>
 <span>  include_lower_bound <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  include_upper_bound <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  include_upper_bound <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  incorrect <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -146,6 +148,11 @@ lower bound is included in the tolerance rate. Default is <code>TRUE</code>.</p>
 <dt id="arg-include-upper-bound">include_upper_bound<a class="anchor" aria-label="anchor" href="#arg-include-upper-bound"></a></dt>
 <dd><p>A boolean value, optional, specifying whether the
 upper bound is included in the tolerance rate. Default is <code>TRUE</code>.</p></dd>
+
+
+<dt id="arg-incorrect">incorrect<a class="anchor" aria-label="anchor" href="#arg-incorrect"></a></dt>
+<dd><p>Score for an incorrect nonempty response, in points.
+Must be finite and non-positive. Default <code>0</code>; omissions receive zero.</p></dd>
 
 </dl></div>
     <div class="section level2">

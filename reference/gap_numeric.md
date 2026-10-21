@@ -14,7 +14,8 @@ gap_numeric(
   include_lower_bound = TRUE,
   include_upper_bound = TRUE,
   expected_length = size_gap(solution),
-  placeholder = NULL
+  placeholder = NULL,
+  incorrect = NULL
 )
 ```
 
@@ -62,6 +63,11 @@ gap_numeric(
 
   A character string, optional; places helpful text in the text input
   field in the content delivery engine.
+
+- incorrect:
+
+  Score for an incorrect nonempty response, in points. Must be finite
+  and non-positive. Default `0`; omissions receive zero.
 
 ## Value
 

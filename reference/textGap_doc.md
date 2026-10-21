@@ -12,7 +12,8 @@ textGap(
   points = 1,
   placeholder = "",
   expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  case_sensitive = FALSE,
+  incorrect = 0
 )
 
 gapText(
@@ -21,7 +22,8 @@ gapText(
   points = 1,
   placeholder = "",
   expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  case_sensitive = FALSE,
+  incorrect = 0
 )
 ```
 
@@ -58,6 +60,11 @@ gapText(
 
   A boolean value, determining whether the evaluation of the correct
   answer is case sensitive. Default is `FALSE`.
+
+- incorrect:
+
+  Score for an incorrect nonempty response, in points. Must be finite
+  and non-positive. Default `0`; omissions receive zero.
 
 ## Value
 

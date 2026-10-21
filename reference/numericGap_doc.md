@@ -15,7 +15,8 @@ numericGap(
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
-  include_upper_bound = TRUE
+  include_upper_bound = TRUE,
+  incorrect = 0
 )
 
 gapNumeric(
@@ -27,7 +28,8 @@ gapNumeric(
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
-  include_upper_bound = TRUE
+  include_upper_bound = TRUE,
+  incorrect = 0
 )
 ```
 
@@ -85,6 +87,11 @@ gapNumeric(
 
   A boolean value, optional, specifying whether the upper bound is
   included in the tolerance rate. Default is `TRUE`.
+
+- incorrect:
+
+  Score for an incorrect nonempty response, in points. Must be finite
+  and non-positive. Default `0`; omissions receive zero.
 
 ## Value
 

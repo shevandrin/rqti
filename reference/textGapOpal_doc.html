@@ -74,7 +74,8 @@
 <span>  placeholder <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
 <span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="fl">0</span></span>
+<span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  incorrect <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">gapTextOpal</span><span class="op">(</span></span>
@@ -84,7 +85,8 @@
 <span>  placeholder <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
 <span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="fl">0</span></span>
+<span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  incorrect <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,6 +131,11 @@ the correct answer is case sensitive. Default is <code>FALSE</code>.</p></dd>
 <dd><p>A numeric value defining how many characters will be taken
 into account to tolerate spelling mistakes in the evaluation of candidate
 answers. Default is 0.</p></dd>
+
+
+<dt id="arg-incorrect">incorrect<a class="anchor" aria-label="anchor" href="#arg-incorrect"></a></dt>
+<dd><p>Score for an incorrect nonempty response, in points.
+Must be finite and non-positive. Default <code>0</code>; omissions receive zero.</p></dd>
 
 </dl></div>
     <div class="section level2">

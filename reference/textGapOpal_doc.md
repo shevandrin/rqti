@@ -13,7 +13,8 @@ textGapOpal(
   placeholder = "",
   expected_length = size_gap(solution),
   case_sensitive = FALSE,
-  tolerance = 0
+  tolerance = 0,
+  incorrect = 0
 )
 
 gapTextOpal(
@@ -23,7 +24,8 @@ gapTextOpal(
   placeholder = "",
   expected_length = size_gap(solution),
   case_sensitive = FALSE,
-  tolerance = 0
+  tolerance = 0,
+  incorrect = 0
 )
 ```
 
@@ -66,6 +68,11 @@ gapTextOpal(
   A numeric value defining how many characters will be taken into
   account to tolerate spelling mistakes in the evaluation of candidate
   answers. Default is 0.
+
+- incorrect:
+
+  Score for an incorrect nonempty response, in points. Must be finite
+  and non-positive. Default `0`; omissions receive zero.
 
 ## Value
 

@@ -18,6 +18,12 @@ assessment tasks according to the QTI 2.1 standard.
   A numeric value, optional, representing the number of points for this
   gap. Default is `1`.
 
+- `incorrect`:
+
+  Score for an incorrect nonempty response, in points. Default `0`.
+  Numeric/text gaps allow a finite non-positive score; omitted or
+  whitespace-only text responses receive zero.
+
 - `placeholder`:
 
   A character value, optional, used to place helpful text in the text

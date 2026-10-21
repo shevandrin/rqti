@@ -106,6 +106,13 @@ verify_qti(
 
 A `qti_validation_result` or `qti_validation_results_list` object.
 
+## Details
+
+Assessment-test validation checks the generated QTI test and item
+documents. The content-package manifest and OpenOlat's separate
+`QTI21PackageConfig.xml` are not QTI assessment documents and are
+excluded.
+
 ## Functions
 
 - `verify_qti(character)`: Validate character input (file path or XML

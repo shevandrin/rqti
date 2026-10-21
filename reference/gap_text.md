@@ -12,7 +12,8 @@ gap_text(
   points = 1,
   response_identifier = NULL,
   expected_length = size_gap(solution),
-  placeholder = NULL
+  placeholder = NULL,
+  incorrect = NULL
 )
 ```
 
@@ -51,6 +52,11 @@ gap_text(
 
   A character string, optional; places helpful text in the text input
   field in the content delivery engine.
+
+- incorrect:
+
+  Score for an incorrect nonempty response, in points. Must be finite
+  and non-positive. Default `0`; omissions receive zero.
 
 ## Value
 

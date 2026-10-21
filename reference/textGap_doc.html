@@ -73,7 +73,8 @@
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  placeholder <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
-<span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  incorrect <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">gapText</span><span class="op">(</span></span>
@@ -82,7 +83,8 @@
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  placeholder <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
-<span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  incorrect <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -121,6 +123,11 @@ is adjusted by solution size.</p></dd>
 <dt id="arg-case-sensitive">case_sensitive<a class="anchor" aria-label="anchor" href="#arg-case-sensitive"></a></dt>
 <dd><p>A boolean value, determining whether the evaluation of
 the correct answer is case sensitive. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-incorrect">incorrect<a class="anchor" aria-label="anchor" href="#arg-incorrect"></a></dt>
+<dd><p>Score for an incorrect nonempty response, in points.
+Must be finite and non-positive. Default <code>0</code>; omissions receive zero.</p></dd>
 
 </dl></div>
     <div class="section level2">
