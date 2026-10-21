@@ -173,10 +173,18 @@ test_that("Testing createResponseProcessing() for Order class", {
       </setOutcomeValue>
     </responseIf>
     <responseElseIf>
-      <lt>
-        <variable identifier="SCORE"></variable>
-        <variable identifier="MAXSCORE"></variable>
-      </lt>
+      <and>
+        <lt>
+          <variable identifier="SCORE"></variable>
+          <variable identifier="MAXSCORE"></variable>
+        </lt>
+        <not>
+          <equal toleranceMode="relative" tolerance="0.0000000001 0.0000000001">
+            <variable identifier="SCORE"></variable>
+            <variable identifier="MAXSCORE"></variable>
+          </equal>
+        </not>
+      </and>
       <setOutcomeValue identifier="FEEDBACKBASIC">
         <baseValue baseType="identifier">incorrect</baseValue>
       </setOutcomeValue>
