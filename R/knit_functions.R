@@ -116,6 +116,10 @@ render_zip <- function(input, qtijs_path = qtijs_preview_path()) {
 #'   RStudio. FALSE keeps serving until the R process exits, for example in tests.
 #' @details Maxima previews use locally installed Maxima through the R server
 #'   and work in both the RStudio Viewer and an external browser.
+#'   Set `options(rqti.maxima = "/path/to/maxima")` before starting the server
+#'   to pass that executable to RStudio's separate Knit session. On Windows,
+#'   use the command-line launcher, for example
+#'   `"C:/Program Files/Maxima/bin/maxima.bat"`, without shell quotes.
 #' @inheritParams render_qtijs
 #' @return The URL string of the qtijs server.
 #' @examples
@@ -129,6 +133,9 @@ start_server <- function(qtijs_path = qtijs_pkg_path(),
     # this will kill all servers that were started via
     # servr in the session; maybe this is not necessary
     stop_server()
+    # Pass the console's explicit choice to the separate Knit session too.
+    executable <- getOption("rqti.maxima")
+    if (!is.null(executable)) Sys.setenv(RQTI_MAXIMA = resolve_maxima_executable(executable))
     url <- start_maxima_local_server(qtijs_path, daemon)
     message("Serving qti.js with local Maxima support at ", url,
             ". To stop the server, run stop_server().")
@@ -188,7 +195,7 @@ clean_qtijs <- function(qtijs_path = qtijs_pkg_path()) {
 #' @return nothing, has side effects
 #' @export
 stop_server <- function() {
-    Sys.unsetenv(c("RQTI_URL", "RQTI_QTIJS_PATH"))
+    Sys.unsetenv(c("RQTI_URL", "RQTI_QTIJS_PATH", "RQTI_MAXIMA"))
     servr::daemon_stop()
     if (is.function(maxima_local_preview_server$stop)) {
         maxima_local_preview_server$stop()

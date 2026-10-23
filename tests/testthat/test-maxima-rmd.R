@@ -190,3 +190,61 @@ test_that("Rmd fails early for missing references and nonnumeric answers", {
     string_answer <- maxima_rmd_file("string(['a = \"text\"]);", variables = "c(a='string')")
     expect_error(create_question_object(string_answer), "integer or float")
 })
+
+test_that("inline and display math preserve live template references", {
+    skip_on_cran()
+    skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
+    file <- maxima_rmd_file("string(['a = 3]);", question = c(
+        "Inline: $`r template_value('a')` + `r template_value('a')`$.",
+        "Display: $$`r template_value('a')`$$",
+        "Legacy: \\\\(`r template_value('a')`\\\\)",
+        "**`r template_value('a')`**",
+        "`r gap_numeric(solution_variable='a')`"))
+    item <- create_question_object(file)
+    xml <- xml2::read_xml(as.character(create_assessment_item(item)))
+    xml2::xml_ns_strip(xml)
+    expect_length(xml2::xml_find_all(xml, ".//itemBody//printedVariable"), 5)
+    expect_length(xml2::xml_find_all(xml, ".//strong/span/printedVariable"), 1)
+    body <- as.character(xml2::xml_find_first(xml, ".//itemBody"))
+    expect_match(body, "\\(", fixed = TRUE)
+    expect_match(body, "\\[", fixed = TRUE)
+    expect_false(grepl("RQTIMAXIMA|data-rqti-template|&lt;span", body))
+    schema <- xml2::read_xml(system.file("qti_v2p1p2_extension.xsd", package="rqti"))
+    expect_true(xml2::xml_validate(xml2::read_xml(as.character(create_assessment_item(item))), schema))
+})
+
+test_that("the Maxima LaTeX example exports and returns intact TeX strings", {
+    skip_on_cran()
+    skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
+    item <- create_question_object(system.file("extdata", "maxima-latex.Rmd", package="rqti"))
+    block <- item@template[[1]]
+    expect_identical(block@variables, c(formula="string", number_set="string",
+                                       embedded="string", display="string"))
+    request <- list(blocks = list(list(code=block@code,
+        outputs=Map(function(name, type) list(name=name, type=type), names(block@variables), block@variables))),
+        libraries=character())
+    job <- start_maxima_preview_job(request)
+    on.exit(cleanup_maxima_preview_job(job))
+    expect_true(maxima_wait_process(job$process, 30))
+    values <- maxima_preview_job_result(job)[[1]]$values
+    expect_match(values$formula, "x+1", fixed=TRUE)
+    expect_identical(values$number_set, "\\mathbb{R}")
+    expect_identical(values$embedded, paste0("\\(", values$formula, "\\)"))
+    expect_match(values$display, "$$", fixed=TRUE)
+    expect_match(values$display, values$formula, fixed=TRUE)
+})
+
+test_that("dollar delimiters inside Maxima string literals survive Rmd conversion", {
+    skip_on_cran()
+    skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
+    code <- 'string([\'a="$$\\\\mathbb{R}$$"]);'
+    item <- create_question_object(maxima_rmd_file(code, variables="NULL",
+        question=c("`r template_value('a')`", "`r gap_numeric(1)`")))
+    expect_identical(item@template[[1]]@code, code)
+    expect_identical(item@template[[1]]@variables, c(a="string"))
+    job <- start_maxima_preview_job(list(blocks=list(list(code=code,
+        outputs=list(list(name="a",type="string")))),libraries=character()))
+    on.exit(cleanup_maxima_preview_job(job))
+    expect_true(maxima_wait_process(job$process, 30))
+    expect_identical(maxima_preview_job_result(job)[[1]]$values$a, "$$\\mathbb{R}$$")
+})

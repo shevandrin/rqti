@@ -6,7 +6,7 @@
 \usage{
 maxima_check(
   code,
-  executable = getOption("rqti.maxima", Sys.which("maxima")),
+  executable = maxima_default_executable(),
   timeout = getOption("rqti.maxima_timeout", 120),
   file = NULL,
   chunk = NULL,
@@ -17,7 +17,10 @@ maxima_check(
 \arguments{
 \item{code}{A non-empty Maxima program.}
 
-\item{executable}{Path to Maxima, defaulting to option \code{rqti.maxima} or PATH.}
+\item{executable}{Path to the Maxima command-line executable or Windows
+\code{.bat}/\code{.cmd} launcher, defaulting to option \code{rqti.maxima}, the choice
+inherited from \code{\link[=start_server]{start_server()}} in an RStudio Knit session, or PATH.
+Explicit paths may contain spaces and Unicode; do not add shell quotes.}
 
 \item{timeout}{Maximum execution time in seconds. Defaults to option
 \code{rqti.maxima_timeout}, or 120 seconds (including library startup).}

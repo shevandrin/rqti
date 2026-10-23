@@ -17,6 +17,9 @@ Creates a \link{TemplateVariableRef} rendered as QTI \code{printedVariable}. Use
 within an item's \code{content} list or inline in an rqti Rmd document. The item must declare
 the referenced variable in its \code{template} list when exported. This function
 does not evaluate the variable or create an answer field.
+For LaTeX without delimiters, such as Maxima's \code{tex1()} output, put the Rmd
+reference inside \verb{$...$} or \verb{$$...$$}. Insert output that already contains
+delimiters directly, without another pair of math delimiters.
 }
 \examples{
 reference <- template_value("a")

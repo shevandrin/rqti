@@ -60,6 +60,7 @@ Config/testthat/parallel: false
 URL: https://github.com/shevandrin/rqti, https://shevandrin.github.io/rqti/
 BugReports: https://github.com/shevandrin/rqti/issues
 Collate: 
+    'maxima_process.R'
     'rqti.R'
     'MaximaVariables.R'
     'QtiMetadata.R'

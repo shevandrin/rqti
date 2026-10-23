@@ -180,7 +180,7 @@ create_question_object <- function(file) {
     if (length(html_qstn) == 0) {
         stop("The \'question\' section was not found in Rmd", call. = FALSE)
     }
-    references <- collect_maxima_references(html_qstn)
+    references <- collector$references
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
         create_sc_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {

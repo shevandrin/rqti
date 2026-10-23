@@ -41,13 +41,10 @@ validate_maxima_preview_request <- function(request) {
 }
 
 start_maxima_preview_job <- function(request,
-        executable = getOption("rqti.maxima", Sys.which("maxima")),
+        executable = maxima_default_executable(),
         timeout = getOption("rqti.maxima_timeout", 120), cache_wait = TRUE) {
     request <- validate_maxima_preview_request(request)
-    if (!is.character(executable) || length(executable) != 1L || is.na(executable) ||
-        !nzchar(executable) || !nzchar(Sys.which(executable))) {
-        stop("Maxima is required. Install Maxima and put it on PATH, or set options(rqti.maxima = '/path/to/maxima').", call. = FALSE)
-    }
+    executable <- resolve_maxima_executable(executable)
     if (!is.numeric(timeout) || length(timeout) != 1L || !is.finite(timeout) || timeout <= 0) {
         stop("timeout must be a positive number of seconds.", call. = FALSE)
     }
@@ -130,7 +127,7 @@ start_maxima_preview_job <- function(request,
     userdir <- normalizePath(userdir, winslash = "/")
     stdout <- file.path(work, "stdout.txt")
     stderr <- file.path(work, "stderr.txt")
-    process <- processx::process$new(executable,
+    process <- maxima_start_process(executable,
         args = c("--very-quiet", paste0("--userdir=", userdir),
                  paste0("--batch-string=batchload(", q(driver), ")$")),
         stdin = NULL, stdout = stdout, stderr = stderr, cleanup_tree = TRUE)

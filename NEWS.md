@@ -1,5 +1,13 @@
 # rqti (development version)
 
+* Maxima LaTeX now renders in the local preview, including references inside
+  Markdown inline/display math and output with its own math delimiters.
+  Formulas remain rendered after answer submission. See `maxima-latex.Rmd` in
+  the installed examples and the Maxima article.
+* Explicit Maxima executable paths bypass `Sys.which()`, supporting long paths
+  and Unicode. Windows batch launchers use `cmd.exe /c call`. Set `rqti.maxima`
+  before `start_server()` to share the choice with RStudio's Knit session.
+
 * QTI 2.2 schemas are compressed in the installed package and unpacked on demand
   into the R session's temporary directory. All schema dependencies remain
   bundled, so validation works offline. Generated template previews are excluded

@@ -20,7 +20,10 @@
 #' Interrupted library loading discards the incomplete cache.
 #'
 #' @param code A non-empty Maxima program.
-#' @param executable Path to Maxima, defaulting to option `rqti.maxima` or PATH.
+#' @param executable Path to the Maxima command-line executable or Windows
+#'   `.bat`/`.cmd` launcher, defaulting to option `rqti.maxima`, the choice
+#'   inherited from [start_server()] in an RStudio Knit session, or PATH.
+#'   Explicit paths may contain spaces and Unicode; do not add shell quotes.
 #' @param timeout Maximum execution time in seconds. Defaults to option
 #'   `rqti.maxima_timeout`, or 120 seconds (including library startup).
 #' @param file,chunk Optional source filename and chunk label for diagnostics.
@@ -30,7 +33,7 @@
 #'   `"unsupported"`; [maxima_variables()] requires explicit declarations for them.
 #' @return Invisibly, `TRUE` on success, or a named type vector if `outputs=TRUE`.
 #' @export
-maxima_check <- function(code, executable = getOption("rqti.maxima", Sys.which("maxima")),
+maxima_check <- function(code, executable = maxima_default_executable(),
                          timeout = getOption("rqti.maxima_timeout", 120),
                          file = NULL, chunk = NULL,
                          libraries = c("distrib", "descriptive", "stats"),
@@ -48,14 +51,8 @@ maxima_check <- function(code, executable = getOption("rqti.maxima", Sys.which("
     if (!is.character(code) || length(code) != 1L || is.na(code) || !nzchar(trimws(code))) {
         stop("code must be a single non-empty string.", call. = FALSE)
     }
-    if (!is.character(executable) || length(executable) != 1L || is.na(executable) ||
-        !nzchar(executable)) {
-        fail("Maxima is required. Install Maxima and put it on PATH, or set options(rqti.maxima = '/path/to/maxima').")
-    }
-    if (!nzchar(Sys.which(executable))) {
-        fail(paste0("Maxima executable not found: ", executable,
-                    ". Install Maxima and put it on PATH, or set options(rqti.maxima = '/path/to/maxima')."))
-    }
+    executable <- tryCatch(resolve_maxima_executable(executable),
+                           error = function(e) fail(conditionMessage(e)))
     if (!is.numeric(timeout) || length(timeout) != 1L || is.na(timeout) ||
         !is.finite(timeout) || timeout <= 0) {
         stop("timeout must be a positive number of seconds.", call. = FALSE)
@@ -128,7 +125,7 @@ maxima_check <- function(code, executable = getOption("rqti.maxima", Sys.which("
     # pipes from blocking Maxima while we wait.
     stdout <- file.path(work, "stdout.txt")
     stderr <- file.path(work, "stderr.txt")
-    process <- tryCatch(processx::process$new(executable,
+    process <- tryCatch(maxima_start_process(executable,
         args = c("--very-quiet", paste0("--userdir=", userdir),
                  paste0("--batch-string=batchload(", quote_maxima(driver), ")$")),
         stdin = NULL, stdout = stdout, stderr = stderr, cleanup_tree = TRUE),
@@ -203,6 +200,8 @@ resolve_maxima_types <- function(observed, variables = NULL) {
 # Only installed for the duration of one rqti conversion. No global template
 # collector or persistent Maxima session is shared between documents.
 setup_maxima_knitting <- function(file, collector) {
+    collector$references <- list()
+    reference_prefix <- paste0("RQTIMAXIMA", gsub("[^A-Za-z0-9]", "", basename(tempfile())), "REF")
     old_engines <- knitr::knit_engines$get()
     old_hooks <- knitr::knit_hooks$get()
     old_option_hooks <- knitr::opts_hooks$get()
@@ -241,7 +240,10 @@ setup_maxima_knitting <- function(file, collector) {
         value <- previous_inline(code, envir)
         if (is(value, "TemplateVariableRef")) {
             validObject(value)
-            marker <- as.character(htmltools::tags$span(`data-rqti-template` = value@identifier))
+            # HTML is escaped inside Pandoc math. An alphanumeric placeholder
+            # survives both Markdown and TeX, including dollar-delimited math.
+            marker <- paste0(reference_prefix, length(collector$references) + 1L, "END")
+            collector$references[[marker]] <- value
             return(knitr::asis_output(marker))
         }
         value
@@ -251,19 +253,6 @@ setup_maxima_knitting <- function(file, collector) {
         knitr::knit_hooks$restore(old_hooks)
         knitr::opts_hooks$restore(old_option_hooks)
     }
-}
-
-collect_maxima_references <- function(question) {
-    nodes <- xml2::xml_find_all(question, ".//span[@data-rqti-template]")
-    if (!length(nodes)) return(list())
-    refs <- lapply(xml2::xml_attr(nodes, "data-rqti-template"), template_value)
-    prefix <- paste0("RQTI_MAXIMA_", basename(tempfile()), "_")
-    markers <- paste0(prefix, seq_along(nodes), "_END")
-    for (i in seq_along(nodes)) {
-        xml2::xml_set_attr(nodes[[i]], "data-rqti-template", NULL)
-        xml2::xml_set_text(nodes[[i]], markers[i])
-    }
-    setNames(refs, markers)
 }
 
 restore_maxima_references <- function(content, references) {
@@ -288,7 +277,7 @@ restore_maxima_references <- function(content, references) {
             if (start > cursor) result <- c(result, list(substr(part, cursor, start - 1L)))
             marker <- substr(part, start, start + size - 1L)
             used <- c(used, marker)
-            result <- c(result, list(references[[marker]]))
+            result <- c(result, list("<span>", references[[marker]], "</span>"))
             cursor <- start + size
         }
         if (cursor <= nchar(part)) result <- c(result, list(substr(part, cursor, nchar(part))))

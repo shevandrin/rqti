@@ -41,7 +41,7 @@ maxima_stop_process <- function(process) {
 }
 
 maxima_cache_identity <- function(executable, timeout) {
-    executable <- normalizePath(Sys.which(executable), winslash = "/", mustWork = TRUE)
+    executable <- resolve_maxima_executable(executable)
     info <- file.info(executable)
     stamp <- paste(executable, info$size, as.numeric(info$mtime), R.version$platform)
     cached <- maxima_cache_state$identities[[stamp]]
@@ -53,7 +53,7 @@ maxima_cache_identity <- function(executable, timeout) {
     userdir <- file.path(work, "user")
     dir.create(userdir)
     stdout <- file.path(work, "stdout")
-    process <- processx::process$new(executable, args = c("--very-quiet",
+    process <- maxima_start_process(executable, args = c("--very-quiet",
         paste0("--userdir=", normalizePath(userdir, winslash = "/")),
         paste0('--batch-string=display2d:false$ printf(true,"__RQTI_CACHE_BUILD__~a~%",',
                'string(makelist(args(build_info())[i],i,1,5)))$ quit();')),

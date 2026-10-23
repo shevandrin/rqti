@@ -31,6 +31,10 @@ file on start up.
 
 Maxima previews use locally installed Maxima through the R server
 and work in both the RStudio Viewer and an external browser.
+Set \code{options(rqti.maxima = "/path/to/maxima")} before starting the server
+to pass that executable to RStudio's separate Knit session. On Windows,
+use the command-line launcher, for example
+\code{"C:/Program Files/Maxima/bin/maxima.bat"}, without shell quotes.
 }
 \examples{
 \dontrun{

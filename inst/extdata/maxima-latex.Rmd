@@ -1,0 +1,42 @@
+---
+type: gap
+identifier: maxima_latex
+title: "LaTeX from Maxima"
+knit: rqti::render_qtijs
+---
+
+<!-- Run rqti::start_server() in the RStudio console before clicking Knit. -->
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+```{maxima latex}
+block([expression],
+    expression: (x + 1)^2,
+    string([
+        'formula = tex1(expression),
+        'number_set = "\\mathbb{R}",
+        'embedded = concat("\\(", tex1(expression), "\\)"),
+        'display = tex(expression, false)
+    ])
+);
+```
+
+# question
+
+Inline formula: $`r template_value("formula")`$.
+
+Display formula:
+
+$$`r template_value("formula")`$$
+
+Literal LaTeX: $`r template_value("number_set")`$.
+
+Output that already contains inline delimiters: `r template_value("embedded")`.
+
+Output from `tex(expression, false)`, including display delimiters:
+
+`r template_value("display")`
+
+What is the value at $x = 0$? `r gap_numeric(1, tolerance_type="exact")`

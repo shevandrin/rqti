@@ -298,6 +298,9 @@ function prepareMaximaTemplate(item) {
     [...html.querySelectorAll(INTERACTION_SEL)].forEach(el=>el.init ? el.init():null);
     panel.remove(); content.forEach(el=>el.hidden=false);
     controls.forEach(([el,disabled])=>el.disabled=disabled);
+    // Maxima finishes after the initial page typeset. Process the newly
+    // populated TeX only once its content is visible.
+    typesetMathJax(html);
     html.dataset.maximaState='ready';
   })().catch(error=>{
     html.dataset.maximaState='error'; panel.setAttribute('role','alert');
@@ -4253,13 +4256,19 @@ function add_span_icon(cond, element, vis = true) {
 // Updates printed variables with latest variable values.
 function updatePrintedVariables(item) {
   let printedVars;
+  let htmlItem;
+  let math = [];
   if (item.tagName=="assessmentItem") {
-    let htmlItem = getHTMLItemById(item.id);
+    htmlItem = getHTMLItemById(item.id);
+    if (hasMaximaTemplate(item) || item.maximaPreparation) groupPrintedVariableMath(htmlItem);
+    math = [...htmlItem.querySelectorAll('.qtijs-template-math')];
     printedVars = [...htmlItem.querySelectorAll(PRINTEDVAR_SEL)];
+    math.forEach(container=>printedVars.push(...container.templateMathSource.querySelectorAll(PRINTEDVAR_SEL)));
   } else if (item.tagName=="assessmentTest") {
     let sel = `${TEST_FDBK_SEL} ${PRINTEDVAR_SEL}`
     printedVars = [...document.querySelectorAll(sel)];
   }
+  let changed = false;
   if (printedVars) {
     printedVars.forEach(pv=>{
       let variable = pv.getAttribute(ID);
@@ -4271,17 +4280,71 @@ function updatePrintedVariables(item) {
           value = value.join(pv.getAttribute(DELIMITER));
         let prefix = pv.getAttribute(PREFIX_ATTRIB)||"";
         let suffix = pv.getAttribute(SUFFIX)||"";
-        let prevInnerHTML = pv.innerHTML;
-        pv.innerHTML = prefix+value+suffix;
-        if (pv.innerHTML != prevInnerHTML)
+        let rendered = prefix+value+suffix;
+        // MathJax replaces innerHTML with its output. Compare the source value,
+        // so scoring an unchanged item does not destroy already typeset math.
+        if (pv.printedSource !== rendered) {
+          clearTypesetMath(pv);
+          pv.innerHTML = rendered;
+          pv.printedSource = rendered;
+          changed = true;
           setDirty(item);
+        }
       }
     });
   }
+  math.forEach(container=>{
+    const source=container.templateMathSource.textContent;
+    if(container.printedSource!==source) {
+      clearTypesetMath(container);
+      container.textContent=source;
+      container.printedSource=source;
+      changed=true;
+    }
+  });
+  if(changed && htmlItem && htmlItem.dataset.maximaState!=='loading') typesetMathJax(htmlItem);
+}
+
+// TeX delimiters and printedVariable spans can straddle HTML nodes. MathJax 2
+// only scans adjacent text nodes, so retain the live source separately and
+// present each complete formula as text in a single container.
+function groupPrintedVariableMath(htmlItem) {
+  const blocks=new Set([...htmlItem.querySelectorAll(PRINTEDVAR_SEL)]
+    .map(pv=>pv.closest('p,li,td,th,div,section')).filter(Boolean));
+  for(const block of blocks) {
+    const walker=document.createTreeWalker(block,NodeFilter.SHOW_TEXT);
+    const nodes=[];
+    let text='', node;
+    while((node=walker.nextNode())) {
+      if(node.parentElement.closest('script,style,.qtijs-template-math,.MathJax_CHTML')) continue;
+      nodes.push({node,start:text.length,end:text.length+node.length});
+      text+=node.nodeValue;
+    }
+    const matches=[...text.matchAll(/\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\]|\$\$[\s\S]*?\$\$/g)];
+    for(const match of matches.reverse()) {
+      const start=match.index, end=start+match[0].length;
+      const first=nodes.find(entry=>entry.end>start);
+      const last=nodes.find(entry=>entry.end>=end);
+      const range=document.createRange();
+      range.setStart(first.node,start-first.start);
+      range.setEnd(last.node,end-last.start);
+      if(!range.cloneContents().querySelector(PRINTEDVAR_SEL)) continue;
+      const container=document.createElement('span');
+      container.className='qtijs-template-math';
+      container.templateMathSource=range.extractContents();
+      range.insertNode(container);
+    }
+  }
+}
+
+function clearTypesetMath(elem) {
+  if(window.MathJax && MathJax.Hub && MathJax.Hub.getAllJax)
+    MathJax.Hub.getAllJax(elem).forEach(jax=>jax.Remove());
 }
 
 // it rounds float variable, when it has more than three decimals
 function roundIfMoreThanThreeDecimals(vrb) {
+    if (typeof vrb !== 'number') return vrb;
     let vrbStr = vrb.toString();
     let parts = vrbStr.split('.');
     if (parts.length >1 && parts[1].length > 3) {
