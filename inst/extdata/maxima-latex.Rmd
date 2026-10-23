@@ -12,31 +12,23 @@ library(rqti)
 ```
 
 ```{maxima latex}
-block([expression],
-    expression: (x + 1)^2,
+block([],
     string([
-        'formula = tex1(expression),
         'number_set = "\\mathbb{R}",
-        'embedded = concat("\\(", tex1(expression), "\\)"),
-        'display = tex(expression, false)
+        'embedded = "\\(\\mathbb{R}\\)"
     ])
 );
 ```
 
 # question
 
-Inline formula: $`r template_value("formula")`$.
+Inline math (try 5): \\(`r template_value("number_set")`\\).
 
-Display formula:
+Display math (try 6):
 
-$$`r template_value("formula")`$$
+$$`r template_value("number_set")`$$
 
-Literal LaTeX: $`r template_value("number_set")`$.
+Math delimiters included in the returned string (`tex_embedded`):
+`r template_value("embedded")`.
 
-Output that already contains inline delimiters: `r template_value("embedded")`.
-
-Output from `tex(expression, false)`, including display delimiters:
-
-`r template_value("display")`
-
-What is the value at $x = 0$? `r gap_numeric(1, tolerance_type="exact")`
+What is $1 + 0$? `r gap_numeric(1, tolerance_type="exact")`

@@ -1,5 +1,9 @@
 # rqti (development version)
 
+* Rmd template references no longer add a span around `printedVariable`.
+  ONYX replaces the reference with text, allowing surrounding inline/display
+  TeX delimiters to be recognized without first opening the online editor.
+
 * Maxima LaTeX now renders in the local preview, including references inside
   Markdown inline/display math and output with its own math delimiters.
   Formulas remain rendered after answer submission. See `maxima-latex.Rmd` in

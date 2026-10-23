@@ -277,7 +277,10 @@ restore_maxima_references <- function(content, references) {
             if (start > cursor) result <- c(result, list(substr(part, cursor, start - 1L)))
             marker <- substr(part, start, start + size - 1L)
             used <- c(used, marker)
-            result <- c(result, list("<span>", references[[marker]], "</span>"))
+            # ONYX replaces printedVariable with its value. An extra span here
+            # would split surrounding TeX delimiters into different HTML nodes,
+            # which MathJax cannot scan as a complete formula after import.
+            result <- c(result, list(references[[marker]]))
             cursor <- start + size
         }
         if (cursor <= nchar(part)) result <- c(result, list(substr(part, cursor, nchar(part))))

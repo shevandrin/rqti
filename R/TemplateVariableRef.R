@@ -69,7 +69,7 @@ validate_template_references <- function(object) {
 #' within an item's `content` list or inline in an rqti Rmd document. The item must declare
 #' the referenced variable in its `template` list when exported. This function
 #' does not evaluate the variable or create an answer field.
-#' For LaTeX without delimiters, such as Maxima's `tex1()` output, put the Rmd
+#' For a LaTeX string without delimiters, put the Rmd
 #' reference inside `$...$` or `$$...$$`. Insert output that already contains
 #' delimiters directly, without another pair of math delimiters.
 #' @param identifier A single valid QTI identifier of the template variable.

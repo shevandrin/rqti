@@ -142,7 +142,7 @@ test_that("Rmd preserves live Maxima templates, displayed references and dynamic
     expect_identical(item@template[[1]]@variables, c(a="integer", b="integer", answer="integer"))
     xml <- xml2::read_xml(as.character(create_assessment_item(item)))
     xml2::xml_ns_strip(xml)
-    expect_length(xml2::xml_find_all(xml, ".//strong/span/printedVariable"), 2)
+    expect_length(xml2::xml_find_all(xml, ".//strong/printedVariable"), 2)
     expect_length(xml2::xml_find_all(xml, ".//customOperator[@definition='MAXIMA']"), 4)
     expect_length(xml2::xml_find_all(xml, "./responseDeclaration/correctResponse"), 0)
     expect_identical(xml2::xml_attr(xml2::xml_find_all(xml, ".//setCorrectResponse/variable"), "identifier"), c("answer", "answer"))
@@ -204,7 +204,11 @@ test_that("inline and display math preserve live template references", {
     xml <- xml2::read_xml(as.character(create_assessment_item(item)))
     xml2::xml_ns_strip(xml)
     expect_length(xml2::xml_find_all(xml, ".//itemBody//printedVariable"), 5)
-    expect_length(xml2::xml_find_all(xml, ".//strong/span/printedVariable"), 1)
+    expect_length(xml2::xml_find_all(xml, ".//strong/printedVariable"), 1)
+    # ONYX substitutes the value as text. Keep surrounding TeX and variables
+    # adjacent, so the resulting formula needs no online-editor normalization.
+    expect_length(xml2::xml_find_all(xml, ".//itemBody//span/printedVariable"), 0)
+    expect_length(xml2::xml_find_all(xml, ".//itemBody/p/printedVariable | .//itemBody/div/p/printedVariable"), 4)
     body <- as.character(xml2::xml_find_first(xml, ".//itemBody"))
     expect_match(body, "\\(", fixed = TRUE)
     expect_match(body, "\\[", fixed = TRUE)
@@ -218,8 +222,7 @@ test_that("the Maxima LaTeX example exports and returns intact TeX strings", {
     skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
     item <- create_question_object(system.file("extdata", "maxima-latex.Rmd", package="rqti"))
     block <- item@template[[1]]
-    expect_identical(block@variables, c(formula="string", number_set="string",
-                                       embedded="string", display="string"))
+    expect_identical(block@variables, c(number_set="string", embedded="string"))
     request <- list(blocks = list(list(code=block@code,
         outputs=Map(function(name, type) list(name=name, type=type), names(block@variables), block@variables))),
         libraries=character())
@@ -227,11 +230,8 @@ test_that("the Maxima LaTeX example exports and returns intact TeX strings", {
     on.exit(cleanup_maxima_preview_job(job))
     expect_true(maxima_wait_process(job$process, 30))
     values <- maxima_preview_job_result(job)[[1]]$values
-    expect_match(values$formula, "x+1", fixed=TRUE)
     expect_identical(values$number_set, "\\mathbb{R}")
-    expect_identical(values$embedded, paste0("\\(", values$formula, "\\)"))
-    expect_match(values$display, "$$", fixed=TRUE)
-    expect_match(values$display, values$formula, fixed=TRUE)
+    expect_identical(values$embedded, "\\(\\mathbb{R}\\)")
 })
 
 test_that("dollar delimiters inside Maxima string literals survive Rmd conversion", {
