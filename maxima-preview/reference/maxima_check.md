@@ -13,7 +13,7 @@ required.
 ``` r
 maxima_check(
   code,
-  executable = getOption("rqti.maxima", Sys.which("maxima")),
+  executable = maxima_default_executable(),
   timeout = getOption("rqti.maxima_timeout", 120),
   file = NULL,
   chunk = NULL,
@@ -30,7 +30,12 @@ maxima_check(
 
 - executable:
 
-  Path to Maxima, defaulting to option `rqti.maxima` or PATH.
+  Path to the Maxima command-line executable or Windows `.bat`/`.cmd`
+  launcher, defaulting to option `rqti.maxima`, the choice inherited
+  from
+  [`start_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/start_server.md)
+  in an RStudio Knit session, or PATH. Explicit paths may contain spaces
+  and Unicode; do not add shell quotes.
 
 - timeout:
 

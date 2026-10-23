@@ -69,23 +69,25 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">textGapOpal</span><span class="op">(</span></span>
-<span>  <span class="va">solution</span>,</span>
+<span>  solution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  response_identifier <span class="op">=</span> <span class="fu">generate_id</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"gap"</span><span class="op">)</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  placeholder <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
+<span>  expected_length <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">solution_variable</span><span class="op">)</span><span class="op">)</span> <span class="fl">10</span> <span class="kw">else</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
 <span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="fl">0</span></span>
+<span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  solution_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">gapTextOpal</span><span class="op">(</span></span>
-<span>  <span class="va">solution</span>,</span>
+<span>  solution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  response_identifier <span class="op">=</span> <span class="fu">generate_id</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"gap"</span><span class="op">)</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  placeholder <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
+<span>  expected_length <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">solution_variable</span><span class="op">)</span><span class="op">)</span> <span class="fl">10</span> <span class="kw">else</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
 <span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  tolerance <span class="op">=</span> <span class="fl">0</span></span>
+<span>  tolerance <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  solution_variable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -95,7 +97,7 @@
 
 <dl><dt id="arg-solution">solution<a class="anchor" aria-label="anchor" href="#arg-solution"></a></dt>
 <dd><p>A character vector containing the values considered as correct
-answers.</p></dd>
+answers. Omit when using <code>solution_variable</code>.</p></dd>
 
 
 <dt id="arg-response-identifier">response_identifier<a class="anchor" aria-label="anchor" href="#arg-response-identifier"></a></dt>
@@ -118,7 +120,7 @@ is "".</p></dd>
 <dt id="arg-expected-length">expected_length<a class="anchor" aria-label="anchor" href="#arg-expected-length"></a></dt>
 <dd><p>A numeric value, optional, used to set the
 size of the text input field in the content delivery engine. Default value
-is adjusted by solution size.</p></dd>
+is adjusted by solution size, or 10 for a dynamic answer.</p></dd>
 
 
 <dt id="arg-case-sensitive">case_sensitive<a class="anchor" aria-label="anchor" href="#arg-case-sensitive"></a></dt>
@@ -130,6 +132,12 @@ the correct answer is case sensitive. Default is <code>FALSE</code>.</p></dd>
 <dd><p>A numeric value defining how many characters will be taken
 into account to tolerate spelling mistakes in the evaluation of candidate
 answers. Default is 0.</p></dd>
+
+
+<dt id="arg-solution-variable">solution_variable<a class="anchor" aria-label="anchor" href="#arg-solution-variable"></a></dt>
+<dd><p>An optional QTI identifier of a <code>string</code> template
+variable used as the correct answer. Requires <code>tolerance = 0</code> and cannot be
+combined with <code>solution</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

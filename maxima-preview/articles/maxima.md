@@ -5,7 +5,8 @@ exercise is instantiated. One exported item can therefore produce many
 random variants. You can write the calculations in a `{maxima}` chunk,
 display their outputs with
 [`template_value()`](https://shevandrin.github.io/rqti/maxima-preview/reference/template_value.md),
-and bind a numeric answer with `gap_numeric(solution_variable = ...)`.
+and bind a correct answer with `gap_numeric(solution_variable = ...)` or
+`gap_text(solution_variable = ...)`.
 
 This article describes the experimental `prototype/maxima-rmd` branch.
 Install that version with R \>= 4.1, then restart your RStudio R
@@ -23,6 +24,25 @@ Install native Maxima separately and put its executable on PATH. In R,
 `options(rqti.maxima = "/path/to/maxima")` to choose an executable
 explicitly. No additional R interface package is required. Ordinary rqti
 exercises do not require Maxima.
+
+On Windows, choose the command-line launcher provided by your Maxima
+installation. Its name and location depend on the installation; use a
+path you have verified locally. Use forward slashes (or doubled
+backslashes in an R string), without adding shell quotes around the
+path. Explicit file paths are checked directly instead of being looked
+up with [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html).
+
+Set the option **before** starting the server:
+[`start_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/start_server.md)
+passes that choice to RStudio’s separate Knit session. Restart the
+server after changing it. Running
+[`options()`](https://rdrr.io/r/base/options.html) in the console alone
+does not set an option in a separate R session.
+
+The [Windows configuration problem reported in issue
+\#257](https://github.com/shevandrin/rqti/issues/257#issuecomment-6360719800)
+has not yet been reproduced on Windows. An explicit launcher path is a
+configuration option; it is not a confirmed workaround for that report.
 
 rqti runs Maxima locally when checking Rmd chunks and generating
 previews. An exported exercise needs a delivery platform that supports
@@ -141,9 +161,145 @@ results. The extra text output can be displayed with
 execution check.
 
 Lists and other structured values need an explicit `string` declaration
-when used for display. This does not create a generated image or a
-dynamic text answer field. Dynamic answer bindings currently support
-numeric gaps.
+when used for display. This does not create a generated image.
+
+### Text answers
+
+Use `gap_text(solution_variable = "answer")` when the Maxima output is a
+`string`. The output supplies one correct text answer for each attempt;
+submitting an answer preserves the generated word. Matching ignores case
+by default; set `case_sensitive = TRUE` to require matching
+capitalization. The entire string must match, including spaces and
+punctuation. Dynamic text answers do not support spelling tolerance or a
+list of alternative answers. `textGap(solution_variable = "answer")`
+provides the same binding in the S4 API.
+
+This example can be previewed in qti.js and exported for ONYX/OPAL:
+
+```` markdown
+---
+type: gap
+identifier: maxima_text_answer
+title: "Text answers from Maxima"
+knit: rqti::render_qtijs
+---
+
+<!-- Run rqti::start_server() in the RStudio console before clicking Knit. -->
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+```{maxima words}
+block([answer],
+    answer: ["Blue", "Green", "Orange"][random(3) + 1],
+    string(['answer = answer])
+);
+```
+
+# question
+
+The generated word is **`r template_value("answer")`**.
+
+Copy it here (capitalization does not matter):
+`r gap_text(solution_variable = "answer", response_identifier = "insensitive")`
+
+Copy it here again (capitalization must match):
+`r gap_text(solution_variable = "answer", case_sensitive = TRUE, response_identifier = "sensitive")`
+````
+
+To try it, copy the installed example to a writable location, start the
+preview server, and open the copy in RStudio:
+
+``` r
+
+example <- file.path(tempdir(), "maxima-text-answer.Rmd")
+file.copy(
+  system.file("extdata", "maxima-text-answer.Rmd", package = "rqti"),
+  example,
+  overwrite = TRUE
+)
+rqti::start_server()
+rstudioapi::navigateToFile(example)
+```
+
+Click **Knit**. Copying the word in lowercase earns one point; copying
+its capitalization exactly into both gaps earns two. Wrong or empty
+answers earn zero. Submitting preserves the word; reloading generates
+another variant. These cases have been tested with native Maxima in
+qti.js, including Unicode, punctuation, and numeric-looking strings such
+as `"0"` and `"01"`. The ONYX/OPAL export validates against the extended
+schema; live OPAL scoring for generated text answers still needs
+verification.
+
+### Display LaTeX strings
+
+Return LaTeX as a Maxima string. The following forms have been checked
+in a fresh ONYX/OPAL attempt and after answer submission:
+
+- Inline math: put `\\(` and `\\)` around the inline
+  [`template_value()`](https://shevandrin.github.io/rqti/maxima-preview/reference/template_value.md)
+  reference in Markdown (try 5 in the original example).
+- Display math: put `$$` around the reference (try 6).
+- Self-contained inline math: return a string including `\\(` and `\\)`
+  in Maxima, then insert the reference directly (`tex_embedded`).
+
+The [OPAL LaTeX
+test](https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/56806965249)
+contains the original tries. Tries 5, 6, and `tex_embedded` render
+correctly; the local qti.js preview supports these forms too.
+
+Backslashes in a literal **Maxima string** must be doubled:
+`"\\mathbb{R}"` produces `\mathbb{R}`. The doubled backslashes in
+Markdown’s `\\(...\\)` likewise preserve the math delimiters; a single
+`\(` in Markdown loses its backslash during conversion.
+
+The local preview typesets the completed Maxima output and preserves it
+when answers are submitted. The exported XML keeps live
+`printedVariable` references, including those inside math, rather than
+the sample values from the local check. Rmd references are inserted
+without an extra HTML span, so ONYX can substitute the values without
+interrupting the surrounding formula. To put the delimiters inside the
+generated value itself instead, use the `embedded` output below.
+
+The complete example shows all three forms:
+
+```` markdown
+---
+type: gap
+identifier: maxima_latex
+title: "LaTeX from Maxima"
+knit: rqti::render_qtijs
+---
+
+<!-- Run rqti::start_server() in the RStudio console before clicking Knit. -->
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+```{maxima latex}
+block([],
+    string([
+        'number_set = "\\mathbb{R}",
+        'embedded = "\\(\\mathbb{R}\\)"
+    ])
+);
+```
+
+# question
+
+Inline math (try 5): \\(`r template_value("number_set")`\\).
+
+Display math (try 6):
+
+$$`r template_value("number_set")`$$
+
+Math delimiters included in the returned string (`tex_embedded`):
+`r template_value("embedded")`.
+
+What is $1 + 0$? `r gap_numeric(1, tolerance_type="exact")`
+````
 
 rqti executes each Rmd Maxima chunk before export, including chunks with
 explicit types. Syntax/runtime errors, missing outputs, incompatible

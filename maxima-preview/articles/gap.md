@@ -300,12 +300,12 @@ This helper function is designed to generate a formatted string
 describing a gap in Rmd content, where the answer is a string:
 
 ``` r
-gap2 <- gap_text(gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"),
+gap2 <- gap_text(c("Bildungsportal Sachsen", "Bildungs Portal Sachsen"),
                           tolerance = 4, case_sensitive = FALSE, 
                           placeholder = "text without special characters",
-                          expected_length = 25))
+                          expected_length = 25)
 cat(gap2)
-<gap>{solution: '<gap>{solution: [''Bildungsportal Sachsen'', ''Bildungs Portal Sachsen''], tolerance: 4, case_sensitive: false, points: 1, expected_length: 25, placeholder: ''text without special characters'', type: ''text_opal''}</gap>', case_sensitive: false, points: 1, expected_length: 211, type: 'text'}</gap>
+<gap>{solution: ['Bildungsportal Sachsen', 'Bildungs Portal Sachsen'], tolerance: 4, case_sensitive: false, points: 1, expected_length: 25, placeholder: 'text without special characters', type: 'text_opal'}</gap>
 ```
 
 Argument list of `gap_text`:
@@ -320,10 +320,22 @@ answers.
 Defines how many characters will be taken into account to tolerate
 spelling mistakes. The exact algorithm of OPAL is unclear.
 
-### case_sensitive (works only in LMS OPAL)
+### case_sensitive
 
 Determines whether the evaluation of the correct answer is case
 sensitive. Default is `FALSE`.
+
+### solution_variable (experimental Maxima branch)
+
+Use `gap_text(solution_variable = "answer")` to take the correct answer
+from a Maxima `string` output instead of supplying a fixed `solution`.
+Use `case_sensitive = TRUE` to require matching capitalization. Dynamic
+text answers accept one correct string and do not support spelling
+tolerance or alternative answer lists. The S4 equivalent is
+`textGap(solution_variable = "answer")`. See [Maxima
+exercises](https://shevandrin.github.io/rqti/maxima-preview/articles/maxima.html#text-answers)
+for a complete Rmd example, installation, preview instructions, and the
+current OPAL verification status.
 
 ### points
 

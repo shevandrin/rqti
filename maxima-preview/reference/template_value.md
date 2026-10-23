@@ -5,7 +5,10 @@ Creates a
 rendered as QTI `printedVariable`. Use it within an item's `content`
 list or inline in an rqti Rmd document. The item must declare the
 referenced variable in its `template` list when exported. This function
-does not evaluate the variable or create an answer field.
+does not evaluate the variable or create an answer field. For a LaTeX
+string without delimiters, put the Rmd reference inside `$...$` or
+`$$...$$`. Insert output that already contains delimiters directly,
+without another pair of math delimiters.
 
 ## Usage
 

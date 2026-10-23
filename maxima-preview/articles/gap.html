@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Gap tasks</h1>
             
-            <h4 data-toc-skip class="date">2026-10-12</h4>
+            <h4 data-toc-skip class="date">2026-10-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/prototype/maxima-rmd/vignettes/gap.Rmd" class="external-link"><code>vignettes/gap.Rmd</code></a></small>
       <div class="d-none name"><code>gap.Rmd</code></div>
@@ -402,12 +402,12 @@ for hints (e.g. <em>numbers only</em>).</p>
 </h2>
 <p>This helper function is designed to generate a formatted string
 describing a gap in Rmd content, where the answer is a string:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>gap2 <span class="ot">&lt;-</span> <span class="fu">gap_text</span>(<span class="fu">gap_text</span>(<span class="fu">c</span>(<span class="st">"Bildungsportal Sachsen"</span>, <span class="st">"Bildungs Portal Sachsen"</span>),</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>gap2 <span class="ot">&lt;-</span> <span class="fu">gap_text</span>(<span class="fu">c</span>(<span class="st">"Bildungsportal Sachsen"</span>, <span class="st">"Bildungs Portal Sachsen"</span>),</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>                          <span class="at">tolerance =</span> <span class="dv">4</span>, <span class="at">case_sensitive =</span> <span class="cn">FALSE</span>, </span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>                          <span class="at">placeholder =</span> <span class="st">"text without special characters"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                          <span class="at">expected_length =</span> <span class="dv">25</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                          <span class="at">expected_length =</span> <span class="dv">25</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">cat</span>(gap2)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> <span class="st">'&lt;gap&gt;{solution: [''Bildungsportal Sachsen'', ''Bildungs Portal Sachsen''], tolerance: 4, case_sensitive: false, points: 1, expected_length: 25, placeholder: ''text without special characters'', type: ''text_opal''}&lt;/gap&gt;'</span>, case_sensitive<span class="sc">:</span> false, points<span class="sc">:</span> <span class="dv">1</span>, expected_length<span class="sc">:</span> <span class="dv">211</span>, type<span class="sc">:</span> <span class="st">'text'</span>}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="sc">&lt;</span>gap<span class="sc">&gt;</span>{solution<span class="sc">:</span> [<span class="st">'Bildungsportal Sachsen'</span>, <span class="st">'Bildungs Portal Sachsen'</span>], tolerance<span class="sc">:</span> <span class="dv">4</span>, case_sensitive<span class="sc">:</span> false, points<span class="sc">:</span> <span class="dv">1</span>, expected_length<span class="sc">:</span> <span class="dv">25</span>, placeholder<span class="sc">:</span> <span class="st">'text without special characters'</span>, type<span class="sc">:</span> <span class="st">'text_opal'</span>}<span class="sc">&lt;</span><span class="er">/</span>gap<span class="sc">&gt;</span></span></code></pre></div>
 <p>Argument list of <code>gap_text</code>:</p>
 <div class="section level3">
 <h3 id="solution-1">solution<a class="anchor" aria-label="anchor" href="#solution-1"></a>
@@ -422,10 +422,23 @@ answers.</p>
 spelling mistakes. The exact algorithm of OPAL is unclear.</p>
 </div>
 <div class="section level3">
-<h3 id="case_sensitive-works-only-in-lms-opal">case_sensitive (works only in LMS OPAL)<a class="anchor" aria-label="anchor" href="#case_sensitive-works-only-in-lms-opal"></a>
+<h3 id="case_sensitive">case_sensitive<a class="anchor" aria-label="anchor" href="#case_sensitive"></a>
 </h3>
 <p>Determines whether the evaluation of the correct answer is case
 sensitive. Default is <code>FALSE</code>.</p>
+</div>
+<div class="section level3">
+<h3 id="solution_variable-experimental-maxima-branch">solution_variable (experimental Maxima branch)<a class="anchor" aria-label="anchor" href="#solution_variable-experimental-maxima-branch"></a>
+</h3>
+<p>Use <code>gap_text(solution_variable = "answer")</code> to take the
+correct answer from a Maxima <code>string</code> output instead of
+supplying a fixed <code>solution</code>. Use
+<code>case_sensitive = TRUE</code> to require matching capitalization.
+Dynamic text answers accept one correct string and do not support
+spelling tolerance or alternative answer lists. The S4 equivalent is
+<code>textGap(solution_variable = "answer")</code>. See <a href="maxima.html#text-answers">Maxima exercises</a> for a complete Rmd
+example, installation, preview instructions, and the current OPAL
+verification status.</p>
 </div>
 <div class="section level3">
 <h3 id="points-1">points<a class="anchor" aria-label="anchor" href="#points-1"></a>

@@ -69,13 +69,14 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gap_text</span><span class="op">(</span></span>
-<span>  <span class="va">solution</span>,</span>
+<span>  solution <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tolerance <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  case_sensitive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  points <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  response_identifier <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  expected_length <span class="op">=</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
-<span>  placeholder <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  expected_length <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">solution_variable</span><span class="op">)</span><span class="op">)</span> <span class="fl">10</span> <span class="kw">else</span> <span class="fu">size_gap</span><span class="op">(</span><span class="va">solution</span><span class="op">)</span>,</span>
+<span>  placeholder <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  solution_variable <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -85,7 +86,7 @@
 
 <dl><dt id="arg-solution">solution<a class="anchor" aria-label="anchor" href="#arg-solution"></a></dt>
 <dd><p>A character vector containing values considered as correct
-answers.</p></dd>
+answers. Omit when using <code>solution_variable</code>.</p></dd>
 
 
 <dt id="arg-tolerance">tolerance<a class="anchor" aria-label="anchor" href="#arg-tolerance"></a></dt>
@@ -110,12 +111,19 @@ identifier for the answer.</p></dd>
 
 <dt id="arg-expected-length">expected_length<a class="anchor" aria-label="anchor" href="#arg-expected-length"></a></dt>
 <dd><p>An integer value, optional; sets the size of the text
-input field in the content delivery engine.</p></dd>
+input field in the content delivery engine. Defaults to 10 for a dynamic
+answer, otherwise to the solution's size.</p></dd>
 
 
 <dt id="arg-placeholder">placeholder<a class="anchor" aria-label="anchor" href="#arg-placeholder"></a></dt>
 <dd><p>A character string, optional; places helpful text in the
 text input field in the content delivery engine.</p></dd>
+
+
+<dt id="arg-solution-variable">solution_variable<a class="anchor" aria-label="anchor" href="#arg-solution-variable"></a></dt>
+<dd><p>A <code>string</code> template variable used as the correct
+answer instead of <code>solution</code>. Dynamic answers do not support spelling
+tolerance; omit <code>tolerance</code> or set it to zero.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -131,6 +139,8 @@ text input field in the content delivery engine.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gap_text</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Solution"</span>, <span class="st">"Solutions"</span><span class="op">)</span>, tolerance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "&lt;gap&gt;{solution: ['Solution', 'Solutions'], tolerance: 2, case_sensitive: false, points: 1, expected_length: 7, type: 'text_opal'}&lt;/gap&gt;"</span>
+<span class="r-in"><span><span class="fu">gap_text</span><span class="op">(</span>solution_variable <span class="op">=</span> <span class="st">"answer"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "&lt;gap&gt;{case_sensitive: false, points: 1, expected_length: 10, solution_variable: 'answer', type: 'text'}&lt;/gap&gt;"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -7,21 +7,23 @@ Create object
 
 ``` r
 textGap(
-  solution,
+  solution = character(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
+  case_sensitive = FALSE,
+  solution_variable = character()
 )
 
 gapText(
-  solution,
+  solution = character(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
+  case_sensitive = FALSE,
+  solution_variable = character()
 )
 ```
 
@@ -30,7 +32,7 @@ gapText(
 - solution:
 
   A character vector containing the values considered as correct
-  answers.
+  answers. Omit when using `solution_variable`.
 
 - response_identifier:
 
@@ -52,12 +54,17 @@ gapText(
 
   A numeric value, optional, used to set the size of the text input
   field in the content delivery engine. Default value is adjusted by
-  solution size.
+  solution size, or 10 for a dynamic answer.
 
 - case_sensitive:
 
   A boolean value, determining whether the evaluation of the correct
   answer is case sensitive. Default is `FALSE`.
+
+- solution_variable:
+
+  An optional QTI identifier of a `string` template variable used as the
+  correct answer. Cannot be combined with `solution`.
 
 ## Value
 
@@ -72,6 +79,7 @@ An object of class
 
 ``` r
 tg_min <- textGap("answer")
+dynamic_gap <- textGap(solution_variable = "answer")
 
 tg <- textGap(solution = "answer",
              response_identifier  = "id_gap_1234",

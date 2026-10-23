@@ -33,6 +33,12 @@ type assessment tasks according to the QTI 2.1 standard.
   A character vector containing the values considered as correct
   answers.
 
+- `solution_variable`:
+
+  An optional QTI identifier of a `string` template variable used as the
+  correct answer instead of `solution`. Dynamic text answers require
+  zero spelling tolerance.
+
 - `case_sensitive`:
 
   A boolean value, determining whether the evaluation of the correct

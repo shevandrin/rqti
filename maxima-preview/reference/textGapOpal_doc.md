@@ -7,23 +7,25 @@ Create object
 
 ``` r
 textGapOpal(
-  solution,
+  solution = character(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
   case_sensitive = FALSE,
-  tolerance = 0
+  tolerance = 0,
+  solution_variable = character()
 )
 
 gapTextOpal(
-  solution,
+  solution = character(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
   case_sensitive = FALSE,
-  tolerance = 0
+  tolerance = 0,
+  solution_variable = character()
 )
 ```
 
@@ -32,7 +34,7 @@ gapTextOpal(
 - solution:
 
   A character vector containing the values considered as correct
-  answers.
+  answers. Omit when using `solution_variable`.
 
 - response_identifier:
 
@@ -54,7 +56,7 @@ gapTextOpal(
 
   A numeric value, optional, used to set the size of the text input
   field in the content delivery engine. Default value is adjusted by
-  solution size.
+  solution size, or 10 for a dynamic answer.
 
 - case_sensitive:
 
@@ -66,6 +68,12 @@ gapTextOpal(
   A numeric value defining how many characters will be taken into
   account to tolerate spelling mistakes in the evaluation of candidate
   answers. Default is 0.
+
+- solution_variable:
+
+  An optional QTI identifier of a `string` template variable used as the
+  correct answer. Requires `tolerance = 0` and cannot be combined with
+  `solution`.
 
 ## Value
 

@@ -102,7 +102,11 @@ will not work. The Knit-Button starts a new session and invoking a server
 there does not work. You can automatically start the server via an .RProfile
 file on start up.</p>
 <p>Maxima previews use locally installed Maxima through the R server
-and work in both the RStudio Viewer and an external browser.</p>
+and work in both the RStudio Viewer and an external browser.
+Set <code>options(rqti.maxima = "/path/to/maxima")</code> before starting the server
+to pass that executable to RStudio's separate Knit session. On Windows,
+use the command-line launcher, for example
+<code>"C:/Program Files/Maxima/bin/maxima.bat"</code>, without shell quotes.</p>
     </div>
 
     <div class="section level2">

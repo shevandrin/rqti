@@ -69,13 +69,14 @@ variant, so use explicit types if output types can vary. Declared
 outputs must exist in the returned list and have compatible types in the
 checked variant. Use inline `template_value("a")` to display an output
 and `gap_numeric(solution_variable = "answer")` to bind a numeric
-correct answer. Displayed references are supported in the question body,
-not in choices. Only one Maxima chunk is supported per Rmd exercise.
-Combine all calculations in that chunk and return all named outputs
-together. Its intermediate identifier is derived from the chunk label;
-set `maxima_identifier` to override it. Template chunks must be
-evaluated and uncached; errors stop export and upload. QTIJS previews
-evaluate these programs through the local Maxima server. See
+correct answer, or `gap_text(solution_variable = "answer")` for a string
+output. Displayed references are supported in the question body, not in
+choices. Only one Maxima chunk is supported per Rmd exercise. Combine
+all calculations in that chunk and return all named outputs together.
+Its intermediate identifier is derived from the chunk label; set
+`maxima_identifier` to override it. Template chunks must be evaluated
+and uncached; errors stop export and upload. QTIJS previews evaluate
+these programs through the local Maxima server. See
 `inst/extdata/maxima-addition.Rmd` for a complete example.
 
 ## Examples

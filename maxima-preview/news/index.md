@@ -2,6 +2,29 @@
 
 ## rqti (development version)
 
+- Maxima string outputs can supply correct text answers with
+  `gap_text(solution_variable = "answer")` or
+  `textGap(solution_variable = "answer")`. Matching respects
+  `case_sensitive`; dynamic spelling tolerance and alternative answer
+  lists are not supported. See `maxima-text-answer.Rmd` in the examples.
+
+- Rmd template references no longer add a span around `printedVariable`.
+  ONYX replaces the reference with text, allowing surrounding
+  inline/display TeX delimiters to be recognized without first opening
+  the online editor.
+
+- Maxima LaTeX now renders in the local preview, including references
+  inside Markdown inline/display math and output with its own math
+  delimiters. Formulas remain rendered after answer submission. See
+  `maxima-latex.Rmd` in the installed examples and the Maxima article.
+
+- Explicit Maxima executable paths bypass
+  [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html), supporting
+  long paths and Unicode. Windows batch launchers use `cmd.exe /c call`.
+  Set `rqti.maxima` before
+  [`start_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/start_server.md)
+  to share the choice with RStudio’s Knit session.
+
 - QTI 2.2 schemas are compressed in the installed package and unpacked
   on demand into the R session’s temporary directory. All schema
   dependencies remain bundled, so validation works offline. Generated

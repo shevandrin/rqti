@@ -123,7 +123,8 @@ map to <code>float</code>. Unsupported values require explicit types (for exampl
 explicit types if output types can vary. Declared outputs must exist in the
 returned list and have compatible types in the checked variant.
 Use inline <code>template_value("a")</code> to display an output and
-<code>gap_numeric(solution_variable = "answer")</code> to bind a numeric correct answer.
+<code>gap_numeric(solution_variable = "answer")</code> to bind a numeric correct answer,
+or <code>gap_text(solution_variable = "answer")</code> for a string output.
 Displayed references are supported in the question body, not in choices.
 Only one Maxima chunk is supported per Rmd exercise. Combine all calculations
 in that chunk and return all named outputs together. Its intermediate
