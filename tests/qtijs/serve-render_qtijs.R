@@ -1,9 +1,4 @@
-options(error = function() {
-    cat("\nR used by the browser test: ", R.version.string,
-        "\nR home: ", R.home(), "\nPackage libraries:\n", sep = "")
-    cat(paste0("  ", .libPaths()), sep = "\n")
-    quit(status = 1)
-})
+options(error = function() quit(status = 1))
 
 repo_root <- Sys.getenv("RQTI_REPO_ROOT")
 if (nzchar(repo_root) && requireNamespace("pkgload", quietly = TRUE)) {
