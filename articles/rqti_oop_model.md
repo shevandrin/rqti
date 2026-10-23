@@ -126,6 +126,9 @@ sc
 #> Slot "choice_identifiers":
 #> [1] "ChoiceA" "ChoiceB" "ChoiceC" "ChoiceD"
 #> 
+#> Slot "response_identifier":
+#> [1] "RESPONSE"
+#> 
 #> Slot "shuffle":
 #> [1] TRUE
 #> 

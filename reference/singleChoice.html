@@ -81,7 +81,8 @@
 <span>  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  calculator <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  files <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  scoring_scheme <span class="op">=</span> <span class="st">"standard"</span></span>
+<span>  scoring_scheme <span class="op">=</span> <span class="st">"standard"</span>,</span>
+<span>  response_identifier <span class="op">=</span> <span class="st">"RESPONSE"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -172,6 +173,12 @@ otherwise. Omitting <code>scoring_scheme</code> retains this default; the defaul
 method of the separate <code><a href="single_choice_scoring.html">single_choice_scoring()</a></code> helper does not override it.
 <code>"penalty"</code> deducts <code>points/(k-1)</code> for an incorrect answer, where
 k is the number of options. Both award zero for an omitted answer.</p></dd>
+
+
+<dt id="arg-response-identifier">response_identifier<a class="anchor" aria-label="anchor" href="#arg-response-identifier"></a></dt>
+<dd><p>QTI response identifier. Default <code>"RESPONSE"</code>.
+Must be a valid identifier distinct from the item's score and feedback
+outcome identifiers.</p></dd>
 
 </dl></div>
     <div class="section level2">

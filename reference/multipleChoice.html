@@ -80,7 +80,8 @@
 <span>  shuffle <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  calculator <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
 <span>  files <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  scoring_scheme <span class="op">=</span> <span class="st">"standard"</span></span>
+<span>  scoring_scheme <span class="op">=</span> <span class="st">"standard"</span>,</span>
+<span>  response_identifier <span class="op">=</span> <span class="st">"RESPONSE"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -164,6 +165,12 @@ will be accessible to the candidate during the test/exam.</p></dd>
 <dt id="arg-scoring-scheme">scoring_scheme<a class="anchor" aria-label="anchor" href="#arg-scoring-scheme"></a></dt>
 <dd><p>A method name or specification from <code><a href="multiple_choice_scoring.html">multiple_choice_scoring()</a></code>.
 The default <code>"standard"</code> retains the existing balanced mapping and zero floor.</p></dd>
+
+
+<dt id="arg-response-identifier">response_identifier<a class="anchor" aria-label="anchor" href="#arg-response-identifier"></a></dt>
+<dd><p>QTI response identifier. Default <code>"RESPONSE"</code>.
+Must be a valid identifier distinct from the item's score and feedback
+outcome identifiers.</p></dd>
 
 </dl></div>
     <div class="section level2">

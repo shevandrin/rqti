@@ -325,6 +325,8 @@ for new features provided as time permits.
   : Get points from AssessmentItem object
 - [`getResponse()`](https://shevandrin.github.io/rqti/reference/getResponse-methods.md)
   : Get and process a piece of question content
+- [`getScoreBounds()`](https://shevandrin.github.io/rqti/reference/getScoreBounds.md)
+  : Get an item's or interaction's score bounds
 - [`inlineChoice()`](https://shevandrin.github.io/rqti/reference/inlineChoice.md)
   : Create object InlineChoice
 - [`isUserLoggedIn()`](https://shevandrin.github.io/rqti/reference/isUserLoggedIn-methods.md)

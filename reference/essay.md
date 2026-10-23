@@ -19,7 +19,8 @@ essay(
   words_min = NA_integer_,
   data_allow_paste = TRUE,
   calculator = NA_character_,
-  files = NA_character_
+  files = NA_character_,
+  response_identifier = "RESPONSE"
 )
 ```
 
@@ -103,6 +104,12 @@ essay(
 
   A character vector, optional, containing paths to files that will be
   accessible to the candidate during the test/exam.
+
+- response_identifier:
+
+  QTI response identifier. Default `"RESPONSE"`. Must be a valid
+  identifier distinct from the item's score and feedback outcome
+  identifiers.
 
 ## Value
 

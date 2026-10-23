@@ -117,6 +117,10 @@ assessment tasks according to the QTI 2.1 standard.
   to the template "ChoiceD", where D is a letter representing the
   alphabetical order of the answer in the list.
 
+- `response_identifier`:
+
+  QTI response identifier. Default `"RESPONSE"`.
+
 - `shuffle`:
 
   A boolean value indicating whether to randomize the order in which the

@@ -19,7 +19,8 @@ multipleChoice(
   shuffle = TRUE,
   calculator = NA_character_,
   files = NA_character_,
-  scoring_scheme = "standard"
+  scoring_scheme = "standard",
+  response_identifier = "RESPONSE"
 )
 ```
 
@@ -110,6 +111,12 @@ multipleChoice(
   [`multiple_choice_scoring()`](https://shevandrin.github.io/rqti/reference/multiple_choice_scoring.md).
   The default `"standard"` retains the existing balanced mapping and
   zero floor.
+
+- response_identifier:
+
+  QTI response identifier. Default `"RESPONSE"`. Must be a valid
+  identifier distinct from the item's score and feedback outcome
+  identifiers.
 
 ## Value
 

@@ -140,6 +140,9 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> Slot "choice_identifiers":
 #> [1] "ChoiceA" "ChoiceB" "ChoiceC"
 #> 
+#> Slot "response_identifier":
+#> [1] "RESPONSE"
+#> 
 #> Slot "shuffle":
 #> [1] TRUE
 #> 
@@ -147,10 +150,10 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_2996"
+#> [1] "id_task_8702"
 #> 
 #> Slot "title":
-#> [1] "id_task_2996"
+#> [1] "id_task_8702"
 #> 
 #> Slot "content":
 #> list()
@@ -222,6 +225,9 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> Slot "choice_identifiers":
 #> [1] "ChoiceA" "ChoiceB" "ChoiceC"
 #> 
+#> Slot "response_identifier":
+#> [1] "RESPONSE"
+#> 
 #> Slot "shuffle":
 #> [1] TRUE
 #> 
@@ -229,10 +235,10 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_6195"
+#> [1] "id_task_3705"
 #> 
 #> Slot "title":
-#> [1] "id_task_6195"
+#> [1] "id_task_3705"
 #> 
 #> Slot "content":
 #> list()

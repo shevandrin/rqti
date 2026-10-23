@@ -20,7 +20,8 @@ singleChoice(
   shuffle = TRUE,
   calculator = NA_character_,
   files = NA_character_,
-  scoring_scheme = "standard"
+  scoring_scheme = "standard",
+  response_identifier = "RESPONSE"
 )
 ```
 
@@ -119,6 +120,12 @@ singleChoice(
   helper does not override it. `"penalty"` deducts `points/(k-1)` for an
   incorrect answer, where k is the number of options. Both award zero
   for an omitted answer.
+
+- response_identifier:
+
+  QTI response identifier. Default `"RESPONSE"`. Must be a valid
+  identifier distinct from the item's score and feedback outcome
+  identifiers.
 
 ## Value
 

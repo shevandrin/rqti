@@ -169,6 +169,9 @@ singleChoice(choices = c("A", "B", "C"), points = 2,
 #> Slot "choice_identifiers":
 #> [1] "ChoiceA" "ChoiceB" "ChoiceC"
 #> 
+#> Slot "response_identifier":
+#> [1] "RESPONSE"
+#> 
 #> Slot "shuffle":
 #> [1] TRUE
 #> 
@@ -176,10 +179,10 @@ singleChoice(choices = c("A", "B", "C"), points = 2,
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_5662"
+#> [1] "id_task_7748"
 #> 
 #> Slot "title":
-#> [1] "id_task_5662"
+#> [1] "id_task_7748"
 #> 
 #> Slot "content":
 #> list()
@@ -254,6 +257,9 @@ singleChoice(prompt = "2 + 2 = 4", choices = c("False", "True"), solution = 2,
 #> Slot "choice_identifiers":
 #> [1] "ChoiceA" "ChoiceB"
 #> 
+#> Slot "response_identifier":
+#> [1] "RESPONSE"
+#> 
 #> Slot "shuffle":
 #> [1] TRUE
 #> 
@@ -261,10 +267,10 @@ singleChoice(prompt = "2 + 2 = 4", choices = c("False", "True"), solution = 2,
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_4816"
+#> [1] "id_task_0387"
 #> 
 #> Slot "title":
-#> [1] "id_task_4816"
+#> [1] "id_task_0387"
 #> 
 #> Slot "content":
 #> list()

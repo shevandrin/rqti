@@ -132,6 +132,10 @@ according to QTI 2.1.
   to copy text into the text input field. Default is `TRUE`. Only works
   on OPAL and OpenOlat.
 
+- `response_identifier`:
+
+  QTI response identifier. Default `"RESPONSE"`.
+
 ## Note
 
 If 'ModalFeedback' is given, default values for slots related to the
