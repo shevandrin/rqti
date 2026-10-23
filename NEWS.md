@@ -1,5 +1,10 @@
 # rqti (development version)
 
+* Maxima string outputs can supply correct text answers with
+  `gap_text(solution_variable = "answer")` or `textGap(solution_variable = "answer")`.
+  Matching respects `case_sensitive`; dynamic spelling tolerance and alternative
+  answer lists are not supported. See `maxima-text-answer.Rmd` in the examples.
+
 * Rmd template references no longer add a span around `printedVariable`.
   ONYX replaces the reference with text, allowing surrounding inline/display
   TeX delimiters to be recognized without first opening the online editor.

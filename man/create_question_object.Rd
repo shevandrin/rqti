@@ -48,7 +48,8 @@ map to \code{float}. Unsupported values require explicit types (for example,
 explicit types if output types can vary. Declared outputs must exist in the
 returned list and have compatible types in the checked variant.
 Use inline \code{template_value("a")} to display an output and
-\code{gap_numeric(solution_variable = "answer")} to bind a numeric correct answer.
+\code{gap_numeric(solution_variable = "answer")} to bind a numeric correct answer,
+or \code{gap_text(solution_variable = "answer")} for a string output.
 Displayed references are supported in the question body, not in choices.
 Only one Maxima chunk is supported per Rmd exercise. Combine all calculations
 in that chunk and return all named outputs together. Its intermediate

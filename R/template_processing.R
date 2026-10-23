@@ -91,13 +91,14 @@ validate_template_identifiers <- function(object) {
 }
 
 # Answer bindings belong to gaps, independently of the calculation block.
-dynamic_numeric_gaps <- function(object) {
-    Filter(function(x) is(x, "NumericGap") && length(x@solution_variable) > 0L,
+dynamic_solution_gaps <- function(object) {
+    Filter(function(x) (is(x, "NumericGap") || is(x, "TextGap")) &&
+               length(x@solution_variable) > 0L,
            object@content)
 }
 
 validate_dynamic_solutions <- function(object) {
-    gaps <- dynamic_numeric_gaps(object)
+    gaps <- dynamic_solution_gaps(object)
     if (!length(gaps)) return(invisible(TRUE))
     validObject(object)
     # Drop names on the list itself so named template lists cannot prefix IDs.
@@ -106,12 +107,14 @@ validate_dynamic_solutions <- function(object) {
     })))
     for (gap in gaps) {
         validObject(gap)
+        if (is(gap, "TextGap")) validate_text_solution(gap)
         id <- gap@solution_variable
         if (!id %in% names(types)) {
             stop("Undeclared solution variable: ", id, call. = FALSE)
         }
-        if (!types[[id]] %in% c("integer", "float")) {
-            stop("Solution variable must have type integer or float: ", id,
+        expected <- if (is(gap, "NumericGap")) c("integer", "float") else "string"
+        if (!types[[id]] %in% expected) {
+            stop("Solution variable must have type ", paste(expected, collapse = " or "), ": ", id,
                  call. = FALSE)
         }
     }
@@ -119,7 +122,7 @@ validate_dynamic_solutions <- function(object) {
 }
 
 create_dynamic_correct_responses <- function(object) {
-    lapply(dynamic_numeric_gaps(object), function(gap) {
+    lapply(dynamic_solution_gaps(object), function(gap) {
         tag("setCorrectResponse", list(identifier = gap@response_identifier,
             tag("variable", list(identifier = gap@solution_variable))))
     })

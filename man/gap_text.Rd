@@ -5,18 +5,19 @@
 \title{Create YAML string for TextGap object}
 \usage{
 gap_text(
-  solution,
+  solution = NULL,
   tolerance = NULL,
   case_sensitive = FALSE,
   points = 1,
   response_identifier = NULL,
-  expected_length = size_gap(solution),
-  placeholder = NULL
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
+  placeholder = NULL,
+  solution_variable = NULL
 )
 }
 \arguments{
 \item{solution}{A character vector containing values considered as correct
-answers.}
+answers. Omit when using \code{solution_variable}.}
 
 \item{tolerance}{An integer value, optional; defines the number of characters
 to tolerate spelling mistakes in evaluating candidate answers.}
@@ -31,10 +32,15 @@ Default is 1.}
 identifier for the answer.}
 
 \item{expected_length}{An integer value, optional; sets the size of the text
-input field in the content delivery engine.}
+input field in the content delivery engine. Defaults to 10 for a dynamic
+answer, otherwise to the solution's size.}
 
 \item{placeholder}{A character string, optional; places helpful text in the
 text input field in the content delivery engine.}
+
+\item{solution_variable}{A \code{string} template variable used as the correct
+answer instead of \code{solution}. Dynamic answers do not support spelling
+tolerance; omit \code{tolerance} or set it to zero.}
 }
 \value{
 A character string mapped as YAML.
@@ -44,6 +50,7 @@ Create YAML string for TextGap object
 }
 \examples{
 gap_text(c("Solution", "Solutions"), tolerance = 2)
+gap_text(solution_variable = "answer")
 
 }
 \seealso{

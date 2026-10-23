@@ -28,7 +28,10 @@ setClass("TextGapOpal", contains = "TextGap", slots = c(tolerance = "numeric"),
 #'Create object [TextGapOpal]
 #'
 #'@param solution A character vector containing the values considered as correct
-#'  answers.
+#'  answers. Omit when using `solution_variable`.
+#'@param solution_variable An optional QTI identifier of a `string` template
+#'  variable used as the correct answer. Requires `tolerance = 0` and cannot be
+#'  combined with `solution`.
 #'@param response_identifier A character value representing an identifier for
 #'  the answer. By default, it is generated as 'id_gap_dddd', where dddd
 #'  represents random digits.
@@ -39,7 +42,7 @@ setClass("TextGapOpal", contains = "TextGap", slots = c(tolerance = "numeric"),
 #'  is "".
 #'@param expected_length A numeric value, optional, used to set the
 #'  size of the text input field in the content delivery engine. Default value
-#'  is adjusted by solution size.
+#'  is adjusted by solution size, or 10 for a dynamic answer.
 #'@param case_sensitive A boolean value, determining whether the evaluation of
 #'  the correct answer is case sensitive. Default is `FALSE`.
 #'@param tolerance A numeric value defining how many characters will be taken
@@ -59,13 +62,16 @@ setClass("TextGapOpal", contains = "TextGap", slots = c(tolerance = "numeric"),
 #'              tolerance = 2)
 #' @rdname textGapOpal_doc
 #'@export
-textGapOpal <- function(solution,
+textGapOpal <- function(solution = character(),
                     response_identifier = generate_id(type = "gap"),
                     points = 1,
                     placeholder = "",
-                    expected_length = size_gap(solution),
+                    expected_length = if (length(solution_variable)) 10 else size_gap(solution),
                     case_sensitive = FALSE,
-                    tolerance = 0){
+                    tolerance = 0, solution_variable = character()){
+    if (missing(solution) && !length(solution_variable)) {
+        stop("Provide solution or solution_variable.", call. = FALSE)
+    }
     params <- as.list(environment())
     params$Class <- "TextGapOpal"
     obj <- do.call("new", params)
@@ -79,5 +85,9 @@ gapTextOpal <- textGapOpal
 #' @rdname createResponseProcessing-methods
 #' @aliases createResponseProcessing,TextGapOpal
 setMethod("createResponseProcessing", "TextGapOpal", function(object) {
-    create_response_processing_text_entry_opal(object)
+    if (length(object@solution_variable)) {
+        create_response_processing_dynamic_text(object)
+    } else {
+        create_response_processing_text_entry_opal(object)
+    }
 })

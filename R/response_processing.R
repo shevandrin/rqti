@@ -181,6 +181,21 @@ create_response_processing_gap_basic <- function(object) {
     return(responseCondition(response_if))
 }
 
+create_response_processing_dynamic_text <- function(object) {
+    validObject(object)
+    validate_text_solution(object)
+    comparison <- tag("stringMatch", list(
+        caseSensitive = tolower(object@case_sensitive),
+        variable(object@response_identifier), correct(object@response_identifier)))
+    score_id <- paste0("SCORE_", object@response_identifier)
+    awarded <- setOutcomeValue(list(identifier = score_id,
+        variable(paste0("MAXSCORE_", object@response_identifier))))
+    zero <- setOutcomeValue(list(identifier = score_id,
+        baseValue(list(baseType = "float", 0))))
+    responseCondition(list(responseIf(list(comparison, awarded)),
+                           responseElse(zero)))
+}
+
 create_response_processing_text_entry_opal <- function(object) {
     # url to scheme that process the answer with tolerance
     url_scheme <- "http://bps-system.de/xsd/imsqti_ext_maptolresponse"

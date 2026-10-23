@@ -47,7 +47,7 @@
     if (result === "false" && declaration.baseType === "boolean") {
       result = false;
     }
-    if (result === "0") {
+    if (result === "0" && declaration.baseType !== "string") {
       result = 0;
     }
     if (result === undefined || result === NaN) {
@@ -156,6 +156,17 @@
           && first.every((value, index) => value === second[index]));
   }
 
+  function stringMatch(first, second, caseSensitive = true, substring = false) {
+    if (first == null || second == null) return null;
+    first = String(first);
+    second = String(second);
+    if (!caseSensitive) {
+      first = first.toLowerCase();
+      second = second.toLowerCase();
+    }
+    return substring ? first.includes(second) : first === second;
+  }
+
   function member(identifier, value) {
     return value && (Array.isArray(value) && value.includes(identifier));
   }
@@ -200,6 +211,7 @@
     normalizeWhitespace,
     removeValue,
     sizeOf,
+    stringMatch,
     swapPair
   });
 
@@ -730,7 +742,7 @@ const EXECUTORS = {
   // Processing Operators
   and:                         elem => reduce(elem, (a,b)=>a && b),
   anyN:                        elem => anyN,
-  baseValue:                   elem => elem.innerHTML, // elem.textContent ?
+  baseValue:                   elem => elem.textContent,
   containerSize:               elem => opN(elem, sizeof),
   contains:                    elem => op2(elem, (a,b)=>a.includes(b)),
   correct:                     elem => getVarAttribute(elem, "correctResponse"),
@@ -802,7 +814,9 @@ const EXECUTORS = {
   round:                       elem => op(elem, Math.round),
   roundTo:                     elem => op(elem, a=>+a.toFixed(figures(elem))),
   statsOperator:               elem => oplib(elem, "STATS_OPERATORS"),
-  stringMatch:                 elem => op2(elem, match),
+  stringMatch:                 elem => op2(elem, (a, b) => QTIValues.stringMatch(a, b,
+                                 elem.getAttribute("caseSensitive") !== "false",
+                                 elem.getAttribute("substring") === "true")),
   substring:                   elem => op2(elem, (a,b)=> a && b && b.indexOf(a)>=0),
   subtract:                    elem => op2(elem, (a,b)=> (+a) - (+b)),
   sum:                         elem => reduce(elem, (a,b)=> (+a) + (+b), 0),
@@ -4188,6 +4202,18 @@ function updateResultIcons(item) {
             break;
         case "string":
             let resp_id_str = el.getAttribute(RESPONSE_ID)
+            if (!declaration.mapping) {
+                const value = declaration.value;
+                if (value === null || value === "") {
+                    el.removeAttribute("class");
+                } else {
+                    const comparison = [...qtiItem.querySelectorAll('responseProcessing stringMatch')]
+                        .find(expr => expr.querySelector(`correct[identifier="${resp_id_str}"]`));
+                    add_span_icon(QTIValues.stringMatch(value, declaration.correctResponse,
+                        !comparison || comparison.getAttribute('caseSensitive') !== 'false'), el, false);
+                }
+                break;
+            }
             let mapping_corr = qtiItem.declarations[resp_id_str].mapping.entries;
             let resp_corr = Object.keys(mapping_corr).map(key => mapping_corr[key].mapKey);
             let register = Object.keys(mapping_corr).map(key => mapping_corr[key].caseSensitive);

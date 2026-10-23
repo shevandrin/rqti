@@ -6,26 +6,28 @@
 \title{Create object \link{TextGap}}
 \usage{
 textGap(
-  solution,
+  solution = character(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
+  case_sensitive = FALSE,
+  solution_variable = character()
 )
 
 gapText(
-  solution,
+  solution = character(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
-  case_sensitive = FALSE
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
+  case_sensitive = FALSE,
+  solution_variable = character()
 )
 }
 \arguments{
 \item{solution}{A character vector containing the values considered as correct
-answers.}
+answers. Omit when using \code{solution_variable}.}
 
 \item{response_identifier}{A character value representing an identifier for
 the answer. By default, it is generated as 'id_gap_dddd', where dddd
@@ -40,10 +42,13 @@ is "".}
 
 \item{expected_length}{A numeric value, optional, used to set the
 size of the text input field in the content delivery engine. Default value
-is adjusted by solution size.}
+is adjusted by solution size, or 10 for a dynamic answer.}
 
 \item{case_sensitive}{A boolean value, determining whether the evaluation of
 the correct answer is case sensitive. Default is \code{FALSE}.}
+
+\item{solution_variable}{An optional QTI identifier of a \code{string} template
+variable used as the correct answer. Cannot be combined with \code{solution}.}
 }
 \value{
 An object of class \link{TextGap}
@@ -53,6 +58,7 @@ Create object \link{TextGap}
 }
 \examples{
 tg_min <- textGap("answer")
+dynamic_gap <- textGap(solution_variable = "answer")
 
 tg <- textGap(solution = "answer",
              response_identifier  = "id_gap_1234",

@@ -29,6 +29,10 @@ size of the text input field in the content delivery engine.}
 \item{\code{solution}}{A character vector containing the values considered as correct
 answers.}
 
+\item{\code{solution_variable}}{An optional QTI identifier of a \code{string} template
+variable used as the correct answer instead of \code{solution}. Dynamic text
+answers require zero spelling tolerance.}
+
 \item{\code{case_sensitive}}{A boolean value, determining whether the evaluation of
 the correct answer is case sensitive. Default is \code{FALSE}.}
 }}
