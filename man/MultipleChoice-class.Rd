@@ -78,6 +78,8 @@ identifiers for answers. By default, identifiers are generated
 automatically according to the template "ChoiceD", where D is a letter
 representing the alphabetical order of the answer in the list.}
 
+\item{\code{response_identifier}}{QTI response identifier. Default \code{"RESPONSE"}.}
+
 \item{\code{shuffle}}{A boolean value indicating whether to randomize the order in
 which the choices are initially presented to the candidate. Default is
 \code{TRUE}.}

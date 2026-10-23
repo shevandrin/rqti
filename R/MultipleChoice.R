@@ -75,6 +75,7 @@ setClass("MultipleChoice", contains = "Choice",
 #'   will be accessible to the candidate during the test/exam.
 #' @param scoring_scheme A method name or specification from [multiple_choice_scoring()].
 #'   The default `"standard"` retains the existing balanced mapping and zero floor.
+#' @inheritParams singleChoice
 #' @return An object of class [MultipleChoice]
 #' @examples
 #'mc_min <- multipleChoice(choices = c("option1", "option2", "option3"),
@@ -107,7 +108,8 @@ multipleChoice <- function(identifier = generate_id(),
                          shuffle = TRUE,
                          calculator = NA_character_,
                          files = NA_character_,
-                         scoring_scheme = "standard") {
+                         scoring_scheme = "standard",
+                         response_identifier = "RESPONSE") {
     params <- as.list(environment())
     obj <- construct_item(params, "MultipleChoice")
     return(obj)
@@ -149,7 +151,7 @@ create_response_declaration_multiple_choice <- function(object) {
         entries <- Map(create_map_entry, spec$weights, object@choice_identifiers)
         tag("mapping", c(list(defaultValue = 0), entries))
     }
-    tag("responseDeclaration", list(identifier = "RESPONSE",
+    tag("responseDeclaration", list(identifier = object@response_identifier,
                                     cardinality = "multiple",
                                     baseType = "identifier",
                                     correct_response, mapping))
@@ -159,16 +161,6 @@ create_response_declaration_multiple_choice <- function(object) {
 #' @aliases createResponseProcessing,MultipleChoice
 setMethod("createResponseProcessing", "MultipleChoice", function(object) {
     if (identical(object@scoring_scheme, "standard")) {
-        create_default_resp_processing(object)
+        create_default_resp_processing(object, object@response_identifier)
     } else create_choice_scoring_processing(object)
-})
-
-#' @rdname createOutcomeDeclaration-methods
-#' @aliases createOutcomeDeclaration,MultipleChoice
-setMethod("createOutcomeDeclaration", "MultipleChoice", function(object) {
-    if (identical(object@scoring_scheme, "standard")) return(callNextMethod())
-    tags <- callNextMethod()
-    spec <- resolve_choice_scoring(object)
-    tags[[3L]] <- make_outcome_declaration("MINSCORE", value = spec$minimum)
-    tags
 })

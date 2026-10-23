@@ -4,6 +4,7 @@
 #' task according to QTI 2.1.
 #' @template AISlotsTemplate
 #' @template EssaySlotsTemplate
+#' @slot response_identifier QTI response identifier. Default `"RESPONSE"`.
 #' @note If 'ModalFeedback' is given, default values for slots related to the
 #'   text input field are calculated automatically.
 #' @examples
@@ -32,7 +33,13 @@ setClass("Essay", contains = "AssessmentItem",
                    expected_lines = "numeric",
                    words_max = "numeric",
                    words_min = "numeric",
-                   data_allow_paste = "logical"))
+                   data_allow_paste = "logical",
+                   response_identifier = "character"),
+         prototype = list(response_identifier = "RESPONSE"),
+         validity = function(object) {
+             error <- validate_response_identifier(object@response_identifier)
+             if (is.null(error)) TRUE else error
+         })
 
 setMethod("initialize", "Essay", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -104,6 +111,7 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 #'@param files A character vector, optional, containing paths to files that will
 #'  be accessible to the candidate during the test/exam.
 #'@return An object of class [Essay]
+#'@inheritParams singleChoice
 #' @examples
 #'es_min <- essay(content = list("<h2>Open question</h2>", "Write your answer here"))
 #'
@@ -134,7 +142,8 @@ essay <- function(identifier = generate_id(),
                   words_min = NA_integer_,
                   data_allow_paste = TRUE,
                   calculator = NA_character_,
-                  files = NA_character_) {
+                  files = NA_character_,
+                  response_identifier = "RESPONSE") {
     params <- as.list(environment())
     obj <- construct_item(params, "Essay")
     return(obj)
@@ -151,7 +160,7 @@ setMethod("createItemBody", signature(object = "Essay"),
 #' @aliases createResponseDeclaration,Essay
 setMethod("createResponseDeclaration", signature(object = "Essay"),
           function(object) {
-              tag("responseDeclaration", list(identifier = "RESPONSE",
+              tag("responseDeclaration", list(identifier = object@response_identifier,
                                               cardinality = "single",
                                               baseType = "string"))
           })

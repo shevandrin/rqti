@@ -51,7 +51,7 @@ create_item_body_entry <- function(object) {
 create_item_body_essay <- function(object) {
     prompt <- create_prompt(object)
     ext_text <- tag("extendedTextInteraction",
-                    list("responseIdentifier" = "RESPONSE",
+                    list("responseIdentifier" = object@response_identifier,
                          "expectedLength" = object@expected_length,
                          "expectedLines" = object@expected_lines,
                          "maxStrings" = object@words_max,
@@ -129,7 +129,7 @@ make_choice_interaction <- function(object, max_choices) {
     simple_choices <- Map(make_choice, "simpleChoice",
                           object@choice_identifiers, object@choices)
     choice_interaction <- tag("choiceInteraction",
-                              list(responseIdentifier = "RESPONSE",
+                              list(responseIdentifier = object@response_identifier,
                                    shuffle = tolower(object@shuffle),
                                    maxChoices = max_choices,
                                    orientation = object@orientation,

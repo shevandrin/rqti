@@ -85,14 +85,20 @@ setMethod("getIdentifier", signature(object = "Gap"),
           })
 
 create_outcome_declaration_gap <- function(object) {
+    bounds <- getScoreBounds(object)
     SCORE <- make_outcome_declaration(paste0("SCORE_",
                                              object@response_identifier),
                                       value = 0)
     MAXSCORE <- make_outcome_declaration(paste0("MAXSCORE_",
                                                 object@response_identifier),
-                                         value = object@points)
+                                         value = bounds[["maximum"]])
     MINSCORE <- make_outcome_declaration(paste0("MINSCORE_",
                                                 object@response_identifier),
-                                         value = object@incorrect)
+                                         value = bounds[["minimum"]])
     tagList(SCORE, MAXSCORE, MINSCORE)
 }
+
+#' @rdname getScoreBounds
+setMethod("getScoreBounds", "Gap", function(object) {
+    c(minimum = unname(object@incorrect), maximum = unname(object@points))
+})

@@ -203,39 +203,39 @@ create_choice_scoring_processing <- function(object) {
     set_score <- function(value) setOutcomeValue(list(identifier = "SCORE", value))
     condition <- function(test, yes, no) responseCondition(list(
         responseIf(list(test, yes)), responseElse(list(no))))
-    empty <- isNull(variable("RESPONSE"))
+    empty <- isNull(variable(object@response_identifier))
     if (spec$model != "single") {
         # Some engines retain an empty multiple response as [] rather than NULL.
         # Both represent an omitted checkbox response.
         empty <- tag("or", list(empty, equal(list(
-            tag("containerSize", list(variable("RESPONSE"))),
+            tag("containerSize", list(variable(object@response_identifier))),
             baseValue(list(baseType = "integer", 0))))))
     }
     if (spec$model == "single") {
         calculate <- condition(empty, set_score(number(spec$values[["omitted"]])),
-            condition(match(list(variable("RESPONSE"), correct("RESPONSE"))),
+            condition(match(list(variable(object@response_identifier), correct(object@response_identifier))),
                 set_score(number(spec$values[["correct"]])),
                 set_score(number(spec$values[["incorrect"]]))))
     } else {
-        raw <- mapResponse("RESPONSE")
+        raw <- mapResponse(object@response_identifier)
         if (spec$offset != 0) raw <- sum_tag(list(number(spec$offset), raw))
         if (spec$model == "all_or_nothing") {
-            raw <- condition(match(list(variable("RESPONSE"), correct("RESPONSE"))),
+            raw <- condition(match(list(variable(object@response_identifier), correct(object@response_identifier))),
                              set_score(number(spec$maximum)), set_score(number(spec$incorrect)))
         } else if (spec$model == "subset") {
             wrong <- object@choice_identifiers[object@points <= 0]
             selected <- lapply(wrong, function(id) tag("member", list(
-                baseValue(list(baseType = "identifier", id)), variable("RESPONSE"))))
+                baseValue(list(baseType = "identifier", id)), variable(object@response_identifier))))
             raw <- if (length(selected)) condition(tag("or", selected),
                     set_score(number(0)), set_score(raw)) else set_score(raw)
         } else if (spec$model == "ripkey") {
-            count <- tag("containerSize", list(variable("RESPONSE")))
+            count <- tag("containerSize", list(variable(object@response_identifier)))
             raw <- condition(gt(list(count, baseValue(list(baseType = "integer", spec$correct_count)))),
                              set_score(number(0)), set_score(raw))
         } else raw <- set_score(raw)
         calculate <- condition(empty, set_score(number(spec$omitted)), raw)
     }
-    feedback <- if (length(object@feedback)) make_default_feedback_cond()
+    feedback <- if (length(object@feedback)) make_default_feedback_cond(response_identifier = object@response_identifier)
     conditions <- Map(createResponseCondition, object@feedback)
     responseProcessing(list(calculate, make_default_resp_cond(), feedback, conditions))
 }

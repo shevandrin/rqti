@@ -13,11 +13,17 @@ setClassUnion("characterOrScoring", c("character", "list"))
 setClass("Choice", contains = "AssessmentItem",
          slots = c(choices = "character",
                    choice_identifiers = "character",
+                   response_identifier = "character",
                    shuffle = "logical",
                    orientation = "character"),
          prototype = prototype(shuffle = TRUE,
                                choice_identifiers = NA_character_,
-                               orientation = "vertical"))
+                               response_identifier = "RESPONSE",
+                               orientation = "vertical"),
+         validity = function(object) {
+             error <- validate_response_identifier(object@response_identifier)
+             if (is.null(error)) TRUE else error
+         })
 
 setMethod("initialize", "Choice", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -28,4 +34,10 @@ setMethod("initialize", "Choice", function(.Object, ...) {
     }
     validObject(.Object)
     .Object
+})
+
+#' @rdname getScoreBounds
+setMethod("getScoreBounds", "Choice", function(object) {
+    spec <- resolve_choice_scoring(object)
+    c(minimum = unname(spec$minimum), maximum = unname(spec$maximum))
 })

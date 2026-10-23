@@ -163,8 +163,7 @@ create_response_declaration_entry <- function(object) {
 }
 
 create_outcome_declaration_entry <- function(object) {
-    answers <- Filter(Negate(is.null), Map(getResponse, object@content))
-    minimum <- sum(vapply(answers, function(x) x@incorrect, numeric(1)))
+    bounds <- getScoreBounds(object)
     feedbacks_declaration <- NULL
     if (length(object@feedback) > 0) {
         feedbacks_declaration <- tagList(make_outcome_declaration("FEEDBACKBASIC",
@@ -178,11 +177,19 @@ create_outcome_declaration_entry <- function(object) {
 
     stand_declaration <- tagList(make_outcome_declaration("SCORE", value = 0),
                                  make_outcome_declaration("MAXSCORE",
-                                                          value = object@points),
-                                 make_outcome_declaration("MINSCORE", value = minimum))
+                                                          value = bounds[["maximum"]]),
+                                 make_outcome_declaration("MINSCORE", value = bounds[["minimum"]]))
     answers <- Map(getResponse, object@content)
     answers[sapply(answers, is.null)] <- NULL
 
     gaps_declaration <- Map(createOutcomeDeclaration, answers)
     tagList(stand_declaration, gaps_declaration, feedbacks_declaration)
 }
+
+#' @rdname getScoreBounds
+setMethod("getScoreBounds", "Entry", function(object) {
+    answers <- Filter(Negate(is.null), Map(getResponse, object@content))
+    bounds <- lapply(answers, getScoreBounds)
+    c(minimum = sum(vapply(bounds, `[[`, numeric(1), "minimum")),
+      maximum = sum(vapply(bounds, `[[`, numeric(1), "maximum")))
+})

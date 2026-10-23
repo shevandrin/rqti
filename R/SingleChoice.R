@@ -88,6 +88,9 @@ setMethod("initialize", "SingleChoice", function(.Object, ...) {
 #'   method of the separate [single_choice_scoring()] helper does not override it.
 #'   `"penalty"` deducts `points/(k-1)` for an incorrect answer, where
 #'   k is the number of options. Both award zero for an omitted answer.
+#' @param response_identifier QTI response identifier. Default `"RESPONSE"`.
+#'   Must be a valid identifier distinct from the item's score and feedback
+#'   outcome identifiers.
 #' @return An object of class [SingleChoice]
 #' @examples
 #' sc_min <- singleChoice(prompt = "Question?",
@@ -122,7 +125,8 @@ singleChoice <- function(identifier = generate_id(),
                          shuffle = TRUE,
                          calculator = NA_character_,
                          files = NA_character_,
-                         scoring_scheme = "standard") {
+                         scoring_scheme = "standard",
+                         response_identifier = "RESPONSE") {
     params <- as.list(environment())
     obj <- construct_item(params, "SingleChoice")
     return(obj)
@@ -164,9 +168,9 @@ setMethod("createOutcomeDeclaration", signature(object = "SingleChoice"),
                                                                 value = NULL,
                                                                 base_type = "identifier"))
               }
-              spec <- resolve_choice_scoring(object)
-              points <- spec$maximum
-              min_score <- spec$minimum
+              bounds <- getScoreBounds(object)
+              points <- bounds[["maximum"]]
+              min_score <- bounds[["minimum"]]
               tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
                                                value = points),
@@ -183,7 +187,7 @@ create_item_body_single_choice <- function(object) {
 create_response_declaration_single_choice <- function(object) {
     correct_choice_identifier <- object@choice_identifiers[object@solution]
     child <- create_correct_response(correct_choice_identifier)
-    tag("responseDeclaration", list(identifier = "RESPONSE",
+    tag("responseDeclaration", list(identifier = object@response_identifier,
                                     cardinality = "single",
                                     baseType = "identifier",
                                     child))

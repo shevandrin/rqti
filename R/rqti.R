@@ -59,6 +59,17 @@ repair_identifier <- function(id) {
     gsub("\\s+", "_", id)
 }
 
+validate_response_identifier <- function(id) {
+    if (!is.character(id) || length(id) != 1L || anyNA(id) ||
+        !check_identifier(id, quiet = TRUE)) {
+        return("response_identifier must be one valid QTI identifier.")
+    }
+    if (id %in% c("SCORE", "MAXSCORE", "MINSCORE", "FEEDBACKBASIC", "FEEDBACKMODAL")) {
+        return("response_identifier must differ from the item's outcome identifiers.")
+    }
+    NULL
+}
+
 
 # helper to put default value into slots of classes without na values
 replace_na <- function(input) {

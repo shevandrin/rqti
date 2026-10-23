@@ -18,7 +18,8 @@ singleChoice(
   shuffle = TRUE,
   calculator = NA_character_,
   files = NA_character_,
-  scoring_scheme = "standard"
+  scoring_scheme = "standard",
+  response_identifier = "RESPONSE"
 )
 }
 \arguments{
@@ -82,6 +83,10 @@ otherwise. Omitting \code{scoring_scheme} retains this default; the default
 method of the separate \code{\link[=single_choice_scoring]{single_choice_scoring()}} helper does not override it.
 \code{"penalty"} deducts \code{points/(k-1)} for an incorrect answer, where
 k is the number of options. Both award zero for an omitted answer.}
+
+\item{response_identifier}{QTI response identifier. Default \code{"RESPONSE"}.
+Must be a valid identifier distinct from the item's score and feedback
+outcome identifiers.}
 }
 \value{
 An object of class \link{SingleChoice}

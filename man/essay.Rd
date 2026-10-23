@@ -17,7 +17,8 @@ essay(
   words_min = NA_integer_,
   data_allow_paste = TRUE,
   calculator = NA_character_,
-  files = NA_character_
+  files = NA_character_,
+  response_identifier = "RESPONSE"
 )
 }
 \arguments{
@@ -71,6 +72,10 @@ calculator to the candidate. Possible values:
 
 \item{files}{A character vector, optional, containing paths to files that will
 be accessible to the candidate during the test/exam.}
+
+\item{response_identifier}{QTI response identifier. Default \code{"RESPONSE"}.
+Must be a valid identifier distinct from the item's score and feedback
+outcome identifiers.}
 }
 \value{
 An object of class \link{Essay}

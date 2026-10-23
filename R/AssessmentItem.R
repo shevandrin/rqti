@@ -191,6 +191,22 @@ setGeneric("createQtiTest",
 #' @docType methods
 setGeneric("getPoints", function(object) standardGeneric("getPoints"))
 
+#' Get an item's or interaction's score bounds
+#'
+#' @param object An assessment item or a gap interaction.
+#' @return A numeric vector named `minimum` and `maximum`, in score points.
+#'   These are the bounds declared in QTI, not the current score or a guarantee
+#'   that both endpoints are attainable. Manual grading may leave a score unset.
+#' @details Choice bounds account for the selected scoring scheme. Entry bounds
+#'   combine its gap interactions. Extensions can define methods without
+#'   generating or parsing XML.
+#' @examples
+#' getScoreBounds(singleChoice(choices = c("A", "B", "C"),
+#'     points = 2, scoring_scheme = "penalty"))
+#' getScoreBounds(numericGap(12, points = 2, incorrect = -0.5))
+#' @export
+setGeneric("getScoreBounds", function(object) standardGeneric("getScoreBounds"))
+
 #' Get identifier
 #'
 #' @param object an instance of the S4 object ([SingleChoice], [MultipleChoice],
@@ -341,11 +357,11 @@ setMethod("createOutcomeDeclaration", signature(object = "AssessmentItem"),
                                                                 value = NULL,
                                                                 base_type = "identifier"))
               }
-              points <- sum(object@points[object@points > 0])
+              bounds <- getScoreBounds(object)
               tagList(make_outcome_declaration("SCORE", value = 0),
                       make_outcome_declaration("MAXSCORE",
-                                               value = points),
-                      make_outcome_declaration("MINSCORE", value = 0),
+                                               value = bounds[["maximum"]]),
+                      make_outcome_declaration("MINSCORE", value = bounds[["minimum"]]),
                       feedbacks)
           })
 
@@ -357,6 +373,11 @@ setMethod("getPoints", signature(object = "AssessmentItem"),
               names(points) <- object@identifier
               return(points)
           })
+
+#' @rdname getScoreBounds
+setMethod("getScoreBounds", "AssessmentItem", function(object) {
+    c(minimum = 0, maximum = sum(object@points[object@points > 0]))
+})
 
 #' @rdname getIdentifier-methods
 #' @aliases getIdentifier,AssessmentItem

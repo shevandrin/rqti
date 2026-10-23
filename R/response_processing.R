@@ -42,9 +42,9 @@ thead <- create_tag("thead")
 tbody <- create_tag("tbody")
 
 # process modalfeedback for all match types and mc
-create_default_resp_processing <- function(object) {
-    not_tag <- not(isNull(variable("RESPONSE")))
-    sum_tag <- sum_tag(list(variable("SCORE"), mapResponse("RESPONSE")))
+create_default_resp_processing <- function(object, response_identifier = "RESPONSE") {
+    not_tag <- not(isNull(variable(response_identifier)))
+    sum_tag <- sum_tag(list(variable("SCORE"), mapResponse(response_identifier)))
     set_ov_tag <- setOutcomeValue(list(identifier = "SCORE", sum_tag))
     responseIf_tag <- responseIf(list(not_tag, set_ov_tag))
     resp_cond1 <- responseCondition(responseIf_tag)
@@ -52,7 +52,9 @@ create_default_resp_processing <- function(object) {
     resp_cond23 <- make_default_resp_cond()
 
     resp_cond4 <- NULL
-    if (length(object@feedback) > 0) resp_cond4 <- make_default_feedback_cond()
+    if (length(object@feedback) > 0) {
+        resp_cond4 <- make_default_feedback_cond(response_identifier = response_identifier)
+    }
 
     conditions <- Map(createResponseCondition, object@feedback)
 
@@ -67,10 +69,12 @@ create_default_resp_processing_sc <- function(object) {
         !object@scoring_scheme %in% c("standard", "penalty")) {
         return(create_choice_scoring_processing(object))
     }
-    resp_cond1 <- make_first_cond_sc_order()
+    resp_cond1 <- make_first_cond_sc_order(object@response_identifier)
     resp_cond23 <- make_default_resp_cond()
     resp_cond4 <- NULL
-    if (length(object@feedback) > 0) resp_cond4 <- make_default_feedback_cond()
+    if (length(object@feedback) > 0) {
+        resp_cond4 <- make_default_feedback_cond(response_identifier = object@response_identifier)
+    }
 
     conditions <- Map(createResponseCondition, object@feedback)
 
@@ -79,9 +83,9 @@ create_default_resp_processing_sc <- function(object) {
     return(resp_proc)
 }
 
-make_first_cond_sc_order <- function() {
-    response_if <- responseIf(isNull(variable("RESPONSE")))
-    match_tag <- match(list(variable("RESPONSE"), correct("RESPONSE")))
+make_first_cond_sc_order <- function(response_identifier = "RESPONSE") {
+    response_if <- responseIf(isNull(variable(response_identifier)))
+    match_tag <- match(list(variable(response_identifier), correct(response_identifier)))
     set_ov_tag <- setOutcomeValue(list(identifier = "SCORE", variable("MAXSCORE")))
     response_elseif <- responseElseIf(list(match_tag, set_ov_tag))
     response_else <- responseElse(list(setOutcomeValue(list(identifier = "SCORE", variable("MINSCORE")))))
@@ -150,8 +154,10 @@ make_default_resp_cond <- function() {
     return(tagList(resp_cond1, resp_cond2))
 }
 
-make_default_feedback_cond <- function(answers = list(NULL)) {
-    tag_isnull <- Map(make_response_condition, answers)
+make_default_feedback_cond <- function(answers = list(NULL), response_identifier = NULL) {
+    tag_isnull <- if (is.null(response_identifier)) Map(make_response_condition, answers) else {
+        list(isNull(variable(response_identifier)))
+    }
     if (length(tag_isnull) > 1) {
         tag_isnull <- and(tag_isnull)
     }
