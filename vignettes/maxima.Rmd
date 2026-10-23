@@ -33,21 +33,20 @@ Install native Maxima separately and put its executable on PATH. In R,
 No additional R interface package is required. Ordinary rqti exercises do not
 require Maxima.
 
-On Windows, select the command-line launcher, for example:
+On Windows, choose the command-line launcher provided by your Maxima
+installation. Its name and location depend on the installation; use a path
+you have verified locally. Use forward slashes (or doubled backslashes in an
+R string), without adding shell quotes around the path. Explicit file paths
+are checked directly instead of being looked up with `Sys.which()`.
 
-```{r windows-maxima}
-options(rqti.maxima = "C:/Program Files/Maxima-5.47.0/bin/maxima.bat")
-rqti::maxima_check("1 + 2;")
-rqti::start_server()
-```
-
-Use your installation's actual path, with forward slashes (or doubled
-backslashes in an R string). Do not add shell quotes around the path. Explicit
-file paths support spaces and Unicode without relying on `Sys.which()` or DOS
-short names. Set the option **before** starting the server: `start_server()`
+Set the option **before** starting the server: `start_server()`
 passes that choice to RStudio's separate Knit session. Restart the server after
 changing it. Running `options()` in the console alone does not set an option in
 a separate R session.
+
+The [Windows configuration problem reported in issue #257](https://github.com/shevandrin/rqti/issues/257#issuecomment-6360719800)
+has not yet been reproduced on Windows. An explicit launcher path is a
+configuration option; it is not a confirmed workaround for that report.
 
 rqti runs Maxima locally when checking Rmd chunks and generating previews.
 An exported exercise needs a delivery platform that supports the ONYX `MAXIMA`
