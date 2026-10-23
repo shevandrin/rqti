@@ -2,10 +2,13 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+cd "$REPO_ROOT"
 LOG=$(mktemp)
 
-RQTI_REPO_ROOT="$REPO_ROOT" Rscript --vanilla "$SCRIPT_DIR/serve-render_qtijs.R" > "$LOG" 2>&1 &
+# Respect the same startup files and package libraries as the hook's R tests.
+# --vanilla ignores .Renviron and .Rprofile, which may configure user libraries.
+RQTI_REPO_ROOT="$REPO_ROOT" Rscript --no-save --no-restore "$SCRIPT_DIR/serve-render_qtijs.R" > "$LOG" 2>&1 &
 R_PID=$!
 
 cleanup() {
@@ -39,7 +42,13 @@ URL="${URL}/?mfb=0"
 
 echo "Using URL: $URL"
 
-until curl -fsS --max-time 2 "$URL" >/dev/null 2>&1; do
+READY_DEADLINE=$((SECONDS + 20))
+until curl --noproxy 127.0.0.1,localhost -fsS --max-time 2 "$URL" >/dev/null 2>&1; do
+  if ! kill -0 "$R_PID" 2>/dev/null || (( SECONDS >= READY_DEADLINE )); then
+    echo "The qtijs server did not become reachable. Log:"
+    cat "$LOG"
+    exit 1
+  fi
   sleep 0.2
 done
 

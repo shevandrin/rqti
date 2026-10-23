@@ -46,5 +46,6 @@ CRAN-SUBMISSION
 /TESTPruefung_*.zip
 /codecov.sh
 /coverage.xml
+/tests/qtijs/node_modules/
 /exams2rqti.R
 *teilnehmerlisten*

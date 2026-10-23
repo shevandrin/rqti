@@ -35,6 +35,7 @@ s4_example.R
 ^TESTPruefung_.*\.zip$
 ^codecov\.sh$
 ^coverage\.xml$
+^tests/qtijs/node_modules$
 ^exams2rqti\.R$
 ^.*teilnehmerlisten.*$
 ^dashboard-preview\.html$

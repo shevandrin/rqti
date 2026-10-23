@@ -1,3 +1,5 @@
+// Keep browser binaries with this test's npm dependencies, unless overridden.
+process.env.PLAYWRIGHT_BROWSERS_PATH ??= "0";
 const { chromium } = require("playwright");
 
 (async () => {
