@@ -663,6 +663,169 @@ setMethod("createCourseGroup", "Opal",
 })
 
 
+#' Update a group in a course on LMS Opal
+#'
+#' This method updates a learning group in an LMS Opal course using OPAL's
+#' `groupVO` XML representation (available since OPAL 2026.10.2). Only the
+#' properties supplied as arguments are included in the request; all other
+#' properties remain unchanged. The group properties waiting list, auto
+#' promotion, enrollment period and sign-out deadline cannot be changed via
+#' the REST API.
+#'
+#' Note that renaming a group does not update course conditions: when the
+#' group name is used in visibility or access rules, these rules must be
+#' checked and updated manually in the course editor afterwards.
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to
+#'   the LMS.
+#' @param course_id A character vector of length one specifying the course
+#'   context ID.
+#' @param group_id A character vector of length one specifying the group ID.
+#' @param name A character vector of length one with the new group name, or
+#'   `NULL` to leave the name unchanged. Defaults to `NULL`.
+#' @param description A character vector of length one with the new group
+#'   description, `""` to clear it, or `NULL` to leave it unchanged.
+#'   Defaults to `NULL`.
+#' @param minParticipants A single finite, non-negative whole number with the
+#'   new minimum number of participants, or `NULL` to leave it unchanged.
+#'   Defaults to `NULL`.
+#' @param maxParticipants A single finite, non-negative whole number with the
+#'   new maximum number of participants, or `NULL` to leave it unchanged.
+#'   Defaults to `NULL`.
+#' @param invitationEnabled A boolean value. If `TRUE`, invitations are enabled
+#'   for new group members, or `NULL` to leave it unchanged. Defaults to `NULL`.
+#' @param signoutEnabled A boolean value. If `TRUE`, members may leave the
+#'   group themselves, or `NULL` to leave it unchanged. Defaults to `NULL`.
+#' @return A one-row data frame with the updated group attributes when OPAL
+#'   returns a `groupVO`, otherwise the status code of the HTTP request. Returns
+#'   `NULL` when OPAL rejects the request.
+#' @examplesIf interactive()
+#' group <- updateCourseGroup(
+#'     course_id = "89068111333293",
+#'     group_id = "2691760214",
+#'     name = "Thema 5",
+#'     description = "Gruppe zur Bearbeitung des Thema 5",
+#'     minParticipants = 1,
+#'     maxParticipants = 10,
+#'     invitationEnabled = FALSE,
+#'     signoutEnabled = FALSE
+#' )
+#' @rdname updateCourseGroup-methods
+#' @export
+setMethod("updateCourseGroup", "Opal",
+          function(object, course_id, group_id, name = NULL,
+                   description = NULL, minParticipants = NULL,
+                   maxParticipants = NULL, invitationEnabled = NULL,
+                   signoutEnabled = NULL) {
+
+    assert_opal_api_scalar(course_id, "course_id")
+    assert_opal_api_scalar(group_id, "group_id")
+
+    group_xml <- create_group_update_xml(
+        name = name,
+        description = description,
+        minParticipants = minParticipants,
+        maxParticipants = maxParticipants,
+        invitationEnabled = invitationEnabled,
+        signoutEnabled = signoutEnabled
+    )
+
+    if (!ensure_opal_login(object)) return(NULL)
+
+    url_res_group <- paste0(object@endpoint, "restapi/repo/courses/",
+                            course_id, "/groups/", group_id)
+    req <- request(url_res_group) %>%
+        req_headers("X-OLAT-TOKEN" = lms_token(object),
+                    "Content-Type" = "application/xml") %>%
+        req_method("POST") %>%
+        req_body_raw(charToRaw(group_xml), type = "application/xml")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+
+    if (response$status_code == 400) {
+        message("The group could not be updated. The given parameter is not correct.")
+        return(NULL)
+    }
+
+    if (response$status_code == 401) {
+        message("Status Code: 401 Unauthorized.")
+        message("The required permissions are typically granted to course owners, course administrators, or users in roles with access to the assessment tool.")
+        return(NULL)
+    }
+
+    if (response$status_code == 404) {
+        message("The group or course could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    parsed_response <- tryCatch(resp_body_xml(response),
+                                error = function(e) NULL)
+    if (is.null(parsed_response)) return(as.integer(response$status_code))
+
+    root_name <- tryCatch(xml2::xml_name(xml2::xml_root(parsed_response)),
+                          error = function(e) character(0))
+    if (identical(root_name, "groupVO")) {
+        parse_group_vo_response(parsed_response)
+    } else {
+        as.integer(response$status_code)
+    }
+})
+
+
+#' Delete a group from a course on LMS Opal
+#'
+#' This method removes a learning group from an LMS Opal course
+#' (available since OPAL 2026.10.2).
+#'
+#' @param object An S4 object of class [Opal] that represents a connection to
+#'   the LMS.
+#' @param course_id A character vector of length one specifying the course
+#'   context ID.
+#' @param group_id A character vector of length one specifying the group ID.
+#' @return Status code `200` if the group was deleted successfully, or `NULL`
+#'   when OPAL rejects the request.
+#' @examplesIf interactive()
+#' deleteCourseGroup(course_id = "12345678", group_id = "123456")
+#' @rdname deleteCourseGroup-methods
+#' @export
+setMethod("deleteCourseGroup", "Opal", function(object, course_id, group_id) {
+
+    assert_opal_api_scalar(course_id, "course_id")
+    assert_opal_api_scalar(group_id, "group_id")
+
+    if (!ensure_opal_login(object)) return(NULL)
+
+    url_res_group <- paste0(object@endpoint, "restapi/repo/courses/",
+                            course_id, "/groups/", group_id)
+    req <- request(url_res_group) %>%
+        req_headers("X-OLAT-TOKEN" = lms_token(object)) %>%
+        req_method("DELETE")
+    response <- req %>% req_error(is_error = ~ FALSE) %>% req_perform()
+
+    if (response$status_code == 401) {
+        message("Status Code: 401 Unauthorized.")
+        message("The required permissions are typically granted to course owners, course administrators, or users in roles with access to the assessment tool.")
+        return(NULL)
+    }
+
+    if (response$status_code == 404) {
+        message("The group or course could not be found.")
+        return(NULL)
+    }
+
+    if (response$status_code != 200) {
+        message("Request failed with status code ", response$status_code, ".")
+        return(NULL)
+    }
+
+    as.integer(response$status_code)
+})
+
+
 #' Add a user to a group on LMS Opal
 #'
 #' This method adds a user to a learning group in LMS Opal by group id and user
@@ -919,6 +1082,68 @@ create_group_vo_xml <- function(name, description = "", minParticipants = 0,
     xml2::xml_add_child(group, "maxParticipants", as.character(maxParticipants))
     xml2::xml_add_child(group, "invitationEnabled", bool_xml(invitationEnabled))
     xml2::xml_add_child(group, "signoutEnabled", bool_xml(signoutEnabled))
+
+    as.character(group)
+}
+
+create_group_update_xml <- function(name = NULL, description = NULL,
+                                    minParticipants = NULL, maxParticipants = NULL,
+                                    invitationEnabled = NULL,
+                                    signoutEnabled = NULL) {
+    provided <- Filter(Negate(is.null),
+                       list(name = name, description = description,
+                            minParticipants = minParticipants,
+                            maxParticipants = maxParticipants,
+                            invitationEnabled = invitationEnabled,
+                            signoutEnabled = signoutEnabled))
+    if (length(provided) == 0) {
+        stop("At least one group property must be provided to update.",
+             call. = FALSE)
+    }
+
+    for (arg in names(provided)) {
+        assert_opal_api_scalar(provided[[arg]], arg)
+    }
+
+    for (arg in intersect(c("minParticipants", "maxParticipants"), names(provided))) {
+        value <- provided[[arg]]
+        if (!is.numeric(value) || is.complex(value) || !is.finite(value) ||
+            value < 0 || value != floor(value)) {
+            stop("`", arg, "` must be a finite, non-negative whole number.",
+                 call. = FALSE)
+        }
+    }
+
+    if (!is.null(invitationEnabled) && !is.logical(invitationEnabled)) {
+        stop("`invitationEnabled` must be TRUE or FALSE.", call. = FALSE)
+    }
+    if (!is.null(signoutEnabled) && !is.logical(signoutEnabled)) {
+        stop("`signoutEnabled` must be TRUE or FALSE.", call. = FALSE)
+    }
+
+    bool_xml <- function(x) if (isTRUE(x)) "true" else "false"
+
+    group <- xml2::xml_new_root("groupVO")
+    if (!is.null(name)) {
+        xml2::xml_add_child(group, "name", as.character(name))
+    }
+    if (!is.null(description)) {
+        xml2::xml_add_child(group, "description", as.character(description))
+    }
+    if (!is.null(minParticipants)) {
+        xml2::xml_add_child(group, "minParticipants",
+                            format(minParticipants, scientific = FALSE, trim = TRUE))
+    }
+    if (!is.null(maxParticipants)) {
+        xml2::xml_add_child(group, "maxParticipants",
+                            format(maxParticipants, scientific = FALSE, trim = TRUE))
+    }
+    if (!is.null(invitationEnabled)) {
+        xml2::xml_add_child(group, "invitationEnabled", bool_xml(invitationEnabled))
+    }
+    if (!is.null(signoutEnabled)) {
+        xml2::xml_add_child(group, "signoutEnabled", bool_xml(signoutEnabled))
+    }
 
     as.character(group)
 }

@@ -1,5 +1,14 @@
 # rqti (development version)
 
+* Learning groups in OPAL courses can be updated and deleted via the REST API
+  (available since OPAL 2026.10.2). `updateCourseGroup()` sends only the
+  properties that should change (name, description, participant limits,
+  invitation and sign-out settings); waiting list, auto promotion, enrollment
+  period and sign-out deadline are not changeable per REST. Renaming a group
+  via the REST API does not update dependent visibility or access rules in the
+  course, so these must be checked afterwards. `deleteCourseGroup()` removes a
+  learning group from a course.
+
 * Exclude OpenOlat's separate package configuration from QTI item/test schema
   validation, as already done for the content-package manifest.
 

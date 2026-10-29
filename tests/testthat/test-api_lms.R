@@ -646,6 +646,329 @@ test_that("createCourseGroup returns NULL when OPAL rejects the group", {
     expect_null(group)
 })
 
+test_that("updateCourseGroup sends a groupVO XML POST request with only provided fields", {
+    con <- mock_opal_connection()
+    captured_req <- NULL
+    con@session$token <- "test-token"
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) {
+            captured_req <<- req
+            httr2::response(
+                status_code = 200,
+                headers = list("content-type" = "application/xml"),
+                body = charToRaw(paste0(
+                    "<groupVO>",
+                    "<key>2691760214</key>",
+                    "<description>Gruppe zur Bearbeitung des Thema 5</description>",
+                    "<name>Thema 5</name>",
+                    "<type>LearningGroup</type>",
+                    "<minParticipants>1</minParticipants>",
+                    "<maxParticipants>10</maxParticipants>",
+                    "<invitationEnabled>false</invitationEnabled>",
+                    "<signoutEnabled>false</signoutEnabled>",
+                    "</groupVO>"
+                ))
+            )
+        },
+        .package = "rqti"
+    )
+
+    group <- updateCourseGroup(
+        con,
+        "1790322205495304001",
+        "2691760214",
+        name = "Thema 5",
+        description = "Gruppe zur Bearbeitung des Thema 5",
+        minParticipants = 1,
+        maxParticipants = 10,
+        invitationEnabled = FALSE,
+        signoutEnabled = FALSE
+    )
+
+    body <- rawToChar(captured_req$body$data)
+
+    expect_identical(
+        captured_req$url,
+        "https://opal.example/restapi/repo/courses/1790322205495304001/groups/2691760214"
+    )
+    expect_identical(captured_req$method, "POST")
+    expect_identical(captured_req$body$content_type, "application/xml")
+    expect_identical(captured_req$headers$`X-OLAT-TOKEN`, "test-token")
+    expect_match(body, "<groupVO>")
+    expect_match(body, "<name>Thema 5</name>", fixed = TRUE)
+    expect_match(body, "<description>Gruppe zur Bearbeitung des Thema 5</description>",
+                 fixed = TRUE)
+    expect_match(body, "<minParticipants>1</minParticipants>", fixed = TRUE)
+    expect_match(body, "<maxParticipants>10</maxParticipants>", fixed = TRUE)
+    expect_match(body, "<invitationEnabled>false</invitationEnabled>", fixed = TRUE)
+    expect_match(body, "<signoutEnabled>false</signoutEnabled>", fixed = TRUE)
+
+    expect_s3_class(group, "data.frame")
+    expect_equal(nrow(group), 1)
+    expect_identical(group$key, "2691760214")
+    expect_identical(group$name, "Thema 5")
+    expect_identical(group$type, "LearningGroup")
+    expect_equal(group$minParticipants, 1)
+    expect_equal(group$maxParticipants, 10)
+    expect_false(group$invitationEnabled)
+    expect_false(group$signoutEnabled)
+})
+
+test_that("updateCourseGroup omits properties that are not provided", {
+    con <- mock_opal_connection()
+    captured_req <- NULL
+    con@session$token <- "test-token"
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) {
+            captured_req <<- req
+            httr2::response(status_code = 200)
+        },
+        .package = "rqti"
+    )
+
+    out <- updateCourseGroup(con, "1790322205495304001", "2691760214",
+                             maxParticipants = 25)
+
+    body <- rawToChar(captured_req$body$data)
+
+    expect_identical(captured_req$method, "POST")
+    expect_match(body, "<groupVO>", fixed = TRUE)
+    expect_match(body, "<maxParticipants>25</maxParticipants>", fixed = TRUE)
+    expect_identical(xml2::xml_name(xml2::xml_children(xml2::read_xml(body))),
+                     "maxParticipants")
+    expect_identical(out, 200L)
+})
+
+test_that("updateCourseGroup rejects invalid properties before checking login", {
+    con <- mock_opal_connection()
+    local_mocked_bindings(
+        ensure_opal_login = function(...) stop("Unexpected login check"),
+        req_perform = function(...) stop("Unexpected API request"),
+        .package = "rqti"
+    )
+
+    for (arg in c("invitationEnabled", "signoutEnabled")) {
+        for (value in list(NA, logical(), c(TRUE, FALSE), "true", 1)) {
+            args <- c(list(object = con, course_id = "123", group_id = "456"),
+                      setNames(list(value), arg))
+            expect_error(do.call(updateCourseGroup, args), arg, fixed = TRUE)
+        }
+    }
+
+    for (arg in c("minParticipants", "maxParticipants")) {
+        for (value in list(NA_real_, NaN, Inf, -Inf, numeric(), c(1, 2),
+                           1.5, -1, "10", TRUE, 1 + 1i, factor("10"))) {
+            args <- c(list(object = con, course_id = "123", group_id = "456"),
+                      setNames(list(value), arg))
+            expect_error(do.call(updateCourseGroup, args), arg, fixed = TRUE)
+        }
+    }
+})
+
+test_that("updateCourseGroup preserves text, empty descriptions, zero limits and TRUE", {
+    con <- mock_opal_connection()
+    captured_req <- NULL
+    local_mocked_bindings(
+        ensure_opal_login = function(...) TRUE,
+        req_perform = function(req) {
+            captured_req <<- req
+            httr2::response(status_code = 200)
+        },
+        .package = "rqti"
+    )
+
+    expect_identical(updateCourseGroup(
+        con, "123", "456", name = "Gruppe <A> & Übungen", description = "",
+        minParticipants = 0L, maxParticipants = 1e6,
+        invitationEnabled = TRUE, signoutEnabled = TRUE
+    ), 200L)
+
+    body <- xml2::read_xml(rawToChar(captured_req$body$data))
+    expect_identical(xml2::xml_text(xml2::xml_find_first(body, "./name")),
+                     "Gruppe <A> & Übungen")
+    expect_identical(xml2::xml_text(xml2::xml_find_first(body, "./description")), "")
+    expect_identical(xml2::xml_text(xml2::xml_find_first(body, "./minParticipants")), "0")
+    expect_identical(xml2::xml_text(xml2::xml_find_first(body, "./maxParticipants")),
+                     "1000000")
+    expect_identical(xml2::xml_text(xml2::xml_find_first(body, "./invitationEnabled")),
+                     "true")
+    expect_identical(xml2::xml_text(xml2::xml_find_first(body, "./signoutEnabled")),
+                     "true")
+})
+
+test_that("course group mutations support a default connection with named IDs", {
+    con <- mock_opal_connection()
+    requests <- list()
+    local_mocked_bindings(
+        get_default_connetion = function() con,
+        ensure_opal_login = function(object) {
+            expect_identical(object, con)
+            TRUE
+        },
+        req_perform = function(req) {
+            requests[[length(requests) + 1L]] <<- req
+            httr2::response(status_code = 200)
+        },
+        .package = "rqti"
+    )
+
+    expect_identical(updateCourseGroup(course_id = "123", group_id = "456",
+                                       name = "New name"), 200L)
+    expect_identical(deleteCourseGroup(course_id = "123", group_id = "456"), 200L)
+    expect_length(requests, 2)
+    expect_identical(vapply(requests, `[[`, character(1), "method"), c("POST", "DELETE"))
+    expect_true(all(vapply(requests, `[[`, character(1), "url") ==
+                    "https://opal.example/restapi/repo/courses/123/groups/456"))
+    body <- xml2::read_xml(rawToChar(requests[[1]]$body$data))
+    expect_identical(xml2::xml_name(xml2::xml_children(body)), "name")
+    expect_identical(xml2::xml_text(xml2::xml_find_first(body, "./name")), "New name")
+})
+
+test_that("course group mutations validate IDs before checking login", {
+    con <- mock_opal_connection()
+    local_mocked_bindings(
+        ensure_opal_login = function(...) stop("Unexpected login check"),
+        req_perform = function(...) stop("Unexpected API request"),
+        .package = "rqti"
+    )
+
+    for (arg in c("course_id", "group_id")) {
+        for (value in list(NA_character_, character(), c("123", "456"))) {
+            args <- list(object = con, course_id = "123", group_id = "456")
+            args[[arg]] <- value
+            expect_error(do.call(deleteCourseGroup, args), arg, fixed = TRUE)
+            expect_error(do.call(updateCourseGroup, c(args, list(name = "New"))),
+                         arg, fixed = TRUE)
+        }
+    }
+})
+
+test_that("course group mutations do not send requests when login fails", {
+    con <- mock_opal_connection()
+    local_mocked_bindings(
+        ensure_opal_login = function(...) FALSE,
+        req_perform = function(...) stop("Unexpected API request"),
+        .package = "rqti"
+    )
+
+    expect_null(updateCourseGroup(con, "123", "456", name = "New"))
+    expect_null(deleteCourseGroup(con, "123", "456"))
+})
+
+test_that("course group mutations handle unauthorized and unexpected responses", {
+    con <- mock_opal_connection()
+    status <- 401L
+    local_mocked_bindings(
+        ensure_opal_login = function(...) TRUE,
+        req_perform = function(...) httr2::response(status_code = status),
+        .package = "rqti"
+    )
+
+    for (status in c(401L, 500L)) {
+        for (mutate in list(
+            function() updateCourseGroup(con, "123", "456", name = "New"),
+            function() deleteCourseGroup(con, "123", "456")
+        )) {
+            expect_message(result <- mutate(), as.character(status))
+            expect_null(result)
+        }
+    }
+})
+
+test_that("updateCourseGroup returns NULL when OPAL rejects the request", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) httr2::response(status_code = 404),
+        .package = "rqti"
+    )
+
+    expect_message(
+        group <- updateCourseGroup(con, "1790322205495304001", "2691760214",
+                                   name = "Thema 5"),
+        "The group or course could not be found."
+    )
+    expect_null(group)
+
+    local_mocked_bindings(
+        req_perform = function(req) httr2::response(status_code = 400),
+        .package = "rqti"
+    )
+
+    expect_message(
+        group <- updateCourseGroup(con, "1790322205495304001", "2691760214",
+                                   name = "Thema 5"),
+        "The group could not be updated"
+    )
+    expect_null(group)
+})
+
+test_that("updateCourseGroup errors when no property is provided", {
+    con <- mock_opal_connection()
+
+    expect_error(
+        updateCourseGroup(con, "1790322205495304001", "2691760214"),
+        "At least one group property must be provided"
+    )
+})
+
+test_that("deleteCourseGroup sends a DELETE request", {
+    con <- mock_opal_connection()
+    captured_req <- NULL
+    con@session$token <- "test-token"
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) {
+            captured_req <<- req
+            httr2::response(status_code = 200)
+        },
+        .package = "rqti"
+    )
+
+    out <- deleteCourseGroup(con, "12345678", "123456")
+
+    expect_identical(
+        captured_req$url,
+        "https://opal.example/restapi/repo/courses/12345678/groups/123456"
+    )
+    expect_identical(captured_req$method, "DELETE")
+    expect_identical(captured_req$headers$`X-OLAT-TOKEN`, "test-token")
+    expect_identical(out, 200L)
+})
+
+test_that("deleteCourseGroup returns NULL when OPAL rejects the request", {
+    con <- mock_opal_connection()
+
+    local_mocked_bindings(
+        ensure_opal_login = function(object) TRUE,
+        req_perform = function(req) httr2::response(status_code = 404),
+        .package = "rqti"
+    )
+
+    expect_message(
+        out <- deleteCourseGroup(con, "12345678", "123456"),
+        "The group or course could not be found."
+    )
+    expect_null(out)
+
+    local_mocked_bindings(
+        req_perform = function(req) httr2::response(status_code = 401),
+        .package = "rqti"
+    )
+
+    expect_message(
+        out <- deleteCourseGroup(con, "12345678", "123456"),
+        "Status Code: 401 Unauthorized."
+    )
+    expect_null(out)
+})
+
 test_that("addGroupUser sends a participant PUT request", {
     con <- mock_opal_connection()
     captured_req <- NULL
