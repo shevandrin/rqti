@@ -19,65 +19,26 @@ remotes::install_github("shevandrin/rqti", ref = "prototype/maxima-rmd")
 
 ## Requirements
 
-Install native Maxima separately and put its executable on PATH. In R,
-`Sys.which("maxima")` searches for the executable by name and returns
-its full path, like `which maxima` on Linux (Windows uses an emulation).
-It needs the program name, not just an installation directory. On
-Windows, try `Sys.which("maxima")`; R can resolve executable suffixes
-there. If needed, use the actual launcher name, for example
-`Sys.which("maxima.bat")`. An empty result means R did not find it
-through that lookup. You can still select an existing executable
-explicitly: set `options(rqti.maxima = "/path/to/maxima")`. No
-additional R interface package is required. Ordinary rqti exercises do
-not require Maxima.
+Install Maxima separately. rqti finds it on PATH, or you can select its
+executable explicitly:
 
-On Windows, choose the command-line launcher provided by your Maxima
-installation. Its name and location depend on the installation; use a
-path you have verified locally. Use forward slashes (or doubled
-backslashes in an R string), without adding shell quotes around the
-path. Explicit file paths are checked directly instead of being looked
-up with [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html). The
-option can contain a **program name** such as `"maxima"` or the **full
-path including the executable**, not just its directory. For example, if
-Maxima is installed in `C:/maxima-5.44.0`:
+``` r
+
+options(rqti.maxima = "/usr/bin/maxima") # replace with your executable's path
+```
+
+On Windows, use the full path to the command-line launcher, for example:
 
 ``` r
 
 options(rqti.maxima = "C:/maxima-5.44.0/bin/maxima.bat")
-rqti::start_server() # if not already running
 ```
 
-The preview backend reads the current console option for each new
-calculation. Separate Knit sessions read current console settings from
-the running preview server, so changing `rqti.maxima` or
-`rqti.task_names` does **not** require a server restart. Set options in
-`.Rprofile` for a persistent configuration.
-
-These settings are **R options**, set with
-[`options()`](https://rdrr.io/r/base/options.html) and read with
-[`getOption()`](https://rdrr.io/r/base/options.html). They belong to the
-current R session. Environment variables, set with
-[`Sys.setenv()`](https://rdrr.io/r/base/Sys.setenv.html) and read with
-[`Sys.getenv()`](https://rdrr.io/r/base/Sys.getenv.html), are separate
-process settings inherited by child processes. Prefer R options for rqti
-configuration: put
-`options(rqti.maxima = "maxima", rqti.task_names = "title")` in
-`.Rprofile` to apply it to future sessions. `.Renviron` is for
-environment variables. rqti uses environment variables internally to let
-Knit locate the running server; authors do not need to configure those
-variables manually.
-
-The reporter of the [Windows configuration problem in issue
-\#257](https://github.com/shevandrin/rqti/issues/257) confirmed that
-selecting the full `maxima.bat` path and restarting the server worked.
-They also reported trouble resolving a versioned installation directory
-through [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html). Explicit
-paths bypass that lookup without requiring a rename of the installation
-directory. R documents Windows
-[`Sys.which()`](https://rdrr.io/r/base/Sys.which.html) results as short
-(8.3) paths; this is not a requirement to name installation directories
-with eight characters or fewer. See the [R documentation for
-`Sys.which()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Sys.which.html).
+Use your installation’s actual path, including the executable filename.
+Forward slashes work in Windows R strings. No additional R interface
+package is required; ordinary rqti exercises do not require Maxima. See
+[Configuration](https://shevandrin.github.io/rqti/maxima-preview/articles/configuration.md)
+for persistent settings.
 
 rqti runs Maxima locally when checking Rmd chunks and generating
 previews. An exported exercise needs a delivery platform that supports
@@ -162,10 +123,6 @@ failed preview shows the diagnostic and a **Retry** button. To stop the
 server, use
 [`rqti::stop_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/stop_server.md).
 
-The Knit button uses a separate R session. rqti passes both the server
-URL and its renderer folder to that session, including when the console
-uses a development checkout and Knit loads the installed package.
-
 ## Output types and authoring checks
 
 Supported output types are `integer`, `float`, and `string`. Rational
@@ -196,7 +153,7 @@ results. The extra text output can be displayed with
 execution check.
 
 Lists and other structured values need an explicit `string` declaration
-when used for display. This does not create a generated image.
+when used for display.
 
 ### Text answers
 
@@ -261,47 +218,22 @@ rstudioapi::navigateToFile(example)
 Click **Knit**. Copying the word in lowercase earns one point; copying
 its capitalization exactly into both gaps earns two. Wrong or empty
 answers earn zero. Submitting preserves the word; reloading generates
-another variant. These cases have been tested with native Maxima in
-qti.js, including Unicode, punctuation, and numeric-looking strings such
-as `"0"` and `"01"`. The ONYX/OPAL export validates against the extended
-schema; live OPAL scoring for generated text answers still needs
-verification.
+another variant. Verify generated text-answer scoring in your target LMS
+before using it in an assessment.
 
 ### Display LaTeX strings
 
-Return LaTeX as a Maxima string. The following forms have been checked
-in a fresh ONYX/OPAL attempt and after answer submission:
+Return LaTeX as a Maxima string and insert it with
+[`template_value()`](https://shevandrin.github.io/rqti/maxima-preview/reference/template_value.md).
+Double backslashes inside Maxima strings: `"\\mathbb{R}"` returns
+`\mathbb{R}`.
 
-- Inline math: put `\\(` and `\\)` around the inline
-  [`template_value()`](https://shevandrin.github.io/rqti/maxima-preview/reference/template_value.md)
-  reference in Markdown (try 5 in the original example).
-- Display math: put `$$` around the reference (try 6).
-- Self-contained inline math: return a string including `\\(` and `\\)`
-  in Maxima, then insert the reference directly (`tex_embedded`).
+For inline math, surround the reference with `\\(` and `\\)` in the Rmd
+text. For display math, use `$$`. Alternatively, include the delimiters
+in the returned Maxima string and insert the reference directly.
 
-The [OPAL LaTeX
-test](https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/56806965249)
-contains the original tries. Tries 5, 6, and `tex_embedded` render
-correctly; the local qti.js preview supports these forms too.
-
-Backslashes in a literal **Maxima string** must be doubled:
-`"\\mathbb{R}"` produces `\mathbb{R}`. The doubled backslashes in
-Markdown’s `\\(...\\)` likewise preserve the math delimiters; a single
-`\(` in Markdown loses its backslash during conversion.
-
-The local preview typesets the completed Maxima output and preserves it
-when answers are submitted. The exported XML keeps live
-`printedVariable` references, including those inside math, rather than
-the sample values from the local check. Rmd references are inserted
-without an extra HTML span, so ONYX can substitute the values without
-interrupting the surrounding formula. To put the delimiters inside the
-generated value itself instead, use the `embedded` or `dollar_embedded`
-output below. Dollar-delimited strings such as `"$$\\mathbb{R}$$"` also
-work with Maxima 5.44’s older parser: rqti supplies an explicit
-terminator when parsing the returned association list. This also handles
-semicolons inside string outputs.
-
-The complete example shows these forms:
+The complete example below shows each form. Copy it to an Rmd file,
+start the preview server, and click **Knit**:
 
 ```` markdown
 ---
@@ -329,13 +261,13 @@ block([],
 
 # question
 
-Inline math (try 5): \\(`r template_value("number_set")`\\).
+Inline math: \\(`r template_value("number_set")`\\).
 
-Display math (try 6):
+Display math:
 
 $$`r template_value("number_set")`$$
 
-Math delimiters included in the returned string (`tex_embedded`):
+Inline delimiters included in the returned string:
 `r template_value("embedded")`.
 
 Dollar delimiters included in the returned string:
@@ -344,18 +276,14 @@ Dollar delimiters included in the returned string:
 What is $1 + 0$? `r gap_numeric(1, tolerance_type="exact")`
 ````
 
-rqti executes each Rmd Maxima chunk before export, including chunks with
-explicit types. Syntax/runtime errors, missing outputs, incompatible
-declared types, or missing template references stop export. Diagnostics
-identify the source file, chunk label, and numbered code. Template
-chunks must be evaluated and uncached. Only one Maxima chunk is allowed
-per Rmd exercise. Return all the values needed by the question and its
-answer from that chunk’s `string([...])` list. This follows the
-all-in-one approach in [issue
-\#257](https://github.com/shevandrin/rqti/issues/257): independent ONYX
-calculations may run in parallel and give separate random calculations
-the same seed. A single block keeps related calculations together.
-Displayed references are supported in the question body.
+### Authoring checks
+
+rqti executes the Maxima chunk before export, including when types are
+declared explicitly. Errors stop export and identify the source file,
+chunk, and numbered code. Use one evaluated, uncached Maxima chunk per
+exercise and return all values needed by the question and answer in its
+`string([...])` list. Related random calculations then share the same
+execution.
 
 ### Check Maxima code directly
 
@@ -398,43 +326,6 @@ stopifnot(result$valid)
 rqti::rmd2zip(example, path = tempdir())
 ```
 
-Previews and exports share `options(rqti.task_names = "title")`. With no
-option set, the exercise title is used; a missing title falls back to
-the source filename. Choose `"filename"`, `"both"` (`Title (filename)`),
-or `"hidden"` (generic labels such as `Task 1.1`) for a different
-display. For example:
-
-``` r
-
-options(rqti.task_names = "hidden")  # also applies to subsequent Knit sessions
-rqti::rmd2zip(example, path = tempdir())
-rqti::render_qtijs(example, task_names = "both") # override for one preview
-rqti::rmd2xml(example, path = tempdir(), task_names = "title")
-```
-
-[`upload2opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/upload2opal.md)
-and
-[`upload2LMS()`](https://shevandrin.github.io/rqti/maxima-preview/reference/upload2LMS-methods.md)
-use the same policy, including the imported repository name when no
-explicit `display_name` is supplied. Generic task names can therefore be
-selected globally for LMS delivery; the fallback default for both local
-preview and export is the exercise title. See
-[`help("task_names", package="rqti")`](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md)
-for details.
-
-XML filenames are independent of display names and identifiers. Both
-Knit and
-[`rmd2xml()`](https://shevandrin.github.io/rqti/maxima-preview/reference/rmd2xml.md)
-preserve the source basename: `minimal-latex.Rmd` produces
-`minimal-latex.xml`, even with `identifier: minimal_latex`;
-`minimal_latex.Rmd` produces `minimal_latex.xml`. The identifier inside
-the XML stays unchanged. Pass an explicit `.xml` path to
-[`rmd2xml()`](https://shevandrin.github.io/rqti/maxima-preview/reference/rmd2xml.md)
-to choose another export filename.
-
-Diesunddas’s original comparison exercise, updated to include the dollar
-string, is also installed as `inst/extdata/minimal-latex.Rmd`.
-
 **Choose `schema = "extended"` for ONYX Maxima items.** The standard QTI
 2.1 schema rejects ONYX’s `customOperator/@value` attribute and the
 `setCorrectResponse` rule in response processing. The default
@@ -455,11 +346,8 @@ rqti’s managed user cache across R sessions. Each calculation still
 starts a fresh Maxima process; programs, variables, and answers remain
 independent and temporary.
 
-Build changes invalidate the cache. Old builds, caches unused for 30
-days, incomplete library loads, and caches exceeding 64 MiB are removed
-automatically. Concurrent sessions coordinate through a lock. You can
-choose another cache directory or keep the cache within the current R
-session:
+rqti manages cache cleanup automatically. You can choose another cache
+directory or keep the cache within the current R session:
 
 ``` r
 

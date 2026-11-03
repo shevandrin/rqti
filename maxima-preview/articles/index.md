@@ -40,6 +40,7 @@
 
 ### Other
 
+- [Configuration](https://shevandrin.github.io/rqti/maxima-preview/articles/configuration.md):
 - [Maxima
   exercises](https://shevandrin.github.io/rqti/maxima-preview/articles/maxima.md):
 - [Compatibility with Learning Management

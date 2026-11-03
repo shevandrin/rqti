@@ -61,6 +61,7 @@
     <li><a class="dropdown-item" href="../articles/rqti_oop_model.html">rqti OOP Model</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Other</h6></li>
+    <li><a class="dropdown-item" href="../articles/configuration.html">Configuration</a></li>
     <li><a class="dropdown-item" href="../articles/maxima.html">Maxima exercises</a></li>
     <li><a class="dropdown-item" href="../articles/compatibility.html">Compatibility with Learning Management Systems</a></li>
     <li><a class="dropdown-item" href="../articles/exams_integr.html">Integration of the exams Package in rqti</a></li>
@@ -110,58 +111,19 @@ many random variants. You can write the calculations in a
 <div class="section level2">
 <h2 id="requirements">Requirements<a class="anchor" aria-label="anchor" href="#requirements"></a>
 </h2>
-<p>Install native Maxima separately and put its executable on PATH. In
-R, <code>Sys.which("maxima")</code> searches for the executable by name
-and returns its full path, like <code>which maxima</code> on Linux
-(Windows uses an emulation). It needs the program name, not just an
-installation directory. On Windows, try
-<code>Sys.which("maxima")</code>; R can resolve executable suffixes
-there. If needed, use the actual launcher name, for example
-<code>Sys.which("maxima.bat")</code>. An empty result means R did not
-find it through that lookup. You can still select an existing executable
-explicitly: set <code>options(rqti.maxima = "/path/to/maxima")</code>.
-No additional R interface package is required. Ordinary rqti exercises
-do not require Maxima.</p>
-<p>On Windows, choose the command-line launcher provided by your Maxima
-installation. Its name and location depend on the installation; use a
-path you have verified locally. Use forward slashes (or doubled
-backslashes in an R string), without adding shell quotes around the
-path. Explicit file paths are checked directly instead of being looked
-up with <code><a href="https://rdrr.io/r/base/Sys.which.html" class="external-link">Sys.which()</a></code>. The option can contain a
-<strong>program name</strong> such as <code>"maxima"</code> or the
-<strong>full path including the executable</strong>, not just its
-directory. For example, if Maxima is installed in
-<code>C:/maxima-5.44.0</code>:</p>
+<p>Install Maxima separately. rqti finds it on PATH, or you can select
+its executable explicitly:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima <span class="op">=</span> <span class="st">"C:/maxima-5.44.0/bin/maxima.bat"</span><span class="op">)</span></span>
-<span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/start_server.html">start_server</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># if not already running</span></span></code></pre></div>
-<p>The preview backend reads the current console option for each new
-calculation. Separate Knit sessions read current console settings from
-the running preview server, so changing <code>rqti.maxima</code> or
-<code>rqti.task_names</code> does <strong>not</strong> require a server
-restart. Set options in <code>.Rprofile</code> for a persistent
-configuration.</p>
-<p>These settings are <strong>R options</strong>, set with
-<code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code> and read with <code><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption()</a></code>. They
-belong to the current R session. Environment variables, set with
-<code><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv()</a></code> and read with <code><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv()</a></code>, are
-separate process settings inherited by child processes. Prefer R options
-for rqti configuration: put
-<code>options(rqti.maxima = "maxima", rqti.task_names = "title")</code>
-in <code>.Rprofile</code> to apply it to future sessions.
-<code>.Renviron</code> is for environment variables. rqti uses
-environment variables internally to let Knit locate the running server;
-authors do not need to configure those variables manually.</p>
-<p>The reporter of the <a href="https://github.com/shevandrin/rqti/issues/257" class="external-link">Windows
-configuration problem in issue #257</a> confirmed that selecting the
-full <code>maxima.bat</code> path and restarting the server worked. They
-also reported trouble resolving a versioned installation directory
-through <code><a href="https://rdrr.io/r/base/Sys.which.html" class="external-link">Sys.which()</a></code>. Explicit paths bypass that lookup
-without requiring a rename of the installation directory. R documents
-Windows <code><a href="https://rdrr.io/r/base/Sys.which.html" class="external-link">Sys.which()</a></code> results as short (8.3) paths; this is
-not a requirement to name installation directories with eight characters
-or fewer. See the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Sys.which.html" class="external-link">R
-documentation for <code>Sys.which()</code></a>.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima <span class="op">=</span> <span class="st">"/usr/bin/maxima"</span><span class="op">)</span> <span class="co"># replace with your executable's path</span></span></code></pre></div>
+<p>On Windows, use the full path to the command-line launcher, for
+example:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima <span class="op">=</span> <span class="st">"C:/maxima-5.44.0/bin/maxima.bat"</span><span class="op">)</span></span></code></pre></div>
+<p>Use your installation’s actual path, including the executable
+filename. Forward slashes work in Windows R strings. No additional R
+interface package is required; ordinary rqti exercises do not require
+Maxima. See <a href="configuration.html">Configuration</a> for
+persistent settings.</p>
 <p>rqti runs Maxima locally when checking Rmd chunks and generating
 previews. An exported exercise needs a delivery platform that supports
 the ONYX <code>MAXIMA</code> custom operator, such as ONYX/OPAL. The XML
@@ -172,35 +134,35 @@ fixed into the exported question.</p>
 <h2 id="write-an-rmd-exercise">Write an Rmd exercise<a class="anchor" aria-label="anchor" href="#write-an-rmd-exercise"></a>
 </h2>
 <p>Here is the complete addition example shipped with this branch:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="an">type:</span><span class="co"> gap</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="an">identifier:</span><span class="co"> maxima_local_addition</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Maxima addition in RStudio"</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="an">knit:</span><span class="co"> rqti::render_qtijs</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">&lt;!-- In the RStudio console, run rqti::start_server()</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">     before clicking Knit. The preview opens in the RStudio Viewer. --&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="in">library(rqti)</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="in">```{maxima addition}</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="in">block(</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="in">    [a, b, answer],</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="in">    a: random(100),</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="in">    b: random(100),</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="in">    answer: a + b,</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="in">    string(['a = a, 'b = b, 'answer = answer])</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="in">);</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="fu"># question</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>What is **`r template_value("a")`** + **`r template_value("b")`**?</span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>Answer: <span class="in">`r gap_numeric(solution_variable="answer", tolerance_type="exact", points=1)`</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="an">type:</span><span class="co"> gap</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="an">identifier:</span><span class="co"> maxima_local_addition</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Maxima addition in RStudio"</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="an">knit:</span><span class="co"> rqti::render_qtijs</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">&lt;!-- In the RStudio console, run rqti::start_server()</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">     before clicking Knit. The preview opens in the RStudio Viewer. --&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="in">library(rqti)</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="in">```{maxima addition}</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="in">block(</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="in">    [a, b, answer],</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="in">    a: random(100),</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="in">    b: random(100),</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="in">    answer: a + b,</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="in">    string(['a = a, 'b = b, 'answer = answer])</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="in">);</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="fu"># question</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>What is **`r template_value("a")`** + **`r template_value("b")`**?</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>Answer: <span class="in">`r gap_numeric(solution_variable="answer", tolerance_type="exact", points=1)`</span></span></code></pre></div>
 <p>The Maxima block returns a string containing a named association
 list: <code>string(['a = a, 'b = b, 'answer = answer])</code>. rqti
 reads the output names and types from one local execution, creates the
@@ -217,7 +179,7 @@ binding in the S4 API.</p>
 <p>Start the preview server in the RStudio console before clicking
 <strong>Knit</strong>. Copy the installed example to a writable location
 first:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shevandrin/rqti" class="external-link">rqti</a></span><span class="op">)</span></span>
 <span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/start_server.html">start_server</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"maxima-addition.Rmd"</span><span class="op">)</span></span>
@@ -237,10 +199,6 @@ the current numbers; reload the preview page to generate another
 variant. A failed preview shows the diagnostic and a
 <strong>Retry</strong> button. To stop the server, use
 <code><a href="../reference/stop_server.html">rqti::stop_server()</a></code>.</p>
-<p>The Knit button uses a separate R session. rqti passes both the
-server URL and its renderer folder to that session, including when the
-console uses a development checkout and Knit loads the installed
-package.</p>
 </div>
 <div class="section level2">
 <h2 id="output-types-and-authoring-checks">Output types and authoring checks<a class="anchor" aria-label="anchor" href="#output-types-and-authoring-checks"></a>
@@ -251,24 +209,23 @@ be used as floating-point outputs. Inference observes one random
 variant; specify types when they may vary between variants:</p>
 <p>For example, replace the addition chunk above with this explicitly
 typed chunk:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="in">```{maxima addition, variables = c(a = "integer", b = "integer", answer = "float", label = "string")}</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="in">block(</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="in">    [a, b, answer, label],</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="in">    a: random(100),</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="in">    b: random(100),</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="in">    answer: a + b,</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="in">    label: "Addition",</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="in">    string(['a = a, 'b = b, 'answer = answer, 'label = label])</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="in">);</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="in">```{maxima addition, variables = c(a = "integer", b = "integer", answer = "float", label = "string")}</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="in">block(</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="in">    [a, b, answer, label],</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="in">    a: random(100),</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="in">    b: random(100),</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="in">    answer: a + b,</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="in">    label: "Addition",</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="in">    string(['a = a, 'b = b, 'answer = answer, 'label = label])</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="in">);</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
 <p>The named <code>variables</code> vector sets the QTI types for the
 returned outputs. <code>answer = "float"</code> accepts both integer and
 floating-point results. The extra text output can be displayed with
 <code>template_value("label")</code>. Explicit types do not bypass the
 local execution check.</p>
 <p>Lists and other structured values need an explicit
-<code>string</code> declaration when used for display. This does not
-create a generated image.</p>
+<code>string</code> declaration when used for display.</p>
 <div class="section level3">
 <h3 id="text-answers">Text answers<a class="anchor" aria-label="anchor" href="#text-answers"></a>
 </h3>
@@ -283,38 +240,38 @@ answers. <code>textGap(solution_variable = "answer")</code> provides the
 same binding in the S4 API.</p>
 <p>This example can be previewed in qti.js and exported for
 ONYX/OPAL:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="an">type:</span><span class="co"> gap</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="an">identifier:</span><span class="co"> maxima_text_answer</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Text answers from Maxima"</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="an">knit:</span><span class="co"> rqti::render_qtijs</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">&lt;!-- Run rqti::start_server() in the RStudio console before clicking Knit. --&gt;</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="in">library(rqti)</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="in">```{maxima words}</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="in">block([answer],</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="in">    answer: ["Blue", "Green", "Orange"][random(3) + 1],</span></span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="in">    string(['answer = answer])</span></span>
-<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="in">);</span></span>
-<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="fu"># question</span></span>
-<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>The generated word is **`r template_value("answer")`**.</span>
-<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>Copy it here (capitalization does not matter):</span>
-<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="in">`r gap_text(solution_variable = "answer", response_identifier = "insensitive")`</span></span>
-<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a>Copy it here again (capitalization must match):</span>
-<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="in">`r gap_text(solution_variable = "answer", case_sensitive = TRUE, response_identifier = "sensitive")`</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="an">type:</span><span class="co"> gap</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="an">identifier:</span><span class="co"> maxima_text_answer</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Text answers from Maxima"</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="an">knit:</span><span class="co"> rqti::render_qtijs</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">&lt;!-- Run rqti::start_server() in the RStudio console before clicking Knit. --&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="in">library(rqti)</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="in">```{maxima words}</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="in">block([answer],</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="in">    answer: ["Blue", "Green", "Orange"][random(3) + 1],</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="in">    string(['answer = answer])</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="in">);</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="fu"># question</span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>The generated word is **`r template_value("answer")`**.</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>Copy it here (capitalization does not matter):</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="in">`r gap_text(solution_variable = "answer", response_identifier = "insensitive")`</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>Copy it here again (capitalization must match):</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a><span class="in">`r gap_text(solution_variable = "answer", case_sensitive = TRUE, response_identifier = "sensitive")`</span></span></code></pre></div>
 <p>To try it, copy the installed example to a writable location, start
 the preview server, and open the copy in RStudio:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"maxima-text-answer.Rmd"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"maxima-text-answer.Rmd"</span>, package <span class="op">=</span> <span class="st">"rqti"</span><span class="op">)</span>,</span>
@@ -326,98 +283,69 @@ the preview server, and open the copy in RStudio:</p>
 <p>Click <strong>Knit</strong>. Copying the word in lowercase earns one
 point; copying its capitalization exactly into both gaps earns two.
 Wrong or empty answers earn zero. Submitting preserves the word;
-reloading generates another variant. These cases have been tested with
-native Maxima in qti.js, including Unicode, punctuation, and
-numeric-looking strings such as <code>"0"</code> and <code>"01"</code>.
-The ONYX/OPAL export validates against the extended schema; live OPAL
-scoring for generated text answers still needs verification.</p>
+reloading generates another variant. Verify generated text-answer
+scoring in your target LMS before using it in an assessment.</p>
 </div>
 <div class="section level3">
 <h3 id="display-latex-strings">Display LaTeX strings<a class="anchor" aria-label="anchor" href="#display-latex-strings"></a>
 </h3>
-<p>Return LaTeX as a Maxima string. The following forms have been
-checked in a fresh ONYX/OPAL attempt and after answer submission:</p>
-<ul>
-<li>Inline math: put <code>\\(</code> and <code>\\)</code> around the
-inline <code><a href="../reference/template_value.html">template_value()</a></code> reference in Markdown (try 5 in the
-original example).</li>
-<li>Display math: put <code>$$</code> around the reference (try 6).</li>
-<li>Self-contained inline math: return a string including
-<code>\\(</code> and <code>\\)</code> in Maxima, then insert the
-reference directly (<code>tex_embedded</code>).</li>
-</ul>
-<p>The <a href="https://bildungsportal.sachsen.de/opal/auth/RepositoryEntry/56806965249" class="external-link">OPAL
-LaTeX test</a> contains the original tries. Tries 5, 6, and
-<code>tex_embedded</code> render correctly; the local qti.js preview
-supports these forms too.</p>
-<p>Backslashes in a literal <strong>Maxima string</strong> must be
-doubled: <code>"\\mathbb{R}"</code> produces <code>\mathbb{R}</code>.
-The doubled backslashes in Markdown’s <code>\\(...\\)</code> likewise
-preserve the math delimiters; a single <code>\(</code> in Markdown loses
-its backslash during conversion.</p>
-<p>The local preview typesets the completed Maxima output and preserves
-it when answers are submitted. The exported XML keeps live
-<code>printedVariable</code> references, including those inside math,
-rather than the sample values from the local check. Rmd references are
-inserted without an extra HTML span, so ONYX can substitute the values
-without interrupting the surrounding formula. To put the delimiters
-inside the generated value itself instead, use the <code>embedded</code>
-or <code>dollar_embedded</code> output below. Dollar-delimited strings
-such as <code>"$$\\mathbb{R}$$"</code> also work with Maxima 5.44’s
-older parser: rqti supplies an explicit terminator when parsing the
-returned association list. This also handles semicolons inside string
-outputs.</p>
-<p>The complete example shows these forms:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="an">type:</span><span class="co"> gap</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="an">identifier:</span><span class="co"> maxima_latex</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="an">title:</span><span class="co"> "LaTeX from Maxima"</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="an">knit:</span><span class="co"> rqti::render_qtijs</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">&lt;!-- Run rqti::start_server() in the RStudio console before clicking Knit. --&gt;</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="in">library(rqti)</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="in">```{maxima latex}</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="in">block([],</span></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="in">    string([</span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="in">        'number_set = "\\mathbb{R}",</span></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="in">        'embedded = "\\(\\mathbb{R}\\)",</span></span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="in">        'dollar_embedded = "$$\\mathbb{R}$$"</span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="in">    ])</span></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="in">);</span></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="fu"># question</span></span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>Inline math (try 5): <span class="sc">\\</span>(<span class="in">`r template_value("number_set")`</span><span class="sc">\\</span>).</span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>Display math (try 6):</span>
-<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>$$<span class="in">`r template_value("number_set")`</span>$$</span>
-<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a></span>
-<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>Math delimiters included in the returned string (<span class="in">`tex_embedded`</span>):</span>
-<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a><span class="in">`r template_value("embedded")`</span>.</span>
-<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>Dollar delimiters included in the returned string:</span>
-<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="in">`r template_value("dollar_embedded")`</span>.</span>
-<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a>What is $1 + 0$? <span class="in">`r gap_numeric(1, tolerance_type="exact")`</span></span></code></pre></div>
-<p>rqti executes each Rmd Maxima chunk before export, including chunks
-with explicit types. Syntax/runtime errors, missing outputs,
-incompatible declared types, or missing template references stop export.
-Diagnostics identify the source file, chunk label, and numbered code.
-Template chunks must be evaluated and uncached. Only one Maxima chunk is
-allowed per Rmd exercise. Return all the values needed by the question
-and its answer from that chunk’s <code>string([...])</code> list. This
-follows the all-in-one approach in <a href="https://github.com/shevandrin/rqti/issues/257" class="external-link">issue #257</a>:
-independent ONYX calculations may run in parallel and give separate
-random calculations the same seed. A single block keeps related
-calculations together. Displayed references are supported in the
-question body.</p>
+<p>Return LaTeX as a Maxima string and insert it with
+<code><a href="../reference/template_value.html">template_value()</a></code>. Double backslashes inside Maxima strings:
+<code>"\\mathbb{R}"</code> returns <code>\mathbb{R}</code>.</p>
+<p>For inline math, surround the reference with <code>\\(</code> and
+<code>\\)</code> in the Rmd text. For display math, use <code>$$</code>.
+Alternatively, include the delimiters in the returned Maxima string and
+insert the reference directly.</p>
+<p>The complete example below shows each form. Copy it to an Rmd file,
+start the preview server, and click <strong>Knit</strong>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="an">type:</span><span class="co"> gap</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="an">identifier:</span><span class="co"> maxima_latex</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="an">title:</span><span class="co"> "LaTeX from Maxima"</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="an">knit:</span><span class="co"> rqti::render_qtijs</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">&lt;!-- Run rqti::start_server() in the RStudio console before clicking Knit. --&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="in">library(rqti)</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="in">```{maxima latex}</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="in">block([],</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="in">    string([</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="in">        'number_set = "\\mathbb{R}",</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="in">        'embedded = "\\(\\mathbb{R}\\)",</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="in">        'dollar_embedded = "$$\\mathbb{R}$$"</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="in">    ])</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="in">);</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="fu"># question</span></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>Inline math: <span class="sc">\\</span>(<span class="in">`r template_value("number_set")`</span><span class="sc">\\</span>).</span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>Display math:</span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>$$<span class="in">`r template_value("number_set")`</span>$$</span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a>Inline delimiters included in the returned string:</span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="in">`r template_value("embedded")`</span>.</span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a>Dollar delimiters included in the returned string:</span>
+<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="in">`r template_value("dollar_embedded")`</span>.</span>
+<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a>What is $1 + 0$? <span class="in">`r gap_numeric(1, tolerance_type="exact")`</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="authoring-checks">Authoring checks<a class="anchor" aria-label="anchor" href="#authoring-checks"></a>
+</h3>
+<p>rqti executes the Maxima chunk before export, including when types
+are declared explicitly. Errors stop export and identify the source
+file, chunk, and numbered code. Use one evaluated, uncached Maxima chunk
+per exercise and return all values needed by the question and answer in
+its <code>string([...])</code> list. Related random calculations then
+share the same execution.</p>
 </div>
 <div class="section level3">
 <h3 id="check-maxima-code-directly">Check Maxima code directly<a class="anchor" aria-label="anchor" href="#check-maxima-code-directly"></a>
@@ -426,12 +354,12 @@ question body.</p>
 Maxima code, including its terminating semicolons or dollar signs. It
 runs that code in a fresh local Maxima process and returns
 <code>TRUE</code> invisibly on success:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/maxima_check.html">maxima_check</a></span><span class="op">(</span><span class="st">"1 + 2;"</span><span class="op">)</span></span></code></pre></div>
 <p>For a program returning the same <code>string([...])</code>
 associations used in an Rmd chunk, set <code>outputs = TRUE</code> to
 obtain a named vector of inferred types:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">code</span> <span class="op">&lt;-</span> <span class="st">"string(['a = 3, 'answer = 1/2, 'label = \"Addition\"]);"</span></span>
 <span><span class="va">types</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/maxima_check.html">maxima_check</a></span><span class="op">(</span><span class="va">code</span>, outputs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">types</span></span>
@@ -448,40 +376,11 @@ load by default.</p>
 <div class="section level2">
 <h2 id="export-and-validate">Export and validate<a class="anchor" aria-label="anchor" href="#export-and-validate"></a>
 </h2>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xml</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/rmd2xml.html">rmd2xml</a></span><span class="op">(</span><span class="va">example</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/verify_qti.html">verify_qti</a></span><span class="op">(</span><span class="va">xml</span>, schema <span class="op">=</span> <span class="st">"extended"</span>, ignore_import <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">valid</span><span class="op">)</span></span>
 <span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/rmd2zip.html">rmd2zip</a></span><span class="op">(</span><span class="va">example</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Previews and exports share
-<code>options(rqti.task_names = "title")</code>. With no option set, the
-exercise title is used; a missing title falls back to the source
-filename. Choose <code>"filename"</code>, <code>"both"</code>
-(<code>Title (filename)</code>), or <code>"hidden"</code> (generic
-labels such as <code>Task 1.1</code>) for a different display. For
-example:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.task_names <span class="op">=</span> <span class="st">"hidden"</span><span class="op">)</span>  <span class="co"># also applies to subsequent Knit sessions</span></span>
-<span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/rmd2zip.html">rmd2zip</a></span><span class="op">(</span><span class="va">example</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/render_qtijs.html">render_qtijs</a></span><span class="op">(</span><span class="va">example</span>, task_names <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span> <span class="co"># override for one preview</span></span>
-<span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/rmd2xml.html">rmd2xml</a></span><span class="op">(</span><span class="va">example</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, task_names <span class="op">=</span> <span class="st">"title"</span><span class="op">)</span></span></code></pre></div>
-<p><code><a href="../reference/upload2opal.html">upload2opal()</a></code> and <code><a href="../reference/upload2LMS-methods.html">upload2LMS()</a></code> use the same
-policy, including the imported repository name when no explicit
-<code>display_name</code> is supplied. Generic task names can therefore
-be selected globally for LMS delivery; the fallback default for both
-local preview and export is the exercise title. See
-<code><a href="../reference/task_names.html">help("task_names", package="rqti")</a></code> for details.</p>
-<p>XML filenames are independent of display names and identifiers. Both
-Knit and <code><a href="../reference/rmd2xml.html">rmd2xml()</a></code> preserve the source basename:
-<code>minimal-latex.Rmd</code> produces <code>minimal-latex.xml</code>,
-even with <code>identifier: minimal_latex</code>;
-<code>minimal_latex.Rmd</code> produces <code>minimal_latex.xml</code>.
-The identifier inside the XML stays unchanged. Pass an explicit
-<code>.xml</code> path to <code><a href="../reference/rmd2xml.html">rmd2xml()</a></code> to choose another
-export filename.</p>
-<p>Diesunddas’s original comparison exercise, updated to include the
-dollar string, is also installed as
-<code>inst/extdata/minimal-latex.Rmd</code>.</p>
 <p><strong>Choose <code>schema = "extended"</code> for ONYX Maxima
 items.</strong> The standard QTI 2.1 schema rejects ONYX’s
 <code>customOperator/@value</code> attribute and the
@@ -502,11 +401,8 @@ libraries. Authoring checks and previews share compiled libraries in
 rqti’s managed user cache across R sessions. Each calculation still
 starts a fresh Maxima process; programs, variables, and answers remain
 independent and temporary.</p>
-<p>Build changes invalidate the cache. Old builds, caches unused for 30
-days, incomplete library loads, and caches exceeding 64 MiB are removed
-automatically. Concurrent sessions coordinate through a lock. You can
-choose another cache directory or keep the cache within the current R
-session:</p>
+<p>rqti manages cache cleanup automatically. You can choose another
+cache directory or keep the cache within the current R session:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima_cache_dir <span class="op">=</span> <span class="st">"/path/to/cache"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima_cache_dir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
