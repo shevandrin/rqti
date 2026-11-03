@@ -355,3 +355,13 @@ test_that("verify_qti prints AssessmentTest validation summaries", {
     expect_match(paste(out, collapse = "\n"), "QTI Validation Results - Assessment Test")
     expect_match(paste(out, collapse = "\n"), "Files:")
 })
+
+test_that("validation result lists have a registered silent print method", {
+    result <- structure(list(), class = c("qti_validation_results_list", "list"))
+    expect_identical(getS3method("print", "qti_validation_results_list"),
+                     print.qti_validation_results_list)
+    output <- capture.output(printed <- withVisible(print(result)))
+    expect_length(output, 0L)
+    expect_identical(printed$value, result)
+    expect_false(printed$visible)
+})

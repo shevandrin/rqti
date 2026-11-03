@@ -438,7 +438,12 @@ setMethod("verify_qti", signature(doc = "AssessmentTest"),
 )
 
 #' Print validation results list
+#' @param x A `qti_validation_results_list` returned by [verify_qti()].
+#' @param ... Unused additional arguments.
+#' @return `x`, invisibly. Results are already printed by [verify_qti()].
 #' @keywords internal
+#' @export
+#' @method print qti_validation_results_list
 print.qti_validation_results_list <- function(x, ...) {
     invisible(x)
 }
