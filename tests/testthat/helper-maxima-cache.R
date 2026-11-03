@@ -1,3 +1,14 @@
+legacy_maxima_parser_setup <- function() {
+    # Reproduce Maxima 5.44's ensure-terminator, which searches even inside
+    # quoted values. Keep the override in the disposable Maxima subprocess.
+    path <- withr::local_tempfile(fileext = ".lisp", .local_envir = parent.frame())
+    writeLines(c('(in-package :maxima)',
+        '(defun ensure-terminator (s)',
+        '  (if (or (search "$" s) (search ";" s))',
+        '      s (concatenate \'string s "$")))'), path)
+    paste0('load("stringproc")$\nload(', maxima_preview_quote(path), ')$\n')
+}
+
 preview_request <- function(code = "string(['answer=7]);", type = "integer") {
     list(blocks = list(list(code = code, identifier = "calculation",
         outputs = list(list(name = "answer", type = type)))), libraries = character())

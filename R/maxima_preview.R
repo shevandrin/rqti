@@ -76,7 +76,7 @@ start_maxima_preview_job <- function(request,
             "rqti_program_completed:false", paste0("batch(", q(program), ")"),
             'if rqti_program_completed#true then error("Maxima did not complete the program")',
             'if not stringp(rqti_program_result) then error("Maxima must return string([...])")',
-            "rqti_pairs:parse_string(rqti_program_result)",
+            "rqti_pairs:parse_string(sconcat(rqti_program_result,\";\"))",
             'if not listp(rqti_pairs) then error("Maxima outputs must be an association list")',
             'rqti_values:[]')
         for (j in seq_along(block$outputs)) {

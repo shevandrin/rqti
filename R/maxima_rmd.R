@@ -98,7 +98,9 @@ maxima_check <- function(code, executable = maxima_default_executable(),
     detector <- c(
         "rqti_detect(result,path):=block([pairs,name,value,type],",
         "  if not stringp(result) then error(\"Maxima program must return string([...]) with named outputs.\"),",
-        "  pairs:parse_string(result),",
+        # Maxima 5.44 assumes any $ or ; inside the string is a terminator,
+        # even inside a quoted output value. Supply a real trailing terminator.
+        "  pairs:parse_string(sconcat(result,\";\")),",
         "  if not listp(pairs) or pairs=[] then error(\"Maxima output must be a nonempty association list.\"),",
         "  with_stdout(path, for pair in pairs do (",
         "    if atom(pair) then error(\"Maxima outputs must be named equations, e.g. 'answer = 3.\"),",

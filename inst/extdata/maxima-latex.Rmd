@@ -15,7 +15,8 @@ library(rqti)
 block([],
     string([
         'number_set = "\\mathbb{R}",
-        'embedded = "\\(\\mathbb{R}\\)"
+        'embedded = "\\(\\mathbb{R}\\)",
+        'dollar_embedded = "$$\\mathbb{R}$$"
     ])
 );
 ```
@@ -30,5 +31,8 @@ $$`r template_value("number_set")`$$
 
 Math delimiters included in the returned string (`tex_embedded`):
 `r template_value("embedded")`.
+
+Dollar delimiters included in the returned string:
+`r template_value("dollar_embedded")`.
 
 What is $1 + 0$? `r gap_numeric(1, tolerance_type="exact")`

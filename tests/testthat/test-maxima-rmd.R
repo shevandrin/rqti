@@ -222,7 +222,8 @@ test_that("the Maxima LaTeX example exports and returns intact TeX strings", {
     skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
     item <- create_question_object(system.file("extdata", "maxima-latex.Rmd", package="rqti"))
     block <- item@template[[1]]
-    expect_identical(block@variables, c(number_set="string", embedded="string"))
+    expect_identical(block@variables,
+                     c(number_set="string", embedded="string", dollar_embedded="string"))
     request <- list(blocks = list(list(code=block@code,
         outputs=Map(function(name, type) list(name=name, type=type), names(block@variables), block@variables))),
         libraries=character())
@@ -232,6 +233,7 @@ test_that("the Maxima LaTeX example exports and returns intact TeX strings", {
     values <- maxima_preview_job_result(job)[[1]]$values
     expect_identical(values$number_set, "\\mathbb{R}")
     expect_identical(values$embedded, "\\(\\mathbb{R}\\)")
+    expect_identical(values$dollar_embedded, "$$\\mathbb{R}$$")
 })
 
 test_that("dollar delimiters inside Maxima string literals survive Rmd conversion", {
@@ -247,4 +249,49 @@ test_that("dollar delimiters inside Maxima string literals survive Rmd conversio
     on.exit(cleanup_maxima_preview_job(job))
     expect_true(maxima_wait_process(job$process, 30))
     expect_identical(maxima_preview_job_result(job)[[1]]$values$a, "$$\\mathbb{R}$$")
+})
+
+test_that("older Maxima parses quoted dollars and semicolons in checks and previews", {
+    skip_on_cran()
+    skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
+    code <- paste0(legacy_maxima_parser_setup(),
+        'string([\'a="$$\\\\mathbb{R}$$", \'label="cost $5; Grüße", \'answer=7]);')
+    file <- maxima_rmd_file(code, variables = "NULL", question = c(
+        "`r template_value('a')`", "`r template_value('label')`",
+        "`r gap_numeric(solution_variable='answer')`"))
+    item <- create_question_object(file)
+    block <- item@template[[1]]
+    expect_identical(block@code, code)
+    expect_identical(block@variables, c(a="string", label="string", answer="integer"))
+    job <- start_maxima_preview_job(list(blocks=list(list(code=code,
+        outputs=Map(function(name, type) list(name=name, type=type),
+                    names(block@variables), block@variables))), libraries=character()))
+    on.exit(cleanup_maxima_preview_job(job))
+    expect_true(maxima_wait_process(job$process, 30))
+    values <- maxima_preview_job_result(job)[[1]]$values
+    expect_identical(values$a, "$$\\mathbb{R}$$")
+    expect_identical(values$label, "cost $5; Grüße")
+    expect_equal(values$answer, 7)
+
+    # RStudio's Knit button runs render_qtijs in a separate R session.
+    renderer <- withr::local_tempdir()
+    withr::local_envvar(c(RQTI_URL="http://127.0.0.1:12345",
+                         RQTI_QTIJS_PATH=renderer, RSTUDIO="0"))
+    script <- withr::local_tempfile(fileext = ".R")
+    package_path <- getNamespaceInfo("rqti", "path")
+    load_package <- if (file.exists(file.path(package_path, "R", "knit_functions.R"))) {
+        sprintf("pkgload::load_all(%s, quiet=TRUE)", deparse(package_path))
+    } else {
+        sprintf("library(rqti, lib.loc=%s)", deparse(dirname(package_path)))
+    }
+    writeLines(c(load_package,
+        'options(rqti.maxima_cache_dir=file.path(tempdir(), "maxima-cache"))',
+        sprintf("rqti::render_qtijs(%s)", deparse(file))), script)
+    child <- processx::run(file.path(R.home("bin"), "Rscript"),
+                          c("--vanilla", script), error_on_status=FALSE, timeout=120000)
+    expect_identical(child$status, 0L, info=paste(child$stdout, child$stderr))
+    doc <- xml2::read_xml(file.path(renderer, "index.xml"))
+    expect_match(xml2::xml_attr(xml2::xml_find_first(doc,
+        ".//*[local-name()='customOperator']"), "value"),
+        "$$\\\\mathbb{R}$$", fixed=TRUE)
 })
