@@ -23,13 +23,13 @@ block([],
 
 # question
 
-Inline math (try 5): \\(`r template_value("number_set")`\\).
+Inline math: \\(`r template_value("number_set")`\\).
 
-Display math (try 6):
+Display math:
 
 $$`r template_value("number_set")`$$
 
-Math delimiters included in the returned string (`tex_embedded`):
+Inline delimiters included in the returned string:
 `r template_value("embedded")`.
 
 Dollar delimiters included in the returned string:
