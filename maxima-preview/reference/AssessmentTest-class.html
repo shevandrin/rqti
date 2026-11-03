@@ -143,11 +143,10 @@ recalculated and the order of choices to be reshuffled for each item attempt.</p
 
 
 <dt><code>fallback_titles</code></dt>
-<dd><p>A character value, optional, controlling how titles
-are assigned when no explicit title is provided. Possible values are
-"filename" (use filenames as titles) and "generic" (use generic labels
-such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-"generic".</p></dd>
+<dd><p>Legacy naming policy. <code>"inherit"</code> uses the shared
+<code>rqti.task_names</code> option at export (default <code>"title"</code>). <code>"generic"</code>
+retains generic names; historical <code>"filename"</code> retains supplied titles.
+See <a href="task_names.html">task_names</a>.</p></dd>
 
 
 <dt><code>academic_grading</code></dt>

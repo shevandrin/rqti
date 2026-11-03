@@ -2,6 +2,37 @@
 
 ## rqti (development version)
 
+- Configuration guidance distinguishes R options
+  ([`options()`](https://rdrr.io/r/base/options.html) / `.Rprofile`)
+  from environment variables
+  ([`Sys.setenv()`](https://rdrr.io/r/base/Sys.setenv.html) /
+  `.Renviron`). R options are the preferred public configuration;
+  process-connection variables remain internal.
+
+- Maxima checks and local previews handle `$` and `;` inside returned
+  strings with older Maxima parsers, including dollar-delimited LaTeX on
+  Maxima 5.44.
+
+- Previews, XML/ZIP exports and OPAL uploads share option
+  `rqti.task_names`: `"title"` (the default), `"filename"`, `"both"`, or
+  `"hidden"`. Per-call `task_names` overrides the option. Default test
+  constructors inherit the policy at export; explicit legacy
+  `fallback_titles` settings remain supported. OPAL repository names
+  default to the selected exported title.
+
+- Knit and
+  [`rmd2xml()`](https://shevandrin.github.io/rqti/maxima-preview/reference/rmd2xml.md)
+  preserve source filename hyphens and underscores, independently of the
+  YAML identifier. Existing Knit XML copies are refreshed.
+
+- Separate Knit sessions read current Maxima and naming options from the
+  preview server. Changing those options no longer requires a server
+  restart. Maxima may be selected by command name (including `maxima` on
+  Windows when resolvable) or by a full executable/launcher path.
+
+- Restored the original `minimal-latex.Rmd` comparison exercise with its
+  dollar-delimited LaTeX output enabled.
+
 - Maxima string outputs can supply correct text answers with
   `gap_text(solution_variable = "answer")` or
   `textGap(solution_variable = "answer")`. Matching respects
@@ -21,9 +52,8 @@
 - Explicit Maxima executable paths bypass
   [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html), supporting
   long paths and Unicode. Windows batch launchers use `cmd.exe /c call`.
-  Set `rqti.maxima` before
-  [`start_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/start_server.md)
-  to share the choice with RStudio’s Knit session.
+  RStudio Knit sessions obtain the current `rqti.maxima` choice from the
+  running server.
 
 - QTI 2.2 schemas are compressed in the installed package and unpacked
   on demand into the R session’s temporary directory. All schema

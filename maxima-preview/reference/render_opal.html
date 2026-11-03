@@ -68,7 +68,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_opal</span><span class="op">(</span><span class="va">input</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_opal</span><span class="op">(</span><span class="va">input</span>, task_names <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -77,6 +77,12 @@
 
 <dl><dt id="arg-input">input<a class="anchor" aria-label="anchor" href="#arg-input"></a></dt>
 <dd><p>(the path to the input Rmd document)</p></dd>
+
+
+<dt id="arg-task-names">task_names<a class="anchor" aria-label="anchor" href="#arg-task-names"></a></dt>
+<dd><p>Display naming policy: <code>"title"</code>, <code>"filename"</code>, <code>"both"</code>,
+or <code>"hidden"</code>. <code>NULL</code> uses option <code>rqti.task_names</code>, falling back to
+<code>"title"</code>. See <a href="task_names.html">task_names</a>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

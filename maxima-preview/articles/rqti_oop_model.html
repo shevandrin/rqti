@@ -88,7 +88,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>rqti OOP Model</h1>
             
-            <h4 data-toc-skip class="date">2026-10-23</h4>
+            <h4 data-toc-skip class="date">2026-11-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shevandrin/rqti/blob/prototype/maxima-rmd/vignettes/rqti_oop_model.Rmd" class="external-link"><code>vignettes/rqti_oop_model.Rmd</code></a></small>
       <div class="d-none name"><code>rqti_oop_model.Rmd</code></div>
@@ -359,13 +359,26 @@ error. In the future we will simplify this case.</p>
 <p>It looks the same because it is almost the same:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">sc</span>, <span class="va">sc2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Attributes: &lt; Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) &gt;"</span></span>
-<span><span class="co">#&gt; [2] "Attributes: &lt; Component \"choices\": 2 string mismatches &gt;"                                 </span></span>
-<span><span class="co">#&gt; [3] "Attributes: &lt; Component \"content\": Component 1: 1 string mismatch &gt;"                      </span></span>
-<span><span class="co">#&gt; [4] "Attributes: &lt; Component \"feedback\": Length mismatch: comparison on first 0 components &gt;"  </span></span>
-<span><span class="co">#&gt; [5] "Attributes: &lt; Component \"files\": Lengths (0, 1) differ (string compare on first 0) &gt;"     </span></span>
-<span><span class="co">#&gt; [6] "Attributes: &lt; Component \"identifier\": 1 string mismatch &gt;"                                </span></span>
-<span><span class="co">#&gt; [7] "Attributes: &lt; Component \"title\": 1 string mismatch &gt;"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "Attributes: &lt; Names: 6 string mismatches &gt;"                                                 </span></span>
+<span><span class="co">#&gt;  [2] "Attributes: &lt; Length mismatch: comparison on first 19 components &gt;"                         </span></span>
+<span><span class="co">#&gt;  [3] "Attributes: &lt; Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) &gt;"</span></span>
+<span><span class="co">#&gt;  [4] "Attributes: &lt; Component \"choices\": 2 string mismatches &gt;"                                 </span></span>
+<span><span class="co">#&gt;  [5] "Attributes: &lt; Component \"content\": Component 1: 1 string mismatch &gt;"                      </span></span>
+<span><span class="co">#&gt;  [6] "Attributes: &lt; Component \"feedback\": Length mismatch: comparison on first 0 components &gt;"  </span></span>
+<span><span class="co">#&gt;  [7] "Attributes: &lt; Component \"files\": Lengths (0, 1) differ (string compare on first 0) &gt;"     </span></span>
+<span><span class="co">#&gt;  [8] "Attributes: &lt; Component \"identifier\": 1 string mismatch &gt;"                                </span></span>
+<span><span class="co">#&gt;  [9] "Attributes: &lt; Component 14: 1 string mismatch &gt;"                                            </span></span>
+<span><span class="co">#&gt; [10] "Attributes: &lt; Component 15: Modes: character, logical &gt;"                                    </span></span>
+<span><span class="co">#&gt; [11] "Attributes: &lt; Component 15: target is character, current is logical &gt;"                      </span></span>
+<span><span class="co">#&gt; [12] "Attributes: &lt; Component 16: Modes: logical, numeric &gt;"                                      </span></span>
+<span><span class="co">#&gt; [13] "Attributes: &lt; Component 16: target is logical, current is numeric &gt;"                        </span></span>
+<span><span class="co">#&gt; [14] "Attributes: &lt; Component 17: Modes: numeric, character &gt;"                                    </span></span>
+<span><span class="co">#&gt; [15] "Attributes: &lt; Component 17: Lengths: 1, 0 &gt;"                                                </span></span>
+<span><span class="co">#&gt; [16] "Attributes: &lt; Component 17: target is numeric, current is character &gt;"                      </span></span>
+<span><span class="co">#&gt; [17] "Attributes: &lt; Component 18: Modes: character, list &gt;"                                       </span></span>
+<span><span class="co">#&gt; [18] "Attributes: &lt; Component 18: target is character, current is list &gt;"                         </span></span>
+<span><span class="co">#&gt; [19] "Attributes: &lt; Component 19: Modes: list, character &gt;"                                       </span></span>
+<span><span class="co">#&gt; [20] "Attributes: &lt; Component 19: Length mismatch: comparison on first 0 components &gt;"</span></span></code></pre></div>
 <p>There are some differences in defaults, and we did not provide
 feedback in this case, but overall, creating objects from scratch is
 relatively straightforward. However, it becomes more challenging when

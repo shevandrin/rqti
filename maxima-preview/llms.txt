@@ -418,6 +418,8 @@ for new features provided as time permits.
   : Start qtijs renderer as a local server.
 - [`stop_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/stop_server.md)
   : Stop QTIJS local server
+- [`task_names`](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md)
+  : Exercise display names in previews and exports
 - [`template_value()`](https://shevandrin.github.io/rqti/maxima-preview/reference/template_value.md)
   : Display a template variable in question content
 - [`test()`](https://shevandrin.github.io/rqti/maxima-preview/reference/test.md)

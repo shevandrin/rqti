@@ -2,12 +2,15 @@
 
 Create zip file with test, that contains one xml question specification
 generated from Rmd (md) description according to qti 2.1 information
-model
+model Display names follow
+[task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md):
+the YAML title by default, or the source filename without its extension
+when no title is supplied.
 
 ## Usage
 
 ``` r
-rmd2zip(file, path = getwd(), verification = FALSE)
+rmd2zip(file, path = getwd(), verification = FALSE, task_names = NULL)
 ```
 
 ## Arguments
@@ -25,6 +28,13 @@ rmd2zip(file, path = getwd(), verification = FALSE)
 
   A boolean value, optional; enable validation of the xml file. Default
   is `FALSE`.
+
+- task_names:
+
+  Display naming policy: `"title"`, `"filename"`, `"both"`, or
+  `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+  `"title"`. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 ## Value
 

@@ -80,7 +80,8 @@ QTI-task and uploads it to the OPAL.</p>
 <span>  open_in_browser <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  as_survey <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  api_user <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  credential_id <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  credential_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  task_names <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -95,8 +96,8 @@ required.</p></dd>
 
 
 <dt id="arg-display-name">display_name<a class="anchor" aria-label="anchor" href="#arg-display-name"></a></dt>
-<dd><p>A length-one character vector naming the file in OPAL;
-by default, this is the file name without extension; optional.</p></dd>
+<dd><p>A length-one character vector naming the resource in OPAL.
+The default is the exported title under the selected naming policy.</p></dd>
 
 
 <dt id="arg-access">access<a class="anchor" aria-label="anchor" href="#arg-access"></a></dt>
@@ -137,6 +138,12 @@ or survey). Default is <code>FALSE</code>.</p></dd>
 credential service is derived from <code>endpoint</code>, with the legacy <code>rqtiopal</code>
 service retained as a fallback. <code>RQTI_API_CREDENTIAL_ID</code> overrides the
 automatic name when set.</p></dd>
+
+
+<dt id="arg-task-names">task_names<a class="anchor" aria-label="anchor" href="#arg-task-names"></a></dt>
+<dd><p>Display naming policy: <code>"title"</code>, <code>"filename"</code>, <code>"both"</code>,
+or <code>"hidden"</code>. <code>NULL</code> uses option <code>rqti.task_names</code>, falling back to
+<code>"title"</code>. See <a href="task_names.html">task_names</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">

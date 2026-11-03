@@ -114,7 +114,8 @@ zip or XML format.</p>
 <span>  access <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  open_in_browser <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  as_survey <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  as_survey <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  task_names <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -137,8 +138,8 @@ objects, or a character string with path to Rmd/md, zip or XML files.</p></dd>
 
 
 <dt id="arg-display-name">display_name<a class="anchor" aria-label="anchor" href="#arg-display-name"></a></dt>
-<dd><p>A length-one character vector naming the resource in OPAL;
-by default, this is the file name without extension or the object identifier; optional.</p></dd>
+<dd><p>A length-one character vector naming the resource in OPAL.
+The default uses the exported test/task title under the selected naming policy.</p></dd>
 
 
 <dt id="arg-access">access<a class="anchor" aria-label="anchor" href="#arg-access"></a></dt>
@@ -161,6 +162,12 @@ a URL in the default browser. Default is <code>TRUE</code>.</p></dd>
 <dt id="arg-as-survey">as_survey<a class="anchor" aria-label="anchor" href="#arg-as-survey"></a></dt>
 <dd><p>A boolean value, optional. If <code>TRUE</code>, the resource will be
 treated as a survey; if <code>FALSE</code>, as a test. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-task-names">task_names<a class="anchor" aria-label="anchor" href="#arg-task-names"></a></dt>
+<dd><p>Display naming policy: <code>"title"</code>, <code>"filename"</code>, <code>"both"</code>,
+or <code>"hidden"</code>. <code>NULL</code> uses option <code>rqti.task_names</code>, falling back to
+<code>"title"</code>. See <a href="task_names.html">task_names</a>.</p></dd>
 
 </dl></div>
 

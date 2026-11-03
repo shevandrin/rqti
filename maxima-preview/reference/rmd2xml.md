@@ -1,12 +1,16 @@
 # Create qti-XML task file from Rmd (md) description
 
 Create XML file for question specification from Rmd (md) description
-according to qti 2.1 information model
+according to qti 2.1 information model When `path` is a directory, the
+XML filename uses the source filename without its extension, preserving
+both hyphens and underscores independently of the YAML `identifier`.
+Knit saves its XML copy beside the source with the same name. Supply an
+explicit `.xml` path to choose a different export filename.
 
 ## Usage
 
 ``` r
-rmd2xml(file, path = getwd(), verification = FALSE)
+rmd2xml(file, path = getwd(), verification = FALSE, task_names = NULL)
 ```
 
 ## Arguments
@@ -24,6 +28,13 @@ rmd2xml(file, path = getwd(), verification = FALSE)
 
   A boolean value, optional; enable validation of the xml file. Default
   is `FALSE`.
+
+- task_names:
+
+  Display naming policy: `"title"`, `"filename"`, `"both"`, or
+  `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+  `"title"`. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 ## Value
 

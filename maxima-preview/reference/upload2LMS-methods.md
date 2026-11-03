@@ -31,7 +31,8 @@ upload2LMS(
   access = 4,
   overwrite = TRUE,
   open_in_browser = TRUE,
-  as_survey = FALSE
+  as_survey = FALSE,
+  task_names = NULL
 )
 ```
 
@@ -58,9 +59,8 @@ upload2LMS(
 
 - display_name:
 
-  A length-one character vector naming the resource in OPAL; by default,
-  this is the file name without extension or the object identifier;
-  optional.
+  A length-one character vector naming the resource in OPAL. The default
+  uses the exported test/task title under the selected naming policy.
 
 - access:
 
@@ -83,3 +83,10 @@ upload2LMS(
 
   A boolean value, optional. If `TRUE`, the resource will be treated as
   a survey; if `FALSE`, as a test. Default is `FALSE`.
+
+- task_names:
+
+  Display naming policy: `"title"`, `"filename"`, `"both"`, or
+  `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+  `"title"`. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).

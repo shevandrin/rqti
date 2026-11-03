@@ -103,9 +103,10 @@ No R interface package for Maxima is required.</p>
 
 
 <dt id="arg-executable">executable<a class="anchor" aria-label="anchor" href="#arg-executable"></a></dt>
-<dd><p>Path to the Maxima command-line executable or Windows
-<code>.bat</code>/<code>.cmd</code> launcher, defaulting to option <code>rqti.maxima</code>, the choice
-inherited from <code><a href="start_server.html">start_server()</a></code> in an RStudio Knit session, or PATH.
+<dd><p>Maxima command name or full path to the command-line
+executable / Windows <code>.bat</code> or <code>.cmd</code> launcher. Defaults to option
+<code>rqti.maxima</code>, the current preview-console choice in a separate Knit
+session, or <code>"maxima"</code> on PATH.
 Explicit paths may contain spaces and Unicode; do not add shell quotes.</p></dd>
 
 

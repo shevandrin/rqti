@@ -6,7 +6,7 @@ local server.
 ## Usage
 
 ``` r
-render_xml(input, qtijs_path = qtijs_preview_path())
+render_xml(input, qtijs_path = qtijs_preview_path(), task_names = NULL)
 ```
 
 ## Arguments
@@ -28,6 +28,13 @@ render_xml(input, qtijs_path = qtijs_preview_path())
   package's QTIJS folder when no server is running. Knit sessions
   inherit the server's folder even when RStudio uses a development
   checkout.
+
+- task_names:
+
+  Display naming policy: `"title"`, `"filename"`, `"both"`, or
+  `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+  `"title"`. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 ## Value
 

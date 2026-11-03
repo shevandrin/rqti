@@ -30,12 +30,11 @@ maxima_check(
 
 - executable:
 
-  Path to the Maxima command-line executable or Windows `.bat`/`.cmd`
-  launcher, defaulting to option `rqti.maxima`, the choice inherited
-  from
-  [`start_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/start_server.md)
-  in an RStudio Knit session, or PATH. Explicit paths may contain spaces
-  and Unicode; do not add shell quotes.
+  Maxima command name or full path to the command-line executable /
+  Windows `.bat` or `.cmd` launcher. Defaults to option `rqti.maxima`,
+  the current preview-console choice in a separate Knit session, or
+  `"maxima"` on PATH. Explicit paths may contain spaces and Unicode; do
+  not add shell quotes.
 
 - timeout:
 

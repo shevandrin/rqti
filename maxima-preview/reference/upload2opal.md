@@ -15,7 +15,8 @@ upload2opal(
   open_in_browser = TRUE,
   as_survey = FALSE,
   api_user = NULL,
-  credential_id = NULL
+  credential_id = NULL,
+  task_names = NULL
 )
 ```
 
@@ -32,8 +33,8 @@ upload2opal(
 
 - display_name:
 
-  A length-one character vector naming the file in OPAL; by default,
-  this is the file name without extension; optional.
+  A length-one character vector naming the resource in OPAL. The default
+  is the exported title under the selected naming policy.
 
 - access:
 
@@ -75,6 +76,13 @@ upload2opal(
   service is derived from `endpoint`, with the legacy `rqtiopal` service
   retained as a fallback. `RQTI_API_CREDENTIAL_ID` overrides the
   automatic name when set.
+
+- task_names:
+
+  Display naming policy: `"title"`, `"filename"`, `"both"`, or
+  `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+  `"title"`. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 ## Value
 

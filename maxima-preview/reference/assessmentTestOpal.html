@@ -74,7 +74,7 @@
 <span>  title <span class="op">=</span> <span class="va">identifier</span>,</span>
 <span>  time_limit <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_attempts <span class="op">=</span> <span class="fl">1L</span>,</span>
-<span>  fallback_titles <span class="op">=</span> <span class="st">"generic"</span>,</span>
+<span>  fallback_titles <span class="op">=</span> <span class="st">"inherit"</span>,</span>
 <span>  academic_grading <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  grade_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>en <span class="op">=</span> <span class="st">"Grade"</span>, de <span class="op">=</span> <span class="st">"Note"</span><span class="op">)</span>,</span>
 <span>  table_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>en <span class="op">=</span> <span class="st">"Grade"</span>, de <span class="op">=</span> <span class="st">"Note"</span><span class="op">)</span>,</span>
@@ -123,11 +123,10 @@ of attempts allowed for the candidate. Default is 1.</p></dd>
 
 
 <dt id="arg-fallback-titles">fallback_titles<a class="anchor" aria-label="anchor" href="#arg-fallback-titles"></a></dt>
-<dd><p>A character value, optional, controlling how titles
-are assigned when no explicit title is provided. Possible values are
-"filename" (use filenames as titles) and "generic" (use generic labels
-such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-"generic".</p></dd>
+<dd><p>Legacy naming policy. The default <code>"inherit"</code> uses
+option <code>rqti.task_names</code> at export, falling back to exercise titles.
+<code>"generic"</code> retains generic task labels; the historical <code>"filename"</code>
+value preserves supplied titles. See <a href="task_names.html">task_names</a>.</p></dd>
 
 
 <dt id="arg-academic-grading">academic_grading<a class="anchor" aria-label="anchor" href="#arg-academic-grading"></a></dt>

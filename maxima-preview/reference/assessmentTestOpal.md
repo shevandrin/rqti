@@ -11,7 +11,7 @@ assessmentTestOpal(
   title = identifier,
   time_limit = NULL,
   max_attempts = 1L,
-  fallback_titles = "generic",
+  fallback_titles = "inherit",
   academic_grading = NULL,
   grade_label = c(en = "Grade", de = "Note"),
   table_label = c(en = "Grade", de = "Note"),
@@ -61,10 +61,11 @@ assessmentTestOpal(
 
 - fallback_titles:
 
-  A character value, optional, controlling how titles are assigned when
-  no explicit title is provided. Possible values are "filename" (use
-  filenames as titles) and "generic" (use generic labels such as
-  "Section 1", "Section 1.2", or "Task 1.2.1"). Default is "generic".
+  Legacy naming policy. The default `"inherit"` uses option
+  `rqti.task_names` at export, falling back to exercise titles.
+  `"generic"` retains generic task labels; the historical `"filename"`
+  value preserves supplied titles. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 - academic_grading:
 

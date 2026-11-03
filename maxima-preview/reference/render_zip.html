@@ -71,7 +71,7 @@ local server.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_zip</span><span class="op">(</span><span class="va">input</span>, qtijs_path <span class="op">=</span> <span class="fu">qtijs_preview_path</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">render_zip</span><span class="op">(</span><span class="va">input</span>, qtijs_path <span class="op">=</span> <span class="fu">qtijs_preview_path</span><span class="op">(</span><span class="op">)</span>, task_names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,6 +90,12 @@ served by the local preview server and to which xml files will be copied. Defaul
 the folder used by the running preview server, or the installed package's
 QTIJS folder when no server is running. Knit sessions inherit the server's
 folder even when RStudio uses a development checkout.</p></dd>
+
+
+<dt id="arg-task-names">task_names<a class="anchor" aria-label="anchor" href="#arg-task-names"></a></dt>
+<dd><p>Display naming policy: <code>"title"</code>, <code>"filename"</code>, <code>"both"</code>,
+or <code>"hidden"</code>. <code>NULL</code> uses option <code>rqti.task_names</code>, falling back to
+<code>"title"</code>. See <a href="task_names.html">task_names</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -270,13 +270,26 @@ It looks the same because it is almost the same:
 ``` r
 
 all.equal(sc, sc2)
-#> [1] "Attributes: < Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) >"
-#> [2] "Attributes: < Component \"choices\": 2 string mismatches >"                                 
-#> [3] "Attributes: < Component \"content\": Component 1: 1 string mismatch >"                      
-#> [4] "Attributes: < Component \"feedback\": Length mismatch: comparison on first 0 components >"  
-#> [5] "Attributes: < Component \"files\": Lengths (0, 1) differ (string compare on first 0) >"     
-#> [6] "Attributes: < Component \"identifier\": 1 string mismatch >"                                
-#> [7] "Attributes: < Component \"title\": 1 string mismatch >"
+#>  [1] "Attributes: < Names: 6 string mismatches >"                                                 
+#>  [2] "Attributes: < Length mismatch: comparison on first 19 components >"                         
+#>  [3] "Attributes: < Component \"calculator\": Lengths (0, 1) differ (string compare on first 0) >"
+#>  [4] "Attributes: < Component \"choices\": 2 string mismatches >"                                 
+#>  [5] "Attributes: < Component \"content\": Component 1: 1 string mismatch >"                      
+#>  [6] "Attributes: < Component \"feedback\": Length mismatch: comparison on first 0 components >"  
+#>  [7] "Attributes: < Component \"files\": Lengths (0, 1) differ (string compare on first 0) >"     
+#>  [8] "Attributes: < Component \"identifier\": 1 string mismatch >"                                
+#>  [9] "Attributes: < Component 14: 1 string mismatch >"                                            
+#> [10] "Attributes: < Component 15: Modes: character, logical >"                                    
+#> [11] "Attributes: < Component 15: target is character, current is logical >"                      
+#> [12] "Attributes: < Component 16: Modes: logical, numeric >"                                      
+#> [13] "Attributes: < Component 16: target is logical, current is numeric >"                        
+#> [14] "Attributes: < Component 17: Modes: numeric, character >"                                    
+#> [15] "Attributes: < Component 17: Lengths: 1, 0 >"                                                
+#> [16] "Attributes: < Component 17: target is numeric, current is character >"                      
+#> [17] "Attributes: < Component 18: Modes: character, list >"                                       
+#> [18] "Attributes: < Component 18: target is character, current is list >"                         
+#> [19] "Attributes: < Component 19: Modes: list, character >"                                       
+#> [20] "Attributes: < Component 19: Length mismatch: comparison on first 0 components >"
 ```
 
 There are some differences in defaults, and we did not provide feedback

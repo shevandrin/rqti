@@ -37,11 +37,16 @@ invoking a server there does not work. You can automatically start the
 server via an .RProfile file on start up.
 
 Maxima previews use locally installed Maxima through the R server and
-work in both the RStudio Viewer and an external browser. Set
-`options(rqti.maxima = "/path/to/maxima")` before starting the server to
-pass that executable to RStudio's separate Knit session. On Windows, use
-the command-line launcher, for example
-`"C:/Program Files/Maxima/bin/maxima.bat"`, without shell quotes.
+work in both the RStudio Viewer and an external browser. Select a
+command name, for example `options(rqti.maxima = "maxima")`, or the full
+path to an executable/launcher. A directory alone is invalid. On Windows
+the launcher may be `maxima.bat`; `Sys.which("maxima")` may also resolve
+it without the suffix. Use the name/path that works locally. The server
+and separate Knit sessions read current console options; changing
+`rqti.maxima` or `rqti.task_names` does not require a server restart.
+These are R options, not environment variables. Set them with
+[`options()`](https://rdrr.io/r/base/options.html); use `.Rprofile` to
+persist them. Internal process-connection variables are managed by rqti.
 
 ## Examples
 

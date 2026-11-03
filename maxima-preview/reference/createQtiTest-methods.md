@@ -6,16 +6,34 @@ Create zip-archive of the qti test specification
 
 ``` r
 createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
-  FALSE)
+  FALSE, task_names = NULL)
 
 # S4 method for class 'AssessmentItem'
-createQtiTest(object, dir = ".", verification = FALSE, zip_only = FALSE)
+createQtiTest(
+  object,
+  dir = ".",
+  verification = FALSE,
+  zip_only = FALSE,
+  task_names = NULL
+)
 
 # S4 method for class 'AssessmentTest'
-createQtiTest(object, dir = getwd(), verification = FALSE, zip_only = FALSE)
+createQtiTest(
+  object,
+  dir = getwd(),
+  verification = FALSE,
+  zip_only = FALSE,
+  task_names = NULL
+)
 
 # S4 method for class 'character'
-createQtiTest(object, dir = getwd())
+createQtiTest(
+  object,
+  dir = getwd(),
+  verification = FALSE,
+  zip_only = FALSE,
+  task_names = NULL
+)
 ```
 
 ## Arguments
@@ -43,6 +61,13 @@ createQtiTest(object, dir = getwd())
 
   A boolean value, optional; if `TRUE`, returns only the zip file. If
   `FALSE`, returns the zip, XML, and download files. Default is `FALSE`.
+
+- task_names:
+
+  Display naming policy: `"title"`, `"filename"`, `"both"`, or
+  `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+  `"title"`. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 ## Value
 

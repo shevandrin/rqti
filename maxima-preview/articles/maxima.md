@@ -20,29 +20,64 @@ remotes::install_github("shevandrin/rqti", ref = "prototype/maxima-rmd")
 ## Requirements
 
 Install native Maxima separately and put its executable on PATH. In R,
-`Sys.which("maxima")` should return a path. You can also set
-`options(rqti.maxima = "/path/to/maxima")` to choose an executable
-explicitly. No additional R interface package is required. Ordinary rqti
-exercises do not require Maxima.
+`Sys.which("maxima")` searches for the executable by name and returns
+its full path, like `which maxima` on Linux (Windows uses an emulation).
+It needs the program name, not just an installation directory. On
+Windows, try `Sys.which("maxima")`; R can resolve executable suffixes
+there. If needed, use the actual launcher name, for example
+`Sys.which("maxima.bat")`. An empty result means R did not find it
+through that lookup. You can still select an existing executable
+explicitly: set `options(rqti.maxima = "/path/to/maxima")`. No
+additional R interface package is required. Ordinary rqti exercises do
+not require Maxima.
 
 On Windows, choose the command-line launcher provided by your Maxima
 installation. Its name and location depend on the installation; use a
 path you have verified locally. Use forward slashes (or doubled
 backslashes in an R string), without adding shell quotes around the
 path. Explicit file paths are checked directly instead of being looked
-up with [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html).
+up with [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html). The
+option can contain a **program name** such as `"maxima"` or the **full
+path including the executable**, not just its directory. For example, if
+Maxima is installed in `C:/maxima-5.44.0`:
 
-Set the option **before** starting the server:
-[`start_server()`](https://shevandrin.github.io/rqti/maxima-preview/reference/start_server.md)
-passes that choice to RStudio’s separate Knit session. Restart the
-server after changing it. Running
-[`options()`](https://rdrr.io/r/base/options.html) in the console alone
-does not set an option in a separate R session.
+``` r
 
-The [Windows configuration problem reported in issue
-\#257](https://github.com/shevandrin/rqti/issues/257#issuecomment-6360719800)
-has not yet been reproduced on Windows. An explicit launcher path is a
-configuration option; it is not a confirmed workaround for that report.
+options(rqti.maxima = "C:/maxima-5.44.0/bin/maxima.bat")
+rqti::start_server() # if not already running
+```
+
+The preview backend reads the current console option for each new
+calculation. Separate Knit sessions read current console settings from
+the running preview server, so changing `rqti.maxima` or
+`rqti.task_names` does **not** require a server restart. Set options in
+`.Rprofile` for a persistent configuration.
+
+These settings are **R options**, set with
+[`options()`](https://rdrr.io/r/base/options.html) and read with
+[`getOption()`](https://rdrr.io/r/base/options.html). They belong to the
+current R session. Environment variables, set with
+[`Sys.setenv()`](https://rdrr.io/r/base/Sys.setenv.html) and read with
+[`Sys.getenv()`](https://rdrr.io/r/base/Sys.getenv.html), are separate
+process settings inherited by child processes. Prefer R options for rqti
+configuration: put
+`options(rqti.maxima = "maxima", rqti.task_names = "title")` in
+`.Rprofile` to apply it to future sessions. `.Renviron` is for
+environment variables. rqti uses environment variables internally to let
+Knit locate the running server; authors do not need to configure those
+variables manually.
+
+The reporter of the [Windows configuration problem in issue
+\#257](https://github.com/shevandrin/rqti/issues/257) confirmed that
+selecting the full `maxima.bat` path and restarting the server worked.
+They also reported trouble resolving a versioned installation directory
+through [`Sys.which()`](https://rdrr.io/r/base/Sys.which.html). Explicit
+paths bypass that lookup without requiring a rename of the installation
+directory. R documents Windows
+[`Sys.which()`](https://rdrr.io/r/base/Sys.which.html) results as short
+(8.3) paths; this is not a requirement to name installation directories
+with eight characters or fewer. See the [R documentation for
+`Sys.which()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Sys.which.html).
 
 rqti runs Maxima locally when checking Rmd chunks and generating
 previews. An exported exercise needs a delivery platform that supports
@@ -260,9 +295,13 @@ when answers are submitted. The exported XML keeps live
 the sample values from the local check. Rmd references are inserted
 without an extra HTML span, so ONYX can substitute the values without
 interrupting the surrounding formula. To put the delimiters inside the
-generated value itself instead, use the `embedded` output below.
+generated value itself instead, use the `embedded` or `dollar_embedded`
+output below. Dollar-delimited strings such as `"$$\\mathbb{R}$$"` also
+work with Maxima 5.44’s older parser: rqti supplies an explicit
+terminator when parsing the returned association list. This also handles
+semicolons inside string outputs.
 
-The complete example shows all three forms:
+The complete example shows these forms:
 
 ```` markdown
 ---
@@ -282,7 +321,8 @@ library(rqti)
 block([],
     string([
         'number_set = "\\mathbb{R}",
-        'embedded = "\\(\\mathbb{R}\\)"
+        'embedded = "\\(\\mathbb{R}\\)",
+        'dollar_embedded = "$$\\mathbb{R}$$"
     ])
 );
 ```
@@ -297,6 +337,9 @@ $$`r template_value("number_set")`$$
 
 Math delimiters included in the returned string (`tex_embedded`):
 `r template_value("embedded")`.
+
+Dollar delimiters included in the returned string:
+`r template_value("dollar_embedded")`.
 
 What is $1 + 0$? `r gap_numeric(1, tolerance_type="exact")`
 ````
@@ -354,6 +397,43 @@ result <- rqti::verify_qti(xml, schema = "extended", ignore_import = FALSE)
 stopifnot(result$valid)
 rqti::rmd2zip(example, path = tempdir())
 ```
+
+Previews and exports share `options(rqti.task_names = "title")`. With no
+option set, the exercise title is used; a missing title falls back to
+the source filename. Choose `"filename"`, `"both"` (`Title (filename)`),
+or `"hidden"` (generic labels such as `Task 1.1`) for a different
+display. For example:
+
+``` r
+
+options(rqti.task_names = "hidden")  # also applies to subsequent Knit sessions
+rqti::rmd2zip(example, path = tempdir())
+rqti::render_qtijs(example, task_names = "both") # override for one preview
+rqti::rmd2xml(example, path = tempdir(), task_names = "title")
+```
+
+[`upload2opal()`](https://shevandrin.github.io/rqti/maxima-preview/reference/upload2opal.md)
+and
+[`upload2LMS()`](https://shevandrin.github.io/rqti/maxima-preview/reference/upload2LMS-methods.md)
+use the same policy, including the imported repository name when no
+explicit `display_name` is supplied. Generic task names can therefore be
+selected globally for LMS delivery; the fallback default for both local
+preview and export is the exercise title. See
+[`help("task_names", package="rqti")`](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md)
+for details.
+
+XML filenames are independent of display names and identifiers. Both
+Knit and
+[`rmd2xml()`](https://shevandrin.github.io/rqti/maxima-preview/reference/rmd2xml.md)
+preserve the source basename: `minimal-latex.Rmd` produces
+`minimal-latex.xml`, even with `identifier: minimal_latex`;
+`minimal_latex.Rmd` produces `minimal_latex.xml`. The identifier inside
+the XML stays unchanged. Pass an explicit `.xml` path to
+[`rmd2xml()`](https://shevandrin.github.io/rqti/maxima-preview/reference/rmd2xml.md)
+to choose another export filename.
+
+Diesunddas’s original comparison exercise, updated to include the dollar
+string, is also installed as `inst/extdata/minimal-latex.Rmd`.
 
 **Choose `schema = "extended"` for ONYX Maxima items.** The standard QTI
 2.1 schema rejects ONYX’s `customOperator/@value` attribute and the

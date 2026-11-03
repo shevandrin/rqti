@@ -5,13 +5,26 @@ Create XML or zip file for question specification
 ## Usage
 
 ``` r
-createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
+createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE,
+  task_names = NULL)
 
 # S4 method for class 'AssessmentItem'
-createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
+createQtiTask(
+  object,
+  dir = ".",
+  verification = FALSE,
+  zip = FALSE,
+  task_names = NULL
+)
 
 # S4 method for class 'character'
-createQtiTask(object, dir = getwd(), verification = FALSE, zip = FALSE)
+createQtiTask(
+  object,
+  dir = getwd(),
+  verification = FALSE,
+  zip = FALSE,
+  task_names = NULL
+)
 ```
 
 ## Arguments
@@ -43,6 +56,13 @@ createQtiTask(object, dir = getwd(), verification = FALSE, zip = FALSE)
 
   A boolean value, optional; `TRUE` creates a zip archive with the
   manifest and task files inside. Default is `FALSE`.
+
+- task_names:
+
+  Display naming policy: `"title"`, `"filename"`, `"both"`, or
+  `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+  `"title"`. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 ## Value
 

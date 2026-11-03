@@ -80,10 +80,10 @@ questions/tasks and/or one or more sub sections.
 
 - `fallback_titles`:
 
-  A character value, optional, controlling how titles are assigned when
-  no explicit title is provided. Possible values are "filename" (use
-  filenames as titles) and "generic" (use generic labels such as
-  "Section 1", "Section 1.2", or "Task 1.2.1"). Default is "generic".
+  Legacy naming policy. `"inherit"` uses the shared `rqti.task_names`
+  option at export (default `"title"`). `"generic"` retains generic
+  names; historical `"filename"` retains supplied titles. See
+  [task_names](https://shevandrin.github.io/rqti/maxima-preview/reference/task_names.md).
 
 - `academic_grading`:
 

@@ -68,13 +68,26 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createQtiTask</span><span class="op">(</span><span class="va">object</span>, dir <span class="op">=</span> <span class="st">"."</span>, verification <span class="op">=</span> <span class="cn">FALSE</span>, zip <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createQtiTask</span><span class="op">(</span><span class="va">object</span>, dir <span class="op">=</span> <span class="st">"."</span>, verification <span class="op">=</span> <span class="cn">FALSE</span>, zip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  task_names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'AssessmentItem'</span></span>
-<span><span class="fu">createQtiTask</span><span class="op">(</span><span class="va">object</span>, dir <span class="op">=</span> <span class="st">"."</span>, verification <span class="op">=</span> <span class="cn">FALSE</span>, zip <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">createQtiTask</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  dir <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  verification <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  zip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  task_names <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'character'</span></span>
-<span><span class="fu">createQtiTask</span><span class="op">(</span><span class="va">object</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, verification <span class="op">=</span> <span class="cn">FALSE</span>, zip <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">createQtiTask</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  verification <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  zip <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  task_names <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -100,6 +113,12 @@ Default is <code>FALSE</code>.</p></dd>
 <dt id="arg-zip">zip<a class="anchor" aria-label="anchor" href="#arg-zip"></a></dt>
 <dd><p>A boolean value, optional; <code>TRUE</code> creates a
 zip archive with the manifest and task files inside. Default is <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-task-names">task_names<a class="anchor" aria-label="anchor" href="#arg-task-names"></a></dt>
+<dd><p>Display naming policy: <code>"title"</code>, <code>"filename"</code>, <code>"both"</code>,
+or <code>"hidden"</code>. <code>NULL</code> uses option <code>rqti.task_names</code>, falling back to
+<code>"title"</code>. See <a href="task_names.html">task_names</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">
