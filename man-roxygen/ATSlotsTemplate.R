@@ -28,11 +28,10 @@
 #'   comments on each question.
 #' @slot rebuild_variables A boolean value, optional, allowing variables to be
 #'   recalculated and the order of choices to be reshuffled for each item attempt.
-#' @slot fallback_titles A character value, optional, controlling how titles
-#'   are assigned when no explicit title is provided. Possible values are
-#'   "filename" (use filenames as titles) and "generic" (use generic labels
-#'   such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-#'   "generic".
+#' @slot fallback_titles Legacy naming policy. `"inherit"` uses the shared
+#'   `rqti.task_names` option at export (default `"title"`). `"generic"`
+#'   retains generic names; historical `"filename"` retains supplied titles.
+#'   See [task_names].
 #' @slot academic_grading A named numeric vector that defines the grade table
 #'   shown to the candidate as feedback at the end of the test.
 #'

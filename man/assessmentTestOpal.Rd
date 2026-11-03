@@ -10,7 +10,7 @@ assessmentTestOpal(
   title = identifier,
   time_limit = NULL,
   max_attempts = 1L,
-  fallback_titles = "generic",
+  fallback_titles = "inherit",
   academic_grading = NULL,
   grade_label = c(en = "Grade", de = "Note"),
   table_label = c(en = "Grade", de = "Note"),
@@ -44,11 +44,10 @@ candidate for the test in minutes. Default is \code{NULL}.}
 \item{max_attempts}{An integer value, optional, indicating the maximum number
 of attempts allowed for the candidate. Default is 1.}
 
-\item{fallback_titles}{A character value, optional, controlling how titles
-are assigned when no explicit title is provided. Possible values are
-"filename" (use filenames as titles) and "generic" (use generic labels
-such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-"generic".}
+\item{fallback_titles}{Legacy naming policy. The default \code{"inherit"} uses
+option \code{rqti.task_names} at export, falling back to exercise titles.
+\code{"generic"} retains generic task labels; the historical \code{"filename"}
+value preserves supplied titles. See \link{task_names}.}
 
 \item{academic_grading}{A named numeric vector that defines the grade table
 shown to the candidate as feedback at the end of the test.

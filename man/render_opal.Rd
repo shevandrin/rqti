@@ -4,10 +4,14 @@
 \alias{render_opal}
 \title{Render Rmd directly in Opal via API}
 \usage{
-render_opal(input, ...)
+render_opal(input, task_names = NULL, ...)
 }
 \arguments{
 \item{input}{(the path to the input Rmd document)}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 
 \item{...}{Arguments supplied by the knitting frontend. Named \code{endpoint},
 \code{api_user}, and \code{credential_id} arguments are forwarded to \code{\link[=opal]{opal()}}.}

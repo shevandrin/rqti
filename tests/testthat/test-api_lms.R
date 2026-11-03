@@ -410,9 +410,12 @@ test_that("upload2LMS rejects overwriting a resource with a different type", {
     )
 })
 
-test_that("upload2LMS derives display_name when it is NULL", {
+test_that("upload2LMS derives display_name from the test title when it is NULL", {
     con <- mock_opal_connection()
     uploaded <- NULL
+    exam <- make_test_exam("mock_null_display")
+    exam@title <- "Visible exercise title"
+    withr::local_options(list(rqti.task_names = NULL))
 
     local_mocked_bindings(
         getLMSResourcesByName = function(object, display_name, rtype = NULL) {
@@ -432,7 +435,7 @@ test_that("upload2LMS derives display_name when it is NULL", {
 
     res <- suppressMessages(upload2LMS(
         con,
-        make_test_exam("mock_null_display"),
+        exam,
         display_name = NULL,
         open_in_browser = FALSE
     ))
@@ -440,7 +443,7 @@ test_that("upload2LMS derives display_name when it is NULL", {
     expect_false(is.null(uploaded$display_name))
     expect_identical(
         uploaded$display_name,
-        tools::file_path_sans_ext(basename(uploaded$file))
+        "Visible exercise title"
     )
     expect_identical(res$display_name, uploaded$display_name)
 })

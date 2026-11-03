@@ -4,8 +4,13 @@
 \alias{create_qti_test}
 \title{Create XML file for exam test specification}
 \usage{
-create_qti_test(object, path = ".", verification = FALSE, zip_only
-  = FALSE)
+create_qti_test(
+  object,
+  path = ".",
+  verification = FALSE,
+  zip_only = FALSE,
+  task_names = NULL
+)
 }
 \arguments{
 \item{object}{an instance of the \link{AssessmentTest} S4 object}
@@ -18,6 +23,10 @@ Default is \code{FALSE}.}
 
 \item{zip_only}{boolean, optional; if TRUE, returns only the zip file. If
 FALSE, returns the zip, XML, and download files.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \value{
 xml document.

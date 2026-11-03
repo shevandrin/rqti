@@ -268,6 +268,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
         content <- textutils::HTMLdecode(content)
         doc <- suppressWarnings(xml2::read_xml(paste0(dtype, content)))
     }
+    mark_xml_name_mode(doc, attr(object, "rqti_name_mode"))
     if (verification) {
         ver <- verify_qti(doc)
         if (!ver$valid) {

@@ -61,11 +61,10 @@ comments on each question.}
 \item{\code{rebuild_variables}}{A boolean value, optional, allowing variables to be
 recalculated and the order of choices to be reshuffled for each item attempt.}
 
-\item{\code{fallback_titles}}{A character value, optional, controlling how titles
-are assigned when no explicit title is provided. Possible values are
-"filename" (use filenames as titles) and "generic" (use generic labels
-such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-"generic".}
+\item{\code{fallback_titles}}{Legacy naming policy. \code{"inherit"} uses the shared
+\code{rqti.task_names} option at export (default \code{"title"}). \code{"generic"}
+retains generic names; historical \code{"filename"} retains supplied titles.
+See \link{task_names}.}
 
 \item{\code{academic_grading}}{A named numeric vector that defines the grade table
 shown to the candidate as feedback at the end of the test.

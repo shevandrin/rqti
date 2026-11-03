@@ -134,8 +134,9 @@ setMethod("isUserLoggedIn", "Opal", function(object) {
 #'   [Opal] class.
 #' @param test An [AssessmentTest], [AssessmentTestOpal] or [AssessmentItem]
 #'   objects, or a character string with path to Rmd/md, zip or XML files.
-#' @param display_name A length-one character vector naming the resource in OPAL;
-#'  by default, this is the file name without extension or the object identifier; optional.
+#' @param display_name A length-one character vector naming the resource in OPAL.
+#'   The default uses the exported test/task title under the selected naming policy.
+#' @inheritParams rmd2zip
 #' @param access An integer value, optional; it controls publication
 #'  status, where 1 - only those responsible for this learning resource; 2 -
 #'  responsible and other authors; 3 - all registered users; 4 - registered
@@ -152,11 +153,11 @@ setMethod("isUserLoggedIn", "Opal", function(object) {
 setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
                                          access = 4, overwrite = TRUE,
                                          open_in_browser = TRUE,
-                                         as_survey = FALSE) {
+                                         as_survey = FALSE, task_names = NULL) {
     callNextMethod()
 
-    file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE)
-    if (is.null(display_name)) display_name <- gsub("\\..*", "", basename(file))
+    file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE, task_names = task_names)
+    if (is.null(display_name)) display_name <- qti_archive_title(file)
 
     # get resources with given display_name and as_survey status
     istest = is_test(file)
@@ -1107,8 +1108,8 @@ update_resource <- function(file, id, rtype, endpoint = NULL, token = "") {
 #'@param test A length one character vector of [AssessmentTest],
 #'  [AssessmentTestOpal] or [AssessmentItem] objects, Rmd/md or XML files;
 #'  required.
-#'@param display_name A length-one character vector naming the file in OPAL;
-#'  by default, this is the file name without extension; optional.
+#'@param display_name A length-one character vector naming the resource in OPAL.
+#'  The default is the exported title under the selected naming policy.
 #'@param access An integer value, optional; it controls publication
 #'  status, where 1 - only those responsible for this learning resource; 2 -
 #'  responsible and other authors; 3 - all registered users; 4 - registered
@@ -1128,6 +1129,7 @@ update_resource <- function(file, id, rtype, endpoint = NULL, token = "") {
 #'  credential service is derived from `endpoint`, with the legacy `rqtiopal`
 #'  service retained as a fallback. `RQTI_API_CREDENTIAL_ID` overrides the
 #'  automatic name when set.
+#' @inheritParams rmd2zip
 #'@return A list with the key, display name, and URL of the resource in Opal.
 #'@examplesIf interactive()
 #'file <- system.file(
@@ -1140,7 +1142,7 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,
                         as_survey = FALSE,
                         api_user = NULL,
-                        credential_id = NULL) {
+                        credential_id = NULL, task_names = NULL) {
     api_user = ifelse(is.null(api_user), NA_character_, api_user)
     endpoint = ifelse(is.null(endpoint), NA_character_, endpoint)
     credential_id = ifelse(is.null(credential_id), NA_character_, credential_id)
@@ -1148,5 +1150,5 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                 credential_id = credential_id)
     upload2LMS(conn, test, display_name, access, overwrite,
                open_in_browser = open_in_browser,
-               as_survey = as_survey)
+               as_survey = as_survey, task_names = task_names)
 }

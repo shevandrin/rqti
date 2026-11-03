@@ -60,7 +60,6 @@ Config/testthat/parallel: false
 URL: https://github.com/shevandrin/rqti, https://shevandrin.github.io/rqti/
 BugReports: https://github.com/shevandrin/rqti/issues
 Collate: 
-    'maxima_process.R'
     'rqti.R'
     'MaximaVariables.R'
     'QtiMetadata.R'
@@ -98,6 +97,7 @@ Collate:
     'knit_functions.R'
     'maxima_cache.R'
     'maxima_preview.R'
+    'maxima_process.R'
     'maxima_rmd.R'
     'object_builder.R'
     'qti_task.R'
@@ -106,10 +106,10 @@ Collate:
     'rqti-package.R'
     'rqti_project.R'
     'section_builder.R'
+    'task_names.R'
     'template_processing.R'
     'utils-pipe.R'
     'verify_qti.R'
     'zzz.R'
 LazyData: true
-Config/roxygen2/version: 8.0.0
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.1.1

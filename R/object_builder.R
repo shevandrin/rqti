@@ -2,11 +2,16 @@
 #'
 #' Create zip file with test, that contains one xml question specification
 #' generated from Rmd (md) description according to qti 2.1 information model
+#' Display names follow [task_names]: the YAML title by default, or the source
+#' filename without its extension when no title is supplied.
 #' @param file A string of path to file with markdown description of question.
 #' @param path A string, optional; a folder to store xml file. Default is
 #'   working directory.
 #' @param verification A boolean value, optional; enable validation of the xml
 #'   file. Default is `FALSE`.
+#' @param task_names Display naming policy: `"title"`, `"filename"`, `"both"`,
+#'   or `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+#'   `"title"`. See [task_names].
 #' @returns The path string to the zip file.
 #' @examples
 #' \dontrun{
@@ -14,23 +19,29 @@
 #' rmd2zip("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export
-rmd2zip <- function(file, path = getwd(), verification = FALSE) {
+rmd2zip <- function(file, path = getwd(), verification = FALSE, task_names = NULL) {
+    mode <- task_name_mode(task_names)
     task <- create_question_object(file)
-    # to avoid using the same file name for task and test due to the same id
     test_id <- task@identifier
     task@identifier <- paste0("task_", task@identifier)
-    section <- new("AssessmentSection", assessment_item = list(task))
-    test <- new("AssessmentTest",
-                identifier = test_id,
-                title = "QTIJS Preview", section = list(section))
+    section <- new("AssessmentSection", title = task@title,
+                   assessment_item = list(task))
+    test <- new("AssessmentTest", identifier = test_id,
+                title = task@title, section = list(section))
+    test <- remember_task_source(test, file)
     createQtiTest(test, dir = path, verification = verification,
-                  zip_only = TRUE)
+                  zip_only = TRUE, task_names = mode)
 }
 
 #' Create qti-XML task file from Rmd (md) description
 #'
 #' Create XML file for question specification from Rmd (md) description
 #' according to qti 2.1 information model
+#' When `path` is a directory, the XML filename uses the source filename without
+#' its extension, preserving both hyphens and underscores independently of the
+#' YAML `identifier`. Knit saves its XML copy beside the source with the same
+#' name. Supply an explicit `.xml` path to choose a different export filename.
+#' @inheritParams rmd2zip
 #' @param file A string of path to file with markdown description of question.
 #' @param path A string, optional; a folder to store xml file. Default is
 #'   working directory.
@@ -43,9 +54,11 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 #' rmd2xml("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export
-rmd2xml <- function(file, path = getwd(), verification = FALSE) {
+rmd2xml <- function(file, path = getwd(), verification = FALSE, task_names = NULL) {
+    mode <- task_name_mode(task_names)
     task <- create_question_object(file)
-    createQtiTask(task, dir = path, verification = verification)
+    createQtiTask(task, dir = rmd_xml_path(file, path), verification = verification,
+                  task_names = mode)
 }
 
 
@@ -224,7 +237,7 @@ create_question_object <- function(file) {
         validate_template_references(object)
         validate_dynamic_solutions(object)
     }
-    return(object)
+    return(remember_task_source(object, file))
 }
 
 create_entry_slots <- function(html, attrs) {

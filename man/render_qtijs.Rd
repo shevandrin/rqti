@@ -8,6 +8,7 @@ render_qtijs(
   input,
   preview_feedback = FALSE,
   qtijs_path = qtijs_preview_path(),
+  task_names = NULL,
   ...
 )
 }
@@ -24,6 +25,10 @@ served by the local preview server and to which xml files will be copied. Defaul
 the folder used by the running preview server, or the installed package's
 QTIJS folder when no server is running. Knit sessions inherit the server's
 folder even when RStudio uses a development checkout.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 
 \item{...}{required for passing arguments when knitting}
 }

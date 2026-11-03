@@ -14,15 +14,15 @@
 \alias{prepareQTIJSFiles,character-method}
 \title{Prepare files to render them with QTIJS}
 \usage{
-prepareQTIJSFiles(object, dir = NULL)
+prepareQTIJSFiles(object, dir = NULL, task_names = NULL)
 
-\S4method{prepareQTIJSFiles}{AssessmentItem}(object, dir = "")
+\S4method{prepareQTIJSFiles}{AssessmentItem}(object, dir = "", task_names = NULL)
 
-\S4method{prepareQTIJSFiles}{AssessmentSection}(object, dir = NULL)
+\S4method{prepareQTIJSFiles}{AssessmentSection}(object, dir = NULL, task_names = NULL)
 
-\S4method{prepareQTIJSFiles}{AssessmentTest}(object, dir = NULL)
+\S4method{prepareQTIJSFiles}{AssessmentTest}(object, dir = NULL, task_names = NULL)
 
-\S4method{prepareQTIJSFiles}{character}(object, dir = NULL)
+\S4method{prepareQTIJSFiles}{character}(object, dir = NULL, task_names = NULL)
 }
 \arguments{
 \item{object}{an instance of \link{AssessmentItem}, \link{AssessmentTest},
@@ -30,6 +30,10 @@ prepareQTIJSFiles(object, dir = NULL)
 files}
 
 \item{dir}{QTIJS path}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \description{
 Prepare files to render them with QTIJS

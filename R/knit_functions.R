@@ -25,6 +25,7 @@
 #'   the folder used by the running preview server, or the installed package's
 #'   QTIJS folder when no server is running. Knit sessions inherit the server's
 #'   folder even when RStudio uses a development checkout.
+#' @inheritParams rmd2zip
 #' @param ... required for passing arguments when knitting
 #'
 #' @return An URL of the corresponding local server to display the rendering
@@ -40,7 +41,8 @@
 #' @importFrom knitr knit_params
 #' @export
 render_qtijs <- function(input, preview_feedback = FALSE,
-                         qtijs_path = qtijs_preview_path(), ...) {
+                         qtijs_path = qtijs_preview_path(), task_names = NULL, ...) {
+    mode <- task_name_mode(task_names, if (is(input, "AssessmentTest")) input@fallback_titles else "inherit")
     # for render_rmd this has to be checked manually because the Knit Button
     # is tricky to set up
     url <- Sys.getenv("RQTI_URL")
@@ -54,7 +56,7 @@ render_qtijs <- function(input, preview_feedback = FALSE,
     }
     check_qtijs_preview_path(qtijs_path)
     clean_qtijs(qtijs_path)
-    preparation <- prepareQTIJSFiles(input, qtijs_path)
+    preparation <- prepareQTIJSFiles(input, qtijs_path, task_names = mode)
     if (!is.null(preparation)) preview_feedback <- preparation
     url <- paste0(url, "?mfb=", as.numeric(preview_feedback))
     message("Open browser at: ", url, " for preview")
@@ -78,13 +80,9 @@ render_qtijs <- function(input, preview_feedback = FALSE,
 #'   render_qtijs(file)
 #'
 #' @export
-render_xml <- function(input, qtijs_path = qtijs_preview_path()) {
-    url <- prepare_renderer(qtijs_path)
-    # use index.xml for a single file
-    file.copy(input, paste0(qtijs_path, "/index.xml"), overwrite = TRUE)
-    if (Sys.getenv("RSTUDIO") == "1") {
-        rstudioapi::viewer(url)
-    }
+render_xml <- function(input, qtijs_path = qtijs_preview_path(), task_names = NULL) {
+    prepare_renderer(qtijs_path)
+    render_qtijs(input, qtijs_path = qtijs_path, task_names = task_names)
 }
 
 #' Render a zipped qti archive with qtijs.
@@ -95,12 +93,9 @@ render_xml <- function(input, qtijs_path = qtijs_preview_path()) {
 #' @inheritParams render_qtijs
 #' @return nothing, has side effects
 #' @export
-render_zip <- function(input, qtijs_path = qtijs_preview_path()) {
-    url <- prepare_renderer(qtijs_path)
-    zip::unzip(input, exdir = qtijs_path)
-    if (Sys.getenv("RSTUDIO") == "1") {
-        rstudioapi::viewer(url)
-    }
+render_zip <- function(input, qtijs_path = qtijs_preview_path(), task_names = NULL) {
+    prepare_renderer(qtijs_path)
+    render_qtijs(input, qtijs_path = qtijs_path, task_names = task_names)
 }
 
 #' Start qtijs renderer as a local server.
@@ -217,6 +212,7 @@ stop_server <- function() {
 #' after the word knit `knit: rqti::render_opal`.
 #'
 #' @param input (the path to the input Rmd document)
+#' @inheritParams rmd2zip
 #' @param ... Arguments supplied by the knitting frontend. Named `endpoint`,
 #'   `api_user`, and `credential_id` arguments are forwarded to [opal()].
 #' @return A list with the key, display name, and URL of the resource in Opal.
@@ -227,8 +223,9 @@ stop_server <- function() {
 #')
 #'render_opal(file)
 #' @export
-render_opal <- function(input, ...) {
-    knit_test <- rmd2zip(input)
+render_opal <- function(input, task_names = NULL, ...) {
+    mode <- task_name_mode(task_names)
+    knit_test <- rmd2zip(input, task_names = mode)
     on.exit(unlink(knit_test), add = TRUE)
 
     dots <- list(...)
@@ -236,6 +233,6 @@ render_opal <- function(input, ...) {
                                   c("endpoint", "api_user", "credential_id"))
     connection_args <- dots[connection_names]
     con <- do.call(opal, connection_args)
-    result <- upload2LMS(con, knit_test)
+    result <- upload2LMS(con, knit_test, task_names = "title")
     return(result)
 }

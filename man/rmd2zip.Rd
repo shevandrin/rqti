@@ -4,7 +4,7 @@
 \alias{rmd2zip}
 \title{Create test zip file with one task xml file from Rmd (md) description}
 \usage{
-rmd2zip(file, path = getwd(), verification = FALSE)
+rmd2zip(file, path = getwd(), verification = FALSE, task_names = NULL)
 }
 \arguments{
 \item{file}{A string of path to file with markdown description of question.}
@@ -14,6 +14,10 @@ working directory.}
 
 \item{verification}{A boolean value, optional; enable validation of the xml
 file. Default is \code{FALSE}.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \value{
 The path string to the zip file.
@@ -21,6 +25,8 @@ The path string to the zip file.
 \description{
 Create zip file with test, that contains one xml question specification
 generated from Rmd (md) description according to qti 2.1 information model
+Display names follow \link{task_names}: the YAML title by default, or the source
+filename without its extension when no title is supplied.
 }
 \examples{
 \dontrun{

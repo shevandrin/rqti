@@ -10,11 +10,24 @@
 \alias{createQtiTask,character}
 \title{Create XML or zip file for question specification}
 \usage{
-createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
+createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE,
+  task_names = NULL)
 
-\S4method{createQtiTask}{AssessmentItem}(object, dir = ".", verification = FALSE, zip = FALSE)
+\S4method{createQtiTask}{AssessmentItem}(
+  object,
+  dir = ".",
+  verification = FALSE,
+  zip = FALSE,
+  task_names = NULL
+)
 
-\S4method{createQtiTask}{character}(object, dir = getwd(), verification = FALSE, zip = FALSE)
+\S4method{createQtiTask}{character}(
+  object,
+  dir = getwd(),
+  verification = FALSE,
+  zip = FALSE,
+  task_names = NULL
+)
 }
 \arguments{
 \item{object}{An instance of the S4 object (\link{SingleChoice}, \link{MultipleChoice},
@@ -29,6 +42,10 @@ Default is \code{FALSE}.}
 
 \item{zip}{A boolean value, optional; \code{TRUE} creates a
 zip archive with the manifest and task files inside. Default is \code{FALSE}.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \value{
 A path to xml or zip file.

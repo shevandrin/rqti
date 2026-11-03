@@ -4,7 +4,7 @@
 \alias{render_xml}
 \title{Render a single xml file with qtijs.}
 \usage{
-render_xml(input, qtijs_path = qtijs_preview_path())
+render_xml(input, qtijs_path = qtijs_preview_path(), task_names = NULL)
 }
 \arguments{
 \item{input}{The path to the input Rmd/md/xml document or an
@@ -16,6 +16,10 @@ served by the local preview server and to which xml files will be copied. Defaul
 the folder used by the running preview server, or the installed package's
 QTIJS folder when no server is running. Knit sessions inherit the server's
 folder even when RStudio uses a development checkout.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \value{
 nothing, has side effects

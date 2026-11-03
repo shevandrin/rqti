@@ -1,7 +1,6 @@
 #' Create XML file for exam test specification
 #'
-#' @usage create_qti_test(object, path = ".", verification = FALSE, zip_only
-#'   = FALSE)
+#' @inheritParams rmd2zip
 #' @param object an instance of the [AssessmentTest] S4 object
 #' @param path string, optional; a path to folder to store zip file with
 #'   possible file name; working directory by default
@@ -11,7 +10,8 @@
 #'   FALSE, returns the zip, XML, and download files.
 #' @return xml document.
 create_qti_test <- function(object, path = ".", verification = FALSE,
-                            zip_only = FALSE) {
+                            zip_only = FALSE, task_names = NULL) {
+    object <- name_qti_object(object, task_name_mode(task_names, object@fallback_titles))
     ext <- tools::file_ext(path)
 
     if (ext == "") {
@@ -29,6 +29,7 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
 
     content <- createAssessmentTest(object, tdir, verification)
     doc_test <- xml2::read_xml(as.character(content))
+    mark_xml_name_mode(doc_test, attr(object, "rqti_name_mode"))
 
     path_test <- paste0(tdir, "/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)

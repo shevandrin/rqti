@@ -12,7 +12,7 @@ test4opal(
   max_attempts = 1L,
   files = NULL,
   calculator = NULL,
-  fallback_titles = "generic",
+  fallback_titles = "inherit",
   academic_grading = NULL,
   grade_label = c(en = "Grade", de = "Note"),
   table_label = c(en = "Grade", de = "Note"),
@@ -56,11 +56,10 @@ calculator to the candidate. Possible values:
 Default is \code{NULL}.
 }}
 
-\item{fallback_titles}{A character value, optional, controlling how titles
-are assigned when no explicit title is provided. Possible values are
-"filename" (use filenames as titles) and "generic" (use generic labels
-such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-"generic".}
+\item{fallback_titles}{Legacy naming policy. The default \code{"inherit"} uses
+option \code{rqti.task_names} at export, falling back to exercise titles.
+\code{"generic"} retains generic task labels; the historical \code{"filename"}
+value preserves supplied titles. See \link{task_names}.}
 
 \item{academic_grading}{A named numeric vector that defines the grade table
 shown to the candidate as feedback at the end of the test.
