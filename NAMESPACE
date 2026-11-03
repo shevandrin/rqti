@@ -125,47 +125,65 @@ import(methods)
 import(xml2)
 importFrom(base64enc,base64encode)
 importFrom(curl,form_file)
-importFrom(exams,exams2qti21)
-importFrom(exams,openolat_config)
-importFrom(htmltools,HTML)
-importFrom(htmltools,p)
-importFrom(htmltools,span)
-importFrom(htmltools,tag)
-importFrom(htmltools,tagAppendChildren)
-importFrom(htmltools,tagList)
-importFrom(httr2,req_body_multipart)
-importFrom(httr2,req_body_raw)
-importFrom(httr2,req_error)
-importFrom(httr2,req_headers)
-importFrom(httr2,req_method)
-importFrom(httr2,req_perform)
-importFrom(httr2,request)
-importFrom(httr2,resp_body_json)
-importFrom(httr2,resp_body_xml)
-importFrom(httr2,resp_header)
-importFrom(keyring,has_keyring_support)
-importFrom(keyring,key_delete)
-importFrom(keyring,key_get)
-importFrom(keyring,key_list)
-importFrom(keyring,key_set_with_value)
-importFrom(knitr,knit)
-importFrom(knitr,knit_params)
-importFrom(knitr,opts_knit)
+importFrom(exams,
+  exams2qti21,
+  openolat_config
+)
+importFrom(htmltools,
+  HTML,
+  p,
+  span,
+  tag,
+  tagAppendChildren,
+  tagList
+)
+importFrom(httr2,
+  req_body_multipart,
+  req_body_raw,
+  req_error,
+  req_headers,
+  req_method,
+  req_perform,
+  request,
+  resp_body_json,
+  resp_body_xml,
+  resp_header
+)
+importFrom(keyring,
+  has_keyring_support,
+  key_delete,
+  key_get,
+  key_list,
+  key_set_with_value
+)
+importFrom(knitr,
+  knit,
+  knit_params,
+  opts_knit
+)
 importFrom(lifecycle,deprecate_warn)
 importFrom(magrittr,"%>%")
-importFrom(rmarkdown,pandoc_convert)
-importFrom(rmarkdown,yaml_front_matter)
+importFrom(rmarkdown,
+  pandoc_convert,
+  yaml_front_matter
+)
 importFrom(stats,setNames)
-importFrom(stringr,str_replace)
-importFrom(stringr,str_split_1)
-importFrom(stringr,str_trim)
+importFrom(stringr,
+  str_replace,
+  str_split_1,
+  str_trim
+)
 importFrom(textutils,HTMLdecode)
 importFrom(tools,file_ext)
-importFrom(utils,browseURL)
-importFrom(utils,download.file)
-importFrom(utils,head)
-importFrom(utils,menu)
-importFrom(utils,read.csv)
+importFrom(utils,
+  browseURL,
+  download.file,
+  head,
+  menu,
+  read.csv
+)
 importFrom(yaml,yaml.load)
-importFrom(zip,zip)
-importFrom(zip,zip_list)
+importFrom(zip,
+  zip,
+  zip_list
+)
