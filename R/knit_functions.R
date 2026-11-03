@@ -116,10 +116,15 @@ render_zip <- function(input, qtijs_path = qtijs_preview_path()) {
 #'   RStudio. FALSE keeps serving until the R process exits, for example in tests.
 #' @details Maxima previews use locally installed Maxima through the R server
 #'   and work in both the RStudio Viewer and an external browser.
-#'   Set `options(rqti.maxima = "/path/to/maxima")` before starting the server
-#'   to pass that executable to RStudio's separate Knit session. On Windows,
-#'   use the command-line launcher, for example
-#'   `"C:/Program Files/Maxima/bin/maxima.bat"`, without shell quotes.
+#'   Select a command name, for example `options(rqti.maxima = "maxima")`,
+#'   or the full path to an executable/launcher. A directory alone is invalid.
+#'   On Windows the launcher may be `maxima.bat`; `Sys.which("maxima")` may also
+#'   resolve it without the suffix. Use the name/path that works locally.
+#'   The server and separate Knit sessions read current console options;
+#'   changing `rqti.maxima` or `rqti.task_names` does not require a server restart.
+#'   These are R options, not environment variables. Set them with `options()`;
+#'   use `.Rprofile` to persist them. Internal process-connection variables are
+#'   managed by rqti.
 #' @inheritParams render_qtijs
 #' @return The URL string of the qtijs server.
 #' @examples
@@ -133,14 +138,16 @@ start_server <- function(qtijs_path = qtijs_pkg_path(),
     # this will kill all servers that were started via
     # servr in the session; maybe this is not necessary
     stop_server()
-    # Pass the console's explicit choice to the separate Knit session too.
+    # Keep a startup fallback for older Knit sessions; current sessions read
+    # live console options from the server.
     executable <- getOption("rqti.maxima")
     if (!is.null(executable)) Sys.setenv(RQTI_MAXIMA = resolve_maxima_executable(executable))
     url <- start_maxima_local_server(qtijs_path, daemon)
     message("Serving qti.js with local Maxima support at ", url,
             ". To stop the server, run stop_server().")
     # only way to get the url when using Knit Button
-    Sys.setenv(RQTI_URL = url, RQTI_QTIJS_PATH = qtijs_path)
+    Sys.setenv(RQTI_URL = url, RQTI_QTIJS_PATH = qtijs_path,
+               RQTI_SERVER_PID = as.character(Sys.getpid()))
     return(url)
 }
 
@@ -195,7 +202,7 @@ clean_qtijs <- function(qtijs_path = qtijs_pkg_path()) {
 #' @return nothing, has side effects
 #' @export
 stop_server <- function() {
-    Sys.unsetenv(c("RQTI_URL", "RQTI_QTIJS_PATH", "RQTI_MAXIMA"))
+    Sys.unsetenv(c("RQTI_URL", "RQTI_QTIJS_PATH", "RQTI_MAXIMA", "RQTI_SERVER_PID"))
     servr::daemon_stop()
     if (is.function(maxima_local_preview_server$stop)) {
         maxima_local_preview_server$stop()

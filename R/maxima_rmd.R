@@ -20,9 +20,10 @@
 #' Interrupted library loading discards the incomplete cache.
 #'
 #' @param code A non-empty Maxima program.
-#' @param executable Path to the Maxima command-line executable or Windows
-#'   `.bat`/`.cmd` launcher, defaulting to option `rqti.maxima`, the choice
-#'   inherited from [start_server()] in an RStudio Knit session, or PATH.
+#' @param executable Maxima command name or full path to the command-line
+#'   executable / Windows `.bat` or `.cmd` launcher. Defaults to option
+#'   `rqti.maxima`, the current preview-console choice in a separate Knit
+#'   session, or `"maxima"` on PATH.
 #'   Explicit paths may contain spaces and Unicode; do not add shell quotes.
 #' @param timeout Maximum execution time in seconds. Defaults to option
 #'   `rqti.maxima_timeout`, or 120 seconds (including library startup).

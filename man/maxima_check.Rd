@@ -17,9 +17,10 @@ maxima_check(
 \arguments{
 \item{code}{A non-empty Maxima program.}
 
-\item{executable}{Path to the Maxima command-line executable or Windows
-\code{.bat}/\code{.cmd} launcher, defaulting to option \code{rqti.maxima}, the choice
-inherited from \code{\link[=start_server]{start_server()}} in an RStudio Knit session, or PATH.
+\item{executable}{Maxima command name or full path to the command-line
+executable / Windows \code{.bat} or \code{.cmd} launcher. Defaults to option
+\code{rqti.maxima}, the current preview-console choice in a separate Knit
+session, or \code{"maxima"} on PATH.
 Explicit paths may contain spaces and Unicode; do not add shell quotes.}
 
 \item{timeout}{Maximum execution time in seconds. Defaults to option

@@ -31,10 +31,15 @@ file on start up.
 
 Maxima previews use locally installed Maxima through the R server
 and work in both the RStudio Viewer and an external browser.
-Set \code{options(rqti.maxima = "/path/to/maxima")} before starting the server
-to pass that executable to RStudio's separate Knit session. On Windows,
-use the command-line launcher, for example
-\code{"C:/Program Files/Maxima/bin/maxima.bat"}, without shell quotes.
+Select a command name, for example \code{options(rqti.maxima = "maxima")},
+or the full path to an executable/launcher. A directory alone is invalid.
+On Windows the launcher may be \code{maxima.bat}; \code{Sys.which("maxima")} may also
+resolve it without the suffix. Use the name/path that works locally.
+The server and separate Knit sessions read current console options;
+changing \code{rqti.maxima} or \code{rqti.task_names} does not require a server restart.
+These are R options, not environment variables. Set them with \code{options()};
+use \code{.Rprofile} to persist them. Internal process-connection variables are
+managed by rqti.
 }
 \examples{
 \dontrun{

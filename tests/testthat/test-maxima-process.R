@@ -1,10 +1,11 @@
 test_that("explicit paths bypass Sys.which, including spaces and Unicode", {
-    path <- file.path(withr::local_tempdir(), "Maxima long path ä (test)", "maxima.bat")
+    path <- file.path(withr::local_tempdir(), "Maxima-5.44.0 long path ä (test)", "maxima.bat")
     dir.create(dirname(path))
     file.create(path)
     local_mocked_bindings(Sys.which = function(...) stop("unexpected PATH lookup"), .package = "base")
     expect_identical(resolve_maxima_executable(path), normalizePath(path, winslash = "/"))
-    expect_error(resolve_maxima_executable(dirname(path)), "executable not found")
+    expect_error(resolve_maxima_executable(dirname(path)),
+                 "full path including the executable.*maxima.bat")
 })
 
 test_that("bare command names use PATH, with option and Knit environment precedence", {
