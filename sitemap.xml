@@ -19,6 +19,7 @@
 <url><loc>https://shevandrin.github.io/rqti/articles/singlechoice.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/articles/table.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/authors.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/cran-release.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/index.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/news/index.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/AssessmentItem-class.html</loc></url>
@@ -73,6 +74,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/create_qti_task.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/create_qti_test.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/create_question_object.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/deleteCourseGroup-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/directedPair.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/dropdown.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/entry.html</loc></url>
@@ -148,6 +150,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/updateCourseElementResource-Opal-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/updateCourseElementResource-missing-method.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/updateCourseElementResource.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/updateCourseGroup-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/upload2LMS-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/upload2opal.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/verify_qti.html</loc></url>

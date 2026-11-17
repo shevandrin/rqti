@@ -135,6 +135,8 @@
   : Create XML file for exam test specification
 - [`create_question_object()`](https://shevandrin.github.io/rqti/reference/create_question_object.md)
   : Create rqti S4 AssessmentItem Object from Rmd
+- [`deleteCourseGroup()`](https://shevandrin.github.io/rqti/reference/deleteCourseGroup-methods.md)
+  : Delete a group from a course
 - [`directedPair()`](https://shevandrin.github.io/rqti/reference/directedPair.md)
   : Create object DirectedPair
 - [`dropdown()`](https://shevandrin.github.io/rqti/reference/dropdown.md)
@@ -285,6 +287,8 @@
 - [`updateCourseElementResource()`](https://shevandrin.github.io/rqti/reference/updateCourseElementResource.md)
   : Update the referenced learning resource of a course element in the
   LMS
+- [`updateCourseGroup()`](https://shevandrin.github.io/rqti/reference/updateCourseGroup-methods.md)
+  : Update a group in a course
 - [`upload2LMS()`](https://shevandrin.github.io/rqti/reference/upload2LMS-methods.md)
   : Upload content to LMS
 - [`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md)

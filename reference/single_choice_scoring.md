@@ -136,7 +136,7 @@ Published coefficients before multiplication by `points`:
 Kanzow AF, Schmidt D, Kanzow P (2023). Scoring Single-Response
 Multiple-Choice Items: Scoping Review and Comparison of Different
 Scoring Methods. JMIR Medical Education, 9, e44084.
-[doi:10.2196/44084](https://doi.org/10.2196/44084).
+[doi:10.2196/44084](https://doi.org/10.2196/44084) .
 
 ## See also
 

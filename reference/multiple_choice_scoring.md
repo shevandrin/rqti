@@ -113,7 +113,8 @@ multiple-choice type alias); no function call is needed inside YAML.
 Betts J, Muntean W, Kim D, Kao S (2022). Evaluating Different Scoring
 Methods for Multiple Response Items Providing Partial Credit.
 Educational and Psychological Measurement, 82(1), 151–176.
-[doi:10.1177/0013164421994636](https://doi.org/10.1177/0013164421994636).
+[doi:10.1177/0013164421994636](https://doi.org/10.1177/0013164421994636)
+.
 
 ## See also
 
