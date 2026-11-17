@@ -7,6 +7,13 @@
 #' loaded by default. Supply `libraries` to include others, such as `draw`.
 #' No R interface package for Maxima is required.
 #'
+#' New global variables or functions left by the program produce a warning.
+#' Keep variables in `block([a, b], ...)` and declare functions with `local(f)`
+#' inside the block. Globals may force a restart on delivery servers that reuse
+#' Maxima instances, slowing down large exams. The check compares `values` and
+#' `functions` after loading libraries and after running the program; changes to
+#' existing definitions or other random variants may be missed.
+#'
 #' @section Compiled library cache:
 #' Compiled libraries are shared with the local preview server across R sessions.
 #' On R >= 4.0, the cache is stored under `tools::R_user_dir("rqti", "cache")`.
@@ -72,6 +79,7 @@ maxima_check <- function(code, executable = maxima_default_executable(),
     driver <- file.path(work, "driver.mac")
     completed <- file.path(work, "completed.txt")
     output_types <- file.path(work, "outputs.tsv")
+    globals_file <- file.path(work, "globals.txt")
     started <- proc.time()[["elapsed"]]
     cache <- NULL
     if (length(libraries)) {
@@ -113,12 +121,24 @@ maxima_check <- function(code, executable = maxima_default_executable(),
         ")$")
     writeLines(c(
         "display2d:false$", "loadprint:false$",
+        "rqti_program_completed:false$",
+        if (outputs) "rqti_program_result:false$",
         if (outputs) detector,
         paste0("rqti_status:errcatch(",
                if (length(libraries)) paste0("load(", vapply(libraries, quote_maxima, character(1)), "),", collapse = "") else "",
                paste0("with_stdout(", quote_maxima(libraries_ready), ",printf(true,\"ok\")),"),
+               # Snapshot after library loading. Block locals and the existing
+               # result/completion bindings keep our own bookkeeping out of
+               # the difference. Compare definitions, not just their counts:
+               # removing an old binding can mask a new one in a count check.
+               "block([rqti_values_before,rqti_functions_before],",
+               "rqti_values_before:copylist(values),rqti_functions_before:copylist(functions),",
                if (outputs) "batch(" else "batchload(", quote_maxima(program), ")",
-               if (outputs) paste0(",rqti_detect(rqti_program_result,", quote_maxima(output_types), ")"), ")$"),
+               paste0(",with_stdout(", quote_maxima(globals_file),
+                   ",printf(true,\"~a~%~a~%\",",
+                   "string(listify(setdifference(setify(values),setify(rqti_values_before)))),",
+                   "string(listify(setdifference(setify(functions),setify(rqti_functions_before))))))"),
+               if (outputs) paste0(",rqti_detect(rqti_program_result,", quote_maxima(output_types), ")"), "))$"),
         paste0("if length(rqti_status)=1 and rqti_program_completed=true then with_stdout(", quote_maxima(completed),
                ",printf(true,\"ok\"))$"),
         "quit();"), driver)
@@ -165,8 +185,24 @@ maxima_check <- function(code, executable = maxima_default_executable(),
         if (anyDuplicated(names) || any(!grepl("^[A-Za-z][A-Za-z0-9_]*$", names))) {
             fail("Maxima output names must be unique ASCII identifiers starting with a letter.")
         }
-        return(setNames(types, names))
     }
+    if (!file.exists(globals_file)) fail("Maxima did not return global-definition diagnostics.")
+    globals <- readLines(globals_file, warn = FALSE, encoding = "UTF-8")
+    if (length(globals) != 2L) fail("Maxima returned incomplete global-definition diagnostics.")
+    if (any(globals != "[]")) {
+        hints <- c(
+            if (globals[[1L]] != "[]") paste0("Global variables: ", globals[[1L]],
+                ". Add them to block([a, b, ...], ...)."),
+            if (globals[[2L]] != "[]") paste0("Global functions: ", globals[[2L]],
+                ". Declare their names with local(f, g, ...) inside the block."))
+        warning(structure(list(message = paste0(context, " left global definitions in Maxima.\n",
+            paste(hints, collapse = "\n"), "\nOn delivery servers that reuse Maxima instances, ",
+            "globals may require a restart and slow down large exams."),
+            call = NULL, file = file, chunk = chunk,
+            variables = globals[[1L]], functions = globals[[2L]]),
+            class = c("rqti_maxima_globals_warning", "warning", "condition")))
+    }
+    if (outputs) return(setNames(types, names))
     invisible(TRUE)
 }
 

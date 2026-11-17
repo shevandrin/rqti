@@ -111,8 +111,10 @@ test_that("Maxima infers names and QTI types from its returned associations", {
         expect_error(maxima_check(bad, libraries=character(), outputs=TRUE))
     }
     # Outputs must retain their names even when global variables are assigned.
-    expect_identical(maxima_check("a:3; b:1/2; string(['a=a,'b=b]);",
-                                libraries=character(), outputs=TRUE), c(a="integer", b="float"))
+    expect_warning(types <- maxima_check("a:3; b:1/2; string(['a=a,'b=b]);",
+        libraries=character(), outputs=TRUE), "Global variables:.*a.*b",
+        class = "rqti_maxima_globals_warning")
+    expect_identical(types, c(a="integer", b="float"))
 })
 
 test_that("automatic Rmd declarations match explicit types and execute once", {

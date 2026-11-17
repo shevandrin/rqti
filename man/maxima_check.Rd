@@ -45,6 +45,14 @@ The ONYX statistics libraries \code{distrib}, \code{descriptive}, and \code{stat
 loaded by default. Supply \code{libraries} to include others, such as \code{draw}.
 No R interface package for Maxima is required.
 }
+\details{
+New global variables or functions left by the program produce a warning.
+Keep variables in \verb{block([a, b], ...)} and declare functions with \code{local(f)}
+inside the block. Globals may force a restart on delivery servers that reuse
+Maxima instances, slowing down large exams. The check compares \code{values} and
+\code{functions} after loading libraries and after running the program; changes to
+existing definitions or other random variants may be missed.
+}
 \section{Compiled library cache}{
 
 Compiled libraries are shared with the local preview server across R sessions.
