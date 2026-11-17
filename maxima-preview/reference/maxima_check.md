@@ -61,6 +61,16 @@ maxima_check(
 
 Invisibly, `TRUE` on success, or a named type vector if `outputs=TRUE`.
 
+## Details
+
+New global variables or functions left by the program produce a warning.
+Keep variables in `block([a, b], ...)` and declare functions with
+`local(f)` inside the block. Globals may force a restart on delivery
+servers that reuse Maxima instances, slowing down large exams. The check
+compares `values` and `functions` after loading libraries and after
+running the program; changes to existing definitions or other random
+variants may be missed.
+
 ## Compiled library cache
 
 Compiled libraries are shared with the local preview server across R

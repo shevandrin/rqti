@@ -135,6 +135,15 @@ value and return its named output types. Unsupported types are marked
     <p>Invisibly, <code>TRUE</code> on success, or a named type vector if <code>outputs=TRUE</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>New global variables or functions left by the program produce a warning.
+Keep variables in <code>block([a, b], ...)</code> and declare functions with <code>local(f)</code>
+inside the block. Globals may force a restart on delivery servers that reuse
+Maxima instances, slowing down large exams. The check compares <code>values</code> and
+<code>functions</code> after loading libraries and after running the program; changes to
+existing definitions or other random variants may be missed.</p>
+    </div>
+    <div class="section level2">
     <h2 id="compiled-library-cache">Compiled library cache<a class="anchor" aria-label="anchor" href="#compiled-library-cache"></a></h2>
 
 

@@ -2,6 +2,11 @@
 
 ## rqti (development version)
 
+- Maxima authoring checks warn when a program leaves new global
+  variables or functions behind, with their names and guidance on
+  `block()` and [`local()`](https://rdrr.io/r/base/eval.html). Globals
+  can force restarts on delivery servers that reuse Maxima instances.
+
 - Configuration guidance distinguishes R options
   ([`options()`](https://rdrr.io/r/base/options.html) / `.Rprofile`)
   from environment variables

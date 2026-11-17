@@ -115,7 +115,8 @@ many random variants. You can write the calculations in a
 its executable explicitly:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima <span class="op">=</span> <span class="st">"/usr/bin/maxima"</span><span class="op">)</span> <span class="co"># replace with your executable's path</span></span></code></pre></div>
-<p>On Windows, use the full path to the command-line launcher, for
+<p>On Windows, PATH is the Windows environment variable. If Maxima is
+not on it, use the full path to the command-line launcher, for
 example:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima <span class="op">=</span> <span class="st">"C:/maxima-5.44.0/bin/maxima.bat"</span><span class="op">)</span></span></code></pre></div>
@@ -346,6 +347,18 @@ file, chunk, and numbered code. Use one evaluated, uncached Maxima chunk
 per exercise and return all values needed by the question and answer in
 its <code>string([...])</code> list. Related random calculations then
 share the same execution.</p>
+<p>rqti also warns about global variables or functions left behind by
+the chunk. On delivery servers that reuse Maxima instances, these can
+require a restart and slow down large exams. Keep variables in the
+block’s local-variable list and use <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">local()</a></code> for function
+definitions:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode maxima"><code class="sourceCode maxima"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">block</span>([<span class="cn">a</span>, <span class="cn">answer</span>],</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="fu">local</span>(<span class="cn">double</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="cn">double</span>(<span class="cn">x</span>) := <span class="dv">2</span>*<span class="cn">x</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="cn">a</span>: <span class="fu">random</span>(<span class="dv">100</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>    <span class="cn">answer</span>: <span class="cn">double</span>(<span class="cn">a</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    <span class="fu">string</span>([<span class="do">'</span><span class="cn">a</span> = <span class="cn">a</span>, <span class="do">'</span><span class="cn">answer</span> = <span class="cn">answer</span>])</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>);</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="check-maxima-code-directly">Check Maxima code directly<a class="anchor" aria-label="anchor" href="#check-maxima-code-directly"></a>
@@ -354,12 +367,12 @@ share the same execution.</p>
 Maxima code, including its terminating semicolons or dollar signs. It
 runs that code in a fresh local Maxima process and returns
 <code>TRUE</code> invisibly on success:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/maxima_check.html">maxima_check</a></span><span class="op">(</span><span class="st">"1 + 2;"</span><span class="op">)</span></span></code></pre></div>
 <p>For a program returning the same <code>string([...])</code>
 associations used in an Rmd chunk, set <code>outputs = TRUE</code> to
 obtain a named vector of inferred types:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">code</span> <span class="op">&lt;-</span> <span class="st">"string(['a = 3, 'answer = 1/2, 'label = \"Addition\"]);"</span></span>
 <span><span class="va">types</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/maxima_check.html">maxima_check</a></span><span class="op">(</span><span class="va">code</span>, outputs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">types</span></span>
@@ -376,7 +389,7 @@ load by default.</p>
 <div class="section level2">
 <h2 id="export-and-validate">Export and validate<a class="anchor" aria-label="anchor" href="#export-and-validate"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">xml</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/rmd2xml.html">rmd2xml</a></span><span class="op">(</span><span class="va">example</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/verify_qti.html">verify_qti</a></span><span class="op">(</span><span class="va">xml</span>, schema <span class="op">=</span> <span class="st">"extended"</span>, ignore_import <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">valid</span><span class="op">)</span></span>
@@ -403,7 +416,7 @@ starts a fresh Maxima process; programs, variables, and answers remain
 independent and temporary.</p>
 <p>rqti manages cache cleanup automatically. You can choose another
 cache directory or keep the cache within the current R session:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima_cache_dir <span class="op">=</span> <span class="st">"/path/to/cache"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.maxima_cache_dir <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>

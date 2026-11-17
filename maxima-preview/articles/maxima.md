@@ -27,7 +27,8 @@ executable explicitly:
 options(rqti.maxima = "/usr/bin/maxima") # replace with your executable's path
 ```
 
-On Windows, use the full path to the command-line launcher, for example:
+On Windows, PATH is the Windows environment variable. If Maxima is not
+on it, use the full path to the command-line launcher, for example:
 
 ``` r
 
@@ -284,6 +285,22 @@ chunk, and numbered code. Use one evaluated, uncached Maxima chunk per
 exercise and return all values needed by the question and answer in its
 `string([...])` list. Related random calculations then share the same
 execution.
+
+rqti also warns about global variables or functions left behind by the
+chunk. On delivery servers that reuse Maxima instances, these can
+require a restart and slow down large exams. Keep variables in the
+block’s local-variable list and use
+[`local()`](https://rdrr.io/r/base/eval.html) for function definitions:
+
+``` maxima
+block([a, answer],
+    local(double),
+    double(x) := 2*x,
+    a: random(100),
+    answer: double(a),
+    string(['a = a, 'answer = answer])
+);
+```
 
 ### Check Maxima code directly
 
