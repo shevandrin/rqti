@@ -22,6 +22,7 @@ s4_example.R
 ^qtitutorial\.Rmd$
 ^engine\.bin$
 ^cran-comments\.md$
+^cran-release\.md$
 ^CRAN-SUBMISSION$
 ^AGENTS\.md$
 ^BOOK$

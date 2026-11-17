@@ -78,7 +78,7 @@
 #' Betts J, Muntean W, Kim D, Kao S (2022). Evaluating Different Scoring Methods
 #' for Multiple Response Items Providing Partial Credit. Educational and
 #' Psychological Measurement, 82(1), 151--176.
-#' \href{https://doi.org/10.1177/0013164421994636}{doi:10.1177/0013164421994636}.
+#' \doi{10.1177/0013164421994636}.
 #' @seealso [multipleChoice()], [single_choice_scoring()]
 #' @examples
 #' multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),

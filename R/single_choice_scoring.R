@@ -96,7 +96,7 @@
 #' Kanzow AF, Schmidt D, Kanzow P (2023). Scoring Single-Response Multiple-Choice
 #' Items: Scoping Review and Comparison of Different Scoring Methods.
 #' JMIR Medical Education, 9, e44084.
-#' \href{https://doi.org/10.2196/44084}{doi:10.2196/44084}.
+#' \doi{10.2196/44084}.
 #' @seealso [singleChoice()], [multiple_choice_scoring()]
 #' @examples
 #' singleChoice(choices = c("A", "B", "C"), points = 2,

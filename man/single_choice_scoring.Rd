@@ -125,7 +125,7 @@ singleChoice(prompt = "2 + 2 = 4", choices = c("False", "True"), solution = 2,
 Kanzow AF, Schmidt D, Kanzow P (2023). Scoring Single-Response Multiple-Choice
 Items: Scoping Review and Comparison of Different Scoring Methods.
 JMIR Medical Education, 9, e44084.
-\href{https://doi.org/10.2196/44084}{doi:10.2196/44084}.
+\doi{10.2196/44084}.
 }
 \seealso{
 \code{\link[=singleChoice]{singleChoice()}}, \code{\link[=multiple_choice_scoring]{multiple_choice_scoring()}}

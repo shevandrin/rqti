@@ -69,14 +69,14 @@ well**. tldr:
 
 - **`rqti`** renders QTI files directly in the browser (or the RStudio
   Viewer pane) from within R, allowing you to *see and interact with the
-  exercise before uploading it* to the LMS.  
+  exercise before uploading it* to the LMS.\
 - **`rqti`** supports more QTI-specific features (e.g., exercise types)
-  than **`exams`**.  
+  than **`exams`**.\
 - Built with S4 object-oriented programming, **`rqti`** is easy to
-  extend for LMS-specific needs.  
-- The Rmd interface is cleaner, focusing exclusively on QTI.  
+  extend for LMS-specific needs.\
+- The Rmd interface is cleaner, focusing exclusively on QTI.\
 - Low-level functions can be used flexibly to create exercises —
-  something not possible in **`exams`**.  
+  something not possible in **`exams`**.\
 - Includes functions for uploading files to an LMS via REST API
   (implemented for OPAL, but you can adapt it to your own LMS).
 
