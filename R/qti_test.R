@@ -28,14 +28,14 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
     dir.create(tdir)
 
     content <- createAssessmentTest(object, tdir, verification)
-    doc_test <- xml2::read_xml(as.character(content))
+    doc_test <- xml2::read_xml(render_qti_xml(content))
     mark_xml_name_mode(doc_test, attr(object, "rqti_name_mode"))
 
     path_test <- paste0(tdir, "/", object@identifier, ".xml")
     xml2::write_xml(doc_test, path_test)
 
     manifest <- create_manifest(object)
-    doc_manifest <- xml2::read_xml(as.character(manifest))
+    doc_manifest <- xml2::read_xml(render_qti_xml(manifest))
     path_manifest <- paste0(tdir, "/imsmanifest.xml")
     xml2::write_xml(doc_manifest, path_manifest)
 

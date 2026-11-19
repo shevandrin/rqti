@@ -80,7 +80,7 @@ validate_template_identifiers <- function(object) {
     declarations <- tagList(createResponseDeclaration(object),
                             createOutcomeDeclaration(object))
     doc <- xml2::read_xml(paste0("<declarations>",
-                                as.character(declarations), "</declarations>"))
+                                render_qti_xml(declarations), "</declarations>"))
     existing <- xml2::xml_attr(xml2::xml_children(doc), "identifier")
     conflicts <- unique(c(ids[duplicated(ids)], ids[ids %in% existing]))
     if (length(conflicts)) {

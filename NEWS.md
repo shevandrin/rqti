@@ -6,6 +6,9 @@
   without MathML now skip them, with identical results; documents with MathML
   are still checked against the full schemas.
 
+* Exporting items and tests is faster because rqti renders its XML without
+  htmltools' dependency handling. The generated files are unchanged.
+
 * Maxima support uses the suggested packages processx, filelock, later,
   promises and openssl, so other rqti features do not require them. Maxima
   checks and previews name any missing package and how to install it.
