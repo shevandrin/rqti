@@ -2,6 +2,19 @@
 
 ## rqti (development version)
 
+- [`verify_qti()`](https://shevandrin.github.io/rqti/reference/verify_qti.md)
+  is 12 to 35 times faster for documents without MathML (about 0.06 s
+  instead of 0.8 s per QTI 2.1 document, 0.15 s instead of 4.9 s for QTI
+  2.2). Compiling the MathML schemas took most of the time. Documents
+  without MathML now skip them, with identical results; documents with
+  MathML are still checked against the full schemas. QTI 2.2 documents
+  with standard MathML skip only the separate MathML 3 namespace schema,
+  which they do not use.
+
+- Exporting items and tests is faster because rqti renders its XML
+  without htmltools’ dependency handling. The generated files are
+  unchanged.
+
 - Maxima support uses the suggested packages processx, filelock, later,
   promises and openssl, so other rqti features do not require them.
   Maxima checks and previews name any missing package and how to install
