@@ -134,9 +134,9 @@ test_that("provide_file() HTML-escapes label text", {
 
 test_that("provide_file() embeds correct Base64 payload", {
     tmp <- tempfile(fileext = ".txt")
-    writeLines("hello", tmp)
+    writeBin(charToRaw("hello\n"), tmp)
 
-    expected <- base64enc::base64encode(tmp)
+    expected <- "aGVsbG8K"
 
     res <- provide_file(tmp)
     html <- as.character(res)
@@ -146,6 +146,18 @@ test_that("provide_file() embeds correct Base64 payload", {
         paste0("base64,", expected),
         fixed = TRUE
     )
+})
+
+test_that("provide_file() embeds long files as one unbroken Base64 string", {
+    tmp <- tempfile(fileext = ".bin")
+    bytes <- as.raw(rep(0:255, 4))
+    writeBin(bytes, tmp)
+
+    html <- as.character(provide_file(tmp))
+    payload <- sub('.*;base64,([^"]*)".*', "\\1", html)
+
+    expect_false(grepl("\\s", payload))
+    expect_identical(jsonlite::base64_dec(payload), bytes)
 })
 
 

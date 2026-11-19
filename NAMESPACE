@@ -130,7 +130,6 @@ exportMethods(upload2LMS)
 import(getPass)
 import(methods)
 import(xml2)
-importFrom(base64enc,base64encode)
 importFrom(curl,form_file)
 importFrom(exams,
   exams2qti21,

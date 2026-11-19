@@ -278,7 +278,7 @@ xml_preparation <- function(obj) {
             "application/octet-stream"
         )
 
-        encoded <- base64enc::base64encode(image_path)
+        encoded <- encode_base64(readBin(image_path, "raw", file.size(image_path)))
         embedded_src <- paste0("data:", mime, ";base64,", encoded)
 
         xml2::xml_set_attr(img, "src", embedded_src)

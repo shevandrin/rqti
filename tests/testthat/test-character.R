@@ -146,7 +146,8 @@ test_that("xml_preparation() embeds local image references", {
         dir.create(xml_dir)
         image_path <- file.path(xml_dir, "figure.png")
         xml_path <- file.path(xml_dir, "item.xml")
-        writeBin(charToRaw("fake image"), image_path)
+        bytes <- as.raw(rep(0:255, 2))
+        writeBin(bytes, image_path)
         writeLines(
             '<assessmentItem identifier="image_item"><itemBody><img src="figure.png"/></itemBody></assessmentItem>',
             xml_path
@@ -159,6 +160,9 @@ test_that("xml_preparation() embeds local image references", {
 
         expect_true(file.exists(sut))
         expect_match(src, "^data:image/png;base64,")
+        payload <- sub("^data:image/png;base64,", "", src)
+        expect_false(grepl("\\s", payload))
+        expect_identical(jsonlite::base64_dec(payload), bytes)
 })
 
 test_that("xml_preparation() warns when referenced images are missing", {

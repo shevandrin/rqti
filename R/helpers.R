@@ -261,7 +261,6 @@ mdlist <- function(vect, solutions = NULL, gaps = NULL) {
 #' @param mime MIME type. If NULL, it is guessed from the extension.
 #' @param download Logical. If TRUE, adds the HTML download attribute.
 #' @param warn_size_mb Warn if file is larger than this many MB.
-#' @importFrom base64enc base64encode
 #' @return knitr_asis object with an HTML hyperlink.
 #' @export
 provide_file <- function(path,
@@ -297,7 +296,7 @@ provide_file <- function(path,
     }
 
     raw  <- readBin(path, "raw", size)
-    encoded <- base64enc::base64encode(raw)
+    encoded <- encode_base64(raw)
     href <- paste0("data:", mime, ";base64,", encoded)
 
     html <- paste0(
@@ -313,6 +312,12 @@ provide_file <- function(path,
     )
 
     knitr::asis_output(html)
+}
+
+# Base64 for data URIs. jsonlite wraps its output every 72 characters, but
+# data URIs must not contain line breaks.
+encode_base64 <- function(raw) {
+    gsub("\n", "", jsonlite::base64_enc(raw), fixed = TRUE)
 }
 
 guess_mime_type <- function(path) {
@@ -375,7 +380,6 @@ html_escape <- function(x) {
 #'   - "audio"
 #' @param warn_size_mb Warn if file is larger than this many MB.
 #'
-#' @importFrom base64enc base64encode
 #'
 #' @return knitr_asis object containing embedded audio HTML.
 #' @export
@@ -437,7 +441,7 @@ provide_audio <- function(path,
 
     raw <- readBin(path, "raw", n = size)
 
-    encoded <- base64enc::base64encode(raw)
+    encoded <- encode_base64(raw)
 
     src <- paste0(
         "data:",

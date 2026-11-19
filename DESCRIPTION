@@ -37,7 +37,6 @@ Imports:
     textutils,
     lifecycle,
     exams,
-    base64enc,
     httpuv,
     jsonlite
 Suggests:
