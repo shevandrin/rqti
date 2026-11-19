@@ -26,10 +26,11 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install libxml2 (xmllint)
+      # Maxima tests are skipped when the executable is missing.
+      - name: Install libxml2 (xmllint) and Maxima
         run: |
           sudo apt-get update
-          sudo apt-get install -y libxml2-utils
+          sudo apt-get install -y libxml2-utils maxima
         shell: bash
 
       - uses: r-lib/actions/setup-r-dependencies@v2
