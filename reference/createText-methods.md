@@ -15,6 +15,9 @@ createText(object)
 # S4 method for class 'InlineChoice'
 createText(object)
 
+# S4 method for class 'TemplateVariableRef'
+createText(object)
+
 # S4 method for class 'character'
 createText(object)
 ```
@@ -23,4 +26,11 @@ createText(object)
 
 - object:
 
-  an instance of the S4 object (Gap, InlineChoice, character)
+  A [Gap](https://shevandrin.github.io/rqti/reference/Gap-class.md),
+  [InlineChoice](https://shevandrin.github.io/rqti/reference/InlineChoice-class.md),
+  [TemplateVariableRef](https://shevandrin.github.io/rqti/reference/TemplateVariableRef-class.md),
+  or character content fragment.
+
+## Value
+
+An HTML/XML tag or a character fragment marked as HTML.

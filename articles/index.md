@@ -36,6 +36,9 @@
 
 ### Other
 
+- [Configuration](https://shevandrin.github.io/rqti/articles/configuration.md):
+- [Maxima
+  exercises](https://shevandrin.github.io/rqti/articles/maxima.md):
 - [Compatibility with Learning Management
   Systems](https://shevandrin.github.io/rqti/articles/compatibility.md):
 - [Integration of the exams Package in

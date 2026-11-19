@@ -52,6 +52,33 @@ references such as `url(...)` and `@import` are not collected or
 rewritten; use self-contained stylesheets. Rendering depends on the
 delivery platform's CSS support.
 
+## Maxima chunks
+
+A `{maxima}` chunk stores its program in the item's template and
+executes it locally using
+[`maxima_check()`](https://shevandrin.github.io/rqti/reference/maxima_check.md)
+before conversion. Maxima must be installed; no R interface package is
+required. Names and types are inferred from the program's returned
+`string([...])` association list. Override this with explicit output
+declarations using the chunk option
+`variables = c(a = "integer", answer = "float")`. Supported types are
+`integer`, `float`, and `string`; rational numbers and real numeric
+constants map to `float`. Unsupported values require explicit types (for
+example, `string` to display a list). Inference observes one random
+variant, so use explicit types if output types can vary. Declared
+outputs must exist in the returned list and have compatible types in the
+checked variant. Use inline `template_value("a")` to display an output
+and `gap_numeric(solution_variable = "answer")` to bind a numeric
+correct answer, or `gap_text(solution_variable = "answer")` for a string
+output. Displayed references are supported in the question body, not in
+choices. Only one Maxima chunk is supported per Rmd exercise. Combine
+all calculations in that chunk and return all named outputs together.
+Its intermediate identifier is derived from the chunk label; set
+`maxima_identifier` to override it. Template chunks must be evaluated
+and uncached; errors stop export and upload. QTIJS previews evaluate
+these programs through the local Maxima server. See
+`inst/extdata/maxima-addition.Rmd` for a complete example.
+
 ## Examples
 
 ``` r

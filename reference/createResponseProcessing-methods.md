@@ -32,6 +32,9 @@ createResponseProcessing(object)
 # S4 method for class 'SingleChoice'
 createResponseProcessing(object)
 
+# S4 method for class 'TextGap'
+createResponseProcessing(object)
+
 # S4 method for class 'TextGapOpal'
 createResponseProcessing(object)
 ```

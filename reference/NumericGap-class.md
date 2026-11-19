@@ -37,6 +37,7 @@ assessment tasks according to the QTI 2.1 standard.
 - `solution`:
 
   A numeric value containing the correct answer for this numeric entry.
+  Leave empty when using `solution_variable`.
 
 - `tolerance`:
 
@@ -65,6 +66,18 @@ assessment tasks according to the QTI 2.1 standard.
   A boolean value, optional, specifying whether the upper bound is
   included in the tolerance rate. Default is `TRUE`.
 
+- `solution_variable`:
+
+  An optional QTI identifier of an `integer` or `float` template
+  variable used as the correct answer. Defaults to
+  [`character()`](https://rdrr.io/r/base/character.html). Cannot be
+  combined with a non-empty `solution`. The containing item must declare
+  this variable. Dynamic gaps default to an expected length of 10 unless
+  explicitly provided. OPAL-style assignment during response processing
+  requires the extended rqti schema. Use
+  [`numericGap()`](https://shevandrin.github.io/rqti/reference/numericGap_doc.md)
+  or `new()` to create dynamic gaps.
+
 ## See also
 
 [Entry](https://shevandrin.github.io/rqti/reference/Entry-class.md),
@@ -85,4 +98,24 @@ ng <- new("NumericGap",
           tolerance_type = "relative",
           include_lower_bound = TRUE,
           include_upper_bound = TRUE)
+dynamic_gap <- new("NumericGap", response_identifier = "answer",
+                   solution_variable = "c")
+variables <- new("MaximaVariables", code = "string(['c = 3]);",
+                 variables = c(c = "integer"))
+item <- new("Entry", content = list("<p>Answer: ", dynamic_gap, "</p>"),
+            template = list(variables))
+createTemplateProcessing(item)
+#> <templateProcessing>
+#>   <setTemplateValue identifier="all">
+#>     <customOperator definition="MAXIMA" value="string([&amp;#x27;c = 3]);"></customOperator>
+#>   </setTemplateValue>
+#>   <setTemplateValue identifier="c">
+#>     <customOperator definition="MAXIMA" value="assoc(c,$(1));">
+#>       <variable identifier="all"></variable>
+#>     </customOperator>
+#>   </setTemplateValue>
+#>   <setCorrectResponse identifier="answer">
+#>     <variable identifier="c"></variable>
+#>   </setCorrectResponse>
+#> </templateProcessing>
 ```

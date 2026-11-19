@@ -15,6 +15,9 @@ getResponse(object)
 # S4 method for class 'NumericGap'
 getResponse(object)
 
+# S4 method for class 'TemplateVariableRef'
+getResponse(object)
+
 # S4 method for class 'TextGap'
 getResponse(object)
 

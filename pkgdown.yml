@@ -5,6 +5,7 @@ articles:
   adding_metadata: adding_metadata.html
   api_opal: api_opal.html
   compatibility: compatibility.html
+  configuration: configuration.html
   directedpairs: directedpairs.html
   dropdown: dropdown.html
   embedding_resources: embedding_resources.html
@@ -12,13 +13,14 @@ articles:
   exams_integr: exams_integr.html
   gap: gap.html
   imported_packages: imported_packages.html
+  maxima: maxima.html
   multiplechoice: multiplechoice.html
   order: order.html
   rqti_oop_model: rqti_oop_model.html
   section: section.html
   singlechoice: singlechoice.html
   table: table.html
-last_built: 2026-11-17T23:28Z
+last_built: 2026-11-19T15:16Z
 urls:
   reference: https://shevandrin.github.io/rqti/reference
   article: https://shevandrin.github.io/rqti/articles

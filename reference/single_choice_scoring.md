@@ -179,10 +179,10 @@ singleChoice(choices = c("A", "B", "C"), points = 2,
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_7748"
+#> [1] "id_task_2810"
 #> 
 #> Slot "title":
-#> [1] "id_task_7748"
+#> [1] "id_task_2810"
 #> 
 #> Slot "content":
 #> list()
@@ -234,6 +234,9 @@ singleChoice(choices = c("A", "B", "C"), points = 2,
 #> character(0)
 #> 
 #> 
+#> Slot "template":
+#> list()
+#> 
 singleChoice(prompt = "2 + 2 = 4", choices = c("False", "True"), solution = 2,
   scoring_scheme = single_choice_scoring("kanzow_21", statement_truth = TRUE))
 #> An object of class "SingleChoice"
@@ -267,10 +270,10 @@ singleChoice(prompt = "2 + 2 = 4", choices = c("False", "True"), solution = 2,
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_0387"
+#> [1] "id_task_6699"
 #> 
 #> Slot "title":
-#> [1] "id_task_0387"
+#> [1] "id_task_6699"
 #> 
 #> Slot "content":
 #> list()
@@ -321,5 +324,8 @@ singleChoice(prompt = "2 + 2 = 4", choices = c("False", "True"), solution = 2,
 #> Slot "version":
 #> character(0)
 #> 
+#> 
+#> Slot "template":
+#> list()
 #> 
 ```

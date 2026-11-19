@@ -20,8 +20,11 @@ input fields (with numeric or text answers) or dropdown lists.
 - `content`:
 
   A list of character content to form the text of the question, which
-  can include HTML tags. For tasks of the Entry type, it must also
-  contain at least one instance of Gap objects, such as
+  can include HTML tags and
+  [TemplateVariableRef](https://shevandrin.github.io/rqti/reference/TemplateVariableRef-class.md)
+  objects for displaying declared template variables. For tasks of the
+  Entry type, it must also contain at least one instance of Gap objects,
+  such as
   [TextGap](https://shevandrin.github.io/rqti/reference/TextGap-class.md),
   [TextGapOpal](https://shevandrin.github.io/rqti/reference/TextGapOpal-class.md),
   [NumericGap](https://shevandrin.github.io/rqti/reference/NumericGap-class.md),
@@ -103,6 +106,14 @@ input fields (with numeric or text answers) or dropdown lists.
   assets referenced by
   [`url()`](https://rdrr.io/r/base/connections.html) or `@import` are
   not bundled automatically.
+
+- `template`:
+
+  A list of
+  [MaximaVariables](https://shevandrin.github.io/rqti/reference/MaximaVariables-class.md)
+  objects describing template calculations. Defaults to an empty list.
+  Blocks generate template declarations and processing in list order.
+  Rmd parsing is not yet supported.
 
 ## See also
 

@@ -7,29 +7,31 @@ Create object
 
 ``` r
 numericGap(
-  solution,
+  solution = numeric(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
   include_upper_bound = TRUE,
-  incorrect = 0
+  incorrect = 0,
+  solution_variable = character()
 )
 
 gapNumeric(
-  solution,
+  solution = numeric(),
   response_identifier = generate_id(type = "gap"),
   points = 1,
   placeholder = "",
-  expected_length = size_gap(solution),
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
   tolerance = 0,
   tolerance_type = "absolute",
   include_lower_bound = TRUE,
   include_upper_bound = TRUE,
-  incorrect = 0
+  incorrect = 0,
+  solution_variable = character()
 )
 ```
 
@@ -38,6 +40,7 @@ gapNumeric(
 - solution:
 
   A numeric value containing the correct answer for this numeric entry.
+  Omit when using `solution_variable`.
 
 - response_identifier:
 
@@ -59,7 +62,7 @@ gapNumeric(
 
   A numeric value, optional, used to set the size of the text input
   field in the content delivery engine. Default value is adjusted by
-  solution size.
+  solution size, or 10 for a dynamic answer.
 
 - tolerance:
 
@@ -93,6 +96,13 @@ gapNumeric(
   Score for an incorrect nonempty response, in points. Must be finite
   and non-positive. Default `0`; omissions receive zero.
 
+- solution_variable:
+
+  An optional QTI identifier of an `integer` or `float` template
+  variable used as the correct answer. Cannot be combined with a
+  non-empty `solution`. Defaults to
+  [`character()`](https://rdrr.io/r/base/character.html).
+
 ## Value
 
 An object of class
@@ -106,6 +116,7 @@ An object of class
 
 ``` r
 ng_min <- numericGap(5.1)
+dynamic_gap <- numericGap(solution_variable = "c")
 
 ng <- numericGap(solution = 5.1,
                 response_identifier  = "id_gap_1234",

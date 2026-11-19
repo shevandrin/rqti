@@ -151,10 +151,10 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_8702"
+#> [1] "id_task_9172"
 #> 
 #> Slot "title":
-#> [1] "id_task_8702"
+#> [1] "id_task_9172"
 #> 
 #> Slot "content":
 #> list()
@@ -205,6 +205,9 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> Slot "version":
 #> character(0)
 #> 
+#> 
+#> Slot "template":
+#> list()
 #> 
 multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
   scoring_scheme = multiple_choice_scoring("exams", rule = "none"))
@@ -236,10 +239,10 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_3705"
+#> [1] "id_task_9482"
 #> 
 #> Slot "title":
-#> [1] "id_task_3705"
+#> [1] "id_task_9482"
 #> 
 #> Slot "content":
 #> list()
@@ -290,5 +293,8 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> Slot "version":
 #> character(0)
 #> 
+#> 
+#> Slot "template":
+#> list()
 #> 
 ```

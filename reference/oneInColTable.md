@@ -23,7 +23,8 @@ oneInColTable(
   shuffle_cols = TRUE,
   feedback = list(),
   calculator = NA_character_,
-  files = NA_character_
+  files = NA_character_,
+  template = list()
 )
 ```
 
@@ -126,6 +127,15 @@ oneInColTable(
 
   A character vector, optional, containing paths to files that will be
   accessible to the candidate during the test/exam.
+
+- template:
+
+  A list of
+  [MaximaVariables](https://shevandrin.github.io/rqti/reference/MaximaVariables-class.md)
+  objects, for example created with
+  [`maxima_variables()`](https://shevandrin.github.io/rqti/reference/maxima_variables.md).
+  Defaults to an empty list. Blocks run in list order when the exported
+  item is delivered by a player supporting MAXIMA.
 
 ## Value
 

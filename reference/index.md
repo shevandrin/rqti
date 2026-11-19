@@ -44,6 +44,9 @@
 - [`MatchTaable-classs`](https://shevandrin.github.io/rqti/reference/MatchTable-class.md)
   [`MatchTable`](https://shevandrin.github.io/rqti/reference/MatchTable-class.md)
   : Class "MatchTable"
+- [`MaximaVariables-class`](https://shevandrin.github.io/rqti/reference/MaximaVariables-class.md)
+  [`MaximaVariables`](https://shevandrin.github.io/rqti/reference/MaximaVariables-class.md)
+  : Maxima template calculation
 - [`ModalFeedback-class`](https://shevandrin.github.io/rqti/reference/ModalFeedback-class.md)
   [`ModalFeedback`](https://shevandrin.github.io/rqti/reference/ModalFeedback-class.md)
   : Class "ModalFeedback"
@@ -77,6 +80,9 @@
 - [`SingleChoice-class`](https://shevandrin.github.io/rqti/reference/SingleChoice-class.md)
   [`SingleChoice`](https://shevandrin.github.io/rqti/reference/SingleChoice-class.md)
   : Class "SingleChoice"
+- [`TemplateVariableRef-class`](https://shevandrin.github.io/rqti/reference/TemplateVariableRef-class.md)
+  [`TemplateVariableRef`](https://shevandrin.github.io/rqti/reference/TemplateVariableRef-class.md)
+  : Reference to a template variable in item content
 - [`TextGap-class`](https://shevandrin.github.io/rqti/reference/TextGap-class.md)
   [`TextGap`](https://shevandrin.github.io/rqti/reference/TextGap-class.md)
   : Class "TextGap"
@@ -122,6 +128,10 @@
   : Create an element responseDeclaration of a qti-xml document
 - [`createResponseProcessing()`](https://shevandrin.github.io/rqti/reference/createResponseProcessing-methods.md)
   : Create an element responseProcessing of a qti-xml document
+- [`createTemplateDeclaration()`](https://shevandrin.github.io/rqti/reference/createTemplateDeclaration.md)
+  : Create QTI template declarations
+- [`createTemplateProcessing()`](https://shevandrin.github.io/rqti/reference/createTemplateProcessing.md)
+  : Create QTI template processing
 - [`createText()`](https://shevandrin.github.io/rqti/reference/createText-methods.md)
   : Compose a set of html elements to display question in qti-xml
   document
@@ -194,6 +204,10 @@
   : Create object InlineChoice
 - [`isUserLoggedIn()`](https://shevandrin.github.io/rqti/reference/isUserLoggedIn-methods.md)
   : Check if User is Logged in LMS
+- [`maxima_check()`](https://shevandrin.github.io/rqti/reference/maxima_check.md)
+  : Check a Maxima program locally
+- [`maxima_variables()`](https://shevandrin.github.io/rqti/reference/maxima_variables.md)
+  : Describe a Maxima calculation and its outputs
 - [`mdlist()`](https://shevandrin.github.io/rqti/reference/mdlist.md) :
   Create a markdown list for answer options
 - [`modalFeedback()`](https://shevandrin.github.io/rqti/reference/modalFeedback.md)
@@ -268,6 +282,10 @@
   : Start qtijs renderer as a local server.
 - [`stop_server()`](https://shevandrin.github.io/rqti/reference/stop_server.md)
   : Stop QTIJS local server
+- [`task_names`](https://shevandrin.github.io/rqti/reference/task_names.md)
+  : Exercise display names in previews and exports
+- [`template_value()`](https://shevandrin.github.io/rqti/reference/template_value.md)
+  : Display a template variable in question content
 - [`test()`](https://shevandrin.github.io/rqti/reference/test.md) :
   Create a test
 - [`test4opal()`](https://shevandrin.github.io/rqti/reference/test4opal.md)
