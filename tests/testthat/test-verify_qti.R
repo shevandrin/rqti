@@ -206,16 +206,25 @@ sc1d_with_body <- function(body, version = "v2p1") {
     sub("<itemBody>", paste0("<itemBody>", body), text, fixed = TRUE)
 }
 
-test_that("bundled schemas have wrappers that stub out MathML", {
+test_that("bundled schemas have wrappers that stub out unused MathML", {
+    no_math <- "<p>x</p>"
+    mathml2 <- '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"/>'
+    mathml3 <- '<m:math xmlns:m="http://www.w3.org/2010/Math/MathML"/>'
     for (schema in c("qti21", "extended", "qti22")) {
         full <- rqti:::resolve_qti_schema(schema)
-        wrapper <- rqti:::mathml_free_schema(full)
+        wrapper <- rqti:::mathml_free_schema(full, no_math)
         expect_true(endsWith(wrapper, "_no_mathml.xsd"))
         expect_true(file.exists(wrapper))
+        expect_identical(rqti:::mathml_free_schema(full, mathml3), full)
     }
+    qti21 <- rqti:::resolve_qti_schema("qti21")
+    expect_identical(rqti:::mathml_free_schema(qti21, mathml2), qti21)
+    qti22 <- rqti:::mathml_free_schema(rqti:::resolve_qti_schema("qti22"), mathml2)
+    expect_true(endsWith(qti22, "_no_mathml3.xsd"))
+    expect_true(file.exists(qti22))
     custom <- withr::local_tempfile(fileext = ".xsd")
     file.copy(system.file("imsqti_v2p1p2.xsd", package = "rqti"), custom)
-    expect_identical(rqti:::mathml_free_schema(custom), custom)
+    expect_identical(rqti:::mathml_free_schema(custom, no_math), custom)
 })
 
 test_that("documents without MathML get the same errors as with the full schemas", {
@@ -259,6 +268,10 @@ test_that("documents with MathML are checked against the full MathML schemas", {
                                logical(1))))
     }
     expect_false(verify_qti(sc1d_with_body(invalid), schema = "extended",
+                            engine = "xml2", print = FALSE)$valid)
+    expect_true(verify_qti(sc1d_with_body(valid, "v2p2"), schema = "qti22",
+                           engine = "xml2", print = FALSE)$valid)
+    expect_false(verify_qti(sc1d_with_body(invalid, "v2p2"), schema = "qti22",
                             engine = "xml2", print = FALSE)$valid)
     mathml3 <- sub("1998", "2010", invalid, fixed = TRUE)
     expect_false(verify_qti(sc1d_with_body(mathml3, "v2p2"), schema = "qti22",

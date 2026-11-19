@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Validates documents that use MathML only in its standard namespace against
+     imsqti_v2p2.xsd. The MathML 3 stub is imported first, so libxml2 skips
+     the full schema for the separate MathML 3 namespace, which takes most of
+     the time of every validation. See verify_qti(). -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://www.w3.org/2010/Math/MathML" schemaLocation="mathml3-stub.xsd"/>
+    <xs:import namespace="http://www.imsglobal.org/xsd/imsqti_v2p2" schemaLocation="imsqti_v2p2.xsd"/>
+</xs:schema>
