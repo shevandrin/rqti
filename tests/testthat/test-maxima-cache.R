@@ -1,3 +1,5 @@
+skip_without_maxima_packages()
+
 withr::local_options(list(rqti.maxima_cache_dir =
     file.path(tempdir(), "rqti-test-maxima-libraries")))
 

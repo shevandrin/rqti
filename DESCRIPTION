@@ -38,13 +38,8 @@ Imports:
     lifecycle,
     exams,
     base64enc,
-    processx,
     httpuv,
-    later,
-    promises,
-    jsonlite,
-    openssl,
-    filelock
+    jsonlite
 Suggests:
     covr,
     dplyr,
@@ -53,7 +48,12 @@ Suggests:
     XML,
     readr,
     RCurl,
-    pkgload
+    pkgload,
+    processx,
+    filelock,
+    later,
+    promises,
+    openssl
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 URL: https://github.com/shevandrin/rqti, https://shevandrin.github.io/rqti/

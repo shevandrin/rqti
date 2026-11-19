@@ -5,7 +5,8 @@
 #' it does not prove every variant works on the target ONYX installation.
 #' The ONYX statistics libraries `distrib`, `descriptive`, and `stats` are
 #' loaded by default. Supply `libraries` to include others, such as `draw`.
-#' No R interface package for Maxima is required.
+#' No R interface package for Maxima is required, but Maxima support uses the
+#' suggested packages processx, filelock, later, promises and openssl.
 #'
 #' New global variables or functions left by the program produce a warning.
 #' Keep variables in `block([a, b], ...)` and declare functions with `local(f)`
@@ -46,6 +47,7 @@ maxima_check <- function(code, executable = maxima_default_executable(),
                          file = NULL, chunk = NULL,
                          libraries = c("distrib", "descriptive", "stats"),
                          outputs = FALSE) {
+    check_maxima_packages()
     context <- paste0(if (!is.null(file)) paste0(basename(file), ": ") else "",
                       if (!is.null(chunk)) paste0("Maxima chunk '", chunk, "'") else "Maxima program")
     fail <- function(diagnostic) {

@@ -1,3 +1,5 @@
+skip_without_maxima_packages()
+
 test_that("explicit paths bypass Sys.which, including spaces and Unicode", {
     path <- file.path(withr::local_tempdir(), "Maxima-5.44.0 long path ä (test)", "maxima.bat")
     dir.create(dirname(path))

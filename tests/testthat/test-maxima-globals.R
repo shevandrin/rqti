@@ -1,3 +1,5 @@
+skip_without_maxima_packages()
+
 test_that("Maxima globals warnings identify variables and preserve typed outputs", {
     skip_on_cran()
     skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")

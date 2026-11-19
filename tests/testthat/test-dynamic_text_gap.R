@@ -76,6 +76,7 @@ test_that("mixed numeric, static text and dynamic text gaps retain their answer 
 test_that("Rmd text helpers bind a real Maxima string without freezing its sample value", {
     skip_on_cran()
     skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
+    skip_without_maxima_packages()
     withr::local_options(list(rqti.maxima_cache_dir =
         file.path(tempdir(), "rqti-test-maxima-libraries")))
     item <- create_question_object(system.file("extdata", "maxima-text-answer.Rmd", package = "rqti"))

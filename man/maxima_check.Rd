@@ -43,7 +43,8 @@ with the original diagnostic. This checks one execution of randomized code;
 it does not prove every variant works on the target ONYX installation.
 The ONYX statistics libraries \code{distrib}, \code{descriptive}, and \code{stats} are
 loaded by default. Supply \code{libraries} to include others, such as \code{draw}.
-No R interface package for Maxima is required.
+No R interface package for Maxima is required, but Maxima support uses the
+suggested packages processx, filelock, later, promises and openssl.
 }
 \details{
 New global variables or functions left by the program produce a warning.

@@ -1,3 +1,8 @@
+# Maxima support packages are suggested; skip their tests when one is missing.
+skip_without_maxima_packages <- function() {
+    for (pkg in maxima_packages) skip_if_not_installed(pkg)
+}
+
 legacy_maxima_parser_setup <- function() {
     # Reproduce Maxima 5.44's ensure-terminator, which searches even inside
     # quoted values. Keep the override in the disposable Maxima subprocess.

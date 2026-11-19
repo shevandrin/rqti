@@ -1,3 +1,5 @@
+skip_without_maxima_packages()
+
 withr::local_options(list(rqti.maxima_cache_dir =
     file.path(tempdir(), "rqti-test-maxima-libraries")))
 
@@ -38,6 +40,20 @@ test_that("local calculation API rejects unrelated origins and missing tokens", 
     req$CONTENT_TYPE <- "application/json"
     req$CONTENT_LENGTH <- "1048577"
     expect_identical(app$call(req)$status, 413L)
+})
+
+test_that("Maxima checks and previews name missing support packages", {
+    local_mocked_bindings(maxima_packages = c("processx", "rqtiMissingPackage"))
+    hint <- 'install.packages("rqtiMissingPackage")'
+    expect_error(maxima_check("1;"), hint, fixed = TRUE)
+    app <- make_maxima_preview_app(tempdir(), "http://127.0.0.1:12345")$app
+    req <- list(PATH_INFO = "/.rqti-maxima/config", REQUEST_METHOD = "GET")
+    req$HTTP_X_RQTI_MAXIMA <- jsonlite::fromJSON(app$call(req)$body)$token
+    req$PATH_INFO <- "/.rqti-maxima/run"
+    req$REQUEST_METHOD <- "POST"
+    response <- app$call(req)
+    expect_identical(response$status, 501L)
+    expect_match(jsonlite::fromJSON(response$body)$error, hint, fixed = TRUE)
 })
 
 test_that("native preview returns typed values and shares state only within an item", {

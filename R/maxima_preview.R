@@ -180,7 +180,9 @@ make_maxima_preview_app <- function(qtijs_path, origin) {
     state$stopped <- FALSE
     state$active <- NULL
     state$queue <- character()
-    token <- paste(format(openssl::rand_bytes(32)), collapse = "")
+    # Every preview server needs a token; httr2 provides 128 cryptographically
+    # random bits, so openssl remains a Maxima-only dependency.
+    token <- as.character(httr2::secret_make_key())
     reply_error <- function(status, message) maxima_preview_response(status, list(error = message))
     call <- function(req) {
         path <- req$PATH_INFO
@@ -197,6 +199,8 @@ make_maxima_preview_app <- function(qtijs_path, origin) {
         if (path != "/.rqti-maxima/run") return(reply_error(404, "Not found"))
         if (req$REQUEST_METHOD != "POST") return(reply_error(405, "Use POST"))
         if (!identical(req$HTTP_X_RQTI_MAXIMA, token)) return(reply_error(403, "Invalid preview token"))
+        packages <- tryCatch(check_maxima_packages(), error = identity)
+        if (inherits(packages, "error")) return(reply_error(501, conditionMessage(packages)))
         if (is.null(req$CONTENT_TYPE) || !grepl("^application/json($|;)", req$CONTENT_TYPE)) {
             return(reply_error(415, "Expected application/json"))
         }

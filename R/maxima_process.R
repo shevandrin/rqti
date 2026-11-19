@@ -1,3 +1,16 @@
+# Maxima support uses suggested packages that other rqti features do not need.
+maxima_packages <- c("processx", "filelock", "later", "promises", "openssl")
+
+check_maxima_packages <- function(packages = maxima_packages) {
+    missing <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+    if (length(missing)) {
+        stop("Maxima support requires the R package", if (length(missing) > 1L) "s", " ",
+             paste(missing, collapse = ", "), ". Install with install.packages(",
+             paste(deparse(missing), collapse = ""), ").", call. = FALSE)
+    }
+    invisible(TRUE)
+}
+
 # Public configuration uses R options. Internal environment variables let
 # separate Knit sessions locate the server and fetch the current options.
 maxima_default_executable <- function() {

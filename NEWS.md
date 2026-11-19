@@ -1,5 +1,9 @@
 # rqti (development version)
 
+* Maxima support uses the suggested packages processx, filelock, later,
+  promises and openssl, so other rqti features do not require them. Maxima
+  checks and previews name any missing package and how to install it.
+
 * Maxima authoring checks warn when a program leaves new global variables or
   functions behind, with their names and guidance on `block()` and `local()`.
   Globals can force restarts on delivery servers that reuse Maxima instances.

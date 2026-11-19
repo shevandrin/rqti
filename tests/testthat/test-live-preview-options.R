@@ -1,3 +1,5 @@
+skip_without_maxima_packages()
+
 test_that("separate Knit sessions use changed console options without a server restart", {
     skip_on_cran()
     skip_if(!nzchar(Sys.which("maxima")), "Maxima not installed")
