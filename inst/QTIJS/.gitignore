@@ -1,2 +1,9 @@
 *.xml
 index.xml
+/node_modules/
+/coverage/
+/.nyc_output/
+/.coverage-instrumented/
+/playwright-report/
+/test-results/
+!tests/fixtures/*.xml

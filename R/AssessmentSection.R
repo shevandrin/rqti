@@ -201,9 +201,9 @@ setMethod("getCalculator", signature(object = "AssessmentSection"),
 #' @rdname prepareQTIJSFiles-methods
 #' @aliases prepareQTIJSFiles,AssessmentSection
 setMethod("prepareQTIJSFiles", signature(object = "AssessmentSection"),
-          function(object, dir) {
+          function(object, dir, task_names = NULL) {
               tst <- test(object)
-              prepareQTIJSFiles(tst, dir)
+              prepareQTIJSFiles(tst, dir, task_names)
               return(NULL)
           })
 

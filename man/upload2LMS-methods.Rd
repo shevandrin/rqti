@@ -18,7 +18,8 @@ upload2LMS(object, test, ...)
   access = 4,
   overwrite = TRUE,
   open_in_browser = TRUE,
-  as_survey = FALSE
+  as_survey = FALSE,
+  task_names = NULL
 )
 }
 \arguments{
@@ -30,8 +31,8 @@ objects, or a character string with path to Rmd/md, zip or XML files.}
 
 \item{...}{Additional arguments to be passed to the method, if applicable.}
 
-\item{display_name}{A length-one character vector naming the resource in OPAL;
-by default, this is the file name without extension or the object identifier; optional.}
+\item{display_name}{A length-one character vector naming the resource in OPAL.
+The default uses the exported test/task title under the selected naming policy.}
 
 \item{access}{An integer value, optional; it controls publication
 status, where 1 - only those responsible for this learning resource; 2 -
@@ -46,6 +47,10 @@ a URL in the default browser. Default is \code{TRUE}.}
 
 \item{as_survey}{A boolean value, optional. If \code{TRUE}, the resource will be
 treated as a survey; if \code{FALSE}, as a test. Default is \code{FALSE}.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \description{
 This is a generic function that handles the process of uploading content to

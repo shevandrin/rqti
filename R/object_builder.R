@@ -2,11 +2,16 @@
 #'
 #' Create zip file with test, that contains one xml question specification
 #' generated from Rmd (md) description according to qti 2.1 information model
+#' Display names follow [task_names]: the YAML title by default, or the source
+#' filename without its extension when no title is supplied.
 #' @param file A string of path to file with markdown description of question.
 #' @param path A string, optional; a folder to store xml file. Default is
 #'   working directory.
 #' @param verification A boolean value, optional; enable validation of the xml
 #'   file. Default is `FALSE`.
+#' @param task_names Display naming policy: `"title"`, `"filename"`, `"both"`,
+#'   or `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
+#'   `"title"`. See [task_names].
 #' @returns The path string to the zip file.
 #' @examples
 #' \dontrun{
@@ -14,23 +19,29 @@
 #' rmd2zip("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export
-rmd2zip <- function(file, path = getwd(), verification = FALSE) {
+rmd2zip <- function(file, path = getwd(), verification = FALSE, task_names = NULL) {
+    mode <- task_name_mode(task_names)
     task <- create_question_object(file)
-    # to avoid using the same file name for task and test due to the same id
     test_id <- task@identifier
     task@identifier <- paste0("task_", task@identifier)
-    section <- new("AssessmentSection", assessment_item = list(task))
-    test <- new("AssessmentTest",
-                identifier = test_id,
-                title = "QTIJS Preview", section = list(section))
+    section <- new("AssessmentSection", title = task@title,
+                   assessment_item = list(task))
+    test <- new("AssessmentTest", identifier = test_id,
+                title = task@title, section = list(section))
+    test <- remember_task_source(test, file)
     createQtiTest(test, dir = path, verification = verification,
-                  zip_only = TRUE)
+                  zip_only = TRUE, task_names = mode)
 }
 
 #' Create qti-XML task file from Rmd (md) description
 #'
 #' Create XML file for question specification from Rmd (md) description
 #' according to qti 2.1 information model
+#' When `path` is a directory, the XML filename uses the source filename without
+#' its extension, preserving both hyphens and underscores independently of the
+#' YAML `identifier`. Knit saves its XML copy beside the source with the same
+#' name. Supply an explicit `.xml` path to choose a different export filename.
+#' @inheritParams rmd2zip
 #' @param file A string of path to file with markdown description of question.
 #' @param path A string, optional; a folder to store xml file. Default is
 #'   working directory.
@@ -43,9 +54,11 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE) {
 #' rmd2xml("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export
-rmd2xml <- function(file, path = getwd(), verification = FALSE) {
+rmd2xml <- function(file, path = getwd(), verification = FALSE, task_names = NULL) {
+    mode <- task_name_mode(task_names)
     task <- create_question_object(file)
-    createQtiTask(task, dir = path, verification = verification)
+    createQtiTask(task, dir = rmd_xml_path(file, path), verification = verification,
+                  task_names = mode)
 }
 
 
@@ -67,6 +80,30 @@ rmd2xml <- function(file, path = getwd(), verification = FALSE) {
 #' CSS references such as `url(...)` and `@import` are not collected or
 #' rewritten; use self-contained stylesheets. Rendering depends on the
 #' delivery platform's CSS support.
+#'
+#' @section Maxima chunks:
+#' A `{maxima}` chunk stores its program in the item's template and executes it
+#' locally using [maxima_check()] before conversion. Maxima must be installed;
+#' no R interface package is required. Names and types are inferred from the
+#' program's returned `string([...])` association list. Override this with
+#' explicit output declarations using the chunk option
+#' `variables = c(a = "integer", answer = "float")`. Supported types are
+#' `integer`, `float`, and `string`; rational numbers and real numeric constants
+#' map to `float`. Unsupported values require explicit types (for example,
+#' `string` to display a list). Inference observes one random variant, so use
+#' explicit types if output types can vary. Declared outputs must exist in the
+#' returned list and have compatible types in the checked variant.
+#' Use inline `template_value("a")` to display an output and
+#' `gap_numeric(solution_variable = "answer")` to bind a numeric correct answer,
+#' or `gap_text(solution_variable = "answer")` for a string output.
+#' Displayed references are supported in the question body, not in choices.
+#' Only one Maxima chunk is supported per Rmd exercise. Combine all calculations
+#' in that chunk and return all named outputs together. Its intermediate
+#' identifier is derived from the chunk label; set `maxima_identifier` to
+#' override it. Template chunks must be evaluated
+#' and uncached; errors stop export and upload. QTIJS previews evaluate these
+#' programs through the local Maxima server.
+#' See `inst/extdata/maxima-addition.Rmd` for a complete example.
 #'
 #' @param file A string representing the path to an Rmd file.
 #' @return One of the rqti S4 AssessmentItem objects: [SingleChoice],
@@ -113,7 +150,19 @@ create_question_object <- function(file) {
     attrs <- attrs[! names(attrs) %in% c("knit", "metadata", "params",
                                          "preview_feedback")]
 
-    tdir <- tempdir()
+    old_chunk_options <- knitr::opts_chunk$get()
+    old_knit_options <- knitr::opts_knit$get()
+    on.exit({
+        knitr::opts_chunk$restore(old_chunk_options)
+        knitr::opts_knit$restore(old_knit_options)
+    }, add = TRUE)
+    collector <- new.env(parent = emptyenv())
+    collector$blocks <- list()
+    restore_knitting <- setup_maxima_knitting(file, collector)
+    on.exit(restore_knitting(), add = TRUE)
+    tdir <- tempfile("rqti-rmd-")
+    dir.create(tdir)
+    on.exit(unlink(tdir, recursive = TRUE), add = TRUE)
 
     md_path <- file.path(tdir, "_temp_md.md")
     knitr::opts_chunk$set(fig.cap="")
@@ -145,6 +194,7 @@ create_question_object <- function(file) {
     if (length(html_qstn) == 0) {
         stop("The \'question\' section was not found in Rmd", call. = FALSE)
     }
+    references <- collector$references
     slots <- if (tolower(attrs$type) %in% c("sc", "singlechoice", "schoice")) {
         create_sc_slots(html_qstn, attrs)
     } else if (tolower(attrs$type) %in% c("mc", "mpc", "multiplechoice")) {
@@ -177,10 +227,17 @@ create_question_object <- function(file) {
     if (is.null(slots$content)) {
         slots$content <- as.list(paste(clean_question(html_qstn), collapse = ""))
     }
+    slots$content <- restore_maxima_references(slots$content, references)
+    if (length(collector$blocks)) slots$template <- collector$blocks
     slots[["type"]] <- NULL
 
     object <- do.call(new, slots)
-    return(object)
+    if (length(collector$blocks) || length(references)) {
+        validate_template_identifiers(object)
+        validate_template_references(object)
+        validate_dynamic_solutions(object)
+    }
+    return(remember_task_source(object, file))
 }
 
 create_entry_slots <- function(html, attrs) {

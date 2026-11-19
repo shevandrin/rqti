@@ -1,7 +1,10 @@
 #' Create YAML string for TextGap object
 #'
 #' @param solution A character vector containing values considered as correct
-#'   answers.
+#'   answers. Omit when using `solution_variable`.
+#' @param solution_variable A `string` template variable used as the correct
+#'   answer instead of `solution`. Dynamic answers do not support spelling
+#'   tolerance; omit `tolerance` or set it to zero.
 #' @param tolerance An integer value, optional; defines the number of characters
 #'   to tolerate spelling mistakes in evaluating candidate answers.
 #' @param case_sensitive A boolean, optional; determines whether the evaluation
@@ -11,20 +14,36 @@
 #' @param response_identifier A character string (optional) representing an
 #'   identifier for the answer.
 #' @param expected_length An integer value, optional; sets the size of the text
-#'   input field in the content delivery engine.
+#'   input field in the content delivery engine. Defaults to 10 for a dynamic
+#'   answer, otherwise to the solution's size.
 #' @param placeholder A character string, optional; places helpful text in the
 #'   text input field in the content delivery engine.
 #' @inheritParams numericGap
 #' @return A character string mapped as YAML.
 #' @examples
 #' gap_text(c("Solution", "Solutions"), tolerance = 2)
+#' gap_text(solution_variable = "answer")
 #'
 #' @seealso [gap_numeric()], [dropdown()], [mdlist()]
 #' @export
-gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
+gap_text <- function(solution = NULL, tolerance = NULL, case_sensitive = FALSE,
                      points = 1, response_identifier = NULL,
-                     expected_length = size_gap(solution), placeholder = NULL,
-                     incorrect = NULL) {
+                     expected_length = if (length(solution_variable)) 10 else size_gap(solution),
+                     placeholder = NULL, incorrect = NULL, solution_variable = NULL) {
+
+    if (length(solution_variable)) {
+        if (!is.null(solution)) {
+            stop("Specify either solution or solution_variable, not both.", call. = FALSE)
+        }
+        new("TemplateVariableRef", identifier = solution_variable)
+        if (!is.null(tolerance) &&
+            (length(tolerance) != 1L || anyNA(tolerance) || tolerance != 0)) {
+            stop("Dynamic text answers do not support spelling tolerance; use tolerance = 0.",
+                 call. = FALSE)
+        }
+    } else if (is.null(solution)) {
+        stop("Provide solution or solution_variable.", call. = FALSE)
+    }
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)
@@ -54,18 +73,30 @@ gap_text <- function(solution, tolerance = NULL, case_sensitive = FALSE,
 #'   input field in the content delivery engine.
 #' @param placeholder A character string, optional; places helpful text in the
 #'   text input field in the content delivery engine.
+#' @param solution_variable A numeric template variable used as the correct
+#'   answer instead of `solution`. Cannot be combined with a static solution.
 #' @inheritParams numericGap
 #' @return A character string mapped as YAML.
 #' @examples
 #' gap_numeric(5.0, tolerance = 10, tolerance_type = "relative")
+#' gap_numeric(solution_variable = "answer", tolerance_type = "exact")
 #'
 #' @seealso [gap_text()], [dropdown()], [mdlist()]
 #' @export
-gap_numeric <- function(solution, tolerance = 0, tolerance_type = "absolute",
+gap_numeric <- function(solution = NULL, tolerance = 0, tolerance_type = "absolute",
                         points = 1, response_identifier = NULL,
                         include_lower_bound = TRUE, include_upper_bound = TRUE,
-                        expected_length = size_gap(solution),
-                        placeholder = NULL, incorrect = NULL) {
+                        expected_length = if (length(solution_variable)) 10 else size_gap(solution),
+                        placeholder = NULL, incorrect = NULL, solution_variable = NULL) {
+
+    if (length(solution_variable)) {
+        if (!is.null(solution)) {
+            stop("Specify either solution or solution_variable, not both.", call. = FALSE)
+        }
+        new("TemplateVariableRef", identifier = solution_variable)
+    } else if (is.null(solution)) {
+        stop("Provide solution or solution_variable.", call. = FALSE)
+    }
 
     params <- as.list(environment())
     params <- Filter(Negate(is.null), params)

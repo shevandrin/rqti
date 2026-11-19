@@ -92,6 +92,7 @@ setClass("OneInColTable", contains = "MatchTable")
 #'                    answers_scores = c(1, 0.5, 0.1, 1),
 #'                    shuffle_rows = FALSE,
 #'                    shuffle_cols = TRUE)
+#' @template TemplateParameter
 #'@export
 oneInColTable <- function(identifier = generate_id(),
                          title = identifier,
@@ -109,7 +110,8 @@ oneInColTable <- function(identifier = generate_id(),
                          shuffle_cols = TRUE,
                          feedback = list(),
                          calculator = NA_character_,
-                         files = NA_character_) {
+                         files = NA_character_,
+                         template = list()) {
     params <- as.list(environment())
     obj <- construct_item(params, "OneInColTable")
     return(obj)

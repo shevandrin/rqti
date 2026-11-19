@@ -34,6 +34,32 @@ rewritten; use self-contained stylesheets. Rendering depends on the
 delivery platform's CSS support.
 }
 
+\section{Maxima chunks}{
+
+A \code{{maxima}} chunk stores its program in the item's template and executes it
+locally using \code{\link[=maxima_check]{maxima_check()}} before conversion. Maxima must be installed;
+no R interface package is required. Names and types are inferred from the
+program's returned \verb{string([...])} association list. Override this with
+explicit output declarations using the chunk option
+\code{variables = c(a = "integer", answer = "float")}. Supported types are
+\code{integer}, \code{float}, and \code{string}; rational numbers and real numeric constants
+map to \code{float}. Unsupported values require explicit types (for example,
+\code{string} to display a list). Inference observes one random variant, so use
+explicit types if output types can vary. Declared outputs must exist in the
+returned list and have compatible types in the checked variant.
+Use inline \code{template_value("a")} to display an output and
+\code{gap_numeric(solution_variable = "answer")} to bind a numeric correct answer,
+or \code{gap_text(solution_variable = "answer")} for a string output.
+Displayed references are supported in the question body, not in choices.
+Only one Maxima chunk is supported per Rmd exercise. Combine all calculations
+in that chunk and return all named outputs together. Its intermediate
+identifier is derived from the chunk label; set \code{maxima_identifier} to
+override it. Template chunks must be evaluated
+and uncached; errors stop export and upload. QTIJS previews evaluate these
+programs through the local Maxima server.
+See \code{inst/extdata/maxima-addition.Rmd} for a complete example.
+}
+
 \examples{
 \dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 create_question_object("file.Rmd")

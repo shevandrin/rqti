@@ -4,7 +4,7 @@
 \alias{rmd2xml}
 \title{Create qti-XML task file from Rmd (md) description}
 \usage{
-rmd2xml(file, path = getwd(), verification = FALSE)
+rmd2xml(file, path = getwd(), verification = FALSE, task_names = NULL)
 }
 \arguments{
 \item{file}{A string of path to file with markdown description of question.}
@@ -14,6 +14,10 @@ working directory.}
 
 \item{verification}{A boolean value, optional; enable validation of the xml
 file. Default is \code{FALSE}.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \value{
 The path string to the xml file.
@@ -21,6 +25,10 @@ The path string to the xml file.
 \description{
 Create XML file for question specification from Rmd (md) description
 according to qti 2.1 information model
+When \code{path} is a directory, the XML filename uses the source filename without
+its extension, preserving both hyphens and underscores independently of the
+YAML \code{identifier}. Knit saves its XML copy beside the source with the same
+name. Supply an explicit \code{.xml} path to choose a different export filename.
 }
 \examples{
 \dontrun{

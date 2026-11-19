@@ -1,3 +1,8 @@
+expect_question_equal <- function(actual, expected, file) {
+    if (is(actual, "AssessmentItem")) expected <- remember_task_source(expected, file)
+    expect_equal(actual, expected)
+}
+
 simplemath <- function(number) {
     # out <- htmltools::tag(display = "inline", htmltools::tag("semantics", list(htmltools::tag("mn", number), htmltools::tag("annotation", list("encoding" = "application/x-tex", number)))))
     # out <- gsub("\n[ ]*", "", as.character(out))
@@ -24,7 +29,7 @@ test_that("Testing SingleChoice where answer is $nummer", {
                     orientation = "vertical",
                     solution = 2
     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for SingleChoice class", {
@@ -52,7 +57,7 @@ test_that("Testing create_question_object() for SingleChoice class", {
                                            "ChoiceD"),
                     orientation = "vertical")
 
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for SingleChoice class: solution", {
@@ -81,7 +86,7 @@ test_that("Testing create_question_object() for SingleChoice class: solution", {
                     orientation = "vertical",
                     solution = 2
     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for MultipleChoice class:
@@ -109,7 +114,7 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                            "ChoiceD"),
                     orientation = "vertical"
     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for MultipleChoice class:
@@ -148,7 +153,7 @@ test_that("Testing create_question_object() for MultipleChoice class:
                                            "ChoiceD"),
                     orientation = "vertical"
     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for Essay class", {
@@ -162,7 +167,7 @@ test_that("Testing create_question_object() for Essay class", {
                    title = "Definition Essay",
                    data_allow_paste = FALSE
                    ))
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for Entry class", {
@@ -176,7 +181,7 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 identifier = "test_2",
                 title = "Germany"
                 ))
-expect_equal(sut, expected)
+expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for Entry with YAML", {
@@ -195,7 +200,7 @@ expected <- suppressMessages(new("Entry", content = list("<p>Hast du ",
                 identifier = "test_2",
                 title = "Germany"
                 ))
-expect_equal(sut, expected)
+expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_outcome_declaration() for Entry class", {
@@ -262,7 +267,7 @@ test_that("Testing create_question_object() for Order task", {
                     choices = c("Berlin", "Hamburg", "Munich",
                                 "Cologne", "Düsseldorf",  "Leipzig")
                     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for Direct Pair task", {
@@ -284,7 +289,7 @@ test_that("Testing create_question_object() for Direct Pair task", {
                                             "row_5 col_5"),
                     answers_scores = c(1, 1, 1, 1, 0.5)
     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for OnInColTable task, where as_table=T", {
@@ -306,7 +311,7 @@ test_that("Testing create_question_object() for OnInColTable task, where as_tabl
                                            "row_5 col_5"),
                     answers_scores = c(0.5, 1, 1, 1, 1)
     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() with conditions: OnInColTable and as_table=F", {
@@ -325,7 +330,7 @@ test_that("Testing create_question_object() with conditions: OnInColTable and as
                                            "row_3 col_2"),
                     answers_scores = c(0.5, 1, 1)
     )
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for OneInRowTable task", {
@@ -348,8 +353,8 @@ test_that("Testing create_question_object() for OneInRowTable task", {
                                             "row_3 col_3", "row_4 col_4",
                                             "row_5 col_2"),
                     answers_scores = c(0.5, 1, 1, 1, 1))
-    expect_equal(sut1, expected)
-    expect_equal(sut2, expected)
+    expect_question_equal(sut1, expected, path1)
+    expect_question_equal(sut2, expected, path2)
 })
 
 test_that("Testing create_question_object() for  MultipleChoiceTable task", {
@@ -368,7 +373,7 @@ test_that("Testing create_question_object() for  MultipleChoiceTable task", {
                     answers_identifiers =c("row_1 col_1", "row_2 col_1",
                     "row_3 col_3", "row_4 col_4", "row_5 col_2", "row_5 col_5"),
                     answers_scores = c(1, 1, 1, 1, 1, 1))
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing create_question_object() for TextGap
@@ -436,7 +441,7 @@ test_that("Testing create_question_object() for TextGap
                          tolerance = 2),'</p>'),
                     feedback = list(new("ModalFeedback",
                                 content = list("<p>general feedback</p>")))))
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 # Rmd file without type of attribute for InlineChoice
 test_that("Testing create_question_object() for InlineChoice
@@ -474,7 +479,7 @@ test_that("Testing create_question_object() for InlineChoice
                                       content = list("<p>correct feedback</p>"))
                                        )
                     ))
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing of incorrect Rmd file (without parameter: type)
@@ -520,7 +525,7 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
           {
     path <- test_path("file/rmd/order.Rmd")
     suppressMessages(rmd2xml(path, path = test_path()))
-    xml_file_sut <- xml2::read_xml(test_path("ord.xml"))
+    xml_file_sut <- xml2::read_xml(test_path("order.xml"))
 
     xml_file_expected <- xml2::read_xml(test_path("file/xml/Order.xml"))
 
@@ -541,9 +546,9 @@ test_that("Testing the Order task, points are awarded for each correct answer.",
     sut <- as.character(match_sut)
     expected <- as.character(match_expected)
 
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
     expect_equal(list_bv_sut, list_bv_expected )
-    unlink(test_path("ord.xml"))
+    unlink(test_path("order.xml"))
 })
 test_that("Testing stop message for create_question_object() function
           in case the type of the task is not specified properly )", {
@@ -593,7 +598,7 @@ test_that("Testing read_table() function: delete the name of cols and rows
                     cols_identifiers = c("alf", "bet", "gmm"),
                     answers_identifiers =c("id1 alf", "id1 gmm", "id2 bet", "id3 bet"),
                     points = 4)
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing read_table() function: delete the name of cols and rows
@@ -611,7 +616,7 @@ test_that("Testing read_table() function: delete the name of cols and rows
                     cols_identifiers = c("alf", "bet", "gmm"),
                     answers_identifiers =c("id1 alf", "id2 alf", "id3 gmm"),
                     points = 3)
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Testing read_table() function: delete the name of cols and rows
@@ -629,7 +634,7 @@ test_that("Testing read_table() function: delete the name of cols and rows
                     cols_identifiers = c("alf", "bet", "gmm"),
                     answers_identifiers =c("id1 alf", "id1 bet", "id3 gmm"),
                     points = 3)
-    expect_equal(sut, expected)
+    expect_question_equal(sut, expected, path)
 })
 
 test_that("Checking rmd_checker() behavior when 'library(rqti)'

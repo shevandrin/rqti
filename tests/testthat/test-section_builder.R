@@ -24,6 +24,8 @@ sc <- new("SingleChoice", identifier = "eco", title = "Economics and Physic",
 path1 <- test_path("file/rmd/mc_no_point.Rmd")
 path2 <-  test_path("file/xml/Essay.xml")
 path3 <- test_path("file/md/sc_example1.md")
+mc <- remember_task_source(mc, path1)
+sc <- remember_task_source(sc, path3)
 
 test_that("Testing function section() to build permanent AssessmentSection", {
     sut <- section(c(path1, path2), id = "permanent_section")

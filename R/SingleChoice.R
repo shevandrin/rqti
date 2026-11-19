@@ -111,6 +111,7 @@ setMethod("initialize", "SingleChoice", function(.Object, ...) {
 #'                    orientation = "vertical",
 #'                    solution = 2)
 #'
+#' @template TemplateParameter
 #' @export
 singleChoice <- function(identifier = generate_id(),
                          title = identifier,
@@ -126,7 +127,8 @@ singleChoice <- function(identifier = generate_id(),
                          calculator = NA_character_,
                          files = NA_character_,
                          scoring_scheme = "standard",
-                         response_identifier = "RESPONSE") {
+                         response_identifier = "RESPONSE",
+                         template = list()) {
     params <- as.list(environment())
     obj <- construct_item(params, "SingleChoice")
     return(obj)

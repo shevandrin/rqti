@@ -95,6 +95,7 @@ setClass("MultipleChoice", contains = "Choice",
 #'                    shuffle = TRUE,
 #'                    orientation = "vertical")
 #'
+#' @template TemplateParameter
 #' @export
 multipleChoice <- function(identifier = generate_id(),
                          title = identifier,
@@ -109,7 +110,8 @@ multipleChoice <- function(identifier = generate_id(),
                          calculator = NA_character_,
                          files = NA_character_,
                          scoring_scheme = "standard",
-                         response_identifier = "RESPONSE") {
+                         response_identifier = "RESPONSE",
+                         template = list()) {
     params <- as.list(environment())
     obj <- construct_item(params, "MultipleChoice")
     return(obj)

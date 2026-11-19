@@ -18,7 +18,8 @@ essay(
   data_allow_paste = TRUE,
   calculator = NA_character_,
   files = NA_character_,
-  response_identifier = "RESPONSE"
+  response_identifier = "RESPONSE",
+  template = list()
 )
 }
 \arguments{
@@ -76,6 +77,10 @@ be accessible to the candidate during the test/exam.}
 \item{response_identifier}{QTI response identifier. Default \code{"RESPONSE"}.
 Must be a valid identifier distinct from the item's score and feedback
 outcome identifiers.}
+
+\item{template}{A list of \link{MaximaVariables} objects, for example created with
+\code{\link[=maxima_variables]{maxima_variables()}}. Defaults to an empty list. Blocks run in list order
+when the exported item is delivered by a player supporting MAXIMA.}
 }
 \value{
 An object of class \link{Essay}

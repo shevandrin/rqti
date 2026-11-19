@@ -6,6 +6,14 @@
 \usage{
 \method{print}{qti_validation_results_list}(x, ...)
 }
+\arguments{
+\item{x}{A \code{qti_validation_results_list} returned by \code{\link[=verify_qti]{verify_qti()}}.}
+
+\item{...}{Unused additional arguments.}
+}
+\value{
+\code{x}, invisibly. Results are already printed by \code{\link[=verify_qti]{verify_qti()}}.
+}
 \description{
 Print validation results list
 }

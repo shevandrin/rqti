@@ -56,7 +56,7 @@ setClass("AssessmentTest", slots = c(identifier = "character",
                           max_attempts = NA_integer_,
                           allow_comment = TRUE,
                           rebuild_variables = NA,
-                          fallback_titles = "generic",
+                          fallback_titles = "inherit",
                           academic_grading = NULL,
                           grade_label = c(en="Grade", de="Note"),
                           table_label = c(en="Grade", de="Note"),
@@ -68,7 +68,7 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
     .Object <- callNextMethod()
 
     .Object@fallback_titles <- match.arg(.Object@fallback_titles,
-                                         c("filename", "generic"))
+                                         c("inherit", "title", "filename", "both", "hidden", "generic"))
 
     if (length(.Object@identifier) == 0) {
         .Object@identifier <- generate_id(type = "test")
@@ -121,11 +121,10 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 #'  candidate for the test in minutes. Default is \code{NULL}.
 #'@param max_attempts An integer value, optional, indicating the maximum number
 #'  of attempts allowed for the candidate. Default is 1.
-#' @param fallback_titles A character value, optional, controlling how titles
-#'   are assigned when no explicit title is provided. Possible values are
-#'   "filename" (use filenames as titles) and "generic" (use generic labels
-#'   such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-#'   "generic".
+#' @param fallback_titles Legacy naming policy. The default `"inherit"` uses
+#'   option `rqti.task_names` at export, falling back to exercise titles.
+#'   `"generic"` retains generic task labels; the historical `"filename"`
+#'   value preserves supplied titles. See [task_names].
 #' @param academic_grading A named numeric vector that defines the grade table
 #'   shown to the candidate as feedback at the end of the test.
 #'
@@ -187,7 +186,7 @@ setMethod("initialize", "AssessmentTest", function(.Object, ...) {
 assessmentTest <- function(section, identifier = generate_id(type = "test"),
                            title = identifier, time_limit = NULL,
                            max_attempts = 1L,
-                           fallback_titles = "generic",
+                           fallback_titles = "inherit",
                            academic_grading = NULL,
                            grade_label = c(en="Grade", de="Note"),
                            table_label = c(en="Grade", de="Note"),
@@ -265,8 +264,8 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTest"),
 #' @aliases createQtiTest,AssessmentTest
 setMethod("createQtiTest", signature(object = "AssessmentTest"),
           function(object, dir = getwd(), verification = FALSE,
-                   zip_only = FALSE) {
-              create_qti_test(object, dir, verification, zip_only)
+                   zip_only = FALSE, task_names = NULL) {
+              create_qti_test(object, dir, verification, zip_only, task_names)
           })
 
 #' @rdname createOutcomeDeclaration-methods
@@ -305,10 +304,10 @@ setMethod("createZip", signature(object = "AssessmentTest"),
 #' @rdname prepareQTIJSFiles-methods
 #' @aliases prepareQTIJSFiles,AssessmentTest
 setMethod("prepareQTIJSFiles", signature(object = "AssessmentTest"),
-          function(object, dir) {
+          function(object, dir, task_names = NULL) {
               zip_file <- createQtiTest(object = object,
                                         dir = dir,
-                                        verification = FALSE)
+                                        verification = FALSE, task_names = task_names)
               zip::unzip(zip_file, exdir = dir)
               unlink(zip_file)
               return(NULL)
@@ -328,69 +327,8 @@ setMethod("createConfigurationFile", signature(object = "AssessmentTest"),
           function(object, output) {
           })
 
-assign_fallback_titles <- function(section,
-                                   mode = c("filename", "generic")) {
-    mode <- match.arg(mode)
-
-    if (mode == "filename") {
-        return(section)
-    }
-
-    warned_paths <- FALSE
-
-    for (i in seq_along(section)) {
-        res <- assign_titles_section(
-            sec = section[[i]],
-            path = as.character(i),
-            warned_paths = warned_paths
-        )
-        section[[i]] <- res$section
-        warned_paths <- res$warned_paths
-    }
-
-    return(section)
-}
-
-assign_titles_section <- function(sec, path, warned_paths = FALSE) {
-    sec@title <- paste("Section", path)
-
-    if (length(sec@assessment_item) > 0) {
-        task_counter <- 0
-        subsection_counter <- 0
-
-        for (j in seq_along(sec@assessment_item)) {
-            obj <- sec@assessment_item[[j]]
-
-            if (is(obj, "AssessmentSection")) {
-                subsection_counter <- subsection_counter + 1
-                sub_path <- paste0(path, ".", subsection_counter)
-
-                res <- assign_titles_section(
-                    sec = obj,
-                    path = sub_path,
-                    warned_paths = warned_paths
-                )
-                obj <- res$section
-                warned_paths <- res$warned_paths
-
-            } else if (is.character(obj) && length(obj) == 1) {
-                if (!warned_paths) {
-                    message(
-                        "Generic fallback titles cannot be assigned to assessment items ",
-                        "provided as XML file paths. These entries keep their original titles."
-                    )
-                    warned_paths <- TRUE
-                }
-
-            } else {
-                task_counter <- task_counter + 1
-                task_path <- paste0(path, ".", task_counter)
-                obj@title <- paste("Task", task_path)
-            }
-
-            sec@assessment_item[[j]] <- obj
-        }
-    }
-
-    return(list(section = sec, warned_paths = warned_paths))
+assign_fallback_titles <- function(section, mode = "inherit") {
+    if (mode == "inherit") return(section)
+    policy <- task_name_mode(fallback_titles = mode)
+    lapply(seq_along(section), function(i) name_qti_object(section[[i]], policy, as.character(i)))
 }

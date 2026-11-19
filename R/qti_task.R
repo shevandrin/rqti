@@ -8,11 +8,14 @@
 #' @returns A list() with a shiny.tag class
 #'
 create_assessment_item <- function(object) {
+    validate_template_references(object)
     assessment_attributes <- create_assessment_attributes(object)
     assesment_item <- tag("assessmentItem", assessment_attributes)
     assesment_item <- tagAppendChildren(assesment_item,
                                         createResponseDeclaration(object),
                                         createOutcomeDeclaration(object),
+                                        createTemplateDeclaration(object),
+                                        createTemplateProcessing(object),
                                         lapply(item_stylesheet_hrefs(object), function(href) {
                                             tag("stylesheet", list(href = href, type = "text/css"))
                                         }),
@@ -266,6 +269,7 @@ create_qti_task <- function(object, dir = NULL, verification = FALSE) {
         content <- textutils::HTMLdecode(content)
         doc <- suppressWarnings(xml2::read_xml(paste0(dtype, content)))
     }
+    mark_xml_name_mode(doc, attr(object, "rqti_name_mode"))
     if (verification) {
         ver <- verify_qti(doc)
         if (!ver$valid) {

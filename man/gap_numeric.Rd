@@ -5,16 +5,17 @@
 \title{Create YAML string for NumericGap object}
 \usage{
 gap_numeric(
-  solution,
+  solution = NULL,
   tolerance = 0,
   tolerance_type = "absolute",
   points = 1,
   response_identifier = NULL,
   include_lower_bound = TRUE,
   include_upper_bound = TRUE,
-  expected_length = size_gap(solution),
+  expected_length = if (length(solution_variable)) 10 else size_gap(solution),
   placeholder = NULL,
-  incorrect = NULL
+  incorrect = NULL,
+  solution_variable = NULL
 )
 }
 \arguments{
@@ -47,6 +48,9 @@ text input field in the content delivery engine.}
 
 \item{incorrect}{Score for an incorrect nonempty response, in points.
 Must be finite and non-positive. Default \code{0}; omissions receive zero.}
+
+\item{solution_variable}{A numeric template variable used as the correct
+answer instead of \code{solution}. Cannot be combined with a static solution.}
 }
 \value{
 A character string mapped as YAML.
@@ -56,6 +60,7 @@ Create YAML string for NumericGap object
 }
 \examples{
 gap_numeric(5.0, tolerance = 10, tolerance_type = "relative")
+gap_numeric(solution_variable = "answer", tolerance_type = "exact")
 
 }
 \seealso{

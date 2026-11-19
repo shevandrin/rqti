@@ -33,6 +33,8 @@ articles:
 - title: Other
   navbar: Other
   contents:
+  - configuration
+  - maxima
   - compatibility
   - exams_integr
   - imported_packages

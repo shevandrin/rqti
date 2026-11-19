@@ -14,13 +14,31 @@
 \title{Create zip-archive of the qti test specification}
 \usage{
 createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
-  FALSE)
+  FALSE, task_names = NULL)
 
-\S4method{createQtiTest}{AssessmentItem}(object, dir = ".", verification = FALSE, zip_only = FALSE)
+\S4method{createQtiTest}{AssessmentItem}(
+  object,
+  dir = ".",
+  verification = FALSE,
+  zip_only = FALSE,
+  task_names = NULL
+)
 
-\S4method{createQtiTest}{AssessmentTest}(object, dir = getwd(), verification = FALSE, zip_only = FALSE)
+\S4method{createQtiTest}{AssessmentTest}(
+  object,
+  dir = getwd(),
+  verification = FALSE,
+  zip_only = FALSE,
+  task_names = NULL
+)
 
-\S4method{createQtiTest}{character}(object, dir = getwd())
+\S4method{createQtiTest}{character}(
+  object,
+  dir = getwd(),
+  verification = FALSE,
+  zip_only = FALSE,
+  task_names = NULL
+)
 }
 \arguments{
 \item{object}{An instance of the \link{AssessmentTest}, \link{AssessmentTestOpal} or
@@ -35,6 +53,10 @@ files. Default is \code{FALSE}.}
 \item{zip_only}{A boolean value, optional; if \code{TRUE}, returns only the zip
 file. If \code{FALSE}, returns the zip, XML, and download files. Default is
 \code{FALSE}.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \value{
 A path to zip and xml files.

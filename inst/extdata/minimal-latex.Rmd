@@ -1,0 +1,50 @@
+---
+type: gap
+identifier: minimal_latex
+title: "Maxima addition in RStudio"
+knit: rqti::render_qtijs
+---
+
+<!-- In the RStudio console, run rqti::start_server()
+     before clicking Knit. The preview opens in the RStudio Viewer. -->
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+
+```{maxima latex}
+block(
+ string([
+'tex_only_single = "\mathbb{R}",
+'tex_only_double = "\\mathbb{R}",
+'tex_embedded = "\\(\\mathbb{R}\\)",
+'tex_embedded2 =  "$$\\mathbb{R}$$"
+ ])
+);
+```
+
+# question
+
+desired output: $\mathbb{R}$
+
+try 1: \(`r template_value("tex_only_single")`\)
+
+try 2: \\(`r template_value("tex_only_single")`\\)
+
+try 3: $$`r template_value("tex_only_single")`$$
+
+try 4: \(`r template_value("tex_only_double")`\)
+
+try 5: \\(`r template_value("tex_only_double")`\\)
+
+try 6: $$`r template_value("tex_only_double")`$$
+
+tex_embedded: `r template_value("tex_embedded")`
+
+tex_embedded2: `r template_value("tex_embedded2")`
+
+
+solution 1: `r gap_numeric(1, tolerance_type="exact", points=1)`
+
+Expected to render as ℝ: tries 5 and 6, tex_embedded, and tex_embedded2.

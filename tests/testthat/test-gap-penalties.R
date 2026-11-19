@@ -36,6 +36,29 @@ test_that("entry aggregation keeps negative gap scores even with feedback", {
     }
 })
 
+test_that("template-bound answers keep incorrect penalties", {
+    block <- new("MaximaVariables", code = 'string([\'word = "Blue", \'number = 3]);',
+                 variables = c(word = "string", number = "integer"))
+    gaps <- list(textGap(solution_variable = "word", response_identifier = "answer",
+                         points = 2, incorrect = -0.5),
+                 textGapOpal(solution_variable = "word", response_identifier = "answer",
+                             points = 2, incorrect = -0.5),
+                 numericGap(solution_variable = "number", response_identifier = "answer",
+                            points = 2, incorrect = -0.5))
+    text <- list(list(NULL, " \t\n", "blue", "Red"), c(0, 0, 2, -0.5))
+    candidates <- list(text[[1]], text[[1]], list(NULL, 3, 4))
+    expected <- list(text[[2]], text[[2]], c(0, 2, -0.5))
+    for (i in seq_along(gaps)) {
+        item <- entry(identifier = paste0("dynamic", i), content = list("Answer: ", gaps[[i]]),
+                      template = list(block))
+        doc <- scoring_item_xml(item)
+        for (j in seq_along(candidates[[i]])) {
+            expect_equal(score_choice_qti(doc, responses = list(answer = candidates[[i]][[j]],
+                word = "Blue", number = 3)), expected[[i]][j])
+        }
+    }
+})
+
 test_that("Rmd gap helpers preserve incorrect scores", {
     skip_if_not(rmarkdown::pandoc_available(), "Pandoc is required")
     path <- tempfile(fileext = ".Rmd")

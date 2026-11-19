@@ -1,0 +1,38 @@
+---
+type: gap
+identifier: maxima_latex
+title: "LaTeX from Maxima"
+knit: rqti::render_qtijs
+---
+
+<!-- Run rqti::start_server() in the RStudio console before clicking Knit. -->
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+```{maxima latex}
+block([],
+    string([
+        'number_set = "\\mathbb{R}",
+        'embedded = "\\(\\mathbb{R}\\)",
+        'dollar_embedded = "$$\\mathbb{R}$$"
+    ])
+);
+```
+
+# question
+
+Inline math: \\(`r template_value("number_set")`\\).
+
+Display math:
+
+$$`r template_value("number_set")`$$
+
+Inline delimiters included in the returned string:
+`r template_value("embedded")`.
+
+Dollar delimiters included in the returned string:
+`r template_value("dollar_embedded")`.
+
+What is $1 + 0$? `r gap_numeric(1, tolerance_type="exact")`

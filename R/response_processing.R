@@ -109,6 +109,7 @@ create_default_resp_processing_order <- function(object) {
 
 #process modalfeedback for entry
 create_response_processing_entry <- function(object) {
+    validate_dynamic_solutions(object)
     answers <- Map(getResponse, object@content)
     answers[sapply(answers, is.null)] <- NULL
 
@@ -130,7 +131,8 @@ create_response_processing_entry <- function(object) {
                               make_default_feedback_cond(answers),
                               resp_conds)
     }
-    return(responseProcessing(list(processing, set_ov, conditions)))
+    return(responseProcessing(list(create_dynamic_correct_responses(object),
+                                   processing, set_ov, conditions)))
 }
 
 set_outcome_value_entry <- function(object) {
@@ -209,6 +211,22 @@ create_response_processing_gap_basic <- function(object) {
                                         map_tag))
     response_if <- responseIf(list(not_tag, outcome_tag))
     return(responseCondition(response_if))
+}
+
+create_response_processing_dynamic_text <- function(object) {
+    validObject(object)
+    validate_text_solution(object)
+    comparison <- tag("stringMatch", list(
+        caseSensitive = tolower(object@case_sensitive),
+        variable(object@response_identifier), correct(object@response_identifier)))
+    score_id <- paste0("SCORE_", object@response_identifier)
+    awarded <- setOutcomeValue(list(identifier = score_id,
+        variable(paste0("MAXSCORE_", object@response_identifier))))
+    # Only reached for answered gaps when wrapped by gap_penalty_processing().
+    wrong <- setOutcomeValue(list(identifier = score_id,
+        baseValue(list(baseType = "float", object@incorrect))))
+    responseCondition(list(responseIf(list(comparison, awarded)),
+                           responseElse(wrong)))
 }
 
 create_response_processing_text_entry_opal <- function(object) {

@@ -320,7 +320,7 @@ test_that("render_opal forwards named connection arguments", {
     writeBin(charToRaw("archive"), archive)
 
     local_mocked_bindings(
-        rmd2zip = function(input) archive,
+        rmd2zip = function(input, ...) archive,
         opal = function(...) {
             observed_args <<- list(...)
             structure(list(), class = "mock_opal")

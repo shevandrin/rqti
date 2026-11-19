@@ -13,7 +13,8 @@ upload2opal(
   open_in_browser = TRUE,
   as_survey = FALSE,
   api_user = NULL,
-  credential_id = NULL
+  credential_id = NULL,
+  task_names = NULL
 )
 }
 \arguments{
@@ -21,8 +22,8 @@ upload2opal(
 \link{AssessmentTestOpal} or \link{AssessmentItem} objects, Rmd/md or XML files;
 required.}
 
-\item{display_name}{A length-one character vector naming the file in OPAL;
-by default, this is the file name without extension; optional.}
+\item{display_name}{A length-one character vector naming the resource in OPAL.
+The default is the exported title under the selected naming policy.}
 
 \item{access}{An integer value, optional; it controls publication
 status, where 1 - only those responsible for this learning resource; 2 -
@@ -49,6 +50,10 @@ or survey). Default is \code{FALSE}.}
 credential service is derived from \code{endpoint}, with the legacy \code{rqtiopal}
 service retained as a fallback. \code{RQTI_API_CREDENTIAL_ID} overrides the
 automatic name when set.}
+
+\item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
+or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
+\code{"title"}. See \link{task_names}.}
 }
 \value{
 A list with the key, display name, and URL of the resource in Opal.

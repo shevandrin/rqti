@@ -8,7 +8,7 @@
 #' @name AssessmentItem-class
 #' @rdname AssessmentItem-class
 #' @aliases AssessmentItem
-#' @include ModalFeedback.R rqti.R QtiMetadata.R
+#' @include ModalFeedback.R rqti.R QtiMetadata.R MaximaVariables.R
 setClass("AssessmentItem", slots = c(identifier = "character",
                                      title = "character",
                                      content = "list",
@@ -19,9 +19,11 @@ setClass("AssessmentItem", slots = c(identifier = "character",
                                      stylesheet_path = "character",
                                      css = "character",
                                      calculator = "character",
-                                     metadata = "QtiMetadata"),
+                                     metadata = "QtiMetadata",
+                                     template = "list"),
          prototype = prototype(prompt = "",
-                               points = 1))
+                               points = 1,
+                               template = list()))
 
 setMethod("initialize", "AssessmentItem", function(.Object, ...) {
     .Object <- callNextMethod()
@@ -46,6 +48,15 @@ setValidity("AssessmentItem", function(object) {
     }
     if (length(object@css) > 1L || anyNA(object@css)) {
         errors <- c(errors, "'css' must be a single string of CSS text.")
+    }
+
+    for (block in object@template) {
+        if (!is(block, "MaximaVariables")) {
+            errors <- c(errors, "Elements of template must be MaximaVariables objects.")
+        } else {
+            validity <- validObject(block, test = TRUE)
+            if (!isTRUE(validity)) errors <- c(errors, validity)
+        }
     }
 
     error <- validate_calculator(object@calculator)
@@ -114,7 +125,9 @@ setGeneric("createResponseProcessing",
 
 #' Create XML or zip file for question specification
 #'
-#' @usage createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE)
+#' @usage createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE,
+#'   task_names = NULL)
+#' @inheritParams rmd2zip
 #' @param object An instance of the S4 object ([SingleChoice], [MultipleChoice],
 #'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
 #'   [MultipleChoiceTable], [DirectedPair]).
@@ -141,12 +154,13 @@ setGeneric("createResponseProcessing",
 setGeneric("createQtiTask",
            function(object, dir = ".",
                     verification = FALSE,
-                    zip = FALSE) standardGeneric("createQtiTask"))
+                    zip = FALSE, task_names = NULL) standardGeneric("createQtiTask"))
 
 #' Create zip-archive of the qti test specification
 #'
 #' @usage createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
-#'   FALSE)
+#'   FALSE, task_names = NULL)
+#' @inheritParams rmd2zip
 #' @param object An instance of the [AssessmentTest], [AssessmentTestOpal] or
 #'   [AssessmentItem] S4 object.
 #' @param dir A character value, optional; a folder to store xml file; working
@@ -177,7 +191,7 @@ setGeneric("createQtiTask",
 #' @export
 setGeneric("createQtiTest",
            function(object, dir = NULL, verification = FALSE,
-                    zip_only = FALSE) standardGeneric("createQtiTest"))
+                    zip_only = FALSE, task_names = NULL) standardGeneric("createQtiTest"))
 
 #' Get points from AssessmentItem object
 #'
@@ -286,12 +300,13 @@ setGeneric("getCalculator", function(object) standardGeneric("getCalculator"))
 #'   [AssessmentTestOpal], [AssessmentSection], or string path to xml, rmd or md
 #'   files
 #' @param dir QTIJS path
+#' @inheritParams rmd2zip
 #' @name prepareQTIJSFiles-methods
 #' @rdname prepareQTIJSFiles-methods
 #' @aliases prepareQTIJSFiles
 #' @docType methods
 setGeneric("prepareQTIJSFiles",
-           function(object, dir = NULL) standardGeneric("prepareQTIJSFiles"))
+           function(object, dir = NULL, task_names = NULL) standardGeneric("prepareQTIJSFiles"))
 
 #' Get list of contributors values
 #'
@@ -315,7 +330,8 @@ setMethod("getContributors", signature(object = "AssessmentItem"),
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
 setMethod("createQtiTask", signature(object = "AssessmentItem"),
-          function(object, dir = ".", verification = FALSE, zip = FALSE) {
+          function(object, dir = ".", verification = FALSE, zip = FALSE, task_names = NULL) {
+              object <- name_qti_object(object, task_name_mode(task_names))
               ifelse(zip, create_task_zip(object, dir, verification),
                      create_qti_task(object, dir, verification))
           })
@@ -323,12 +339,13 @@ setMethod("createQtiTask", signature(object = "AssessmentItem"),
 #' @rdname createQtiTest-methods
 #' @aliases createQtiTest,AssessmentItem
 setMethod("createQtiTest", signature(object = "AssessmentItem"),
-          function(object, dir = ".", verification = FALSE, zip_only) {
+          function(object, dir = ".", verification = FALSE, zip_only = FALSE, task_names = NULL) {
               test_section <- section(object)
               test_object <- test(test_section,
-                                  identifier = paste0("test_",
-                                                      object@identifier))
-              create_qti_test(test_object, dir, verification, zip_only)
+                                  identifier = paste0("test_", object@identifier),
+                                  title = object@title)
+              attr(test_object, "rqti_source_file") <- attr(object, "rqti_source_file")
+              create_qti_test(test_object, dir, verification, zip_only, task_names)
           })
 
 #' @rdname createResponseProcessing-methods
@@ -429,7 +446,8 @@ setMethod("getCalculator", signature(object = "AssessmentItem"),
 #' @rdname prepareQTIJSFiles-methods
 #' @aliases prepareQTIJSFiles,AssessmentItem
 setMethod("prepareQTIJSFiles", signature(object = "AssessmentItem"),
-          function(object, dir = "") {
+          function(object, dir = "", task_names = NULL) {
+              object <- name_qti_object(object, task_name_mode(task_names))
               xml_path <- file.path(dir, "index.xml")
               suppressMessages(create_qti_task(object, xml_path,
                                                verification = FALSE))

@@ -14,7 +14,14 @@ setMethod("buildAssessmentSection", signature(object = "character"),
 
                   id <- xml2::xml_attr(doc, "identifier")
 
-                  file.copy(f_path, folder)
+                  title <- attr(object, "rqti_display_title")
+                  if (is.null(title)) {
+                      file.copy(f_path, folder)
+                  } else {
+                      xml2::xml_attr(doc, "title") <- title
+                      mark_xml_name_mode(doc, attr(object, "rqti_name_mode"))
+                      xml2::write_xml(doc, file.path(folder, basename(f_path)))
+                  }
                   message(paste("see assessment item:", file.path(folder, basename(f_path))))
                   tag("assessmentItemRef", list(identifier = id,
                                                 href = basename(object)))
@@ -89,7 +96,8 @@ setMethod("getIdentifier", signature(object = "character"),
 #' @rdname createQtiTest-methods
 #' @aliases createQtiTest,character
 setMethod("createQtiTest", signature(object = "character"),
-          function(object, dir = getwd()) {
+          function(object, dir = getwd(), verification = FALSE,
+                   zip_only = FALSE, task_names = NULL) {
 
               file <- object
               if (length(file) > 1) {
@@ -102,15 +110,20 @@ setMethod("createQtiTest", signature(object = "character"),
 
               ext <- file_ext(file)
               if (ext != "zip") {
-                  if (ext %in% c("Rmd", "md")) file <- rmd2zip(file, path = dir)
+                  if (ext %in% c("Rmd", "md")) file <- rmd2zip(file, path = dir,
+                      verification = verification, task_names = task_names)
                   if (ext == "xml") {
                       section_obj <- section(file, title = "Preview")
-                      test_obj <- test(content = section_obj,
-                                       identifier = "Preview")
+                      doc <- xml2::read_xml(file)
+                      test_obj <- test(content = section_obj, identifier = "Preview",
+                                       title = xml2::xml_attr(doc, "title"))
+                      test_obj <- remember_task_source(test_obj, file)
                       file <- create_qti_test(test_obj, path = dir,
-                                              zip_only = TRUE)
+                                              zip_only = TRUE, verification = verification,
+                                              task_names = task_names)
                   }
               }
+              if (ext == "zip") file <- name_qti_archive(file, task_name_mode(task_names))
               return(file)
           })
 
@@ -118,7 +131,7 @@ setMethod("createQtiTest", signature(object = "character"),
 #' @aliases createQtiTask,character
 setMethod("createQtiTask", signature(object = "character"),
           function(object, dir = getwd(),
-                   verification = FALSE, zip = FALSE) {
+                   verification = FALSE, zip = FALSE, task_names = NULL) {
 
               file <- object
               if (length(file) > 1) {
@@ -133,7 +146,9 @@ setMethod("createQtiTask", signature(object = "character"),
               if (ext != "zip") {
                   if (ext %in% c("Rmd", "md")) {
                       obj <- create_question_object(file)
-                      file <- createQtiTask(obj, dir = dir, zip = zip)
+                      target <- if (zip) dir else rmd_xml_path(file, dir)
+                      file <- createQtiTask(obj, dir = target, zip = zip,
+                                            verification = verification, task_names = task_names)
                   }
               }
               return(file)
@@ -188,7 +203,7 @@ setMethod("getCalculator", signature(object = "character"),
 #' @rdname prepareQTIJSFiles-methods
 #' @aliases prepareQTIJSFiles,AssessmentItem
 setMethod("prepareQTIJSFiles", signature(object = "character"),
-          function(object, dir) {
+          function(object, dir, task_names = NULL) {
               if (!file.exists(object)) {
                   stop("The file does not exist", call. = FALSE)
               }
@@ -196,16 +211,20 @@ setMethod("prepareQTIJSFiles", signature(object = "character"),
               ext <- file_ext(object)
               if (ext %in% c("Rmd", "md")) {
                   task <- create_question_object(object)
+                  task <- name_qti_object(task, task_name_mode(task_names))
                   create_qti_task(task, out_path, verification = FALSE)
                   current_rmd_fullpath <- normalizePath(object)
-                  xml_target <- sub("\\.Rmd$", ".xml", current_rmd_fullpath)
-                  file.copy(out_path, xml_target)
+                  xml_target <- file.path(dirname(current_rmd_fullpath),
+                                          paste0(tools::file_path_sans_ext(basename(object)), ".xml"))
+                  file.copy(out_path, xml_target, overwrite = TRUE)
               }
               if (ext == "xml") {
                   object <- xml_preparation(object)
-                  file.copy(object, out_path)
+                  copy_named_xml(object, out_path, task_name_mode(task_names))
               }
-              if (ext == "zip") zip::unzip(object, exdir = dir)
+              if (ext == "zip") zip::unzip(name_qti_archive(object, task_name_mode(task_names)), exdir = dir)
+
+              if (!ext %in% c("Rmd", "md")) return(NULL)
 
               preview_feedback <- yaml_front_matter(object)$preview_feedback
               params <- knit_params(readLines(object))

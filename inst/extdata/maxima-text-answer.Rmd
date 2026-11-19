@@ -1,0 +1,29 @@
+---
+type: gap
+identifier: maxima_text_answer
+title: "Text answers from Maxima"
+knit: rqti::render_qtijs
+---
+
+<!-- Run rqti::start_server() in the RStudio console before clicking Knit. -->
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+```{maxima words}
+block([answer],
+    answer: ["Blue", "Green", "Orange"][random(3) + 1],
+    string(['answer = answer])
+);
+```
+
+# question
+
+The generated word is **`r template_value("answer")`**.
+
+Copy it here (capitalization does not matter):
+`r gap_text(solution_variable = "answer", response_identifier = "insensitive")`
+
+Copy it here again (capitalization must match):
+`r gap_text(solution_variable = "answer", case_sensitive = TRUE, response_identifier = "sensitive")`

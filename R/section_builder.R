@@ -168,11 +168,10 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'   candidate for the test in minutes. Default is \code{NULL}.
 #' @param max_attempts An integer value, optional, indicating the maximum number
 #'   of attempts allowed for the candidate. Default is 1.
-#' @param fallback_titles A character value, optional, controlling how titles
-#'   are assigned when no explicit title is provided. Possible values are
-#'   "filename" (use filenames as titles) and "generic" (use generic labels
-#'   such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-#'   "generic".
+#' @param fallback_titles Legacy naming policy. The default `"inherit"` uses
+#'   option `rqti.task_names` at export, falling back to exercise titles.
+#'   `"generic"` retains generic task labels; the historical `"filename"`
+#'   value preserves supplied titles. See [task_names].
 #' @param academic_grading A named numeric vector that defines the grade table
 #'   shown to the candidate as feedback at the end of the test.
 #'
@@ -235,7 +234,7 @@ make_variant_subsection <- function(file, n_variants, seed_number) {
 #'@export
 test <- function(content, identifier = "test_identifier", title = "Test Title",
                  time_limit = NULL, max_attempts = 1L,
-                 fallback_titles = "generic",
+                 fallback_titles = "inherit",
                  academic_grading = NULL,
                  grade_label = c(en="Grade", de="Note"),
                  table_label = c(en="Grade", de="Note"),
@@ -283,11 +282,10 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 #'   - 'simple'
 #'   - 'scientific'.
 #'   Default is `NULL`.
-#' @param fallback_titles A character value, optional, controlling how titles
-#'   are assigned when no explicit title is provided. Possible values are
-#'   "filename" (use filenames as titles) and "generic" (use generic labels
-#'   such as "Section 1", "Section 1.2", or "Task 1.2.1"). Default is
-#'   "generic".
+#' @param fallback_titles Legacy naming policy. The default `"inherit"` uses
+#'   option `rqti.task_names` at export, falling back to exercise titles.
+#'   `"generic"` retains generic task labels; the historical `"filename"`
+#'   value preserves supplied titles. See [task_names].
 #' @param academic_grading A named numeric vector that defines the grade table
 #'   shown to the candidate as feedback at the end of the test.
 #'
@@ -358,7 +356,7 @@ test <- function(content, identifier = "test_identifier", title = "Test Title",
 test4opal <- function(content, identifier = "test_identifier",
                       title = "Test Title", time_limit = NULL, max_attempts = 1L,
                       files = NULL, calculator = NULL,
-                      fallback_titles = "generic",
+                      fallback_titles = "inherit",
                       academic_grading = NULL,
                       grade_label = c(en="Grade", de="Note"),
                       table_label = c(en="Grade", de="Note"),

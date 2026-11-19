@@ -24,15 +24,25 @@ score_choice_qti <- function(doc, response = NULL, responses = NULL, manual_scor
     env$RESPONSE <- response
     for (id in names(responses)) env[[id]] <- responses[[id]]
     for (id in names(manual_scores)) env[[id]] <- manual_scores[[id]]
+    # Correct responses assigned by setCorrectResponse (template-bound answers).
+    corrected <- list()
     eval_node <- function(node) {
         children <- xml2::xml_children(node)
         identifier <- xml2::xml_attr(node, "identifier")
         args <- function() lapply(children, eval_node)
         switch(xml2::xml_name(node),
             variable = env[[identifier]],
-            correct = xml2::xml_text(xml2::xml_find_all(doc, paste0(
+            correct = if (!is.null(corrected[[identifier]])) corrected[[identifier]] else
+                xml2::xml_text(xml2::xml_find_all(doc, paste0(
                 "/assessmentItem/responseDeclaration[@identifier='", identifier,
                 "']/correctResponse/value"))),
+            setCorrectResponse = { corrected[[identifier]] <<- eval_node(children[[1L]]); NULL },
+            stringMatch = {
+                values <- args()
+                if (any(lengths(values) == 0L)) FALSE
+                else if (xml2::xml_attr(node, "caseSensitive") == "true") values[[1L]] == values[[2L]]
+                else tolower(values[[1L]]) == tolower(values[[2L]])
+            },
             null = NULL,
             baseValue = {
                 value <- xml2::xml_text(node)

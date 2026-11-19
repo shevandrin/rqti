@@ -1,0 +1,29 @@
+---
+type: gap
+identifier: maxima_local_addition
+title: "Maxima addition in RStudio"
+knit: rqti::render_qtijs
+---
+
+<!-- In the RStudio console, run rqti::start_server()
+     before clicking Knit. The preview opens in the RStudio Viewer. -->
+
+```{r setup, include=FALSE}
+library(rqti)
+```
+
+```{maxima addition}
+block(
+    [a, b, answer],
+    a: random(100),
+    b: random(100),
+    answer: a + b,
+    string(['a = a, 'b = b, 'answer = answer])
+);
+```
+
+# question
+
+What is **`r template_value("a")`** + **`r template_value("b")`**?
+
+Answer: `r gap_numeric(solution_variable="answer", tolerance_type="exact", points=1)`

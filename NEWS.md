@@ -1,5 +1,100 @@
 # rqti (development version)
 
+* Maxima authoring checks warn when a program leaves new global variables or
+  functions behind, with their names and guidance on `block()` and `local()`.
+  Globals can force restarts on delivery servers that reuse Maxima instances.
+
+* Configuration guidance distinguishes R options (`options()` / `.Rprofile`)
+  from environment variables (`Sys.setenv()` / `.Renviron`). R options are the
+  preferred public configuration; process-connection variables remain internal.
+
+* Maxima checks and local previews handle `$` and `;` inside returned strings
+  with older Maxima parsers, including dollar-delimited LaTeX on Maxima 5.44.
+
+* Previews, XML/ZIP exports and OPAL uploads share option `rqti.task_names`:
+  `"title"` (the default), `"filename"`, `"both"`, or `"hidden"`. Per-call
+  `task_names` overrides the option. Default test constructors inherit the
+  policy at export; explicit legacy `fallback_titles` settings remain supported.
+  OPAL repository names default to the selected exported title.
+
+* Knit and `rmd2xml()` preserve source filename hyphens and underscores,
+  independently of the YAML identifier. Existing Knit XML copies are refreshed.
+
+* Separate Knit sessions read current Maxima and naming options from the preview
+  server. Changing those options no longer requires a server restart. Maxima
+  may be selected by command name (including `maxima` on Windows when resolvable)
+  or by a full executable/launcher path.
+
+* Restored the original `minimal-latex.Rmd` comparison exercise with its
+  dollar-delimited LaTeX output enabled.
+
+* Maxima string outputs can supply correct text answers with
+  `gap_text(solution_variable = "answer")` or `textGap(solution_variable = "answer")`.
+  Matching respects `case_sensitive`; dynamic spelling tolerance and alternative
+  answer lists are not supported. See `maxima-text-answer.Rmd` in the examples.
+
+* Rmd template references no longer add a span around `printedVariable`.
+  ONYX replaces the reference with text, allowing surrounding inline/display
+  TeX delimiters to be recognized without first opening the online editor.
+
+* Maxima LaTeX now renders in the local preview, including references inside
+  Markdown inline/display math and output with its own math delimiters.
+  Formulas remain rendered after answer submission. See `maxima-latex.Rmd` in
+  the installed examples and the Maxima article.
+
+* Explicit Maxima executable paths bypass `Sys.which()`, supporting long paths
+  and Unicode. Windows batch launchers use `cmd.exe /c call`. RStudio Knit
+  sessions obtain the current `rqti.maxima` choice from the running server.
+
+* Knit previews write to the running server's renderer folder across R sessions,
+  including when RStudio uses a development checkout and Knit loads an installed
+  package. Explicit mismatches fail before any preview files are removed.
+
+* Maxima authoring checks and previews share a persistent, build-specific cache
+  of compiled libraries. Locks coordinate concurrent R sessions; calculations
+  and random answers remain independent. Old, oversized, and incomplete caches
+  are removed. `rqti.maxima_cache_dir` can override or disable persistence.
+
+* qti.js previews use native Maxima through the local R server,
+  including the RStudio Viewer. Calculations run asynchronously, preserve
+  typed outputs and scoring, and report source diagnostics with retry support.
+  Each item has a fresh process; compiled libraries are reused between jobs.
+  The native backend loads the statistics libraries used by the R authoring checks.
+
+* Rmd exercises accept one self-contained `{maxima}` chunk returning all named
+  outputs, following the ONYX all-in-one approach. A second chunk is rejected.
+
+* Rmd files support locally checked `{maxima}` template chunks with inferred
+  output names/types and optional explicit declarations. `template_value()` displays an output, and
+  `gap_numeric(solution_variable = ...)` binds a dynamic numeric answer.
+  `numericGap()` and the S4 slot use `solution_variable` consistently.
+  Checks call Maxima directly, preserve syntax/runtime diagnostics, and stop
+  export on failure or timeout. The `rim` package is not required.
+  `maxima_variables()` also infers types when its `variables` argument is omitted.
+
+* Added `maxima_variables()` and `template_value()` constructors. All item
+  constructors now accept a trailing `template` argument; `numericGap()` and
+  `gapNumeric()` accept `solution_variable` for dynamic correct answers.
+  Existing positional arguments retain their order.
+
+* `NumericGap` objects can use `solution_variable` to bind their correct answer
+  to a numeric template variable. Export sets the answer after template
+  calculations and again before response processing, preserving scoring and
+  tolerance settings. OPAL-style response processing uses the extended schema.
+
+* Added `TemplateVariableRef` content objects that display declared template
+  variables with `printedVariable`, including alongside gaps in `Entry` items.
+  Item export rejects references to undeclared template variables.
+
+* Assessment items now export Maxima template declarations and processing,
+  preserving block order and rejecting conflicting variable identifiers.
+  Programs use the MAXIMA custom operator supported by OPAL/ONYX.
+  XML validation requires the extended
+  rqti schema because OPAL uses `customOperator/@value`.
+
+* Added the `MaximaVariables` S4 model and an empty-by-default `template` slot
+  on assessment items.
+
 # rqti 1.4.0
 
 ## New features

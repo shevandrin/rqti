@@ -129,6 +129,7 @@ setMethod("initialize", "Essay", function(.Object, ...) {
 #'                             content = list("Model answer"))),
 #'            calculator = "scientific-calculator",
 #'            files = "text_book.pdf")
+#' @template TemplateParameter
 #'@export
 essay <- function(identifier = generate_id(),
                   title = identifier,
@@ -143,7 +144,8 @@ essay <- function(identifier = generate_id(),
                   data_allow_paste = TRUE,
                   calculator = NA_character_,
                   files = NA_character_,
-                  response_identifier = "RESPONSE") {
+                  response_identifier = "RESPONSE",
+                  template = list()) {
     params <- as.list(environment())
     obj <- construct_item(params, "Essay")
     return(obj)

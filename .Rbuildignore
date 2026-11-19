@@ -55,4 +55,8 @@ s4_example.R
 ^inst/xsd/(imsqti_v2p2|imsqtiv2p2_html5_v1p0)\.xsd$
 ^inst/w3$
 ^inst/apipv1p0$
+^issue-257-draft\.md$
+^maxima_latex\.xml$
+^minimal-latex\.Rmd$
+^minimal-latex\.xml$
 ^\.git$

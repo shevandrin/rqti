@@ -103,6 +103,7 @@ setClass("DirectedPair", contains = "MatchTable",
 #'                    shuffle_rows = FALSE,
 #'                    shuffle_cols = TRUE,
 #'                    orientation = "horizontal")
+#' @template TemplateParameter
 #'@export
 directedPair <- function(identifier = generate_id(),
                          title = identifier,
@@ -121,7 +122,8 @@ directedPair <- function(identifier = generate_id(),
                          feedback = list(),
                          orientation = "vertical",
                          calculator = NA_character_,
-                         files = NA_character_) {
+                         files = NA_character_,
+                         template = list()) {
     params <- as.list(environment())
     obj <- construct_item(params, "DirectedPair")
     return(obj)
