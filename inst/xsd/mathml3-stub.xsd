@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Stand-in for the MathML 3 schema, used by the *_no_mathml.xsd wrappers.
+     It only declares <math>, the one MathML component the QTI schemas refer
+     to, so it is used only for documents that contain no MathML. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.w3.org/2010/Math/MathML"
+           elementFormDefault="qualified">
+    <xs:element name="math"/>
+</xs:schema>

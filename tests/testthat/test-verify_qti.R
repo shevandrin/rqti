@@ -199,6 +199,72 @@ test_that("compressed QTI 2.2 schemas reject invalid XML with both backends", {
     }
 })
 
+sc1d_with_body <- function(body, version = "v2p1") {
+    f <- system.file("extdata", "sc1d.xml", package = "rqti")
+    text <- paste(readLines(f, warn = FALSE), collapse = "\n")
+    text <- gsub("imsqti_v2p1", paste0("imsqti_", version), text, fixed = TRUE)
+    sub("<itemBody>", paste0("<itemBody>", body), text, fixed = TRUE)
+}
+
+test_that("bundled schemas have wrappers that stub out MathML", {
+    for (schema in c("qti21", "extended", "qti22")) {
+        full <- rqti:::resolve_qti_schema(schema)
+        wrapper <- rqti:::mathml_free_schema(full)
+        expect_true(endsWith(wrapper, "_no_mathml.xsd"))
+        expect_true(file.exists(wrapper))
+    }
+    custom <- withr::local_tempfile(fileext = ".xsd")
+    file.copy(system.file("imsqti_v2p1p2.xsd", package = "rqti"), custom)
+    expect_identical(rqti:::mathml_free_schema(custom), custom)
+})
+
+test_that("documents without MathML get the same errors as with the full schemas", {
+    x <- xml2::read_xml(sc1d_with_body("<details/>"))
+    validity_errors <- function(errors) {
+        errors[!grepl("Skipping import", errors, fixed = TRUE)]
+    }
+    for (schema in c("qti21", "extended")) {
+        full <- rqti:::resolve_qti_schema(schema)
+        expected <- attr(xml2::xml_validate(x, xml2::read_xml(full)), "errors")
+        res <- verify_qti(x, schema = schema, engine = "xml2",
+                          ignore_import = FALSE, print = FALSE)
+        expect_false(res$valid)
+        raw <- vapply(res$errors, function(err) err$raw_message, character(1))
+        expect_identical(validity_errors(raw), validity_errors(expected))
+        expect_false(any(grepl("stub", raw, fixed = TRUE)))
+    }
+    skip_if(.Platform$OS.type == "windows")
+    skip_if_not(nzchar(Sys.which("xmllint")), "xmllint is not installed")
+    res <- verify_qti(as.character(x), engine = "xmllint", ignore_import = FALSE,
+                      print = FALSE, color = FALSE)
+    expect_false(res$valid)
+    raw <- unlist(lapply(res$errors, function(err) err$raw_message))
+    expect_false(any(grepl("stub", raw, fixed = TRUE)))
+})
+
+test_that("documents with MathML are checked against the full MathML schemas", {
+    mathml2 <- "http://www.w3.org/1998/Math/MathML"
+    valid <- sprintf('<p><m:math xmlns:m="%s"><m:mi>x</m:mi></m:math></p>', mathml2)
+    invalid <- sprintf('<p><m:math xmlns:m="%s"><m:notMathML/></m:math></p>', mathml2)
+    engines <- "xml2"
+    if (.Platform$OS.type != "windows" && nzchar(Sys.which("xmllint"))) {
+        engines <- c(engines, "xmllint")
+    }
+    for (engine in engines) {
+        expect_true(verify_qti(sc1d_with_body(valid), engine = engine,
+                               print = FALSE)$valid)
+        res <- verify_qti(sc1d_with_body(invalid), engine = engine, print = FALSE)
+        expect_false(res$valid)
+        expect_true(any(vapply(res$errors, function(err) identical(err$element, "notMathML"),
+                               logical(1))))
+    }
+    expect_false(verify_qti(sc1d_with_body(invalid), schema = "extended",
+                            engine = "xml2", print = FALSE)$valid)
+    mathml3 <- sub("1998", "2010", invalid, fixed = TRUE)
+    expect_false(verify_qti(sc1d_with_body(mathml3, "v2p2"), schema = "qti22",
+                            engine = "xml2", print = FALSE)$valid)
+})
+
 test_that("verify_qti prints valid validation results", {
     f <- system.file("extdata", "sc1d.xml", package = "rqti")
 

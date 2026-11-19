@@ -101,6 +101,9 @@ verify_qti_impl <- function(doc,
     # schema
     schema_file <- resolve_qti_schema(schema, extended_schema)
     schema_label <- attr(schema_file, "label", exact = TRUE)
+    if (!any(grepl("Math/MathML", xml_lines, fixed = TRUE))) {
+        schema_file <- mathml_free_schema(schema_file)
+    }
 
     # colors
     red <- if (isTRUE(color)) "\033[31m" else ""
@@ -138,6 +141,7 @@ verify_qti_impl <- function(doc,
             ))
 
             status <- attr(out, "status")
+            out <- drop_stub_import_warnings(out)
             has_schema_errors <- any(grepl("Schemas validity error", out, fixed = TRUE))
 
             if ((is.null(status) || identical(status, 0L)) && !has_schema_errors) {
@@ -222,7 +226,7 @@ verify_qti_impl <- function(doc,
     if (is.null(raw_errors)) {
         raw_errors <- as.character(validation)
     }
-    raw_errors <- as.character(raw_errors)
+    raw_errors <- drop_stub_import_warnings(as.character(raw_errors))
 
     parsed <- parse_errors(
         raw_errors = raw_errors,
@@ -637,6 +641,21 @@ resolve_qti_schema <- function(schema = NULL, extended_schema = FALSE) {
     schema_file
 }
 
+# libxml2 compiles the schema on every validation, and the MathML schemas take
+# most of that time (MathML 2 ~0.7 s, MathML 3 ~3.5 s). The bundled schemas
+# have *_no_mathml.xsd wrappers that import stubs declaring only <math>, so
+# libxml2 skips the real MathML imports. For documents that never mention
+# MathML the result is identical.
+mathml_free_schema <- function(schema_file) {
+    wrapper <- sub("\\.xsd$", "_no_mathml.xsd", schema_file)
+    if (file.exists(wrapper)) wrapper else schema_file
+}
+
+# Each MathML import the wrappers skip is reported as a schema parser warning.
+drop_stub_import_warnings <- function(messages) {
+    messages[!grepl("mathml[23]-stub\\.xsd", messages)]
+}
+
 find_schema_file <- function(schema) {
     candidates <- c(
         schema,
@@ -688,6 +707,10 @@ qti22_schema_file <- function() {
     if (!file.exists(schema_file)) {
         stop("The bundled QTI 2.2 schema archive is incomplete.", call. = FALSE)
     }
+    file.copy(c(system.file("schemas", "imsqti_v2p2_no_mathml.xsd", package = "rqti"),
+                system.file("xsd", c("mathml2-stub.xsd", "mathml3-stub.xsd"),
+                            package = "rqti")),
+              dirname(schema_file))
     if (!is.null(qti22_schema_cache$directory)) {
         unlink(qti22_schema_cache$directory, recursive = TRUE)
     }
