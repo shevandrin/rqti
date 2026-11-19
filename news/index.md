@@ -2,6 +2,14 @@
 
 ## rqti (development version)
 
+- Maxima support uses the suggested packages processx, filelock, later,
+  promises and openssl, so other rqti features do not require them.
+  Maxima checks and previews name any missing package and how to install
+  it.
+
+- rqti no longer imports base64enc. Embedded files and images are
+  encoded with jsonlite, producing the same data URIs.
+
 - Maxima authoring checks warn when a program leaves new global
   variables or functions behind, with their names and guidance on
   `block()` and [`local()`](https://rdrr.io/r/base/eval.html). Globals

@@ -41,6 +41,14 @@ package is required; ordinary rqti exercises do not require Maxima. See
 [Configuration](https://shevandrin.github.io/rqti/articles/configuration.md)
 for persistent settings.
 
+Maxima support also uses a few suggested R packages. rqti names any that
+are missing; you can install them all at once:
+
+``` r
+
+install.packages(c("processx", "filelock", "later", "promises", "openssl"))
+```
+
 rqti runs Maxima locally when checking Rmd chunks and generating
 previews. An exported exercise needs a delivery platform that supports
 the ONYX `MAXIMA` custom operator, such as ONYX/OPAL. The XML retains

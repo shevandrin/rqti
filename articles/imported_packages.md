@@ -22,6 +22,7 @@
 | 16 | textutils | Decodes HTML entities. | high |
 | 17 | lifecycle | Deliver warnings about depricated functionality | high |
 | 18 | exams | Integration with exams package | high |
-| 19 | base64enc | To embed file direct to the tasks | moderate |
+| 19 | httpuv | Serves the local qti.js preview and its Maxima calculation endpoint. | high |
+| 20 | jsonlite | Exchanges preview settings and Maxima results as JSON and encodes embedded files as Base64. | high |
 
 Imported and suggested packages {.table}

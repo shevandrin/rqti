@@ -6,7 +6,8 @@ randomized code; it does not prove every variant works on the target
 ONYX installation. The ONYX statistics libraries `distrib`,
 `descriptive`, and `stats` are loaded by default. Supply `libraries` to
 include others, such as `draw`. No R interface package for Maxima is
-required.
+required, but Maxima support uses the suggested packages processx,
+filelock, later, promises and openssl.
 
 ## Usage
 
