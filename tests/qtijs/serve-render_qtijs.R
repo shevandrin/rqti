@@ -21,11 +21,17 @@ copy_qtijs_dir <- function() {
 }
 
 qtijs_path <- copy_qtijs_dir()
-sc1d <- system.file("extdata", "sc1d.Rmd", package = "rqti")
+source_rmd <- system.file("extdata", "sc1d.Rmd", package = "rqti")
 
-if (!nzchar(sc1d)) {
+if (!nzchar(source_rmd)) {
     stop("Could not find extdata/sc1d.Rmd in the rqti package")
 }
+
+# Rendering an Rmd writes its XML next to the source, so render a copy to keep
+# the shipped extdata/sc1d.xml example unchanged.
+sc1d <- file.path(tempfile("sc1d-"), "sc1d.Rmd")
+dir.create(dirname(sc1d))
+file.copy(source_rmd, sc1d)
 
 invisible(rqti:::prepareQTIJSFiles(sc1d, qtijs_path))
 start_server(qtijs_path)

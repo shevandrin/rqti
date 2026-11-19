@@ -52,6 +52,11 @@
           <variable identifier="MAXSCORE"/>
         </setOutcomeValue>
       </responseElseIf>
+      <responseElse>
+        <setOutcomeValue identifier="SCORE">
+          <variable identifier="MINSCORE"/>
+        </setOutcomeValue>
+      </responseElse>
     </responseCondition>
     <responseCondition>
       <responseIf>
@@ -85,10 +90,18 @@
         </setOutcomeValue>
       </responseIf>
       <responseElseIf>
-        <lt>
-          <variable identifier="SCORE"/>
-          <variable identifier="MAXSCORE"/>
-        </lt>
+        <and>
+          <lt>
+            <variable identifier="SCORE"/>
+            <variable identifier="MAXSCORE"/>
+          </lt>
+          <not>
+            <equal toleranceMode="relative" tolerance="0.0000000001 0.0000000001">
+              <variable identifier="SCORE"/>
+              <variable identifier="MAXSCORE"/>
+            </equal>
+          </not>
+        </and>
         <setOutcomeValue identifier="FEEDBACKBASIC">
           <baseValue baseType="identifier">incorrect</baseValue>
         </setOutcomeValue>
