@@ -62,10 +62,9 @@ create_qti_test <- function(object, path = ".", verification = FALSE,
 create_assessment_test <- function(object, folder, verify = FALSE,
                                    data_downloads = NULL,
                                    data_features = NULL) {
-    assessment_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
+    assessment_attrs <- c("xmlns" = qti_namespace(),
                           "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-                          "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imsqti_v2p1 ",
-                                                        "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"),
+                          "xsi:schemaLocation" = qti_schema_location(),
                           "identifier" = object@identifier,
                           "title" = paste(object@title),
                           "data-downloads" = data_downloads,
@@ -204,16 +203,7 @@ create_item_session_control <- function(attempts, comments, rebuild) {
 create_manifest <- function(object) {
     manifest_attrs <- c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
                         "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-                        "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imscp_v1p1",
-                                                      " http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd ",
-                                                      "http://www.imsglobal.org/xsd/imsqti_v2p1 ",
-                                                      "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd ",
-                                                      "http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 ",
-                                                      "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd ",
-                                                      "http://ltsc.ieee.org/xsd/LOM ",
-                                                      "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
-                                                      "http://www.w3.org/1998/Math/MathML ",
-                                                      "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
+                        "xsi:schemaLocation" = manifest_schema_location(),
                         "identifier" = paste0(object@identifier, "_manifest"))
     manifest <- tag("manifest", manifest_attrs)
 
@@ -226,7 +216,7 @@ create_manifest <- function(object) {
     items <- unlist(Map(getAssessmentItems, object@section, USE.NAMES = FALSE))
     dependencies <- Map(create_dependency, names(items))
     test_resource <- tag("resource", list(identifier = object@identifier,
-                                          type = "imsqti_test_xmlv2p1",
+                                          type = qti_resource_type("test"),
                                           href = paste0(object@identifier,
                                                         ".xml"),
                                           file, stylesheet_files, metadata,
@@ -267,7 +257,7 @@ create_dependency <- function(id) {
 create_resource_item <- function(id, href, stylesheet_hrefs = character()) {
     file <- tag("file", list(href = href))
     tag("resource", list(identifier = id,
-                         type = "imsqti_item_xmlv2p1",
+                         type = qti_resource_type("item"),
                          href = href,
                          file,
                          lapply(stylesheet_hrefs, function(path) {

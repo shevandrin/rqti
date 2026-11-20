@@ -28,7 +28,8 @@
 #' @param print Logical. Should the validation result be printed before it is
 #'   returned? Defaults to `TRUE`.
 #' @param schema Character string or `NULL`. Schema to validate against. Use
-#'   `NULL` for the default QTI 2.1 schema, `"extended"` for the extended rqti
+#'   `NULL` for the QTI 2.1 schema, or the QTI 2.2 schema for documents in the
+#'   QTI 2.2 namespace (see option `rqti.qti_version`), `"extended"` for the extended rqti
 #'   QTI 2.1 schema, `"qti21"` for the default QTI 2.1 schema, `"qti22"` for a
 #'   local QTI 2.2 schema, or a file path to a custom XSD. The legacy
 #'   `extended_schema = TRUE` argument is still supported and is equivalent to
@@ -99,6 +100,10 @@ verify_qti_impl <- function(doc,
     }
 
     # schema
+    if (is.null(schema) && !isTRUE(extended_schema) &&
+        any(grepl(qti_namespace("2.2"), xml_lines, fixed = TRUE))) {
+        schema <- "qti22"
+    }
     schema_file <- resolve_qti_schema(schema, extended_schema)
     schema_label <- attr(schema_file, "label", exact = TRUE)
     schema_file <- mathml_free_schema(schema_file, xml_lines)
@@ -321,7 +326,8 @@ print.qti_validation_result <- function(x, ...) {
 #' @param print Logical. Print results?
 #' @param schema Character string or `NULL`. Schema selector or custom XSD path.
 #'   Supported selectors are `"qti21"`, `"extended"`, and `"qti22"`. Defaults
-#'   to `NULL`, which uses the legacy `extended_schema` flag.
+#'   to `NULL`, which uses the legacy `extended_schema` flag, and the QTI 2.2
+#'   schema for documents in the QTI 2.2 namespace.
 #' @details Assessment-test validation checks the generated QTI test and item
 #'   documents. The content-package manifest and OpenOlat's separate
 #'   `QTI21PackageConfig.xml` are not QTI assessment documents and are excluded.

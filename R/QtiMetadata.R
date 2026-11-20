@@ -246,7 +246,7 @@ create_metadata <- function(object) {
     contrib <- lapply(mt_obj@contributor, createMetadata)
     lifeccl <- tag("lifeCycle", list(ver, contrib))
     # section Technical
-    techn <- tag("technical", list(tag("format", list("IMS QTI 2.1"))))
+    techn <- tag("technical", list(tag("format", list(paste("IMS QTI", qti_version())))))
     # section Rights
     rights <- tag("rights", list(tag("description", list(mt_obj@rights))))
 

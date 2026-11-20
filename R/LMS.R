@@ -869,7 +869,7 @@ is_test <- function(file) {
     zip_con <- unz(file, "imsmanifest.xml")
     file_content <- readLines(zip_con, n = -1L)
     close(zip_con)
-    result <- grepl("imsqti_test_xmlv2p1", file_content)
+    result <- grepl("imsqti_test_xmlv2p[12]", file_content)
     return(any(result))
 }
 

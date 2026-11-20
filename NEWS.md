@@ -1,5 +1,14 @@
 # rqti (development version)
 
+* New option `rqti.qti_version`: set it to `"2.2"` to export items, tests and
+  content packages as QTI 2.2 (namespace, schema locations, manifest resource
+  types and metadata). QTI 2.1 remains the default, with unchanged output.
+  `verify_qti()` validates QTI 2.2 documents against the bundled QTI 2.2
+  schema, so `verification = TRUE` works for both versions, and QTI 2.2 uploads
+  are recognised as tests. HTML `data-*` attributes such as `data-allowPaste`
+  are valid in QTI 2.2; LMS-specific extensions (for example OPAL's
+  `mapTolResponse` and Maxima templates) are defined for QTI 2.1 only.
+
 * `verify_qti()` is 12 to 35 times faster for documents without MathML (about
   0.06 s instead of 0.8 s per QTI 2.1 document, 0.15 s instead of 4.9 s for
   QTI 2.2). Compiling the MathML schemas took most of the time. Documents

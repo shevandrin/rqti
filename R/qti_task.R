@@ -24,11 +24,59 @@ create_assessment_item <- function(object) {
                                         Map(createModalFeedback, object@feedback))
 }
 
+# QTI version of exported XML, from option rqti.qti_version: "2.1" (default)
+# or "2.2". Separate Knit sessions use the preview console's setting.
+qti_version <- function() {
+    version <- getOption("rqti.qti_version")
+    if (is.null(version)) version <- preview_console_options()$qti_version
+    if (is.null(version)) version <- "2.1"
+    version <- as.character(version)
+    if (length(version) != 1L || !version %in% c("2.1", "2.2")) {
+        stop("Option rqti.qti_version must be \"2.1\" or \"2.2\".", call. = FALSE)
+    }
+    version
+}
+
+# "v2p1" or "v2p2", as used in QTI namespaces, schema files and resource types
+qti_version_tag <- function(version = qti_version()) {
+    paste0("v", sub(".", "p", version, fixed = TRUE))
+}
+
+qti_namespace <- function(version = qti_version()) {
+    paste0("http://www.imsglobal.org/xsd/imsqti_", qti_version_tag(version))
+}
+
+qti_schema_location <- function(version = qti_version()) {
+    tag <- qti_version_tag(version)
+    paste0(qti_namespace(version), " ",
+           "http://www.imsglobal.org/xsd/qti/qti", tag, "/imsqti_", tag, ".xsd")
+}
+
+manifest_schema_location <- function(version = qti_version()) {
+    tag <- qti_version_tag(version)
+    # QTI 2.1 packages refer to the 2.1.1 item and metadata schemas.
+    schema <- if (version == "2.1") "v2p1p1" else tag
+    paste0("http://www.imsglobal.org/xsd/imscp_v1p1 ",
+           "http://www.imsglobal.org/xsd/qti/qti", tag, "/qti", tag, "_imscpv1p2_v1p0.xsd ",
+           "http://www.imsglobal.org/xsd/imsqti_", tag, " ",
+           "http://www.imsglobal.org/xsd/qti/qti", tag, "/imsqti_", schema, ".xsd ",
+           "http://www.imsglobal.org/xsd/imsqti_metadata_", tag, " ",
+           "http://www.imsglobal.org/xsd/qti/qti", tag, "/imsqti_metadata_", schema, ".xsd ",
+           "http://ltsc.ieee.org/xsd/LOM ",
+           "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
+           "http://www.w3.org/1998/Math/MathML ",
+           "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd")
+}
+
+# content package resource type: "item" or "test"
+qti_resource_type <- function(kind, version = qti_version()) {
+    paste0("imsqti_", kind, "_xml", qti_version_tag(version))
+}
+
 create_assessment_attributes <- function(object) {
-    c("xmlns" = "http://www.imsglobal.org/xsd/imsqti_v2p1",
+    c("xmlns" = qti_namespace(),
       "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-      "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imsqti_v2p1 ",
-                                    "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd"),
+      "xsi:schemaLocation" = qti_schema_location(),
       "identifier" = object@identifier,
       "title" = paste(object@title),
       "adaptive" =  "false",
@@ -312,7 +360,7 @@ create_manifest_task <- function(object) {
     file <-  tag("file", list(href = file_name))
 
     resource <- tag("resource", list(identifier = object@identifier,
-                                     type = "imsqti_item_xmlv2p1",
+                                     type = qti_resource_type("item"),
                                      href = paste0(object@identifier, ".xml"),
                                      file,
                                      lapply(item_stylesheet_hrefs(object), function(href) {
@@ -325,16 +373,7 @@ create_manifest_task <- function(object) {
 create_manifest_attributes <- function(object) {
     c("xmlns" = "http://www.imsglobal.org/xsd/imscp_v1p1",
       "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-      "xsi:schemaLocation" = paste0("http://www.imsglobal.org/xsd/imscp_v1p1 ",
-                                    "http://www.imsglobal.org/xsd/qti/qtiv2p1/qtiv2p1_imscpv1p2_v1p0.xsd ",
-                                    "http://www.imsglobal.org/xsd/imsqti_v2p1 ",
-                                    "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd ",
-                                    "http://www.imsglobal.org/xsd/imsqti_metadata_v2p1 ",
-                                    "http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd ",
-                                    "http://ltsc.ieee.org/xsd/LOM ",
-                                    "http://www.imsglobal.org/xsd/imsmd_loose_v1p3p2.xsd ",
-                                    "http://www.w3.org/1998/Math/MathML ",
-                                    "http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd"),
+      "xsi:schemaLocation" = manifest_schema_location(),
       "identifier" = paste0(object@title, "_manifest"))
 }
 

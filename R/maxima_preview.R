@@ -194,7 +194,8 @@ make_maxima_preview_app <- function(qtijs_path, origin) {
             return(maxima_preview_response(200, list(backend = "local",
                 endpoint = "/.rqti-maxima/run", token = token,
                 options = list(maxima = getOption("rqti.maxima", "maxima"),
-                               task_names = getOption("rqti.task_names", "title")))))
+                               task_names = getOption("rqti.task_names", "title"),
+                               qti_version = getOption("rqti.qti_version", "2.1")))))
         }
         if (path != "/.rqti-maxima/run") return(reply_error(404, "Not found"))
         if (req$REQUEST_METHOD != "POST") return(reply_error(405, "Use POST"))
