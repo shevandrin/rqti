@@ -99,6 +99,32 @@
         </xs:complexType>
     </xs:redefine>
 
+    <!-- OPAL test settings (AssessmentTestOpal): downloadable files, and
+         semicolon-separated features such as scientific-calculator,
+         show-test-time, mark-items and keep-responses. -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="AssessmentTest.Type" abstract="false" mixed="false">
+            <xs:complexContent>
+                <xs:extension base="AssessmentTest.Type">
+                    <xs:attribute name="data-downloads" type="xs:string" use="optional"/>
+                    <xs:attribute name="data-features" type="xs:string" use="optional"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
+    <!-- OPAL recalculates variables and reshuffles choices for each item
+         attempt when rebuildVariables is true (rebuild_variables in rqti). -->
+    <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
+        <xs:complexType name="ItemSessionControl.Type" abstract="false" mixed="false">
+            <xs:complexContent>
+                <xs:extension base="ItemSessionControl.Type">
+                    <xs:attribute name="rebuildVariables" type="xs:boolean" use="optional"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+
     <!-- Redefine the MatchInteraction.Type to add the attr orientation -->
     <xs:redefine schemaLocation="imsqti_v2p1p2.xsd">
         <xs:complexType name="MatchInteraction.Type" abstract="false" mixed="false">

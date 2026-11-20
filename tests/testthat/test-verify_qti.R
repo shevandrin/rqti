@@ -104,6 +104,36 @@ test_that("extended schema validates TextGapOpal tolerance processing", {
     expect_true(res$valid)
 })
 
+test_that("extended schema accepts OPAL test settings", {
+    supplement <- withr::local_tempfile(fileext = ".pdf")
+    writeLines("formulas", supplement)
+    item <- singleChoice(identifier = "opal_settings_item", choices = c("A", "B"))
+    exam <- assessmentTestOpal(list(assessmentSection(list(item), identifier = "s")),
+                               identifier = "opal_settings", calculator = "scientific",
+                               keep_responses = TRUE, files = supplement)
+    out <- withr::local_tempdir()
+    archive <- createQtiTest(exam, dir = out, zip_only = TRUE)
+    test_xml <- utils::unzip(archive, "opal_settings.xml", exdir = out)
+    text <- paste(readLines(test_xml, warn = FALSE), collapse = "\n")
+    expect_match(text, "data-downloads=", fixed = TRUE)
+    expect_match(text, "scientific-calculator", fixed = TRUE)
+    expect_match(text, 'rebuildVariables="true"', fixed = TRUE)
+
+    engines <- "xml2"
+    if (.Platform$OS.type != "windows" && nzchar(Sys.which("xmllint"))) {
+        engines <- c(engines, "xmllint")
+    }
+    for (engine in engines) {
+        expect_true(verify_qti(test_xml, schema = "extended", engine = engine,
+                               print = FALSE)$valid)
+    }
+    standard <- verify_qti(test_xml, engine = "xml2", print = FALSE)
+    expect_false(standard$valid)
+    invalid <- sub('rebuildVariables="true"', 'rebuildVariables="maybe"', text, fixed = TRUE)
+    expect_false(verify_qti(invalid, schema = "extended", engine = "xml2",
+                            print = FALSE)$valid)
+})
+
 test_that("verify_qti can select a local qti22 schema", {
     f <- system.file("extdata", "sc1d.xml", package = "rqti")
     qti22_xml <- paste(readLines(f, warn = FALSE), collapse = "\n")
