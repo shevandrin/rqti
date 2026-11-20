@@ -223,9 +223,9 @@ stop_server <- function() {
 #')
 #'render_opal(file)
 #' @export
-render_opal <- function(input, task_names = NULL, ...) {
+render_opal <- function(input, task_names = NULL, qti_version = NULL, ...) {
     mode <- task_name_mode(task_names)
-    knit_test <- rmd2zip(input, task_names = mode)
+    knit_test <- rmd2zip(input, task_names = mode, qti_version = qti_version)
     on.exit(unlink(knit_test), add = TRUE)
 
     dots <- list(...)

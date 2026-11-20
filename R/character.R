@@ -97,8 +97,8 @@ setMethod("getIdentifier", signature(object = "character"),
 #' @aliases createQtiTest,character
 setMethod("createQtiTest", signature(object = "character"),
           function(object, dir = getwd(), verification = FALSE,
-                   zip_only = FALSE, task_names = NULL) {
-
+                   zip_only = FALSE, task_names = NULL, qti_version = NULL) {
+              local_qti_version(qti_version)
               file <- object
               if (length(file) > 1) {
                   stop("Only one file can be provided as input.", call. = FALSE)
@@ -131,8 +131,9 @@ setMethod("createQtiTest", signature(object = "character"),
 #' @aliases createQtiTask,character
 setMethod("createQtiTask", signature(object = "character"),
           function(object, dir = getwd(),
-                   verification = FALSE, zip = FALSE, task_names = NULL) {
-
+                   verification = FALSE, zip = FALSE, task_names = NULL,
+                   qti_version = NULL) {
+              local_qti_version(qti_version)
               file <- object
               if (length(file) > 1) {
                   stop("Only one file can be provided as input.", call. = FALSE)

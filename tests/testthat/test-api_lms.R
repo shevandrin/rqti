@@ -448,6 +448,36 @@ test_that("upload2LMS derives display_name from the test title when it is NULL",
     expect_identical(res$display_name, uploaded$display_name)
 })
 
+test_that("upload2opal uploads the requested QTI version as a test", {
+    con <- mock_opal_connection()
+    uploaded <- NULL
+    withr::local_options(list(rqti.qti_version = NULL))
+
+    local_mocked_bindings(
+        getLMSResourcesByName = function(object, display_name, rtype = NULL) {
+            data.frame(key = character(),
+                       displayname = character(),
+                       resourceableTypeName = character())
+        },
+        upload_resource = function(file, display_name, rtype, access,
+                                   endpoint = NULL, token = "") {
+            zip_con <- unz(file, "imsmanifest.xml")
+            on.exit(close(zip_con))
+            uploaded <<- list(rtype = rtype, manifest = readLines(zip_con, warn = FALSE))
+            opal_upload_response("qti22-key", display_name)
+        },
+        update_resource = function(...) stop("unexpected update"),
+        .package = "rqti"
+    )
+
+    suppressMessages(upload2LMS(con, make_test_exam("mock_qti22"),
+                                open_in_browser = FALSE, qti_version = "2.2"))
+
+    expect_identical(uploaded$rtype, "FileResource.TEST")
+    expect_true(any(grepl("imsqti_test_xmlv2p2", uploaded$manifest, fixed = TRUE)))
+    expect_null(getOption("rqti.qti_version"))
+})
+
 test_that("upload2LMS sends standalone question archives with question target type", {
     con <- mock_opal_connection()
     uploaded <- NULL

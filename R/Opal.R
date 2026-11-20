@@ -153,10 +153,12 @@ setMethod("isUserLoggedIn", "Opal", function(object) {
 setMethod("upload2LMS", "Opal", function(object, test, display_name = NULL,
                                          access = 4, overwrite = TRUE,
                                          open_in_browser = TRUE,
-                                         as_survey = FALSE, task_names = NULL) {
+                                         as_survey = FALSE, task_names = NULL,
+                                         qti_version = NULL) {
     callNextMethod()
 
-    file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE, task_names = task_names)
+    file <- createQtiTest(test, dir = tempdir(), zip_only = TRUE, task_names = task_names,
+                          qti_version = qti_version)
     if (is.null(display_name)) display_name <- qti_archive_title(file)
 
     # get resources with given display_name and as_survey status
@@ -1367,7 +1369,8 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                         endpoint = NULL, open_in_browser = TRUE,
                         as_survey = FALSE,
                         api_user = NULL,
-                        credential_id = NULL, task_names = NULL) {
+                        credential_id = NULL, task_names = NULL,
+                        qti_version = NULL) {
     api_user = ifelse(is.null(api_user), NA_character_, api_user)
     endpoint = ifelse(is.null(endpoint), NA_character_, endpoint)
     credential_id = ifelse(is.null(credential_id), NA_character_, credential_id)
@@ -1375,5 +1378,6 @@ upload2opal <- function(test, display_name = NULL, access = 4, overwrite = TRUE,
                 credential_id = credential_id)
     upload2LMS(conn, test, display_name, access, overwrite,
                open_in_browser = open_in_browser,
-               as_survey = as_survey, task_names = task_names)
+               as_survey = as_survey, task_names = task_names,
+               qti_version = qti_version)
 }

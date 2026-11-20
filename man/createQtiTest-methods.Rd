@@ -14,14 +14,15 @@
 \title{Create zip-archive of the qti test specification}
 \usage{
 createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
-  FALSE, task_names = NULL)
+  FALSE, task_names = NULL, qti_version = NULL)
 
 \S4method{createQtiTest}{AssessmentItem}(
   object,
   dir = ".",
   verification = FALSE,
   zip_only = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 
 \S4method{createQtiTest}{AssessmentTest}(
@@ -29,7 +30,8 @@ createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
   dir = getwd(),
   verification = FALSE,
   zip_only = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 
 \S4method{createQtiTest}{character}(
@@ -37,7 +39,8 @@ createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
   dir = getwd(),
   verification = FALSE,
   zip_only = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 }
 \arguments{
@@ -57,6 +60,9 @@ file. If \code{FALSE}, returns the zip, XML, and download files. Default is
 \item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
 or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
 \code{"title"}. See \link{task_names}.}
+
+\item{qti_version}{QTI version of the export: \code{"2.1"} or \code{"2.2"}. \code{NULL}
+uses option \code{rqti.qti_version}, falling back to \code{"2.1"}.}
 }
 \value{
 A path to zip and xml files.

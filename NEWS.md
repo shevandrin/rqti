@@ -3,6 +3,9 @@
 * New option `rqti.qti_version`: set it to `"2.2"` to export items, tests and
   content packages as QTI 2.2 (namespace, schema locations, manifest resource
   types and metadata). QTI 2.1 remains the default, with unchanged output.
+  The export functions (`createQtiTask()`, `createQtiTest()`, `rmd2xml()`,
+  `rmd2zip()`, `upload2opal()`, `upload2LMS()` and `render_opal()`) take a
+  `qti_version` argument that overrides the option for that call.
   `verify_qti()` validates QTI 2.2 documents against the bundled QTI 2.2
   schema, so `verification = TRUE` works for both versions, and QTI 2.2 uploads
   are recognised as tests. HTML `data-*` attributes such as `data-allowPaste`

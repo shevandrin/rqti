@@ -12,6 +12,8 @@
 #' @param task_names Display naming policy: `"title"`, `"filename"`, `"both"`,
 #'   or `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
 #'   `"title"`. See [task_names].
+#' @param qti_version QTI version of the export: `"2.1"` or `"2.2"`. `NULL`
+#'   uses option `rqti.qti_version`, falling back to `"2.1"`.
 #' @returns The path string to the zip file.
 #' @examples
 #' \dontrun{
@@ -19,7 +21,9 @@
 #' rmd2zip("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export
-rmd2zip <- function(file, path = getwd(), verification = FALSE, task_names = NULL) {
+rmd2zip <- function(file, path = getwd(), verification = FALSE, task_names = NULL,
+                    qti_version = NULL) {
+    local_qti_version(qti_version)
     mode <- task_name_mode(task_names)
     task <- create_question_object(file)
     test_id <- task@identifier
@@ -54,7 +58,9 @@ rmd2zip <- function(file, path = getwd(), verification = FALSE, task_names = NUL
 #' rmd2xml("task.Rmd", "target_folder", TRUE)
 #' }
 #' @export
-rmd2xml <- function(file, path = getwd(), verification = FALSE, task_names = NULL) {
+rmd2xml <- function(file, path = getwd(), verification = FALSE, task_names = NULL,
+                    qti_version = NULL) {
+    local_qti_version(qti_version)
     mode <- task_name_mode(task_names)
     task <- create_question_object(file)
     createQtiTask(task, dir = rmd_xml_path(file, path), verification = verification,

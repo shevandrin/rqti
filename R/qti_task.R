@@ -37,6 +37,18 @@ qti_version <- function() {
     version
 }
 
+# Applies an explicit qti_version argument for the rest of the calling export
+# function; NULL keeps option rqti.qti_version. The builders read the version
+# deep inside the S4 methods, so the argument is scoped as an option instead
+# of being passed through all of them.
+local_qti_version <- function(version, envir = parent.frame()) {
+    if (!is.null(version)) {
+        old <- options(rqti.qti_version = version)
+        do.call(on.exit, list(bquote(options(.(old))), add = TRUE), envir = envir)
+    }
+    invisible(qti_version())
+}
+
 # "v2p1" or "v2p2", as used in QTI namespaces, schema files and resource types
 qti_version_tag <- function(version = qti_version()) {
     paste0("v", sub(".", "p", version, fixed = TRUE))

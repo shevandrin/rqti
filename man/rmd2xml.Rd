@@ -4,7 +4,13 @@
 \alias{rmd2xml}
 \title{Create qti-XML task file from Rmd (md) description}
 \usage{
-rmd2xml(file, path = getwd(), verification = FALSE, task_names = NULL)
+rmd2xml(
+  file,
+  path = getwd(),
+  verification = FALSE,
+  task_names = NULL,
+  qti_version = NULL
+)
 }
 \arguments{
 \item{file}{A string of path to file with markdown description of question.}
@@ -18,6 +24,9 @@ file. Default is \code{FALSE}.}
 \item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
 or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
 \code{"title"}. See \link{task_names}.}
+
+\item{qti_version}{QTI version of the export: \code{"2.1"} or \code{"2.2"}. \code{NULL}
+uses option \code{rqti.qti_version}, falling back to \code{"2.1"}.}
 }
 \value{
 The path string to the xml file.

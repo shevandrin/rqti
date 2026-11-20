@@ -264,7 +264,8 @@ setMethod("createAssessmentTest", signature(object = "AssessmentTest"),
 #' @aliases createQtiTest,AssessmentTest
 setMethod("createQtiTest", signature(object = "AssessmentTest"),
           function(object, dir = getwd(), verification = FALSE,
-                   zip_only = FALSE, task_names = NULL) {
+                   zip_only = FALSE, task_names = NULL, qti_version = NULL) {
+              local_qti_version(qti_version)
               create_qti_test(object, dir, verification, zip_only, task_names)
           })
 

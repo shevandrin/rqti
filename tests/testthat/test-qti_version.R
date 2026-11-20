@@ -67,3 +67,58 @@ test_that("QTI 2.2 tests and content packages declare QTI 2.2", {
     expect_true(all(vapply(results, function(x) x$valid, logical(1))))
     expect_true(all(vapply(results, function(x) x$schema, "") == "imsqti_v2p2.xsd"))
 })
+
+item_namespace <- function(path) {
+    unname(xml2::xml_ns(xml2::read_xml(path))[["d1"]])
+}
+
+zip_manifest <- function(archive) {
+    zip_con <- unz(archive, "imsmanifest.xml")
+    on.exit(close(zip_con))
+    paste(readLines(zip_con, warn = FALSE), collapse = "\n")
+}
+
+test_that("qti_version arguments override the option for one export", {
+    withr::local_options(list(rqti.qti_version = NULL))
+    withr::local_envvar(c(RQTI_SERVER_PID = NA))
+    item <- singleChoice(identifier = "sc_version", choices = c("A", "B"))
+    out <- withr::local_tempdir()
+
+    createQtiTask(item, dir = file.path(out, "a.xml"), qti_version = "2.2")
+    expect_identical(item_namespace(file.path(out, "a.xml")),
+                     "http://www.imsglobal.org/xsd/imsqti_v2p2")
+    expect_null(getOption("rqti.qti_version"))
+
+    options(rqti.qti_version = "2.2")
+    createQtiTask(item, dir = file.path(out, "b.xml"), qti_version = "2.1")
+    expect_identical(item_namespace(file.path(out, "b.xml")),
+                     "http://www.imsglobal.org/xsd/imsqti_v2p1")
+    expect_identical(getOption("rqti.qti_version"), "2.2")
+
+    exam <- assessmentTest(list(assessmentSection(list(item), identifier = "s")),
+                           identifier = "version_test", rebuild_variables = NA)
+    archive <- createQtiTest(exam, dir = file.path(out, "test"), zip_only = TRUE,
+                             qti_version = "2.1")
+    expect_match(zip_manifest(archive), "imsqti_test_xmlv2p1", fixed = TRUE)
+    expect_identical(getOption("rqti.qti_version"), "2.2")
+
+    expect_error(createQtiTask(item, dir = out, qti_version = "3.0"),
+                 "must be \"2.1\" or \"2.2\"", fixed = TRUE)
+    expect_identical(getOption("rqti.qti_version"), "2.2")
+})
+
+test_that("Rmd exports pass qti_version through", {
+    withr::local_options(list(rqti.qti_version = NULL))
+    withr::local_envvar(c(RQTI_SERVER_PID = NA))
+    rmd <- system.file("rmarkdown", "templates", "singlechoice-simple",
+                       "skeleton", "skeleton.Rmd", package = "rqti")
+    out <- withr::local_tempdir()
+
+    suppressMessages(rmd2xml(rmd, file.path(out, "task.xml"), qti_version = "2.2"))
+    expect_identical(item_namespace(file.path(out, "task.xml")),
+                     "http://www.imsglobal.org/xsd/imsqti_v2p2")
+
+    archive <- suppressMessages(rmd2zip(rmd, out, qti_version = "2.2"))
+    expect_match(zip_manifest(archive), "imsqti_item_xmlv2p2", fixed = TRUE)
+    expect_null(getOption("rqti.qti_version"))
+})

@@ -62,6 +62,14 @@ items, tests and content packages in the QTI 2.2 namespace:
 options(rqti.qti_version = "2.2")
 ```
 
+A function's `qti_version` argument overrides the option for that call, for
+example to export one test in both versions:
+
+```{r qti-version-override}
+createQtiTest(exam, dir = "qti21", qti_version = "2.1")
+createQtiTest(exam, dir = "qti22", qti_version = "2.2")
+```
+
 `verify_qti()` then validates the exported documents against the bundled QTI
 2.2 schema. Check that your LMS imports QTI 2.2 before switching. LMS-specific
 extensions, such as OPAL's tolerant text gaps (`textGapOpal()`), Maxima

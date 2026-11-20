@@ -126,7 +126,7 @@ setGeneric("createResponseProcessing",
 #' Create XML or zip file for question specification
 #'
 #' @usage createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE,
-#'   task_names = NULL)
+#'   task_names = NULL, qti_version = NULL)
 #' @inheritParams rmd2zip
 #' @param object An instance of the S4 object ([SingleChoice], [MultipleChoice],
 #'   [Essay], [Entry], [Ordering], [OneInRowTable], [OneInColTable],
@@ -154,12 +154,13 @@ setGeneric("createResponseProcessing",
 setGeneric("createQtiTask",
            function(object, dir = ".",
                     verification = FALSE,
-                    zip = FALSE, task_names = NULL) standardGeneric("createQtiTask"))
+                    zip = FALSE, task_names = NULL,
+                    qti_version = NULL) standardGeneric("createQtiTask"))
 
 #' Create zip-archive of the qti test specification
 #'
 #' @usage createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
-#'   FALSE, task_names = NULL)
+#'   FALSE, task_names = NULL, qti_version = NULL)
 #' @inheritParams rmd2zip
 #' @param object An instance of the [AssessmentTest], [AssessmentTestOpal] or
 #'   [AssessmentItem] S4 object.
@@ -191,7 +192,8 @@ setGeneric("createQtiTask",
 #' @export
 setGeneric("createQtiTest",
            function(object, dir = NULL, verification = FALSE,
-                    zip_only = FALSE, task_names = NULL) standardGeneric("createQtiTest"))
+                    zip_only = FALSE, task_names = NULL,
+                    qti_version = NULL) standardGeneric("createQtiTest"))
 
 #' Get points from AssessmentItem object
 #'
@@ -330,7 +332,9 @@ setMethod("getContributors", signature(object = "AssessmentItem"),
 #' @rdname createQtiTask-methods
 #' @aliases createQtiTask,AssessmentItem
 setMethod("createQtiTask", signature(object = "AssessmentItem"),
-          function(object, dir = ".", verification = FALSE, zip = FALSE, task_names = NULL) {
+          function(object, dir = ".", verification = FALSE, zip = FALSE, task_names = NULL,
+                   qti_version = NULL) {
+              local_qti_version(qti_version)
               object <- name_qti_object(object, task_name_mode(task_names))
               ifelse(zip, create_task_zip(object, dir, verification),
                      create_qti_task(object, dir, verification))
@@ -339,7 +343,9 @@ setMethod("createQtiTask", signature(object = "AssessmentItem"),
 #' @rdname createQtiTest-methods
 #' @aliases createQtiTest,AssessmentItem
 setMethod("createQtiTest", signature(object = "AssessmentItem"),
-          function(object, dir = ".", verification = FALSE, zip_only = FALSE, task_names = NULL) {
+          function(object, dir = ".", verification = FALSE, zip_only = FALSE, task_names = NULL,
+                   qti_version = NULL) {
+              local_qti_version(qti_version)
               test_section <- section(object)
               test_object <- test(test_section,
                                   identifier = paste0("test_", object@identifier),

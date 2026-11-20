@@ -11,14 +11,15 @@
 \title{Create XML or zip file for question specification}
 \usage{
 createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE,
-  task_names = NULL)
+  task_names = NULL, qti_version = NULL)
 
 \S4method{createQtiTask}{AssessmentItem}(
   object,
   dir = ".",
   verification = FALSE,
   zip = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 
 \S4method{createQtiTask}{character}(
@@ -26,7 +27,8 @@ createQtiTask(object, dir = ".", verification = FALSE, zip = FALSE,
   dir = getwd(),
   verification = FALSE,
   zip = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 }
 \arguments{
@@ -46,6 +48,9 @@ zip archive with the manifest and task files inside. Default is \code{FALSE}.}
 \item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
 or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
 \code{"title"}. See \link{task_names}.}
+
+\item{qti_version}{QTI version of the export: \code{"2.1"} or \code{"2.2"}. \code{NULL}
+uses option \code{rqti.qti_version}, falling back to \code{"2.1"}.}
 }
 \value{
 A path to xml or zip file.

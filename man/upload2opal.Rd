@@ -14,7 +14,8 @@ upload2opal(
   as_survey = FALSE,
   api_user = NULL,
   credential_id = NULL,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 }
 \arguments{
@@ -54,6 +55,9 @@ automatic name when set.}
 \item{task_names}{Display naming policy: \code{"title"}, \code{"filename"}, \code{"both"},
 or \code{"hidden"}. \code{NULL} uses option \code{rqti.task_names}, falling back to
 \code{"title"}. See \link{task_names}.}
+
+\item{qti_version}{QTI version of the export: \code{"2.1"} or \code{"2.2"}. \code{NULL}
+uses option \code{rqti.qti_version}, falling back to \code{"2.1"}.}
 }
 \value{
 A list with the key, display name, and URL of the resource in Opal.
