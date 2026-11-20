@@ -156,9 +156,30 @@ for that call:</p>
 <code class="sourceCode R"><span><span class="fu">rqti</span><span class="fu">::</span><span class="fu"><a href="../reference/rmd2zip.html">rmd2zip</a></span><span class="op">(</span><span class="st">"exercise.Rmd"</span>, task_names <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span></code></pre></div>
 <p>Display names do not change identifiers or exported filenames. See
 <code><a href="../reference/task_names.html">help("task_names", package = "rqti")</a></code> for details.</p>
-<p>Set <code>rqti.maxima</code> and <code>rqti.task_names</code> in the
-RStudio console; subsequent Knit calls read these settings from the
-running preview server without a restart.</p>
+</div>
+<div class="section level3">
+<h3 id="qti-version">QTI version<a class="anchor" aria-label="anchor" href="#qti-version"></a>
+</h3>
+<p>rqti exports QTI 2.1 by default. Set <code>rqti.qti_version</code> to
+<code>"2.2"</code> to export items, tests and content packages in the
+QTI 2.2 namespace:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rqti.qti_version <span class="op">=</span> <span class="st">"2.2"</span><span class="op">)</span></span></code></pre></div>
+<p>A function’s <code>qti_version</code> argument overrides the option
+for that call, for example to export one test in both versions:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">exam</span>, dir <span class="op">=</span> <span class="st">"qti21"</span>, qti_version <span class="op">=</span> <span class="st">"2.1"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">exam</span>, dir <span class="op">=</span> <span class="st">"qti22"</span>, qti_version <span class="op">=</span> <span class="st">"2.2"</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="../reference/verify_qti.html">verify_qti()</a></code> then validates the exported documents
+against the bundled QTI 2.2 schema. Check that your LMS imports QTI 2.2
+before switching. LMS-specific extensions, such as OPAL’s tolerant text
+gaps (<code><a href="../reference/textGapOpal_doc.html">textGapOpal()</a></code>), Maxima templates and
+<code>rebuildVariables</code>, are defined for QTI 2.1 and are not valid
+QTI 2.2 either.</p>
+<p>Set <code>rqti.maxima</code>, <code>rqti.task_names</code> and
+<code>rqti.qti_version</code> in the RStudio console; subsequent Knit
+calls read these settings from the running preview server without a
+restart.</p>
 </div>
 </div>
 <div class="section level2">
@@ -166,7 +187,7 @@ running preview server without a restart.</p>
 </h2>
 <p>Environment variables use <code><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv()</a></code> instead of
 <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options()</a></code>. For example, select an OPAL instance with:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>RQTI_API_ENDPOINT <span class="op">=</span> <span class="st">"https://bildungsportal.sachsen.de/opal/"</span><span class="op">)</span></span></code></pre></div>
 <p>For persistence, put
 <code>RQTI_API_ENDPOINT=https://bildungsportal.sachsen.de/opal/</code>

@@ -100,7 +100,8 @@ verify_qti(
 
   Character string or `NULL`. Schema selector or custom XSD path.
   Supported selectors are `"qti21"`, `"extended"`, and `"qti22"`.
-  Defaults to `NULL`, which uses the legacy `extended_schema` flag.
+  Defaults to `NULL`, which uses the legacy `extended_schema` flag, and
+  the QTI 2.2 schema for documents in the QTI 2.2 namespace.
 
 ## Value
 

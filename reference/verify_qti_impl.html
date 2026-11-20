@@ -129,7 +129,8 @@ returned? Defaults to <code>TRUE</code>.</p></dd>
 
 <dt id="arg-schema">schema<a class="anchor" aria-label="anchor" href="#arg-schema"></a></dt>
 <dd><p>Character string or <code>NULL</code>. Schema to validate against. Use
-<code>NULL</code> for the default QTI 2.1 schema, <code>"extended"</code> for the extended rqti
+<code>NULL</code> for the QTI 2.1 schema, or the QTI 2.2 schema for documents in the
+QTI 2.2 namespace (see option <code>rqti.qti_version</code>), <code>"extended"</code> for the extended rqti
 QTI 2.1 schema, <code>"qti21"</code> for the default QTI 2.1 schema, <code>"qti22"</code> for a
 local QTI 2.2 schema, or a file path to a custom XSD. The legacy
 <code>extended_schema = TRUE</code> argument is still supported and is equivalent to

@@ -2,6 +2,27 @@
 
 ## rqti (development version)
 
+- New option `rqti.qti_version`: set it to `"2.2"` to export items,
+  tests and content packages as QTI 2.2 (namespace, schema locations,
+  manifest resource types and metadata). QTI 2.1 remains the default,
+  with unchanged output. The export functions
+  ([`createQtiTask()`](https://shevandrin.github.io/rqti/reference/createQtiTask-methods.md),
+  [`createQtiTest()`](https://shevandrin.github.io/rqti/reference/createQtiTest-methods.md),
+  [`rmd2xml()`](https://shevandrin.github.io/rqti/reference/rmd2xml.md),
+  [`rmd2zip()`](https://shevandrin.github.io/rqti/reference/rmd2zip.md),
+  [`upload2opal()`](https://shevandrin.github.io/rqti/reference/upload2opal.md),
+  [`upload2LMS()`](https://shevandrin.github.io/rqti/reference/upload2LMS-methods.md)
+  and
+  [`render_opal()`](https://shevandrin.github.io/rqti/reference/render_opal.md))
+  take a `qti_version` argument that overrides the option for that call.
+  [`verify_qti()`](https://shevandrin.github.io/rqti/reference/verify_qti.md)
+  validates QTI 2.2 documents against the bundled QTI 2.2 schema, so
+  `verification = TRUE` works for both versions, and QTI 2.2 uploads are
+  recognised as tests. HTML `data-*` attributes such as
+  `data-allowPaste` are valid in QTI 2.2; LMS-specific extensions (for
+  example OPAL’s `mapTolResponse` and Maxima templates) are defined for
+  QTI 2.1 only.
+
 - [`verify_qti()`](https://shevandrin.github.io/rqti/reference/verify_qti.md)
   is 12 to 35 times faster for documents without MathML (about 0.06 s
   instead of 0.8 s per QTI 2.1 document, 0.15 s instead of 4.9 s for QTI

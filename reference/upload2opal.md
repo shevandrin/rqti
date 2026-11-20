@@ -16,7 +16,8 @@ upload2opal(
   as_survey = FALSE,
   api_user = NULL,
   credential_id = NULL,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 ```
 
@@ -83,6 +84,11 @@ upload2opal(
   `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
   `"title"`. See
   [task_names](https://shevandrin.github.io/rqti/reference/task_names.md).
+
+- qti_version:
+
+  QTI version of the export: `"2.1"` or `"2.2"`. `NULL` uses option
+  `rqti.qti_version`, falling back to `"2.1"`.
 
 ## Value
 

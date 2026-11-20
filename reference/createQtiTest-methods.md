@@ -6,7 +6,7 @@ Create zip-archive of the qti test specification
 
 ``` r
 createQtiTest(object, dir = NULL, verification = FALSE, zip_only =
-  FALSE, task_names = NULL)
+  FALSE, task_names = NULL, qti_version = NULL)
 
 # S4 method for class 'AssessmentItem'
 createQtiTest(
@@ -14,7 +14,8 @@ createQtiTest(
   dir = ".",
   verification = FALSE,
   zip_only = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 
 # S4 method for class 'AssessmentTest'
@@ -23,7 +24,8 @@ createQtiTest(
   dir = getwd(),
   verification = FALSE,
   zip_only = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 
 # S4 method for class 'character'
@@ -32,7 +34,8 @@ createQtiTest(
   dir = getwd(),
   verification = FALSE,
   zip_only = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 ```
 
@@ -68,6 +71,11 @@ createQtiTest(
   `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
   `"title"`. See
   [task_names](https://shevandrin.github.io/rqti/reference/task_names.md).
+
+- qti_version:
+
+  QTI version of the export: `"2.1"` or `"2.2"`. `NULL` uses option
+  `rqti.qti_version`, falling back to `"2.1"`.
 
 ## Value
 

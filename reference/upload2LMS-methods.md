@@ -32,7 +32,8 @@ upload2LMS(
   overwrite = TRUE,
   open_in_browser = TRUE,
   as_survey = FALSE,
-  task_names = NULL
+  task_names = NULL,
+  qti_version = NULL
 )
 ```
 
@@ -90,3 +91,8 @@ upload2LMS(
   `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
   `"title"`. See
   [task_names](https://shevandrin.github.io/rqti/reference/task_names.md).
+
+- qti_version:
+
+  QTI version of the export: `"2.1"` or `"2.2"`. `NULL` uses option
+  `rqti.qti_version`, falling back to `"2.1"`.

@@ -10,7 +10,13 @@ explicit `.xml` path to choose a different export filename.
 ## Usage
 
 ``` r
-rmd2xml(file, path = getwd(), verification = FALSE, task_names = NULL)
+rmd2xml(
+  file,
+  path = getwd(),
+  verification = FALSE,
+  task_names = NULL,
+  qti_version = NULL
+)
 ```
 
 ## Arguments
@@ -35,6 +41,11 @@ rmd2xml(file, path = getwd(), verification = FALSE, task_names = NULL)
   `"hidden"`. `NULL` uses option `rqti.task_names`, falling back to
   `"title"`. See
   [task_names](https://shevandrin.github.io/rqti/reference/task_names.md).
+
+- qti_version:
+
+  QTI version of the export: `"2.1"` or `"2.2"`. `NULL` uses option
+  `rqti.qti_version`, falling back to `"2.1"`.
 
 ## Value
 

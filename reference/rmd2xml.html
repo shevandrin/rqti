@@ -84,7 +84,13 @@ name. Supply an explicit <code>.xml</code> path to choose a different export fil
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rmd2xml</span><span class="op">(</span><span class="va">file</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>, verification <span class="op">=</span> <span class="cn">FALSE</span>, task_names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rmd2xml</span><span class="op">(</span></span>
+<span>  <span class="va">file</span>,</span>
+<span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  verification <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  task_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  qti_version <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -109,6 +115,11 @@ file. Default is <code>FALSE</code>.</p></dd>
 <dd><p>Display naming policy: <code>"title"</code>, <code>"filename"</code>, <code>"both"</code>,
 or <code>"hidden"</code>. <code>NULL</code> uses option <code>rqti.task_names</code>, falling back to
 <code>"title"</code>. See <a href="task_names.html">task_names</a>.</p></dd>
+
+
+<dt id="arg-qti-version">qti_version<a class="anchor" aria-label="anchor" href="#arg-qti-version"></a></dt>
+<dd><p>QTI version of the export: <code>"2.1"</code> or <code>"2.2"</code>. <code>NULL</code>
+uses option <code>rqti.qti_version</code>, falling back to <code>"2.1"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

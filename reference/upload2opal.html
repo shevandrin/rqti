@@ -82,7 +82,8 @@ QTI-task and uploads it to the OPAL.</p>
 <span>  as_survey <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  api_user <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  credential_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  task_names <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  task_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  qti_version <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -145,6 +146,11 @@ automatic name when set.</p></dd>
 <dd><p>Display naming policy: <code>"title"</code>, <code>"filename"</code>, <code>"both"</code>,
 or <code>"hidden"</code>. <code>NULL</code> uses option <code>rqti.task_names</code>, falling back to
 <code>"title"</code>. See <a href="task_names.html">task_names</a>.</p></dd>
+
+
+<dt id="arg-qti-version">qti_version<a class="anchor" aria-label="anchor" href="#arg-qti-version"></a></dt>
+<dd><p>QTI version of the export: <code>"2.1"</code> or <code>"2.2"</code>. <code>NULL</code>
+uses option <code>rqti.qti_version</code>, falling back to <code>"2.1"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

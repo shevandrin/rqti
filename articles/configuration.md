@@ -50,9 +50,36 @@ Display names do not change identifiers or exported filenames. See
 [`help("task_names", package = "rqti")`](https://shevandrin.github.io/rqti/reference/task_names.md)
 for details.
 
-Set `rqti.maxima` and `rqti.task_names` in the RStudio console;
-subsequent Knit calls read these settings from the running preview
-server without a restart.
+### QTI version
+
+rqti exports QTI 2.1 by default. Set `rqti.qti_version` to `"2.2"` to
+export items, tests and content packages in the QTI 2.2 namespace:
+
+``` r
+
+options(rqti.qti_version = "2.2")
+```
+
+A function’s `qti_version` argument overrides the option for that call,
+for example to export one test in both versions:
+
+``` r
+
+createQtiTest(exam, dir = "qti21", qti_version = "2.1")
+createQtiTest(exam, dir = "qti22", qti_version = "2.2")
+```
+
+[`verify_qti()`](https://shevandrin.github.io/rqti/reference/verify_qti.md)
+then validates the exported documents against the bundled QTI 2.2
+schema. Check that your LMS imports QTI 2.2 before switching.
+LMS-specific extensions, such as OPAL’s tolerant text gaps
+([`textGapOpal()`](https://shevandrin.github.io/rqti/reference/textGapOpal_doc.md)),
+Maxima templates and `rebuildVariables`, are defined for QTI 2.1 and are
+not valid QTI 2.2 either.
+
+Set `rqti.maxima`, `rqti.task_names` and `rqti.qti_version` in the
+RStudio console; subsequent Knit calls read these settings from the
+running preview server without a restart.
 
 ## Environment variables
 
