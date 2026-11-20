@@ -79,9 +79,10 @@ verify_qti(
 \item{print}{Logical. Print results?}
 
 \item{schema}{Character string or \code{NULL}. Schema selector or custom XSD path.
-Supported selectors are \code{"qti21"}, \code{"extended"}, and \code{"qti22"}. Defaults
-to \code{NULL}, which uses the legacy \code{extended_schema} flag, and the QTI 2.2
-schema for documents in the QTI 2.2 namespace.}
+Supported selectors are \code{"qti21"}, \code{"extended"}, \code{"qti22"}, and
+\code{"qti22extended"}. Defaults to \code{NULL}, which uses the legacy
+\code{extended_schema} flag. For documents in the QTI 2.2 namespace, \code{NULL}
+selects the QTI 2.2 schema and \code{"extended"} the extended QTI 2.2 schema.}
 }
 \value{
 A \code{qti_validation_result} or \code{qti_validation_results_list} object.

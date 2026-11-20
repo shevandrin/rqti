@@ -22,8 +22,16 @@
   `verify_qti()` validates QTI 2.2 documents against the bundled QTI 2.2
   schema, so `verification = TRUE` works for both versions, and QTI 2.2 uploads
   are recognised as tests. HTML `data-*` attributes such as `data-allowPaste`
-  are valid in QTI 2.2; LMS-specific extensions (for example OPAL's
-  `mapTolResponse` and Maxima templates) are defined for QTI 2.1 only.
+  are valid in QTI 2.2.
+
+* New extended QTI 2.2 schema: `verify_qti(schema = "extended")` (or
+  `extended_schema = TRUE`) validates QTI 2.2 documents against it, and
+  `schema = "qti22extended"` selects it explicitly. Like the extended QTI 2.1
+  schema it accepts the OPAL extensions rqti exports: `<details>`, tolerant
+  text gaps (`mapTolResponse`), Maxima templates (`customOperator` values and
+  `setCorrectResponse`), and the test settings `data-downloads`,
+  `data-features` and `rebuildVariables`. It is generated from the QTI 2.2
+  schema by `tools/build-qti22-extension.R`.
 
 * `verify_qti()` is 12 to 35 times faster for documents without MathML (about
   0.06 s instead of 0.8 s per QTI 2.1 document, 0.15 s instead of 4.9 s for

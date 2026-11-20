@@ -29,9 +29,11 @@
 #'   returned? Defaults to `TRUE`.
 #' @param schema Character string or `NULL`. Schema to validate against. Use
 #'   `NULL` for the QTI 2.1 schema, or the QTI 2.2 schema for documents in the
-#'   QTI 2.2 namespace (see option `rqti.qti_version`), `"extended"` for the extended rqti
-#'   QTI 2.1 schema, `"qti21"` for the default QTI 2.1 schema, `"qti22"` for a
-#'   local QTI 2.2 schema, or a file path to a custom XSD. The legacy
+#'   QTI 2.2 namespace (see option `rqti.qti_version`), `"extended"` for rqti's
+#'   extended schema (QTI 2.1, or QTI 2.2 for QTI 2.2 documents), which accepts
+#'   the OPAL extensions rqti exports, `"qti21"` for the default QTI 2.1 schema,
+#'   `"qti22"` for a local QTI 2.2 schema, `"qti22extended"` for the extended
+#'   QTI 2.2 schema, or a file path to a custom XSD. The legacy
 #'   `extended_schema = TRUE` argument is still supported and is equivalent to
 #'   `schema = "extended"` when `schema` is `NULL`.
 #'   QTI 2.2 schemas are bundled in compressed form and unpacked once per R
@@ -99,10 +101,15 @@ verify_qti_impl <- function(doc,
         xml_lines <- strsplit(xml_txt, "\n", fixed = TRUE)[[1]]
     }
 
-    # schema
-    if (is.null(schema) && !isTRUE(extended_schema) &&
-        any(grepl(qti_namespace("2.2"), xml_lines, fixed = TRUE))) {
-        schema <- "qti22"
+    # schema: QTI 2.2 documents default to the QTI 2.2 schemas, where
+    # "extended" means rqti's extended QTI 2.2 schema
+    if (any(grepl(qti_namespace("2.2"), xml_lines, fixed = TRUE))) {
+        key <- if (is.null(schema)) {
+            if (isTRUE(extended_schema)) "extended" else "default"
+        } else gsub("[._-]", "", tolower(schema))
+        if (key %in% c("default", "extended", "extendedschema", "extendedxsd")) {
+            schema <- if (key == "default") "qti22" else "qti22extended"
+        }
     }
     schema_file <- resolve_qti_schema(schema, extended_schema)
     schema_label <- attr(schema_file, "label", exact = TRUE)
@@ -325,9 +332,10 @@ print.qti_validation_result <- function(x, ...) {
 #' @param ignore_import Logical. Ignore import warnings?
 #' @param print Logical. Print results?
 #' @param schema Character string or `NULL`. Schema selector or custom XSD path.
-#'   Supported selectors are `"qti21"`, `"extended"`, and `"qti22"`. Defaults
-#'   to `NULL`, which uses the legacy `extended_schema` flag, and the QTI 2.2
-#'   schema for documents in the QTI 2.2 namespace.
+#'   Supported selectors are `"qti21"`, `"extended"`, `"qti22"`, and
+#'   `"qti22extended"`. Defaults to `NULL`, which uses the legacy
+#'   `extended_schema` flag. For documents in the QTI 2.2 namespace, `NULL`
+#'   selects the QTI 2.2 schema and `"extended"` the extended QTI 2.2 schema.
 #' @details Assessment-test validation checks the generated QTI test and item
 #'   documents. The content-package manifest and OpenOlat's separate
 #'   `QTI21PackageConfig.xml` are not QTI assessment documents and are excluded.
@@ -621,6 +629,8 @@ resolve_qti_schema <- function(schema = NULL, extended_schema = FALSE) {
         qti22 = qti22_schema_file(),
         qti2p2 = qti22_schema_file(),
         imsqtiv2p2xsd = qti22_schema_file(),
+        qti22extended = qti22_extension_file(),
+        qti2p2extended = qti22_extension_file(),
         NULL
     )
 
@@ -630,7 +640,7 @@ resolve_qti_schema <- function(schema = NULL, extended_schema = FALSE) {
         if (is.null(schema_file)) {
             stop(
                 "Unknown schema selector or missing XSD file: ", schema, "\n",
-                "Use one of 'qti21', 'extended', 'qti22', or pass a path to an XSD file.",
+                "Use one of 'qti21', 'extended', 'qti22', 'qti22extended', or pass a path to an XSD file.",
                 call. = FALSE
             )
         }
@@ -724,10 +734,14 @@ qti22_schema_file <- function() {
         stop("The bundled QTI 2.2 schema archive is incomplete.", call. = FALSE)
     }
     file.copy(c(system.file("schemas", c("imsqti_v2p2_no_mathml.xsd",
-                                         "imsqti_v2p2_no_mathml3.xsd"),
+                                         "imsqti_v2p2_no_mathml3.xsd",
+                                         "qti_v2p2_extension.xsd",
+                                         "qti_v2p2_extension_no_mathml.xsd",
+                                         "qti_v2p2_extension_no_mathml3.xsd"),
                             package = "rqti"),
                 system.file("xsd", c("mathml2-stub.xsd", "mathml3-stub.xsd"),
-                            package = "rqti")),
+                            package = "rqti"),
+                system.file("maptolresponse.xsd", package = "rqti")),
               dirname(schema_file))
     if (!is.null(qti22_schema_cache$directory)) {
         unlink(qti22_schema_cache$directory, recursive = TRUE)
@@ -736,6 +750,11 @@ qti22_schema_file <- function() {
     qti22_schema_cache$hash <- hash
     ready <- TRUE
     schema_file
+}
+
+# rqti's extended QTI 2.2 schema, unpacked beside the QTI 2.2 schema it extends.
+qti22_extension_file <- function() {
+    file.path(dirname(qti22_schema_file()), "qti_v2p2_extension.xsd")
 }
 
 qti_schema_search_dirs <- function(start = getwd(), max_depth = 5) {

@@ -40,9 +40,11 @@ returned? Defaults to \code{TRUE}.}
 
 \item{schema}{Character string or \code{NULL}. Schema to validate against. Use
 \code{NULL} for the QTI 2.1 schema, or the QTI 2.2 schema for documents in the
-QTI 2.2 namespace (see option \code{rqti.qti_version}), \code{"extended"} for the extended rqti
-QTI 2.1 schema, \code{"qti21"} for the default QTI 2.1 schema, \code{"qti22"} for a
-local QTI 2.2 schema, or a file path to a custom XSD. The legacy
+QTI 2.2 namespace (see option \code{rqti.qti_version}), \code{"extended"} for rqti's
+extended schema (QTI 2.1, or QTI 2.2 for QTI 2.2 documents), which accepts
+the OPAL extensions rqti exports, \code{"qti21"} for the default QTI 2.1 schema,
+\code{"qti22"} for a local QTI 2.2 schema, \code{"qti22extended"} for the extended
+QTI 2.2 schema, or a file path to a custom XSD. The legacy
 \code{extended_schema = TRUE} argument is still supported and is equivalent to
 \code{schema = "extended"} when \code{schema} is \code{NULL}.
 QTI 2.2 schemas are bundled in compressed form and unpacked once per R

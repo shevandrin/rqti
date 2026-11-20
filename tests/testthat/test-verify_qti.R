@@ -221,6 +221,8 @@ test_that("QTI 2.2 schemas unpack in a session directory and are reused", {
     expect_true(file.exists(file.path(directory, "w3", "mathml3", "mathml3.xsd")))
     expect_true(file.exists(file.path(directory, "apipv1p0",
                                      "apipv1p0_qtiextv2p2_v1p0p1.xsd")))
+    expect_true(file.exists(file.path(directory, "xsd", "qti_v2p2_extension.xsd")))
+    expect_true(file.exists(file.path(directory, "xsd", "maptolresponse.xsd")))
 
     # Rebuild if a caller clears the R session's temporary files.
     unlink(directory, recursive = TRUE)
@@ -262,7 +264,7 @@ test_that("bundled schemas have wrappers that stub out unused MathML", {
     no_math <- "<p>x</p>"
     mathml2 <- '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML"/>'
     mathml3 <- '<m:math xmlns:m="http://www.w3.org/2010/Math/MathML"/>'
-    for (schema in c("qti21", "extended", "qti22")) {
+    for (schema in c("qti21", "extended", "qti22", "qti22extended")) {
         full <- rqti:::resolve_qti_schema(schema)
         wrapper <- rqti:::mathml_free_schema(full, no_math)
         expect_true(endsWith(wrapper, "_no_mathml.xsd"))
@@ -271,9 +273,11 @@ test_that("bundled schemas have wrappers that stub out unused MathML", {
     }
     qti21 <- rqti:::resolve_qti_schema("qti21")
     expect_identical(rqti:::mathml_free_schema(qti21, mathml2), qti21)
-    qti22 <- rqti:::mathml_free_schema(rqti:::resolve_qti_schema("qti22"), mathml2)
-    expect_true(endsWith(qti22, "_no_mathml3.xsd"))
-    expect_true(file.exists(qti22))
+    for (schema in c("qti22", "qti22extended")) {
+        wrapper <- rqti:::mathml_free_schema(rqti:::resolve_qti_schema(schema), mathml2)
+        expect_true(endsWith(wrapper, "_no_mathml3.xsd"))
+        expect_true(file.exists(wrapper))
+    }
     custom <- withr::local_tempfile(fileext = ".xsd")
     file.copy(system.file("imsqti_v2p1p2.xsd", package = "rqti"), custom)
     expect_identical(rqti:::mathml_free_schema(custom, no_math), custom)

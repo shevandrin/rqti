@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Validates documents without MathML against qti_v2p2_extension.xsd.
+     The MathML stubs are imported first, so libxml2 skips the full MathML
+     schemas imported by qti_v2p2_extension.xsd. Compiling those takes most of the time
+     of every validation. See verify_qti(). -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml2-stub.xsd"/>
+    <xs:import namespace="http://www.w3.org/2010/Math/MathML" schemaLocation="mathml3-stub.xsd"/>
+    <xs:import namespace="http://www.imsglobal.org/xsd/imsqti_v2p2" schemaLocation="qti_v2p2_extension.xsd"/>
+</xs:schema>

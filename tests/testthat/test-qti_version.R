@@ -122,3 +122,48 @@ test_that("Rmd exports pass qti_version through", {
     expect_match(zip_manifest(archive), "imsqti_item_xmlv2p2", fixed = TRUE)
     expect_null(getOption("rqti.qti_version"))
 })
+
+test_that("the extended QTI 2.2 schema accepts rqti's OPAL extensions", {
+    withr::local_options(list(rqti.qti_version = "2.2"))
+    withr::local_envvar(c(RQTI_SERVER_PID = NA))
+    out <- withr::local_tempdir()
+    supplement <- file.path(out, "sheet.pdf")
+    writeLines("formulas", supplement)
+    details <- "<details><summary>Hint</summary><p>Text</p></details>"
+    gaps <- entry(identifier = "gaps22", content = list(
+        "<p>A</p>", details, "<p>B ",
+        new("TextGapOpal", response_identifier = "R1", solution = c("more", "More"),
+            tolerance = 2),
+        "</p>"))
+    maxima <- entry(identifier = "maxima22",
+                    template = list(maxima_variables(
+                        code = "block([a], a: random(10) + 1, string(['a = a]));",
+                        variables = c(a = "integer"))),
+                    content = list("<p>", template_value("a"), " = ",
+                                   numericGap(solution_variable = "a",
+                                              response_identifier = "R2"), "</p>"))
+    exam <- assessmentTestOpal(list(assessmentSection(list(gaps, maxima), identifier = "s")),
+                               identifier = "opal22", calculator = "scientific",
+                               files = supplement)
+    archive <- createQtiTest(exam, dir = out, zip_only = TRUE)
+    files <- utils::unzip(archive, exdir = file.path(out, "unzipped"))
+    roots <- vapply(files, function(f) {
+        if (grepl("\\.xml$", f)) xml2::xml_name(xml2::read_xml(f)) else ""
+    }, character(1))
+    documents <- files[roots %in% c("assessmentTest", "assessmentItem")]
+    expect_length(documents, 3L)
+
+    for (f in documents) {
+        expect_false(verify_qti(f, print = FALSE)$valid)
+        extended <- verify_qti(f, extended_schema = TRUE, print = FALSE)
+        expect_true(extended$valid, info = basename(f))
+        expect_identical(extended$schema, "qti_v2p2_extension.xsd")
+        expect_identical(verify_qti(f, schema = "extended", print = FALSE)$schema,
+                         "qti_v2p2_extension.xsd")
+    }
+    test_xml <- paste(readLines(files[roots == "assessmentTest"], warn = FALSE),
+                      collapse = "\n")
+    expect_false(verify_qti(sub('rebuildVariables="true"', 'rebuildVariables="maybe"',
+                                test_xml, fixed = TRUE),
+                            schema = "extended", print = FALSE)$valid)
+})
