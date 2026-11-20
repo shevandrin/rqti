@@ -5,6 +5,11 @@
   calculator and other `AssessmentTestOpal` features) and `rebuildVariables`
   on `itemSessionControl`. OPAL tests exported by rqti now validate against it.
 
+* The extended schema allows `<details>` at any position in `itemBody`,
+  `modalFeedback` and `div`, so gap exercises with collapsible details (their
+  content is wrapped in a `div`) validate. Before, `<details>` was only
+  accepted after all other content of `itemBody` and `modalFeedback`.
+
 * The `dropdown-complex` Rmd template uses a valid choice identifier
   (`no_OOP` instead of `no OOP`).
 

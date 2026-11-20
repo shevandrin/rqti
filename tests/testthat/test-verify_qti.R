@@ -78,6 +78,28 @@ test_that("extended schema allows details in itemBody", {
     expect_true(res_extended$valid)
 })
 
+test_that("extended schema allows details anywhere in item bodies and divs", {
+    details <- "<details><summary>Hint</summary><p>Text</p></details>"
+    text <- paste(readLines(system.file("extdata", "sc1d.xml", package = "rqti"),
+                            warn = FALSE), collapse = "\n")
+    interaction <- regmatches(text, regexpr("<choiceInteraction.*</choiceInteraction>", text))
+    with_body <- function(body) {
+        sub("<itemBody>.*</itemBody>", paste0("<itemBody>", body, "</itemBody>"), text)
+    }
+    extended_valid <- function(xml) {
+        verify_qti(xml, schema = "extended", engine = "xml2", print = FALSE)$valid
+    }
+
+    expect_true(extended_valid(with_body(paste0("<p>Question</p>", details, interaction))))
+    # gap exercises wrap their content in a div
+    expect_true(extended_valid(with_body(paste0(
+        "<div><p>A</p>", details, details, "text<p>B</p></div>", interaction))))
+    expect_false(extended_valid(with_body(paste0(
+        "<p>Question</p><summary>Hint</summary>", interaction))))
+    expect_false(extended_valid(with_body(paste0(
+        "<div><p>A</p>", details, "<madeUp/></div>", interaction))))
+})
+
 test_that("extended schema validates TextGapOpal tolerance processing", {
     item <- new(
         "Entry",
