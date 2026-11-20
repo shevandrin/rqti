@@ -60,9 +60,11 @@ verify_qti_impl(
 
   Character string or `NULL`. Schema to validate against. Use `NULL` for
   the QTI 2.1 schema, or the QTI 2.2 schema for documents in the QTI 2.2
-  namespace (see option `rqti.qti_version`), `"extended"` for the
-  extended rqti QTI 2.1 schema, `"qti21"` for the default QTI 2.1
-  schema, `"qti22"` for a local QTI 2.2 schema, or a file path to a
+  namespace (see option `rqti.qti_version`), `"extended"` for rqti's
+  extended schema (QTI 2.1, or QTI 2.2 for QTI 2.2 documents), which
+  accepts the OPAL extensions rqti exports, `"qti21"` for the default
+  QTI 2.1 schema, `"qti22"` for a local QTI 2.2 schema,
+  `"qti22extended"` for the extended QTI 2.2 schema, or a file path to a
   custom XSD. The legacy `extended_schema = TRUE` argument is still
   supported and is equivalent to `schema = "extended"` when `schema` is
   `NULL`. QTI 2.2 schemas are bundled in compressed form and unpacked

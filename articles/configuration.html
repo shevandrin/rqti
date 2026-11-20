@@ -172,10 +172,12 @@ for that call, for example to export one test in both versions:</p>
 <span><span class="fu"><a href="../reference/createQtiTest-methods.html">createQtiTest</a></span><span class="op">(</span><span class="va">exam</span>, dir <span class="op">=</span> <span class="st">"qti22"</span>, qti_version <span class="op">=</span> <span class="st">"2.2"</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="../reference/verify_qti.html">verify_qti()</a></code> then validates the exported documents
 against the bundled QTI 2.2 schema. Check that your LMS imports QTI 2.2
-before switching. LMS-specific extensions, such as OPAL’s tolerant text
-gaps (<code><a href="../reference/textGapOpal_doc.html">textGapOpal()</a></code>), Maxima templates and
-<code>rebuildVariables</code>, are defined for QTI 2.1 and are not valid
-QTI 2.2 either.</p>
+before switching. OPAL’s extensions, such as tolerant text gaps
+(<code><a href="../reference/textGapOpal_doc.html">textGapOpal()</a></code>), Maxima templates, collapsible
+<code>&lt;details&gt;</code> and the test settings of
+<code><a href="../reference/assessmentTestOpal.html">assessmentTestOpal()</a></code>, are not part of QTI 2.2;
+<code>verify_qti(schema = "extended")</code> accepts them in QTI 2.2
+documents as it does in QTI 2.1 documents.</p>
 <p>Set <code>rqti.maxima</code>, <code>rqti.task_names</code> and
 <code>rqti.qti_version</code> in the RStudio console; subsequent Knit
 calls read these settings from the running preview server without a

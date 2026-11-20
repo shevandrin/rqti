@@ -163,9 +163,10 @@
 
 <dt id="arg-schema">schema<a class="anchor" aria-label="anchor" href="#arg-schema"></a></dt>
 <dd><p>Character string or <code>NULL</code>. Schema selector or custom XSD path.
-Supported selectors are <code>"qti21"</code>, <code>"extended"</code>, and <code>"qti22"</code>. Defaults
-to <code>NULL</code>, which uses the legacy <code>extended_schema</code> flag, and the QTI 2.2
-schema for documents in the QTI 2.2 namespace.</p></dd>
+Supported selectors are <code>"qti21"</code>, <code>"extended"</code>, <code>"qti22"</code>, and
+<code>"qti22extended"</code>. Defaults to <code>NULL</code>, which uses the legacy
+<code>extended_schema</code> flag. For documents in the QTI 2.2 namespace, <code>NULL</code>
+selects the QTI 2.2 schema and <code>"extended"</code> the extended QTI 2.2 schema.</p></dd>
 
 </dl></div>
     <div class="section level2">
