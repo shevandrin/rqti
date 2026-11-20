@@ -2,6 +2,15 @@
 
 ## rqti (development version)
 
+- The extended schema (`verify_qti(schema = "extended")`) accepts OPAL’s
+  test settings: `data-downloads` and `data-features` on
+  `assessmentTest` (files, calculator and other `AssessmentTestOpal`
+  features) and `rebuildVariables` on `itemSessionControl`. OPAL tests
+  exported by rqti now validate against it.
+
+- The `dropdown-complex` Rmd template uses a valid choice identifier
+  (`no_OOP` instead of `no OOP`).
+
 - New option `rqti.qti_version`: set it to `"2.2"` to export items,
   tests and content packages as QTI 2.2 (namespace, schema locations,
   manifest resource types and metadata). QTI 2.1 remains the default,

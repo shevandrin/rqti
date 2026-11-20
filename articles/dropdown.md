@@ -117,7 +117,7 @@ use of the helper function `dropdown`.
 
     ```{r echo=F}
     library(rqti)
-    dropdown1 <- dropdown(c("no OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP", 
+    dropdown1 <- dropdown(c("no_OOP" = "no OOP", "S4" = "S4 OOP", "S3" = "S3 OOP",
                             "R6" = "R6 OOP"), solution_index = 2, points = 2, 
                           response_identifier = "OOP_task")
     ```
