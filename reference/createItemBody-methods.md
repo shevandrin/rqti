@@ -20,6 +20,9 @@ createItemBody(object)
 # S4 method for class 'MultipleChoice'
 createItemBody(object)
 
+# S4 method for class 'HotspotChoice'
+createItemBody(object)
+
 # S4 method for class 'MultipleChoiceTable'
 createItemBody(object)
 

@@ -90,7 +90,7 @@ createTemplateProcessing(item)
 #>       <variable identifier="all"></variable>
 #>     </customOperator>
 #>   </setTemplateValue>
-#>   <setCorrectResponse identifier="id_gap_9699">
+#>   <setCorrectResponse identifier="id_gap_9043">
 #>     <variable identifier="c"></variable>
 #>   </setCorrectResponse>
 #> </templateProcessing>
@@ -102,7 +102,7 @@ createItemBody(item)
 #>      + 
 #>     <printedVariable identifier="b"></printedVariable>
 #>      = 
-#>     <textEntryInteraction responseIdentifier="id_gap_9699" expectedLength="10" placeholderText=""></textEntryInteraction>
+#>     <textEntryInteraction responseIdentifier="id_gap_9043" expectedLength="10" placeholderText=""></textEntryInteraction>
 #>     </p>
 #>   </div>
 #> </itemBody>

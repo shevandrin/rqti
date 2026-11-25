@@ -20,10 +20,10 @@ createResponseDeclaration(object)
 # S4 method for class 'Essay'
 createResponseDeclaration(object)
 
-# S4 method for class 'InlineChoice'
+# S4 method for class 'MultipleChoice'
 createResponseDeclaration(object)
 
-# S4 method for class 'MultipleChoice'
+# S4 method for class 'InlineChoice'
 createResponseDeclaration(object)
 
 # S4 method for class 'MultipleChoiceTable'

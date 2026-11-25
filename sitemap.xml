@@ -35,6 +35,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/Entry-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/Essay-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/Gap-class.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/HotspotChoice-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/InlineChoice-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/LMS-class.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/MatchTable-class.html</loc></url>
@@ -107,6 +108,7 @@
 <url><loc>https://shevandrin.github.io/rqti/reference/getPoints-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getResponse-methods.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/getScoreBounds.html</loc></url>
+<url><loc>https://shevandrin.github.io/rqti/reference/hotspotChoice.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/index.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/inlineChoice.html</loc></url>
 <url><loc>https://shevandrin.github.io/rqti/reference/isUserLoggedIn-methods.html</loc></url>

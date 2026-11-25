@@ -151,10 +151,10 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_9172"
+#> [1] "id_task_6016"
 #> 
 #> Slot "title":
-#> [1] "id_task_9172"
+#> [1] "id_task_6016"
 #> 
 #> Slot "content":
 #> list()
@@ -239,10 +239,10 @@ multipleChoice(choices = c("A", "B", "C"), points = c(0.5, 0, 0.5),
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_9482"
+#> [1] "id_task_5603"
 #> 
 #> Slot "title":
-#> [1] "id_task_9482"
+#> [1] "id_task_5603"
 #> 
 #> Slot "content":
 #> list()

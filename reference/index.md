@@ -35,6 +35,9 @@
 - [`Gap-class`](https://shevandrin.github.io/rqti/reference/Gap-class.md)
   [`Gap`](https://shevandrin.github.io/rqti/reference/Gap-class.md) :
   Class "Gap"
+- [`HotspotChoice-class`](https://shevandrin.github.io/rqti/reference/HotspotChoice-class.md)
+  [`HotspotChoice`](https://shevandrin.github.io/rqti/reference/HotspotChoice-class.md)
+  : Class "HotspotChoice"
 - [`InlineChoice-class`](https://shevandrin.github.io/rqti/reference/InlineChoice-class.md)
   [`InlineChoice`](https://shevandrin.github.io/rqti/reference/InlineChoice-class.md)
   : Class "InlineChoice"
@@ -200,6 +203,8 @@
   : Get and process a piece of question content
 - [`getScoreBounds()`](https://shevandrin.github.io/rqti/reference/getScoreBounds.md)
   : Get an item's or interaction's score bounds
+- [`hotspotChoice()`](https://shevandrin.github.io/rqti/reference/hotspotChoice.md)
+  : Create object HotspotChoice
 - [`inlineChoice()`](https://shevandrin.github.io/rqti/reference/inlineChoice.md)
   : Create object InlineChoice
 - [`isUserLoggedIn()`](https://shevandrin.github.io/rqti/reference/isUserLoggedIn-methods.md)

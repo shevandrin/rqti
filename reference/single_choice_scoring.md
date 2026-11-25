@@ -179,10 +179,10 @@ singleChoice(choices = c("A", "B", "C"), points = 2,
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_2810"
+#> [1] "id_task_7252"
 #> 
 #> Slot "title":
-#> [1] "id_task_2810"
+#> [1] "id_task_7252"
 #> 
 #> Slot "content":
 #> list()
@@ -270,10 +270,10 @@ singleChoice(prompt = "2 + 2 = 4", choices = c("False", "True"), solution = 2,
 #> [1] "vertical"
 #> 
 #> Slot "identifier":
-#> [1] "id_task_6699"
+#> [1] "id_task_8017"
 #> 
 #> Slot "title":
-#> [1] "id_task_6699"
+#> [1] "id_task_8017"
 #> 
 #> Slot "content":
 #> list()
