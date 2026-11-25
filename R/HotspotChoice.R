@@ -4,6 +4,14 @@
 #' candidates select one or several areas (hotspots) in an image, e.g.
 #' regions of a Venn diagram. Scoring works as in [MultipleChoice-class]: each
 #' hotspot has points, hotspots with positive points are correct.
+#'
+#' ONYX (OPAL, version 2026.11) renders the image on the server and marks a
+#' selected hotspot by a translucent white overlay and a thin blue outline.
+#' On a white image the selection is hardly visible, so use a medium or dark
+#' background color for the areas; selected areas then appear clearly
+#' lighter. Hotspots must not overlap: an area that surrounds others, like the
+#' outside of a Venn diagram, can be drawn as one polygon with a slit to the
+#' inner boundary (a keyhole shape).
 #' @template AISlotsTemplate
 #' @template ChoiceSlotsTemplate
 #' @slot scoring_scheme A method name or named list from
